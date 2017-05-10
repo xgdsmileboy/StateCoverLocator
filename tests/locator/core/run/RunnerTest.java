@@ -35,10 +35,10 @@ public class RunnerTest {
 	}
 	
 	@Test
-	public void test_buildSubject(){
+	public void test_compileSubject(){
 		Constant.PROJECT_HOME = "res/junitRes";
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
-		Assert.assertTrue("Should success !", Runner.buildSubject(subject));
+		Assert.assertTrue("Should success !", Runner.compileSubject(subject));
 	}
 	
 }

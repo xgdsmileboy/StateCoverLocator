@@ -59,7 +59,6 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 	private final static String __name__ = "@StatementInstrumentVisitor ";
 
 	private String _clazzName = "";
-	private String _clazzFileName = "";
 	private CompilationUnit _cu;
 	private String _methodFlag = Constant.INSTRUMENT_K_SOURCE;
 	private Method _method = null;
@@ -77,7 +76,6 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 
 	public void reset() {
 		_clazzName = "";
-		_clazzFileName = "";
 		_cu = null;
 		_methodFlag = Constant.INSTRUMENT_K_SOURCE;
 	}
@@ -106,29 +104,29 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 				return false;
 			}
 		}
-		_clazzName = node.getPackage().getName().getFullyQualifiedName();
-		for (Object object : node.types()) {
-			if (object instanceof TypeDeclaration) {
-				TypeDeclaration type = (TypeDeclaration) object;
-				if (Modifier.isPublic(type.getModifiers())) {
-					_clazzName += Constant.INSTRUMENT_DOT_SEPARATOR + type.getName().getFullyQualifiedName();
-					_clazzFileName = _clazzName;
+		_clazzName = null;
+		String packageName = node.getPackage().getName().getFullyQualifiedName();
+		List<Object> types = node.types();
+		if(types.size() == 1){
+			if(types.get(0) instanceof TypeDeclaration){
+				TypeDeclaration typeDeclaration = (TypeDeclaration) types.get(0);
+				_clazzName = packageName + Constant.INSTRUMENT_DOT_SEPARATOR + typeDeclaration.getName().getFullyQualifiedName();
+			}
+		}else{
+			for (Object object : node.types()) {
+				if (object instanceof TypeDeclaration) {
+					TypeDeclaration type = (TypeDeclaration) object;
+					if (Modifier.isPublic(type.getModifiers())) {
+						_clazzName = packageName + Constant.INSTRUMENT_DOT_SEPARATOR + type.getName().getFullyQualifiedName();
+					}
 				}
-			} else {
-				return false;
 			}
 		}
-		return true;
-	}
-
-	@Override
-	public boolean visit(TypeDeclaration node) {
-
-		if (!Modifier.isPublic(node.getModifiers())) {
-			_clazzName = _clazzFileName + "$" + node.getName().getFullyQualifiedName();
+		if(_clazzName == null){
+			LevelLogger.error(__name__ + "#visit(CompilationUnit) no public type declaration exists.");
+			return false;
 		}
 		return true;
-
 	}
 
 	@Override
@@ -168,8 +166,17 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 			parent = parent.getParent();
 		}
 
+		String currentClassName = _clazzName;
+		if(parent != null && parent instanceof TypeDeclaration){
+			TypeDeclaration typeDeclaration = (TypeDeclaration) parent;
+			String parentName = typeDeclaration.getName().getFullyQualifiedName();
+			if(!_clazzName.endsWith(parentName)){
+				currentClassName = _clazzName + "$" + parentName;
+			}
+		}
+
 //		StringBuffer buffer = new StringBuffer(Constant.INSTRUMENT_KEY_TYPE + _clazzName);
-		StringBuffer buffer = new StringBuffer(_clazzName + "#");
+		StringBuffer buffer = new StringBuffer(currentClassName + "#");
 
 		String retType = "?";
 		if (node.getReturnType2() != null) {

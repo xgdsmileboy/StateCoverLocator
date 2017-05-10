@@ -147,6 +147,16 @@ public class BigFraction
 
         }
     }
+    
+    class TroubleClazz{
+    	public void method1(){
+    		
+    	}
+    	
+    	public boolean method2(){
+    		return true;
+    	}
+    }
 
     /**
      * Create a fraction given the double value.
@@ -1141,4 +1151,14 @@ public class BigFraction
         return BigFractionField.getInstance();
     }
 
+}
+
+class AnotherTroubleClazz{
+	public void method1(){
+		
+	}
+	
+	public boolean method2(){
+		return true;
+	}
 }

@@ -7,7 +7,6 @@
 
 package locator.core;
 
-import java.awt.List;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,7 +26,7 @@ public class CollectorTest {
 	@Test
 	public void test_collectAllPassedTestCases(){
 		Constant.PROJECT_HOME = "res/junitRes";
-		String failedTestString = "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests::test2947660";
+		String failedTestString = "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests#void#test2947660#?";
 		Set<Integer> failedTests = new HashSet<>();
 		int failedID = Identifier.getIdentifier(failedTestString);
 		failedTests.add(failedID);

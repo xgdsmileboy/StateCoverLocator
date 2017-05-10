@@ -50,7 +50,7 @@ public class Runner {
 		return checkBuild();
 	}
 	
-	public static boolean buildSubject(Subject subject){
+	public static boolean compileSubject(Subject subject){
 		try {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createBuildSubjectCmd(subject));
 		} catch (Exception e) {

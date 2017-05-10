@@ -55,8 +55,7 @@ public class Collector {
 				}
 				String methodName = line.substring(0, indexOfLeftBracket);
 				String clazzName = line.substring(indexOfLeftBracket + 1, indexOfRightBracket);
-				// NOTE: test method string format is different from source method
-				String methodString = clazzName + "::" + methodName;
+				String methodString = clazzName + "#void#" + methodName + "#?";
 				int methodID = Identifier.getIdentifier(methodString);
 				if(!failedTests.contains(methodID)){
 					allPassedTestCases.add(methodID);

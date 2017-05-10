@@ -12,6 +12,7 @@ import locator.common.config.Constant;
 public class Main {
 	
 	private static void proceed(){
+		
 		//step 1: collect all failed tests
 		
 		//step 2: for each failed test collect running path
