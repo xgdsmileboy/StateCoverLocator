@@ -14,51 +14,39 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.junit.Test;
 
-import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
 import locator.common.java.Method;
 
 /**
  * @author Jiajun
- * @date May 10, 2017
+ * @date May 11, 2017
  */
-public class StatementInstrumentVisitorTest {
-	
+public class MethodInstrumentVIsitorTest {
+
 	@Test
-	public void test_InstrumentForTestClass(){
-		String filePath = "res/junitRes/IterativeLegendreGaussIntegratorTest.java";
-		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
-		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
-		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_TEST);
-		compilationUnit.accept(statementInstrumentVisitor);
-		System.out.println(compilationUnit.toString());
-	}
-	
-	@Test
-	public void test_InstrumentForSourceClass(){
+	public void test_methodInstrumentForClazz() {
 		String filePath = "res/junitRes/BigFraction.java";
 		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
-		compilationUnit.accept(new StatementInstrumentVisitor());
+		compilationUnit.accept(new MethodInstrumentVisitor());
 		System.out.println(compilationUnit.toString());
 	}
 	
 	@Test
-	public void test_InstrumentForSingleMethod(){
+	public void test_methodInstrumentForSingleMethod() {
 		String filePath = "res/junitRes/BigFraction.java";
 		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Set<Method> methods = new HashSet<>();
 		methods.add(new Method(Identifier.getIdentifier(methodString)));
-		compilationUnit.accept(new StatementInstrumentVisitor(methods));
+		compilationUnit.accept(new MethodInstrumentVisitor(methods));
 		System.out.println(compilationUnit.toString());
 	}
 	
 	@Test
-	public void test_InstrumentForMultiMethod(){
+	public void test_methodInstrumentForMultiMethod() {
 		String filePath = "res/junitRes/BigFraction.java";
 		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
@@ -69,8 +57,8 @@ public class StatementInstrumentVisitorTest {
 		methods.add(new Method(Identifier.getIdentifier(methodString2)));
 		String methodString3 = "org.apache.commons.math3.fraction.BigFraction$TroubleClazz#boolean#method2#?";
 		methods.add(new Method(Identifier.getIdentifier(methodString3)));
-		compilationUnit.accept(new StatementInstrumentVisitor(methods));
+		compilationUnit.accept(new MethodInstrumentVisitor(methods));
 		System.out.println(compilationUnit.toString());
 	}
-	
+
 }

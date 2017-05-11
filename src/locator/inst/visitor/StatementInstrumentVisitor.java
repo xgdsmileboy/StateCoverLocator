@@ -9,16 +9,14 @@ package locator.inst.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.AssertStatement;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BreakStatement;
 import org.eclipse.jdt.core.dom.CatchClause;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
 import org.eclipse.jdt.core.dom.ContinueStatement;
 import org.eclipse.jdt.core.dom.DoStatement;
@@ -28,21 +26,17 @@ import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.LabeledStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.ReturnStatement;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.TryStatement;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.JavaFile;
 import locator.common.java.Method;
 import locator.common.util.LevelLogger;
 import locator.inst.gen.GenStatement;
@@ -50,18 +44,12 @@ import locator.inst.gen.GenStatement;
 
 /**
  * This class is used for instrument for each {@code Statement}
- * 
  * @author Jiajun
- *
+ * @date May 11, 2017
  */
 public class StatementInstrumentVisitor extends TraversalVisitor {
 
 	private final static String __name__ = "@StatementInstrumentVisitor ";
-
-	private String _clazzName = "";
-	private CompilationUnit _cu;
-	private String _methodFlag = Constant.INSTRUMENT_K_SOURCE;
-	private Method _method = null;
 
 	public StatementInstrumentVisitor() {
 	}
@@ -70,138 +58,23 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 		_methodFlag = methodFlag;
 	}
 
-	public StatementInstrumentVisitor(Method method) {
-		_method = method;
-	}
-
-	public void reset() {
-		_clazzName = "";
-		_cu = null;
-		_methodFlag = Constant.INSTRUMENT_K_SOURCE;
-	}
-
-	public void setFlag(String methodFlag) {
-		_methodFlag = methodFlag;
-	}
-
-	@Override
-	public void setMethod(Method method) {
-		_method = method;
-	}
-
-	
-	@Override
-	public boolean visit(CompilationUnit node) {
-		_cu = node;
-		if (node.getPackage().getName() != null && node.getPackage().getName().getFullyQualifiedName().equals("auxiliary")) {
-			return false;
-		}
-		if (_method != null) {
-			// filter unrelative files
-			String methodInfo = Identifier.getMessage(_method.getMethodID());
-			if (!methodInfo.contains(_cu.getPackage().getName().getFullyQualifiedName())) {
-				LevelLogger.error(__name__ + "@visit Not the right java file.");
-				return false;
-			}
-		}
-		_clazzName = null;
-		String packageName = node.getPackage().getName().getFullyQualifiedName();
-		List<Object> types = node.types();
-		if(types.size() == 1){
-			if(types.get(0) instanceof TypeDeclaration){
-				TypeDeclaration typeDeclaration = (TypeDeclaration) types.get(0);
-				_clazzName = packageName + Constant.INSTRUMENT_DOT_SEPARATOR + typeDeclaration.getName().getFullyQualifiedName();
-			}
-		}else{
-			for (Object object : node.types()) {
-				if (object instanceof TypeDeclaration) {
-					TypeDeclaration type = (TypeDeclaration) object;
-					if (Modifier.isPublic(type.getModifiers())) {
-						_clazzName = packageName + Constant.INSTRUMENT_DOT_SEPARATOR + type.getName().getFullyQualifiedName();
-					}
-				}
-			}
-		}
-		if(_clazzName == null){
-			LevelLogger.error(__name__ + "#visit(CompilationUnit) no public type declaration exists.");
-			return false;
-		}
-		return true;
+	public StatementInstrumentVisitor(Set<Method> methods) {
+		_methods = methods;
 	}
 
 	@Override
 	public boolean visit(MethodDeclaration node) {
-
-		if (_method != null && !_method.match(node, _clazzName)) {
+		
+		String message = buildMethodInfoString(node);
+		if(message == null){
 			return true;
 		}
-		
-		String name = node.getName().getFullyQualifiedName();
-		if(Modifier.isStatic(node.getModifiers())){
-			return true;
-		}
-		
-		if (_methodFlag.equals(Constant.INSTRUMENT_K_TEST) && (name.equals("setUp") || name.equals("countTestCases")
-				|| name.equals("createResult") || name.equals("run") || name.equals("runBare") || name.equals("runTest")
-				|| name.equals("tearDown") || name.equals("toString") || name.equals("getName")
-				|| name.equals("setName"))){
-			return true;
-		}
-		
-		// filter those functional methods in test class path, test method name
-		// starting with "test" in Junit 3 while with annotation as "@Test" in
-		// Junit 4, 
-		//TODO should be optimized since the "contain" method is time consuming
-		if (_methodFlag.equals(Constant.INSTRUMENT_K_TEST)
-				&& !name.startsWith("test") && !node.toString().contains("@Test")) {
-			return true;
-		}
-		
-		// filter those methods that defined in anonymous classes
-		ASTNode parent = node.getParent();
-		while (parent != null && !(parent instanceof TypeDeclaration)) {
-			if (parent instanceof ClassInstanceCreation) {
-				return true;
-			}
-			parent = parent.getParent();
-		}
-
-		String currentClassName = _clazzName;
-		if(parent != null && parent instanceof TypeDeclaration){
-			TypeDeclaration typeDeclaration = (TypeDeclaration) parent;
-			String parentName = typeDeclaration.getName().getFullyQualifiedName();
-			if(!_clazzName.endsWith(parentName)){
-				currentClassName = _clazzName + "$" + parentName;
-			}
-		}
-
-//		StringBuffer buffer = new StringBuffer(Constant.INSTRUMENT_KEY_TYPE + _clazzName);
-		StringBuffer buffer = new StringBuffer(currentClassName + "#");
-
-		String retType = "?";
-		if (node.getReturnType2() != null) {
-			retType = node.getReturnType2().toString();
-		}
-		StringBuffer param = new StringBuffer("?");
-		for (Object object : node.parameters()) {
-			if (!(object instanceof SingleVariableDeclaration)) {
-				LevelLogger.error(__name__ + "#visit Parameter is not a SingleVariableDeclaration : " + object.toString());
-				param.append(",?");
-			} else {
-				SingleVariableDeclaration singleVariableDeclaration = (SingleVariableDeclaration) object;
-				param.append("," + singleVariableDeclaration.getType().toString());
-			}
-		}
-		// add method return type
-		buffer.append(retType + "#");
-		// add method name
-		buffer.append(node.getName().getFullyQualifiedName() + "#");
-		// add method params, NOTE: the first parameter starts at index 1.
-		buffer.append(param);
-
-		String message = buffer.toString();
-
 		int keyValue =Identifier.getIdentifier(message);
+
+		if(shouldSkip(node, keyValue)){
+			return true;
+		}
+		
 		//optimize instrument
 		message = Constant.INSTRUMENT_FLAG + _methodFlag + "#" + String.valueOf(keyValue);
 		

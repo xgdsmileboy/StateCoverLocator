@@ -7,6 +7,9 @@
 
 package locator.inst.visitor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.junit.Test;
@@ -27,7 +30,16 @@ public class DeInstrumentVisitorTest {
 		String methodString = "org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegratorTest#void#testSinFunction#?";
 		CompilationUnit unit = JavaFile.genASTFromSource(JavaFile.readFileToString(path), ASTParser.K_COMPILATION_UNIT);
 		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
-		deInstrumentVisitor.setMethod(new Method(Identifier.getIdentifier(methodString)));
+		Set<Method> methods = new HashSet<>();
+		methods.add(new Method(Identifier.getIdentifier(methodString)));
+		
+		deInstrumentVisitor.setMethod(methods);
+		unit.accept(deInstrumentVisitor);
+		System.out.println(unit.toString());
+		
+		String anotherMethod = "org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegratorTest#void#testQuinticFunction#?"; 
+		methods.add(new Method(Identifier.getIdentifier(anotherMethod)));
+		deInstrumentVisitor.setMethod(methods);
 		unit.accept(deInstrumentVisitor);
 		System.out.println(unit.toString());
 	}

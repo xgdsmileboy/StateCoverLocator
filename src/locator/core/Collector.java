@@ -15,8 +15,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import locator.common.config.Constant;
 import locator.common.config.Identifier;
+import locator.common.java.Pair;
 import locator.common.java.Subject;
+import locator.common.util.CmdFactory;
+import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
 
 /**
@@ -27,7 +31,25 @@ public class Collector {
 
 	private final static String __name__ = "@Collector ";
 	
-	public static Set<Integer> collectAllPassedTestCases(Subject subject, Set<Integer> failedTests){
+	public static Pair<Set<Integer>, Set<Integer>> collectAllTestCases(Subject subject){
+		Pair<Set<Integer>, Set<Integer>> allTests = new Pair<>();
+		//run all test
+		try {
+			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
+		} catch (Exception e) {
+			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
+			return null;
+		} 
+		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
+		Set<Integer> passedTest = collectAllPassedTestCases(subject, failedTest);
+		
+		allTests.setFirst(failedTest);
+		allTests.setSecond(passedTest);
+		
+		return allTests;
+	}
+	
+	private static Set<Integer> collectAllPassedTestCases(Subject subject, Set<Integer> failedTests){
 		Set<Integer> allPassedTestCases = new HashSet<>();
 		
 		File file = new File(subject.getHome() + "/all-tests.txt");
@@ -67,5 +89,64 @@ public class Collector {
 		return allPassedTestCases;
 	}
 	
+	
+	private static Set<Integer> findFailedTestFromFile(String outputFilePath) {
+		if (outputFilePath == null) {
+			LevelLogger.error(__name__ + "#findFailedTestFromFile OutputFilePath is null.");
+			return null;
+		}
+		File file = new File(outputFilePath);
+		BufferedReader bReader = null;
+		try {
+			bReader = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			LevelLogger.error(__name__ + "@findFailedTestFromFile BufferedReader init failed.");
+			return null;
+		}
+
+		String line = null;
+		Set<Integer> failedTest = new HashSet<>();
+		try {
+			while ((line = bReader.readLine()) != null) {
+				String trimed = line.trim();
+				if (trimed.startsWith(Constant.ANT_BUILD_FAILED)) {
+					LevelLogger.error(__name__ + "#findFailedTestFromFile Ant build failed.");
+					break;
+				}
+				if (trimed.startsWith("Failing tests:")) {
+					String count = trimed.substring("Failing tests:".length());
+					int failingCount = Integer.parseInt(count.trim());
+					while (failingCount > 0) {
+						line = bReader.readLine();
+						int index = line.indexOf("-");
+						if (index > 0) {
+							String testStr = line.substring(index + 2).trim();
+							String[] testInfo = testStr.split("::");
+							if(testInfo.length != 2){
+								LevelLogger.error(__name__ + "#findFailedTestFromFile Failed test cases format error !");
+								System.exit(0);
+							}
+							//convert "org.jfree.chart.Clazz::test" to "org.jfree.chart.Clazz#void#test#?"
+							String identifierString = testInfo[0] + "#void#" + testInfo[1] + "#?";
+							int methodID = Identifier.getIdentifier(identifierString);
+							failedTest.add(methodID);
+						}
+						failingCount--;
+					}
+				}
+			}
+			bReader.close();
+		} catch (IOException e) {
+			LevelLogger.fatal(__name__ + "#findFailedTestFromFile Read line from file failed.", e);
+		} finally {
+			if (bReader != null) {
+				try {
+					bReader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		return failedTest;
+	}
 	
 }

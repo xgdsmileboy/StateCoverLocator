@@ -9,6 +9,7 @@ package locator.inst.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -37,59 +38,33 @@ import locator.common.util.LevelLogger;
 public class DeInstrumentVisitor extends TraversalVisitor {
 
 	private final String __name__ = "@DeInstrumentVisitor "; 
-	private Method _method = null;
 	
 	public DeInstrumentVisitor(){
 		
 	}
 	
-	public DeInstrumentVisitor(Method method){
-		_method = method;
+	public DeInstrumentVisitor(Set<Method> methods){
+		_methods = methods;
 	}
 	
-	public boolean visit(CompilationUnit unit){
-		if (_method != null) {
-			// filter unrelative files
-			String methodInfo = Identifier.getMessage(_method.getMethodID());
-			if (!methodInfo.contains(unit.getPackage().getName().getFullyQualifiedName())) {
-				LevelLogger.debug(__name__ + "@visit Not the right java file.");
-				return false;
-			}
-		}
-		return true;
-	}
 	
 	public boolean visit(MethodDeclaration node){
-		if (_method != null && !_method.match(node)) {
-			return true;
+		if (_methods != null) {
+			boolean flag = false;
+			for(Method method : _methods){
+				if(method.match(node, _clazzName)){
+					flag = true;
+				}
+			}
+			if(!flag){
+				return true;
+			}
 		}
 		RemoveStatementVisitor removeStatementVisitor = new RemoveStatementVisitor();
 		node.accept(removeStatementVisitor);
 		return true;
 	}
-
-
-
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setFlag(String methodFlag) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setMethod(Method method) {
-		_method = method;
-	}
 	
-	public static void main(String[] args) {
-		
-	}
 }
 
 class RemoveStatementVisitor extends ASTVisitor{

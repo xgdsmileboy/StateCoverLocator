@@ -7,7 +7,6 @@
 
 package locator.core;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -15,6 +14,7 @@ import org.junit.Test;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
+import locator.common.java.Pair;
 import locator.common.java.Subject;
 
 /**
@@ -27,14 +27,17 @@ public class CollectorTest {
 	public void test_collectAllPassedTestCases(){
 		Constant.PROJECT_HOME = "res/junitRes";
 		String failedTestString = "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests#void#test2947660#?";
-		Set<Integer> failedTests = new HashSet<>();
 		int failedID = Identifier.getIdentifier(failedTestString);
-		failedTests.add(failedID);
 		Subject subject = new Subject("chart", 1, "/source", "tests", "build", "build-tests");
-		Set<Integer> allPassedTestMethod = Collector.collectAllPassedTestCases(subject, failedTests);
 		
-		Assert.assertTrue("Passed tests should not be zero.", allPassedTestMethod.size() > 0);
-		Assert.assertFalse("Failed test should be excluded.", allPassedTestMethod.contains(failedID));
+		Pair<Set<Integer>, Set<Integer>> allTests = Collector.collectAllTestCases(subject);
+		
+		Assert.assertNotNull(allTests);
+		Assert.assertTrue("There should be one failed test.", allTests.getFirst().size() == 1);
+		Assert.assertTrue("Failed test should be contained.", allTests.getFirst().contains(failedID));
+		
+		Assert.assertTrue("Passed tests should not be zero.", allTests.getSecond().size() > 0);
+		Assert.assertFalse("Failed test should be excluded.", allTests.getSecond().contains(failedID));
 	}
 	
 }

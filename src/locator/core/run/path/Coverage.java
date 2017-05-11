@@ -28,7 +28,6 @@ public class Coverage {
 			LevelLogger.fatal(__name__ + "#computeCoverage run test suite failed !", e);
 		}
 		
-		
 	}
 	
 }

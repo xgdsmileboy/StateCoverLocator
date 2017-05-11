@@ -7,13 +7,39 @@
 
 package locator;
 
+import java.util.List;
+import java.util.Set;
+
+import locator.common.config.Configure;
 import locator.common.config.Constant;
+import locator.common.java.Pair;
+import locator.common.java.Subject;
+import locator.common.util.LevelLogger;
+import locator.core.Collector;
+import locator.inst.Instrument;
+import locator.inst.visitor.DeInstrumentVisitor;
 
 public class Main {
 	
+	private final static String __name__ = "@Main ";
+	
 	private static void proceed(){
 		
-		//step 1: collect all failed tests
+		List<Subject> allSubject = Configure.getSubjectFromXML();
+		if(allSubject.size() < 1){
+			LevelLogger.error(__name__ + "#proceed no subjects !");
+			return;
+		}
+		Subject subject = allSubject.get(0);
+		//preprocess : remove all instrument
+		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
+		Instrument.execute(subject.getHome()+subject.getSsrc(), deInstrumentVisitor);
+		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
+		//copy auxiliary file to subject path
+		Configure.config_dumper(subject);
+		
+		//step 1: collect all tests
+		Pair<Set<Integer>, Set<Integer>> allTests = Collector.collectAllTestCases(subject);
 		
 		//step 2: for each failed test collect running path
 		
