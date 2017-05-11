@@ -37,6 +37,17 @@ public class StatementInstrumentVisitorTest {
 	}
 	
 	@Test
+	public void test_InstrumentForTestClass2(){
+		String filePath = "res/junitRes/AbstractAnnotation.java";
+		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
+				ASTParser.K_COMPILATION_UNIT);
+		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
+		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_SOURCE);
+		compilationUnit.accept(statementInstrumentVisitor);
+		System.out.println(compilationUnit.toString());
+	}
+	
+	@Test
 	public void test_InstrumentForSourceClass(){
 		String filePath = "res/junitRes/BigFraction.java";
 		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),

@@ -7,6 +7,21 @@
 
 package locator.core.run.path;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.dom4j.Branch;
+
+import locator.common.java.Method;
+import locator.common.util.LevelLogger;
+
 /**
  * This class is responsible for constructing the execution path from the output
  * information and compute the intersection point for different test
@@ -17,10 +32,105 @@ package locator.core.run.path;
 public class ExecutionPathBuilder {
 
 	private final static String __name__ = "@ExecutionPathBuilder ";
-	private final static long MILLIS_PER_MINUTE = 1000 * 60;
 
 	
-
+	public static Map<Method, Integer> collectAllExecutedMethods(String outputFile){
+		Map<Method, Integer> allMethods = new HashMap<>();
+		File file = new File(outputFile);
+		if(!file.exists()){
+			LevelLogger.warn(__name__ + "#collectAllExecutedMethods file : " + outputFile + " does not exist.");
+			return allMethods;
+		}
+		
+		BufferedReader bReader = null;
+		
+		try {
+			bReader = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			LevelLogger.fatal(__name__ + "#collectAllExecutedMethods open file failed !", e);
+			return allMethods;
+		}
+		
+		String line = null;
+		try {
+			while((line = bReader.readLine()) != null){
+				String[] methodInfo = line.split("#");
+				if(methodInfo.length < 3){
+					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
+					System.exit(0);
+				}
+				int mID = Integer.parseInt(methodInfo[1]);
+				Method method = new Method(mID);
+				Integer count = allMethods.get(method);
+				if(count == null){
+					count = 0;
+				}
+				allMethods.put(method, count + 1);
+			}
+			bReader.close();
+		} catch (IOException e) {
+			LevelLogger.fatal(__name__ + "#collectAllExecutedMethods read file failed !", e);
+			return null;
+		} finally {
+			if(bReader != null){
+				try {
+					bReader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		
+		return allMethods;
+	}
+	
+	public static Map<String, Integer> collectAllExecutedStatements(String outputFile){
+		Map<String, Integer> allMethods = new HashMap<>();
+		File file = new File(outputFile);
+		if(!file.exists()){
+			LevelLogger.warn(__name__ + "#collectAllExecutedMethods file : " + outputFile + " does not exist.");
+			return allMethods;
+		}
+		
+		BufferedReader bReader = null;
+		
+		try {
+			bReader = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			LevelLogger.fatal(__name__ + "#collectAllExecutedMethods open file failed !", e);
+			return allMethods;
+		}
+		
+		String line = null;
+		try {
+			while((line = bReader.readLine()) != null){
+				String[] methodInfo = line.split("#");
+				if(methodInfo.length < 3){
+					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
+					System.exit(0);
+				}
+				String statement = methodInfo[1] + "#" + methodInfo[2];
+				Integer count = allMethods.get(statement);
+				if(count == null){
+					count = 0;
+				}
+				allMethods.put(statement, count + 1);
+			}
+			bReader.close();
+		} catch (IOException e) {
+			LevelLogger.fatal(__name__ + "#collectAllExecutedMethods read file failed !", e);
+			return null;
+		} finally {
+			if(bReader != null){
+				try {
+					bReader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		
+		return allMethods;
+	}
+	
 //	public static List<TestMethod> buildPathFromFile(DynamicRuntimeInfo dynamicRuntimeInfo, String outputFilePath) {
 //		List<TestMethod> testMethodList = new ArrayList<>();
 //		if (outputFilePath == null) {

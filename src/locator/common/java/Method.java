@@ -107,6 +107,12 @@ public class Method {
 	}
 	
 	@Override
+	public int hashCode() {
+		String methodString = Identifier.getMessage(_methodID);
+		return methodString.hashCode();
+	}
+	
+	@Override
 	public String toString() {
 		String methodString = Identifier.getMessage(_methodID);
 		return methodString;

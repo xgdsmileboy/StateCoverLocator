@@ -7,10 +7,69 @@
 
 package locator.core.run.path;
 
+import java.io.File;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import locator.common.config.Configure;
+import locator.common.config.Constant;
+import locator.common.config.Identifier;
+import locator.common.java.CoverInfo;
+import locator.common.java.JavaFile;
+import locator.common.java.Method;
+import locator.common.java.Pair;
+import locator.common.java.Subject;
+import locator.core.Collector;
+import locator.inst.Instrument;
+import locator.inst.visitor.DeInstrumentVisitor;
+
 /**
  * @author Jiajun
  * @date May 10, 2017
  */
 public class CoverageTest {
+	
+	@Test
+	public void test_computeCoverage(){
+		Constant.PROJECT_HOME = "res/junitRes";
+		Subject subject = new Subject("chart", 2, "/source", "/tests", "/build", "/build-tests");
+		//preprocess : remove all instrument
+		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
+		Instrument.execute(subject.getHome()+subject.getSsrc(), deInstrumentVisitor);
+		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
+		//copy auxiliary file to subject path
+		Configure.config_dumper(subject);
+		
+		Pair<Set<Integer>, Set<Integer>> allTests = Collector.collectAllTestCases(subject);
+		
+		Assert.assertTrue(allTests.getFirst().size() == 2);
+		Assert.assertTrue(allTests.getSecond().size() == 52);
+		
+		Map<String, CoverInfo> coverage = Coverage.computeCoverage(subject, allTests);
+		
+		File file = new File(System.getProperty("user.dir") + "/tests/locator/core/run/path/coverage.csv");
+		if(file.exists()){
+			file.delete();
+		}
+		for(Entry<String, CoverInfo> entry : coverage.entrySet()){
+			StringBuffer stringBuffer = new StringBuffer();
+			String key = entry.getKey();
+			String[] info = key.split("#");
+			String methodString = Identifier.getMessage(Integer.parseInt(info[0]));
+			stringBuffer.append(methodString);
+			stringBuffer.append("#");
+			stringBuffer.append(info[1]);
+			stringBuffer.append("\t");
+			stringBuffer.append(entry.getValue().getFailedCount());
+			stringBuffer.append("\t");
+			stringBuffer.append(entry.getValue().getPassedCount());
+			stringBuffer.append("\n");
+			JavaFile.writeStringToFile(file, stringBuffer.toString(), true);
+		}
+	}
 	
 }

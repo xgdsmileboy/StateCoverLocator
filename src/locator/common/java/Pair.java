@@ -16,8 +16,8 @@ package locator.common.java;
  */
 public class Pair<A, B> {
 
-	private A _first;
-	private B _second;
+	protected A _first;
+	protected B _second;
 
 	public Pair() {
 	}

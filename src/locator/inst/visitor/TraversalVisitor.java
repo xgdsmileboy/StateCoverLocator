@@ -68,16 +68,16 @@ public abstract class TraversalVisitor extends ASTVisitor {
 		}
 		// filter unrelative files
 		if (_methods != null) {
-			boolean skip = true;
+			boolean continueVisit = false;
 			for(Method method : _methods){
 				String methodInfo = Identifier.getMessage(method.getMethodID());
 				if (methodInfo.contains(_cu.getPackage().getName().getFullyQualifiedName())) {
-					skip = false;
+					continueVisit = true;
 					break;
 				}
 			}
-			if(skip){
-				return true;
+			if(!continueVisit){
+				return false;
 			}
 		}
 		_clazzName = null;
