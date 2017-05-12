@@ -37,6 +37,9 @@ public class Constant {
 
 	// least length for failed test trace
 	public final static int TRACE_LENGTH_FOR_FAILED_TEST = 20;
+	
+	// instrument top K predicates for each variable
+	public final static int TOP_K_PREDICTED_PREDICATE = 2;
 
 	// build flags
 	public final static String ANT_BUILD_FAILED = "BUILD FAILED";

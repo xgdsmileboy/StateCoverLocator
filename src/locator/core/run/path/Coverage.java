@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-
-import com.google.common.base.Utf8;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;

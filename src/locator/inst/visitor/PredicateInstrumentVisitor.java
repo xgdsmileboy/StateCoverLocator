@@ -9,7 +9,6 @@ package locator.inst.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -37,8 +36,6 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Method;
-import locator.common.util.LevelLogger;
 import locator.inst.gen.GenStatement;
 
 /**
@@ -49,41 +46,29 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 
 	
 	private final static String __name__ = "@PredicateInstrumentVisitor ";
-	
-	
-	@Override
-	public void reset() {
-		_methodFlag = Constant.INSTRUMENT_K_SOURCE;
-		_methods = null;
-		_clazzName = null;
-		_cu = null;
-	}
 
-	@Override
-	public void setFlag(String methodFlag) {
-		_methodFlag = methodFlag;
+	private int _mutantLineNumber = -1;
+	
+	private String _condition = null;
+	
+	/**
+	 * 
+	 */
+	public PredicateInstrumentVisitor(String condition, int line) {
+		_condition = condition;
+		_mutantLineNumber = line;
 	}
 	
 	@Override
-	public void setMethod(Set<Method> methods) {
-		_methods = methods;
-	}
-
-	
-	public boolean visit(MethodDeclaration node){
+	public boolean visit(MethodDeclaration node) {
 		
 		String message = buildMethodInfoString(node);
 		if(message == null){
 			return true;
 		}
-		int keyValue =Identifier.getIdentifier(message);
-
-		if(shouldSkip(node, keyValue)){
-			return true;
-		}
-
+		String keyValue = String.valueOf(Identifier.getIdentifier(message));
 		//optimize instrument
-		message = Constant.INSTRUMENT_FLAG + _methodFlag + "#" + String.valueOf(keyValue);
+		message = Constant.INSTRUMENT_FLAG + _methodFlag + "#" + keyValue;
 		
 		Block methodBody = node.getBody();
 
@@ -91,168 +76,239 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			return true;
 		}
 
-		List<Statement> blockStatement = new ArrayList<>();
+		List<ASTNode> blockStatement = new ArrayList<>();
 
-		for (Object object : methodBody.statements()) {
-			if (object instanceof Statement) {
-				Statement statement = (Statement) object;
-//				blockStatement.addAll(process(statement, message));
-			} else {
-				LevelLogger.error(__name__ + "#visit UNKNOWN statement type : " + object.toString());
-			}
+		int startLine = _cu.getLineNumber(node.getStartPosition());
+		int endLine = _cu.getLineNumber(node.getStartPosition() + node.getLength());
+		
+		if(_mutantLineNumber < startLine || endLine < _mutantLineNumber){
+			return true;
 		}
+		
+		AST ast = AST.newAST(AST.JLS8);
+		
+		int lastStatementEndLine = startLine;
+		
+		for (int i = 0; i < methodBody.statements().size(); i++) {
+			ASTNode astNode = (ASTNode) methodBody.statements().get(i);
+			blockStatement.addAll(process(astNode, keyValue));
+		}
+			
 		methodBody.statements().clear();
-		for (Statement statement : blockStatement) {
+		for (ASTNode statement : blockStatement) {
 			methodBody.statements().add(ASTNode.copySubtree(methodBody.getAST(), statement));
 		}
 
 		return true;
 	}
-	private List<Statement> process(Statement statement, String message) {
+	
+	private List<ASTNode> process(ASTNode statement, String message) {
 
-		List<Statement> result = new ArrayList<>();
+		List<ASTNode> result = new ArrayList<>();
+		
+		int startLine = _cu.getLineNumber(statement.getStartPosition());
+		int endLine = _cu.getLineNumber(statement.getStartPosition() + statement.getLength());
+		if(startLine > _mutantLineNumber || endLine < _mutantLineNumber){
+			result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
+			return result;
+		}
 
 		if (statement instanceof IfStatement) {
+			
 			IfStatement ifStatement = (IfStatement) statement;
-
-			int lineNumber = _cu.getLineNumber(ifStatement.getExpression().getStartPosition());
-			Statement insert = GenStatement.genASTNode(message, lineNumber);
-			result.add(insert);
-
-			Statement thenBody = ifStatement.getThenStatement();
-			if (thenBody != null) {
-				Block thenBlock = null;
-				if (thenBody instanceof Block) {
-					thenBlock = (Block) thenBody;
-				} else {
-					AST ast = AST.newAST(AST.JLS8);
-					thenBlock = ast.newBlock();
-					thenBlock.statements().add(ASTNode.copySubtree(thenBlock.getAST(), thenBody));
-				}
-
-				Block newThenBlock = processBlock(thenBlock, null, message);
-				ifStatement.setThenStatement((Statement) ASTNode.copySubtree(ifStatement.getAST(), newThenBlock));
+			startLine = _cu.getLineNumber(ifStatement.getExpression().getStartPosition());
+			if(startLine == _mutantLineNumber){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+				result.add(inserted);
+				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
+				return result;
 			}
 
+			Statement thenBody = ifStatement.getThenStatement();
+			
+			if(thenBody != null){
+				startLine = _cu.getLineNumber(thenBody.getStartPosition());
+				endLine = _cu.getLineNumber(thenBody.getStartPosition() + thenBody.getLength());
+				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+					Block thenBlock = null;
+					if (thenBody instanceof Block) {
+						thenBlock = (Block) thenBody;
+					} else {
+						AST ast = AST.newAST(AST.JLS8);
+						thenBlock = ast.newBlock();
+						thenBlock.statements().add(ASTNode.copySubtree(thenBlock.getAST(), thenBody));
+					}
+
+					Block newThenBlock = processBlock(thenBlock, message);
+					ifStatement.setThenStatement((Statement) ASTNode.copySubtree(ifStatement.getAST(), newThenBlock));
+				} 
+			}
+			
 			Statement elseBody = ifStatement.getElseStatement();
 			if (elseBody != null) {
-				Block elseBlock = null;
-				if (elseBody instanceof Block) {
-					elseBlock = (Block) elseBody;
-				} else {
-					AST ast = AST.newAST(AST.JLS8);
-					elseBlock = ast.newBlock();
-					elseBlock.statements().add(ASTNode.copySubtree(elseBlock.getAST(), elseBody));
+				startLine = _cu.getLineNumber(elseBody.getStartPosition());
+				endLine = _cu.getLineNumber(elseBody.getStartPosition() + elseBody.getLength());
+				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+					Block elseBlock = null;
+					if (elseBody instanceof Block) {
+						elseBlock = (Block) elseBody;
+					} else {
+						AST ast = AST.newAST(AST.JLS8);
+						elseBlock = ast.newBlock();
+						elseBlock.statements().add(ASTNode.copySubtree(elseBlock.getAST(), elseBody));
+					}
+					Block newElseBlock = processBlock(elseBlock, message);
+					ifStatement.setElseStatement((Statement) ASTNode.copySubtree(ifStatement.getAST(), newElseBlock));
 				}
-				Block newElseBlock = processBlock(elseBlock, null, message);
-				ifStatement.setElseStatement((Statement) ASTNode.copySubtree(ifStatement.getAST(), newElseBlock));
 			}
 			result.add(ifStatement);
 		} else if (statement instanceof WhileStatement) {
 
 			WhileStatement whileStatement = (WhileStatement) statement;
-			Statement whilebody = whileStatement.getBody();
-			if (whilebody != null) {
-				Block whileBlock = null;
-				if (whilebody instanceof Block) {
-					whileBlock = (Block) whilebody;
-				} else {
-					AST ast = AST.newAST(AST.JLS8);
-					whileBlock = ast.newBlock();
-					whileBlock.statements().add(ASTNode.copySubtree(whileBlock.getAST(), whilebody));
-				}
-
-				int lineNumber = _cu.getLineNumber(whileStatement.getExpression().getStartPosition());
-				Statement insert = GenStatement.genASTNode(message, lineNumber);
-				Block newWhileBlock = processBlock(whileBlock, insert, message);
-				whileStatement.setBody((Statement) ASTNode.copySubtree(whileStatement.getAST(), newWhileBlock));
+			
+			int lineNumber = _cu.getLineNumber(whileStatement.getExpression().getStartPosition());
+			if(lineNumber == _mutantLineNumber){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+				result.add(inserted);
+				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
+				return result;
 			}
-
+			
+			Statement whilebody = whileStatement.getBody();
+			
+			if (whilebody != null) {
+				startLine = _cu.getLineNumber(whilebody.getStartPosition());
+				endLine = _cu.getLineNumber(whilebody.getStartPosition() + whilebody.getLength());
+				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+					Block whileBlock = null;
+					if (whilebody instanceof Block) {
+						whileBlock = (Block) whilebody;
+					} else {
+						AST ast = AST.newAST(AST.JLS8);
+						whileBlock = ast.newBlock();
+						whileBlock.statements().add(ASTNode.copySubtree(whileBlock.getAST(), whilebody));
+					}
+	
+					Block newWhileBlock = processBlock(whileBlock, message);
+					whileStatement.setBody((Statement) ASTNode.copySubtree(whileStatement.getAST(), newWhileBlock));
+				}
+			}
 			result.add(whileStatement);
 		} else if (statement instanceof ForStatement) {
 
 			ForStatement forStatement = (ForStatement) statement;
+			
+			int lineNumber = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
+			if(lineNumber == _mutantLineNumber){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+				result.add(inserted);
+				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
+				return result;
+			}
+			
 			Statement forBody = forStatement.getBody();
+			
 			if (forBody != null) {
-				Block forBlock = null;
-				if (forBody instanceof Block) {
-					forBlock = (Block) forBody;
-				} else {
-					AST ast = AST.newAST(AST.JLS8);
-					forBlock = ast.newBlock();
-					forBlock.statements().add(ASTNode.copySubtree(forBlock.getAST(), forBody));
+				startLine = _cu.getLineNumber(forBody.getStartPosition());
+				endLine = _cu.getLineNumber(forBody.getStartPosition() + forBody.getLength());
+				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+					Block forBlock = null;
+					if (forBody instanceof Block) {
+						forBlock = (Block) forBody;
+					} else {
+						AST ast = AST.newAST(AST.JLS8);
+						forBlock = ast.newBlock();
+						forBlock.statements().add(ASTNode.copySubtree(forBlock.getAST(), forBody));
+					}
+	
+					Block newForBlock = processBlock(forBlock, message);
+					forStatement.setBody((Statement) ASTNode.copySubtree(forStatement.getAST(), newForBlock));
 				}
-
-				int position = forStatement.getStartPosition();
-				if (forStatement.getExpression() != null) {
-					position = forStatement.getExpression().getStartPosition();
-				} else if (forStatement.initializers() != null && forStatement.initializers().size() > 0) {
-					position = ((ASTNode) forStatement.initializers().get(0)).getStartPosition();
-				} else if (forStatement.updaters() != null && forStatement.updaters().size() > 0) {
-					position = ((ASTNode) forStatement.updaters().get(0)).getStartPosition();
-				}
-				int lineNumber = _cu.getLineNumber(position);
-				Statement insert = GenStatement.genASTNode(message, lineNumber);
-				Block newForBlock = processBlock(forBlock, insert, message);
-				forStatement.setBody((Statement) ASTNode.copySubtree(forStatement.getAST(), newForBlock));
 			}
 
 			result.add(forStatement);
 		} else if (statement instanceof DoStatement) {
 
 			DoStatement doStatement = (DoStatement) statement;
+			
+			int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
+			if(lineNumber == _mutantLineNumber){
+				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+				result.add(inserted);
+				return result;
+			}
+			
 			Statement doBody = doStatement.getBody();
 			if (doBody != null) {
-				Block doBlock = null;
-				if (doBody instanceof Block) {
-					doBlock = (Block) doBody;
-				} else {
-					AST ast = AST.newAST(AST.JLS8);
-					doBlock = ast.newBlock();
-					doBlock.statements().add(ASTNode.copySubtree(doBlock.getAST(), doBody));
+				startLine = _cu.getLineNumber(doBody.getStartPosition());
+				endLine = _cu.getLineNumber(doBody.getStartPosition() + doBody.getLength());
+				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+					Block doBlock = null;
+					if (doBody instanceof Block) {
+						doBlock = (Block) doBody;
+					} else {
+						AST ast = AST.newAST(AST.JLS8);
+						doBlock = ast.newBlock();
+						doBlock.statements().add(ASTNode.copySubtree(doBlock.getAST(), doBody));
+					}
+	
+					Block newDoBlock = processBlock(doBlock, message);
+					doStatement.setBody((Statement) ASTNode.copySubtree(doStatement.getAST(), newDoBlock));
 				}
-
-				Block newDoBlock = processBlock(doBlock, null, message);
-				ASTNode lastStatement = (ASTNode) newDoBlock.statements().get(newDoBlock.statements().size() - 1);
-				if (!(lastStatement instanceof BreakStatement || lastStatement instanceof ReturnStatement)) {
-					int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
-					Statement insert = GenStatement.genASTNode(message, lineNumber);
-					newDoBlock.statements().add(ASTNode.copySubtree(newDoBlock.getAST(), insert));
-				}
-
-				doStatement.setBody((Statement) ASTNode.copySubtree(doStatement.getAST(), newDoBlock));
 			}
 
 			result.add(doStatement);
 		} else if (statement instanceof Block) {
 			Block block = (Block) statement;
-			Block newBlock = processBlock(block, null, message);
+			Block newBlock = processBlock(block, message);
 			result.add(newBlock);
 		} else if (statement instanceof EnhancedForStatement) {
 
 			EnhancedForStatement enhancedForStatement = (EnhancedForStatement) statement;
+			
+			int lineNumber = _cu.getLineNumber(enhancedForStatement.getExpression().getStartPosition());
+			if(lineNumber == _mutantLineNumber){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+				result.add(inserted);
+				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
+				return result;
+			}
+			
 			Statement enhancedBody = enhancedForStatement.getBody();
 			if (enhancedBody != null) {
-				Block enhancedBlock = null;
-				if (enhancedBody instanceof Block) {
-					enhancedBlock = (Block) enhancedBody;
-				} else {
-					AST ast = AST.newAST(AST.JLS8);
-					enhancedBlock = ast.newBlock();
-					enhancedBlock.statements().add(ASTNode.copySubtree(enhancedBlock.getAST(), enhancedBody));
+				
+				startLine = _cu.getLineNumber(enhancedBody.getStartPosition());
+				endLine = _cu.getLineNumber(enhancedBody.getStartPosition() + enhancedBody.getLength());
+				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				
+					Block enhancedBlock = null;
+					if (enhancedBody instanceof Block) {
+						enhancedBlock = (Block) enhancedBody;
+					} else {
+						AST ast = AST.newAST(AST.JLS8);
+						enhancedBlock = ast.newBlock();
+						enhancedBlock.statements().add(ASTNode.copySubtree(enhancedBlock.getAST(), enhancedBody));
+					}
+					Block newEnhancedBlock = processBlock(enhancedBlock, message);
+					enhancedForStatement
+							.setBody((Statement) ASTNode.copySubtree(enhancedForStatement.getAST(), newEnhancedBlock));
 				}
-
-				int lineNumber = _cu.getLineNumber(enhancedForStatement.getExpression().getStartPosition());
-				Statement insert = GenStatement.genASTNode(message, lineNumber);
-				Block newEnhancedBlock = processBlock(enhancedBlock, insert, message);
-				enhancedForStatement
-						.setBody((Statement) ASTNode.copySubtree(enhancedForStatement.getAST(), newEnhancedBlock));
 			}
 
 			result.add(enhancedForStatement);
 		} else if (statement instanceof SwitchStatement) {
 
 			SwitchStatement switchStatement = (SwitchStatement) statement;
+			
+			int lineNumber = _cu.getLineNumber(switchStatement.getExpression().getStartPosition());
+			if(lineNumber == _mutantLineNumber){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+				result.add(inserted);
+				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
+				return result;
+			}
+			
 			List<ASTNode> statements = new ArrayList<>();
 			AST ast = AST.newAST(AST.JLS8);
 			for (Object object : switchStatement.statements()) {
@@ -263,29 +319,25 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			switchStatement.statements().clear();
 
 			for (ASTNode astNode : statements) {
-				if (astNode instanceof Statement) {
-					Statement s = (Statement) astNode;
-					for (Statement statement2 : process(s, message)) {
-						switchStatement.statements().add(ASTNode.copySubtree(switchStatement.getAST(), statement2));
-					}
-				} else {
-					switchStatement.statements().add(ASTNode.copySubtree(switchStatement.getAST(), astNode));
+				for(ASTNode node : process(astNode, message)){
+					switchStatement.statements().add(ASTNode.copySubtree(switchStatement.getAST(), node));
 				}
 			}
 
-			int lineNumber = _cu.getLineNumber(switchStatement.getExpression().getStartPosition());
-			Statement insert = GenStatement.genASTNode(message, lineNumber);
-
-			result.add(insert);
 			result.add(switchStatement);
 		} else if (statement instanceof TryStatement) {
 
 			TryStatement tryStatement = (TryStatement) statement;
 
 			Block tryBlock = tryStatement.getBody();
+			
 			if (tryBlock != null) {
-				Block newTryBlock = processBlock(tryBlock, null, message);
-				tryStatement.setBody((Block) ASTNode.copySubtree(tryStatement.getAST(), newTryBlock));
+				startLine = _cu.getLineNumber(tryBlock.getStartPosition());
+				endLine = _cu.getLineNumber(tryBlock.getStartPosition() + tryBlock.getLength());
+				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+					Block newTryBlock = processBlock(tryBlock, message);
+					tryStatement.setBody((Block) ASTNode.copySubtree(tryStatement.getAST(), newTryBlock));
+				}
 			}
 
 			List catchList = tryStatement.catchClauses();
@@ -294,7 +346,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 					if (object instanceof CatchClause) {
 						CatchClause catchClause = (CatchClause) object;
 						Block catchBlock = catchClause.getBody();
-						Block newCatchBlock = processBlock(catchBlock, null, message);
+						Block newCatchBlock = processBlock(catchBlock, message);
 						catchClause.setBody((Block) ASTNode.copySubtree(catchClause.getAST(), newCatchBlock));
 					}
 				}
@@ -302,15 +354,18 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 
 			Block finallyBlock = tryStatement.getFinally();
 			if (finallyBlock != null) {
-				Block newFinallyBlock = processBlock(finallyBlock, null, message);
-				tryStatement.setFinally((Block) ASTNode.copySubtree(tryStatement.getAST(), newFinallyBlock));
+				startLine = _cu.getLineNumber(finallyBlock.getStartPosition());
+				endLine = _cu.getLineNumber(finallyBlock.getStartPosition() + finallyBlock.getLength());
+				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+					Block newFinallyBlock = processBlock(finallyBlock, message);
+					tryStatement.setFinally((Block) ASTNode.copySubtree(tryStatement.getAST(), newFinallyBlock));
+				}
 			}
 
 			result.add(tryStatement);
 		} else {
-			int lineNumber = _cu.getLineNumber(statement.getStartPosition());
 			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(AST.JLS8), statement);
-			Statement insert = GenStatement.genASTNode(message, lineNumber);
+			Statement insert = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
 
 			if (statement instanceof ConstructorInvocation) {
 				result.add(copy);
@@ -318,15 +373,19 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			} else if (statement instanceof ContinueStatement || statement instanceof BreakStatement
 					|| statement instanceof ReturnStatement || statement instanceof ThrowStatement
 					|| statement instanceof AssertStatement || statement instanceof ExpressionStatement
+					|| statement instanceof ConstructorInvocation
 					|| statement instanceof VariableDeclarationStatement) {
 				result.add(insert);
 				result.add(copy);
 
 			} else if (statement instanceof LabeledStatement) {
+				result.add(insert);
 				result.add(copy);
 			} else if (statement instanceof SynchronizedStatement) {
+				result.add(insert);
 				result.add(copy);
 			} else {
+				result.add(insert);
 				result.add(copy);
 			}
 		}
@@ -334,23 +393,16 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 		return result;
 	}
 
-	private Block processBlock(Block block, Statement insert, String message) {
+	private Block processBlock(Block block, String message) {
 		Block newBlock = AST.newAST(AST.JLS8).newBlock();
 		if (block == null) {
 			return newBlock;
 		}
-		if (insert != null) {
-			newBlock.statements().add(ASTNode.copySubtree(newBlock.getAST(), insert));
-		}
 		for (Object object : block.statements()) {
-			if (object instanceof Statement) {
-				Statement statement = (Statement) object;
-				List<Statement> newStatements = process(statement, message);
-				for (Statement newStatement : newStatements) {
-					newBlock.statements().add(ASTNode.copySubtree(newBlock.getAST(), newStatement));
-				}
-			} else {
-				LevelLogger.error(__name__ + "#processBlock UNKNOWN astNode : " + object.toString());
+			ASTNode astNode = (ASTNode) object;
+			List<ASTNode> newStatements = process(astNode, message);
+			for (ASTNode newStatement : newStatements) {
+				newBlock.statements().add(ASTNode.copySubtree(newBlock.getAST(), newStatement));
 			}
 		}
 		return newBlock;

@@ -21,6 +21,7 @@ import java.util.Map;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
@@ -64,7 +65,7 @@ public class JavaFile {
 	 * @param type
 	 * @return
 	 */
-	public static CompilationUnit genASTFromSource(String icu, int type) {
+	public static ASTNode genASTFromSource(String icu, int type) {
 		ASTParser astParser = ASTParser.newParser(AST.JLS8);
 		Map<?, ?> options = JavaCore.getOptions();
 		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
@@ -72,7 +73,7 @@ public class JavaFile {
 		astParser.setSource(icu.toCharArray());
 		astParser.setKind(type);
 		astParser.setResolveBindings(true);
-		return (CompilationUnit) astParser.createAST(null);
+		return astParser.createAST(null);
 	}
 
 	/**

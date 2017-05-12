@@ -1,6 +1,8 @@
 package locator.inst.gen;
 
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.Expression;
@@ -9,6 +11,10 @@ import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.Message;
+
+import locator.common.java.JavaFile;
+
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.NullLiteral;
@@ -310,6 +316,17 @@ public class GenStatement {
 		ThrowStatement throwStatement = ast.newThrowStatement();
 		throwStatement.setExpression(ast.newSimpleName(varName));
 		return throwStatement;
+	}
+	
+	public static IfStatement genPredicateStatement(String condition, String message, int line){
+		IfStatement ifStatement = ast.newIfStatement();
+		Expression conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
+		ifStatement.setExpression((Expression) ASTNode.copySubtree(ast, conditionExp));
+		Statement statement = genASTNode(message, line);
+		Block thenBlock = ast.newBlock();
+		thenBlock.statements().add(statement);
+		ifStatement.setThenStatement(thenBlock);
+		return ifStatement;
 	}
 
 }

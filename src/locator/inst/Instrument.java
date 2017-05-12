@@ -50,11 +50,11 @@ public class Instrument {
 
 		for (File f : fileList) {
 			String source = JavaFile.readFileToString(f);
-			CompilationUnit unit = JavaFile.genASTFromSource(source, ASTParser.K_COMPILATION_UNIT);
+			CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSource(source, ASTParser.K_COMPILATION_UNIT);
 			if (unit == null || unit.toString().trim().length() < 1) {
 				continue;
 			}
-			unit.accept(traversalVisitor);
+			traversalVisitor.traverse(unit);
 			String formatSource = null;
 //			Formatter formatter = new Formatter();
 //			try {

@@ -62,7 +62,7 @@ public class Subject {
 
 	@Override
 	public String toString() {
-		return "Subject [_name=" + _name + ", _id=" + _id + ", _ssrc=" + _ssrc + ", _tsrc=" + _tsrc + ", _sbin=" + _sbin
+		return "[_name=" + _name + ", _id=" + _id + ", _ssrc=" + _ssrc + ", _tsrc=" + _tsrc + ", _sbin=" + _sbin
 				+ ", _tbin=" + _tbin + "]";
 	}
 }

@@ -68,6 +68,7 @@ public class CoverageTest {
 			stringBuffer.append("\t");
 			stringBuffer.append(entry.getValue().getPassedCount());
 			stringBuffer.append("\n");
+			//view coverage.csv file
 			JavaFile.writeStringToFile(file, stringBuffer.toString(), true);
 		}
 	}

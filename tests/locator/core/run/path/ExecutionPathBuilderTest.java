@@ -7,15 +7,6 @@
 
 package locator.core.run.path;
 
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import locator.common.config.Constant;
-import locator.common.java.Subject;
-import locator.core.run.Runner;
-
 /**
  * @author Jiajun
  * @date May 10, 2017

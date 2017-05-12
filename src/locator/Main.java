@@ -7,23 +7,15 @@
 
 package locator;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-
-import org.eclipse.core.internal.jobs.InternalJobGroup;
 
 import locator.common.config.Configure;
 import locator.common.config.Constant;
-import locator.common.java.CoverInfo;
-import locator.common.java.Method;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
 import locator.core.Collector;
-import locator.core.run.path.Coverage;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
 
@@ -33,7 +25,7 @@ public class Main {
 	
 	private static void proceed(){
 		
-		List<Subject> allSubject = Configure.getSubjectFromXML();
+		List<Subject> allSubject = Configure.getSubjectFromXML(Constant.HOME + "/res/conf/project.xml");
 		if(allSubject.size() < 1){
 			LevelLogger.error(__name__ + "#proceed no subjects !");
 			return;

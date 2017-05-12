@@ -35,9 +35,8 @@ public class Configure {
 
 	private final static String __name__ = "@Configure ";
 
-	public static List<Subject> getSubjectFromXML() {
+	public static List<Subject> getSubjectFromXML(String fileName) throws NumberFormatException{
 		List<Subject> list = new ArrayList<>();
-		String fileName = Constant.HOME + "/res/conf/project.xml";
 
 		File inputXml = new File(fileName);
 		SAXReader saxReader = new SAXReader();
@@ -48,7 +47,12 @@ public class Configure {
 			for (Iterator iterator = root.elementIterator(); iterator.hasNext();) {
 				Element element = (Element) iterator.next();
 				String name = element.attributeValue("name");
-				int id = Integer.parseInt(element.attributeValue("id"));
+				int id = 0;
+				try{
+					id = Integer.parseInt(element.attributeValue("id"));
+				} catch (NumberFormatException e){
+					throw new NumberFormatException("Parse id failed!");
+				}
 				String ssrc = element.elementText("ssrc");
 				String tsrc = element.elementText("tsrc");
 				String sbin = element.elementText("sbin");
@@ -68,7 +72,7 @@ public class Configure {
 			LevelLogger.error("File : " + file.getAbsolutePath() + " not exist.");
 			System.exit(0);
 		}
-		CompilationUnit cu = JavaFile.genASTFromSource(JavaFile.readFileToString(file), ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(file), ASTParser.K_COMPILATION_UNIT);
 		cu.accept(new ConfigDumperVisitor());
 		String formatSource = null;
 		Formatter formatter = new Formatter();

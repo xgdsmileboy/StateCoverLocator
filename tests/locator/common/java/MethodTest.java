@@ -31,7 +31,7 @@ public class MethodTest {
 	}
 	
 	@Test
-	public void test_mapContaion(){
+	public void test_mapContain(){
 		String methodString = "org.jfree.data.ComparableObjectItem#?#ComparableObjectItem#?,Comparable,Object";
 		int id = Identifier.getIdentifier(methodString);
 		Method method = new Method(id);

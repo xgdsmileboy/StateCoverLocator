@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.junit.Assert;
 import org.junit.Test;
 
 import locator.common.config.Identifier;
@@ -28,36 +29,31 @@ public class DeInstrumentVisitorTest {
 	public void test_deInstrumentSingleMethod(){
 		String path = "res/junitRes/ForDeInstrument.java";
 		String methodString = "org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegratorTest#void#testSinFunction#?";
-		CompilationUnit unit = JavaFile.genASTFromSource(JavaFile.readFileToString(path), ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(path), ASTParser.K_COMPILATION_UNIT);
 		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
 		Set<Method> methods = new HashSet<>();
 		methods.add(new Method(Identifier.getIdentifier(methodString)));
 		
 		deInstrumentVisitor.setMethod(methods);
 		unit.accept(deInstrumentVisitor);
-		System.out.println(unit.toString());
+		String expected = JavaFile.readFileToString("res/junitRes/testOracle/ForDeInstrument-Single.java");
+		Assert.assertTrue(unit.toString().equals(expected));
 		
 		String anotherMethod = "org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegratorTest#void#testQuinticFunction#?"; 
 		methods.add(new Method(Identifier.getIdentifier(anotherMethod)));
 		deInstrumentVisitor.setMethod(methods);
 		unit.accept(deInstrumentVisitor);
-		System.out.println(unit.toString());
+		String expected2 = JavaFile.readFileToString("res/junitRes/testOracle/ForDeInstrument-Full.java");
+		Assert.assertTrue(unit.toString().equals(expected2));
 	}
 	
 	@Test
 	public void test_deInstrumentTestClass(){
 		String path = "res/junitRes/ForDeInstrument.java";
-		CompilationUnit unit = JavaFile.genASTFromSource(JavaFile.readFileToString(path), ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(path), ASTParser.K_COMPILATION_UNIT);
 		unit.accept(new DeInstrumentVisitor());
-		System.out.println(unit.toString());
-	}
-	
-	@Test
-	public void test_deInstrumentSourceClass(){
-		String path = "res/junitRes/ForDeInstrument.java";
-		CompilationUnit unit = JavaFile.genASTFromSource(JavaFile.readFileToString(path), ASTParser.K_COMPILATION_UNIT);
-		unit.accept(new DeInstrumentVisitor());
-		System.out.println(unit.toString());
+		String expected = JavaFile.readFileToString("res/junitRes/testOracle/ForDeInstrument-Full.java");
+		Assert.assertTrue(unit.toString().equals(expected));
 	}
 	
 }

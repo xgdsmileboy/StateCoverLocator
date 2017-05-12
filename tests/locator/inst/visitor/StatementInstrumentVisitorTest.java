@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.junit.Assert;
 import org.junit.Test;
 
 import locator.common.config.Constant;
@@ -27,51 +28,55 @@ public class StatementInstrumentVisitorTest {
 	
 	@Test
 	public void test_InstrumentForTestClass(){
-		String filePath = "res/junitRes/IterativeLegendreGaussIntegratorTest.java";
-		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
+		String filePath = "res/junitRes/Test.java";
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_TEST);
 		compilationUnit.accept(statementInstrumentVisitor);
-		System.out.println(compilationUnit.toString());
+		String expected = JavaFile.readFileToString("res/junitRes/testOracle/Test-InsFull.java");
+		Assert.assertTrue(compilationUnit.toString().equals(expected));
 	}
 	
 	@Test
 	public void test_InstrumentForTestClass2(){
 		String filePath = "res/junitRes/AbstractAnnotation.java";
-		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_SOURCE);
 		compilationUnit.accept(statementInstrumentVisitor);
-		System.out.println(compilationUnit.toString());
+		String expected = JavaFile.readFileToString("res/junitRes/testOracle/AbstractAnnotation-SInsFull.java");
+		Assert.assertTrue(compilationUnit.toString().equals(expected));
 	}
 	
 	@Test
 	public void test_InstrumentForSourceClass(){
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		compilationUnit.accept(new StatementInstrumentVisitor());
-		System.out.println(compilationUnit.toString());
+		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-SInsFull.java");
+		Assert.assertTrue(compilationUnit.toString().equals(expected));
 	}
 	
 	@Test
 	public void test_InstrumentForSingleMethod(){
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Set<Method> methods = new HashSet<>();
 		methods.add(new Method(Identifier.getIdentifier(methodString)));
 		compilationUnit.accept(new StatementInstrumentVisitor(methods));
-		System.out.println(compilationUnit.toString());
+		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-SInsSingle.java");
+		Assert.assertTrue(compilationUnit.toString().equals(expected));
 	}
 	
 	@Test
 	public void test_InstrumentForMultiMethod(){
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		Set<Method> methods = new HashSet<>();
 		String methodString1 = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
@@ -81,7 +86,8 @@ public class StatementInstrumentVisitorTest {
 		String methodString3 = "org.apache.commons.math3.fraction.BigFraction$TroubleClazz#boolean#method2#?";
 		methods.add(new Method(Identifier.getIdentifier(methodString3)));
 		compilationUnit.accept(new StatementInstrumentVisitor(methods));
-		System.out.println(compilationUnit.toString());
+		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-SInsMulti.java");
+		Assert.assertTrue(compilationUnit.toString().equals(expected));
 	}
 	
 }
