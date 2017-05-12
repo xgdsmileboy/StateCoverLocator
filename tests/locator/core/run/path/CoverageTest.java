@@ -9,8 +9,8 @@ package locator.core.run.path;
 
 import java.io.File;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,7 +20,6 @@ import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.CoverInfo;
 import locator.common.java.JavaFile;
-import locator.common.java.Method;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.core.Collector;

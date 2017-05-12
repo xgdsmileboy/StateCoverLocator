@@ -36,15 +36,13 @@ public class DeInstrumentVisitorTest {
 		
 		deInstrumentVisitor.setMethod(methods);
 		unit.accept(deInstrumentVisitor);
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/ForDeInstrument-Single.java");
-		Assert.assertTrue(unit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(unit) == 18);
 		
 		String anotherMethod = "org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegratorTest#void#testQuinticFunction#?"; 
 		methods.add(new Method(Identifier.getIdentifier(anotherMethod)));
 		deInstrumentVisitor.setMethod(methods);
 		unit.accept(deInstrumentVisitor);
-		String expected2 = JavaFile.readFileToString("res/junitRes/testOracle/ForDeInstrument-Full.java");
-		Assert.assertTrue(unit.toString().equals(expected2));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(unit) == 0);
 	}
 	
 	@Test
@@ -52,8 +50,7 @@ public class DeInstrumentVisitorTest {
 		String path = "res/junitRes/ForDeInstrument.java";
 		CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(path), ASTParser.K_COMPILATION_UNIT);
 		unit.accept(new DeInstrumentVisitor());
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/ForDeInstrument-Full.java");
-		Assert.assertTrue(unit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(unit) == 0);
 	}
 	
 }

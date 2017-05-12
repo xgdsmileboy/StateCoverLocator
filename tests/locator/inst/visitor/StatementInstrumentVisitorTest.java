@@ -34,8 +34,7 @@ public class StatementInstrumentVisitorTest {
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_TEST);
 		compilationUnit.accept(statementInstrumentVisitor);
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/Test-InsFull.java");
-		Assert.assertTrue(compilationUnit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 25);
 	}
 	
 	@Test
@@ -46,8 +45,7 @@ public class StatementInstrumentVisitorTest {
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_SOURCE);
 		compilationUnit.accept(statementInstrumentVisitor);
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/AbstractAnnotation-SInsFull.java");
-		Assert.assertTrue(compilationUnit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 21);
 	}
 	
 	@Test
@@ -56,8 +54,7 @@ public class StatementInstrumentVisitorTest {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		compilationUnit.accept(new StatementInstrumentVisitor());
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-SInsFull.java");
-		Assert.assertTrue(compilationUnit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 47);
 	}
 	
 	@Test
@@ -69,8 +66,7 @@ public class StatementInstrumentVisitorTest {
 		Set<Method> methods = new HashSet<>();
 		methods.add(new Method(Identifier.getIdentifier(methodString)));
 		compilationUnit.accept(new StatementInstrumentVisitor(methods));
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-SInsSingle.java");
-		Assert.assertTrue(compilationUnit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 16);
 	}
 	
 	@Test
@@ -86,8 +82,7 @@ public class StatementInstrumentVisitorTest {
 		String methodString3 = "org.apache.commons.math3.fraction.BigFraction$TroubleClazz#boolean#method2#?";
 		methods.add(new Method(Identifier.getIdentifier(methodString3)));
 		compilationUnit.accept(new StatementInstrumentVisitor(methods));
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-SInsMulti.java");
-		Assert.assertTrue(compilationUnit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 22);
 	}
 	
 }

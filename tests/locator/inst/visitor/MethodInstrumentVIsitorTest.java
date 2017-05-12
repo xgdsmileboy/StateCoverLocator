@@ -31,8 +31,7 @@ public class MethodInstrumentVIsitorTest {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		compilationUnit.accept(new MethodInstrumentVisitor());
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-MInsFull.java");
-		Assert.assertTrue(compilationUnit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 10);
 	}
 	
 	@Test
@@ -44,8 +43,7 @@ public class MethodInstrumentVIsitorTest {
 		Set<Method> methods = new HashSet<>();
 		methods.add(new Method(Identifier.getIdentifier(methodString)));
 		compilationUnit.accept(new MethodInstrumentVisitor(methods));
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-MInsSingle.java");
-		Assert.assertTrue(compilationUnit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);
 	}
 	
 	@Test
@@ -61,8 +59,7 @@ public class MethodInstrumentVIsitorTest {
 		String methodString3 = "org.apache.commons.math3.fraction.BigFraction$TroubleClazz#boolean#method2#?";
 		methods.add(new Method(Identifier.getIdentifier(methodString3)));
 		compilationUnit.accept(new MethodInstrumentVisitor(methods));
-		String expected = JavaFile.readFileToString("res/junitRes/testOracle/BigFraction-MInsMulti.java");
-		Assert.assertTrue(compilationUnit.toString().equals(expected));
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 3);
 	}
 
 }

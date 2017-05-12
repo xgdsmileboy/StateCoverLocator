@@ -7,6 +7,8 @@
 
 package locator.inst;
 
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,6 +16,7 @@ import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
 import locator.inst.visitor.DeInstrumentVisitor;
+import locator.inst.visitor.InstrumentCount;
 import locator.inst.visitor.StatementInstrumentVisitor;
 
 /**
@@ -30,11 +33,9 @@ public class InstrumentTest {
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_TEST);
 		Instrument.execute(filePath, statementInstrumentVisitor);
 		String newContent = JavaFile.readFileToString(filePath);
-		String instrumentContent = JavaFile.readFileToString("res/junitRes/testOracle/Test-InsFull.java");
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(newContent, ASTParser.K_COMPILATION_UNIT);
+		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 25);
 		JavaFile.writeStringToFile(filePath, content);
-
-		Assert.assertFalse(content.equals(newContent));
-		Assert.assertTrue(newContent.equals(instrumentContent));
 	}
 
 	@Test
