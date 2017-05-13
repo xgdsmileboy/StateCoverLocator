@@ -47,7 +47,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 	
 	private final static String __name__ = "@PredicateInstrumentVisitor ";
 
-	private int _mutantLineNumber = -1;
+	private int _line = -1;
 	
 	private String _condition = null;
 	
@@ -56,7 +56,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 	 */
 	public PredicateInstrumentVisitor(String condition, int line) {
 		_condition = condition;
-		_mutantLineNumber = line;
+		_line = line;
 	}
 	
 	@Override
@@ -81,7 +81,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 		int startLine = _cu.getLineNumber(node.getStartPosition());
 		int endLine = _cu.getLineNumber(node.getStartPosition() + node.getLength());
 		
-		if(_mutantLineNumber < startLine || endLine < _mutantLineNumber){
+		if(_line < startLine || endLine < _line){
 			return true;
 		}
 		
@@ -108,7 +108,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 		
 		int startLine = _cu.getLineNumber(statement.getStartPosition());
 		int endLine = _cu.getLineNumber(statement.getStartPosition() + statement.getLength());
-		if(startLine > _mutantLineNumber || endLine < _mutantLineNumber){
+		if(startLine > _line || endLine < _line){
 			result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 			return result;
 		}
@@ -117,8 +117,8 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			
 			IfStatement ifStatement = (IfStatement) statement;
 			startLine = _cu.getLineNumber(ifStatement.getExpression().getStartPosition());
-			if(startLine == _mutantLineNumber){
-				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+			if(startLine == _line){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _line);
 				result.add(inserted);
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -129,7 +129,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			if(thenBody != null){
 				startLine = _cu.getLineNumber(thenBody.getStartPosition());
 				endLine = _cu.getLineNumber(thenBody.getStartPosition() + thenBody.getLength());
-				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				if(startLine <= _line && _line <= endLine){
 					Block thenBlock = null;
 					if (thenBody instanceof Block) {
 						thenBlock = (Block) thenBody;
@@ -148,7 +148,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			if (elseBody != null) {
 				startLine = _cu.getLineNumber(elseBody.getStartPosition());
 				endLine = _cu.getLineNumber(elseBody.getStartPosition() + elseBody.getLength());
-				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				if(startLine <= _line && _line <= endLine){
 					Block elseBlock = null;
 					if (elseBody instanceof Block) {
 						elseBlock = (Block) elseBody;
@@ -167,8 +167,8 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			WhileStatement whileStatement = (WhileStatement) statement;
 			
 			int lineNumber = _cu.getLineNumber(whileStatement.getExpression().getStartPosition());
-			if(lineNumber == _mutantLineNumber){
-				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+			if(lineNumber == _line){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _line);
 				result.add(inserted);
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -179,7 +179,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			if (whilebody != null) {
 				startLine = _cu.getLineNumber(whilebody.getStartPosition());
 				endLine = _cu.getLineNumber(whilebody.getStartPosition() + whilebody.getLength());
-				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				if(startLine <= _line && _line <= endLine){
 					Block whileBlock = null;
 					if (whilebody instanceof Block) {
 						whileBlock = (Block) whilebody;
@@ -199,8 +199,8 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			ForStatement forStatement = (ForStatement) statement;
 			
 			int lineNumber = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
-			if(lineNumber == _mutantLineNumber){
-				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+			if(lineNumber == _line){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _line);
 				result.add(inserted);
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -211,7 +211,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			if (forBody != null) {
 				startLine = _cu.getLineNumber(forBody.getStartPosition());
 				endLine = _cu.getLineNumber(forBody.getStartPosition() + forBody.getLength());
-				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				if(startLine <= _line && _line <= endLine){
 					Block forBlock = null;
 					if (forBody instanceof Block) {
 						forBlock = (Block) forBody;
@@ -232,9 +232,9 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			DoStatement doStatement = (DoStatement) statement;
 			
 			int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
-			if(lineNumber == _mutantLineNumber){
+			if(lineNumber == _line){
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
-				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _line);
 				result.add(inserted);
 				return result;
 			}
@@ -243,7 +243,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			if (doBody != null) {
 				startLine = _cu.getLineNumber(doBody.getStartPosition());
 				endLine = _cu.getLineNumber(doBody.getStartPosition() + doBody.getLength());
-				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				if(startLine <= _line && _line <= endLine){
 					Block doBlock = null;
 					if (doBody instanceof Block) {
 						doBlock = (Block) doBody;
@@ -268,8 +268,8 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			EnhancedForStatement enhancedForStatement = (EnhancedForStatement) statement;
 			
 			int lineNumber = _cu.getLineNumber(enhancedForStatement.getExpression().getStartPosition());
-			if(lineNumber == _mutantLineNumber){
-				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+			if(lineNumber == _line){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _line);
 				result.add(inserted);
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -280,7 +280,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 				
 				startLine = _cu.getLineNumber(enhancedBody.getStartPosition());
 				endLine = _cu.getLineNumber(enhancedBody.getStartPosition() + enhancedBody.getLength());
-				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				if(startLine <= _line && _line <= endLine){
 				
 					Block enhancedBlock = null;
 					if (enhancedBody instanceof Block) {
@@ -302,8 +302,8 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			SwitchStatement switchStatement = (SwitchStatement) statement;
 			
 			int lineNumber = _cu.getLineNumber(switchStatement.getExpression().getStartPosition());
-			if(lineNumber == _mutantLineNumber){
-				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+			if(lineNumber == _line){
+				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _line);
 				result.add(inserted);
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -334,7 +334,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			if (tryBlock != null) {
 				startLine = _cu.getLineNumber(tryBlock.getStartPosition());
 				endLine = _cu.getLineNumber(tryBlock.getStartPosition() + tryBlock.getLength());
-				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				if(startLine <= _line && _line <= endLine){
 					Block newTryBlock = processBlock(tryBlock, message);
 					tryStatement.setBody((Block) ASTNode.copySubtree(tryStatement.getAST(), newTryBlock));
 				}
@@ -356,7 +356,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			if (finallyBlock != null) {
 				startLine = _cu.getLineNumber(finallyBlock.getStartPosition());
 				endLine = _cu.getLineNumber(finallyBlock.getStartPosition() + finallyBlock.getLength());
-				if(startLine <= _mutantLineNumber && _mutantLineNumber <= endLine){
+				if(startLine <= _line && _line <= endLine){
 					Block newFinallyBlock = processBlock(finallyBlock, message);
 					tryStatement.setFinally((Block) ASTNode.copySubtree(tryStatement.getAST(), newFinallyBlock));
 				}
@@ -365,7 +365,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 			result.add(tryStatement);
 		} else {
 			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(AST.JLS8), statement);
-			Statement insert = GenStatement.genPredicateStatement(_condition, message, _mutantLineNumber);
+			Statement insert = GenStatement.genPredicateStatement(_condition, message, _line);
 
 			if (statement instanceof ConstructorInvocation) {
 				result.add(copy);
