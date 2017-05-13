@@ -15,13 +15,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 
-import javax.management.modelmbean.InvalidTargetObjectTypeException;
-
-import org.eclipse.jdt.internal.compiler.lookup.MethodScope;
-
-import junit.extensions.TestSetup;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.Method;
@@ -54,8 +48,9 @@ public class Collector {
 	 */
 	public static Pair<Set<Integer>, Set<Integer>> collectAllTestCases(Subject subject) {
 		Pair<Set<Integer>, Set<Integer>> allTests = new Pair<>();
-		//test case instrument
-		Instrument.execute(subject.getHome() + subject.getTsrc(), new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST));
+		// test case instrument
+		Instrument.execute(subject.getHome() + subject.getTsrc(),
+				new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST));
 		// run all test
 		try {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
@@ -64,18 +59,29 @@ public class Collector {
 			return null;
 		}
 		Instrument.execute(subject.getHome() + subject.getTsrc(), new DeInstrumentVisitor());
-		
+
 		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
 		Set<Integer> passedTest = collectAllPassedTestCases(Constant.STR_TMP_INSTR_OUTPUT_FILE, failedTest);
-//		Set<Integer> passedTest = collectAllPassedTestCases(subject.getHome() + "/all-tests.txt", failedTest);
+		// Set<Integer> passedTest = collectAllPassedTestCases(subject.getHome()
+		// + "/all-tests.txt", failedTest);
 
 		allTests.setFirst(failedTest);
 		allTests.setSecond(passedTest);
 
 		return allTests;
 	}
-	
-	private static Set<Integer> collectAllPassedTestCases(String outputFile, Set<Integer> failedTests){
+
+	/**
+	 * collect all passed test cases based on the output info, before which the
+	 * test cases should be instrumented and we should run all the test cases
+	 * 
+	 * @param outputFile
+	 *            : file containing the instrument information
+	 * @param failedTests
+	 *            : failed test cases to be filtered
+	 * @return a set of method ids of passed test cases
+	 */
+	private static Set<Integer> collectAllPassedTestCases(String outputFile, Set<Integer> failedTests) {
 		Set<Integer> allPassedTestCases = new HashSet<>();
 		File file = new File(outputFile);
 		if (!file.exists()) {
@@ -96,7 +102,7 @@ public class Collector {
 		try {
 			while ((line = bReader.readLine()) != null) {
 				String[] methodInfo = line.split("#");
-				if(methodInfo.length < 3){
+				if (methodInfo.length < 3) {
 					LevelLogger.error(__name__ + "collectAllPassedTestCases output format error : " + line);
 				}
 				int methodID = Integer.parseInt(methodInfo[1]);
@@ -108,7 +114,7 @@ public class Collector {
 		} catch (IOException e) {
 			LevelLogger.fatal(__name__ + "#collectAllPassedTestCases read file error !", e);
 		} finally {
-			if(bReader != null){
+			if (bReader != null) {
 				try {
 					bReader.close();
 				} catch (IOException e) {
@@ -118,71 +124,77 @@ public class Collector {
 		return allPassedTestCases;
 	}
 
-//	/**
-//	 * collect all passed test cases by parsing the test output record file,
-//	 * during which excluding failed tests
-//	 * 
-//	 * @param recordFilePath
-//	 *            : file path containing all test information
-//	 * @param failedTests
-//	 *            : filtered failed test cases
-//	 * @return
-//	 */
-//	private static Set<Integer> collectAllPassedTestCases(String recordFilePath, Set<Integer> failedTests) {
-//		Set<Integer> allPassedTestCases = new HashSet<>();
-//
-//		File file = new File(recordFilePath);
-//		if (!file.exists()) {
-//			LevelLogger.error(
-//					__name__ + "#collectAllPassedTestCases file : " + file.getAbsolutePath() + " does not exist !");
-//			return allPassedTestCases;
-//		}
-//
-//		BufferedReader bReader = null;
-//		try {
-//			bReader = new BufferedReader(new FileReader(file));
-//		} catch (FileNotFoundException e) {
-//			LevelLogger.error(__name__ + "#collectAllPassedTestCases open file failed !", e);
-//			return allPassedTestCases;
-//		}
-//
-//		String line = null;
-//		try {
-//			while ((line = bReader.readLine()) != null) {
-//				int indexOfLeftBracket = line.indexOf("(");
-//				int indexOfRightBracket = line.indexOf(")");
-//				if (indexOfLeftBracket < 0 || indexOfRightBracket < 0) {
-//					LevelLogger.warn(__name__ + "#collectAllPassedTestCases find bracket failed !");
-//					continue;
-//				}
-//				String methodName = line.substring(0, indexOfLeftBracket);
-//				String clazzName = line.substring(indexOfLeftBracket + 1, indexOfRightBracket);
-//				String methodString = clazzName + "#void#" + methodName + "#?";
-//				int methodID = Identifier.getIdentifier(methodString);
-//				if (!failedTests.contains(methodID)) {
-//					allPassedTestCases.add(methodID);
-//				}
-//			}
-//			bReader.close();
-//		} catch (IOException e) {
-//			LevelLogger.fatal(__name__ + "#collectAllPassedTestCases read file error !", e);
-//		} finally {
-//			if(bReader != null){
-//				try {
-//					bReader.close();
-//				} catch (IOException e) {
-//				}
-//			}
-//		}
-//		return allPassedTestCases;
-//	}
+	// /**
+	// * collect all passed test cases by parsing the test output record file,
+	// * during which excluding failed tests
+	// *
+	// * @param recordFilePath
+	// * : file path containing all test information
+	// * @param failedTests
+	// * : filtered failed test cases
+	// * @return
+	// */
+	// private static Set<Integer> collectAllPassedTestCases(String
+	// recordFilePath, Set<Integer> failedTests) {
+	// Set<Integer> allPassedTestCases = new HashSet<>();
+	//
+	// File file = new File(recordFilePath);
+	// if (!file.exists()) {
+	// LevelLogger.error(
+	// __name__ + "#collectAllPassedTestCases file : " + file.getAbsolutePath()
+	// + " does not exist !");
+	// return allPassedTestCases;
+	// }
+	//
+	// BufferedReader bReader = null;
+	// try {
+	// bReader = new BufferedReader(new FileReader(file));
+	// } catch (FileNotFoundException e) {
+	// LevelLogger.error(__name__ + "#collectAllPassedTestCases open file failed
+	// !", e);
+	// return allPassedTestCases;
+	// }
+	//
+	// String line = null;
+	// try {
+	// while ((line = bReader.readLine()) != null) {
+	// int indexOfLeftBracket = line.indexOf("(");
+	// int indexOfRightBracket = line.indexOf(")");
+	// if (indexOfLeftBracket < 0 || indexOfRightBracket < 0) {
+	// LevelLogger.warn(__name__ + "#collectAllPassedTestCases find bracket
+	// failed !");
+	// continue;
+	// }
+	// String methodName = line.substring(0, indexOfLeftBracket);
+	// String clazzName = line.substring(indexOfLeftBracket + 1,
+	// indexOfRightBracket);
+	// String methodString = clazzName + "#void#" + methodName + "#?";
+	// int methodID = Identifier.getIdentifier(methodString);
+	// if (!failedTests.contains(methodID)) {
+	// allPassedTestCases.add(methodID);
+	// }
+	// }
+	// bReader.close();
+	// } catch (IOException e) {
+	// LevelLogger.fatal(__name__ + "#collectAllPassedTestCases read file error
+	// !", e);
+	// } finally {
+	// if(bReader != null){
+	// try {
+	// bReader.close();
+	// } catch (IOException e) {
+	// }
+	// }
+	// }
+	// return allPassedTestCases;
+	// }
 
 	/**
-	 * collect all failed test cases based on the test output information
+	 * collect all failed test cases by parsing the d4j output information
 	 * 
 	 * @param outputFilePath
 	 *            : defects4j output file path
-	 * @return
+	 * @return a set of method ids of failed test cases
 	 */
 	private static Set<Integer> findFailedTestFromFile(String outputFilePath) {
 		if (outputFilePath == null) {
@@ -245,7 +257,16 @@ public class Collector {
 		return failedTest;
 	}
 
-	public static Set<Method> collectRunningMethod(Subject subject, Set<Integer> testcases) {
+	/**
+	 * collect all executed methods for given test cases {@code testcases}
+	 * 
+	 * @param subject
+	 *            : current subject, e.g., chart_1_buggy
+	 * @param testcases
+	 *            :a set of method ids of test cases to be collected
+	 * @return a set of method ids covered by the given test cases
+	 */
+	public static Set<Method> collectCoveredMethod(Subject subject, Set<Integer> testcases) {
 		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor();
 		String subjectSourcePath = subject.getHome() + subject.getSsrc();
 		Instrument.execute(subjectSourcePath, methodInstrumentVisitor);
@@ -266,14 +287,15 @@ public class Collector {
 						.error(__name__ + "#collectRunningMethod build subject failed when running single test case.");
 				System.exit(0);
 			}
-			Map<Method, Integer> pathMap = ExecutionPathBuilder.collectAllExecutedMethods(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-			
-			if(pathMap != null){
+			Map<Method, Integer> pathMap = ExecutionPathBuilder
+					.collectAllExecutedMethods(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+
+			if (pathMap != null) {
 				allMethods.addAll(pathMap.keySet());
 			}
 		}
-		
+
 		Instrument.execute(subjectSourcePath, new DeInstrumentVisitor());
 		return allMethods;
-	}	
+	}
 }

@@ -22,6 +22,22 @@ public class Subject {
 	private String _sbin = null;
 	private String _tbin = null;
 
+	/**
+	 * subject
+	 * 
+	 * @param name
+	 *            : name of subject, e.g., "chart".
+	 * @param id
+	 *            : number of subject, e.g., 1.
+	 * @param ssrc
+	 *            : relative path for source folder, e.g., "/source"
+	 * @param tsrc
+	 *            : relative path for test folder, e.g., "/tests"
+	 * @param sbin
+	 *            : relative path for source byte code, e.g., "/classes"
+	 * @param tbin
+	 *            : relative path for test byte code, e.g., "/test-classes"
+	 */
 	public Subject(String name, int id, String ssrc, String tsrc, String sbin, String tbin) {
 		_name = name;
 		_id = id;
@@ -54,11 +70,15 @@ public class Subject {
 	public String getTbin() {
 		return _tbin;
 	}
-	
-	public String getHome(){
+
+	/**
+	 * get absolute home path for subject
+	 * 
+	 * @return e.g., "/home/user/chart/chart_1_buggy"
+	 */
+	public String getHome() {
 		return Constant.PROJECT_HOME + "/" + _name + "/" + _name + "_" + _id + "_buggy";
 	}
-
 
 	@Override
 	public String toString() {

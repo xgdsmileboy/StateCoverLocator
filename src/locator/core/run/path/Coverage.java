@@ -35,7 +35,7 @@ public class Coverage {
 	
 	public static Map<String, CoverInfo> computeCoverage(Subject subject, Pair<Set<Integer>, Set<Integer>> allTests){
 		// compute path for failed test cases
-		Set<Method> failedPath = Collector.collectRunningMethod(subject, allTests.getFirst());
+		Set<Method> failedPath = Collector.collectCoveredMethod(subject, allTests.getFirst());
 		
 //		//TODO : for debugging
 //		for(Method method : failedPath){

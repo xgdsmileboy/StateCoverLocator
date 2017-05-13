@@ -26,39 +26,87 @@ public class ExecuteCommand {
 
 	private final static String __name__ = "@ExecuteCommand ";
 
-	public static void deletePathFile() {
+	/**
+	 * delete file containing instrument outputs
+	 */
+	public static void deleteInstrumentOutputFile() {
 		File file = new File(Constant.STR_TMP_INSTR_OUTPUT_FILE);
 		if (file.exists()) {
 			file.delete();
 		}
 	}
 
+	/**
+	 * move a single file {@code source} to the file {@code target}
+	 * 
+	 * @param source
+	 *            : source file to be moved
+	 * @param target
+	 *            : target file name
+	 * @return execution information
+	 */
 	public static String moveFile(String source, String target) {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_MV + source + " " + target };
 		return execute(cmd);
 	}
 
-	public static String moveFolder(String source, String target) {
-		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_MV + "-f " + source + " " + target };
+	/**
+	 * move the file folder {@code srcFolder} to the target file path
+	 * {@code tarFolder}
+	 * 
+	 * @param srcFolder
+	 *            : source folder to be moved
+	 * @param tarFolder
+	 *            : target folder
+	 * @return execution information
+	 */
+	public static String moveFolder(String srcFolder, String tarFolder) {
+		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_MV + "-f " + srcFolder + " " + tarFolder };
 		return execute(cmd);
 	}
 
+	/**
+	 * copy {@code source} file to {@code target} file
+	 * 
+	 * @param source
+	 *            : source file to be copied
+	 * @param target
+	 *            : target file path
+	 * @return execution information
+	 */
 	public static String copyFile(String source, String target) {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_CP + source + " " + target };
 		return execute(cmd);
 	}
 
+	/**
+	 * delete all collected data
+	 * 
+	 * @return execution information
+	 */
 	public static String deleteDataFiles() {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_RM + Constant.STR_ALL_DATA_COLLECT_PATH };
 		return execute(cmd);
 	}
 
+	/**
+	 * delete all output files
+	 * 
+	 * @return execution information
+	 */
 	public static String deleteOutputFile() {
 		String[] cmd = new String[] { "/bin/bash", "-c",
 				Constant.COMMAND_RM + Constant.STR_OUT_PATH + Constant.PATH_SEPARATOR + "*" };
 		return execute(cmd);
 	}
 
+	/**
+	 * execute given commands
+	 * 
+	 * @param command
+	 *            : command to be executed
+	 * @return output information when running given command
+	 */
 	private static String execute(String... command) {
 		Process process = null;
 		String result = null;
@@ -109,10 +157,19 @@ public class ExecuteCommand {
 	// executeDefects4JTest(cmds, Constant.STR_TMP_D4J_OUTPUT_FILE);
 	// }
 
-	public static void executeDefects4JTest(String[] command)
-			throws IOException, InterruptedException {
-		
-		deletePathFile();
+	/**
+	 * execute d4j test command
+	 * 
+	 * @param command
+	 *            : commands to be executed
+	 * @throws IOException
+	 *             : when the file does not exist for d4j output
+	 * @throws InterruptedException
+	 *             : when current process is interrupted
+	 */
+	public static void executeDefects4JTest(String[] command) throws IOException, InterruptedException {
+
+		deleteInstrumentOutputFile();
 
 		File file = new File(Constant.STR_TMP_D4J_OUTPUT_FILE);
 		if (!file.exists()) {

@@ -35,7 +35,17 @@ public class Configure {
 
 	private final static String __name__ = "@Configure ";
 
-	public static List<Subject> getSubjectFromXML(String fileName) throws NumberFormatException{
+	/**
+	 * read subject configure information from configure file
+	 * 
+	 * @param fileName
+	 *            : configure file path containing the subject configuration
+	 *            information
+	 * @return a list of subject
+	 * @throws NumberFormatException
+	 *             : when the subject id is not configured correctly
+	 */
+	public static List<Subject> getSubjectFromXML(String fileName) throws NumberFormatException {
 		List<Subject> list = new ArrayList<>();
 
 		File inputXml = new File(fileName);
@@ -48,9 +58,9 @@ public class Configure {
 				Element element = (Element) iterator.next();
 				String name = element.attributeValue("name");
 				int id = 0;
-				try{
+				try {
 					id = Integer.parseInt(element.attributeValue("id"));
-				} catch (NumberFormatException e){
+				} catch (NumberFormatException e) {
 					throw new NumberFormatException("Parse id failed!");
 				}
 				String ssrc = element.elementText("ssrc");
@@ -66,13 +76,21 @@ public class Configure {
 		return list;
 	}
 
+	/**
+	 * copy the auxiliary file into the subject source path to make the
+	 * instrument running correctly
+	 * 
+	 * @param subject
+	 *            : current subject
+	 */
 	public static void config_dumper(Subject subject) {
 		File file = new File("res/auxiliary/Dumper.java");
 		if (!file.exists()) {
 			LevelLogger.error("File : " + file.getAbsolutePath() + " not exist.");
 			System.exit(0);
 		}
-		CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(file), ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(file),
+				ASTParser.K_COMPILATION_UNIT);
 		cu.accept(new ConfigDumperVisitor());
 		String formatSource = null;
 		Formatter formatter = new Formatter();

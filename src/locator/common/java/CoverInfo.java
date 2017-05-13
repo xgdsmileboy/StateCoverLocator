@@ -15,31 +15,23 @@ public class CoverInfo {
 
 	private int _failedCount = 0;
 	private int _passedCount = 0;
-	
-	public CoverInfo(){
+
+	public CoverInfo() {
 	}
-	
-	public void failedAdd(int count){
+
+	public void failedAdd(int count) {
 		_failedCount += count;
 	}
-	
-	public void passedAdd(int count){
+
+	public void passedAdd(int count) {
 		_passedCount += count;
 	}
 
-	public void failedInc() {
-		_failedCount ++;
-	}
-	
-	public void passedInc(){
-		_passedCount ++;
-	}
-	
-	public int getFailedCount(){
+	public int getFailedCount() {
 		return _failedCount;
 	}
-	
-	public int getPassedCount(){
+
+	public int getPassedCount() {
 		return _passedCount;
 	}
 }
