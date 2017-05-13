@@ -10,6 +10,7 @@ package locator.inst.visitor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -48,10 +49,10 @@ public class InstrumentAllPredicatesVisitor extends TraversalVisitor {
 
 	private final static String __name__ = "@InstrumentAllPredicatesVisitor ";
 
-	private Map<Integer, Map<Integer, List<String>>> _allInstruments = null;
-	private Map<Integer, List<String>> _currentConditions = null;
+	private Map<Integer, Map<Integer, Set<String>>> _allInstruments = null;
+	private Map<Integer, Set<String>> _currentConditions = null;
 
-	public InstrumentAllPredicatesVisitor(Map<Integer, Map<Integer, List<String>>> allInstruments) {
+	public InstrumentAllPredicatesVisitor(Map<Integer, Map<Integer, Set<String>>> allInstruments) {
 		_allInstruments = allInstruments;
 	}
 	

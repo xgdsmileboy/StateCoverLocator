@@ -275,7 +275,7 @@ public class Collector {
 			String methodString = Identifier.getMessage(methodID);
 			String[] methodInfo = methodString.split("#");
 			if (methodInfo.length < 4) {
-				LevelLogger.error(__name__ + "#collectRunningMethod method string format error : " + methodString);
+				LevelLogger.error(__name__ + "#collectCoveredMethod method string format error : " + methodString);
 				System.exit(1);
 			}
 			String clazzpath = methodInfo[0];
@@ -284,7 +284,7 @@ public class Collector {
 			boolean success = Runner.testSingleCase(subject, singleTest);
 			if (!success) {
 				LevelLogger
-						.error(__name__ + "#collectRunningMethod build subject failed when running single test case.");
+						.error(__name__ + "#collectCoveredMethod build subject failed when running single test case.");
 				System.exit(0);
 			}
 			Map<Method, Integer> pathMap = ExecutionPathBuilder

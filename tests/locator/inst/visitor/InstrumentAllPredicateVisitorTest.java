@@ -7,10 +7,10 @@
 
 package locator.inst.visitor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -32,12 +32,12 @@ public class InstrumentAllPredicateVisitorTest {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
-		Map<Integer, List<String>> conditionMap = new HashMap<>();
-		List<String> conditionList1 = new ArrayList<>();
-		conditionList1.add("den > 0");
-		conditionMap.put(23, conditionList1);
+		Map<Integer, Set<String>> conditionMap = new HashMap<>();
+		Set<String> conditionSet1 = new HashSet<>();
+		conditionSet1.add("den > 0");
+		conditionMap.put(23, conditionSet1);
 		int methodID = Identifier.getIdentifier(methodString);
-		Map<Integer, Map<Integer, List<String>>> predicateMap = new HashMap<>();
+		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
 		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
@@ -51,16 +51,16 @@ public class InstrumentAllPredicateVisitorTest {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
-		Map<Integer, List<String>> conditionMap = new HashMap<>();
-		List<String> conditionList1 = new ArrayList<>();
-		conditionList1.add("den > 0");
-		conditionMap.put(23, conditionList1);
-		List<String> conditionList2 = new ArrayList<>();
-		conditionList2.add("num <= 0");
-		conditionList2.add("num > 10");
-		conditionMap.put(26, conditionList2);
+		Map<Integer, Set<String>> conditionMap = new HashMap<>();
+		Set<String> conditionSet1 = new HashSet<>();
+		conditionSet1.add("den > 0");
+		conditionMap.put(23, conditionSet1);
+		Set<String> conditionSet2 = new HashSet<>();
+		conditionSet2.add("num <= 0");
+		conditionSet2.add("num > 10");
+		conditionMap.put(26, conditionSet2);
 		int methodID = Identifier.getIdentifier(methodString);
-		Map<Integer, Map<Integer, List<String>>> predicateMap = new HashMap<>();
+		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
 		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
@@ -75,26 +75,26 @@ public class InstrumentAllPredicateVisitorTest {
 				ASTParser.K_COMPILATION_UNIT);
 		//for the first method
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
-		Map<Integer, List<String>> conditionMap = new HashMap<>();
-		List<String> conditionList1 = new ArrayList<>();
-		conditionList1.add("den > 0");
-		conditionMap.put(23, conditionList1);
-		List<String> conditionList2 = new ArrayList<>();
-		conditionList2.add("num <= 0");
-		conditionList2.add("num > 10");
-		conditionMap.put(26, conditionList2);
+		Map<Integer, Set<String>> conditionMap = new HashMap<>();
+		Set<String> conditionSet1 = new HashSet<>();
+		conditionSet1.add("den > 0");
+		conditionMap.put(23, conditionSet1);
+		Set<String> conditionSet2 = new HashSet<>();
+		conditionSet2.add("num <= 0");
+		conditionSet2.add("num > 10");
+		conditionMap.put(26, conditionSet2);
 		int methodID = Identifier.getIdentifier(methodString);
-		Map<Integer, Map<Integer, List<String>>> predicateMap = new HashMap<>();
-		predicateMap.put(methodID, conditionMap);
 		
 		//for the second method
 		String anotherMethodString = "org.apache.commons.math3.fraction.BigFraction$TroubleClazz#boolean#method2#?";
-		Map<Integer, List<String>> anotherConditionMap = new HashMap<>();
-		List<String> anotherConditionList = new ArrayList<>();
-		anotherConditionList.add("true");
-		anotherConditionMap.put(49, anotherConditionList);
+		Map<Integer, Set<String>> anotherConditionMap = new HashMap<>();
+		Set<String> anotherConditionSet = new HashSet<>();
+		anotherConditionSet.add("true");
+		anotherConditionMap.put(49, anotherConditionSet);
 		int anotherMethodID = Identifier.getIdentifier(anotherMethodString);
-		Map<Integer, Map<Integer, List<String>>> anotherPredicateMap = new HashMap<>();
+		
+		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
+		predicateMap.put(methodID, conditionMap);
 		predicateMap.put(anotherMethodID, anotherConditionMap);
 		
 		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
@@ -109,12 +109,12 @@ public class InstrumentAllPredicateVisitorTest {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
-		Map<Integer, List<String>> conditionMap = new HashMap<>();
-		List<String> conditionList1 = new ArrayList<>();
-		conditionList1.add("den > 0");
-		conditionMap.put(23, conditionList1);
+		Map<Integer, Set<String>> conditionMap = new HashMap<>();
+		Set<String> conditionSet = new HashSet<>();
+		conditionSet.add("den > 0");
+		conditionMap.put(23, conditionSet);
 		int methodID = Identifier.getIdentifier(methodString);
-		Map<Integer, Map<Integer, List<String>>> predicateMap = new HashMap<>();
+		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
 		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
@@ -128,12 +128,12 @@ public class InstrumentAllPredicateVisitorTest {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
 				ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
-		Map<Integer, List<String>> conditionMap = new HashMap<>();
-		List<String> conditionList1 = new ArrayList<>();
-		conditionList1.add("den > 0");
-		conditionMap.put(47, conditionList1);
+		Map<Integer, Set<String>> conditionMap = new HashMap<>();
+		Set<String> conditionSet = new HashSet<>();
+		conditionSet.add("den > 0");
+		conditionMap.put(47, conditionSet);
 		int methodID = Identifier.getIdentifier(methodString);
-		Map<Integer, Map<Integer, List<String>>> predicateMap = new HashMap<>();
+		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
 		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
