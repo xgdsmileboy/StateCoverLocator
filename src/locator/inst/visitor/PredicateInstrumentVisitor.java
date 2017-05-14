@@ -59,6 +59,10 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 		_line = line;
 	}
 	
+	public void setCondition(String condition){
+		_condition = condition;
+	}
+	
 	@Override
 	public boolean visit(MethodDeclaration node) {
 		

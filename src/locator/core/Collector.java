@@ -12,9 +12,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.eclipse.jdt.core.dom.ASTVisitor;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
@@ -124,71 +128,6 @@ public class Collector {
 		return allPassedTestCases;
 	}
 
-	// /**
-	// * collect all passed test cases by parsing the test output record file,
-	// * during which excluding failed tests
-	// *
-	// * @param recordFilePath
-	// * : file path containing all test information
-	// * @param failedTests
-	// * : filtered failed test cases
-	// * @return
-	// */
-	// private static Set<Integer> collectAllPassedTestCases(String
-	// recordFilePath, Set<Integer> failedTests) {
-	// Set<Integer> allPassedTestCases = new HashSet<>();
-	//
-	// File file = new File(recordFilePath);
-	// if (!file.exists()) {
-	// LevelLogger.error(
-	// __name__ + "#collectAllPassedTestCases file : " + file.getAbsolutePath()
-	// + " does not exist !");
-	// return allPassedTestCases;
-	// }
-	//
-	// BufferedReader bReader = null;
-	// try {
-	// bReader = new BufferedReader(new FileReader(file));
-	// } catch (FileNotFoundException e) {
-	// LevelLogger.error(__name__ + "#collectAllPassedTestCases open file failed
-	// !", e);
-	// return allPassedTestCases;
-	// }
-	//
-	// String line = null;
-	// try {
-	// while ((line = bReader.readLine()) != null) {
-	// int indexOfLeftBracket = line.indexOf("(");
-	// int indexOfRightBracket = line.indexOf(")");
-	// if (indexOfLeftBracket < 0 || indexOfRightBracket < 0) {
-	// LevelLogger.warn(__name__ + "#collectAllPassedTestCases find bracket
-	// failed !");
-	// continue;
-	// }
-	// String methodName = line.substring(0, indexOfLeftBracket);
-	// String clazzName = line.substring(indexOfLeftBracket + 1,
-	// indexOfRightBracket);
-	// String methodString = clazzName + "#void#" + methodName + "#?";
-	// int methodID = Identifier.getIdentifier(methodString);
-	// if (!failedTests.contains(methodID)) {
-	// allPassedTestCases.add(methodID);
-	// }
-	// }
-	// bReader.close();
-	// } catch (IOException e) {
-	// LevelLogger.fatal(__name__ + "#collectAllPassedTestCases read file error
-	// !", e);
-	// } finally {
-	// if(bReader != null){
-	// try {
-	// bReader.close();
-	// } catch (IOException e) {
-	// }
-	// }
-	// }
-	// return allPassedTestCases;
-	// }
-
 	/**
 	 * collect all failed test cases by parsing the d4j output information
 	 * 
@@ -196,7 +135,7 @@ public class Collector {
 	 *            : defects4j output file path
 	 * @return a set of method ids of failed test cases
 	 */
-	private static Set<Integer> findFailedTestFromFile(String outputFilePath) {
+	public static Set<Integer> findFailedTestFromFile(String outputFilePath) {
 		if (outputFilePath == null) {
 			LevelLogger.error(__name__ + "#findFailedTestFromFile OutputFilePath is null.");
 			return null;
@@ -298,4 +237,39 @@ public class Collector {
 		Instrument.execute(subjectSourcePath, new DeInstrumentVisitor());
 		return allMethods;
 	}
+	
+//	public static Map<Integer, Map<Integer, Set<String>>> collectAllPredicates(Subject subject, List<String> statements){
+//		Map<Integer, Map<Integer, Set<String>>> allPredicates = new HashMap<>();
+//		String srcPath = subject.getHome() + subject.getSsrc();
+//		for(String stmt : statements){
+//			String[] stmtInfo = stmt.split("#");
+//			if(stmtInfo.length != 2){
+//				LevelLogger.error(__name__ + "#collectAllPredicates statement information error : " + stmt);
+//				System.exit(1);
+//			}
+//			int methodID = Integer.parseInt(stmtInfo[0]);
+//			int line = Integer.parseInt(stmtInfo[1]);
+//			String methodString = Identifier.getMessage(methodID);
+//			
+//		}
+//		return allPredicates;
+//	}
+//	
+//	private static class VarCollectorVisitor extends ASTVisitor{
+//		private String _leftVarName = null;
+//		private Set<String> _rightVarNames = null;
+//		
+//		public VarCollectorVisitor(){
+//			_leftVarName = null;
+//			_rightVarNames = new HashSet<>();
+//		}
+//		
+//		public String getleftVarName(){
+//			return _leftVarName;
+//		}
+//		
+//		public Set<String> getRightVarNames(){
+//			return _rightVarNames;
+//		}
+//	}
 }

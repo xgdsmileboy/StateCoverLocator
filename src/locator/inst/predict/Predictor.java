@@ -9,7 +9,9 @@ package locator.inst.predict;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import locator.common.java.Pair;
 import locator.inst.visitor.feature.FeatureEntry;
 
 /**
@@ -19,6 +21,18 @@ import locator.inst.visitor.feature.FeatureEntry;
 public class Predictor {
 	
 	public static List<String> predict(FeatureEntry featureEntry){
+		List<String> insertedStatement = new ArrayList<>();
+		
+		return insertedStatement;
+	}
+	
+	public static Pair<Set<String>, Set<String>> predict(List<String> varFeatures, List<String> expFeatures){
+		Pair<Set<String>, Set<String>> conditions = new Pair<>();
+		//TODO : return conditions for left variable and right variables
+		return conditions;
+	}
+	
+	private static List<String> predict(String feature){
 		List<String> insertedStatement = new ArrayList<>();
 		
 		return insertedStatement;

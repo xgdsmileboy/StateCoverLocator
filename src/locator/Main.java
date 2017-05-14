@@ -8,14 +8,17 @@
 package locator;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import locator.common.config.Configure;
 import locator.common.config.Constant;
+import locator.common.java.CoverInfo;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
 import locator.core.Collector;
+import locator.core.run.path.Coverage;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
 
@@ -41,6 +44,8 @@ public class Main {
 		//step 1: collect all tests
 		Pair<Set<Integer>, Set<Integer>> allTests = Collector.collectAllTestCases(subject);
 		
+		//step 2: compute original coverage information
+		Map<String, CoverInfo> coverage = Coverage.computeCoverage(subject, allTests);
 		
 		//step 2: for each failed test collect running path
 		
