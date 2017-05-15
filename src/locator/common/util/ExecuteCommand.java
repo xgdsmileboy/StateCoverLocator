@@ -146,17 +146,6 @@ public class ExecuteCommand {
 		return result;
 	}
 
-	// public static void main(String[] args) {
-	// DynamicRuntimeInfo _dynamicRuntimeInfo = new DynamicRuntimeInfo("chart",
-	// 1);
-	// String[] cmds =
-	// InfoBuilder.buildDefects4JTestCommand(_dynamicRuntimeInfo,
-	// "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests",
-	// "test2947660");
-	//// newExecutedDefects4JTest(cmds);
-	// executeDefects4JTest(cmds, Constant.STR_TMP_D4J_OUTPUT_FILE);
-	// }
-
 	/**
 	 * execute d4j test command
 	 * 
@@ -176,8 +165,17 @@ public class ExecuteCommand {
 			file.getParentFile().mkdirs();
 			file.createNewFile();
 		}
+		executeCmd(command, Constant.STR_TMP_D4J_OUTPUT_FILE);
+	}
+	
+	public static void executePredict() throws IOException, InterruptedException{
+		String[] cmd = CmdFactory.createPredictCmd();
+		executeCmd(cmd, Constant.STR_TMP_ML_LOG_FILE);
+	}
+	
+	private static String executeCmd(String[] command, String outputFile) throws IOException, InterruptedException {
 		final Process process = Runtime.getRuntime().exec(command);
-		final FileOutputStream resultOutStream = new FileOutputStream(file);
+		final FileOutputStream resultOutStream = new FileOutputStream(outputFile);
 
 		new Thread() {
 			public void run() {
@@ -222,5 +220,7 @@ public class ExecuteCommand {
 		}.start();
 
 		process.waitFor();
+		
+		return resultOutStream.toString();
 	}
 }

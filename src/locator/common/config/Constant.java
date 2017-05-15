@@ -52,6 +52,7 @@ public class Constant {
 	public static String COMMAND_CP = null;
 	public static String COMMAND_JAVA = null;
 	public static String COMMAND_D4J = null;
+	public static String COMMAND_PYTHON = null;
 	
 	public static String DUMPER_HOME = null;
 	public static String PROJECT_HOME = null;
@@ -70,6 +71,10 @@ public class Constant {
 	 */
 	public final static String STR_TMP_D4J_OUTPUT_FILE = STR_OUT_PATH + "/d4j.out";
 	/**
+	 * out/ml.out
+	 */
+	public final static String STR_TMP_ML_LOG_FILE = STR_OUT_PATH + "/ml.out";
+	/**
 	 * out/path.out
 	 */
 	public final static String STR_TMP_INSTR_OUTPUT_FILE = STR_OUT_PATH + "/path.out";
@@ -86,6 +91,13 @@ public class Constant {
 	 */
 	public final static String STR_ALL_DATA_COLLECT_PATH = STR_OUT_PATH + "/data";
 
+	/**
+	 * Machine learning home path TODO : need to refactor
+	 */
+	private final static String STR_ML_HOME = "";
+	public final static String STR_ML_VAR_OUT_FILE_PATH = STR_ML_HOME + "/input/math/var";
+	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input/math/expr";
+	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output/math";
 	
 	static {
 		Properties prop = new Properties();
@@ -105,6 +117,8 @@ public class Constant {
 			Constant.COMMAND_MV = prop.getProperty("COMMAND.MV").replace("/", Constant.PATH_SEPARATOR) + " ";
 
 			Constant.COMMAND_D4J = prop.getProperty("COMMAND.D4J").replace("/", Constant.PATH_SEPARATOR) + " ";
+			
+			Constant.COMMAND_PYTHON = prop.getProperty("COMMAND.PYTHON").replace("/", Constant.PATH_SEPARATOR) + " ";
 			
 			in.close();
 		} catch (IOException e) {

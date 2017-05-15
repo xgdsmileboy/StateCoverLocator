@@ -233,7 +233,7 @@ public class Coverage {
 			String relJavaPath = clazz + ".java";
 			List<String> varFeatures = FeatureExtraction.extractVarFeature(srcPath, relJavaPath, line);
 			List<String> expFeatures = FeatureExtraction.extractExpFeature(srcPath, relJavaPath, line);
-			Pair<Set<String>, Set<String>> allConditions = Predictor.predict(varFeatures, expFeatures);
+			Pair<Set<String>, Set<String>> allConditions = Predictor.predict(subject, varFeatures, expFeatures);
 			// TODO : currently, only instrument predicates for left variables
 			Set<String> conditionsForRightVars = allConditions.getSecond();
 			// if predicted conditions are not empty for right variables,
