@@ -94,7 +94,7 @@ public class Constant {
 	/**
 	 * Machine learning home path TODO : need to refactor
 	 */
-	private final static String STR_ML_HOME = "";
+	public final static String STR_ML_HOME = "";
 	public final static String STR_ML_VAR_OUT_FILE_PATH = STR_ML_HOME + "/input/math/var";
 	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input/math/expr";
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output/math";

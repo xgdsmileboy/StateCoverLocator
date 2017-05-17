@@ -9,7 +9,6 @@ package locator.common.util;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
-import soot.coffi.constant_element_value;
 
 /**
  * @author Jiajun
@@ -72,7 +71,7 @@ public class CmdFactory {
 	public static String[] createPredictCmd(){
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(Constant.COMMAND_PYTHON);
-		// TODO: build python invoke command
+		stringBuffer.append(Constant.STR_ML_HOME + "/run_all.py");
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
 	}

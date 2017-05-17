@@ -66,7 +66,7 @@ public class Predictor {
 		}
 
 		file = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
-				+ subject.getId() + "expr.csv");
+				+ subject.getId() + ".expr.csv");
 		if (file.exists()) {
 			file.delete();
 		}
@@ -83,7 +83,7 @@ public class Predictor {
 		}
 
 		file = new File(Constant.STR_ML_PREDICT_EXP_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
-				+ subject.getId() + ".expr_pred.csv");
+				+ subject.getId() + ".join.csv");
 		BufferedReader bReader = null;
 		try {
 			bReader = new BufferedReader(new FileReader(file));
@@ -94,8 +94,16 @@ public class Predictor {
 		Set<String> rightConditions = new HashSet<>();
 		String line = null;
 		try {
+			//parse predict result "8	u	$ == null	0.8319194802"
 			while ((line = bReader.readLine()) != null) {
-				// TODO : parse the file
+				String[] columns = line.split("\t");
+				if(columns.length < 4){
+					LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
+					continue;
+				}
+				String varName = columns[1];
+				String condition = columns[2].replace("$", varName);
+				rightConditions.add(condition);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

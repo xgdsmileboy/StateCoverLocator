@@ -25,9 +25,11 @@ public class FeatureExtractionTest {
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 48);
+		System.out.println("Variables : ");
 		for (String string : vars.getFirst()) {
 			System.out.println(string);
 		}
+		System.out.println("Expressions : ");
 		for (String string : vars.getSecond()) {
 			System.out.println(string);
 		}
@@ -42,11 +44,9 @@ public class FeatureExtractionTest {
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
-		Assert.assertTrue(varFeature.size() == 2);
-		Assert.assertTrue(varFeature.get(0).equals("x	48	0	DatasetUtilities.java	calculatePieDatasetTotal	keys	List	getKeys()	0	0	NO_USE	?"));
-		Assert.assertTrue(varFeature.get(1).equals("x	48	0	DatasetUtilities.java	calculatePieDatasetTotal	dataset	PieDataset	PARAM_AS	1	1	CALLER_USE	?"));
-		Assert.assertTrue(expFeature.get(0).equals("x	48	0	DatasetUtilities.java	calculatePieDatasetTotal	keys	List	0	DEF	?"));
-		Assert.assertTrue(expFeature.get(1).equals("x	48	0	DatasetUtilities.java	calculatePieDatasetTotal	dataset	PieDataset	0	DEF	?"));
+		Assert.assertTrue(varFeature.size() == 1);
+		Assert.assertTrue(varFeature.get(0).equals("x	48	0	DatasetUtilities.java	calculatePieDatasetTotal	dataset	PieDataset	PARAM_AS	1	1	CALLER_USE	?"));
+		Assert.assertTrue(expFeature.get(0).equals("x	48	0	DatasetUtilities.java	calculatePieDatasetTotal	dataset	PieDataset	0	DEF	?"));
 	}
 	
 	@Test
