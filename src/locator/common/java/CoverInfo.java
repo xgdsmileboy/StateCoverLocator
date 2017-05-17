@@ -34,4 +34,9 @@ public class CoverInfo {
 	public int getPassedCount() {
 		return _passedCount;
 	}
+	
+	public void combine(CoverInfo coverInfo){
+		this._failedCount += coverInfo.getFailedCount();
+		this._passedCount += coverInfo.getPassedCount();
+	}
 }

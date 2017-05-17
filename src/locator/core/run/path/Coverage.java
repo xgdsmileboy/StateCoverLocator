@@ -203,7 +203,7 @@ public class Coverage {
 	 * @return <statementString, coverageInformation>,
 	 *         statementString:"MethodID#line"
 	 */
-	public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, List<String> allStatements,
+	public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, Set<String> allStatements,
 			Set<Integer> failedTests) {
 		Map<String, CoverInfo> coverage = new HashMap<>();
 		String srcPath = subject.getHome() + subject.getSsrc();

@@ -7,13 +7,17 @@
 
 package locator;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import locator.common.config.Configure;
 import locator.common.config.Constant;
+import locator.common.config.Identifier;
 import locator.common.java.CoverInfo;
+import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
@@ -47,14 +51,47 @@ public class Main {
 		//step 2: compute original coverage information
 		Map<String, CoverInfo> coverage = Coverage.computeCoverage(subject, allTests);
 		
-		//step 2: for each failed test collect running path
+		//step 3: compute statements covered by failed tests
+		Set<String> allCoveredStatement = Coverage.getAllCoveredStatement(subject, allTests.getFirst());
 		
-		//step 3: for each statement ran by failed tests, instrument predicates
+		//step 4: compute predicate coverage information
+		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement, allTests.getFirst());
 		
-		//step 4: run each test and collect coverage info
+		//step 5: combine all coverage informaiton
+		for(Entry<String, CoverInfo> entry : predicateCoverage.entrySet()){
+			CoverInfo coverInfo = coverage.get(entry.getKey()); 
+			if(coverInfo != null){
+				coverInfo.combine(entry.getValue());
+			} else {
+				coverage.put(entry.getKey(), entry.getValue());
+			}
+		}
 		
-		//step 5: calculate suspiciousness for each statement based on predefined formula
-				
+		//step 6: output coverage information to file
+		printCoverage(coverage);
+	}
+	
+	private static void printCoverage(Map<String, CoverInfo> coverage){
+		File file = new File(System.getProperty("user.dir") + "/coverage.csv");
+		if(file.exists()){
+			file.delete();
+		}
+		for(Entry<String, CoverInfo> entry : coverage.entrySet()){
+			StringBuffer stringBuffer = new StringBuffer();
+			String key = entry.getKey();
+			String[] info = key.split("#");
+			String methodString = Identifier.getMessage(Integer.parseInt(info[0]));
+			stringBuffer.append(methodString);
+			stringBuffer.append("#");
+			stringBuffer.append(info[1]);
+			stringBuffer.append("\t");
+			stringBuffer.append(entry.getValue().getFailedCount());
+			stringBuffer.append("\t");
+			stringBuffer.append(entry.getValue().getPassedCount());
+			stringBuffer.append("\n");
+			//view coverage.csv file
+			JavaFile.writeStringToFile(file, stringBuffer.toString(), true);
+		}
 	}
 	
 	public static void main(String[] args) {
