@@ -171,7 +171,7 @@ public class FeatureExtractionTest {
 	
 	@Test
 	public void test_extractAllFeatures_assignment2(){
-		//test assignment statement "runningTotal=runningTotal + value;"
+		//test assignment statement "num = num.divide(gcd);"
 		String path = System.getProperty("user.dir") + "/res/junitRes/math/math_3_buggy/src/main/java";
 		String relJavaPath = "/org/apache/commons/math3/fraction/BigFraction.java";
 		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 134);

@@ -106,6 +106,7 @@ public class Coverage {
 			}
 		}
 
+		Set<Integer> filteredPassedTests = new HashSet<>();
 		// run all passed test
 		for (Integer passTestID : allTests.getSecond()) {
 			String testString = Identifier.getMessage(passTestID);
@@ -127,19 +128,23 @@ public class Coverage {
 
 			Map<String, Integer> tmpCover = ExecutionPathBuilder
 					.collectAllExecutedStatements(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-			for (Entry<String, Integer> entry : tmpCover.entrySet()) {
-				String statement = entry.getKey();
-				Integer coverCount = entry.getValue();
-				CoverInfo coverInfo = coverage.get(statement);
-				if (coverInfo == null) {
-					coverInfo = new CoverInfo();
-					coverInfo.passedAdd(coverCount);
-					coverage.put(statement, coverInfo);
-				} else {
-					coverInfo.passedAdd(coverCount);
+			if(tmpCover.size() > 0){
+				filteredPassedTests.add(passTestID);
+				for (Entry<String, Integer> entry : tmpCover.entrySet()) {
+					String statement = entry.getKey();
+					Integer coverCount = entry.getValue();
+					CoverInfo coverInfo = coverage.get(statement);
+					if (coverInfo == null) {
+						coverInfo = new CoverInfo();
+						coverInfo.passedAdd(coverCount);
+						coverage.put(statement, coverInfo);
+					} else {
+						coverInfo.passedAdd(coverCount);
+					}
 				}
 			}
 		}
+		allTests.setSecond(filteredPassedTests);
 
 		Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
 

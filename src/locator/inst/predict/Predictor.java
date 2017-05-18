@@ -58,20 +58,18 @@ public class Predictor {
 		// TODO : return conditions for left variable and right variables
 		File file = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
 				+ subject.getId() + ".var.csv");
-		if (file.exists()) {
-			file.delete();
-		}
+		String varTitle = "id	line	column	filename	methodname	varname	vartype	lastassign	isparam	incondnum	bodyuse	if\n";
+		JavaFile.writeStringToFile(file, varTitle);
 		for (String string : varFeatures) {
-			JavaFile.writeStringToFile(file, string);
+			JavaFile.writeStringToFile(file, string + "\n", true);
 		}
 
 		file = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
 				+ subject.getId() + ".expr.csv");
-		if (file.exists()) {
-			file.delete();
-		}
+		String expTitle = "id	line	column	filename	methodname	varname	vartype	else	return	right\n";
+		JavaFile.writeStringToFile(file, expTitle);
 		for (String string : expFeatures) {
-			JavaFile.writeStringToFile(file, string);
+			JavaFile.writeStringToFile(file, string + "\n", true);
 		}
 
 		try {
@@ -83,7 +81,7 @@ public class Predictor {
 		}
 
 		file = new File(Constant.STR_ML_PREDICT_EXP_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
-				+ subject.getId() + ".join.csv");
+				+ subject.getId() + ".joint.csv");
 		BufferedReader bReader = null;
 		try {
 			bReader = new BufferedReader(new FileReader(file));
@@ -94,16 +92,19 @@ public class Predictor {
 		Set<String> rightConditions = new HashSet<>();
 		String line = null;
 		try {
-			//parse predict result "8	u	$ == null	0.8319194802"
-			while ((line = bReader.readLine()) != null) {
-				String[] columns = line.split("\t");
-				if(columns.length < 4){
-					LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
-					continue;
+			//filter title
+			if(bReader.readLine() != null){
+				//parse predict result "8	u	$ == null	0.8319194802"
+				while ((line = bReader.readLine()) != null) {
+					String[] columns = line.split("\t");
+					if(columns.length < 4){
+						LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
+						continue;
+					}
+					String varName = columns[1];
+					String condition = columns[2].replace("$", varName);
+					rightConditions.add(condition);
 				}
-				String varName = columns[1];
-				String condition = columns[2].replace("$", varName);
-				rightConditions.add(condition);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

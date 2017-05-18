@@ -96,7 +96,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		Constant.PROJECT_HOME = "/Users/Jiajun/Code/Java/manualD4J";
+		Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
 		
 		proceed();
 	}
