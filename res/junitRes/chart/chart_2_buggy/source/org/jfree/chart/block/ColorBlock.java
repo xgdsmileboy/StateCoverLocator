@@ -1,0 +1,115 @@
+package org.jfree.chart.block;
+import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import org.jfree.chart.util.PaintUtilities;
+import org.jfree.chart.util.SerialUtilities;
+import org.jfree.chart.util.Size2D;
+/** 
+ * A block that is filled with a single color.
+ */
+public class ColorBlock extends AbstractBlock implements Block {
+  /** 
+ * For serialization. 
+ */
+  static final long serialVersionUID=3383866145634010865L;
+  /** 
+ * The paint. 
+ */
+  private transient Paint paint;
+  /** 
+ * Creates a new block.
+ * @param paint  the paint (<code>null</code> not permitted).
+ * @param width  the width.
+ * @param height  the height.
+ */
+  public ColorBlock(  Paint paint,  double width,  double height){
+    if (paint == null) {
+      throw new IllegalArgumentException("Null 'paint' argument.");
+    }
+    this.paint=paint;
+    setWidth(width);
+    setHeight(height);
+  }
+  /** 
+ * Returns the paint.
+ * @return The paint (never <code>null</code>).
+ * @since 1.0.5
+ */
+  public Paint getPaint(){
+    return this.paint;
+  }
+  /** 
+ * Arranges the contents of the block, within the given constraints, and returns the block size.
+ * @param g2  the graphics device.
+ * @param constraint  the constraint (<code>null</code> not permitted).
+ * @return The block size (in Java2D units, never <code>null</code>).
+ */
+  public Size2D arrange(  Graphics2D g2,  RectangleConstraint constraint){
+    return new Size2D(calculateTotalWidth(getWidth()),calculateTotalHeight(getHeight()));
+  }
+  /** 
+ * Draws the block.
+ * @param g2  the graphics device.
+ * @param area  the area.
+ */
+  public void draw(  Graphics2D g2,  Rectangle2D area){
+    area=trimMargin(area);
+    drawBorder(g2,area);
+    area=trimBorder(area);
+    area=trimPadding(area);
+    g2.setPaint(this.paint);
+    g2.fill(area);
+  }
+  /** 
+ * Draws the block within the specified area.
+ * @param g2  the graphics device.
+ * @param area  the area.
+ * @param params  ignored (<code>null</code> permitted).
+ * @return Always <code>null</code>.
+ */
+  public Object draw(  Graphics2D g2,  Rectangle2D area,  Object params){
+    draw(g2,area);
+    return null;
+  }
+  /** 
+ * Tests this block for equality with an arbitrary object.
+ * @param obj  the object (<code>null</code> permitted).
+ * @return A boolean.
+ */
+  public boolean equals(  Object obj){
+    if (obj == this) {
+      return true;
+    }
+    if (!(obj instanceof ColorBlock)) {
+      return false;
+    }
+    ColorBlock that=(ColorBlock)obj;
+    if (!PaintUtilities.equal(this.paint,that.paint)) {
+      return false;
+    }
+    return super.equals(obj);
+  }
+  /** 
+ * Provides serialization support.
+ * @param stream  the output stream.
+ * @throws IOException if there is an I/O error.
+ */
+  private void writeObject(  ObjectOutputStream stream) throws IOException {
+    stream.defaultWriteObject();
+    SerialUtilities.writePaint(this.paint,stream);
+  }
+  /** 
+ * Provides serialization support.
+ * @param stream  the input stream.
+ * @throws IOException  if there is an I/O error.
+ * @throws ClassNotFoundException  if there is a classpath problem.
+ */
+  private void readObject(  ObjectInputStream stream) throws IOException, ClassNotFoundException {
+    stream.defaultReadObject();
+    this.paint=SerialUtilities.readPaint(stream);
+  }
+}
