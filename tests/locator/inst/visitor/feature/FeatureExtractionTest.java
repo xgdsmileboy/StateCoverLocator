@@ -168,4 +168,24 @@ public class FeatureExtractionTest {
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 2);
 	}
+	
+	@Test
+	public void test_extractAllFeatures_assignment2(){
+		//test assignment statement "runningTotal=runningTotal + value;"
+		String path = System.getProperty("user.dir") + "/res/junitRes/math/math_3_buggy/src/main/java";
+		String relJavaPath = "/org/apache/commons/math3/fraction/BigFraction.java";
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 134);
+//		System.out.println("Variables : ");
+//		for (String string : vars.getFirst()) {
+//			System.out.println(string);
+//		}
+//		System.out.println("Expressions : ");
+//		for (String string : vars.getSecond()) {
+//			System.out.println(string);
+//		}
+		List<String> varFeature = vars.getFirst();
+		List<String> expFeature = vars.getSecond();
+		Assert.assertTrue(varFeature.size() == expFeature.size());
+		Assert.assertTrue(varFeature.size() == 2);
+	}
 }
