@@ -17,7 +17,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.ShapeUtilities;
 /** 
- * A default implementation of the      {@link DrawingSupplier} interface.  All{@link Plot} instances have a new instance of this class installed bydefault.
+ * A default implementation of the                               {@link DrawingSupplier} interface.  All{@link Plot} instances have a new instance of this class installed bydefault.
  */
 public class DefaultDrawingSupplier implements DrawingSupplier, Cloneable, PublicCloneable, Serializable {
   /** 

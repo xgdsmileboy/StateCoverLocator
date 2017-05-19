@@ -2,7 +2,7 @@ package org.jfree.data;
 import java.io.Serializable;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * A (key, value) pair.  This class provides a default implementation of the      {@link KeyedValue} interface.
+ * A (key, value) pair.  This class provides a default implementation of the                              {@link KeyedValue} interface.
  */
 public class DefaultKeyedValue implements KeyedValue, Cloneable, PublicCloneable, Serializable {
   /** 

@@ -13,7 +13,7 @@ import java.io.Serializable;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.Size2D;
 /** 
- * A text item, with an associated font, that fits on a single line (see     {@link TextLine}).  Instances of the class are immutable.
+ * A text item, with an associated font, that fits on a single line (see                              {@link TextLine}).  Instances of the class are immutable.
  */
 public class TextFragment implements Serializable {
   /** 

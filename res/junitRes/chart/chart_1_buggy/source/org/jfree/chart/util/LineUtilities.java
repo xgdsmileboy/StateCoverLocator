@@ -2,7 +2,7 @@ package org.jfree.chart.util;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 /** 
- * Some utility methods for      {@link Line2D} objects.
+ * Some utility methods for                               {@link Line2D} objects.
  * @since 1.0.12
  */
 public class LineUtilities {

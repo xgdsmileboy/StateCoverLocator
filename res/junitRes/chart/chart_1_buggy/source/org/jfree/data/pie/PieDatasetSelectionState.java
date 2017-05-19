@@ -3,7 +3,7 @@ import org.jfree.data.general.*;
 import java.io.Serializable;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * Returns information about the selection state of items in an     {@link PieDataset}.  Classes that implement this interface must also implement      {@link PublicCloneable} to ensure that charts and datasets can becorrectly cloned.  Likewise, classes implementing this interface must also implement  {@link Serializable}. <br><br> The selection state might be part of a dataset implementation, or it could be maintained in parallel with a dataset implementation that doesn't directly support selection state.
+ * Returns information about the selection state of items in an                              {@link PieDataset}.  Classes that implement this interface must also implement                               {@link PublicCloneable} to ensure that charts and datasets can becorrectly cloned.  Likewise, classes implementing this interface must also implement  {@link Serializable}. <br><br> The selection state might be part of a dataset implementation, or it could be maintained in parallel with a dataset implementation that doesn't directly support selection state.
  * @since 1.2.0
  */
 public interface PieDatasetSelectionState extends DatasetSelectionState {

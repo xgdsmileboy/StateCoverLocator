@@ -2,7 +2,7 @@ package org.jfree.data;
 import java.util.Comparator;
 import org.jfree.chart.util.SortOrder;
 /** 
- * A utility class that can compare and order two      {@link KeyedValue} instancesand sort them into ascending or descending order by key or by value.
+ * A utility class that can compare and order two                               {@link KeyedValue} instancesand sort them into ascending or descending order by key or by value.
  */
 public class KeyedValueComparator implements Comparator {
   /** 
@@ -40,7 +40,7 @@ public class KeyedValueComparator implements Comparator {
     return this.order;
   }
   /** 
- * Compares two      {@link KeyedValue} instances and returns an<code>int</code> that indicates the relative order of the two objects.
+ * Compares two                               {@link KeyedValue} instances and returns an<code>int</code> that indicates the relative order of the two objects.
  * @param o1  object 1.
  * @param o2  object 2.
  * @return An int indicating the relative order of the objects.

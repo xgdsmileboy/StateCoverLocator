@@ -16,6 +16,8 @@ import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
+import locator.inst.Instrument;
+import locator.inst.visitor.DeInstrumentVisitor;
 
 /**
  * @author Jiajun
@@ -28,8 +30,9 @@ public class CollectorTest {
 		Constant.PROJECT_HOME = "res/junitRes";
 		String failedTestString = "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests#void#test2947660#?";
 		int failedID = Identifier.getIdentifier(failedTestString);
-		Subject subject = new Subject("chart", 1, "/source", "tests", "build", "build-tests");
-		
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "/build", "/build-tests");
+		Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
+		Instrument.execute(subject.getHome() + subject.getTsrc(), new DeInstrumentVisitor());
 		Pair<Set<Integer>, Set<Integer>> allTests = Collector.collectAllTestCases(subject);
 		
 		Assert.assertNotNull(allTests);

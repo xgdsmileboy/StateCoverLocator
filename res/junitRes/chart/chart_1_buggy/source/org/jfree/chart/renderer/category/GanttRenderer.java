@@ -64,7 +64,7 @@ public class GanttRenderer extends IntervalBarRenderer implements Serializable {
     return this.completePaint;
   }
   /** 
- * Sets the paint used to show the percentage complete and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the paint used to show the percentage complete and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getCompletePaint()
  */
@@ -84,7 +84,7 @@ public class GanttRenderer extends IntervalBarRenderer implements Serializable {
     return this.incompletePaint;
   }
   /** 
- * Sets the paint used to show the percentage incomplete and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the paint used to show the percentage incomplete and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getIncompletePaint()
  */
@@ -104,7 +104,7 @@ public class GanttRenderer extends IntervalBarRenderer implements Serializable {
     return this.startPercent;
   }
   /** 
- * Sets the position of the start of the progress indicator, as a percentage of the bar width, and sends a      {@link RendererChangeEvent} toall registered listeners.
+ * Sets the position of the start of the progress indicator, as a percentage of the bar width, and sends a                               {@link RendererChangeEvent} toall registered listeners.
  * @param percent  the percent.
  * @see #getStartPercent()
  */
@@ -121,7 +121,7 @@ public class GanttRenderer extends IntervalBarRenderer implements Serializable {
     return this.endPercent;
   }
   /** 
- * Sets the position of the end of the progress indicator, as a percentage of the bar width, and sends a      {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the position of the end of the progress indicator, as a percentage of the bar width, and sends a                               {@link RendererChangeEvent} to allregistered listeners.
  * @param percent  the percent.
  * @see #getEndPercent()
  */

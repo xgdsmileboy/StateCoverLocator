@@ -7,7 +7,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
 /** 
- * A standard item label generator for use with      {@link XYZDataset} data.  Eachvalue can be formatted as a number or as a date.
+ * A standard item label generator for use with                               {@link XYZDataset} data.  Eachvalue can be formatted as a number or as a date.
  */
 public class StandardXYZToolTipGenerator extends StandardXYToolTipGenerator implements XYZToolTipGenerator, Serializable {
   /** 
@@ -98,7 +98,7 @@ public class StandardXYZToolTipGenerator extends StandardXYToolTipGenerator impl
     return result;
   }
   /** 
- * Creates the array of items that can be passed to the     {@link MessageFormat} class for creating labels.
+ * Creates the array of items that can be passed to the                              {@link MessageFormat} class for creating labels.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param series  the series (zero-based index).
  * @param item  the item (zero-based index).

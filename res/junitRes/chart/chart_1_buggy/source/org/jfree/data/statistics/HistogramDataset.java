@@ -28,7 +28,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset implements Inter
  */
   private HistogramType type;
   /** 
- * Creates a new (empty) dataset with a default type of     {@link HistogramType}.FREQUENCY.
+ * Creates a new (empty) dataset with a default type of                              {@link HistogramType}.FREQUENCY.
  */
   public HistogramDataset(){
     this.list=new ArrayList();
@@ -42,7 +42,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset implements Inter
     return this.type;
   }
   /** 
- * Sets the histogram type and sends a      {@link DatasetChangeEvent} to allregistered listeners.
+ * Sets the histogram type and sends a                               {@link DatasetChangeEvent} to allregistered listeners.
  * @param type  the type (<code>null</code> not permitted).
  */
   public void setType(  HistogramType type){
@@ -276,7 +276,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset implements Inter
     return new Double(bin.getEndBoundary());
   }
   /** 
- * Returns the start y-value for a bin (which is the same as the y-value, this method exists only to support the general form of the     {@link IntervalXYDataset} interface).
+ * Returns the start y-value for a bin (which is the same as the y-value, this method exists only to support the general form of the                              {@link IntervalXYDataset} interface).
  * @param series  the series index (in the range <code>0</code> to<code>getSeriesCount() - 1</code>).
  * @param item  the item index (zero based).
  * @return The y-value.
@@ -286,7 +286,7 @@ public class HistogramDataset extends AbstractIntervalXYDataset implements Inter
     return getY(series,item);
   }
   /** 
- * Returns the end y-value for a bin (which is the same as the y-value, this method exists only to support the general form of the     {@link IntervalXYDataset} interface).
+ * Returns the end y-value for a bin (which is the same as the y-value, this method exists only to support the general form of the                              {@link IntervalXYDataset} interface).
  * @param series  the series index (in the range <code>0</code> to<code>getSeriesCount() - 1</code>).
  * @param item  the item index (zero based).
  * @return The Y value.

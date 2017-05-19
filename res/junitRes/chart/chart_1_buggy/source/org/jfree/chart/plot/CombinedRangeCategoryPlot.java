@@ -61,7 +61,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot implements PlotChang
     return this.gap;
   }
   /** 
- * Sets the amount of space between subplots and sends a     {@link PlotChangeEvent} to all registered listeners.
+ * Sets the amount of space between subplots and sends a                              {@link PlotChangeEvent} to all registered listeners.
  * @param gap  the gap between subplots (in Java2D units).
  */
   public void setGap(  double gap){
@@ -69,14 +69,14 @@ public class CombinedRangeCategoryPlot extends CategoryPlot implements PlotChang
     fireChangeEvent();
   }
   /** 
- * Adds a subplot (with a default 'weight' of 1) and sends a     {@link PlotChangeEvent} to all registered listeners.<br><br> You must ensure that the subplot has a non-null domain axis.  The range axis for the subplot will be set to <code>null</code>.
+ * Adds a subplot (with a default 'weight' of 1) and sends a                              {@link PlotChangeEvent} to all registered listeners.<br><br> You must ensure that the subplot has a non-null domain axis.  The range axis for the subplot will be set to <code>null</code>.
  * @param subplot  the subplot (<code>null</code> not permitted).
  */
   public void add(  CategoryPlot subplot){
     add(subplot,1);
   }
   /** 
- * Adds a subplot and sends a      {@link PlotChangeEvent} to all registeredlisteners. <br><br> You must ensure that the subplot has a non-null domain axis.  The range axis for the subplot will be set to <code>null</code>.
+ * Adds a subplot and sends a                               {@link PlotChangeEvent} to all registeredlisteners. <br><br> You must ensure that the subplot has a non-null domain axis.  The range axis for the subplot will be set to <code>null</code>.
  * @param subplot  the subplot (<code>null</code> not permitted).
  * @param weight  the weight (must be >= 1).
  */
@@ -328,7 +328,7 @@ public class CombinedRangeCategoryPlot extends CategoryPlot implements PlotChang
     }
   }
   /** 
- * Receives a      {@link PlotChangeEvent} and responds by notifying alllisteners.
+ * Receives a                               {@link PlotChangeEvent} and responds by notifying alllisteners.
  * @param event  the event.
  */
   public void plotChanged(  PlotChangeEvent event){

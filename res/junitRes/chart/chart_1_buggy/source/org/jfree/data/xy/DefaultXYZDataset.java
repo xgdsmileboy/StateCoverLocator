@@ -7,7 +7,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.event.DatasetChangeEvent;
 /** 
- * A default implementation of the      {@link XYZDataset} interface that storesdata values in arrays of double primitives.
+ * A default implementation of the                               {@link XYZDataset} interface that storesdata values in arrays of double primitives.
  * @since 1.0.2
  */
 public class DefaultXYZDataset extends AbstractXYZDataset implements XYZDataset, PublicCloneable {
@@ -149,7 +149,7 @@ public class DefaultXYZDataset extends AbstractXYZDataset implements XYZDataset,
     return new Double(getZValue(series,item));
   }
   /** 
- * Adds a series or if a series with the same key already exists replaces the data for that series, then sends a      {@link DatasetChangeEvent} toall registered listeners.
+ * Adds a series or if a series with the same key already exists replaces the data for that series, then sends a                               {@link DatasetChangeEvent} toall registered listeners.
  * @param seriesKey  the series key (<code>null</code> not permitted).
  * @param data  the data (must be an array with length 3, containing threearrays of equal length, the first containing the x-values, the second containing the y-values and the third containing the z-values).
  */
@@ -178,7 +178,7 @@ public class DefaultXYZDataset extends AbstractXYZDataset implements XYZDataset,
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a series from the dataset, then sends a     {@link DatasetChangeEvent} to all registered listeners.
+ * Removes a series from the dataset, then sends a                              {@link DatasetChangeEvent} to all registered listeners.
  * @param seriesKey  the series key (<code>null</code> not permitted).
  */
   public void removeSeries(  Comparable seriesKey){

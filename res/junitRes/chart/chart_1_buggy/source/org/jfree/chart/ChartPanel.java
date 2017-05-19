@@ -75,7 +75,7 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DatasetAndSelection;
 import org.jfree.data.general.DatasetSelectionState;
 /** 
- * A Swing GUI component for displaying a      {@link JFreeChart} object.<P> The panel registers with the chart to receive notification of changes to any component of the chart.  The chart is redrawn automatically whenever this notification is received.
+ * A Swing GUI component for displaying a                               {@link JFreeChart} object.<P> The panel registers with the chart to receive notification of changes to any component of the chart.  The chart is redrawn automatically whenever this notification is received.
  */
 public class ChartPanel extends JPanel implements ChartChangeListener, ChartProgressListener, ActionListener, MouseListener, MouseMotionListener, OverlayChangeListener, RenderingSource, Printable, Serializable {
   /** 
@@ -384,7 +384,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener, ChartProg
  */
   private ZoomHandler zoomHandler;
   /** 
- * A list of      {@link DatasetAndSelection} objects.
+ * A list of                               {@link DatasetAndSelection} objects.
  * @since 1.2.0
  */
   private List selectionStates=new java.util.ArrayList();
@@ -1406,7 +1406,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener, ChartProg
     }
   }
   /** 
- * Receives notification of mouse clicks on the panel.  These are translated and passed on to any registered      {@link ChartMouseListener}s.
+ * Receives notification of mouse clicks on the panel.  These are translated and passed on to any registered                               {@link ChartMouseListener}s.
  * @param event  Information about the mouse event.
  */
   public void mouseClicked(  MouseEvent event){
@@ -1462,7 +1462,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener, ChartProg
     plot.setNotify(savedNotify);
   }
   /** 
- * Decreases the length of the domain axis, centered about the given coordinate on the screen.  The length of the domain axis is reduced by the value of      {@link #getZoomInFactor()}.
+ * Decreases the length of the domain axis, centered about the given coordinate on the screen.  The length of the domain axis is reduced by the value of                               {@link #getZoomInFactor()}.
  * @param x  the x coordinate (in screen coordinates).
  * @param y  the y-coordinate (in screen coordinates).
  */
@@ -1477,7 +1477,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener, ChartProg
     }
   }
   /** 
- * Decreases the length of the range axis, centered about the given coordinate on the screen.  The length of the range axis is reduced by the value of      {@link #getZoomInFactor()}.
+ * Decreases the length of the range axis, centered about the given coordinate on the screen.  The length of the range axis is reduced by the value of                               {@link #getZoomInFactor()}.
  * @param x  the x-coordinate (in screen coordinates).
  * @param y  the y coordinate (in screen coordinates).
  */
@@ -1508,7 +1508,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener, ChartProg
     plot.setNotify(savedNotify);
   }
   /** 
- * Increases the length of the domain axis, centered about the given coordinate on the screen.  The length of the domain axis is increased by the value of      {@link #getZoomOutFactor()}.
+ * Increases the length of the domain axis, centered about the given coordinate on the screen.  The length of the domain axis is increased by the value of                               {@link #getZoomOutFactor()}.
  * @param x  the x coordinate (in screen coordinates).
  * @param y  the y-coordinate (in screen coordinates).
  */
@@ -1523,7 +1523,7 @@ public class ChartPanel extends JPanel implements ChartChangeListener, ChartProg
     }
   }
   /** 
- * Increases the length the range axis, centered about the given coordinate on the screen.  The length of the range axis is increased by the value of      {@link #getZoomOutFactor()}.
+ * Increases the length the range axis, centered about the given coordinate on the screen.  The length of the range axis is increased by the value of                               {@link #getZoomOutFactor()}.
  * @param x  the x coordinate (in screen coordinates).
  * @param y  the y-coordinate (in screen coordinates).
  */

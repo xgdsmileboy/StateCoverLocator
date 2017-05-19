@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 /** 
- * Represents a single month.  This class is immutable, which is a requirement for all      {@link RegularTimePeriod} subclasses.
+ * Represents a single month.  This class is immutable, which is a requirement for all                               {@link RegularTimePeriod} subclasses.
  */
 public class Month extends RegularTimePeriod implements Serializable {
   /** 
@@ -113,7 +113,7 @@ public class Month extends RegularTimePeriod implements Serializable {
     return this.month;
   }
   /** 
- * Returns the first millisecond of the month.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the     {@link #peg(Calendar)} method.
+ * Returns the first millisecond of the month.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                              {@link #peg(Calendar)} method.
  * @return The first millisecond of the month.
  * @see #getLastMillisecond()
  */
@@ -121,7 +121,7 @@ public class Month extends RegularTimePeriod implements Serializable {
     return this.firstMillisecond;
   }
   /** 
- * Returns the last millisecond of the month.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the     {@link #peg(Calendar)} method.
+ * Returns the last millisecond of the month.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                              {@link #peg(Calendar)} method.
  * @return The last millisecond of the month.
  * @see #getFirstMillisecond()
  */
@@ -138,7 +138,7 @@ public class Month extends RegularTimePeriod implements Serializable {
     this.lastMillisecond=getLastMillisecond(calendar);
   }
   /** 
- * Returns the month preceding this one.  Note that the returned     {@link Month} is "pegged" using the default time-zone, irrespective ofthe time-zone used to peg of the current month (which is not recorded anywhere).  See the  {@link #peg(Calendar)} method.
+ * Returns the month preceding this one.  Note that the returned                              {@link Month} is "pegged" using the default time-zone, irrespective ofthe time-zone used to peg of the current month (which is not recorded anywhere).  See the  {@link #peg(Calendar)} method.
  * @return The month preceding this one.
  */
   public RegularTimePeriod previous(){
@@ -157,7 +157,7 @@ public class Month extends RegularTimePeriod implements Serializable {
     return result;
   }
   /** 
- * Returns the month following this one.  Note that the returned     {@link Month} is "pegged" using the default time-zone, irrespective ofthe time-zone used to peg of the current month (which is not recorded anywhere).  See the  {@link #peg(Calendar)} method.
+ * Returns the month following this one.  Note that the returned                              {@link Month} is "pegged" using the default time-zone, irrespective ofthe time-zone used to peg of the current month (which is not recorded anywhere).  See the  {@link #peg(Calendar)} method.
  * @return The month following this one.
  */
   public RegularTimePeriod next(){

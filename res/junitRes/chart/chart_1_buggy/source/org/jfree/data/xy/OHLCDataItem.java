@@ -2,7 +2,7 @@ package org.jfree.data.xy;
 import java.io.Serializable;
 import java.util.Date;
 /** 
- * Represents a single (open-high-low-close) data item in an      {@link DefaultOHLCDataset}.  This data item is commonly used to summarise the trading activity of a financial commodity for a fixed period (most often one day).
+ * Represents a single (open-high-low-close) data item in an                               {@link DefaultOHLCDataset}.  This data item is commonly used to summarise the trading activity of a financial commodity for a fixed period (most often one day).
  */
 public class OHLCDataItem implements Comparable, Serializable {
   /** 

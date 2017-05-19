@@ -1,7 +1,7 @@
 package org.jfree.chart.block;
 import org.jfree.chart.entity.EntityCollection;
 /** 
- * Used to return results from the draw() method in the      {@link Block}class.
+ * Used to return results from the draw() method in the                               {@link Block}class.
  */
 public class BlockResult implements EntityBlockResult {
   /** 

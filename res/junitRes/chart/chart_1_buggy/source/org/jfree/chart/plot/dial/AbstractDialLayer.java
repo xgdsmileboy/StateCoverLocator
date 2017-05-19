@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.event.EventListenerList;
 import org.jfree.chart.util.HashUtilities;
 /** 
- * A base class that can be used to implement a      {@link DialLayer}.  It includes an event notification mechanism.
+ * A base class that can be used to implement a                               {@link DialLayer}.  It includes an event notification mechanism.
  * @since 1.0.7
  */
 public abstract class AbstractDialLayer implements DialLayer {
@@ -35,7 +35,7 @@ public abstract class AbstractDialLayer implements DialLayer {
     return this.visible;
   }
   /** 
- * Sets the flag that determines whether or not this layer is drawn by the plot, and sends a      {@link DialLayerChangeEvent} to all registeredlisteners.
+ * Sets the flag that determines whether or not this layer is drawn by the plot, and sends a                               {@link DialLayerChangeEvent} to all registeredlisteners.
  * @param visible  the flag.
  * @see #isVisible()
  */
@@ -103,7 +103,7 @@ public abstract class AbstractDialLayer implements DialLayer {
     return list.contains(listener);
   }
   /** 
- * Notifies all registered listeners that the dial layer has changed. The      {@link DialLayerChangeEvent} provides information about the change.
+ * Notifies all registered listeners that the dial layer has changed. The                               {@link DialLayerChangeEvent} provides information about the change.
  * @param event  information about the change to the axis.
  */
   protected void notifyListeners(  DialLayerChangeEvent event){

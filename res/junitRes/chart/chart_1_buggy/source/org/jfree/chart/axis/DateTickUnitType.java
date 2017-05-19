@@ -3,7 +3,7 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.Calendar;
 /** 
- * An enumeration of the unit types for a      {@link DateTickUnit} instance.
+ * An enumeration of the unit types for a                               {@link DateTickUnit} instance.
  * @since 1.0.13
  */
 public class DateTickUnitType implements Serializable {

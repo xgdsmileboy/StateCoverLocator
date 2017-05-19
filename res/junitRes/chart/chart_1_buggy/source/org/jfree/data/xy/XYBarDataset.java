@@ -4,7 +4,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.event.DatasetChangeListener;
 /** 
- * A dataset wrapper class that converts a standard      {@link XYDataset} into an{@link IntervalXYDataset} suitable for use in creating XY bar charts.
+ * A dataset wrapper class that converts a standard                               {@link XYDataset} into an{@link IntervalXYDataset} suitable for use in creating XY bar charts.
  */
 public class XYBarDataset extends AbstractIntervalXYDataset implements IntervalXYDataset, DatasetChangeListener, PublicCloneable {
   /** 
@@ -43,7 +43,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset implements IntervalX
     return this.barWidth;
   }
   /** 
- * Sets the bar width and sends a      {@link DatasetChangeEvent} to allregistered listeners.
+ * Sets the bar width and sends a                               {@link DatasetChangeEvent} to allregistered listeners.
  * @param barWidth  the bar width.
  * @see #getBarWidth()
  * @since 1.0.4
@@ -230,7 +230,7 @@ public class XYBarDataset extends AbstractIntervalXYDataset implements IntervalX
     return true;
   }
   /** 
- * Returns an independent copy of the dataset.  Note that: <ul> <li>the underlying dataset is only cloned if it implements the     {@link PublicCloneable} interface;</li><li>the listeners registered with this dataset are not carried over to the cloned dataset.</li> </ul>
+ * Returns an independent copy of the dataset.  Note that: <ul> <li>the underlying dataset is only cloned if it implements the                              {@link PublicCloneable} interface;</li><li>the listeners registered with this dataset are not carried over to the cloned dataset.</li> </ul>
  * @return An independent copy of the dataset.
  * @throws CloneNotSupportedException if the dataset cannot be cloned forany reason.
  */

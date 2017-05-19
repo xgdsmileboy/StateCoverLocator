@@ -3,7 +3,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import org.jfree.data.DefaultKeyedValues2D;
 /** 
- * A dataset that can be used with the      {@link org.jfree.chart.plot.WaferMapPlot}class.
+ * A dataset that can be used with the                               {@link org.jfree.chart.plot.WaferMapPlot}class.
  */
 public class WaferMapDataset extends AbstractDataset {
   /** 

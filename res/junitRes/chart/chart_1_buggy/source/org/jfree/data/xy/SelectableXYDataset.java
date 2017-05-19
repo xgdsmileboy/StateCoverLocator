@@ -1,6 +1,6 @@
 package org.jfree.data.xy;
 /** 
- * An      {@link XYDataset} that has the ability to track selection state.
+ * An                               {@link XYDataset} that has the ability to track selection state.
  */
 public interface SelectableXYDataset {
   /** 

@@ -4,7 +4,7 @@ import java.util.Date;
 import org.jfree.chart.event.DatasetChangeInfo;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * A simple implementation of the      {@link OHLCDataset} interface.  See alsothe  {@link DefaultOHLCDataset} class, which provides another implementationthat is very similar.
+ * A simple implementation of the                               {@link OHLCDataset} interface.  See alsothe  {@link DefaultOHLCDataset} class, which provides another implementationthat is very similar.
  */
 public class DefaultHighLowDataset extends AbstractXYDataset implements OHLCDataset, SelectableXYDataset, XYDatasetSelectionState, PublicCloneable {
   /** 
@@ -72,7 +72,7 @@ public class DefaultHighLowDataset extends AbstractXYDataset implements OHLCData
     return this.seriesKey;
   }
   /** 
- * Returns the x-value for one item in a series.  The value returned is a <code>Long</code> instance generated from the underlying <code>Date</code> object.  To avoid generating a new object instance, you might prefer to call      {@link #getXValue(int,int)}.
+ * Returns the x-value for one item in a series.  The value returned is a <code>Long</code> instance generated from the underlying <code>Date</code> object.  To avoid generating a new object instance, you might prefer to call                               {@link #getXValue(int,int)}.
  * @param series  the series (zero-based index).
  * @param item  the item (zero-based index).
  * @return The x-value.
@@ -93,7 +93,7 @@ public class DefaultHighLowDataset extends AbstractXYDataset implements OHLCData
     return this.date[item];
   }
   /** 
- * Returns the y-value for one item in a series. <p> This method (from the      {@link XYDataset} interface) is mapped to the{@link #getCloseValue(int,int)} method.
+ * Returns the y-value for one item in a series. <p> This method (from the                               {@link XYDataset} interface) is mapped to the{@link #getCloseValue(int,int)} method.
  * @param series  the series (zero-based index).
  * @param item  the item (zero-based index).
  * @return The y-value.

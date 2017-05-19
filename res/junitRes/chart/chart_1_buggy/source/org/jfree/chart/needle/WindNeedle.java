@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 /** 
- * A needle that indicates wind direction, for use with the     {@link org.jfree.chart.plot.CompassPlot} class.
+ * A needle that indicates wind direction, for use with the                              {@link org.jfree.chart.plot.CompassPlot} class.
  */
 public class WindNeedle extends ArrowNeedle implements Cloneable, Serializable {
   /** 

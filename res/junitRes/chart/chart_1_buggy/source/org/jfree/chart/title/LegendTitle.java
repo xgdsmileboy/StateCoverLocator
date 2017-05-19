@@ -137,7 +137,7 @@ public class LegendTitle extends Title implements Cloneable, PublicCloneable, Se
     return this.sources;
   }
   /** 
- * Sets the legend item sources and sends a      {@link TitleChangeEvent} toall registered listeners.
+ * Sets the legend item sources and sends a                               {@link TitleChangeEvent} toall registered listeners.
  * @param sources  the sources (<code>null</code> not permitted).
  */
   public void setSources(  LegendItemSource[] sources){
@@ -155,7 +155,7 @@ public class LegendTitle extends Title implements Cloneable, PublicCloneable, Se
     return this.backgroundPaint;
   }
   /** 
- * Sets the background paint for the legend and sends a     {@link TitleChangeEvent} to all registered listeners.
+ * Sets the background paint for the legend and sends a                              {@link TitleChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> permitted).
  */
   public void setBackgroundPaint(  Paint paint){
@@ -219,7 +219,7 @@ public class LegendTitle extends Title implements Cloneable, PublicCloneable, Se
     return this.legendItemGraphicPadding;
   }
   /** 
- * Sets the padding that will be applied to each item graphic in the legend and sends a      {@link TitleChangeEvent} to all registered listeners.
+ * Sets the padding that will be applied to each item graphic in the legend and sends a                               {@link TitleChangeEvent} to all registered listeners.
  * @param padding  the padding (<code>null</code> not permitted).
  */
   public void setLegendItemGraphicPadding(  RectangleInsets padding){
@@ -237,7 +237,7 @@ public class LegendTitle extends Title implements Cloneable, PublicCloneable, Se
     return this.itemFont;
   }
   /** 
- * Sets the item font and sends a      {@link TitleChangeEvent} toall registered listeners.
+ * Sets the item font and sends a                               {@link TitleChangeEvent} toall registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  */
   public void setItemFont(  Font font){

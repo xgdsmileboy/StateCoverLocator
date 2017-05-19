@@ -19,7 +19,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A standard frame for the      {@link DialPlot} class.
+ * A standard frame for the                               {@link DialPlot} class.
  * @since 1.0.7
  */
 public class ArcDialFrame extends AbstractDialLayer implements DialFrame, Cloneable, PublicCloneable, Serializable {
@@ -84,7 +84,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame, Clonea
     return this.backgroundPaint;
   }
   /** 
- * Sets the background paint and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the background paint and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getBackgroundPaint()
  */
@@ -104,7 +104,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame, Clonea
     return this.foregroundPaint;
   }
   /** 
- * Sets the foreground paint and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the foreground paint and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getForegroundPaint()
  */
@@ -124,7 +124,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame, Clonea
     return this.stroke;
   }
   /** 
- * Sets the stroke and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the stroke and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getStroke()
  */
@@ -144,7 +144,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame, Clonea
     return this.innerRadius;
   }
   /** 
- * Sets the inner radius and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the inner radius and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param radius  the inner radius.
  * @see #getInnerRadius()
  */
@@ -164,7 +164,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame, Clonea
     return this.outerRadius;
   }
   /** 
- * Sets the outer radius and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the outer radius and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param radius  the outer radius.
  * @see #getOuterRadius()
  */
@@ -184,7 +184,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame, Clonea
     return this.startAngle;
   }
   /** 
- * Sets the start angle and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the start angle and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param angle  the angle.
  * @see #getStartAngle()
  */
@@ -201,7 +201,7 @@ public class ArcDialFrame extends AbstractDialLayer implements DialFrame, Clonea
     return this.extent;
   }
   /** 
- * Sets the extent and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the extent and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param extent  the extent.
  * @see #getExtent()
  */

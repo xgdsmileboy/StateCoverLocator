@@ -1,7 +1,7 @@
 package org.jfree.chart.encoders;
 import java.util.Hashtable;
 /** 
- * Factory class for returning      {@link ImageEncoder}s for different     {@link ImageFormat}s.
+ * Factory class for returning                               {@link ImageEncoder}s for different                              {@link ImageFormat}s.
  */
 public class ImageEncoderFactory {
   private static Hashtable encoders=null;

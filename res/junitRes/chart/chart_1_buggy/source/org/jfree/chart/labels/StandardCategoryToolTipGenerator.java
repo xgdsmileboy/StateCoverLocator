@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A standard tool tip generator that can be used with a     {@link org.jfree.chart.renderer.category.CategoryItemRenderer}.
+ * A standard tool tip generator that can be used with a                              {@link org.jfree.chart.renderer.category.CategoryItemRenderer}.
  */
 public class StandardCategoryToolTipGenerator extends AbstractCategoryItemLabelGenerator implements CategoryToolTipGenerator, Serializable {
   /** 

@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 /** 
- * A needle for use with the      {@link org.jfree.chart.plot.CompassPlot} class.
+ * A needle for use with the                               {@link org.jfree.chart.plot.CompassPlot} class.
  */
 public class PlumNeedle extends MeterNeedle implements Cloneable, Serializable {
   /** 

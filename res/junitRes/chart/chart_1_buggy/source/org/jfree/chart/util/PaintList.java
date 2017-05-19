@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 /** 
- * A table of      {@link Paint} objects.
+ * A table of                               {@link Paint} objects.
  */
 public class PaintList extends AbstractObjectList {
   /** 
@@ -14,7 +14,7 @@ public class PaintList extends AbstractObjectList {
     super();
   }
   /** 
- * Returns a      {@link Paint} object from the list.
+ * Returns a                               {@link Paint} object from the list.
  * @param index the index (zero-based).
  * @return The object.
  */
@@ -22,7 +22,7 @@ public class PaintList extends AbstractObjectList {
     return (Paint)get(index);
   }
   /** 
- * Sets the      {@link Paint} for an item in the list.  The list is expandedif necessary.
+ * Sets the                               {@link Paint} for an item in the list.  The list is expandedif necessary.
  * @param index  the index (zero-based).
  * @param paint  the {@link Paint}.
  */

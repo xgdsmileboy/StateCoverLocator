@@ -1,6 +1,6 @@
 package org.jfree.data.category;
 /** 
- * A      {@link CategoryDataset} that has the ability to track selection state.
+ * A                               {@link CategoryDataset} that has the ability to track selection state.
  */
 public interface SelectableCategoryDataset {
   /** 

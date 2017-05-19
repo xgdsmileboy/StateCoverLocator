@@ -109,17 +109,14 @@ class RemoveStatementVisitor extends ASTVisitor{
 
 			} else if(astNode instanceof IfStatement){
 				IfStatement ifStatement = (IfStatement) astNode;
-				if(ifStatement.getThenStatement() instanceof Block && ifStatement.getElseStatement() instanceof Block){
+				if(ifStatement.getThenStatement() instanceof Block && ifStatement.getElseStatement() == null){
 					Block thenBlock = (Block) ifStatement.getThenStatement();
-					Block elseBlock = (Block) ifStatement.getElseStatement();
-					if(thenBlock.statements().size()==1 && elseBlock.statements().size() == 1){
+					if(thenBlock.statements().size()==1){
 						Statement thenStatement = (Statement) thenBlock.statements().get(0);
-						Statement elseStatement = (Statement) elseBlock.statements().get(0);
-						if(thenStatement instanceof ExpressionStatement && elseStatement instanceof ExpressionStatement){
+						if(thenStatement instanceof ExpressionStatement){
 							ExpressionStatement thenExpression = (ExpressionStatement) thenStatement;
-							ExpressionStatement elseExpression = (ExpressionStatement) elseStatement;
-							if(thenExpression.getExpression() instanceof MethodInvocation && elseExpression.getExpression() instanceof MethodInvocation){
-								if(IsInstrumentation((MethodInvocation) thenExpression.getExpression()) && IsInstrumentation((MethodInvocation) elseExpression.getExpression())){
+							if(thenExpression.getExpression() instanceof MethodInvocation){
+								if(IsInstrumentation((MethodInvocation) thenExpression.getExpression())){
 									continue;
 								}
 							}

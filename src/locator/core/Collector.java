@@ -33,6 +33,7 @@ import locator.core.run.path.ExecutionPathBuilder;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MethodInstrumentVisitor;
+import soot.coffi.constant_element_value;
 
 /**
  * @author Jiajun
@@ -52,8 +53,24 @@ public class Collector {
 	 */
 	public static Pair<Set<Integer>, Set<Integer>> collectAllTestCases(Subject subject) {
 		Pair<Set<Integer>, Set<Integer>> allTests = new Pair<>();
+		// run all test
+		try {
+			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
+		} catch (Exception e) {
+			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
+			return null;
+		}
+		
+		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
+		String srcPath = subject.getHome() + subject.getSsrc();
+		String tsrPath = subject.getHome() + subject.getTsrc();
+		Set<Method> coveredMethods = collectCoveredMethod(subject, failedTest);
+		
+		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(coveredMethods);
+		Instrument.execute(srcPath, methodInstrumentVisitor);
+		
 		// test case instrument
-		Instrument.execute(subject.getHome() + subject.getTsrc(),
+		Instrument.execute(tsrPath,
 				new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST));
 		// run all test
 		try {
@@ -62,9 +79,10 @@ public class Collector {
 			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
 			return null;
 		}
-		Instrument.execute(subject.getHome() + subject.getTsrc(), new DeInstrumentVisitor());
+		Instrument.execute(tsrPath, new DeInstrumentVisitor());
+		Instrument.execute(srcPath, new DeInstrumentVisitor());
 
-		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
+		
 		Set<Integer> passedTest = collectAllPassedTestCases(Constant.STR_TMP_INSTR_OUTPUT_FILE, failedTest);
 		// Set<Integer> passedTest = collectAllPassedTestCases(subject.getHome()
 		// + "/all-tests.txt", failedTest);
@@ -102,17 +120,27 @@ public class Collector {
 			return allPassedTestCases;
 		}
 
+		String lastLine = null;
 		String line = null;
+		String sourceFlag = Constant.INSTRUMENT_FLAG + Constant.INSTRUMENT_K_SOURCE;
 		try {
-			while ((line = bReader.readLine()) != null) {
-				String[] methodInfo = line.split("#");
+			line = bReader.readLine();
+			lastLine = line;
+			while (lastLine != null) {
+				line = bReader.readLine();
+				String[] methodInfo = lastLine.split("#");
 				if (methodInfo.length < 3) {
 					LevelLogger.error(__name__ + "collectAllPassedTestCases output format error : " + line);
 				}
-				int methodID = Integer.parseInt(methodInfo[1]);
-				if (!failedTests.contains(methodID)) {
-					allPassedTestCases.add(methodID);
+				if(methodInfo[0].endsWith(Constant.INSTRUMENT_K_TEST)){
+					if(line != null && line.startsWith(sourceFlag)){
+						int methodID = Integer.parseInt(methodInfo[1]);
+						if (!failedTests.contains(methodID)) {
+							allPassedTestCases.add(methodID);
+						}
+					}
 				}
+				lastLine = line;
 			}
 			bReader.close();
 		} catch (IOException e) {

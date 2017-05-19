@@ -6,7 +6,7 @@ import org.jfree.chart.event.DatasetChangeInfo;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.event.DatasetChangeEvent;
 /** 
- * A dataset that defines a range (interval) for both the x-values and the y-values.  This implementation uses six arrays to store the x, start-x, end-x, y, start-y and end-y values. <br><br> An alternative implementation of the      {@link IntervalXYDataset} interfaceis provided by the  {@link XYIntervalSeriesCollection} class.
+ * A dataset that defines a range (interval) for both the x-values and the y-values.  This implementation uses six arrays to store the x, start-x, end-x, y, start-y and end-y values. <br><br> An alternative implementation of the                               {@link IntervalXYDataset} interfaceis provided by the  {@link XYIntervalSeriesCollection} class.
  * @since 1.0.3
  */
 public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset implements PublicCloneable {
@@ -208,7 +208,7 @@ public class DefaultIntervalXYDataset extends AbstractIntervalXYDataset implemen
     return new Double(getYValue(series,item));
   }
   /** 
- * Adds a series or if a series with the same key already exists replaces the data for that series, then sends a      {@link DatasetChangeEvent} toall registered listeners.
+ * Adds a series or if a series with the same key already exists replaces the data for that series, then sends a                               {@link DatasetChangeEvent} toall registered listeners.
  * @param seriesKey  the series key (<code>null</code> not permitted).
  * @param data  the data (must be an array with length 6, containing sixarrays of equal length, the first three containing the x-values (x, xLow and xHigh) and the last three containing the y-values (y, yLow and yHigh)).
  */

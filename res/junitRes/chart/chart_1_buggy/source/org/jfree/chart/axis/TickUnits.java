@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 /** 
- * A collection of tick units, used by the      {@link DateAxis} and{@link NumberAxis} classes.
+ * A collection of tick units, used by the                               {@link DateAxis} and{@link NumberAxis} classes.
  */
 public class TickUnits implements TickUnitSource, Cloneable, Serializable {
   /** 

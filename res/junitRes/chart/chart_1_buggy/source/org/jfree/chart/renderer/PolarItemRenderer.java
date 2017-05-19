@@ -9,7 +9,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.PolarPlot;
 import org.jfree.data.xy.XYDataset;
 /** 
- * The interface for a renderer that can be used by the      {@link PolarPlot} class.
+ * The interface for a renderer that can be used by the                               {@link PolarPlot} class.
  */
 public interface PolarItemRenderer {
   /** 

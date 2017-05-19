@@ -27,7 +27,7 @@ import org.jfree.chart.util.RectangleInsets;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.Size2D;
 /** 
- * A value indicator for a      {@link DialPlot}.
+ * A value indicator for a                               {@link DialPlot}.
  * @since 1.0.7
  */
 public class DialValueIndicator extends AbstractDialLayer implements DialLayer, Cloneable, PublicCloneable, Serializable {
@@ -132,7 +132,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.datasetIndex;
   }
   /** 
- * Sets the dataset index and sends a      {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the dataset index and sends a                               {@link DialLayerChangeEvent} to allregistered listeners.
  * @param index  the index.
  * @see #getDatasetIndex()
  */
@@ -149,7 +149,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.angle;
   }
   /** 
- * Sets the angle for the anchor point and sends a     {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the angle for the anchor point and sends a                              {@link DialLayerChangeEvent} to all registered listeners.
  * @param angle  the angle (in degrees).
  * @see #getAngle()
  */
@@ -166,7 +166,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.radius;
   }
   /** 
- * Sets the radius and sends a      {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the radius and sends a                               {@link DialLayerChangeEvent} to allregistered listeners.
  * @param radius  the radius.
  * @see #getRadius()
  */
@@ -183,7 +183,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.frameAnchor;
   }
   /** 
- * Sets the frame anchor and sends a      {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the frame anchor and sends a                               {@link DialLayerChangeEvent} to allregistered listeners.
  * @param anchor  the anchor (<code>null</code> not permitted).
  * @see #getFrameAnchor()
  */
@@ -203,7 +203,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.templateValue;
   }
   /** 
- * Sets the template value and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the template value and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param value  the value (<code>null</code> not permitted).
  * @see #setTemplateValue(Number)
  */
@@ -224,7 +224,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.maxTemplateValue;
   }
   /** 
- * Sets the template value for the maximum size of the indicator bounds and sends a      {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the template value for the maximum size of the indicator bounds and sends a                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param value  the value (<code>null</code> permitted).
  * @since 1.0.14
  * @see #getMaxTemplateValue()
@@ -242,7 +242,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.formatter;
   }
   /** 
- * Sets the formatter used to format the value and sends a     {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the formatter used to format the value and sends a                              {@link DialLayerChangeEvent} to all registered listeners.
  * @param formatter  the formatter (<code>null</code> not permitted).
  * @see #getNumberFormat()
  */
@@ -262,7 +262,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.font;
   }
   /** 
- * Sets the font and sends a      {@link DialLayerChangeEvent} to all registeredlisteners.
+ * Sets the font and sends a                               {@link DialLayerChangeEvent} to all registeredlisteners.
  * @param font  the font (<code>null</code> not permitted).
  */
   public void setFont(  Font font){
@@ -281,7 +281,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.paint;
   }
   /** 
- * Sets the paint and sends a      {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the paint and sends a                               {@link DialLayerChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -301,7 +301,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.backgroundPaint;
   }
   /** 
- * Sets the background paint and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the background paint and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getBackgroundPaint()
  */
@@ -321,7 +321,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.outlineStroke;
   }
   /** 
- * Sets the outline stroke and sends a      {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the outline stroke and sends a                               {@link DialLayerChangeEvent} toall registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getOutlineStroke()
  */
@@ -341,7 +341,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.outlinePaint;
   }
   /** 
- * Sets the outline paint and sends a      {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the outline paint and sends a                               {@link DialLayerChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getOutlinePaint()
  */
@@ -361,7 +361,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.insets;
   }
   /** 
- * Sets the insets and sends a      {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the insets and sends a                               {@link DialLayerChangeEvent} to allregistered listeners.
  * @param insets  the insets (<code>null</code> not permitted).
  * @see #getInsets()
  */
@@ -381,7 +381,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.valueAnchor;
   }
   /** 
- * Sets the value anchor and sends a      {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the value anchor and sends a                               {@link DialLayerChangeEvent} to allregistered listeners.
  * @param anchor  the anchor (<code>null</code> not permitted).
  * @see #getValueAnchor()
  */
@@ -401,7 +401,7 @@ public class DialValueIndicator extends AbstractDialLayer implements DialLayer, 
     return this.textAnchor;
   }
   /** 
- * Sets the text anchor and sends a      {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the text anchor and sends a                               {@link DialLayerChangeEvent} to allregistered listeners.
  * @param anchor  the anchor (<code>null</code> not permitted).
  * @see #getTextAnchor()
  */

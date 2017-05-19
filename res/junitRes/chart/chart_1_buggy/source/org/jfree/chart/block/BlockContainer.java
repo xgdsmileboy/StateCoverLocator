@@ -11,7 +11,7 @@ import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.Size2D;
 /** 
- * A container for a collection of      {@link Block} objects.  The container usesan  {@link Arrangement} object to handle the position of each block.
+ * A container for a collection of                               {@link Block} objects.  The container usesan  {@link Arrangement} object to handle the position of each block.
  */
 public class BlockContainer extends AbstractBlock implements Block, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -68,7 +68,7 @@ public class BlockContainer extends AbstractBlock implements Block, Cloneable, P
     return this.blocks.isEmpty();
   }
   /** 
- * Returns an unmodifiable list of the      {@link Block} objects managed bythis arrangement.
+ * Returns an unmodifiable list of the                               {@link Block} objects managed bythis arrangement.
  * @return A list of blocks.
  */
   public List getBlocks(){

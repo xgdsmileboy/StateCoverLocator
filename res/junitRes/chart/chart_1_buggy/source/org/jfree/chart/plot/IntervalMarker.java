@@ -71,7 +71,7 @@ public class IntervalMarker extends Marker implements Cloneable, Serializable {
     return this.startValue;
   }
   /** 
- * Sets the start value for the marker and sends a     {@link MarkerChangeEvent} to all registered listeners.
+ * Sets the start value for the marker and sends a                              {@link MarkerChangeEvent} to all registered listeners.
  * @param value  the value.
  * @since 1.0.3
  */
@@ -87,7 +87,7 @@ public class IntervalMarker extends Marker implements Cloneable, Serializable {
     return this.endValue;
   }
   /** 
- * Sets the end value for the marker and sends a     {@link MarkerChangeEvent} to all registered listeners.
+ * Sets the end value for the marker and sends a                              {@link MarkerChangeEvent} to all registered listeners.
  * @param value  the value.
  * @since 1.0.3
  */
@@ -103,7 +103,7 @@ public class IntervalMarker extends Marker implements Cloneable, Serializable {
     return this.gradientPaintTransformer;
   }
   /** 
- * Sets the gradient paint transformer and sends a     {@link MarkerChangeEvent} to all registered listeners.
+ * Sets the gradient paint transformer and sends a                              {@link MarkerChangeEvent} to all registered listeners.
  * @param transformer  the transformer (<code>null</code> permitted).
  */
   public void setGradientPaintTransformer(  GradientPaintTransformer transformer){

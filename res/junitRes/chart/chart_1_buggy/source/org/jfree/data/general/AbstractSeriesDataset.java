@@ -4,7 +4,7 @@ import org.jfree.data.event.SeriesChangeEvent;
 import java.io.Serializable;
 import org.jfree.chart.event.DatasetChangeInfo;
 /** 
- * An abstract implementation of the      {@link SeriesDataset} interface,containing a mechanism for registering change listeners.
+ * An abstract implementation of the                               {@link SeriesDataset} interface,containing a mechanism for registering change listeners.
  */
 public abstract class AbstractSeriesDataset extends AbstractDataset implements SeriesDataset, SeriesChangeListener, Serializable {
   /** 
@@ -23,7 +23,7 @@ public abstract class AbstractSeriesDataset extends AbstractDataset implements S
  */
   public abstract int getSeriesCount();
   /** 
- * Returns the key for a series. <p> If <code>series</code> is not within the specified range, the implementing method should throw an      {@link IndexOutOfBoundsException}(preferred) or an      {@link IllegalArgumentException}.
+ * Returns the key for a series. <p> If <code>series</code> is not within the specified range, the implementing method should throw an                               {@link IndexOutOfBoundsException}(preferred) or an                               {@link IllegalArgumentException}.
  * @param series  the series index (in the range <code>0</code> to<code>getSeriesCount() - 1</code>).
  * @return The series key.
  */

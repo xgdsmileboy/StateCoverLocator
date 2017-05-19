@@ -46,8 +46,10 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
 import edu.pku.sei.conditon.simple.FeatureGenerator;
+import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
+import soot.coffi.constant_element_value;
 
 /**
  * @author Jiajun
@@ -67,7 +69,7 @@ public class FeatureExtraction {
 		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
 
 		CompilationUnit cu = (CompilationUnit) JavaFile
-				.genASTFromSource(JavaFile.readFileToString(srcPath + relJavaPath), ASTParser.K_COMPILATION_UNIT);
+				.genASTFromSource(JavaFile.readFileToString(srcPath + Constant.PATH_SEPARATOR + relJavaPath), ASTParser.K_COMPILATION_UNIT);
 		VariableCollector variableCollector = new VariableCollector(line);
 		cu.accept(variableCollector);
 		Set<String> rightVars = variableCollector.getRightVariables();
@@ -76,6 +78,8 @@ public class FeatureExtraction {
 		for (String feature : varFeature) {
 			String[] elements = feature.split("\t");
 			if (rightVars.contains(elements[5])) {
+				//TODO : should be removed after re-train the prediction model
+				feature = feature.replace("CALLER_USE", "CLALLER_USE");
 				filteredVarFeatures.add(feature);
 			}
 		}

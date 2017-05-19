@@ -1,6 +1,6 @@
 package org.jfree.chart.axis;
 /** 
- * An interface used by the      {@link DateAxis} and {@link NumberAxis} classes toobtain a suitable  {@link TickUnit}.
+ * An interface used by the                               {@link DateAxis} and {@link NumberAxis} classes toobtain a suitable  {@link TickUnit}.
  */
 public interface TickUnitSource {
   /** 

@@ -4,7 +4,7 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.util.HashUtilities;
 import org.jfree.chart.util.ObjectUtilities;
 /** 
- * An entity to represent the labels on a      {@link CategoryAxis}.
+ * An entity to represent the labels on a                               {@link CategoryAxis}.
  * @since 1.0.3
  */
 public class CategoryLabelEntity extends TickLabelEntity {

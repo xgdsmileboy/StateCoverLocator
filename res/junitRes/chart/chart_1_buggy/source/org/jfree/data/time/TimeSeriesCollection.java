@@ -20,7 +20,7 @@ import org.jfree.data.xy.XYDatasetSelectionState;
 import org.jfree.data.xy.XYDomainInfo;
 import org.jfree.data.xy.XYRangeInfo;
 /** 
- * A collection of time series objects.  This class implements the     {@link XYDataset} interface, as well as the extended{@link IntervalXYDataset} interface.  This makes it a convenient dataset foruse with the  {@link org.jfree.chart.plot.XYPlot} class.
+ * A collection of time series objects.  This class implements the                              {@link XYDataset} interface, as well as the extended{@link IntervalXYDataset} interface.  This makes it a convenient dataset foruse with the  {@link org.jfree.chart.plot.XYPlot} class.
  */
 public class TimeSeriesCollection extends AbstractIntervalXYDataset implements XYDataset, IntervalXYDataset, DomainInfo, XYDomainInfo, XYRangeInfo, XYDatasetSelectionState, SelectableXYDataset, Serializable {
   /** 
@@ -36,7 +36,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset implements X
  */
   private Calendar workingCalendar;
   /** 
- * The point within each time period that is used for the X value when this collection is used as an      {@link org.jfree.data.xy.XYDataset}.  This can be the start, middle or end of the time period.
+ * The point within each time period that is used for the X value when this collection is used as an                               {@link org.jfree.data.xy.XYDataset}.  This can be the start, middle or end of the time period.
  */
   private TimePeriodAnchor xPosition;
   /** 
@@ -86,14 +86,14 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset implements X
     return DomainOrder.ASCENDING;
   }
   /** 
- * Returns the position within each time period that is used for the X value when the collection is used as an     {@link org.jfree.data.xy.XYDataset}.
+ * Returns the position within each time period that is used for the X value when the collection is used as an                              {@link org.jfree.data.xy.XYDataset}.
  * @return The anchor position (never <code>null</code>).
  */
   public TimePeriodAnchor getXPosition(){
     return this.xPosition;
   }
   /** 
- * Sets the position within each time period that is used for the X values when the collection is used as an      {@link XYDataset}, then sends a     {@link DatasetChangeEvent} is sent to all registered listeners.
+ * Sets the position within each time period that is used for the X values when the collection is used as an                               {@link XYDataset}, then sends a                              {@link DatasetChangeEvent} is sent to all registered listeners.
  * @param anchor  the anchor position (<code>null</code> not permitted).
  */
   public void setXPosition(  TimePeriodAnchor anchor){
@@ -166,7 +166,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset implements X
     return getSeries(series).getKey();
   }
   /** 
- * Adds a series to the collection and sends a      {@link DatasetChangeEvent} toall registered listeners.
+ * Adds a series to the collection and sends a                               {@link DatasetChangeEvent} toall registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void addSeries(  TimeSeries series){
@@ -178,7 +178,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset implements X
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes the specified series from the collection and sends a     {@link DatasetChangeEvent} to all registered listeners.
+ * Removes the specified series from the collection and sends a                              {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void removeSeries(  TimeSeries series){
@@ -200,7 +200,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset implements X
     }
   }
   /** 
- * Removes all the series from the collection and sends a     {@link DatasetChangeEvent} to all registered listeners.
+ * Removes all the series from the collection and sends a                              {@link DatasetChangeEvent} to all registered listeners.
  */
   public void removeAllSeries(){
     for (int i=0; i < this.data.size(); i++) {
@@ -323,7 +323,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset implements X
     return i.isSelected();
   }
   /** 
- * Sets the selection state for the specified data item and sends a      {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the selection state for the specified data item and sends a                               {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series index.
  * @param item  the item index.
  * @param selected  the selection state.
@@ -333,7 +333,7 @@ public class TimeSeriesCollection extends AbstractIntervalXYDataset implements X
     setSelected(series,item,selected,true);
   }
   /** 
- * Sets the selection state for the specified data item and, if requested, sends a      {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the selection state for the specified data item and, if requested, sends a                               {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series index.
  * @param item  the item index.
  * @param selected  the selection state.

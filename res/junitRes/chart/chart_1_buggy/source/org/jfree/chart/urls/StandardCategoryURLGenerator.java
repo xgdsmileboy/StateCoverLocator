@@ -5,7 +5,7 @@ import java.net.URLEncoder;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A URL generator that can be assigned to a     {@link org.jfree.chart.renderer.category.CategoryItemRenderer}.
+ * A URL generator that can be assigned to a                              {@link org.jfree.chart.renderer.category.CategoryItemRenderer}.
  */
 public class StandardCategoryURLGenerator implements CategoryURLGenerator, Serializable {
   /** 

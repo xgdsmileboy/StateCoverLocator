@@ -1,6 +1,6 @@
 package org.jfree.data.xy;
 /** 
- * An extension of the      {@link XYZDataset} interface that allows a range of datato be defined for any of the X values, the Y values, and the Z values.
+ * An extension of the                               {@link XYZDataset} interface that allows a range of datato be defined for any of the X values, the Y values, and the Z values.
  */
 public interface IntervalXYZDataset extends XYZDataset {
   /** 

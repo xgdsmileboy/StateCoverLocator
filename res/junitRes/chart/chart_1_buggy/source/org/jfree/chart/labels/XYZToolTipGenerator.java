@@ -1,7 +1,7 @@
 package org.jfree.chart.labels;
 import org.jfree.data.xy.XYZDataset;
 /** 
- * Interface for a tooltip generator for plots that use data from an     {@link XYZDataset}.
+ * Interface for a tooltip generator for plots that use data from an                              {@link XYZDataset}.
  */
 public interface XYZToolTipGenerator extends XYToolTipGenerator {
   /** 

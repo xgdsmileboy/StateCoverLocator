@@ -1,11 +1,11 @@
 package org.jfree.chart.editor;
 import org.jfree.chart.JFreeChart;
 /** 
- * The central point for obtaining      {@link ChartEditor} instances for editingcharts.  Right now, the API is minimal - the plan is to extend this class to provide customisation options for chart editors (for example, make some editor items read-only).
+ * The central point for obtaining                               {@link ChartEditor} instances for editingcharts.  Right now, the API is minimal - the plan is to extend this class to provide customisation options for chart editors (for example, make some editor items read-only).
  */
 public class ChartEditorManager {
   /** 
- * This factory creates new      {@link ChartEditor} instances as required. 
+ * This factory creates new                               {@link ChartEditor} instances as required. 
  */
   static ChartEditorFactory factory=new DefaultChartEditorFactory();
   /** 

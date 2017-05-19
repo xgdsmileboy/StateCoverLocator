@@ -2,7 +2,7 @@ package org.jfree.data;
 import java.util.Arrays;
 import org.jfree.data.general.DatasetUtilities;
 /** 
- * Utility methods for use with some of the data classes (but not the datasets, see      {@link DatasetUtilities}).
+ * Utility methods for use with some of the data classes (but not the datasets, see                              {@link DatasetUtilities}).
  */
 public abstract class DataUtilities {
   /** 
@@ -171,7 +171,7 @@ public abstract class DataUtilities {
     return result;
   }
   /** 
- * Returns a      {@link KeyedValues} instance that contains the cumulativepercentage values for the data in another  {@link KeyedValues} instance.<p> The percentages are values between 0.0 and 1.0 (where 1.0 = 100%).
+ * Returns a                              {@link KeyedValues} instance that contains the cumulativepercentage values for the data in another  {@link KeyedValues} instance.<p> The percentages are values between 0.0 and 1.0 (where 1.0 = 100%).
  * @param data  the data (<code>null</code> not permitted).
  * @return The cumulative percentages.
  */

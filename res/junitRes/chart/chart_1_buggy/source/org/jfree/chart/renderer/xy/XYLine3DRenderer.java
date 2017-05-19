@@ -66,7 +66,7 @@ public class XYLine3DRenderer extends XYLineAndShapeRenderer implements Effect3D
     return this.yOffset;
   }
   /** 
- * Sets the x-offset and sends a      {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the x-offset and sends a                               {@link RendererChangeEvent} to allregistered listeners.
  * @param xOffset  the x-offset.
  */
   public void setXOffset(  double xOffset){
@@ -74,7 +74,7 @@ public class XYLine3DRenderer extends XYLineAndShapeRenderer implements Effect3D
     fireChangeEvent();
   }
   /** 
- * Sets the y-offset and sends a      {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the y-offset and sends a                               {@link RendererChangeEvent} to allregistered listeners.
  * @param yOffset  the y-offset.
  */
   public void setYOffset(  double yOffset){
@@ -89,7 +89,7 @@ public class XYLine3DRenderer extends XYLineAndShapeRenderer implements Effect3D
     return this.wallPaint;
   }
   /** 
- * Sets the paint used to hightlight the left and bottom walls in the plot background and sends a      {@link RendererChangeEvent} to all registeredlisteners.
+ * Sets the paint used to hightlight the left and bottom walls in the plot background and sends a                               {@link RendererChangeEvent} to all registeredlisteners.
  * @param paint  the paint.
  */
   public void setWallPaint(  Paint paint){

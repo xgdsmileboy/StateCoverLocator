@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * A default implementation of the      {@link WindDataset} interface.
+ * A default implementation of the                               {@link WindDataset} interface.
  */
 public class DefaultWindDataset extends AbstractXYDataset implements WindDataset, PublicCloneable {
   /** 
@@ -129,7 +129,7 @@ public class DefaultWindDataset extends AbstractXYDataset implements WindDataset
     return windItem.getX();
   }
   /** 
- * Returns the y-value for one item within a series.  This maps to the     {@link #getWindForce(int,int)} method and is implemented because<code>WindDataset</code> is an extension of  {@link XYDataset}.
+ * Returns the y-value for one item within a series.  This maps to the                              {@link #getWindForce(int,int)} method and is implemented because<code>WindDataset</code> is an extension of  {@link XYDataset}.
  * @param series  the series (zero-based index).
  * @param item  the item (zero-based index).
  * @return The y-value for the item within the series.

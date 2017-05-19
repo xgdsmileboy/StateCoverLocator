@@ -95,7 +95,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 		
 		for (int i = 0; i < methodBody.statements().size(); i++) {
 			ASTNode astNode = (ASTNode) methodBody.statements().get(i);
-			blockStatement.addAll(process(astNode, keyValue));
+			blockStatement.addAll(process(astNode, message));
 		}
 			
 		methodBody.statements().clear();

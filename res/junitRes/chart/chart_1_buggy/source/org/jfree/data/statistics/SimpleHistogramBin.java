@@ -2,7 +2,7 @@ package org.jfree.data.statistics;
 import java.io.Serializable;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * A bin for the      {@link SimpleHistogramDataset}.
+ * A bin for the                               {@link SimpleHistogramDataset}.
  */
 public class SimpleHistogramBin implements Comparable, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -85,7 +85,7 @@ public class SimpleHistogramBin implements Comparable, Cloneable, PublicCloneabl
     return this.itemCount;
   }
   /** 
- * Sets the item count.  No event notification occurs when calling this method - if the bin is contained within a     {@link SimpleHistogramDataset}, you should not be calling this method directly.  Instead, update the bin using methods such as     {@link SimpleHistogramDataset#addObservations(double[])}.
+ * Sets the item count.  No event notification occurs when calling this method - if the bin is contained within a                              {@link SimpleHistogramDataset}, you should not be calling this method directly.  Instead, update the bin using methods such as                              {@link SimpleHistogramDataset#addObservations(double[])}.
  * @param count  the item count.
  * @see #getItemCount()
  */

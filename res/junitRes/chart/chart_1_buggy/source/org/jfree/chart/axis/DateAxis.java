@@ -27,7 +27,7 @@ import org.jfree.data.time.Month;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.Year;
 /** 
- * The base class for axes that display dates.  You will find it easier to understand how this axis works if you bear in mind that it really displays/measures integer (or long) data, where the integers are milliseconds since midnight, 1-Jan-1970.  When displaying tick labels, the millisecond values are converted back to dates using a <code>DateFormat</code> instance. <P> You can also create a      {@link org.jfree.chart.axis.Timeline} and supply inthe constructor to create an axis that only contains certain domain values. For example, this allows you to create a date axis that only contains working days.
+ * The base class for axes that display dates.  You will find it easier to understand how this axis works if you bear in mind that it really displays/measures integer (or long) data, where the integers are milliseconds since midnight, 1-Jan-1970.  When displaying tick labels, the millisecond values are converted back to dates using a <code>DateFormat</code> instance. <P> You can also create a                               {@link org.jfree.chart.axis.Timeline} and supply inthe constructor to create an axis that only contains certain domain values. For example, this allows you to create a date axis that only contains working days.
  */
 public class DateAxis extends ValueAxis implements Cloneable, Serializable {
   /** 
@@ -210,7 +210,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     return this.timeZone;
   }
   /** 
- * Sets the time zone for the axis and sends an      {@link AxisChangeEvent} toall registered listeners.
+ * Sets the time zone for the axis and sends an                               {@link AxisChangeEvent} toall registered listeners.
  * @param zone  the time zone (<code>null</code> not permitted).
  * @since 1.0.4
  * @see #getTimeZone()
@@ -233,7 +233,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     return this.timeline;
   }
   /** 
- * Sets the underlying timeline to use for this axis. <P> If the timeline is changed, an      {@link AxisChangeEvent} is sent to allregistered listeners.
+ * Sets the underlying timeline to use for this axis. <P> If the timeline is changed, an                               {@link AxisChangeEvent} is sent to allregistered listeners.
  * @param timeline  the timeline.
  */
   public void setTimeline(  Timeline timeline){
@@ -292,14 +292,14 @@ private static class DefaultTimeline implements Timeline, Serializable {
     notifyListeners(new AxisChangeEvent(this));
   }
   /** 
- * Sets the upper and lower bounds for the axis and sends an     {@link AxisChangeEvent} to all registered listeners.  As a side-effect,the auto-range flag is set to false.
+ * Sets the upper and lower bounds for the axis and sends an                              {@link AxisChangeEvent} to all registered listeners.  As a side-effect,the auto-range flag is set to false.
  * @param range  the new range (<code>null</code> not permitted).
  */
   public void setRange(  Range range){
     setRange(range,true,true);
   }
   /** 
- * Sets the range for the axis, if requested, sends an     {@link AxisChangeEvent} to all registered listeners.  As a side-effect,the auto-range flag is set to <code>false</code> (optional).
+ * Sets the range for the axis, if requested, sends an                              {@link AxisChangeEvent} to all registered listeners.  As a side-effect,the auto-range flag is set to <code>false</code> (optional).
  * @param range  the range (<code>null</code> not permitted).
  * @param turnOffAutoRange  a flag that controls whether or not the autorange is turned off.
  * @param notify  a flag that controls whether or not listeners arenotified.
@@ -314,7 +314,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     super.setRange(range,turnOffAutoRange,notify);
   }
   /** 
- * Sets the axis range and sends an      {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the axis range and sends an                               {@link AxisChangeEvent} to allregistered listeners.
  * @param lower  the lower bound for the axis.
  * @param upper  the upper bound for the axis.
  */
@@ -325,7 +325,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     setRange(new DateRange(lower,upper));
   }
   /** 
- * Sets the axis range and sends an      {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the axis range and sends an                               {@link AxisChangeEvent} to allregistered listeners.
  * @param lower  the lower bound for the axis.
  * @param upper  the upper bound for the axis.
  */
@@ -354,7 +354,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     return result;
   }
   /** 
- * Sets the minimum date visible on the axis and sends an     {@link AxisChangeEvent} to all registered listeners.  If<code>date</code> is on or after the current maximum date for the axis, the maximum date will be shifted to preserve the current length of the axis.
+ * Sets the minimum date visible on the axis and sends an                              {@link AxisChangeEvent} to all registered listeners.  If<code>date</code> is on or after the current maximum date for the axis, the maximum date will be shifted to preserve the current length of the axis.
  * @param date  the date (<code>null</code> not permitted).
  * @see #getMinimumDate()
  * @see #setMaximumDate(Date)
@@ -393,7 +393,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     return result;
   }
   /** 
- * Sets the maximum date visible on the axis and sends an     {@link AxisChangeEvent} to all registered listeners.  If<code>maximumDate</code> is on or before the current minimum date for the axis, the minimum date will be shifted to preserve the current length of the axis.
+ * Sets the maximum date visible on the axis and sends an                              {@link AxisChangeEvent} to all registered listeners.  If<code>maximumDate</code> is on or before the current minimum date for the axis, the minimum date will be shifted to preserve the current length of the axis.
  * @param maximumDate  the date (<code>null</code> not permitted).
  * @see #getMinimumDate()
  * @see #setMinimumDate(Date)
@@ -421,7 +421,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     return this.tickMarkPosition;
   }
   /** 
- * Sets the tick mark position (start, middle or end of the time period) and sends an      {@link AxisChangeEvent} to all registered listeners.
+ * Sets the tick mark position (start, middle or end of the time period) and sends an                               {@link AxisChangeEvent} to all registered listeners.
  * @param position  the position (<code>null</code> not permitted).
  */
   public void setTickMarkPosition(  DateTickMarkPosition position){
@@ -741,7 +741,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     }
   }
   /** 
- * Returns a      {@link java.util.Date} corresponding to the specified positionwithin a  {@link RegularTimePeriod}.
+ * Returns a                               {@link java.util.Date} corresponding to the specified positionwithin a  {@link RegularTimePeriod}.
  * @param period  the period.
  * @param position  the position (<code>null</code> not permitted).
  * @return A date.
@@ -780,14 +780,14 @@ private static class DefaultTimeline implements Timeline, Serializable {
     return calendar.getTime();
   }
   /** 
- * Returns a collection of standard date tick units that uses the default time zone.  This collection will be used by default, but you are free to create your own collection if you want to (see the     {@link ValueAxis#setStandardTickUnits(TickUnitSource)} method inheritedfrom the  {@link ValueAxis} class).
+ * Returns a collection of standard date tick units that uses the default time zone.  This collection will be used by default, but you are free to create your own collection if you want to (see the                              {@link ValueAxis#setStandardTickUnits(TickUnitSource)} method inheritedfrom the  {@link ValueAxis} class).
  * @return A collection of standard date tick units.
  */
   public static TickUnitSource createStandardDateTickUnits(){
     return createStandardDateTickUnits(TimeZone.getDefault(),Locale.getDefault());
   }
   /** 
- * Returns a collection of standard date tick units.  This collection will be used by default, but you are free to create your own collection if you want to (see the     {@link ValueAxis#setStandardTickUnits(TickUnitSource)} method inheritedfrom the  {@link ValueAxis} class).
+ * Returns a collection of standard date tick units.  This collection will be used by default, but you are free to create your own collection if you want to (see the                              {@link ValueAxis#setStandardTickUnits(TickUnitSource)} method inheritedfrom the  {@link ValueAxis} class).
  * @param zone  the time zone (<code>null</code> not permitted).
  * @return A collection of standard date tick units.
  * @deprecated Since 1.0.11, use {@link #createStandardDateTickUnits(TimeZone,Locale)} to explicitly set the locale as well as thetime zone.
@@ -796,7 +796,7 @@ private static class DefaultTimeline implements Timeline, Serializable {
     return createStandardDateTickUnits(zone,Locale.getDefault());
   }
   /** 
- * Returns a collection of standard date tick units.  This collection will be used by default, but you are free to create your own collection if you want to (see the     {@link ValueAxis#setStandardTickUnits(TickUnitSource)} method inheritedfrom the  {@link ValueAxis} class).
+ * Returns a collection of standard date tick units.  This collection will be used by default, but you are free to create your own collection if you want to (see the                              {@link ValueAxis#setStandardTickUnits(TickUnitSource)} method inheritedfrom the  {@link ValueAxis} class).
  * @param zone  the time zone (<code>null</code> not permitted).
  * @param locale  the locale (<code>null</code> not permitted).
  * @return A collection of standard date tick units.

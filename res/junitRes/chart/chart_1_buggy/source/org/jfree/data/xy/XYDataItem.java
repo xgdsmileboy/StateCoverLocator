@@ -3,7 +3,7 @@ import java.io.Serializable;
 import org.jfree.chart.util.HashUtilities;
 import org.jfree.chart.util.ObjectUtilities;
 /** 
- * Represents one (x, y) data item for an      {@link XYSeries}.  Note that subclasses are REQUIRED to support cloning.
+ * Represents one (x, y) data item for an                               {@link XYSeries}.  Note that subclasses are REQUIRED to support cloning.
  */
 public class XYDataItem implements Cloneable, Comparable, Serializable {
   /** 

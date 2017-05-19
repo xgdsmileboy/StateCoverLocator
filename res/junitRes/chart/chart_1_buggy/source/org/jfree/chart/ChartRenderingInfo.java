@@ -11,7 +11,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A structure for storing rendering information from one call to the JFreeChart.draw() method. <P> An instance of the      {@link JFreeChart} class can draw itself within anarbitrary rectangle on any <code>Graphics2D</code>.  It is assumed that client code will sometimes render the same chart in more than one view, so the  {@link JFreeChart} instance does not retain any information about itsrendered dimensions.  This information can be useful sometimes, so you have the option to collect the information at each call to <code>JFreeChart.draw()</code>, by passing an instance of this <code>ChartRenderingInfo</code> class.
+ * A structure for storing rendering information from one call to the JFreeChart.draw() method. <P> An instance of the                               {@link JFreeChart} class can draw itself within anarbitrary rectangle on any <code>Graphics2D</code>.  It is assumed that client code will sometimes render the same chart in more than one view, so the  {@link JFreeChart} instance does not retain any information about itsrendered dimensions.  This information can be useful sometimes, so you have the option to collect the information at each call to <code>JFreeChart.draw()</code>, by passing an instance of this <code>ChartRenderingInfo</code> class.
  */
 public class ChartRenderingInfo implements Cloneable, Serializable {
   /** 
@@ -31,7 +31,7 @@ public class ChartRenderingInfo implements Cloneable, Serializable {
  */
   private EntityCollection entities;
   /** 
- * The rendering source.  This is the object that calls the draw(...) method in the      {@link JFreeChart} class, or <code>null</code> if therendering source chooses to remain anonymous.  Our initial use for this is to identify the  {@link ChartPanel} that is drawing a chart, sothat selection state info can be retrieved from the panel in some cases.
+ * The rendering source.  This is the object that calls the draw(...) method in the                               {@link JFreeChart} class, or <code>null</code> if therendering source chooses to remain anonymous.  Our initial use for this is to identify the  {@link ChartPanel} that is drawing a chart, sothat selection state info can be retrieved from the panel in some cases.
  * @since 1.2.0
  */
   private RenderingSource renderingSource;

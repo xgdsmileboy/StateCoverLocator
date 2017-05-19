@@ -73,7 +73,7 @@ public class ServletUtilities {
     return ServletUtilities.saveChartAsPNG(chart,width,height,null,session);
   }
   /** 
- * Saves the chart as a PNG format file in the temporary directory and populates the      {@link ChartRenderingInfo} object which can be used togenerate an HTML image map.
+ * Saves the chart as a PNG format file in the temporary directory and populates the                               {@link ChartRenderingInfo} object which can be used togenerate an HTML image map.
  * @param chart  the chart to be saved (<code>null</code> not permitted).
  * @param width  the width of the chart.
  * @param height  the height of the chart.
@@ -150,7 +150,7 @@ public class ServletUtilities {
     }
   }
   /** 
- * Adds a      {@link ChartDeleter} object to the session object with the name<code>JFreeChart_Deleter</code> if there is not already one bound to the session and adds the filename to the list of charts to be deleted.
+ * Adds a                               {@link ChartDeleter} object to the session object with the name<code>JFreeChart_Deleter</code> if there is not already one bound to the session and adds the filename to the list of charts to be deleted.
  * @param tempFile  the file to be deleted.
  * @param session  the HTTP session of the client.
  */

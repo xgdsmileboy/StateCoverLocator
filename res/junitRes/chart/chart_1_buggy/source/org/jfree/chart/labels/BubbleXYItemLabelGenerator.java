@@ -10,7 +10,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
 /** 
- * An item label generator defined for use with the      {@link XYBubbleRenderer}class, or any other class that uses an      {@link XYZDataset}.
+ * An item label generator defined for use with the                               {@link XYBubbleRenderer}class, or any other class that uses an                               {@link XYZDataset}.
  * @since 1.0.1
  */
 public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator implements XYItemLabelGenerator, PublicCloneable, Serializable {
@@ -108,7 +108,7 @@ public class BubbleXYItemLabelGenerator extends AbstractXYItemLabelGenerator imp
     return result;
   }
   /** 
- * Creates the array of items that can be passed to the     {@link MessageFormat} class for creating labels.
+ * Creates the array of items that can be passed to the                              {@link MessageFormat} class for creating labels.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param series  the series (zero-based index).
  * @param item  the item (zero-based index).

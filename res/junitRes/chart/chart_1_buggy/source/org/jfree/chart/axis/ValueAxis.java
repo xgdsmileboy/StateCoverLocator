@@ -25,7 +25,7 @@ import org.jfree.chart.util.RectangleInsets;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 /** 
- * The base class for axes that display value data, where values are measured using the <code>double</code> primitive.  The two key subclasses are     {@link DateAxis} and {@link NumberAxis}.
+ * The base class for axes that display value data, where values are measured using the <code>double</code> primitive.  The two key subclasses are                              {@link DateAxis} and {@link NumberAxis}.
  */
 public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -192,7 +192,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.verticalTickLabels;
   }
   /** 
- * Sets the flag that controls whether the tick labels are displayed vertically (that is, rotated 90 degrees from horizontal).  If the flag is changed, an      {@link AxisChangeEvent} is sent to all registeredlisteners.
+ * Sets the flag that controls whether the tick labels are displayed vertically (that is, rotated 90 degrees from horizontal).  If the flag is changed, an                               {@link AxisChangeEvent} is sent to all registeredlisteners.
  * @param flag  the flag.
  * @see #isVerticalTickLabels()
  */
@@ -211,7 +211,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.positiveArrowVisible;
   }
   /** 
- * Sets a flag that controls whether or not the axis lines has an arrow drawn that points in the positive direction for the axis, and sends an     {@link AxisChangeEvent} to all registered listeners.
+ * Sets a flag that controls whether or not the axis lines has an arrow drawn that points in the positive direction for the axis, and sends an                              {@link AxisChangeEvent} to all registered listeners.
  * @param visible  the flag.
  * @see #isPositiveArrowVisible()
  */
@@ -228,7 +228,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.negativeArrowVisible;
   }
   /** 
- * Sets a flag that controls whether or not the axis lines has an arrow drawn that points in the negative direction for the axis, and sends an     {@link AxisChangeEvent} to all registered listeners.
+ * Sets a flag that controls whether or not the axis lines has an arrow drawn that points in the negative direction for the axis, and sends an                              {@link AxisChangeEvent} to all registered listeners.
  * @param visible  the flag.
  * @see #setNegativeArrowVisible(boolean)
  */
@@ -245,7 +245,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.upArrow;
   }
   /** 
- * Sets the shape that can be displayed as an arrow pointing upwards at the end of an axis line and sends an      {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the shape that can be displayed as an arrow pointing upwards at the end of an axis line and sends an                               {@link AxisChangeEvent} to allregistered listeners.
  * @param arrow  the arrow shape (<code>null</code> not permitted).
  * @see #getUpArrow()
  */
@@ -265,7 +265,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.downArrow;
   }
   /** 
- * Sets the shape that can be displayed as an arrow pointing downwards at the end of an axis line and sends an      {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the shape that can be displayed as an arrow pointing downwards at the end of an axis line and sends an                               {@link AxisChangeEvent} to allregistered listeners.
  * @param arrow  the arrow shape (<code>null</code> not permitted).
  * @see #getDownArrow()
  */
@@ -285,7 +285,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.leftArrow;
   }
   /** 
- * Sets the shape that can be displayed as an arrow pointing left at the end of an axis line and sends an      {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the shape that can be displayed as an arrow pointing left at the end of an axis line and sends an                               {@link AxisChangeEvent} to allregistered listeners.
  * @param arrow  the arrow shape (<code>null</code> not permitted).
  * @see #getLeftArrow()
  */
@@ -305,7 +305,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.rightArrow;
   }
   /** 
- * Sets the shape that can be displayed as an arrow pointing rightwards at the end of an axis line and sends an      {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the shape that can be displayed as an arrow pointing rightwards at the end of an axis line and sends an                               {@link AxisChangeEvent} to allregistered listeners.
  * @param arrow  the arrow shape (<code>null</code> not permitted).
  * @see #getRightArrow()
  */
@@ -668,7 +668,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     setAutoRange(auto,true);
   }
   /** 
- * Sets the auto range attribute.  If the <code>notify</code> flag is set, an      {@link AxisChangeEvent} is sent to registered listeners.
+ * Sets the auto range attribute.  If the <code>notify</code> flag is set, an                               {@link AxisChangeEvent} is sent to registered listeners.
  * @param auto  the flag.
  * @param notify  notify listeners?
  * @see #isAutoRange()
@@ -693,7 +693,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.autoRangeMinimumSize;
   }
   /** 
- * Sets the auto range minimum size and sends an      {@link AxisChangeEvent}to all registered listeners.
+ * Sets the auto range minimum size and sends an                               {@link AxisChangeEvent}to all registered listeners.
  * @param size  the size.
  * @see #getAutoRangeMinimumSize()
  */
@@ -701,7 +701,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     setAutoRangeMinimumSize(size,true);
   }
   /** 
- * Sets the minimum size allowed for the axis range when it is automatically calculated. <p> If requested, an      {@link AxisChangeEvent} is forwarded to all registeredlisteners.
+ * Sets the minimum size allowed for the axis range when it is automatically calculated. <p> If requested, an                               {@link AxisChangeEvent} is forwarded to all registeredlisteners.
  * @param size  the new minimum.
  * @param notify  notify listeners?
  */
@@ -729,7 +729,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.defaultAutoRange;
   }
   /** 
- * Sets the default auto range and sends an      {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the default auto range and sends an                               {@link AxisChangeEvent} to allregistered listeners.
  * @param range  the range (<code>null</code> not permitted).
  * @see #getDefaultAutoRange()
  * @since 1.0.5
@@ -750,7 +750,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.lowerMargin;
   }
   /** 
- * Sets the lower margin for the axis (as a percentage of the axis range) and sends an      {@link AxisChangeEvent} to all registered listeners.  Thismargin is added only when the axis range is auto-calculated - if you set the axis range manually, the margin is ignored.
+ * Sets the lower margin for the axis (as a percentage of the axis range) and sends an                               {@link AxisChangeEvent} to all registered listeners.  Thismargin is added only when the axis range is auto-calculated - if you set the axis range manually, the margin is ignored.
  * @param margin  the margin percentage (for example, 0.05 is five percent).
  * @see #getLowerMargin()
  * @see #setUpperMargin(double)
@@ -771,7 +771,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.upperMargin;
   }
   /** 
- * Sets the upper margin for the axis (as a percentage of the axis range) and sends an      {@link AxisChangeEvent} to all registered listeners.  Thismargin is added only when the axis range is auto-calculated - if you set the axis range manually, the margin is ignored.
+ * Sets the upper margin for the axis (as a percentage of the axis range) and sends an                               {@link AxisChangeEvent} to all registered listeners.  Thismargin is added only when the axis range is auto-calculated - if you set the axis range manually, the margin is ignored.
  * @param margin  the margin percentage (for example, 0.05 is five percent).
  * @see #getLowerMargin()
  * @see #setLowerMargin(double)
@@ -812,7 +812,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.range.getLowerBound();
   }
   /** 
- * Sets the lower bound for the axis range.  An      {@link AxisChangeEvent} issent to all registered listeners.
+ * Sets the lower bound for the axis range.  An                               {@link AxisChangeEvent} issent to all registered listeners.
  * @param min  the new minimum.
  * @see #getLowerBound()
  */
@@ -833,7 +833,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.range.getUpperBound();
   }
   /** 
- * Sets the upper bound for the axis range, and sends an     {@link AxisChangeEvent} to all registered listeners.
+ * Sets the upper bound for the axis range, and sends an                              {@link AxisChangeEvent} to all registered listeners.
  * @param max  the new maximum.
  * @see #getUpperBound()
  */
@@ -854,7 +854,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.range;
   }
   /** 
- * Sets the range attribute and sends an      {@link AxisChangeEvent} to allregistered listeners.  As a side-effect, the auto-range flag is set to <code>false</code>.
+ * Sets the range attribute and sends an                               {@link AxisChangeEvent} to allregistered listeners.  As a side-effect, the auto-range flag is set to <code>false</code>.
  * @param range  the range (<code>null</code> not permitted).
  * @see #getRange()
  */
@@ -862,7 +862,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     setRange(range,true,true);
   }
   /** 
- * Sets the range for the axis, if requested, sends an     {@link AxisChangeEvent} to all registered listeners.  As a side-effect,the auto-range flag is set to <code>false</code> (optional).
+ * Sets the range for the axis, if requested, sends an                              {@link AxisChangeEvent} to all registered listeners.  As a side-effect,the auto-range flag is set to <code>false</code> (optional).
  * @param range  the range (<code>null</code> not permitted).
  * @param turnOffAutoRange  a flag that controls whether or not the autorange is turned off.
  * @param notify  a flag that controls whether or not listeners arenotified.
@@ -881,7 +881,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     }
   }
   /** 
- * Sets the axis range and sends an      {@link AxisChangeEvent} to allregistered listeners.  As a side-effect, the auto-range flag is set to <code>false</code>.
+ * Sets the axis range and sends an                               {@link AxisChangeEvent} to allregistered listeners.  As a side-effect, the auto-range flag is set to <code>false</code>.
  * @param lower  the lower axis limit.
  * @param upper  the upper axis limit.
  * @see #getRange()
@@ -891,14 +891,14 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     setRange(new Range(lower,upper));
   }
   /** 
- * Sets the range for the axis (after first adding the current margins to the specified range) and sends an      {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the range for the axis (after first adding the current margins to the specified range) and sends an                               {@link AxisChangeEvent} to allregistered listeners.
  * @param range  the range (<code>null</code> not permitted).
  */
   public void setRangeWithMargins(  Range range){
     setRangeWithMargins(range,true,true);
   }
   /** 
- * Sets the range for the axis after first adding the current margins to the range and, if requested, sends an      {@link AxisChangeEvent} to allregistered listeners.  As a side-effect, the auto-range flag is set to <code>false</code> (optional).
+ * Sets the range for the axis after first adding the current margins to the range and, if requested, sends an                               {@link AxisChangeEvent} to allregistered listeners.  As a side-effect, the auto-range flag is set to <code>false</code> (optional).
  * @param range  the range (excluding margins, <code>null</code> notpermitted).
  * @param turnOffAutoRange  a flag that controls whether or not the autorange is turned off.
  * @param notify  a flag that controls whether or not listeners arenotified.
@@ -910,7 +910,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     setRange(Range.expand(range,getLowerMargin(),getUpperMargin()),turnOffAutoRange,notify);
   }
   /** 
- * Sets the axis range (after first adding the current margins to the range) and sends an      {@link AxisChangeEvent} to all registered listeners.As a side-effect, the auto-range flag is set to <code>false</code>.
+ * Sets the axis range (after first adding the current margins to the range) and sends an                               {@link AxisChangeEvent} to all registered listeners.As a side-effect, the auto-range flag is set to <code>false</code>.
  * @param lower  the lower axis limit.
  * @param upper  the upper axis limit.
  */
@@ -964,7 +964,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.standardTickUnits;
   }
   /** 
- * Sets the source for obtaining standard tick units for the axis and sends an      {@link AxisChangeEvent} to all registered listeners.  The axis willtry to select the smallest tick unit from the source that does not cause the tick labels to overlap (see also the {@link #setAutoTickUnitSelection(boolean)} method.
+ * Sets the source for obtaining standard tick units for the axis and sends an                               {@link AxisChangeEvent} to all registered listeners.  The axis willtry to select the smallest tick unit from the source that does not cause the tick labels to overlap (see also the {@link #setAutoTickUnitSelection(boolean)} method.
  * @param source  the source for standard tick units (<code>null</code>permitted).
  * @see #getStandardTickUnits()
  */
@@ -982,7 +982,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     return this.minorTickCount;
   }
   /** 
- * Sets the number of minor tick marks to display, and sends an     {@link AxisChangeEvent} to all registered listeners.
+ * Sets the number of minor tick marks to display, and sends an                              {@link AxisChangeEvent} to all registered listeners.
  * @param count  the count.
  * @see #getMinorTickCount()
  * @since 1.0.12
@@ -1026,7 +1026,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
  */
   protected abstract void autoAdjustRange();
   /** 
- * Centers the axis range about the specified value and sends an     {@link AxisChangeEvent} to all registered listeners.
+ * Centers the axis range about the specified value and sends an                              {@link AxisChangeEvent} to all registered listeners.
  * @param value  the center value.
  */
   public void centerRange(  double value){
@@ -1035,7 +1035,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     setRange(adjusted);
   }
   /** 
- * Increases or decreases the axis range by the specified percentage about the central value and sends an      {@link AxisChangeEvent} to all registeredlisteners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
+ * Increases or decreases the axis range by the specified percentage about the central value and sends an                               {@link AxisChangeEvent} to all registeredlisteners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
  * @param percent  the resize factor.
  * @see #resizeRange(double,double)
  */
@@ -1043,7 +1043,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     resizeRange(percent,this.range.getCentralValue());
   }
   /** 
- * Increases or decreases the axis range by the specified percentage about the specified anchor value and sends an      {@link AxisChangeEvent} to allregistered listeners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
+ * Increases or decreases the axis range by the specified percentage about the specified anchor value and sends an                               {@link AxisChangeEvent} to allregistered listeners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
  * @param percent  the resize factor.
  * @param anchorValue  the new central value after the resize.
  * @see #resizeRange(double)
@@ -1059,7 +1059,7 @@ public abstract class ValueAxis extends Axis implements Cloneable, PublicCloneab
     }
   }
   /** 
- * Increases or decreases the axis range by the specified percentage about the specified anchor value and sends an      {@link AxisChangeEvent} to allregistered listeners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
+ * Increases or decreases the axis range by the specified percentage about the specified anchor value and sends an                               {@link AxisChangeEvent} to allregistered listeners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
  * @param percent  the resize factor.
  * @param anchorValue  the new central value after the resize.
  * @see #resizeRange(double)

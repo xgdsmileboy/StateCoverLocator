@@ -57,7 +57,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
     return this.key;
   }
   /** 
- * Sets the key and sends a      {@link MarkerChangeEvent} to all registeredlisteners.
+ * Sets the key and sends a                               {@link MarkerChangeEvent} to all registeredlisteners.
  * @param key  the key (<code>null</code> not permitted).
  * @since 1.0.3
  */
@@ -76,7 +76,7 @@ public class CategoryMarker extends Marker implements Cloneable, Serializable {
     return this.drawAsLine;
   }
   /** 
- * Sets the flag that controls whether the marker is drawn as a region or as a line, and sends a      {@link MarkerChangeEvent} to all registeredlisteners.
+ * Sets the flag that controls whether the marker is drawn as a region or as a line, and sends a                               {@link MarkerChangeEvent} to all registeredlisteners.
  * @param drawAsLine  the flag.
  */
   public void setDrawAsLine(  boolean drawAsLine){

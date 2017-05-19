@@ -5,7 +5,7 @@ import java.util.Locale;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.pie.PieDataset;
 /** 
- * A standard item label generator for plots that use data from a     {@link PieDataset}. <p> For the label format, use {0} where the pie section key should be inserted, {1} for the absolute section value and {2} for the percent amount of the pie section, e.g. <code>"{0} = {1} ({2})"</code> will display as <code>apple = 120 (5%)</code>.
+ * A standard item label generator for plots that use data from a                              {@link PieDataset}. <p> For the label format, use {0} where the pie section key should be inserted, {1} for the absolute section value and {2} for the percent amount of the pie section, e.g. <code>"{0} = {1} ({2})"</code> will display as <code>apple = 120 (5%)</code>.
  */
 public class StandardPieToolTipGenerator extends AbstractPieItemLabelGenerator implements PieToolTipGenerator, Cloneable, PublicCloneable, Serializable {
   /** 

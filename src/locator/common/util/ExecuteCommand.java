@@ -30,10 +30,8 @@ public class ExecuteCommand {
 	 * delete file containing instrument outputs
 	 */
 	public static void deleteInstrumentOutputFile() {
-		File file = new File(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-		if (file.exists()) {
-			file.delete();
-		}
+		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_RM + Constant.STR_TMP_INSTR_OUTPUT_FILE };
+		execute(cmd);
 	}
 
 	/**
@@ -76,6 +74,16 @@ public class ExecuteCommand {
 	 */
 	public static String copyFile(String source, String target) {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_CP + source + " " + target };
+		return execute(cmd);
+	}
+	
+	/**
+	 * delete all collected data
+	 * 
+	 * @return execution information
+	 */
+	public static String deleteGivenFile(String file) {
+		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_RM + file };
 		return execute(cmd);
 	}
 

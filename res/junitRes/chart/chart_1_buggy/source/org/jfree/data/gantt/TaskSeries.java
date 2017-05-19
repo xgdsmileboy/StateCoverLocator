@@ -4,7 +4,7 @@ import java.util.List;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.general.Series;
 /** 
- * A series that contains zero, one or many      {@link Task} objects.<P> This class is used as a building block for the  {@link TaskSeriesCollection}class that can be used to construct basic Gantt charts.
+ * A series that contains zero, one or many                               {@link Task} objects.<P> This class is used as a building block for the  {@link TaskSeriesCollection}class that can be used to construct basic Gantt charts.
  */
 public class TaskSeries extends Series {
   /** 
@@ -20,7 +20,7 @@ public class TaskSeries extends Series {
     this.tasks=new java.util.ArrayList();
   }
   /** 
- * Adds a task to the series and sends a     {@link org.jfree.data.general.SeriesChangeEvent} to all registeredlisteners.
+ * Adds a task to the series and sends a                              {@link org.jfree.data.general.SeriesChangeEvent} to all registeredlisteners.
  * @param task  the task (<code>null</code> not permitted).
  */
   public void add(  Task task){
@@ -31,7 +31,7 @@ public class TaskSeries extends Series {
     fireSeriesChanged();
   }
   /** 
- * Removes a task from the series and sends a      {@link org.jfree.data.general.SeriesChangeEvent}to all registered listeners.
+ * Removes a task from the series and sends a                               {@link org.jfree.data.general.SeriesChangeEvent}to all registered listeners.
  * @param task  the task.
  */
   public void remove(  Task task){
@@ -39,7 +39,7 @@ public class TaskSeries extends Series {
     fireSeriesChanged();
   }
   /** 
- * Removes all tasks from the series and sends a      {@link org.jfree.data.general.SeriesChangeEvent}to all registered listeners.
+ * Removes all tasks from the series and sends a                               {@link org.jfree.data.general.SeriesChangeEvent}to all registered listeners.
  */
   public void removeAll(){
     this.tasks.clear();

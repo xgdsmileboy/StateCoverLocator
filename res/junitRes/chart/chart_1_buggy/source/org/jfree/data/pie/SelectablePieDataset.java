@@ -1,6 +1,6 @@
 package org.jfree.data.pie;
 /** 
- * A      {@link PieDataset} that has the ability to track selection state.
+ * A                               {@link PieDataset} that has the ability to track selection state.
  */
 public interface SelectablePieDataset {
   /** 

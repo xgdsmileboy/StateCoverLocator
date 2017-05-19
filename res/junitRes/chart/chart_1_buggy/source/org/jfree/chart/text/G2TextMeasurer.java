@@ -3,7 +3,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 /** 
- * A      {@link TextMeasurer} based on a {@link Graphics2D}.
+ * A                               {@link TextMeasurer} based on a {@link Graphics2D}.
  */
 public class G2TextMeasurer implements TextMeasurer {
   /** 

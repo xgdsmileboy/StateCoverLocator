@@ -4,7 +4,7 @@ import org.jfree.chart.text.TextAnchor;
 import org.jfree.chart.text.TextBlockAnchor;
 import org.jfree.chart.util.RectangleAnchor;
 /** 
- * The attributes that control the position of the labels for the categories on a      {@link CategoryAxis}. Instances of this class are immutable and other JFreeChart classes rely upon this.
+ * The attributes that control the position of the labels for the categories on a                               {@link CategoryAxis}. Instances of this class are immutable and other JFreeChart classes rely upon this.
  */
 public class CategoryLabelPosition implements Serializable {
   /** 

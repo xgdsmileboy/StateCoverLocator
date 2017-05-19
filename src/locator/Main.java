@@ -8,10 +8,12 @@
 package locator;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import locator.common.config.Configure;
 import locator.common.config.Constant;
@@ -25,6 +27,7 @@ import locator.core.Collector;
 import locator.core.run.path.Coverage;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
+import soot.dava.internal.AST.ASTTryNode.container;
 
 public class Main {
 	
@@ -51,6 +54,8 @@ public class Main {
 		//step 2: compute original coverage information
 		Map<String, CoverInfo> coverage = Coverage.computeCoverage(subject, allTests);
 		
+		printCoverage(coverage, Constant.HOME + "/ori_coverage.csv");
+		
 		//step 3: compute statements covered by failed tests
 		Set<String> allCoveredStatement = Coverage.getAllCoveredStatement(subject, allTests.getFirst());
 		
@@ -68,11 +73,11 @@ public class Main {
 		}
 		
 		//step 6: output coverage information to file
-		printCoverage(coverage);
+		printCoverage(coverage, Constant.HOME + "/coverage.csv");
 	}
 	
-	private static void printCoverage(Map<String, CoverInfo> coverage){
-		File file = new File(System.getProperty("user.dir") + "/coverage.csv");
+	private static void printCoverage(Map<String, CoverInfo> coverage, String filePath){
+		File file = new File(filePath);
 		if(file.exists()){
 			file.delete();
 		}
@@ -96,9 +101,16 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
+		String begin = simpleDateFormat.format(new Date());
+		System.out.println("BEGIN : " + begin);
+		
 		Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
 		
 		proceed();
+		
+		String end = simpleDateFormat.format(new Date());
+		System.out.println("BEGIN : " + begin + " - END : " + end);
 	}
 
 }

@@ -59,7 +59,7 @@ import org.jfree.data.xy.SelectableXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYDatasetSelectionState;
 /** 
- * A base class that can be used to create new      {@link XYItemRenderer}implementations.
+ * A base class that can be used to create new                               {@link XYItemRenderer}implementations.
  */
 public abstract class AbstractXYItemRenderer extends AbstractRenderer implements XYItemRenderer, AnnotationChangeListener, Cloneable, Serializable {
   /** 
@@ -149,7 +149,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     this.plot=plot;
   }
   /** 
- * Creates the renderer state.  This is called by the      {@link #initialise()}method.
+ * Creates the renderer state.  This is called by the                               {@link #initialise()}method.
  * @param info  the plot rendering info.
  * @return A new state instance.
  * @since 1.2.0
@@ -184,7 +184,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return state;
   }
   /** 
- * Returns the label generator for a data item.  This implementation simply passes control to the      {@link #getSeriesItemLabelGenerator(int)} method.If, for some reason, you want a different generator for individual items, you can override this method.
+ * Returns the label generator for a data item.  This implementation simply passes control to the                               {@link #getSeriesItemLabelGenerator(int)} method.If, for some reason, you want a different generator for individual items, you can override this method.
  * @param series  the series index (zero based).
  * @param item  the item index (zero based).
  * @param selected  is the item selected?
@@ -208,7 +208,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return (XYItemLabelGenerator)this.itemLabelGeneratorList.get(series);
   }
   /** 
- * Sets the item label generator for a series and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the item label generator for a series and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero based).
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getSeriesItemLabelGenerator(int)
@@ -218,7 +218,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     fireChangeEvent();
   }
   /** 
- * Sets the item label generator for the specified series and, if requested, sends a      {@link RendererChangeEvent} to all registeredlisteners.
+ * Sets the item label generator for the specified series and, if requested, sends a                               {@link RendererChangeEvent} to all registeredlisteners.
  * @param series  the series index.
  * @param generator  the label generator (<code>null</code> permitted);
  * @param notify  notify listeners?
@@ -239,14 +239,14 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return this.baseItemLabelGenerator;
   }
   /** 
- * Sets the base item label generator and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the base item label generator and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  */
   public void setBaseItemLabelGenerator(  XYItemLabelGenerator generator){
     setBaseItemLabelGenerator(generator,true);
   }
   /** 
- * Sets the default item label generator and, if requested, sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the default item label generator and, if requested, sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @since 1.2.0
@@ -283,7 +283,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return (XYToolTipGenerator)this.toolTipGeneratorList.get(series);
   }
   /** 
- * Sets the tool tip generator for a series and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the tool tip generator for a series and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero based).
  * @param generator  the generator (<code>null</code> permitted).
  */
@@ -291,7 +291,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     setSeriesToolTipGenerator(series,generator,true);
   }
   /** 
- * Sets the tool tip generator for a series and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the tool tip generator for a series and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero based).
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -312,7 +312,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return this.baseToolTipGenerator;
   }
   /** 
- * Sets the base tool tip generator and sends a      {@link RendererChangeEvent}to all registered listeners.
+ * Sets the base tool tip generator and sends a                               {@link RendererChangeEvent}to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getBaseToolTipGenerator()
  */
@@ -320,7 +320,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     setBaseToolTipGenerator(generator,true);
   }
   /** 
- * Sets the default tool tip generator and, if requested, sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the default tool tip generator and, if requested, sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @see #getBaseToolTipGenerator()
@@ -358,7 +358,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return (XYURLGenerator)this.urlGeneratorList.get(series);
   }
   /** 
- * Sets the URL generator for the specified series and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the URL generator for the specified series and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index.
  * @param generator  the generator (<code>null</code> permitted)
  * @see #getSeriesURLGenerator(int)
@@ -368,7 +368,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     setSeriesURLGenerator(series,generator,true);
   }
   /** 
- * Sets the URL generator for the specified series and, if requested, sends a      {@link RendererChangeEvent} to all registered listeners.
+ * Sets the URL generator for the specified series and, if requested, sends a                               {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index.
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -391,7 +391,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return this.baseURLGenerator;
   }
   /** 
- * Sets the default URL generator and sends a      {@link RendererChangeEvent}to all registered listeners.
+ * Sets the default URL generator and sends a                               {@link RendererChangeEvent}to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getBaseURLGenerator()
  * @since 1.2.0
@@ -400,7 +400,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     setBaseURLGenerator(generator,true);
   }
   /** 
- * Sets the default URL generator and, if requested, sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the default URL generator and, if requested, sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listener?
  * @see #getBaseURLGenerator()
@@ -413,14 +413,14 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     }
   }
   /** 
- * Adds an annotation and sends a      {@link RendererChangeEvent} to allregistered listeners.  The annotation is added to the foreground layer.
+ * Adds an annotation and sends a                               {@link RendererChangeEvent} to allregistered listeners.  The annotation is added to the foreground layer.
  * @param annotation  the annotation (<code>null</code> not permitted).
  */
   public void addAnnotation(  XYAnnotation annotation){
     addAnnotation(annotation,Layer.FOREGROUND);
   }
   /** 
- * Adds an annotation to the specified layer and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Adds an annotation to the specified layer and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @param layer  the layer (<code>null</code> not permitted).
  */
@@ -445,7 +445,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     }
   }
   /** 
- * Removes the specified annotation and sends a      {@link RendererChangeEvent}to all registered listeners.
+ * Removes the specified annotation and sends a                               {@link RendererChangeEvent}to all registered listeners.
  * @param annotation  the annotation to remove (<code>null</code> notpermitted).
  * @return A boolean to indicate whether or not the annotation wassuccessfully removed.
  */
@@ -457,7 +457,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return removed;
   }
   /** 
- * Removes all annotations and sends a      {@link RendererChangeEvent}to all registered listeners.
+ * Removes all annotations and sends a                               {@link RendererChangeEvent}to all registered listeners.
  */
   public void removeAnnotations(){
     for (int i=0; i < this.foregroundAnnotations.size(); i++) {
@@ -473,7 +473,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     fireChangeEvent();
   }
   /** 
- * Receives notification of a change to an      {@link Annotation} added tothis renderer.
+ * Receives notification of a change to an                               {@link Annotation} added tothis renderer.
  * @param event  information about the event (not used here).
  * @since 1.0.14
  */
@@ -499,7 +499,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return this.legendItemLabelGenerator;
   }
   /** 
- * Sets the legend item label generator and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the legend item label generator and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> not permitted).
  * @see #getLegendItemLabelGenerator()
  */
@@ -519,7 +519,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return this.legendItemToolTipGenerator;
   }
   /** 
- * Sets the legend item tool tip generator and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the legend item tool tip generator and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getLegendItemToolTipGenerator()
  */
@@ -536,7 +536,7 @@ public abstract class AbstractXYItemRenderer extends AbstractRenderer implements
     return this.legendItemURLGenerator;
   }
   /** 
- * Sets the legend item URL generator and sends a     {@link RendererChangeEvent} to all registered listeners.
+ * Sets the legend item URL generator and sends a                              {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getLegendItemURLGenerator()
  */

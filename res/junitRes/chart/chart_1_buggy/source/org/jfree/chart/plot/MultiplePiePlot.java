@@ -36,7 +36,7 @@ import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.pie.PieDataset;
 /** 
- * A plot that displays multiple pie plots using data from a     {@link CategoryDataset}.
+ * A plot that displays multiple pie plots using data from a                              {@link CategoryDataset}.
  */
 public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
   /** 
@@ -114,7 +114,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
     return this.dataset;
   }
   /** 
- * Sets the dataset used by the plot and sends a      {@link PlotChangeEvent}to all registered listeners.
+ * Sets the dataset used by the plot and sends a                               {@link PlotChangeEvent}to all registered listeners.
  * @param dataset  the dataset (<code>null</code> permitted).
  */
   public void setDataset(  CategoryDataset dataset){
@@ -137,7 +137,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
     return this.pieChart;
   }
   /** 
- * Sets the chart that is used to draw the individual pie plots.  The chart's plot must be an instance of      {@link PiePlot}.
+ * Sets the chart that is used to draw the individual pie plots.  The chart's plot must be an instance of                               {@link PiePlot}.
  * @param pieChart  the pie chart (<code>null</code> not permitted).
  * @see #getPieChart()
  */
@@ -159,7 +159,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
     return this.dataExtractOrder;
   }
   /** 
- * Sets the data extract order (by row or by column) and sends a     {@link PlotChangeEvent} to all registered listeners.
+ * Sets the data extract order (by row or by column) and sends a                              {@link PlotChangeEvent} to all registered listeners.
  * @param order  the order (<code>null</code> not permitted).
  */
   public void setDataExtractOrder(  TableOrder order){
@@ -213,7 +213,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
     return this.aggregatedItemsPaint;
   }
   /** 
- * Sets the paint used to draw the pie section representing the aggregated items and sends a      {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the pie section representing the aggregated items and sends a                               {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @since 1.0.2
  */
@@ -241,7 +241,7 @@ public class MultiplePiePlot extends Plot implements Cloneable, Serializable {
     return this.legendItemShape;
   }
   /** 
- * Sets the shape used for legend items and sends a      {@link PlotChangeEvent}to all registered listeners.
+ * Sets the shape used for legend items and sends a                               {@link PlotChangeEvent}to all registered listeners.
  * @param shape  the shape (<code>null</code> not permitted).
  * @see #getLegendItemShape()
  * @since 1.0.12

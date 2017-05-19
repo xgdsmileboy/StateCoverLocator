@@ -2,7 +2,7 @@ package org.jfree.chart.plot;
 import java.awt.geom.Point2D;
 import org.jfree.chart.ChartPanel;
 /** 
- * A plot that is zoomable must implement this interface to provide a mechanism for the      {@link ChartPanel} to control the zooming.
+ * A plot that is zoomable must implement this interface to provide a mechanism for the                               {@link ChartPanel} to control the zooming.
  */
 public interface Zoomable {
   /** 

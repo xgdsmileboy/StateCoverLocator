@@ -9,7 +9,7 @@ import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.event.DatasetChangeListener;
 import org.jfree.data.general.DatasetUtilities;
 /** 
- * A delegate that handles the specification or automatic calculation of the interval surrounding the x-values in a dataset.  This is used to extend a regular      {@link XYDataset} to support the {@link IntervalXYDataset}interface. <p> The decorator pattern was not used because of the several possibly implemented interfaces of the decorated instance (e.g.     {@link TableXYDataset},      {@link RangeInfo},      {@link DomainInfo} etc.).<p> The width can be set manually or calculated automatically. The switch autoWidth allows to determine which behavior is used. The auto width calculation tries to find the smallest gap between two x-values in the dataset.  If there is only one item in the series, the auto width calculation fails and falls back on the manually set interval width (which is itself defaulted to 1.0).
+ * A delegate that handles the specification or automatic calculation of the interval surrounding the x-values in a dataset.  This is used to extend a regular                               {@link XYDataset} to support the {@link IntervalXYDataset}interface. <p> The decorator pattern was not used because of the several possibly implemented interfaces of the decorated instance (e.g.                              {@link TableXYDataset},                               {@link RangeInfo},                               {@link DomainInfo} etc.).<p> The width can be set manually or calculated automatically. The switch autoWidth allows to determine which behavior is used. The auto width calculation tries to find the smallest gap between two x-values in the dataset.  If there is only one item in the series, the auto width calculation fails and falls back on the manually set interval width (which is itself defaulted to 1.0).
  */
 public class IntervalXYDelegate implements DatasetChangeListener, DomainInfo, Serializable, Cloneable, PublicCloneable {
   /** 
@@ -66,7 +66,7 @@ public class IntervalXYDelegate implements DatasetChangeListener, DomainInfo, Se
     return this.autoWidth;
   }
   /** 
- * Sets the flag that indicates whether the interval width is automatically calculated.  If the flag is set to <code>true</code>, the interval is recalculated. <p> Note: recalculating the interval amounts to changing the data values represented by the dataset.  The calling dataset must fire an appropriate      {@link DatasetChangeEvent}.
+ * Sets the flag that indicates whether the interval width is automatically calculated.  If the flag is set to <code>true</code>, the interval is recalculated. <p> Note: recalculating the interval amounts to changing the data values represented by the dataset.  The calling dataset must fire an appropriate                               {@link DatasetChangeEvent}.
  * @param b  a boolean.
  */
   public void setAutoWidth(  boolean b){
@@ -83,7 +83,7 @@ public class IntervalXYDelegate implements DatasetChangeListener, DomainInfo, Se
     return this.intervalPositionFactor;
   }
   /** 
- * Sets the interval position factor.  This controls how the interval is aligned to the x-value.  For a value of 0.5, the interval is aligned with the x-value in the center.  For a value of 0.0, the interval is aligned with the x-value at the lower end of the interval, and for a value of 1.0, the interval is aligned with the x-value at the upper end of the interval. <br><br> Note that changing the interval position factor amounts to changing the data values represented by the dataset.  Therefore, the dataset that is using this delegate is responsible for generating the appropriate      {@link DatasetChangeEvent}.
+ * Sets the interval position factor.  This controls how the interval is aligned to the x-value.  For a value of 0.5, the interval is aligned with the x-value in the center.  For a value of 0.0, the interval is aligned with the x-value at the lower end of the interval, and for a value of 1.0, the interval is aligned with the x-value at the upper end of the interval. <br><br> Note that changing the interval position factor amounts to changing the data values represented by the dataset.  Therefore, the dataset that is using this delegate is responsible for generating the appropriate                               {@link DatasetChangeEvent}.
  * @param d  the new interval position factor (in the range<code>0.0</code> to <code>1.0</code> inclusive).
  */
   public void setIntervalPositionFactor(  double d){
@@ -100,7 +100,7 @@ public class IntervalXYDelegate implements DatasetChangeListener, DomainInfo, Se
     return this.fixedIntervalWidth;
   }
   /** 
- * Sets the fixed interval width and, as a side effect, sets the <code>autoWidth</code> flag to <code>false</code>. Note that changing the interval width amounts to changing the data values represented by the dataset.  Therefore, the dataset that is using this delegate is responsible for generating the appropriate      {@link DatasetChangeEvent}.
+ * Sets the fixed interval width and, as a side effect, sets the <code>autoWidth</code> flag to <code>false</code>. Note that changing the interval width amounts to changing the data values represented by the dataset.  Therefore, the dataset that is using this delegate is responsible for generating the appropriate                               {@link DatasetChangeEvent}.
  * @param w  the width (negative values not permitted).
  */
   public void setFixedIntervalWidth(  double w){
@@ -111,7 +111,7 @@ public class IntervalXYDelegate implements DatasetChangeListener, DomainInfo, Se
     this.autoWidth=false;
   }
   /** 
- * Returns the interval width.  This method will return either the auto calculated interval width or the manually specified interval width, depending on the      {@link #isAutoWidth()} result.
+ * Returns the interval width.  This method will return either the auto calculated interval width or the manually specified interval width, depending on the                               {@link #isAutoWidth()} result.
  * @return The interval width to use.
  */
   public double getIntervalWidth(){

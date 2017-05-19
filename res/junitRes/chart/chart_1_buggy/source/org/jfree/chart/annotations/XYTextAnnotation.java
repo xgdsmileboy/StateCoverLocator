@@ -24,7 +24,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A text annotation that can be placed at a particular (x, y) location on an     {@link XYPlot}.
+ * A text annotation that can be placed at a particular (x, y) location on an                              {@link XYPlot}.
  */
 public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -155,7 +155,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.font;
   }
   /** 
- * Sets the font for the annotation and sends an     {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the font for the annotation and sends an                              {@link AnnotationChangeEvent} to all registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getFont()
  */
@@ -175,7 +175,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.paint;
   }
   /** 
- * Sets the paint for the annotation and sends an     {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the paint for the annotation and sends an                              {@link AnnotationChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -195,7 +195,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.textAnchor;
   }
   /** 
- * Sets the text anchor (the point on the text bounding rectangle that is aligned to the (x, y) coordinate of the annotation) and sends an     {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the text anchor (the point on the text bounding rectangle that is aligned to the (x, y) coordinate of the annotation) and sends an                              {@link AnnotationChangeEvent} to all registered listeners.
  * @param anchor  the anchor point (<code>null</code> not permitted).
  * @see #getTextAnchor()
  */
@@ -215,7 +215,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.rotationAnchor;
   }
   /** 
- * Sets the rotation anchor point and sends an     {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the rotation anchor point and sends an                              {@link AnnotationChangeEvent} to all registered listeners.
  * @param anchor  the anchor (<code>null</code> not permitted).
  * @see #getRotationAnchor()
  */
@@ -235,7 +235,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.rotationAngle;
   }
   /** 
- * Sets the rotation angle and sends an      {@link AnnotationChangeEvent} toall registered listeners.  The angle is measured clockwise in radians.
+ * Sets the rotation angle and sends an                               {@link AnnotationChangeEvent} toall registered listeners.  The angle is measured clockwise in radians.
  * @param angle  the angle (in radians).
  * @see #getRotationAngle()
  */
@@ -252,7 +252,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.x;
   }
   /** 
- * Sets the x coordinate for the text anchor point (measured against the domain axis) and sends an      {@link AnnotationChangeEvent} to allregistered listeners.
+ * Sets the x coordinate for the text anchor point (measured against the domain axis) and sends an                               {@link AnnotationChangeEvent} to allregistered listeners.
  * @param x  the x coordinate (in data space).
  * @see #getX()
  */
@@ -269,7 +269,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.y;
   }
   /** 
- * Sets the y coordinate for the text anchor point (measured against the range axis) and sends an      {@link AnnotationChangeEvent} to all registeredlisteners.
+ * Sets the y coordinate for the text anchor point (measured against the range axis) and sends an                               {@link AnnotationChangeEvent} to all registeredlisteners.
  * @param y  the y coordinate.
  * @see #getY()
  */
@@ -287,7 +287,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.backgroundPaint;
   }
   /** 
- * Sets the background paint for the annotation and sends an     {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the background paint for the annotation and sends an                              {@link AnnotationChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getBackgroundPaint()
  * @since 1.0.13
@@ -306,7 +306,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.outlinePaint;
   }
   /** 
- * Sets the outline paint for the annotation and sends an     {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the outline paint for the annotation and sends an                              {@link AnnotationChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getOutlinePaint()
  * @since 1.0.13
@@ -328,7 +328,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.outlineStroke;
   }
   /** 
- * Sets the outline stroke for the annotation and sends an     {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the outline stroke for the annotation and sends an                              {@link AnnotationChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getOutlineStroke()
  * @since 1.0.13
@@ -349,7 +349,7 @@ public class XYTextAnnotation extends AbstractXYAnnotation implements Cloneable,
     return this.outlineVisible;
   }
   /** 
- * Sets the flag that controls whether or not the outline is drawn and sends an      {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the flag that controls whether or not the outline is drawn and sends an                               {@link AnnotationChangeEvent} to all registered listeners.
  * @param visible  the new flag value.
  * @since 1.0.13
  */

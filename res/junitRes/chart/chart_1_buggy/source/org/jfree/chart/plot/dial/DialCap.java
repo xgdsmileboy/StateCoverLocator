@@ -57,7 +57,7 @@ public class DialCap extends AbstractDialLayer implements DialLayer, Cloneable, 
     return this.radius;
   }
   /** 
- * Sets the radius of the cap, as a percentage of the dial's framing rectangle, and sends a      {@link DialLayerChangeEvent} to all registeredlisteners.
+ * Sets the radius of the cap, as a percentage of the dial's framing rectangle, and sends a                               {@link DialLayerChangeEvent} to all registeredlisteners.
  * @param radius  the radius (must be greater than zero).
  * @see #getRadius()
  */
@@ -77,7 +77,7 @@ public class DialCap extends AbstractDialLayer implements DialLayer, Cloneable, 
     return this.fillPaint;
   }
   /** 
- * Sets the paint for the cap background and sends a     {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the paint for the cap background and sends a                              {@link DialLayerChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getFillPaint()
  */
@@ -97,7 +97,7 @@ public class DialCap extends AbstractDialLayer implements DialLayer, Cloneable, 
     return this.outlinePaint;
   }
   /** 
- * Sets the paint used to draw the outline of the cap and sends a     {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the outline of the cap and sends a                              {@link DialLayerChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getOutlinePaint()
  */
@@ -117,7 +117,7 @@ public class DialCap extends AbstractDialLayer implements DialLayer, Cloneable, 
     return this.outlineStroke;
   }
   /** 
- * Sets the stroke used to draw the outline of the cap and sends a     {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the outline of the cap and sends a                              {@link DialLayerChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getOutlineStroke()
  */

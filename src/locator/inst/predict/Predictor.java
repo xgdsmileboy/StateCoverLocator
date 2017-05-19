@@ -56,20 +56,20 @@ public class Predictor {
 			List<String> expFeatures) {
 		Pair<Set<String>, Set<String>> conditions = new Pair<>();
 		// TODO : return conditions for left variable and right variables
-		File file = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
+		File varFile = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
 				+ subject.getId() + ".var.csv");
 		String varTitle = "id	line	column	filename	methodname	varname	vartype	lastassign	isparam	incondnum	bodyuse	if\n";
-		JavaFile.writeStringToFile(file, varTitle);
+		JavaFile.writeStringToFile(varFile, varTitle);
 		for (String string : varFeatures) {
-			JavaFile.writeStringToFile(file, string + "\n", true);
+			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 
-		file = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
+		File expFile = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
 				+ subject.getId() + ".expr.csv");
 		String expTitle = "id	line	column	filename	methodname	varname	vartype	else	return	right\n";
-		JavaFile.writeStringToFile(file, expTitle);
+		JavaFile.writeStringToFile(expFile, expTitle);
 		for (String string : expFeatures) {
-			JavaFile.writeStringToFile(file, string + "\n", true);
+			JavaFile.writeStringToFile(expFile, string + "\n", true);
 		}
 
 		try {
@@ -80,13 +80,13 @@ public class Predictor {
 			e.printStackTrace();
 		}
 
-		file = new File(Constant.STR_ML_PREDICT_EXP_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
+		File rslFile = new File(Constant.STR_ML_PREDICT_EXP_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
 				+ subject.getId() + ".joint.csv");
 		BufferedReader bReader = null;
 		try {
-			bReader = new BufferedReader(new FileReader(file));
+			bReader = new BufferedReader(new FileReader(rslFile));
 		} catch (FileNotFoundException e) {
-			LevelLogger.warn(__name__ + "#predict file not found : " + file.getAbsolutePath());
+			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
 			return conditions;
 		}
 		Set<String> rightConditions = new HashSet<>();
@@ -106,9 +106,13 @@ public class Predictor {
 					rightConditions.add(condition);
 				}
 			}
+			bReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		ExecuteCommand.deleteGivenFile(varFile.getAbsolutePath());
+		ExecuteCommand.deleteGivenFile(expFile.getAbsolutePath());
+		ExecuteCommand.deleteGivenFile(rslFile.getAbsolutePath());
 		conditions.setSecond(rightConditions);
 		return conditions;
 	}

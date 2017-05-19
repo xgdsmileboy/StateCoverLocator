@@ -2,7 +2,7 @@ package org.jfree.data.statistics;
 import java.io.Serializable;
 import org.jfree.chart.util.ObjectUtilities;
 /** 
- * A simple data structure that holds a mean value and a standard deviation value.  This is used in the     {@link org.jfree.data.statistics.DefaultStatisticalCategoryDataset} class.
+ * A simple data structure that holds a mean value and a standard deviation value.  This is used in the                              {@link org.jfree.data.statistics.DefaultStatisticalCategoryDataset} class.
  */
 public class MeanAndStandardDeviation implements Serializable {
   /** 

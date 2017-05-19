@@ -8,7 +8,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
 /** 
- * An item label generator for datasets that implement the     {@link IntervalXYDataset} interface.
+ * An item label generator for datasets that implement the                              {@link IntervalXYDataset} interface.
  * @since 1.0.10
  */
 public class IntervalXYItemLabelGenerator extends AbstractXYItemLabelGenerator implements XYItemLabelGenerator, Cloneable, PublicCloneable, Serializable {
@@ -59,7 +59,7 @@ public class IntervalXYItemLabelGenerator extends AbstractXYItemLabelGenerator i
     super(formatString,xFormat,yFormat);
   }
   /** 
- * Creates the array of items that can be passed to the     {@link MessageFormat} class for creating labels.
+ * Creates the array of items that can be passed to the                              {@link MessageFormat} class for creating labels.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param series  the series (zero-based index).
  * @param item  the item (zero-based index).

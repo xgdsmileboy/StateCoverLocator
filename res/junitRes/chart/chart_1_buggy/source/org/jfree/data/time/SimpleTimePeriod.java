@@ -68,7 +68,7 @@ public class SimpleTimePeriod implements TimePeriod, Comparable, Serializable {
     return this.end;
   }
   /** 
- * Tests this time period instance for equality with an arbitrary object. The object is considered equal if it is an instance of      {@link TimePeriod}and it has the same start and end dates.
+ * Tests this time period instance for equality with an arbitrary object. The object is considered equal if it is an instance of                               {@link TimePeriod}and it has the same start and end dates.
  * @param obj  the other object (<code>null</code> permitted).
  * @return A boolean.
  */

@@ -4,7 +4,7 @@ import org.jfree.chart.event.DatasetChangeInfo;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DataUtilities;
 /** 
- * A default implementation of the      {@link HeatMapDataset} interface.
+ * A default implementation of the                               {@link HeatMapDataset} interface.
  * @since 1.0.13
  */
 public class DefaultHeatMapDataset extends AbstractDataset implements HeatMapDataset, Cloneable, PublicCloneable, Serializable {
@@ -76,14 +76,14 @@ public class DefaultHeatMapDataset extends AbstractDataset implements HeatMapDat
     }
   }
   /** 
- * Returns the number of x values across the width of the dataset.  The values are evenly spaced between      {@link #getMinimumXValue()} and{@link #getMaximumXValue()}.
+ * Returns the number of x values across the width of the dataset.  The values are evenly spaced between                               {@link #getMinimumXValue()} and{@link #getMaximumXValue()}.
  * @return The number of x-values (always > 0).
  */
   public int getXSampleCount(){
     return this.xSamples;
   }
   /** 
- * Returns the number of y values (or samples) for the dataset.  The values are evenly spaced between      {@link #getMinimumYValue()} and{@link #getMaximumYValue()}.
+ * Returns the number of y values (or samples) for the dataset.  The values are evenly spaced between                               {@link #getMinimumYValue()} and{@link #getMaximumYValue()}.
  * @return The number of y-values (always > 0).
  */
   public int getYSampleCount(){
@@ -145,7 +145,7 @@ public class DefaultHeatMapDataset extends AbstractDataset implements HeatMapDat
     return this.zValues[xIndex][yIndex];
   }
   /** 
- * Returns the z-value at the specified sample position in the dataset. In this implementation, where the underlying values are stored in an array of double primitives, you should avoid using this method and use      {@link #getZValue(int,int)} instead.
+ * Returns the z-value at the specified sample position in the dataset. In this implementation, where the underlying values are stored in an array of double primitives, you should avoid using this method and use                               {@link #getZValue(int,int)} instead.
  * @param xIndex  the position of the x sample in the dataset.
  * @param yIndex  the position of the y sample in the dataset.
  * @return The z-value.
@@ -154,7 +154,7 @@ public class DefaultHeatMapDataset extends AbstractDataset implements HeatMapDat
     return new Double(getZValue(xIndex,yIndex));
   }
   /** 
- * Updates a z-value in the dataset and sends a      {@link DatasetChangeEvent}to all registered listeners.
+ * Updates a z-value in the dataset and sends a                               {@link DatasetChangeEvent}to all registered listeners.
  * @param xIndex  the x-index.
  * @param yIndex  the y-index.
  * @param z  the new z-value.
@@ -163,7 +163,7 @@ public class DefaultHeatMapDataset extends AbstractDataset implements HeatMapDat
     setZValue(xIndex,yIndex,z,true);
   }
   /** 
- * Updates a z-value in the dataset and, if requested, sends a     {@link DatasetChangeEvent} to all registered listeners.
+ * Updates a z-value in the dataset and, if requested, sends a                              {@link DatasetChangeEvent} to all registered listeners.
  * @param xIndex  the x-index.
  * @param yIndex  the y-index.
  * @param z  the new z-value.

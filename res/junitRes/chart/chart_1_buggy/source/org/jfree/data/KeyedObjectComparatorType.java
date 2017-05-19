@@ -1,6 +1,6 @@
 package org.jfree.data;
 /** 
- * Used to indicate the type of a      {@link KeyedObjectComparator} : 'by key' or'by object'.
+ * Used to indicate the type of a                               {@link KeyedObjectComparator} : 'by key' or'by object'.
  */
 public final class KeyedObjectComparatorType {
   /** 

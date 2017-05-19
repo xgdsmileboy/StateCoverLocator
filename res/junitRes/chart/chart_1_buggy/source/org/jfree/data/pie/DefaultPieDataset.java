@@ -11,7 +11,7 @@ import org.jfree.data.KeyedValues;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.event.DatasetChangeEvent;
 /** 
- * A default implementation of the      {@link PieDataset} interface.
+ * A default implementation of the                               {@link PieDataset} interface.
  */
 public class DefaultPieDataset extends AbstractPieDataset implements PieDataset, PieDatasetSelectionState, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -30,7 +30,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     setSelectionState(this);
   }
   /** 
- * Creates a new dataset by copying data from a      {@link KeyedValues}instance.
+ * Creates a new dataset by copying data from a                               {@link KeyedValues}instance.
  * @param data  the data (<code>null</code> not permitted).
  */
   public DefaultPieDataset(  KeyedValues data){
@@ -102,7 +102,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     return dataItem.getValue();
   }
   /** 
- * Sets the data value for a key and sends a      {@link DatasetChangeEvent} toall registered listeners.
+ * Sets the data value for a key and sends a                               {@link DatasetChangeEvent} toall registered listeners.
  * @param key  the key (<code>null</code> not permitted).
  * @param value  the value.
  * @throws IllegalArgumentException if <code>key</code> is<code>null</code>.
@@ -118,7 +118,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     fireDatasetChanged(info);
   }
   /** 
- * Sets the data value for a key and sends a      {@link DatasetChangeEvent} toall registered listeners.
+ * Sets the data value for a key and sends a                               {@link DatasetChangeEvent} toall registered listeners.
  * @param key  the key (<code>null</code> not permitted).
  * @param value  the value.
  * @throws IllegalArgumentException if <code>key</code> is<code>null</code>.
@@ -127,7 +127,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     setValue(key,new Double(value));
   }
   /** 
- * Inserts a new value at the specified position in the dataset or, if there is an existing item with the specified key, updates the value for that item and moves it to the specified position.  After the change is made, this methods sends a      {@link DatasetChangeEvent} to allregistered listeners.
+ * Inserts a new value at the specified position in the dataset or, if there is an existing item with the specified key, updates the value for that item and moves it to the specified position.  After the change is made, this methods sends a                               {@link DatasetChangeEvent} to allregistered listeners.
  * @param position  the position (in the range 0 to getItemCount()).
  * @param key  the key (<code>null</code> not permitted).
  * @param value  the value (<code>null</code> permitted).
@@ -137,7 +137,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     insertValue(position,key,new Double(value));
   }
   /** 
- * Inserts a new value at the specified position in the dataset or, if there is an existing item with the specified key, updates the value for that item and moves it to the specified position.  After the change is made, this method sends a      {@link DatasetChangeEvent} to allregistered listeners.
+ * Inserts a new value at the specified position in the dataset or, if there is an existing item with the specified key, updates the value for that item and moves it to the specified position.  After the change is made, this method sends a                               {@link DatasetChangeEvent} to allregistered listeners.
  * @param position  the position (in the range 0 to getItemCount()).
  * @param key  the key (<code>null</code> not permitted).
  * @param value  the value (<code>null</code> permitted).
@@ -149,7 +149,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     fireDatasetChanged(new PieDatasetChangeInfo(ct,position,position));
   }
   /** 
- * Removes an item from the dataset and sends a      {@link DatasetChangeEvent}to all registered listeners.
+ * Removes an item from the dataset and sends a                               {@link DatasetChangeEvent}to all registered listeners.
  * @param key  the key (<code>null</code> not permitted).
  * @throws IllegalArgumentException if <code>key</code> is<code>null</code>.
  */
@@ -160,7 +160,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     fireDatasetChanged(new PieDatasetChangeInfo(ct,i,i));
   }
   /** 
- * Clears all data from this dataset and sends a      {@link DatasetChangeEvent}to all registered listeners (unless the dataset was already empty).
+ * Clears all data from this dataset and sends a                               {@link DatasetChangeEvent}to all registered listeners (unless the dataset was already empty).
  * @since 1.0.2
  */
   public void clear(){
@@ -171,7 +171,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     }
   }
   /** 
- * Sorts the dataset's items by key and sends a      {@link DatasetChangeEvent}to all registered listeners.
+ * Sorts the dataset's items by key and sends a                               {@link DatasetChangeEvent}to all registered listeners.
  * @param order  the sort order (<code>null</code> not permitted).
  * @since 1.0.3
  */
@@ -181,7 +181,7 @@ public class DefaultPieDataset extends AbstractPieDataset implements PieDataset,
     fireDatasetChanged(new PieDatasetChangeInfo(ct,0,getItemCount() - 1));
   }
   /** 
- * Sorts the dataset's items by value and sends a      {@link DatasetChangeEvent}to all registered listeners.
+ * Sorts the dataset's items by value and sends a                               {@link DatasetChangeEvent}to all registered listeners.
  * @param order  the sort order (<code>null</code> not permitted).
  * @since 1.0.3
  */

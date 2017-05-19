@@ -10,7 +10,7 @@ import java.io.Serializable;
 import org.jfree.chart.util.GradientPaintTransformer;
 import org.jfree.chart.util.RectangleEdge;
 /** 
- * An implementation of the      {@link XYBarPainter} interface that preserves thebehaviour of bar painting that existed prior to the introduction of the {@link XYBarPainter} interface.
+ * An implementation of the                               {@link XYBarPainter} interface that preserves thebehaviour of bar painting that existed prior to the introduction of the {@link XYBarPainter} interface.
  * @see GradientXYBarPainter
  * @since 1.0.11
  */

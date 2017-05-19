@@ -1,7 +1,7 @@
 package org.jfree.chart.urls;
 import org.jfree.data.xy.XYDataset;
 /** 
- * Interface for a URL generator for plots that uses data from an     {@link XYDataset}.  Classes that implement this interface are responsible for correctly escaping any text that is derived from the dataset, as this may be user-specified and could pose a security risk.
+ * Interface for a URL generator for plots that uses data from an                              {@link XYDataset}.  Classes that implement this interface are responsible for correctly escaping any text that is derived from the dataset, as this may be user-specified and could pose a security risk.
  */
 public interface XYURLGenerator {
   /** 

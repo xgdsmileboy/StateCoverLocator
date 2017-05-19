@@ -5,7 +5,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 /** 
- * A SAX handler for reading a      {@link CategoryDataset} from an XML file.
+ * A SAX handler for reading a                               {@link CategoryDataset} from an XML file.
  */
 public class CategoryDatasetHandler extends RootHandler implements DatasetTags {
   /** 

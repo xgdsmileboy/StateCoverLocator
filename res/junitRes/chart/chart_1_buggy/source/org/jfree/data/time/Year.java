@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 /** 
- * Represents a year in the range -9999 to 9999.  This class is immutable, which is a requirement for all      {@link RegularTimePeriod} subclasses.
+ * Represents a year in the range -9999 to 9999.  This class is immutable, which is a requirement for all                               {@link RegularTimePeriod} subclasses.
  */
 public class Year extends RegularTimePeriod implements Serializable {
   /** 
@@ -89,7 +89,7 @@ public class Year extends RegularTimePeriod implements Serializable {
     return this.year;
   }
   /** 
- * Returns the first millisecond of the year.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the     {@link #peg(Calendar)} method.
+ * Returns the first millisecond of the year.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                              {@link #peg(Calendar)} method.
  * @return The first millisecond of the year.
  * @see #getLastMillisecond()
  */
@@ -97,7 +97,7 @@ public class Year extends RegularTimePeriod implements Serializable {
     return this.firstMillisecond;
   }
   /** 
- * Returns the last millisecond of the year.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the     {@link #peg(Calendar)} method.
+ * Returns the last millisecond of the year.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                              {@link #peg(Calendar)} method.
  * @return The last millisecond of the year.
  * @see #getFirstMillisecond()
  */

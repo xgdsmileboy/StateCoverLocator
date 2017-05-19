@@ -7,7 +7,7 @@ import java.util.Date;
 import org.jfree.data.statistics.BoxAndWhiskerXYDataset;
 import org.jfree.data.xy.XYDataset;
 /** 
- * An item label generator for plots that use data from a     {@link BoxAndWhiskerXYDataset}. <P> The tooltip text and item label text are composed using a     {@link java.text.MessageFormat} object, that can aggregate some or all ofthe following string values into a message. <table> <tr><td>0</td><td>Series Name</td></tr> <tr><td>1</td><td>X (value or date)</td></tr> <tr><td>2</td><td>Mean</td></tr> <tr><td>3</td><td>Median</td></tr> <tr><td>4</td><td>Minimum</td></tr> <tr><td>5</td><td>Maximum</td></tr> <tr><td>6</td><td>Quartile 1</td></tr> <tr><td>7</td><td>Quartile 3</td></tr> </table>
+ * An item label generator for plots that use data from a                              {@link BoxAndWhiskerXYDataset}. <P> The tooltip text and item label text are composed using a                              {@link java.text.MessageFormat} object, that can aggregate some or all ofthe following string values into a message. <table> <tr><td>0</td><td>Series Name</td></tr> <tr><td>1</td><td>X (value or date)</td></tr> <tr><td>2</td><td>Mean</td></tr> <tr><td>3</td><td>Median</td></tr> <tr><td>4</td><td>Minimum</td></tr> <tr><td>5</td><td>Maximum</td></tr> <tr><td>6</td><td>Quartile 1</td></tr> <tr><td>7</td><td>Quartile 3</td></tr> </table>
  */
 public class BoxAndWhiskerXYToolTipGenerator extends StandardXYToolTipGenerator implements XYToolTipGenerator, Cloneable, Serializable {
   /** 
@@ -34,7 +34,7 @@ public class BoxAndWhiskerXYToolTipGenerator extends StandardXYToolTipGenerator 
     super(toolTipFormat,dateFormat,numberFormat);
   }
   /** 
- * Creates the array of items that can be passed to the     {@link MessageFormat} class for creating labels.
+ * Creates the array of items that can be passed to the                              {@link MessageFormat} class for creating labels.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param series  the series (zero-based index).
  * @param item  the item (zero-based index).

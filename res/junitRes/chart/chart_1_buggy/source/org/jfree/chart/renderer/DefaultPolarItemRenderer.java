@@ -22,7 +22,7 @@ import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.BooleanList;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A renderer that can be used with the      {@link PolarPlot} class.
+ * A renderer that can be used with the                               {@link PolarPlot} class.
  */
 public class DefaultPolarItemRenderer extends AbstractRenderer implements PolarItemRenderer {
   /** 

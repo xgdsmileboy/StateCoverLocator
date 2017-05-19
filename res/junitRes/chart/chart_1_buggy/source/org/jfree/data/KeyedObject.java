@@ -49,7 +49,7 @@ public class KeyedObject implements Cloneable, PublicCloneable, Serializable {
     this.object=object;
   }
   /** 
- * Returns a clone of this object.  It is assumed that the key is an immutable object, so it is not deep-cloned.  The object is deep-cloned if it implements      {@link PublicCloneable}, otherwise a shallow clone is made.
+ * Returns a clone of this object.  It is assumed that the key is an immutable object, so it is not deep-cloned.  The object is deep-cloned if it implements                               {@link PublicCloneable}, otherwise a shallow clone is made.
  * @return A clone.
  * @throws CloneNotSupportedException if there is a problem cloning.
  */

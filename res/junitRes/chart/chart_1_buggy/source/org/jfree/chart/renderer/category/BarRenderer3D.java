@@ -40,7 +40,7 @@ import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A renderer for bars with a 3D effect, for use with the     {@link CategoryPlot} class.  The example shown here is generatedby the <code>BarChart3DDemo1.java</code> program included in the JFreeChart Demo Collection: <br><br> <img src="../../../../../images/BarRenderer3DSample.png" alt="BarRenderer3DSample.png" />
+ * A renderer for bars with a 3D effect, for use with the                              {@link CategoryPlot} class.  The example shown here is generatedby the <code>BarChart3DDemo1.java</code> program included in the JFreeChart Demo Collection: <br><br> <img src="../../../../../images/BarRenderer3DSample.png" alt="BarRenderer3DSample.png" />
  */
 public class BarRenderer3D extends BarRenderer implements Effect3D, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -116,7 +116,7 @@ public class BarRenderer3D extends BarRenderer implements Effect3D, Cloneable, P
     return this.wallPaint;
   }
   /** 
- * Sets the paint used to hightlight the left and bottom walls in the plot background, and sends a      {@link RendererChangeEvent} to all registeredlisteners.
+ * Sets the paint used to hightlight the left and bottom walls in the plot background, and sends a                               {@link RendererChangeEvent} to all registeredlisteners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getWallPaint()
  */

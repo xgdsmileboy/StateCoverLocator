@@ -4,7 +4,7 @@ import javax.swing.table.TableModel;
 import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.event.DatasetChangeListener;
 /** 
- * A READ-ONLY wrapper around a      {@link TableXYDataset} to convert it to atable model for use in a JTable.  The first column of the table shows the x-values, the remaining columns show the y-values for each series (series 0 appears in column 1, series 1 appears in column 2, etc). <P> TO DO: <ul> <li>implement proper naming for x axis (getColumnName)</li> <li>implement setValueAt to remove READ-ONLY constraint (not sure how)</li> </ul>
+ * A READ-ONLY wrapper around a                               {@link TableXYDataset} to convert it to atable model for use in a JTable.  The first column of the table shows the x-values, the remaining columns show the y-values for each series (series 0 appears in column 1, series 1 appears in column 2, etc). <P> TO DO: <ul> <li>implement proper naming for x axis (getColumnName)</li> <li>implement setValueAt to remove READ-ONLY constraint (not sure how)</li> </ul>
  */
 public class XYDatasetTableModel extends AbstractTableModel implements TableModel, DatasetChangeListener {
   /** 
@@ -106,7 +106,7 @@ public class XYDatasetTableModel extends AbstractTableModel implements TableMode
     return false;
   }
   /** 
- * Updates the      {@link XYDataset} if allowed.
+ * Updates the                               {@link XYDataset} if allowed.
  * @param value  the new value.
  * @param row  the row.
  * @param column  the column.

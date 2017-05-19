@@ -1,6 +1,6 @@
 package org.jfree.data.category;
 /** 
- * A category dataset that defines a value range for each series/category combination.  The data value (defined in the      {@link CategoryDataset}interface) is NOT required to fall within the value range specified here. If the start value and the end value are not <code>null</code>, then it is a requirement that the start value must be less than or equal to the end value.
+ * A category dataset that defines a value range for each series/category combination.  The data value (defined in the                               {@link CategoryDataset}interface) is NOT required to fall within the value range specified here. If the start value and the end value are not <code>null</code>, then it is a requirement that the start value must be less than or equal to the end value.
  */
 public interface IntervalCategoryDataset extends CategoryDataset {
   /** 

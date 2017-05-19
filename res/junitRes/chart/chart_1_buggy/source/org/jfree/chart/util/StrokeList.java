@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 /** 
- * A table of      {@link Stroke} objects.
+ * A table of                               {@link Stroke} objects.
  */
 public class StrokeList extends AbstractObjectList {
   /** 
@@ -14,7 +14,7 @@ public class StrokeList extends AbstractObjectList {
     super();
   }
   /** 
- * Returns a      {@link Stroke} object from the list.
+ * Returns a                               {@link Stroke} object from the list.
  * @param index the index (zero-based).
  * @return The object.
  */
@@ -22,7 +22,7 @@ public class StrokeList extends AbstractObjectList {
     return (Stroke)get(index);
   }
   /** 
- * Sets the      {@link Stroke} for an item in the list.  The list is expandedif necessary.
+ * Sets the                               {@link Stroke} for an item in the list.  The list is expandedif necessary.
  * @param index  the index (zero-based).
  * @param stroke  the {@link Stroke}.
  */

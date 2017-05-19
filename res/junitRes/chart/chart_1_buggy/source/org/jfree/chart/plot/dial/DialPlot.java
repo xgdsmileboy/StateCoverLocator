@@ -106,7 +106,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return this.background;
   }
   /** 
- * Sets the background layer and sends a      {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the background layer and sends a                               {@link PlotChangeEvent} to allregistered listeners.
  * @param background  the background layer (<code>null</code> permitted).
  * @see #getBackground()
  */
@@ -129,7 +129,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return this.cap;
   }
   /** 
- * Sets the cap and sends a      {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets the cap and sends a                               {@link PlotChangeEvent} to all registeredlisteners.
  * @param cap  the cap (<code>null</code> permitted).
  * @see #getCap()
  */
@@ -152,7 +152,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return this.dialFrame;
   }
   /** 
- * Sets the dial's frame and sends a      {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the dial's frame and sends a                               {@link PlotChangeEvent} to allregistered listeners.
  * @param frame  the frame (<code>null</code> not permitted).
  * @see #getDialFrame()
  */
@@ -198,7 +198,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return this.viewH;
   }
   /** 
- * Sets the viewing rectangle, relative to the dial's framing rectangle, and sends a      {@link PlotChangeEvent} to all registered listeners.
+ * Sets the viewing rectangle, relative to the dial's framing rectangle, and sends a                               {@link PlotChangeEvent} to all registered listeners.
  * @param x  the x-coordinate (in the range 0.0 to 1.0).
  * @param y  the y-coordinate (in the range 0.0 to 1.0).
  * @param w  the width (in the range 0.0 to 1.0).
@@ -216,7 +216,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     fireChangeEvent();
   }
   /** 
- * Adds a layer to the plot and sends a      {@link PlotChangeEvent} to allregistered listeners.
+ * Adds a layer to the plot and sends a                               {@link PlotChangeEvent} to allregistered listeners.
  * @param layer  the layer (<code>null</code> not permitted).
  */
   public void addLayer(  DialLayer layer){
@@ -239,7 +239,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return this.layers.indexOf(layer);
   }
   /** 
- * Removes the layer at the specified index and sends a     {@link PlotChangeEvent} to all registered listeners.
+ * Removes the layer at the specified index and sends a                              {@link PlotChangeEvent} to all registered listeners.
  * @param index  the index.
  */
   public void removeLayer(  int index){
@@ -251,14 +251,14 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     fireChangeEvent();
   }
   /** 
- * Removes the specified layer and sends a      {@link PlotChangeEvent} to allregistered listeners.
+ * Removes the specified layer and sends a                               {@link PlotChangeEvent} to allregistered listeners.
  * @param layer  the layer (<code>null</code> not permitted).
  */
   public void removeLayer(  DialLayer layer){
     removeLayer(getLayerIndex(layer));
   }
   /** 
- * Adds a pointer to the plot and sends a      {@link PlotChangeEvent} to allregistered listeners.
+ * Adds a pointer to the plot and sends a                               {@link PlotChangeEvent} to allregistered listeners.
  * @param pointer  the pointer (<code>null</code> not permitted).
  */
   public void addPointer(  DialPointer pointer){
@@ -281,7 +281,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return this.pointers.indexOf(pointer);
   }
   /** 
- * Removes the pointer at the specified index and sends a     {@link PlotChangeEvent} to all registered listeners.
+ * Removes the pointer at the specified index and sends a                              {@link PlotChangeEvent} to all registered listeners.
  * @param index  the index.
  */
   public void removePointer(  int index){
@@ -293,7 +293,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     fireChangeEvent();
   }
   /** 
- * Removes the specified pointer and sends a      {@link PlotChangeEvent} to allregistered listeners.
+ * Removes the specified pointer and sends a                               {@link PlotChangeEvent} to allregistered listeners.
  * @param pointer  the pointer (<code>null</code> not permitted).
  */
   public void removePointer(  DialPointer pointer){
@@ -335,7 +335,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return result;
   }
   /** 
- * Sets the dataset for the plot, replacing the existing dataset, if there is one, and sends a      {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets the dataset for the plot, replacing the existing dataset, if there is one, and sends a                               {@link PlotChangeEvent} to all registeredlisteners.
  * @param dataset  the dataset (<code>null</code> permitted).
  */
   public void setDataset(  ValueDataset dataset){
@@ -366,7 +366,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return this.datasets.size();
   }
   /** 
- * Draws the plot.  This method is usually called by the      {@link JFreeChart}instance that manages the plot.
+ * Draws the plot.  This method is usually called by the                               {@link JFreeChart}instance that manages the plot.
  * @param g2  the graphics target.
  * @param area  the area in which the plot should be drawn.
  * @param anchor  the anchor point (typically the last point that themouse clicked on, <code>null</code> is permitted).
@@ -463,7 +463,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return result;
   }
   /** 
- * Adds a dial scale to the plot and sends a      {@link PlotChangeEvent} toall registered listeners.
+ * Adds a dial scale to the plot and sends a                               {@link PlotChangeEvent} toall registered listeners.
  * @param index  the scale index.
  * @param scale  the scale (<code>null</code> not permitted).
  */
@@ -532,7 +532,7 @@ public class DialPlot extends Plot implements DialLayerChangeListener {
     return new Rectangle2D.Double(x - w / 2.0,y - h / 2.0,w,h);
   }
   /** 
- * Receives notification when a layer has changed, and responds by forwarding a      {@link PlotChangeEvent} to all registered listeners.
+ * Receives notification when a layer has changed, and responds by forwarding a                               {@link PlotChangeEvent} to all registered listeners.
  * @param event  the event.
  */
   public void dialLayerChanged(  DialLayerChangeEvent event){

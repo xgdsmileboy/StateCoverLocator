@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import org.jfree.chart.util.ObjectUtilities;
 /** 
- * A tick unit for use by subclasses of      {@link DateAxis}.  Instances of this class are immutable.
+ * A tick unit for use by subclasses of                               {@link DateAxis}.  Instances of this class are immutable.
  */
 public class DateTickUnit extends TickUnit implements Serializable {
   /** 

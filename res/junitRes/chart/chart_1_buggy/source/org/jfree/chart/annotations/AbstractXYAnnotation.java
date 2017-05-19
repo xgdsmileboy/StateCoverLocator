@@ -9,7 +9,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.util.ObjectUtilities;
 /** 
- * The interface that must be supported by annotations that are to be added to an      {@link XYPlot}.
+ * The interface that must be supported by annotations that are to be added to an                               {@link XYPlot}.
  */
 public abstract class AbstractXYAnnotation extends AbstractAnnotation implements XYAnnotation {
   /** 
@@ -29,7 +29,7 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation implements
     this.url=null;
   }
   /** 
- * Returns the tool tip text for the annotation.  This will be displayed in a      {@link org.jfree.chart.ChartPanel} when the mouse pointer hovers overthe annotation.
+ * Returns the tool tip text for the annotation.  This will be displayed in a                               {@link org.jfree.chart.ChartPanel} when the mouse pointer hovers overthe annotation.
  * @return The tool tip text (possibly <code>null</code>).
  * @see #setToolTipText(String)
  */
@@ -72,7 +72,7 @@ public abstract class AbstractXYAnnotation extends AbstractAnnotation implements
  */
   public abstract void draw(  Graphics2D g2,  XYPlot plot,  Rectangle2D dataArea,  ValueAxis domainAxis,  ValueAxis rangeAxis,  int rendererIndex,  PlotRenderingInfo info);
   /** 
- * A utility method for adding an      {@link XYAnnotationEntity} toa  {@link PlotRenderingInfo} instance.
+ * A utility method for adding an                               {@link XYAnnotationEntity} toa  {@link PlotRenderingInfo} instance.
  * @param info  the plot rendering info (<code>null</code> permitted).
  * @param hotspot  the hotspot area.
  * @param rendererIndex  the renderer index.

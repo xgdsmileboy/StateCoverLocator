@@ -51,7 +51,7 @@ public class FlowArrangement implements Arrangement, Serializable {
     this.verticalGap=vGap;
   }
   /** 
- * Adds a block to be managed by this instance.  This method is usually called by the      {@link BlockContainer}, you shouldn't need to call it directly.
+ * Adds a block to be managed by this instance.  This method is usually called by the                               {@link BlockContainer}, you shouldn't need to call it directly.
  * @param block  the block.
  * @param key  a key that controls the position of the block.
  */

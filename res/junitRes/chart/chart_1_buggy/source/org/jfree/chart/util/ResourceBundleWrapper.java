@@ -24,7 +24,7 @@ public class ResourceBundleWrapper {
   private ResourceBundleWrapper(){
   }
   /** 
- * Instantiate a      {@link URLClassLoader} for resource lookups where thecodeBase URL is removed.  This method is typically called from an applet's init() method.  If this method is never called, the <code>getBundle()</code> methods map to the standard {@link ResourceBundle} lookup methods.
+ * Instantiate a                               {@link URLClassLoader} for resource lookups where thecodeBase URL is removed.  This method is typically called from an applet's init() method.  If this method is never called, the <code>getBundle()</code> methods map to the standard {@link ResourceBundle} lookup methods.
  * @param codeBase  the codeBase URL.
  * @param urlClassLoader  the class loader.
  */

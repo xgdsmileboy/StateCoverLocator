@@ -6,7 +6,7 @@ import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.util.StringUtilities;
 /** 
- * Collection of utility methods related to producing image maps. Functionality was originally in      {@link org.jfree.chart.ChartUtilities}.
+ * Collection of utility methods related to producing image maps. Functionality was originally in                               {@link org.jfree.chart.ChartUtilities}.
  */
 public class ImageMapUtilities {
   /** 

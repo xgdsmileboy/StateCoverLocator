@@ -41,7 +41,7 @@ public class DefaultMultiValueCategoryDataset extends AbstractDataset implements
     this.rangeBounds=new Range(0.0,0.0);
   }
   /** 
- * Adds a list of values to the dataset (<code>null</code> and Double.NaN items are automatically removed) and sends a      {@link DatasetChangeEvent}to all registered listeners.
+ * Adds a list of values to the dataset (<code>null</code> and Double.NaN items are automatically removed) and sends a                               {@link DatasetChangeEvent}to all registered listeners.
  * @param values  a list of values (<code>null</code> not permitted).
  * @param rowKey  the row key (<code>null</code> not permitted).
  * @param columnKey  the column key (<code>null</code> not permitted).

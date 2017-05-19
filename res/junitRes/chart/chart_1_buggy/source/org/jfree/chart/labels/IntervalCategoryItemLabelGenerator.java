@@ -6,7 +6,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.IntervalCategoryDataset;
 /** 
- * A label generator for plots that use data from an     {@link IntervalCategoryDataset}.
+ * A label generator for plots that use data from an                              {@link IntervalCategoryDataset}.
  */
 public class IntervalCategoryItemLabelGenerator extends StandardCategoryItemLabelGenerator implements CategoryItemLabelGenerator, PublicCloneable, Cloneable, Serializable {
   /** 

@@ -106,7 +106,6 @@ public class Coverage {
 			}
 		}
 
-		Set<Integer> filteredPassedTests = new HashSet<>();
 		// run all passed test
 		for (Integer passTestID : allTests.getSecond()) {
 			String testString = Identifier.getMessage(passTestID);
@@ -128,23 +127,19 @@ public class Coverage {
 
 			Map<String, Integer> tmpCover = ExecutionPathBuilder
 					.collectAllExecutedStatements(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-			if(tmpCover.size() > 0){
-				filteredPassedTests.add(passTestID);
-				for (Entry<String, Integer> entry : tmpCover.entrySet()) {
-					String statement = entry.getKey();
-					Integer coverCount = entry.getValue();
-					CoverInfo coverInfo = coverage.get(statement);
-					if (coverInfo == null) {
-						coverInfo = new CoverInfo();
-						coverInfo.passedAdd(coverCount);
-						coverage.put(statement, coverInfo);
-					} else {
-						coverInfo.passedAdd(coverCount);
-					}
+			for (Entry<String, Integer> entry : tmpCover.entrySet()) {
+				String statement = entry.getKey();
+				Integer coverCount = entry.getValue();
+				CoverInfo coverInfo = coverage.get(statement);
+				if (coverInfo == null) {
+					coverInfo = new CoverInfo();
+					coverInfo.passedAdd(coverCount);
+					coverage.put(statement, coverInfo);
+				} else {
+					coverInfo.passedAdd(coverCount);
 				}
 			}
 		}
-		allTests.setSecond(filteredPassedTests);
 
 		Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
 
@@ -213,7 +208,7 @@ public class Coverage {
 		Map<String, CoverInfo> coverage = new HashMap<>();
 		String srcPath = subject.getHome() + subject.getSsrc();
 		String testPath = subject.getHome() + subject.getTsrc();
-		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor();
+		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST);
 		Instrument.execute(testPath, methodInstrumentVisitor);
 
 		for (String stmt : allStatements) {
@@ -225,6 +220,7 @@ public class Coverage {
 			Integer methodID = Integer.valueOf(stmtInfo[0]);
 			int line = Integer.parseInt(stmtInfo[1]);
 			String methodString = Identifier.getMessage(methodID);
+			System.out.println("Statement : " + methodString);
 			String[] methodInfo = methodString.split("#");
 			if (methodInfo.length < 4) {
 				LevelLogger.error(__name__ + "#computePredicateCoverage method info parse error : " + methodString);
@@ -245,8 +241,8 @@ public class Coverage {
 			// if predicted conditions are not empty for right variables,
 			// instrument each condition one by one and compute coverage
 			// information for each predicate
-			if (conditionsForRightVars != null) {
-				String javaFile = srcPath + relJavaPath;
+			if (conditionsForRightVars != null && conditionsForRightVars.size() > 0) {
+				String javaFile = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
 				// the source file will instrumented iteratively, before which
 				// the original source file should be saved
 				ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
@@ -269,6 +265,7 @@ public class Coverage {
 						// <TestMethodID, <StatementString, coveredTimes>>
 						Map<Integer, Map<String, Integer>> coveInfo = ExecutionPathBuilder
 								.collectPredicateCoverageInfo(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+						System.out.println(line + " : " + condition);
 						for (Entry<Integer, Map<String, Integer>> entry : coveInfo.entrySet()) {
 							Integer currMethodID = entry.getKey();
 							if (failedTests.contains(currMethodID)) {

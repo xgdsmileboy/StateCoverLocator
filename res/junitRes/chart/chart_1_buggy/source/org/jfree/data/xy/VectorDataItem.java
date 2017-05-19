@@ -1,7 +1,7 @@
 package org.jfree.data.xy;
 import org.jfree.data.ComparableObjectItem;
 /** 
- * A data item representing data in the form (x, y, deltaX, deltaY), intended for use by the      {@link VectorSeries} class.
+ * A data item representing data in the form (x, y, deltaX, deltaY), intended for use by the                               {@link VectorSeries} class.
  * @since 1.0.6
  */
 public class VectorDataItem extends ComparableObjectItem {

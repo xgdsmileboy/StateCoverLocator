@@ -78,7 +78,7 @@ public class CrosshairState {
     this.distance=distance;
   }
   /** 
- * Evaluates a data point and if it is the closest to the anchor point it becomes the new crosshair point. <P> To understand this method, you need to know the context in which it will be called.  An instance of this class is passed to an     {@link org.jfree.chart.renderer.xy.XYItemRenderer} aseach data point is plotted.  As the point is plotted, it is passed to this method to see if it should be the new crosshair point.
+ * Evaluates a data point and if it is the closest to the anchor point it becomes the new crosshair point. <P> To understand this method, you need to know the context in which it will be called.  An instance of this class is passed to an                              {@link org.jfree.chart.renderer.xy.XYItemRenderer} aseach data point is plotted.  As the point is plotted, it is passed to this method to see if it should be the new crosshair point.
  * @param x  x coordinate (measured against the domain axis).
  * @param y  y coordinate (measured against the range axis).
  * @param transX  x translated into Java2D space.
@@ -90,7 +90,7 @@ public class CrosshairState {
     updateCrosshairPoint(x,y,0,0,transX,transY,orientation);
   }
   /** 
- * Evaluates a data point and if it is the closest to the anchor point it becomes the new crosshair point. <P> To understand this method, you need to know the context in which it will be called.  An instance of this class is passed to an     {@link org.jfree.chart.renderer.xy.XYItemRenderer} aseach data point is plotted.  As the point is plotted, it is passed to this method to see if it should be the new crosshair point.
+ * Evaluates a data point and if it is the closest to the anchor point it becomes the new crosshair point. <P> To understand this method, you need to know the context in which it will be called.  An instance of this class is passed to an                              {@link org.jfree.chart.renderer.xy.XYItemRenderer} aseach data point is plotted.  As the point is plotted, it is passed to this method to see if it should be the new crosshair point.
  * @param x  x coordinate (measured against the domain axis).
  * @param y  y coordinate (measured against the range axis).
  * @param domainAxisIndex  the index of the domain axis for this point.
