@@ -8,7 +8,7 @@ import datetime
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, precision_score
 
 ### predict the true pos examples, and see whether they can be classified correctly
-def predict(data_file_path, model_file_path, result_file_path, output_path, summary_file, feature_num, x_encoders, y_encoder):
+def predict(data_file_path, model_file_path, result_file_path, output_path, feature_num, x_encoders, y_encoder):
     start_time = datetime.datetime.now()
     data_file_name = data_file_path.split('/')[-1][0:-4]
 
@@ -90,14 +90,14 @@ def predict(data_file_path, model_file_path, result_file_path, output_path, summ
 
 
     ## sum up the results in the summary_file
-    with open(summary_file, 'a+') as f:
-        f.write('{},{},{},{}\n'.format(accuracy, p, r, f1))
+    # with open(summary_file, 'a+') as f:
+    #     f.write('{},{},{},{}\n'.format(accuracy, p, r, f1))
 
 
     ### or with xg func
     # plot feature importance
-    plot_importance(model)
-    pyplot.show()
+    # plot_importance(model)
+    # pyplot.show()
 
     end_time = datetime.datetime.now()
     run_time = end_time - start_time

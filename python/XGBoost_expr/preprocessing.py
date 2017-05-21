@@ -66,37 +66,37 @@ def preprocess(data_file_path, feature_num, frequency):
     frequent_samples = len(frequent_indices)
     print('Frequent rows num: {}'.format(frequent_samples))
 
-    # if not os.path.exists(frequent_encoded_data_file):
-    #     with open(frequent_encoded_data_file, 'a+') as f:
-    #         for i in frequent_indices:
-    #             for x in encoded_x[i]:
-    #                 f.write('%s,'%(x))
-    #             f.write('%s'%(encoded_y[i]))
-    #             f.write('\n')
+    if not os.path.exists(frequent_encoded_data_file):
+        with open(frequent_encoded_data_file, 'a+') as f:
+            for i in frequent_indices:
+                for x in encoded_x[i]:
+                    f.write('%s,'%(x))
+                f.write('%s'%(encoded_y[i]))
+                f.write('\n')
 
-    # frequent_data=pd.read_csv(frequent_encoded_data_file, sep=',', header=None, encoding='utf-8')
-    # frequent_values=frequent_data.values
-    # frequent_x = frequent_values[:, 0:6]
-    # frequent_y = frequent_values[:, 6]
+    frequent_data=pd.read_csv(frequent_encoded_data_file, sep=',', header=None, encoding='utf-8')
+    frequent_values=frequent_data.values
+    frequent_x = frequent_values[:, 0:6]
+    frequent_y = frequent_values[:, 6]
     # split the data into training and validing set
-    # X_train, X_valid, y_train, y_valid = train_test_split(frequent_x, frequent_y, test_size=0.1, random_state=7)
-    # print('Training set size: {}'.format(y_train.shape))
-    # print('Validation set size: {}'.format(y_valid.shape))
+    X_train, X_valid, y_train, y_valid = train_test_split(frequent_x, frequent_y, test_size=0.1, random_state=7)
+    print('Training set size: {}'.format(y_train.shape))
+    print('Validation set size: {}'.format(y_valid.shape))
     # write the encoded data into 2 files
-    # if not os.path.exists(training_file):
-    #     with open(training_file, 'a+') as f:
-    #         for i in range(0, X_train.shape[0]):
-    #             for x in X_train[i]:
-    #                 f.write('%s,'% x)
-    #             f.write('%s' % y_train[i])
-    #             f.write('\n')
-    # if not os.path.exists(validating_file):
-    #     with open(validating_file, 'a+') as f:
-    #         for i in range(0, X_valid.shape[0]):
-    #             for x in X_valid[i]:
-    #                 f.write('%s,'% x)
-    #             f.write('%s' % y_valid[i])
-    #             f.write('\n')
+    if not os.path.exists(training_file):
+        with open(training_file, 'a+') as f:
+            for i in range(0, X_train.shape[0]):
+                for x in X_train[i]:
+                    f.write('%s,'% x)
+                f.write('%s' % y_train[i])
+                f.write('\n')
+    if not os.path.exists(validating_file):
+        with open(validating_file, 'a+') as f:
+            for i in range(0, X_valid.shape[0]):
+                for x in X_valid[i]:
+                    f.write('%s,'% x)
+                f.write('%s' % y_valid[i])
+                f.write('\n')
 
     # with open(summary_file, 'a+') as f:
     #     f.write('%s,' % class_num)
@@ -108,5 +108,5 @@ def preprocess(data_file_path, feature_num, frequency):
     end_time = datetime.datetime.now()
     run_time = end_time - start_time
     print('Preprossing finished, time cost : {}'.format(run_time))
-    # print('Data splited and saved in {} and {}'.format(training_file, validating_file))
+    print('Data splited and saved in {} and {}'.format(training_file, validating_file))
     return (classes, x_encoders, y_encoder)

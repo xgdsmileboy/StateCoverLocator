@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
-def preprocess(summary_file, data_file_path, feature_num):
+def preprocess(data_file_path, feature_num):
     start_time = datetime.datetime.now()
     training_file = data_file_path[0:-4]+'_train.csv'
     validating_file = data_file_path[0:-4]+'_valid.csv'
@@ -117,10 +117,10 @@ def preprocess(summary_file, data_file_path, feature_num):
                         f.write('\n')
 
 
-    with open(summary_file, 'a+') as f:
-        f.write('%s,' % class_num)
-        f.write('{},'.format(X.shape[0]))
-        f.write('{},'.format('5000+5000-'))
+    # with open(summary_file, 'a+') as f:
+    #     f.write('%s,' % class_num)
+    #     f.write('{},'.format(X.shape[0]))
+    #     f.write('{},'.format('5000+5000-'))
 
 
     end_time = datetime.datetime.now()
