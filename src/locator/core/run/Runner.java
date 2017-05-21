@@ -24,9 +24,9 @@ import locator.common.util.LevelLogger;
  * @date May 10, 2017
  */
 public class Runner {
-	
+
 	private final static String __name__ = "@Run ";
-	
+
 	/**
 	 * execute all test and collect all failed test
 	 * 
@@ -40,8 +40,8 @@ public class Runner {
 		}
 		return checkBuild();
 	}
-	
-	public static boolean testSingleCase(Subject subject, String testcase){
+
+	public static boolean testSingleCase(Subject subject, String testcase) {
 		try {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject, testcase));
 		} catch (Exception e) {
@@ -49,8 +49,8 @@ public class Runner {
 		}
 		return checkBuild();
 	}
-	
-	public static boolean compileSubject(Subject subject){
+
+	public static boolean compileSubject(Subject subject) {
 		try {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createBuildSubjectCmd(subject));
 		} catch (Exception e) {
@@ -58,33 +58,33 @@ public class Runner {
 		}
 		return checkBuild();
 	}
-	
-	private static boolean checkBuild(){
-		// check whether the project is built successfully 
+
+	private static boolean checkBuild() {
+		// check whether the project is built successfully
 		// based on the output info @Constant.STR_TMP_D4J_OUTPUT_FILE
 		File file = new File(Constant.STR_TMP_D4J_OUTPUT_FILE);
-		if(!file.exists()){
+		if (!file.exists()) {
 			LevelLogger.debug(__name__ + "#checkBuild file :" + Constant.STR_TMP_D4J_OUTPUT_FILE + " not exists.");
 			return false;
 		}
-		
+
 		BufferedReader bReader = null;
-		
+
 		try {
 			bReader = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {
 			LevelLogger.fatal(__name__ + "#checkBuild open file failed !", e);
 			return false;
 		}
-		
+
 		String line = null;
 		boolean buildSuccess = false;
 		try {
-			while((line = bReader.readLine()) != null){
-				if(line.startsWith(Constant.ANT_BUILD_SUCCESS)){
+			while ((line = bReader.readLine()) != null) {
+				if (line.startsWith(Constant.ANT_BUILD_SUCCESS)) {
 					buildSuccess = true;
 					break;
-				} else if(line.startsWith(Constant.ANT_BUILD_FAILED)){
+				} else if (line.startsWith(Constant.ANT_BUILD_FAILED)) {
 					buildSuccess = false;
 					break;
 				}
@@ -92,7 +92,7 @@ public class Runner {
 		} catch (IOException e) {
 			LevelLogger.fatal(__name__ + "#checkBuild read file failed !", e);
 		}
-		
+
 		return buildSuccess;
 	}
 }

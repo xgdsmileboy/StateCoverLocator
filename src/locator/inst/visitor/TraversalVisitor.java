@@ -101,7 +101,8 @@ public abstract class TraversalVisitor extends ASTVisitor {
 			}
 		}
 		if (_clazzName == null) {
-//			LevelLogger.warn(__name__ + "#visit(CompilationUnit) no public type declaration exists.");
+			// LevelLogger.warn(__name__ + "#visit(CompilationUnit) no public
+			// type declaration exists.");
 			return false;
 		}
 		return true;

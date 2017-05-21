@@ -90,29 +90,33 @@ public class FeatureEntry {
 			this._value = value;
 		}
 	}
-	//TODO : label id for current if condition, no use in current circumstance, default -1
+
+	// TODO : label id for current if condition, no use in current circumstance,
+	// default -1
 	private int _ifID = -1;
-	//line number of current statement line
+	// line number of current statement line
 	private int _line = -1;
-	//column number of current statement
+	// column number of current statement
 	private int _column = -1;
-	//current java file name, NOTE : contain ".java"
+	// current java file name, NOTE : contain ".java"
 	private String _fileName = "";
-	//current method name
+	// current method name
 	private String _methodName = "";
-	//variable name
+	// variable name
 	private String _varName = "";
-	//variable type
+	// variable type
 	private Type _type = null;
-	//current variable appears in which type statements
+	// current variable appears in which type statements
 	private AssignType _lastAssignType = AssignType.UNKNOWN_AS;
-	//this variable is a parameter
+	// this variable is a parameter
 	private boolean _isParam = false;
-	//number of appearing in if condition statement for this variable in current method 
+	// number of appearing in if condition statement for this variable in
+	// current method
 	private int _countAppearInCondition = 0;
-	//TODO : how this variable is used in if body, no use in current circumstance, use default NO_USE
+	// TODO : how this variable is used in if body, no use in current
+	// circumstance, use default NO_USE
 	private UseType _useTypeInIFBody = UseType.NO_USE;
-	//current statement is a if condition containing this variable
+	// current statement is a if condition containing this variable
 	private boolean _inIf = false;
 
 	/**
@@ -146,7 +150,7 @@ public class FeatureEntry {
 	public void set_useTypeInIFBody(UseType useTypeInIFBody) {
 		this._useTypeInIFBody = useTypeInIFBody;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer();

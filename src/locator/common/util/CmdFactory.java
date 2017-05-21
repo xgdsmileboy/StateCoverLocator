@@ -69,15 +69,32 @@ public class CmdFactory {
 		return cmd;
 	}
 
-	public static String[] createPredictCmd(){
+	public static String[] createTrainCmd(Subject subject) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_PYTHON);
-		stringBuffer.append(Constant.STR_ML_HOME + "/run_all.py");
+		stringBuffer.append(Constant.STR_ML_HOME + "/train_model.py ");
+		stringBuffer.append(subject.getName());
+		stringBuffer.append(" ");
+		stringBuffer.append(subject.getId());
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
 	}
-	
+
+	public static String[] createPredictCmd(Subject subject) {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(Constant.COMMAND_CD);
+		stringBuffer.append(Constant.STR_ML_HOME);
+		stringBuffer.append(" && ");
+		stringBuffer.append(Constant.COMMAND_PYTHON);
+		stringBuffer.append(Constant.STR_ML_HOME + "/run_all.py ");
+		stringBuffer.append(subject.getName());
+		stringBuffer.append(" ");
+		stringBuffer.append(subject.getId());
+		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
+		return cmd;
+	}
+
 }

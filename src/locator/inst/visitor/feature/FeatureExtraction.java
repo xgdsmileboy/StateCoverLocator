@@ -68,8 +68,9 @@ public class FeatureExtraction {
 		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
 		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
 
-		CompilationUnit cu = (CompilationUnit) JavaFile
-				.genASTFromSource(JavaFile.readFileToString(srcPath + Constant.PATH_SEPARATOR + relJavaPath), ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSource(
+				JavaFile.readFileToString(srcPath + Constant.PATH_SEPARATOR + relJavaPath),
+				ASTParser.K_COMPILATION_UNIT);
 		VariableCollector variableCollector = new VariableCollector(line);
 		cu.accept(variableCollector);
 		Set<String> rightVars = variableCollector.getRightVariables();
@@ -78,7 +79,7 @@ public class FeatureExtraction {
 		for (String feature : varFeature) {
 			String[] elements = feature.split("\t");
 			if (rightVars.contains(elements[5])) {
-				//TODO : should be removed after re-train the prediction model
+				// TODO : should be removed after re-train the prediction model
 				feature = feature.replace("CALLER_USE", "CLALLER_USE");
 				filteredVarFeatures.add(feature);
 			}
@@ -248,7 +249,7 @@ public class FeatureExtraction {
 		}
 
 		private static Pair<String, Set<String>> parseName(ASTNode node) {
-//			System.out.println(node);
+			// System.out.println(node);
 			CollectSimpleName collectSimpleName = new CollectSimpleName();
 			node.accept(collectSimpleName);
 			return collectSimpleName.getVariables();
@@ -266,12 +267,12 @@ public class FeatureExtraction {
 			}
 
 			public Pair<String, Set<String>> getVariables() {
-//				System.out.println("left : " + leftVariable);
-//				System.out.print("right : ");
-//				for (String string : rightVariables) {
-//					System.out.print(string + ",");
-//				}
-//				System.out.println();
+				// System.out.println("left : " + leftVariable);
+				// System.out.print("right : ");
+				// for (String string : rightVariables) {
+				// System.out.print(string + ",");
+				// }
+				// System.out.println();
 				return new Pair<String, Set<String>>(leftVariable, rightVariables);
 			}
 

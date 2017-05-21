@@ -28,7 +28,6 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import locator.common.config.Constant;
 import locator.common.util.LevelLogger;
 
-
 /**
  * This class contains some auxiliary methods that provide convenience
  * 
@@ -211,12 +210,12 @@ public class JavaFile {
 			inputStreamReader = new InputStreamReader(in, "UTF-8");
 			char[] ch = new char[1024];
 			int readCount = 0;
-			while((readCount = inputStreamReader.read(ch)) != -1){
+			while ((readCount = inputStreamReader.read(ch)) != -1) {
 				stringBuffer.append(ch, 0, readCount);
 			}
 			inputStreamReader.close();
 			in.close();
-			
+
 		} catch (Exception e) {
 			if (inputStreamReader != null) {
 				try {

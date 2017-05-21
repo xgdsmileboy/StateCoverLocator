@@ -17,21 +17,21 @@ import locator.common.util.LevelLogger;
  * @date May 12, 2017
  */
 public class TypingManagement {
-	
+
 	private final static String __name__ = "@TypingManagement ";
-	
+
 	private static Map<String, TypingInfo> _clazzInfo = new HashMap<>();
-	
-	public static void add(String clazzIdentifier, TypingInfo type){
-		if(!contain(clazzIdentifier)){
+
+	public static void add(String clazzIdentifier, TypingInfo type) {
+		if (!contain(clazzIdentifier)) {
 			_clazzInfo.put(clazzIdentifier, type);
 		} else {
 			LevelLogger.error(__name__ + "#add Already contains typing information for clazz : " + clazzIdentifier);
 		}
 	}
-	
-	public static boolean contain(String clazzIdentifier){
+
+	public static boolean contain(String clazzIdentifier) {
 		return _clazzInfo.containsKey(clazzIdentifier);
 	}
-	
+
 }

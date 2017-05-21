@@ -6,6 +6,7 @@
  */
 
 package locator.common.java;
+
 /**
  * User defined struct, which saves the information appear together
  * 

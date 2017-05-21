@@ -41,9 +41,9 @@ import locator.common.java.Method;
 import locator.common.util.LevelLogger;
 import locator.inst.gen.GenStatement;
 
-
 /**
  * This class is used for instrument for each {@code Statement}
+ * 
  * @author Jiajun
  * @date May 11, 2017
  */
@@ -64,20 +64,20 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		
-		String message = buildMethodInfoString(node);
-		if(message == null){
-			return true;
-		}
-		int keyValue =Identifier.getIdentifier(message);
 
-		if(shouldSkip(node, keyValue)){
+		String message = buildMethodInfoString(node);
+		if (message == null) {
 			return true;
 		}
-		
-		//optimize instrument
+		int keyValue = Identifier.getIdentifier(message);
+
+		if (shouldSkip(node, keyValue)) {
+			return true;
+		}
+
+		// optimize instrument
 		message = Constant.INSTRUMENT_FLAG + _methodFlag + "#" + String.valueOf(keyValue);
-		
+
 		Block methodBody = node.getBody();
 
 		if (methodBody == null) {
@@ -283,7 +283,7 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 			}
 
 			List catchList = tryStatement.catchClauses();
-			if(catchList != null){
+			if (catchList != null) {
 				for (Object object : catchList) {
 					if (object instanceof CatchClause) {
 						CatchClause catchClause = (CatchClause) object;

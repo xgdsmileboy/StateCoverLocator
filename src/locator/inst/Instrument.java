@@ -56,13 +56,14 @@ public class Instrument {
 			}
 			traversalVisitor.traverse(unit);
 			String formatSource = null;
-//			Formatter formatter = new Formatter();
-//			try {
-//				formatSource = formatter.formatSource(unit.toString());
-//			} catch (FormatterException e) {
-//				LevelLogger.error(__name__ + "#execute Format Code Error for : " + f.getAbsolutePath());
-				formatSource = unit.toString();
-//			}
+			// Formatter formatter = new Formatter();
+			// try {
+			// formatSource = formatter.formatSource(unit.toString());
+			// } catch (FormatterException e) {
+			// LevelLogger.error(__name__ + "#execute Format Code Error for : "
+			// + f.getAbsolutePath());
+			formatSource = unit.toString();
+			// }
 			JavaFile.writeStringToFile(f, formatSource);
 		}
 		return true;

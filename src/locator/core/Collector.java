@@ -60,18 +60,17 @@ public class Collector {
 			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
 			return null;
 		}
-		
+
 		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
 		String srcPath = subject.getHome() + subject.getSsrc();
 		String tsrPath = subject.getHome() + subject.getTsrc();
 		Set<Method> coveredMethods = collectCoveredMethod(subject, failedTest);
-		
+
 		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(coveredMethods);
 		Instrument.execute(srcPath, methodInstrumentVisitor);
-		
+
 		// test case instrument
-		Instrument.execute(tsrPath,
-				new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST));
+		Instrument.execute(tsrPath, new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST));
 		// run all test
 		try {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
@@ -82,7 +81,6 @@ public class Collector {
 		Instrument.execute(tsrPath, new DeInstrumentVisitor());
 		Instrument.execute(srcPath, new DeInstrumentVisitor());
 
-		
 		Set<Integer> passedTest = collectAllPassedTestCases(Constant.STR_TMP_INSTR_OUTPUT_FILE, failedTest);
 		// Set<Integer> passedTest = collectAllPassedTestCases(subject.getHome()
 		// + "/all-tests.txt", failedTest);
@@ -132,8 +130,8 @@ public class Collector {
 				if (methodInfo.length < 3) {
 					LevelLogger.error(__name__ + "collectAllPassedTestCases output format error : " + line);
 				}
-				if(methodInfo[0].endsWith(Constant.INSTRUMENT_K_TEST)){
-					if(line != null && line.startsWith(sourceFlag)){
+				if (methodInfo[0].endsWith(Constant.INSTRUMENT_K_TEST)) {
+					if (line != null && line.startsWith(sourceFlag)) {
 						int methodID = Integer.parseInt(methodInfo[1]);
 						if (!failedTests.contains(methodID)) {
 							allPassedTestCases.add(methodID);
@@ -265,39 +263,41 @@ public class Collector {
 		Instrument.execute(subjectSourcePath, new DeInstrumentVisitor());
 		return allMethods;
 	}
-	
-//	public static Map<Integer, Map<Integer, Set<String>>> collectAllPredicates(Subject subject, List<String> statements){
-//		Map<Integer, Map<Integer, Set<String>>> allPredicates = new HashMap<>();
-//		String srcPath = subject.getHome() + subject.getSsrc();
-//		for(String stmt : statements){
-//			String[] stmtInfo = stmt.split("#");
-//			if(stmtInfo.length != 2){
-//				LevelLogger.error(__name__ + "#collectAllPredicates statement information error : " + stmt);
-//				System.exit(1);
-//			}
-//			int methodID = Integer.parseInt(stmtInfo[0]);
-//			int line = Integer.parseInt(stmtInfo[1]);
-//			String methodString = Identifier.getMessage(methodID);
-//			
-//		}
-//		return allPredicates;
-//	}
-//	
-//	private static class VarCollectorVisitor extends ASTVisitor{
-//		private String _leftVarName = null;
-//		private Set<String> _rightVarNames = null;
-//		
-//		public VarCollectorVisitor(){
-//			_leftVarName = null;
-//			_rightVarNames = new HashSet<>();
-//		}
-//		
-//		public String getleftVarName(){
-//			return _leftVarName;
-//		}
-//		
-//		public Set<String> getRightVarNames(){
-//			return _rightVarNames;
-//		}
-//	}
+
+	// public static Map<Integer, Map<Integer, Set<String>>>
+	// collectAllPredicates(Subject subject, List<String> statements){
+	// Map<Integer, Map<Integer, Set<String>>> allPredicates = new HashMap<>();
+	// String srcPath = subject.getHome() + subject.getSsrc();
+	// for(String stmt : statements){
+	// String[] stmtInfo = stmt.split("#");
+	// if(stmtInfo.length != 2){
+	// LevelLogger.error(__name__ + "#collectAllPredicates statement information
+	// error : " + stmt);
+	// System.exit(1);
+	// }
+	// int methodID = Integer.parseInt(stmtInfo[0]);
+	// int line = Integer.parseInt(stmtInfo[1]);
+	// String methodString = Identifier.getMessage(methodID);
+	//
+	// }
+	// return allPredicates;
+	// }
+	//
+	// private static class VarCollectorVisitor extends ASTVisitor{
+	// private String _leftVarName = null;
+	// private Set<String> _rightVarNames = null;
+	//
+	// public VarCollectorVisitor(){
+	// _leftVarName = null;
+	// _rightVarNames = new HashSet<>();
+	// }
+	//
+	// public String getleftVarName(){
+	// return _leftVarName;
+	// }
+	//
+	// public Set<String> getRightVarNames(){
+	// return _rightVarNames;
+	// }
+	// }
 }

@@ -56,16 +56,16 @@ public class Predictor {
 			List<String> expFeatures) {
 		Pair<Set<String>, Set<String>> conditions = new Pair<>();
 		// TODO : return conditions for left variable and right variables
-		File varFile = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
-				+ subject.getId() + ".var.csv");
+		File varFile = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + "/" + subject.getName() + "/var/"
+				+ subject.getName() + "_" + subject.getId() + ".var.csv");
 		String varTitle = "id	line	column	filename	methodname	varname	vartype	lastassign	isparam	incondnum	bodyuse	if\n";
 		JavaFile.writeStringToFile(varFile, varTitle);
 		for (String string : varFeatures) {
 			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 
-		File expFile = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
-				+ subject.getId() + ".expr.csv");
+		File expFile = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + "/" + subject.getName() + "/expr/"
+				+ subject.getName() + "_" + subject.getId() + ".expr.csv");
 		String expTitle = "id	line	column	filename	methodname	varname	vartype	else	return	right\n";
 		JavaFile.writeStringToFile(expFile, expTitle);
 		for (String string : expFeatures) {
@@ -73,15 +73,15 @@ public class Predictor {
 		}
 
 		try {
-			ExecuteCommand.executePredict();
+			ExecuteCommand.executePredict(subject);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		File rslFile = new File(Constant.STR_ML_PREDICT_EXP_PATH + Constant.PATH_SEPARATOR + subject.getName() + "_"
-				+ subject.getId() + ".joint.csv");
+		File rslFile = new File(Constant.STR_ML_PREDICT_EXP_PATH + "/" + subject.getName() + "/" + subject.getName()
+				+ "_" + subject.getId() + ".joint.csv");
 		BufferedReader bReader = null;
 		try {
 			bReader = new BufferedReader(new FileReader(rslFile));
@@ -92,12 +92,12 @@ public class Predictor {
 		Set<String> rightConditions = new HashSet<>();
 		String line = null;
 		try {
-			//filter title
-			if(bReader.readLine() != null){
-				//parse predict result "8	u	$ == null	0.8319194802"
+			// filter title
+			if (bReader.readLine() != null) {
+				// parse predict result "8 u $ == null 0.8319194802"
 				while ((line = bReader.readLine()) != null) {
 					String[] columns = line.split("\t");
-					if(columns.length < 4){
+					if (columns.length < 4) {
 						LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
 						continue;
 					}

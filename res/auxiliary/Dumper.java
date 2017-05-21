@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 public class Dumper {
-  private static final long MAX_OUTPUT_FILE_SIZE = 1000;
+  private static final long MAX_OUTPUT_FILE_SIZE = 5; //max file size in GB
   private static final String OUT_AND_LIB_PATH =
       "/Users/Jiajun/Code/Java/fault-localization/StateCoverLocator";
   private static final String OUT_FILE_NAME = OUT_AND_LIB_PATH + "/out/path.out";
@@ -30,7 +30,7 @@ public class Dumper {
         return false;
       }
     }
-    if ((file.length() >> 20) > MAX_OUTPUT_FILE_SIZE) {
+    if ((file.length() >> 30) > MAX_OUTPUT_FILE_SIZE) {
       return true;
     }
     BufferedWriter bufferedWriter = null;

@@ -37,26 +37,25 @@ import locator.common.util.LevelLogger;
  */
 public class DeInstrumentVisitor extends TraversalVisitor {
 
-	private final String __name__ = "@DeInstrumentVisitor "; 
-	
-	public DeInstrumentVisitor(){
-		
+	private final String __name__ = "@DeInstrumentVisitor ";
+
+	public DeInstrumentVisitor() {
+
 	}
-	
-	public DeInstrumentVisitor(Set<Method> methods){
+
+	public DeInstrumentVisitor(Set<Method> methods) {
 		_methods = methods;
 	}
-	
-	
-	public boolean visit(MethodDeclaration node){
+
+	public boolean visit(MethodDeclaration node) {
 		if (_methods != null) {
 			boolean flag = false;
-			for(Method method : _methods){
-				if(method.match(node, _clazzName)){
+			for (Method method : _methods) {
+				if (method.match(node, _clazzName)) {
 					flag = true;
 				}
 			}
-			if(!flag){
+			if (!flag) {
 				return true;
 			}
 		}
@@ -64,10 +63,10 @@ public class DeInstrumentVisitor extends TraversalVisitor {
 		node.accept(removeStatementVisitor);
 		return true;
 	}
-	
+
 }
 
-class RemoveStatementVisitor extends ASTVisitor{
+class RemoveStatementVisitor extends ASTVisitor {
 	public boolean visit(Block node) {
 
 		List<ASTNode> statements = new ArrayList<>();
@@ -107,16 +106,16 @@ class RemoveStatementVisitor extends ASTVisitor{
 					switchStatement.statements().add(ASTNode.copySubtree(switchStatement.getAST(), swNode));
 				}
 
-			} else if(astNode instanceof IfStatement){
+			} else if (astNode instanceof IfStatement) {
 				IfStatement ifStatement = (IfStatement) astNode;
-				if(ifStatement.getThenStatement() instanceof Block && ifStatement.getElseStatement() == null){
+				if (ifStatement.getThenStatement() instanceof Block && ifStatement.getElseStatement() == null) {
 					Block thenBlock = (Block) ifStatement.getThenStatement();
-					if(thenBlock.statements().size()==1){
+					if (thenBlock.statements().size() == 1) {
 						Statement thenStatement = (Statement) thenBlock.statements().get(0);
-						if(thenStatement instanceof ExpressionStatement){
+						if (thenStatement instanceof ExpressionStatement) {
 							ExpressionStatement thenExpression = (ExpressionStatement) thenStatement;
-							if(thenExpression.getExpression() instanceof MethodInvocation){
-								if(IsInstrumentation((MethodInvocation) thenExpression.getExpression())){
+							if (thenExpression.getExpression() instanceof MethodInvocation) {
+								if (IsInstrumentation((MethodInvocation) thenExpression.getExpression())) {
 									continue;
 								}
 							}
@@ -132,26 +131,31 @@ class RemoveStatementVisitor extends ASTVisitor{
 
 	private boolean IsInstrumentation(MethodInvocation node) {
 		Expression expression = node.getExpression();
-		if (expression != null && expression.toString().equals("auxiliary.Dumper") && node.getName().getFullyQualifiedName().equals("write")) {
+		if (expression != null && expression.toString().equals("auxiliary.Dumper")
+				&& node.getName().getFullyQualifiedName().equals("write")) {
 			return true;
 		}
 		return false;
 	}
-	
-//	private boolean IsInstrumentation(MethodInvocation node) {
-//		if (node.getName().getFullyQualifiedName().equals("println") && node.arguments() != null) {
-//			List<Object> args = node.arguments();
-//			if (args != null && args.size() > 0 && args.get(0).toString().contains(Constant.INSTRUMENT_FLAG)) {
-//				return true;
-//			}
-////			if (args != null && args.size() > 0 && args.get(0) instanceof StringLiteral) {
-////				StringLiteral stringLiteral = (StringLiteral) args.get(0);
-////				if (stringLiteral.getLiteralValue().startsWith(Constant.INSTRUMENT_FLAG)) {
-////					return true;
-////				}
-////			}
-//		}
-//		return false;
-//	}
-	
+
+	// private boolean IsInstrumentation(MethodInvocation node) {
+	// if (node.getName().getFullyQualifiedName().equals("println") &&
+	// node.arguments() != null) {
+	// List<Object> args = node.arguments();
+	// if (args != null && args.size() > 0 &&
+	// args.get(0).toString().contains(Constant.INSTRUMENT_FLAG)) {
+	// return true;
+	// }
+	//// if (args != null && args.size() > 0 && args.get(0) instanceof
+	// StringLiteral) {
+	//// StringLiteral stringLiteral = (StringLiteral) args.get(0);
+	//// if
+	// (stringLiteral.getLiteralValue().startsWith(Constant.INSTRUMENT_FLAG)) {
+	//// return true;
+	//// }
+	//// }
+	// }
+	// return false;
+	// }
+
 }

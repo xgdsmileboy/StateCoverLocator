@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import locator.common.config.Constant;
+import locator.common.java.Subject;
 
 /**
  * This class is an interface to run script command background
@@ -76,7 +77,7 @@ public class ExecuteCommand {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_CP + source + " " + target };
 		return execute(cmd);
 	}
-	
+
 	/**
 	 * delete all collected data
 	 * 
@@ -175,12 +176,17 @@ public class ExecuteCommand {
 		}
 		executeCmd(command, Constant.STR_TMP_D4J_OUTPUT_FILE);
 	}
-	
-	public static void executePredict() throws IOException, InterruptedException{
-		String[] cmd = CmdFactory.createPredictCmd();
+
+	public static void executeTrain(Subject subject) throws IOException, InterruptedException {
+		String[] cmd = CmdFactory.createTrainCmd(subject);
 		executeCmd(cmd, Constant.STR_TMP_ML_LOG_FILE);
 	}
-	
+
+	public static void executePredict(Subject subject) throws IOException, InterruptedException {
+		String[] cmd = CmdFactory.createPredictCmd(subject);
+		executeCmd(cmd, Constant.STR_TMP_ML_LOG_FILE);
+	}
+
 	private static String executeCmd(String[] command, String outputFile) throws IOException, InterruptedException {
 		final Process process = Runtime.getRuntime().exec(command);
 		final FileOutputStream resultOutStream = new FileOutputStream(outputFile);
@@ -228,7 +234,7 @@ public class ExecuteCommand {
 		}.start();
 
 		process.waitFor();
-		
+
 		return resultOutStream.toString();
 	}
 }

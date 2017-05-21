@@ -232,7 +232,8 @@ public class Coverage {
 				clazz = clazz.substring(0, index);
 			}
 			String relJavaPath = clazz + ".java";
-			Pair<List<String>, List<String>> features = FeatureExtraction.extractAllFeatures(srcPath, relJavaPath, line);
+			Pair<List<String>, List<String>> features = FeatureExtraction.extractAllFeatures(srcPath, relJavaPath,
+					line);
 			List<String> varFeatures = features.getFirst();
 			List<String> expFeatures = features.getSecond();
 			Pair<Set<String>, Set<String>> allConditions = Predictor.predict(subject, varFeatures, expFeatures);

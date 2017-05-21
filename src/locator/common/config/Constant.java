@@ -17,11 +17,12 @@ import locator.common.util.LevelLogger;
 
 /**
  * This class contains all constant variables
+ * 
  * @author Jiajun
  * @date May 9, 2017
  */
 public class Constant {
-	
+
 	private final static String __name__ = "@Constant ";
 
 	// used for instrument
@@ -37,7 +38,7 @@ public class Constant {
 
 	// least length for failed test trace
 	public final static int TRACE_LENGTH_FOR_FAILED_TEST = 20;
-	
+
 	// instrument top K predicates for each variable
 	public final static int TOP_K_PREDICTED_PREDICATE = 2;
 
@@ -53,7 +54,7 @@ public class Constant {
 	public static String COMMAND_JAVA = null;
 	public static String COMMAND_D4J = null;
 	public static String COMMAND_PYTHON = null;
-	
+
 	public static String DUMPER_HOME = null;
 	public static String PROJECT_HOME = null;
 
@@ -63,7 +64,7 @@ public class Constant {
 	 */
 	public final static String STR_OUT_PATH = HOME + "/out";
 	/**
-	 * out/debug.log 
+	 * out/debug.log
 	 */
 	public final static String STR_LOG_FILE = STR_OUT_PATH + "/debug.log";
 	/**
@@ -95,10 +96,10 @@ public class Constant {
 	 * Machine learning home path TODO : need to refactor
 	 */
 	public final static String STR_ML_HOME = HOME + "/python";
-	public final static String STR_ML_VAR_OUT_FILE_PATH = STR_ML_HOME + "/input/math/var";
-	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input/math/expr";
-	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output/math";
-	
+	public final static String STR_ML_VAR_OUT_FILE_PATH = STR_ML_HOME + "/input";
+	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input";
+	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
+
 	static {
 		Properties prop = new Properties();
 		try {
@@ -117,13 +118,13 @@ public class Constant {
 			Constant.COMMAND_MV = prop.getProperty("COMMAND.MV").replace("/", Constant.PATH_SEPARATOR) + " ";
 
 			Constant.COMMAND_D4J = prop.getProperty("COMMAND.D4J").replace("/", Constant.PATH_SEPARATOR) + " ";
-			
+
 			Constant.COMMAND_PYTHON = prop.getProperty("COMMAND.PYTHON").replace("/", Constant.PATH_SEPARATOR) + " ";
-			
+
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_system get properties failed!" + e.getMessage());
 		}
 	}
-	
+
 }

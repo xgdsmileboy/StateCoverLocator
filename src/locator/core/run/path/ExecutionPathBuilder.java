@@ -100,7 +100,7 @@ public class ExecutionPathBuilder {
 	 * @param outputFile
 	 *            : file including the path information
 	 * @return : a map contains all executed statements with corresponding
-	 *         executed times, statement formatted as : "MethodID#lineNumebr" 
+	 *         executed times, statement formatted as : "MethodID#lineNumebr"
 	 */
 	public static Map<String, Integer> collectAllExecutedStatements(String outputFile) {
 		Map<String, Integer> allMethods = new HashMap<>();

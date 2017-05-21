@@ -55,26 +55,27 @@ public class InstrumentAllPredicatesVisitor extends TraversalVisitor {
 	public InstrumentAllPredicatesVisitor(Map<Integer, Map<Integer, Set<String>>> allInstruments) {
 		_allInstruments = allInstruments;
 	}
-	
+
 	@Override
 	public boolean visit(CompilationUnit node) {
 		_cu = node;
-		if(_allInstruments == null){
+		if (_allInstruments == null) {
 			return false;
 		}
-		if (node.getPackage().getName() != null && node.getPackage().getName().getFullyQualifiedName().equals("auxiliary")) {
+		if (node.getPackage().getName() != null
+				&& node.getPackage().getName().getFullyQualifiedName().equals("auxiliary")) {
 			return false;
 		}
 		// filter unrelative files
 		boolean continueVisit = false;
-		for(Integer methodID : _allInstruments.keySet()){
+		for (Integer methodID : _allInstruments.keySet()) {
 			String methodInfo = Identifier.getMessage(methodID);
 			if (methodInfo.contains(_cu.getPackage().getName().getFullyQualifiedName())) {
 				continueVisit = true;
 				break;
 			}
 		}
-		if(!continueVisit){
+		if (!continueVisit) {
 			return false;
 		}
 		return super.visit(node);
@@ -273,7 +274,7 @@ public class InstrumentAllPredicatesVisitor extends TraversalVisitor {
 
 			int lineNumber = _cu.getLineNumber(switchStatement.getExpression().getStartPosition());
 			result.addAll(genListConditions(message, lineNumber));
-			
+
 			List<ASTNode> statements = new ArrayList<>();
 			AST ast = AST.newAST(AST.JLS8);
 			for (Object object : switchStatement.statements()) {
@@ -364,8 +365,8 @@ public class InstrumentAllPredicatesVisitor extends TraversalVisitor {
 		}
 		return newBlock;
 	}
-	
-	private List<ASTNode> genListConditions(String message, Integer line){
+
+	private List<ASTNode> genListConditions(String message, Integer line) {
 		List<ASTNode> result = new ArrayList<>();
 		if (_currentConditions.containsKey(line)) {
 			for (String condition : _currentConditions.get(line)) {

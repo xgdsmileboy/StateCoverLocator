@@ -22,14 +22,14 @@ public class TypingInfo {
 	private static Map<String, Type> fieldTypeMap = new HashMap<>();
 	private static Map<String, Map<String, Type>> localTypeMap = new HashMap<>();
 
-	
-	public static void resetAll(){
+	public static void resetAll() {
 		fieldTypeMap = new HashMap<>();
 		localTypeMap = new HashMap<>();
 	}
-	
+
 	public static boolean addFieldType(String fieldName, Type type) {
-		if (fieldTypeMap.containsKey(fieldName) && !fieldTypeMap.get(fieldName).equals(type) && !fieldTypeMap.get(fieldName).toString().equals(type.toString())) {
+		if (fieldTypeMap.containsKey(fieldName) && !fieldTypeMap.get(fieldName).equals(type)
+				&& !fieldTypeMap.get(fieldName).toString().equals(type.toString())) {
 			System.out.println("Field type inconsistancy '" + fieldName + "' with types : "
 					+ fieldTypeMap.get(fieldName) + " and " + type);
 			return false;
@@ -46,7 +46,8 @@ public class TypingInfo {
 			return true;
 		} else {
 			Map<String, Type> map = localTypeMap.get(methodName);
-			if (map.containsKey(varName) && !map.get(varName).equals(type) && !map.get(varName).toString().equals(type.toString())) {
+			if (map.containsKey(varName) && !map.get(varName).equals(type)
+					&& !map.get(varName).toString().equals(type.toString())) {
 				System.out.println("Variable type inconsistancy of '" + varName + "' in method '" + methodName
 						+ "' with types : " + map.get(varName) + " and " + type);
 				return false;
@@ -57,7 +58,7 @@ public class TypingInfo {
 	}
 
 	public static Type getVariableType(String methodName, String varName) {
-		
+
 		if (localTypeMap.containsKey(methodName) && localTypeMap.get(methodName).get(varName) != null) {
 			return localTypeMap.get(methodName).get(varName);
 		} else {
@@ -66,9 +67,9 @@ public class TypingInfo {
 	}
 
 	public static Class<?> convert2Class(Type type) {
-		
+
 		System.out.println("type : " + type);
-		
+
 		switch (type.toString()) {
 		case "void":
 			return void.class;
@@ -88,8 +89,8 @@ public class TypingInfo {
 			return byte.class;
 		default:
 		}
-		
-		if(type.toString().contains("[")){
+
+		if (type.toString().contains("[")) {
 			return Arrays.class;
 		}
 		return null;

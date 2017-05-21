@@ -50,13 +50,13 @@ public class MethodInstrumentVisitor extends TraversalVisitor {
 	public boolean visit(MethodDeclaration node) {
 
 		String message = buildMethodInfoString(node);
-		if(message == null){
+		if (message == null) {
 			return true;
 		}
-		
+
 		int keyValue = Identifier.getIdentifier(message);
-		
-		if(shouldSkip(node, keyValue)){
+
+		if (shouldSkip(node, keyValue)) {
 			return true;
 		}
 

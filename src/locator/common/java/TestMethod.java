@@ -12,9 +12,8 @@ import java.util.List;
 
 import locator.common.config.Identifier;
 
+public class TestMethod extends Method {
 
-public class TestMethod extends Method{
-	
 	/**
 	 * record the execution path info of this test method, contain duplicated
 	 * methods if run more than one time
@@ -25,12 +24,12 @@ public class TestMethod extends Method{
 	 * the test case, this field may be 1 or 2
 	 */
 	private int _whichStatement = 1;
-	
-	public TestMethod(int methodID){
+
+	public TestMethod(int methodID) {
 		super(methodID);
 		_path = new ArrayList<>();
 	}
-	
+
 	public void setTestStatementNumber(int whichStatement) {
 		_whichStatement = whichStatement;
 	}
@@ -42,22 +41,22 @@ public class TestMethod extends Method{
 	public List<Method> getExecutionPath() {
 		return _path;
 	}
-	
+
 	public void addExecutedMethod(Method method) {
 		Method newPath = new Method(method.getMethodID());
 		_path.add(method);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null || !(obj instanceof TestMethod)){
+		if (obj == null || !(obj instanceof TestMethod)) {
 			return false;
 		}
-		TestMethod other = (TestMethod)obj;
-		if(other.getMethodID() != getMethodID()){
+		TestMethod other = (TestMethod) obj;
+		if (other.getMethodID() != getMethodID()) {
 			return false;
 		}
-			
+
 		return true;
 	}
 
