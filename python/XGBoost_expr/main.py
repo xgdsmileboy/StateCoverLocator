@@ -29,14 +29,16 @@ def run_expr(params):
     feature_num = 6
     frequency = params['expr_frequency']
     # preprocess, encode-
-    classes, x_encoders, y_encoder = preprocess(data_file_path, feature_num, frequency)
-    class_num = len(classes)
+    # classes, x_encoders, y_encoder = preprocess(data_file_path, feature_num, frequency)
+    # class_num = len(classes)
 
     # train the model
-    train(frequent_file_path, model_saved_path, feature_num, 'multi:softprob', class_num)
+    # train(frequent_file_path, model_saved_path, feature_num, 'multi:softprob', class_num)
     # predict
-    predict(data_file_path, model_saved_path, result_path, params['output_path'], feature_num, classes, x_encoders, y_encoder)
+    # predict(data_file_path, model_saved_path, result_path, params['output_path'], feature_num, classes, x_encoders, y_encoder)
     # run_gen_exprs(params, y_encoder)
+    back_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.back.csv'
+    open(back_file_path, "w").write(open(data_file_path, "r").read())
 
 if __name__ == '__main__':
 

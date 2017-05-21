@@ -29,7 +29,8 @@ def run_var(params):
     train(data_file_path, model_saved_path, feature_num, 'binary:logistic')
     # predict
     predict(data_file_path,model_saved_path, result_path, params['output_path'], feature_num, x_encoders, y_encoder)
-
+    back_file_path = params['input_path']+ params['project'] + '/var/' + params['project'] + '_'+params['bugid']+'.var.back.csv'
+    open(back_file_path, "w").write(open(data_file_path, "r").read())
 
 if __name__ == '__main__':
     params = {

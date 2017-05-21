@@ -1,4 +1,8 @@
 # Code Pieces Predicting with XGBoost
 # PyProjects
 
-Do NOT delete XXX.expr.back.csv and XXX.var.back.csv in this version.
+Model training:
+python train_model.py math 3
+
+Prediction for one statement:
+python run_all.py math 3

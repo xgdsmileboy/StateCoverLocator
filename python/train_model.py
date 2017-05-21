@@ -19,4 +19,4 @@ if __name__ == '__main__':
         'gen_expr_top': 10
     }
     run_expr(params)
-    un_var(params)
+    run_var(params)
