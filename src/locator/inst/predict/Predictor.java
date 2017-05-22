@@ -61,6 +61,9 @@ public class Predictor {
 		String varTitle = "id	line	column	filename	methodname	varname	vartype	lastassign	isparam	incondnum	bodyuse	if\n";
 		JavaFile.writeStringToFile(varFile, varTitle);
 		for (String string : varFeatures) {
+			// TODO : for debug
+			System.out.println(string);
+			string.replace("CALLER_USE", "CLALLER_USE");
 			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 
@@ -69,6 +72,8 @@ public class Predictor {
 		String expTitle = "id	line	column	filename	methodname	varname	vartype	else	return	right\n";
 		JavaFile.writeStringToFile(expFile, expTitle);
 		for (String string : expFeatures) {
+			// TODO : for debug
+			System.out.println(string);
 			JavaFile.writeStringToFile(expFile, string + "\n", true);
 		}
 
