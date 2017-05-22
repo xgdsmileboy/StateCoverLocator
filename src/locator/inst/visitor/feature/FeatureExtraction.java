@@ -49,7 +49,6 @@ import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
-import soot.coffi.constant_element_value;
 
 /**
  * @author Jiajun

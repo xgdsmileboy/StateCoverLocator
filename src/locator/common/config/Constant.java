@@ -64,6 +64,10 @@ public class Constant {
 	 */
 	public final static String STR_OUT_PATH = HOME + "/out";
 	/**
+	 * info
+	 */
+	public final static String STR_INFO_OUT_PATH = HOME + "/info";
+	/**
 	 * out/debug.log
 	 */
 	public final static String STR_LOG_FILE = STR_OUT_PATH + "/debug.log";

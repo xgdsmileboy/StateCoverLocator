@@ -12,13 +12,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.eclipse.jdt.core.dom.ASTVisitor;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
@@ -33,7 +29,6 @@ import locator.core.run.path.ExecutionPathBuilder;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MethodInstrumentVisitor;
-import soot.coffi.constant_element_value;
 
 /**
  * @author Jiajun

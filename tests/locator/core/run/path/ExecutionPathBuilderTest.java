@@ -13,20 +13,23 @@ package locator.core.run.path;
  */
 public class ExecutionPathBuilderTest {
 
-//	@Test
-//	public void test_findFailedTestFromFile(){
-//		Constant.PROJECT_HOME = "res/junitRes";
-//		Subject subject = new Subject("chart", 1, "/source", "tests", "build", "build-tests");
-//		boolean success = Runner.testSuite(subject);
-//		Assert.assertTrue(success);
-//		
-//		List<String> failedTests = ExecutionPathBuilder.findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
-//		
-//		Assert.assertEquals(1, failedTests.size());
-//		String expected = "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests::test2947660";
-//		String actural = failedTests.get(0);
-//		Assert.assertTrue(expected.equals(actural));
-//		
-//	}
-//	
+	// @Test
+	// public void test_findFailedTestFromFile(){
+	// Constant.PROJECT_HOME = "res/junitRes";
+	// Subject subject = new Subject("chart", 1, "/source", "tests", "build",
+	// "build-tests");
+	// boolean success = Runner.testSuite(subject);
+	// Assert.assertTrue(success);
+	//
+	// List<String> failedTests =
+	// ExecutionPathBuilder.findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
+	//
+	// Assert.assertEquals(1, failedTests.size());
+	// String expected =
+	// "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests::test2947660";
+	// String actural = failedTests.get(0);
+	// Assert.assertTrue(expected.equals(actural));
+	//
+	// }
+	//
 }

@@ -25,55 +25,55 @@ import locator.common.java.Method;
  * @date May 10, 2017
  */
 public class StatementInstrumentVisitorTest {
-	
+
 	@Test
-	public void test_InstrumentForTestClass(){
+	public void test_InstrumentForTestClass() {
 		String filePath = "res/junitRes/Test.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_TEST);
 		compilationUnit.accept(statementInstrumentVisitor);
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 25);
 	}
-	
+
 	@Test
-	public void test_InstrumentForTestClass2(){
+	public void test_InstrumentForTestClass2() {
 		String filePath = "res/junitRes/AbstractAnnotation.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_SOURCE);
 		compilationUnit.accept(statementInstrumentVisitor);
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 21);
 	}
-	
+
 	@Test
-	public void test_InstrumentForSourceClass(){
+	public void test_InstrumentForSourceClass() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		compilationUnit.accept(new StatementInstrumentVisitor());
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 47);
 	}
-	
+
 	@Test
-	public void test_InstrumentForSingleMethod(){
+	public void test_InstrumentForSingleMethod() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Set<Method> methods = new HashSet<>();
 		methods.add(new Method(Identifier.getIdentifier(methodString)));
 		compilationUnit.accept(new StatementInstrumentVisitor(methods));
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 16);
 	}
-	
+
 	@Test
-	public void test_InstrumentForMultiMethod(){
+	public void test_InstrumentForMultiMethod() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		Set<Method> methods = new HashSet<>();
 		String methodString1 = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		methods.add(new Method(Identifier.getIdentifier(methodString1)));
@@ -84,5 +84,5 @@ public class StatementInstrumentVisitorTest {
 		compilationUnit.accept(new StatementInstrumentVisitor(methods));
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 22);
 	}
-	
+
 }

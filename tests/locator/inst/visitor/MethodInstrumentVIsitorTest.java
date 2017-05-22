@@ -28,29 +28,29 @@ public class MethodInstrumentVIsitorTest {
 	@Test
 	public void test_methodInstrumentForClazz() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		compilationUnit.accept(new MethodInstrumentVisitor());
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 10);
 	}
-	
+
 	@Test
 	public void test_methodInstrumentForSingleMethod() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Set<Method> methods = new HashSet<>();
 		methods.add(new Method(Identifier.getIdentifier(methodString)));
 		compilationUnit.accept(new MethodInstrumentVisitor(methods));
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);
 	}
-	
+
 	@Test
 	public void test_methodInstrumentForMultiMethod() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		Set<Method> methods = new HashSet<>();
 		String methodString1 = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		methods.add(new Method(Identifier.getIdentifier(methodString1)));

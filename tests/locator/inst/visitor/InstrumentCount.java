@@ -25,18 +25,18 @@ import org.eclipse.jdt.core.dom.SwitchStatement;
 public class InstrumentCount {
 
 	private static int counter = 0;
-	
-	public static int getInstrumentCount(CompilationUnit unit){
+
+	public static int getInstrumentCount(CompilationUnit unit) {
 		CounterVisitor counterVisitor = new CounterVisitor();
 		counter = 0;
 		unit.accept(counterVisitor);
 		return counter;
 	}
-	
-	private static class CounterVisitor extends ASTVisitor{
-		
+
+	private static class CounterVisitor extends ASTVisitor {
+
 		public boolean visit(Block node) {
-			
+
 			for (Object element : node.statements()) {
 				ASTNode astNode = (ASTNode) element;
 				if (astNode instanceof ExpressionStatement) {
@@ -44,7 +44,7 @@ public class InstrumentCount {
 					if (expressionStatement.getExpression() instanceof MethodInvocation) {
 						MethodInvocation methodInvocation = (MethodInvocation) expressionStatement.getExpression();
 						if (IsInstrumentation(methodInvocation)) {
-							counter ++;
+							counter++;
 							continue;
 						}
 					}
@@ -55,29 +55,34 @@ public class InstrumentCount {
 						if (swNode instanceof ExpressionStatement) {
 							ExpressionStatement expressionStatement = (ExpressionStatement) swNode;
 							if (expressionStatement.getExpression() instanceof MethodInvocation) {
-								MethodInvocation methodInvocation = (MethodInvocation) expressionStatement.getExpression();
+								MethodInvocation methodInvocation = (MethodInvocation) expressionStatement
+										.getExpression();
 								if (IsInstrumentation(methodInvocation)) {
-									counter ++;
+									counter++;
 									continue;
 								}
 							}
 						}
 					}
 
-				} else if(astNode instanceof IfStatement){
+				} else if (astNode instanceof IfStatement) {
 					IfStatement ifStatement = (IfStatement) astNode;
-					if(ifStatement.getThenStatement() instanceof Block && ifStatement.getElseStatement() instanceof Block){
+					if (ifStatement.getThenStatement() instanceof Block
+							&& ifStatement.getElseStatement() instanceof Block) {
 						Block thenBlock = (Block) ifStatement.getThenStatement();
 						Block elseBlock = (Block) ifStatement.getElseStatement();
-						if(thenBlock.statements().size()==1 && elseBlock.statements().size() == 1){
+						if (thenBlock.statements().size() == 1 && elseBlock.statements().size() == 1) {
 							Statement thenStatement = (Statement) thenBlock.statements().get(0);
 							Statement elseStatement = (Statement) elseBlock.statements().get(0);
-							if(thenStatement instanceof ExpressionStatement && elseStatement instanceof ExpressionStatement){
+							if (thenStatement instanceof ExpressionStatement
+									&& elseStatement instanceof ExpressionStatement) {
 								ExpressionStatement thenExpression = (ExpressionStatement) thenStatement;
 								ExpressionStatement elseExpression = (ExpressionStatement) elseStatement;
-								if(thenExpression.getExpression() instanceof MethodInvocation && elseExpression.getExpression() instanceof MethodInvocation){
-									if(IsInstrumentation((MethodInvocation) thenExpression.getExpression()) && IsInstrumentation((MethodInvocation) elseExpression.getExpression())){
-										counter ++;
+								if (thenExpression.getExpression() instanceof MethodInvocation
+										&& elseExpression.getExpression() instanceof MethodInvocation) {
+									if (IsInstrumentation((MethodInvocation) thenExpression.getExpression())
+											&& IsInstrumentation((MethodInvocation) elseExpression.getExpression())) {
+										counter++;
 										continue;
 									}
 								}
@@ -92,13 +97,11 @@ public class InstrumentCount {
 
 		private boolean IsInstrumentation(MethodInvocation node) {
 			Expression expression = node.getExpression();
-			if (expression != null && expression.toString().equals("auxiliary.Dumper") && node.getName().getFullyQualifiedName().equals("write")) {
+			if (expression != null && expression.toString().equals("auxiliary.Dumper")
+					&& node.getName().getFullyQualifiedName().equals("write")) {
 				return true;
 			}
 			return false;
 		}
 	}
 }
-
-
-

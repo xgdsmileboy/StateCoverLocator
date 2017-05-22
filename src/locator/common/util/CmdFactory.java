@@ -9,7 +9,6 @@ package locator.common.util;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
-import soot.coffi.constant_element_value;
 
 /**
  * @author Jiajun

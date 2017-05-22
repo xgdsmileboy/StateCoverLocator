@@ -19,15 +19,15 @@ import locator.common.java.JavaFile;
  * @date May 12, 2017
  */
 public class PredicateInstrumentVisitorTest {
-	
+
 	@Test
-	public void test_predicateInstrumentForClazz(){
+	public void test_predicateInstrumentForClazz() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor("a > b", 23);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);
 	}
-	
+
 }

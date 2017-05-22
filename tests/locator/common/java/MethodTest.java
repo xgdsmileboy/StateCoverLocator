@@ -20,27 +20,27 @@ import locator.common.config.Identifier;
  * @date May 11, 2017
  */
 public class MethodTest {
-	
+
 	@Test
-	public void test_equals(){
+	public void test_equals() {
 		String methodString = "org.jfree.data.ComparableObjectItem#?#ComparableObjectItem#?,Comparable,Object";
 		int id = Identifier.getIdentifier(methodString);
 		Method method = new Method(id);
 		Method another = new Method(id);
 		Assert.assertTrue(method.equals(another));
 	}
-	
+
 	@Test
-	public void test_mapContain(){
+	public void test_mapContain() {
 		String methodString = "org.jfree.data.ComparableObjectItem#?#ComparableObjectItem#?,Comparable,Object";
 		int id = Identifier.getIdentifier(methodString);
 		Method method = new Method(id);
 		Map<Method, Integer> map = new HashMap<>();
 		map.put(method, 0);
-		
+
 		Method another = new Method(id);
 		Integer value = map.get(another);
 		Assert.assertNotNull(value);
 	}
-	
+
 }

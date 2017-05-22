@@ -14,18 +14,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import com.google.common.collect.MapMaker;
 
 import locator.common.config.Constant;
 import locator.common.java.Method;
-import locator.common.java.Pair;
 import locator.common.util.LevelLogger;
-import soot.coffi.constant_element_value;
-import soot.dava.internal.AST.ASTTryNode.container;
-import soot.dava.internal.SET.SETStatementSequenceNode;
-import soot.dava.toolkits.base.renamer.infoGatheringAnalysis;
 
 /**
  * This class is responsible for constructing the execution path from the output

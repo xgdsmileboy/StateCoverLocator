@@ -18,35 +18,37 @@ import locator.common.java.Subject;
  * @date May 10, 2017
  */
 public class CmdFactoryTest {
-	
+
 	@Test
-	public void test_createTestSuiteCmd(){
+	public void test_createTestSuiteCmd() {
 		Constant.COMMAND_D4J = "defects4j ";
 		Constant.PROJECT_HOME = "res/junitRes";
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
-		String[] actuals = CmdFactory.createTestSuiteCmd(subject); 
-		String[] expecteds = new String[]{"/bin/bash", "-c", "cd " + subject.getHome() + " && " + "defects4j test"};
+		String[] actuals = CmdFactory.createTestSuiteCmd(subject);
+		String[] expecteds = new String[] { "/bin/bash", "-c", "cd " + subject.getHome() + " && " + "defects4j test" };
 		Assert.assertArrayEquals(expecteds, actuals);
 	}
-	
+
 	@Test
-	public void test_createTestSingleCmd(){
+	public void test_createTestSingleCmd() {
 		Constant.COMMAND_D4J = "defects4j ";
 		Constant.PROJECT_HOME = "res/junitRes";
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
-		String[] actuals = CmdFactory.createTestSingleCmd(subject, "classA::testMethod"); 
-		String[] expecteds = new String[]{"/bin/bash", "-c", "cd " + subject.getHome() + " && " + "defects4j test -t classA::testMethod"};
+		String[] actuals = CmdFactory.createTestSingleCmd(subject, "classA::testMethod");
+		String[] expecteds = new String[] { "/bin/bash", "-c",
+				"cd " + subject.getHome() + " && " + "defects4j test -t classA::testMethod" };
 		Assert.assertArrayEquals(expecteds, actuals);
 	}
-	
+
 	@Test
-	public void test_createBuildSubjectCmd(){
+	public void test_createBuildSubjectCmd() {
 		Constant.COMMAND_D4J = "defects4j ";
 		Constant.PROJECT_HOME = "res/junitRes";
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
-		String[] actuals = CmdFactory.createBuildSubjectCmd(subject); 
-		String[] expecteds = new String[]{"/bin/bash", "-c", "cd " + subject.getHome() + " && " + "defects4j compile"};
+		String[] actuals = CmdFactory.createBuildSubjectCmd(subject);
+		String[] expecteds = new String[] { "/bin/bash", "-c",
+				"cd " + subject.getHome() + " && " + "defects4j compile" };
 		Assert.assertArrayEquals(expecteds, actuals);
 	}
-	
+
 }

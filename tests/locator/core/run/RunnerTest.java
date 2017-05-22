@@ -18,27 +18,27 @@ import locator.common.java.Subject;
  * @date May 10, 2017
  */
 public class RunnerTest {
-	
+
 	@Test
-	public void test_testSuite(){
+	public void test_testSuite() {
 		Constant.PROJECT_HOME = "res/junitRes";
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
 		Assert.assertTrue("Should success !", Runner.testSuite(subject));
 	}
-	
+
 	@Test
-	public void test_testSingleCase(){
+	public void test_testSingleCase() {
 		Constant.PROJECT_HOME = "res/junitRes";
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
 		String testCase = "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests::test2947660";
 		Assert.assertTrue("Should success !", Runner.testSingleCase(subject, testCase));
 	}
-	
+
 	@Test
-	public void test_compileSubject(){
+	public void test_compileSubject() {
 		Constant.PROJECT_HOME = "res/junitRes";
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
 		Assert.assertTrue("Should success !", Runner.compileSubject(subject));
 	}
-	
+
 }

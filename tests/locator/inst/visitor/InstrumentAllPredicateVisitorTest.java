@@ -25,12 +25,12 @@ import locator.common.java.JavaFile;
  * @date May 12, 2017
  */
 public class InstrumentAllPredicateVisitorTest {
-	
+
 	@Test
-	public void test_instrumentSinglePredicate(){
+	public void test_instrumentSinglePredicate() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Map<Integer, Set<String>> conditionMap = new HashMap<>();
 		Set<String> conditionSet1 = new HashSet<>();
@@ -39,17 +39,18 @@ public class InstrumentAllPredicateVisitorTest {
 		int methodID = Identifier.getIdentifier(methodString);
 		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
-		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
+		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(
+				predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
 		System.out.println(compilationUnit.toString());
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);
 	}
-	
+
 	@Test
-	public void test_instrumentMultiPredicatesForSingleMethod(){
+	public void test_instrumentMultiPredicatesForSingleMethod() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Map<Integer, Set<String>> conditionMap = new HashMap<>();
 		Set<String> conditionSet1 = new HashSet<>();
@@ -62,18 +63,19 @@ public class InstrumentAllPredicateVisitorTest {
 		int methodID = Identifier.getIdentifier(methodString);
 		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
-		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
+		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(
+				predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
 		System.out.println(compilationUnit.toString());
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 3);
 	}
-	
+
 	@Test
-	public void test_instrumentMultiPredicatesForMultiMethod(){
+	public void test_instrumentMultiPredicatesForMultiMethod() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
-		//for the first method
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
+		// for the first method
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Map<Integer, Set<String>> conditionMap = new HashMap<>();
 		Set<String> conditionSet1 = new HashSet<>();
@@ -84,30 +86,31 @@ public class InstrumentAllPredicateVisitorTest {
 		conditionSet2.add("num > 10");
 		conditionMap.put(26, conditionSet2);
 		int methodID = Identifier.getIdentifier(methodString);
-		
-		//for the second method
+
+		// for the second method
 		String anotherMethodString = "org.apache.commons.math3.fraction.BigFraction$TroubleClazz#boolean#method2#?";
 		Map<Integer, Set<String>> anotherConditionMap = new HashMap<>();
 		Set<String> anotherConditionSet = new HashSet<>();
 		anotherConditionSet.add("true");
 		anotherConditionMap.put(49, anotherConditionSet);
 		int anotherMethodID = Identifier.getIdentifier(anotherMethodString);
-		
+
 		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
 		predicateMap.put(anotherMethodID, anotherConditionMap);
-		
-		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
+
+		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(
+				predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
 		System.out.println(compilationUnit.toString());
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 4);
 	}
-	
+
 	@Test
-	public void test_instrumentPredicateFomWrongClass(){
+	public void test_instrumentPredicateFomWrongClass() {
 		String filePath = "res/junitRes/Test.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Map<Integer, Set<String>> conditionMap = new HashMap<>();
 		Set<String> conditionSet = new HashSet<>();
@@ -116,17 +119,18 @@ public class InstrumentAllPredicateVisitorTest {
 		int methodID = Identifier.getIdentifier(methodString);
 		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
-		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
+		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(
+				predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
 		System.out.println(compilationUnit.toString());
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 0);
 	}
-	
+
 	@Test
-	public void test_instrumentPredicateInEmptyLine(){
+	public void test_instrumentPredicateInEmptyLine() {
 		String filePath = "res/junitRes/BigFraction.java";
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(filePath),
-				ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
 		Map<Integer, Set<String>> conditionMap = new HashMap<>();
 		Set<String> conditionSet = new HashSet<>();
@@ -135,10 +139,11 @@ public class InstrumentAllPredicateVisitorTest {
 		int methodID = Identifier.getIdentifier(methodString);
 		Map<Integer, Map<Integer, Set<String>>> predicateMap = new HashMap<>();
 		predicateMap.put(methodID, conditionMap);
-		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(predicateMap);
+		InstrumentAllPredicatesVisitor instrumentAllPredicatesVisitor = new InstrumentAllPredicatesVisitor(
+				predicateMap);
 		compilationUnit.accept(instrumentAllPredicatesVisitor);
 		System.out.println(compilationUnit.toString());
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 0);
 	}
-	
+
 }

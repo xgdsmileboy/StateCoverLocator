@@ -33,7 +33,8 @@ public class InstrumentTest {
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_TEST);
 		Instrument.execute(filePath, statementInstrumentVisitor);
 		String newContent = JavaFile.readFileToString(filePath);
-		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(newContent, ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(newContent,
+				ASTParser.K_COMPILATION_UNIT);
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 25);
 		JavaFile.writeStringToFile(filePath, content);
 	}

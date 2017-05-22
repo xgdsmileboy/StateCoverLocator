@@ -17,9 +17,9 @@ import locator.common.java.Subject;
  * @date May 10, 2017
  */
 public class ExecuteCommandTest {
-	
+
 	@Test
-	public void test_testSuite(){
+	public void test_testSuite() {
 		Constant.PROJECT_HOME = "res/junitRes";
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
 		String[] cmd = CmdFactory.createTestSuiteCmd(subject);
@@ -29,5 +29,5 @@ public class ExecuteCommandTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
