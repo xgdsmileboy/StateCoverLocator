@@ -27,12 +27,12 @@ def train(data_file_path, model_file_path, feature_num, training_objective, clas
     y = dataset[:, feature_num]
     print('Training data size: {}'.format(dataset.shape))
     # load encoded training set
-    # training_data = pd.read_csv(training_file, sep=',', header=None, encoding='utf-8')
-    # training_data_values = training_data.values
-    # print('Training set size: {}'.format(training_data_values.shape))
-    # X_train = training_data_values[:, 0:feature_num]
-    # y_train = training_data_values[:, feature_num]
-    # # load encoded validation set
+    training_data = pd.read_csv(training_file, sep=',', header=None, encoding='utf-8')
+    training_data_values = training_data.values
+    print('Training set size: {}'.format(training_data_values.shape))
+    X_train = training_data_values[:, 0:feature_num]
+    y_train = training_data_values[:, feature_num]
+    # load encoded validation set
     testing_data = pd.read_csv(validating_file, sep=',', header=None, encoding='utf-8')
     testing_data_values = testing_data.values
     print('Validating data size: {}'.format(testing_data_values.shape))
@@ -45,9 +45,9 @@ def train(data_file_path, model_file_path, feature_num, training_objective, clas
         os.remove(model_file)
 
     print('Training the model...')
-    # model = XGBClassifier(max_depth=6, objective=training_objective, silent=True, learning_rate=0.1)
-    # # train the model
-    # model.fit(X, y)
+    model = XGBClassifier(max_depth=6, objective=training_objective, silent=True, learning_rate=0.1)
+    # train the model
+    model.fit(X, y)
     # model.fit(X, y)
 
     ### another way to train the model
