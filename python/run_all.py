@@ -5,6 +5,7 @@ from XGBoost_expr.gen_exprs import *
 from Utils.predict_vars import *
 from XGBoost_expr.encode_expr import *
 from XGBoost_var.encode_var import *
+from clustering.cluster import *
 import os
 import sys
 
@@ -24,8 +25,9 @@ if __name__ == '__main__':
     }
     # run_expr(params)
     # run_var(params)
-    encode_var(params)
-    encode_expr(params)
-    run_predict_vars(params)
-    run_gen_exprs(params)
+    var_encoder = get_var_encoder(params)
+    encode_var(params, var_encoder)
+    encode_expr(params, var_encoder)
+    run_predict_vars(params, var_encoder)
+    run_gen_exprs(params, var_encoder)
     join_prob(params)

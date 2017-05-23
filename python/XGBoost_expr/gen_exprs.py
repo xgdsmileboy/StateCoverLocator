@@ -115,7 +115,7 @@ def gen_exprs(project_bugid, expr_model_path, output_path, raw_expr_path, encode
                 f.write('\t%f'%line[alts[j]])
                 f.write('\n')
 
-def run_gen_exprs(params):
+def run_gen_exprs(params, var_encoder):
     project = params['project']
     bugid = params['bugid']
     project_bugid = project+'_'+bugid
@@ -135,7 +135,7 @@ def run_gen_exprs(params):
 
     # get the encoder
     original_data_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.back.csv'
-    classes, x_encoders, y_encoder = preprocess(original_data_file_path, 6, params['expr_frequency'])
+    classes, x_encoders, y_encoder = preprocess(original_data_file_path, 6, params['expr_frequency'], var_encoder)
 
     # get the predicted exprs
     gen_exprs(project_bugid, expr_model_path, output_path, raw_expr_path, encoded_raw_expr, top, y_encoder)

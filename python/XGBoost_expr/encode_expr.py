@@ -1,6 +1,6 @@
 from preprocessing import *
 
-def encode_expr(params):
+def encode_expr(params, var_encoder):
     ## construct the path strings with params
     data_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.csv'
     encode_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr_encoded.csv'
@@ -39,8 +39,11 @@ def encode_expr(params):
         for i in range(0, dataset.shape[0]):
             for j in range(0, feature_num):
                 try:
-                    feature = x_encoders[j].transform([dataset[i, 3 + j]])
-                    f.write("%s," % feature[0])
+                    if j == 2:
+                        f.write("%d," % var_encoder[str(dataset[i, 3 + j]).lower()])
+                    else:
+                        feature = x_encoders[j].transform([str(dataset[i, 3 + j])])
+                        f.write("%s," % feature[0])
                 except Exception as e:
                     print(e)
                     f.write("%d," % x_encoders[j].classes_.shape[0])

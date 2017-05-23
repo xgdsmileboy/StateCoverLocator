@@ -2,7 +2,7 @@ from preprocessing import *
 from training import *
 from testing import *
 
-def run_var(params):
+def run_var(params, var_encoder):
     print('Training var model for {}_{}...'.format(params['project'], params['bugid']))
 
     data_file_path = params['input_path']+ params['project'] + '/var/' + params['project'] + '_'+params['bugid']+'.var.csv'
@@ -24,7 +24,7 @@ def run_var(params):
     # feature_num = # cols - 1(only one target)
     feature_num = 8
     # preprocess, encode
-    x_encoders, y_encoder = preprocess(data_file_path, feature_num)
+    x_encoders, y_encoder = preprocess(data_file_path, feature_num, var_encoder)
     # train the model
     train(data_file_path, model_saved_path, feature_num, 'binary:logistic')
     # predict

@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
-def preprocess(data_file_path, feature_num, frequency):
+def preprocess(data_file_path, feature_num, frequency, var_encoder):
     start_time = datetime.datetime.now()
     training_file = data_file_path[0:-4]+'_train.csv'
     validating_file = data_file_path[0:-4]+'_valid.csv'
@@ -31,6 +31,10 @@ def preprocess(data_file_path, feature_num, frequency):
         x_encoders[i] = LabelEncoder()
         feature = x_encoders[i].fit_transform(X[:,i])
         feature = feature.reshape(X.shape[0],1)
+        if i == 2:
+            # variable name
+            for j in range(0, X.shape[0]):
+                feature[j] = var_encoder[str(X[j, i]).lower()]
         if encoded_x is None:
             encoded_x = feature
         else:

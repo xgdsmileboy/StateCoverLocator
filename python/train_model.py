@@ -1,5 +1,6 @@
 from XGBoost_expr.main import *
 from XGBoost_var.main import *
+from clustering.cluster import *
 
 import os
 import sys
@@ -18,5 +19,6 @@ if __name__ == '__main__':
         'output_path':'output/',
         'gen_expr_top': 10
     }
-    run_expr(params)
-    run_var(params)
+    var_encoder = cluster_var(params)
+    run_var(params, var_encoder)
+    run_expr(params, var_encoder)
