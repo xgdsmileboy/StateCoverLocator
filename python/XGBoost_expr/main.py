@@ -4,7 +4,7 @@ from testing import *
 from gen_exprs import  *
 import datetime
 
-def run_expr(params):
+def run_expr(params, var_encoder):
     print('Training expr model for {}_{}...'.format(params['project'], params['bugid']))
     ## construct the path strings with params
     data_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.csv'
@@ -29,7 +29,11 @@ def run_expr(params):
     feature_num = 6
     frequency = params['expr_frequency']
     # preprocess, encode-
+<<<<<<< HEAD
+    classes, x_encoders, y_encoder = preprocess(data_file_path, feature_num, frequency, var_encoder)
+=======
     classes, x_encoders, y_encoder = preprocess(data_file_path, feature_num, frequency)
+>>>>>>> e9391575040dbd3ee60b421d24bb89cdb37c08a2
     class_num = len(classes)
 
     # train the model
