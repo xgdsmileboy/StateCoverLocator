@@ -29,11 +29,7 @@ def run_expr(params, var_encoder):
     feature_num = 6
     frequency = params['expr_frequency']
     # preprocess, encode-
-<<<<<<< HEAD
     classes, x_encoders, y_encoder = preprocess(data_file_path, feature_num, frequency, var_encoder)
-=======
-    classes, x_encoders, y_encoder = preprocess(data_file_path, feature_num, frequency)
->>>>>>> e9391575040dbd3ee60b421d24bb89cdb37c08a2
     class_num = len(classes)
 
     # train the model

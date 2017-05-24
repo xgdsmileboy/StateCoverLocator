@@ -13,7 +13,7 @@ if __name__ == '__main__':
         'project': sys.argv[1],
         'bugid': sys.argv[2],
         'type': 'expr',
-        'expr_frequency': 1,
+        'expr_frequency': 5,
         'model_path': 'model/',
         'input_path':'input/',
         'output_path':'output/',
