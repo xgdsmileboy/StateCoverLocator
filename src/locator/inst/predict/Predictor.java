@@ -63,7 +63,7 @@ public class Predictor {
 		for (String string : varFeatures) {
 			// TODO : for debug
 			System.out.println(string);
-			string.replace("CALLER_USE", "CLALLER_USE");
+//			string.replace("CALLER_USE", "CLALLER_USE");
 			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 

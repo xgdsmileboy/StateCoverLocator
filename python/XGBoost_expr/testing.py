@@ -8,7 +8,7 @@ import os
 import datetime
 from sklearn.metrics import accuracy_score
 
-def predict(data_file_path, model_file_path, result_file_path, output_path, summary_file, feature_num, classes, x_encoders, y_encoder):
+def predict(data_file_path, model_file_path, result_file_path, output_path, feature_num, classes, x_encoders, y_encoder):
     start_time = datetime.datetime.now()
     data_file_name = data_file_path.split('/')[-1][0:-4]
 
