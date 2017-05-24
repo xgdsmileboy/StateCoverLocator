@@ -5,9 +5,10 @@ from sklearn.cluster import KMeans
 import os
 
 def cluster_var(params):
-	var_file_path = params['input_path']+ params['project'] + '/var/' + params['project'] + '_'+params['bugid']+'.var.csv'
-	expr_file_path = params['input_path']+ params['project'] + '/expr/' + params['project'] + '_'+params['bugid']+'.expr.csv'
-	output_file_path = params['input_path']+ params['project'] + '/pred/' + params['project'] + '_'+params['bugid']+'.cluster.csv'
+	train_file_path = params['input_path']+ params['project'] + "/" + params['project'] + '_'+params['bugid']
+	var_file_path =  train_file_path +'/var/' + params['project'] + '_'+params['bugid']+'.var.csv'
+	expr_file_path = train_file_path + '/expr/' + params['project'] + '_'+params['bugid']+'.expr.csv'
+	output_file_path = train_file_path + '/cluster/' + params['project'] + '_'+params['bugid']+'.cluster.csv'
 
 	var_data = pd.read_csv(var_file_path, sep='\t', header=0, encoding='utf-8')
 	expr_data = pd.read_csv(expr_file_path, sep='\t', header=0, encoding='utf-8')
@@ -18,6 +19,7 @@ def cluster_var(params):
 	all_var = np.row_stack((var_dataset[:, 5:6], expr_dataset[:, 5:6]))
 
 	# all_var = np.array([['len'], ['length'], ['cross'], ['clockwise']])
+	all_var = all_var.astype(str)
 
 	unique_var = set()
 
@@ -48,6 +50,8 @@ def cluster_var(params):
 		varnames.append(v)
 		i = i + 1
 
+	print len(unique_var) / 10
+
 	kmeans = KMeans(n_clusters = len(unique_var) / 10, random_state = 0).fit(X)
 
 	result = {}
@@ -63,7 +67,8 @@ def cluster_var(params):
 
 def get_var_encoder(params):
 	result = {}
-	cluster_file_path = params['input_path']+ params['project'] + '/pred/' + params['project'] + '_'+params['bugid']+'.cluster.csv'
+	train_file_path = params['input_path'] + params['project'] + "/" + params['project'] + '_' + params['bugid']
+	cluster_file_path = train_file_path + '/cluster/' + params['project'] + '_'+params['bugid']+'.cluster.csv';
 	data = pd.read_csv(cluster_file_path, sep='\t', header=None, encoding='utf-8')
 	dataset = data.values
 	for i in range(0, dataset.shape[0]):

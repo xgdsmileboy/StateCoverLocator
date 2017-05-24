@@ -5,7 +5,8 @@ from testing import *
 def run_var(params, var_encoder):
     print('Training var model for {}_{}...'.format(params['project'], params['bugid']))
 
-    data_file_path = params['input_path']+ params['project'] + '/var/' + params['project'] + '_'+params['bugid']+'.var.csv'
+    train_file_path = params['input_path'] + params['project'] + "/" + params['project'] + '_' + params['bugid']
+    data_file_path = train_file_path + '/var/' + params['project'] + '_'+params['bugid']+'.var.csv'
     model_saved_path = params['model_path']
     result_path = params['output_path']+params['project']+'/var/'
 
@@ -29,8 +30,10 @@ def run_var(params, var_encoder):
     train(data_file_path, model_saved_path, feature_num, 'binary:logistic')
     # predict
     predict(data_file_path,model_saved_path, result_path, params['output_path'], feature_num, x_encoders, y_encoder)
-    back_file_path = params['input_path']+ params['project'] + '/var/' + params['project'] + '_'+params['bugid']+'.var.back.csv'
-    open(back_file_path, "w").write(open(data_file_path, "r").read())
+    # back_file_path = train_file_path + '/var/' + params['project'] + '_'+params['bugid']+'.var.back.csv'
+    # if not os.path.exists(back_file_path):
+    #     os.makedirs(back_file_path)
+    # open(back_file_path, "w").write(open(data_file_path, "r").read())
 
 if __name__ == '__main__':
     params = {

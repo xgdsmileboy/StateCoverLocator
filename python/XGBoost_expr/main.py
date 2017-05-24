@@ -7,8 +7,9 @@ import datetime
 def run_expr(params, var_encoder):
     print('Training expr model for {}_{}...'.format(params['project'], params['bugid']))
     ## construct the path strings with params
-    data_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.csv'
-    frequent_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr_frequent.csv'
+    train_file_path = params['input_path'] + params['project'] + "/" + params['project'] + '_' + params['bugid']
+    data_file_path = train_file_path +'/expr/'+params['project']+'_'+params['bugid']+'.expr.csv'
+    frequent_file_path = train_file_path +'/expr/'+params['project']+'_'+params['bugid']+'.expr_frequent.csv'
 
     model_saved_path = params['model_path']
     result_path = params['output_path']+params['project']+'/expr/'
@@ -37,8 +38,8 @@ def run_expr(params, var_encoder):
     # predict
     predict(data_file_path, model_saved_path, result_path, params['output_path'], feature_num, classes, x_encoders, y_encoder)
     # run_gen_exprs(params, y_encoder)
-    back_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.back.csv'
-    open(back_file_path, "w").write(open(data_file_path, "r").read())
+    # back_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.back.csv'
+    # open(back_file_path, "w").write(open(data_file_path, "r").read())
 
 if __name__ == '__main__':
 
