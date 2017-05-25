@@ -58,19 +58,16 @@ public class Predictor {
 		// TODO : return conditions for left variable and right variables
 		File varFile = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + "/" + subject.getName() + "/var/"
 				+ subject.getName() + "_" + subject.getId() + ".var.csv");
-		String varTitle = "id	line	column	filename	methodname	varname	vartype	lastassign	isparam	incondnum	bodyuse	if\n";
-		JavaFile.writeStringToFile(varFile, varTitle);
+		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
 		for (String string : varFeatures) {
 			// TODO : for debug
 			System.out.println(string);
-//			string.replace("CALLER_USE", "CLALLER_USE");
 			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 
 		File expFile = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + "/" + subject.getName() + "/expr/"
 				+ subject.getName() + "_" + subject.getId() + ".expr.csv");
-		String expTitle = "id	line	column	filename	methodname	varname	vartype	else	return	right\n";
-		JavaFile.writeStringToFile(expFile, expTitle);
+		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
 		for (String string : expFeatures) {
 			// TODO : for debug
 			System.out.println(string);

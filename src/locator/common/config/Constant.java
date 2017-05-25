@@ -45,6 +45,10 @@ public class Constant {
 	// build flags
 	public final static String ANT_BUILD_FAILED = "BUILD FAILED";
 	public final static String ANT_BUILD_SUCCESS = "BUILD SUCCESSFUL";
+	
+	// header for feature
+	public final static String FEATURE_VAR_HEADER = "id	line	column	filename	methodname	varname	vartype	lastassign	dis0	preassnum	isparam	infor	incondnum	bodyuse	if\n";
+	public final static String FEATURE_EXPR_HEADER = "id	line	column	filename	methodname	varname	vartype	else	return	right\n";
 
 	// system command
 	public static String COMMAND_CD = null;
