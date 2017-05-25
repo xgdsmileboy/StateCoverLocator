@@ -62,14 +62,19 @@ def getPredicateProb(filePath):
 
     return predicateProbMap
 
-def join_prob(params):
-    var_predicted = params['output_path'] + params['project']+ '/'+ params['project'] +'_'+params['bugid']+ '.var_pred.csv'
+def join_prob(config):
+    """
+    @type config: Configure
+    @param config:Configure 
+    :return: 
+    """
+    var_predicted = config.get_var_pred_out_file()
+    expr_predicted = config.get_expr_pred_out_file()
+    joint_file = config.get_joint_predict_file()
+
     print(var_predicted)
     varProbMap = getVarProb(var_predicted)
-    expr_predicted = params['output_path'] + params['project']+ '/'+ params['project'] +'_'+params['bugid']+ '.expr_pred.csv'
     predicateProbMap = getPredicateProb(expr_predicted)
-
-    joint_file =  params['output_path'] + params['project']+ '/'+ params['project'] +'_'+params['bugid']+ '.joint.csv'
 
     varPredicateProbMap = {}
 

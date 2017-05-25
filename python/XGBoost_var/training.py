@@ -34,7 +34,6 @@ class Train(object):
         X = dataset[:, 3:3 + feature_num]
         X = X.astype(str)
         Y = dataset[:, 3 + feature_num]
-
         Y = Y.astype(str)
         classes = np.unique(Y)
         class_num = len(classes)

@@ -49,14 +49,20 @@ class XGVar(object):
         encoded_rows_array = np.array(encoded_var)
         # print(encoded_rows_array.shape)
         X_pred = encoded_rows_array[:, 0:feature_num]
+        X_pred = X_pred.astype(float)
+
         y_pred = encoded_rows_array[:, feature_num]
+
+        y_pred = y_pred.astype(float)
+
         M_pred = xgb.DMatrix(X_pred, label=y_pred)
         y_prob = model.predict(M_pred)
+
 
         if os.path.exists(var_predicted):
             os.remove(var_predicted)
 
-        with open(var_predicted, 'a+') as f:
+        with open(var_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
                 f.write('%s\t' % if_ids[i])
                 f.write('%s\t' % varnames[i])

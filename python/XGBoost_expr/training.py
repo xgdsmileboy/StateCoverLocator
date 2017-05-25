@@ -80,6 +80,8 @@ class TrainExpr(object):
                 frequent_X.append(encoded_x[i])
                 frequent_y.append(encoded_y[i])
 
+        frequent_X = pd.DataFrame(frequent_X)
+        frequent_y = pd.DataFrame(frequent_y)
         # split the data into training and validing set
         X_train, X_valid, y_train, y_valid = train_test_split(frequent_X, frequent_y, test_size=0.1, random_state=7)
         print('Training set size: {}'.format(y_train.shape))
@@ -125,8 +127,13 @@ class TrainExpr(object):
         model = xgb.train(params, M_train, num_boost_round=num_round, evals=watchlist,
                         early_stopping_rounds=early_stop, learning_rates=learning_rates)
 
-        model.save_model(model_file)
-        print('Model saved in {}'.format(model_file))
+        # save the best model on the disk
+        with open(model_file, 'w') as f:
+            pk.dump(model, f)
+            print('Model saved in {}'.format(model_file))
+
+        # model.save_model(model_file)
+        # print('Model saved in {}'.format(model_file))
 
         end_time = datetime.datetime.now()
         run_time = end_time-start_time

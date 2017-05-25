@@ -1,6 +1,7 @@
 from training import *
 import datetime
 from Utils.config import *
+import heapq as hq
 
 class XGExpr(object):
 
@@ -51,7 +52,7 @@ class XGExpr(object):
         ## save the results
         if os.path.exists(expr_predicted):
             os.remove(expr_predicted)
-        with open(expr_predicted, 'a+') as f:
+        with open(expr_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
                 f.write('%s\t' % dataset[i, 0])
                 f.write('%s\t' % dataset[i, 5])
@@ -109,4 +110,6 @@ class XGExpr(object):
                     feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
             encoded_x.append(feature)
 
+        encoded_x = pd.DataFrame(encoded_x)
+        encoded_y = pd.DataFrame(encoded_y)
         return (dataset, encoded_x, encoded_y, x_encoders, y_encoder)

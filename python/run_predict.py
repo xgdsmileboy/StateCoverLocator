@@ -30,4 +30,4 @@ if __name__ == '__main__':
     xgexpr = XGExpr(config)
     xgexpr.run_gen_exprs(var_encoder, 6)
 
-    # join_prob(config)
+    join_prob(config)
