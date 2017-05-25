@@ -12,12 +12,11 @@ class XGVar(object):
         """
         self.__configure__ = configure;
 
-    def train_var(self, var_encoder):
+    def train_var(self, var_encoder, feature_num):
         print('Training var model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
 
         # feature_num = # cols - 1(only one target)
-        feature_num = 8
         train = Train(self.__configure__)
         train.train(feature_num, 'binary:logistic', var_encoder)
 
@@ -49,14 +48,20 @@ class XGVar(object):
         encoded_rows_array = np.array(encoded_var)
         # print(encoded_rows_array.shape)
         X_pred = encoded_rows_array[:, 0:feature_num]
+        X_pred = X_pred.astype(float)
+
         y_pred = encoded_rows_array[:, feature_num]
+
+        y_pred = y_pred.astype(float)
+
         M_pred = xgb.DMatrix(X_pred, label=y_pred)
         y_prob = model.predict(M_pred)
+
 
         if os.path.exists(var_predicted):
             os.remove(var_predicted)
 
-        with open(var_predicted, 'a+') as f:
+        with open(var_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
                 f.write('%s\t' % if_ids[i])
                 f.write('%s\t' % varnames[i])
@@ -100,10 +105,18 @@ class XGVar(object):
             feature = list()
             for j in range(0, feature_num):
                 # TODO : if the key does not exit in the encoder, how to transform
-                if j == 2:
-                    feature.append(var_encoder[str(dataset[i, 3 + j]).lower()])
-                else:
-                    feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
+                try:
+                    if j == 2:
+                        feature.append(var_encoder[str(dataset[i, 3 + j]).lower()])
+                    else:
+                        feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
+                except Exception as e:
+                    print(e)
+                    if j == 2:
+                        feature.append(len(var_encoder))
+                    else:
+                        feature.append(x_encoders[j].classes_.shape[0])
+
             feature.append('0')
             encoded_feature.append(feature)
 

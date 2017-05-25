@@ -48,6 +48,14 @@ public class Main {
 				+ subject.getId();
 		String targetVarPath = outPath + "/var/" + subject.getName() + "_" + subject.getId() + ".var.csv";
 		String targetExprPath = outPath + "/expr/" + subject.getName() + "_" + subject.getId() + ".expr.csv";
+		File file = new File(targetVarPath);
+		if(!file.exists()){
+			file.getParentFile().mkdirs();
+		}
+		file = new File(targetExprPath);
+		if(!file.exists()){
+			file.getParentFile().mkdirs();
+		}
 		FeatureGenerator.generateTrainFeature(srcPath, targetVarPath, targetExprPath);
 
 		// // train model

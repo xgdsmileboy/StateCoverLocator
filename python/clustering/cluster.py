@@ -12,8 +12,8 @@ class Cluster(object):
 
 	def cluster_var(self):
 		# config file path
-		var_file_path = self.__configure__.get_var_train_in_file()
-		expr_file_path = self.__configure__.get_expr_train_in_file()
+		var_file_path = self.__configure__.get_raw_var_train_in_file()
+		expr_file_path = self.__configure__.get_raw_expr_train_in_file()
 		output_file_path = self.__configure__.get_cluster_file()
 
 		# read data
@@ -57,9 +57,9 @@ class Cluster(object):
 			varnames.append(v)
 			i = i + 1
 
-		print len(unique_var) / 10
+		print len(unique_var) / 20
 
-		kmeans = KMeans(n_clusters=len(unique_var) / 10, random_state=0).fit(X)
+		kmeans = KMeans(n_clusters=len(unique_var) / 20, random_state=0).fit(X)
 
 		result = {}
 		if (os.path.exists(output_file_path)):

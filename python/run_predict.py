@@ -13,21 +13,20 @@ if __name__ == '__main__':
     config = Configure(
         sys.argv[1],
         sys.argv[2],
-        'expr',
         1,
         'model/',
         'input/',
         'output/',
-        10
+        100
     )
 
     cluster = Cluster(config)
     var_encoder = cluster.get_var_encoder()
 
     xgvar = XGVar(config)
-    xgvar.run_predict_vars(var_encoder, 8)
+    xgvar.run_predict_vars(var_encoder, 11)
 
     xgexpr = XGExpr(config)
     xgexpr.run_gen_exprs(var_encoder, 6)
 
-    # join_prob(config)
+    join_prob(config)
