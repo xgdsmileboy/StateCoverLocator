@@ -1,59 +1,112 @@
-from preprocessing import *
 from training import *
-from testing import *
-from gen_exprs import  *
 import datetime
+from Utils.config import *
 
-def run_expr(params, var_encoder):
-    print('Training expr model for {}_{}...'.format(params['project'], params['bugid']))
-    ## construct the path strings with params
-    data_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.csv'
-    frequent_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr_frequent.csv'
+class XGExpr(object):
 
-    model_saved_path = params['model_path']
-    result_path = params['output_path']+params['project']+'/expr/'
+    def __init__(self, configure):
+        """
+        @type configure: Configure
+        @param configure: Configure
+        """
+        self.__configure__ = configure
+
+    def train_expr(self, var_encoder, feature_num):
+        print('Training expr model for {}_{}...'.\
+              format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
+        ## construct the path strings with params
+        feature_num = 6
+        trainExpr = TrainExpr(self.__configure__)
+        # train the model
+        trainExpr.train(feature_num, 'multi:softprob', var_encoder)
 
 
-    # store vital info in the summary file
-    # summary_file = params['output_path'] + 'summary_expr.csv'
-    # if not os.path.exists(summary_file):
-    #     # write the header only once
-    #     with open(summary_file, 'a+') as f:
-    #         f.write('time, project_bugid, #classes, #samples, frequency, #frequent_classes, #frequent_samples, #test_samples, #top1, p(top1), #top5, p(top5), #top10, p(top10)\n')
+    def run_gen_exprs(self, var_encoder, feature_num):
+        print('Predicting expr for {}...'.format(self.__configure__.get_bug_id()))
 
-    # with open(summary_file, 'a+') as f:
-    #     f.write('%s,' % datetime.datetime.now())
-    #     f.write('%s,' % (params['project'] + '_' + params['bugid']))
+        expr_predicted = self.__configure__.get_expr_pred_out_file()
+        expr_model_path = self.__configure__.get_expr_model_file()
 
-    # feature_num = # cols - 1(only one target)
-    feature_num = 6
-    frequency = params['expr_frequency']
-    # preprocess, encode-
-<<<<<<< HEAD
-    classes, x_encoders, y_encoder = preprocess(data_file_path, feature_num, frequency, var_encoder)
-=======
-    classes, x_encoders, y_encoder = preprocess(data_file_path, feature_num, frequency)
->>>>>>> e9391575040dbd3ee60b421d24bb89cdb37c08a2
-    class_num = len(classes)
+        top = self.__configure__.get_gen_expr_top()
 
-    # train the model
-    train(frequent_file_path, model_saved_path, feature_num, 'multi:softprob', class_num)
-    # predict
-    predict(data_file_path, model_saved_path, result_path, params['output_path'], feature_num, classes, x_encoders, y_encoder)
-    # run_gen_exprs(params, y_encoder)
-    back_file_path = params['input_path']+params['project']+'/expr/'+params['project']+'_'+params['bugid']+'.expr.back.csv'
-    open(back_file_path, "w").write(open(data_file_path, "r").read())
+        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(var_encoder, feature_num)
 
-if __name__ == '__main__':
+        ## load the model
+        if not os.path.exists(expr_model_path):
+            print('Model file does not exist!')
+            os._exit(0)
+        with open(expr_model_path, 'r') as f:
+            model = pk.load(f)
+            print('Model loaded from {}'.format(expr_model_path))
+            print(model)
 
-    params ={
-        'project':'math',
-        'bugid':'82',
-        'type': 'expr',
-        'expr_frequency': 1,
-        'model_path': '../model/',
-        'input_path':'../input/',
-        'output_path':'../output/',
-        'gen_expr_top': 10
-    }
-    run_expr(params)
+        X_pred = encoded_x
+        print(X_pred)
+
+        M_pred = xgb.DMatrix(X_pred)
+        y_prob = model.predict(M_pred)
+
+        print(y_prob.shape)
+
+        ## save the results
+        if os.path.exists(expr_predicted):
+            os.remove(expr_predicted)
+        with open(expr_predicted, 'a+') as f:
+            for i in range(0, X_pred.shape[0]):
+                f.write('%s\t' % dataset[i, 0])
+                f.write('%s\t' % dataset[i, 5])
+                # f.write('%s' % y_prob[i])
+                line = y_prob[i]
+                # the predicted indices, ordered with the classes in alphabet order
+                # so classes = np.unique(Y) required to decode
+                alts = hq.nlargest(top, range(len(line)), line.__getitem__)
+                # print(alts)
+                for j in range(top):
+                    if j != 0:
+                        f.write('\t\t')
+                    # tag_pred = classes[alts[j]]
+                    tag_pred = alts[j]
+                    original = y_encoder.inverse_transform(tag_pred)
+                    f.write('{}'.format(original))  # predicate
+                    f.write('\t%f' % line[alts[j]])
+                    f.write('\n')
+
+
+    def encode_expr(self, var_encoder, feature_num):
+
+        data_file_path = self.__configure__.get_raw_expr_pred_in_file()
+        original_data_file_path = self.__configure__.get_raw_expr_train_in_file()
+
+        # load data from a csv file
+        original_data = pd.read_csv(original_data_file_path, sep='\t', header=0, encoding='utf-8')
+        original_dataset = original_data.values
+        print('Raw data size: {}'.format(original_dataset.shape))
+        # split data into X and y
+        X = original_dataset[:, 3:3 + feature_num]
+        X = X.astype(str)
+        Y = original_dataset[:, -1]
+
+        y_encoder = LabelEncoder()
+        encoded_y = y_encoder.fit_transform(Y)
+
+        # encoding string as integers
+        x_encoders = [None] * feature_num
+        for i in range(0, X.shape[1]):
+            x_encoders[i] = LabelEncoder()
+            x_encoders[i].fit_transform(X[:, i])
+
+        data = pd.read_csv(data_file_path, sep='\t', header=0, encoding='utf-8')
+        dataset = data.values
+
+
+        encoded_x = list()
+        for i in range(0, dataset.shape[0]):
+            feature = list()
+            for j in range(0, feature_num):
+                if j == 2:
+                    feature.append(var_encoder[str(dataset[i, 3 + j]).lower()])
+                else:
+                    feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
+            encoded_x.append(feature)
+
+        return (dataset, encoded_x, encoded_y, x_encoders, y_encoder)

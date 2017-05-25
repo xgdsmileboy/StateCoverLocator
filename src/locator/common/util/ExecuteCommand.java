@@ -174,20 +174,105 @@ public class ExecuteCommand {
 			file.getParentFile().mkdirs();
 			file.createNewFile();
 		}
-		executeCmd(command, Constant.STR_TMP_D4J_OUTPUT_FILE);
+		executeAndOutputFile(command, Constant.STR_TMP_D4J_OUTPUT_FILE);
 	}
 
+	/**
+	 * execute train command
+	 * 
+	 * @param subject
+	 *            : subject for training
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public static void executeTrain(Subject subject) throws IOException, InterruptedException {
 		String[] cmd = CmdFactory.createTrainCmd(subject);
-		executeCmd(cmd, Constant.STR_TMP_ML_LOG_FILE);
+		executeAndOutputConsole(cmd);
 	}
 
+	/**
+	 * execute predicate predicting
+	 * 
+	 * @param subject
+	 *            : subject for predicting
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public static void executePredict(Subject subject) throws IOException, InterruptedException {
 		String[] cmd = CmdFactory.createPredictCmd(subject);
-		executeCmd(cmd, Constant.STR_TMP_ML_LOG_FILE);
+		executeAndOutputConsole(cmd);
 	}
 
-	private static String executeCmd(String[] command, String outputFile) throws IOException, InterruptedException {
+	/**
+	 * execute outside command when given command and output execution
+	 * information to console
+	 * 
+	 * @param command
+	 *            : to be executed
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	private static void executeAndOutputConsole(String[] command) throws IOException, InterruptedException {
+		final Process process = Runtime.getRuntime().exec(command);
+
+		new Thread() {
+			public void run() {
+				InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
+				int num = 0;
+				byte[] bs = new byte[1024];
+				try {
+					while ((num = errorInStream.read(bs)) != -1) {
+						String string = new String(bs, 0, num, "UTF-8");
+						LevelLogger.info(string);
+					}
+				} catch (IOException e) {
+					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
+				} finally {
+					try {
+						errorInStream.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		}.start();
+
+		new Thread() {
+			public void run() {
+				InputStream processInStream = new BufferedInputStream(process.getInputStream());
+				int num = 0;
+				byte[] bs = new byte[1024];
+				try {
+					while ((num = processInStream.read(bs)) != -1) {
+						String string = new String(bs, 0, num, "UTF-8");
+						LevelLogger.info(string);
+					}
+				} catch (IOException e) {
+					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
+				} finally {
+					try {
+						processInStream.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		}.start();
+
+		process.waitFor();
+	}
+
+	/**
+	 * execute given command and output execution information into file
+	 * 
+	 * @param command
+	 *            : command to be executed
+	 * @param outputFile
+	 *            : output file path
+	 * @return
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	private static String executeAndOutputFile(String[] command, String outputFile)
+			throws IOException, InterruptedException {
 		final Process process = Runtime.getRuntime().exec(command);
 		final FileOutputStream resultOutStream = new FileOutputStream(outputFile);
 

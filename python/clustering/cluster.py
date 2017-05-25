@@ -3,69 +3,81 @@ import numpy as np
 from math import isnan
 from sklearn.cluster import KMeans
 import os
+from Utils.config import *
 
-def cluster_var(params):
-	var_file_path = params['input_path']+ params['project'] + '/var/' + params['project'] + '_'+params['bugid']+'.var.csv'
-	expr_file_path = params['input_path']+ params['project'] + '/expr/' + params['project'] + '_'+params['bugid']+'.expr.csv'
-	output_file_path = params['input_path']+ params['project'] + '/pred/' + params['project'] + '_'+params['bugid']+'.cluster.csv'
+class Cluster(object):
 
-	var_data = pd.read_csv(var_file_path, sep='\t', header=0, encoding='utf-8')
-	expr_data = pd.read_csv(expr_file_path, sep='\t', header=0, encoding='utf-8')
+	def __init__(self, configure):
+		self.__configure__ = configure
 
-	var_dataset = var_data.values
-	expr_dataset = expr_data.values
+	def cluster_var(self):
+		# config file path
+		var_file_path = self.__configure__.get_var_train_in_file()
+		expr_file_path = self.__configure__.get_expr_train_in_file()
+		output_file_path = self.__configure__.get_cluster_file()
 
-	all_var = np.row_stack((var_dataset[:, 5:6], expr_dataset[:, 5:6]))
+		# read data
+		var_data = pd.read_csv(var_file_path, sep='\t', header=0, encoding='utf-8')
+		expr_data = pd.read_csv(expr_file_path, sep='\t', header=0, encoding='utf-8')
 
-	# all_var = np.array([['len'], ['length'], ['cross'], ['clockwise']])
+		var_dataset = var_data.values
+		expr_dataset = expr_data.values
 
-	unique_var = set()
+		all_var = np.row_stack((var_dataset[:, 5:6], expr_dataset[:, 5:6]))
 
-	for i in range(0, all_var.shape[0]):
-		unique_var.add(str(all_var[i][0]).lower())
+		# all_var = np.array([['len'], ['length'], ['cross'], ['clockwise']])
+		all_var = all_var.astype(str)
 
-	X = np.mat(np.zeros((len(unique_var), 27 * 27 + 1)))
-	varnames = list()
+		unique_var = set()
 
-	i = 0
-	for v in unique_var:
-		# print(v)
-		if len(v) == 1:
-			X[i, 26 * 26] = 1
-		else:
-			for j in range(0, len(v) - 1):
-				first = ord(v[j]) - ord('a')
-				second = ord(v[j + 1]) - ord('a')
-				if first < 0 or first >= 26:
-					first = 26
-				if second < 0 or second >= 26:
-					second = 26
-				# print(first)
-				# print(second)
-				pos = first * 27 + second
-				# print(pos)
-				X[i, pos] = 1
-		varnames.append(v)
-		i = i + 1
+		for i in range(0, all_var.shape[0]):
+			unique_var.add(str(all_var[i][0]).lower())
 
-	kmeans = KMeans(n_clusters = len(unique_var) / 10, random_state = 0).fit(X)
+		X = np.mat(np.zeros((len(unique_var), 27 * 27 + 1)))
+		varnames = list()
 
-	result = {}
-	if (os.path.exists(output_file_path)):
-		os.remove(output_file_path)
-	with open(output_file_path, 'w+') as f:
-		for i in range(0, X.shape[0]):
-			result[varnames[i]] = kmeans.labels_[i]
-			f.write('%s\t' % varnames[i])
-			f.write('%d\n' % kmeans.labels_[i])
+		i = 0
+		for v in unique_var:
+			# print(v)
+			if len(v) == 1:
+				X[i, 26 * 26] = 1
+			else:
+				for j in range(0, len(v) - 1):
+					first = ord(v[j]) - ord('a')
+					second = ord(v[j + 1]) - ord('a')
+					if first < 0 or first >= 26:
+						first = 26
+					if second < 0 or second >= 26:
+						second = 26
+					# print(first)
+					# print(second)
+					pos = first * 27 + second
+					# print(pos)
+					X[i, pos] = 1
+			varnames.append(v)
+			i = i + 1
 
-	return result
+		print len(unique_var) / 10
 
-def get_var_encoder(params):
-	result = {}
-	cluster_file_path = params['input_path']+ params['project'] + '/pred/' + params['project'] + '_'+params['bugid']+'.cluster.csv'
-	data = pd.read_csv(cluster_file_path, sep='\t', header=None, encoding='utf-8')
-	dataset = data.values
-	for i in range(0, dataset.shape[0]):
-		result[str(dataset[i, 0])] = dataset[i, 1]
-	return result
+		kmeans = KMeans(n_clusters=len(unique_var) / 10, random_state=0).fit(X)
+
+		result = {}
+		if (os.path.exists(output_file_path)):
+			os.remove(output_file_path)
+		with open(output_file_path, 'w+') as f:
+			for i in range(0, X.shape[0]):
+				result[varnames[i]] = kmeans.labels_[i]
+				f.write('%s\t' % varnames[i])
+				f.write('%d\n' % kmeans.labels_[i])
+		return result
+
+	def get_var_encoder(self):
+		result = {}
+		# train_file_path = params['input_path'] + params['project'] + "/" + params['project'] + '_' + params['bugid']
+		# cluster_file_path = train_file_path + '/cluster/' + params['project'] + '_'+params['bugid']+'.cluster.csv';
+		cluster_file_path = self.__configure__.get_cluster_file()
+		data = pd.read_csv(cluster_file_path, sep='\t', header=None, encoding='utf-8')
+		dataset = data.values
+		for i in range(0, dataset.shape[0]):
+			result[str(dataset[i, 0])] = dataset[i, 1]
+		return result

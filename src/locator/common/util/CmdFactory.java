@@ -68,6 +68,12 @@ public class CmdFactory {
 		return cmd;
 	}
 
+	/**
+	 * create model training command
+	 * 
+	 * @param subject
+	 * @return
+	 */
 	public static String[] createTrainCmd(Subject subject) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(Constant.COMMAND_CD);
@@ -82,6 +88,12 @@ public class CmdFactory {
 		return cmd;
 	}
 
+	/**
+	 * create predicate predicting command
+	 * 
+	 * @param subject
+	 * @return
+	 */
 	public static String[] createPredictCmd(Subject subject) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(Constant.COMMAND_CD);
