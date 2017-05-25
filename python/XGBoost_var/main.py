@@ -12,12 +12,10 @@ class XGVar(object):
         """
         self.__configure__ = configure;
 
-    def train_var(self, var_encoder):
+    def train_var(self, var_encoder, feature_num):
         print('Training var model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
 
-        # feature_num = # cols - 1(only one target)
-        feature_num = 8
         train = Train(self.__configure__)
         train.train(feature_num, 'binary:logistic', var_encoder)
 

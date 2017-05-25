@@ -3,10 +3,9 @@ import sys
 
 class Configure(object):
 
-    def __init__(self, project_name, bug_id, type, expr_freq, model_path, input_path, output_path, gen_expr_top):
+    def __init__(self, project_name, bug_id, expr_freq, model_path, input_path, output_path, gen_expr_top):
         self.__project_name__ = project_name
         self.__bug_id__ = bug_id
-        self.__type__ = type
         self.__expr_freq__ = expr_freq
         self.__model_path__ = model_path
         self.__input_path__ = input_path
@@ -20,9 +19,6 @@ class Configure(object):
 
     def get_bug_id(self):
         return self.__bug_id__
-
-    def get_type(self):
-        return self.__type__
 
     def get_expr_frequency(self):
         return self.__expr_freq__
