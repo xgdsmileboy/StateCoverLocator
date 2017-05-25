@@ -1,55 +1,130 @@
 import os
 import sys
 
-class Configure:
-
-    input_base_path = ''
+class Configure(object):
 
     def __init__(self, project_name, bug_id, type, expr_freq, model_path, input_path, output_path, gen_expr_top):
-        self.project_name = project_name
-        self.bug_id = bug_id
-        self.type = type
-        self.expr_freq = expr_freq
-        self.model_path = model_path
-        self.input_path = input_path
-        self.output_path = output_path
-        self.gen_expr_top = gen_expr_top
-        self.input_base_path = input_path + project_name + '/' + project_name + '_' + bug_id
+        self.__project_name__ = project_name
+        self.__bug_id__ = bug_id
+        self.__type__ = type
+        self.__expr_freq__ = expr_freq
+        self.__model_path__ = model_path
+        self.__input_path__ = input_path
+        self.__output_path__ = output_path
+        self.__gen_expr_top__ = gen_expr_top
+        self.__input_base_path__ = input_path + project_name + '/' + project_name + '_' + bug_id
+        self.__output_base_path__ = output_path + project_name + '/' + project_name + '_' + bug_id
 
-    def get_var_train_in_file(self):
+    def get_project_name(self):
+        return self.__project_name__
+
+    def get_bug_id(self):
+        return self.__bug_id__
+
+    def get_type(self):
+        return self.__type__
+
+    def get_expr_frequency(self):
+        return self.__expr_freq__
+
+    def get_gen_expr_top(self):
+        return self.__gen_expr_top__
+
+    def get_raw_var_train_in_file(self):
         # python/input/math/math_1/var/math_1.var.csv
-        train_file_path = self.input_base_path + '/var/' + self.project_name + '_' + self.bug_id + '.var.csv'
-        return train_file_path
+        return self.__input_base_path__ + '/var/' + self.__project_name__ + '_' + self.__bug_id__ + '.var.csv'
 
-    def get_expr_train_in_file(self):
+
+    def get_raw_expr_train_in_file(self):
         # python/input/math/math_1/var/math_1.expr.csv
-        train_file_path = self.input_base_path + '/expr/' + self.project_name + '_' + self.bug_id + '.expr.csv'
-        return train_file_path
+        return self.__input_base_path__ + '/expr/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr.csv'
+
+    #
+    # def get_expr_train_in_file(self):
+    #     # python/input/math/math_1/var/math_1.expr_train.csv
+    #     return self.__input_base_path__ + '/expr/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr_train.csv'
+
 
     def get_cluster_file(self):
         # python/input/math/math_1/cluster/math_1.cluster.csv
-        cluster_file_path = self.input_base_path + '/cluster/' + self.project_name + '_' + self.bug_id + '.cluster.csv'
-        return cluster_file_path
+        path = self.__input_base_path__ + '/cluster/'
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + self.__project_name__ + '_' + self.__bug_id__ + '.cluster.csv'
 
-    def get_var_pred_in_file(self):
+
+    def get_var_model_file(self):
+        # python/model/math_1.var_model.pkl
+        if not os.path.exists(self.__model_path__):
+            os.makedirs(self.__model_path__)
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.var_model.pkl'
+
+    def get_expr_model_file(self):
+        # python/model/math_1.expr_model.pkl
+        if not os.path.exists(self.__model_path__):
+            os.makedirs(self.__model_path__)
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.expr_model.pkl'
+
+    # def get_var_encode_file(self):
+    #     # python/input/math/math_1/var/math_1.var_encoded.csv
+    #     return self.__input_base_path__ + '/var/' + self.__project_name__ + '_' + self.__bug_id__ + '.var_encoded.csv'
+    #
+    # def get_expr_encode_file(self):
+    #     # python/input/math/math_1/expr/math_1.expr_encoded.csv
+    #     return self.__input_base_path__ + '/expr/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr_encoded.csv'
+
+    def get_raw_var_pred_in_file(self):
         # python/input/math/math_1/pred/math_1.var.csv
-        var_path = self.input_base_path + '/pred/' + self.project_name + '_' + self.bug_id + '.var.csv'
+        var_path = self.__input_base_path__ + '/pred/' + self.__project_name__ + '_' + self.__bug_id__ + '.var.csv'
         return var_path
 
-    def get_expr_pred_in_file(self):
+    def get_raw_expr_pred_in_file(self):
         # python/input/math/math_1/pred/math_1.expr.csv
-        expr_path = self.input_base_path + '/pred/' + self.project_name + '_' + self.bug_id + '.expr.csv'
+        expr_path = self.__input_base_path__ + '/pred/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr.csv'
         return expr_path
 
     def get_var_pred_out_file(self):
-        # python/output/math/var/math_1.var.csv
-        var_path = self.output_path + self.project_name + '/var/' + self.project_name + '_' + self.bug_id + '.var.csv'
+        # python/output/math/math_1/math_1.var.csv
+        if not os.path.exists(self.__output_path__):
+            os.makedirs(self.__output_path__)
+        var_path = self.__output_base_path__ + '/' + self.__project_name__ + '_' + self.__bug_id__ + '.var.csv'
         return var_path
 
     def get_expr_pred_out_file(self):
-        # python/output/math/expr/math_1.expr.csv
-        var_path = self.output_path + self.project_name + '/expr/' + self.project_name + '_' + self.bug_id + '.expr.csv'
+        # python/output/math/math_1/math_1.expr.csv
+        if not os.path.exists(self.__output_path__):
+            os.makedirs(self.__output_path__)
+        var_path = self.__output_base_path__ + '/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr.csv'
         return var_path
+
+    def get_joint_predict_file(self):
+        # python/output/math/math_1/math_1.joint.csv
+        if not os.path.exists(self.__output_path__):
+            os.makedirs(self.__output_path__)
+        return self.__output_base_path__ + '/' + self.__project_name__ + '_' + self.__bug_id__ + '.csv.csv'
+
+    # def get_var_valid_file(self):
+    #     # python/input/math/math_1/var/math_1.var_valid.csv
+    #     return self.__input_base_path__ + '/var/' + self.__project_name__ + '_' + self.__bug_id__ + '.var_valid.csv'
+    #
+    # def get_expr_valid_file(self):
+    #     # python/input/math/math_1/expr/math_1.expr_valid.csv
+    #     return self.__input_base_path__ + '/expr/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr_valid.csv'
+    #
+
+class Dumper(object):
+
+    def __init__(self, configure):
+        self.__configure__ = configure
+
+    def dump(self):
+        print self.__configure__.get_expr_train_in_file()
+        print self.__configure__.get_expr_pred_in_file()
+        print self.__configure__.get_expr_pred_out_file()
+        print self.__configure__.get_var_train_in_file()
+        print self.__configure__.get_var_pred_in_file()
+        print self.__configure__.get_var_pred_out_file()
+        print self.__configure__.get_cluster_file()
 
 if __name__ == '__main__':
     conf = Configure(
@@ -62,11 +137,5 @@ if __name__ == '__main__':
         'output/',
         10
     )
-
-    print conf.get_expr_train_in_file()
-    print conf.get_expr_pred_in_file()
-    print conf.get_expr_pred_out_file()
-    print conf.get_var_train_in_file()
-    print conf.get_var_pred_in_file()
-    print conf.get_var_pred_out_file()
-    print conf.get_cluster_file()
+    dumper = Dumper(conf)
+    dumper.dump()
