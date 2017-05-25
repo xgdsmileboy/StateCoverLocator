@@ -20,10 +20,13 @@ if __name__ == '__main__':
         10
     )
     cluster = Cluster(config)
-    var_encoder = cluster.cluster_var()
+    var_encoder, var_column, expr_column  = cluster.cluster_var()
 
     xgvar = XGVar(config)
-    xgvar.train_var(var_encoder, 11)
+    var_feature_num = var_column - 4
+    xgvar.train_var(var_encoder, var_feature_num)
+
 
     xgexpr = XGExpr(config)
-    xgexpr.train_expr(var_encoder, 6)
+    expr_feature_num = expr_column - 4
+    xgexpr.train_expr(var_encoder, expr_feature_num)

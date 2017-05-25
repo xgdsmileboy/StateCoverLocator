@@ -22,7 +22,7 @@ class XGExpr(object):
         trainExpr.train(feature_num, 'multi:softprob', var_encoder)
 
 
-    def run_gen_exprs(self, var_encoder, feature_num):
+    def run_gen_exprs(self, var_encoder):
         print('Predicting expr for {}...'.format(self.__configure__.get_bug_id()))
 
         expr_predicted = self.__configure__.get_expr_pred_out_file()
@@ -30,7 +30,7 @@ class XGExpr(object):
 
         top = self.__configure__.get_gen_expr_top()
 
-        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(var_encoder, feature_num)
+        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(var_encoder)
 
         ## load the model
         if not os.path.exists(expr_model_path):
@@ -73,7 +73,7 @@ class XGExpr(object):
                     f.write('\n')
 
 
-    def encode_expr(self, var_encoder, feature_num):
+    def encode_expr(self, var_encoder):
 
         data_file_path = self.__configure__.get_raw_expr_pred_in_file()
         original_data_file_path = self.__configure__.get_raw_expr_train_in_file()
@@ -83,13 +83,14 @@ class XGExpr(object):
         original_dataset = original_data.values
         print('Raw data size: {}'.format(original_dataset.shape))
         # split data into X and y
-        X = original_dataset[:, 3:3 + feature_num]
+        X = original_dataset[:, 3:-1]
         X = X.astype(str)
         Y = original_dataset[:, -1]
 
         y_encoder = LabelEncoder()
         encoded_y = y_encoder.fit_transform(Y)
 
+        feature_num = original_data.shape[1] - 4
         # encoding string as integers
         x_encoders = [None] * feature_num
         for i in range(0, X.shape[1]):

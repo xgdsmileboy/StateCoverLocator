@@ -21,7 +21,7 @@ class XGVar(object):
         train.train(feature_num, 'binary:logistic', var_encoder)
 
 
-    def predict_vars(self, encoded_var, feature_num):
+    def predict_vars(self, encoded_var):
         # encoded_oracle_var =  oracle[0:-4]+ '.var_encoded.csv'
         var_predicted = self.__configure__.get_var_pred_out_file()
 
@@ -47,10 +47,10 @@ class XGVar(object):
 
         encoded_rows_array = np.array(encoded_var)
         # print(encoded_rows_array.shape)
-        X_pred = encoded_rows_array[:, 0:feature_num]
+        X_pred = encoded_rows_array[:, 0:-1]
         X_pred = X_pred.astype(float)
 
-        y_pred = encoded_rows_array[:, feature_num]
+        y_pred = encoded_rows_array[:, -1]
 
         y_pred = y_pred.astype(float)
 
@@ -69,16 +69,16 @@ class XGVar(object):
                 f.write('\n')
 
 
-    def run_predict_vars(self, var_encoder, feature_num):
+    def run_predict_vars(self, var_encoder):
 
         print('Predicting var for {}...'.format(self.__configure__.get_bug_id()))
 
-        encoded_var = self.encode_var(var_encoder, feature_num)
+        encoded_var = self.encode_var(var_encoder)
         # get the predicted varnames
-        self.predict_vars(encoded_var, feature_num)
+        self.predict_vars(encoded_var)
 
 
-    def encode_var(self, var_encoder, feature_num):
+    def encode_var(self, var_encoder):
         data_file_path = self.__configure__.get_raw_var_pred_in_file()
 
         original_data_file_path = self.__configure__.get_raw_var_train_in_file()
@@ -86,9 +86,10 @@ class XGVar(object):
         original_data = pd.read_csv(original_data_file_path, sep='\t', header=0, encoding='utf-8')
         original_dataset = original_data.values
         print('Dataset size: {}'.format(original_dataset.shape))
+        feature_num = original_data.shape[1] - 4
         # split data into X and y
         # 3 to 11: 8
-        X = original_dataset[:, 3:3 + feature_num]
+        X = original_dataset[:, 3:-1]
         X = X.astype(str)
 
         # encoding string as integers

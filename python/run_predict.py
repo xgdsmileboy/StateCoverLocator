@@ -24,9 +24,9 @@ if __name__ == '__main__':
     var_encoder = cluster.get_var_encoder()
 
     xgvar = XGVar(config)
-    xgvar.run_predict_vars(var_encoder, 11)
+    xgvar.run_predict_vars(var_encoder)
 
     xgexpr = XGExpr(config)
-    xgexpr.run_gen_exprs(var_encoder, 6)
+    xgexpr.run_gen_exprs(var_encoder)
 
     join_prob(config)

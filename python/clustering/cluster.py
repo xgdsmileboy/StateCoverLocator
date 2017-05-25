@@ -69,7 +69,7 @@ class Cluster(object):
 				result[varnames[i]] = kmeans.labels_[i]
 				f.write('%s\t' % varnames[i])
 				f.write('%d\n' % kmeans.labels_[i])
-		return result
+		return result, var_data.shape[1], expr_data.shape[1]
 
 	def get_var_encoder(self):
 		result = {}
