@@ -7,7 +7,7 @@ def readFile(filePath):
     try:
         file = open(filePath)
     except:
-        print "read file" + filePath + " error"
+        print ("read file" + filePath + " error")
         return
     lines = []
     while True:
@@ -30,7 +30,7 @@ def getVarProb(filePath):
         keyTuple = (words[0], words[1])
         value = float(words[2])
         if keyTuple in varProbMap.keys():
-            print 'error keyTuple[0]=' + str(keyTuple[0]) + "|keyTuple[1]=" + str(keyTuple[1])
+            print ('error keyTuple[0]=' + str(keyTuple[0]) + "|keyTuple[1]=" + str(keyTuple[1]))
         varProbMap[keyTuple] = value
 
     return varProbMap

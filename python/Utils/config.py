@@ -69,32 +69,23 @@ class Configure(object):
 
     def get_var_pred_out_file(self):
         # python/output/math/math_1/math_1.var.csv
-        if not os.path.exists(self.__output_path__):
-            os.makedirs(self.__output_path__)
+        if not os.path.exists(self.__output_base_path__):
+            os.makedirs(self.__output_base_path__)
         var_path = self.__output_base_path__ + '/' + self.__project_name__ + '_' + self.__bug_id__ + '.var_pred.csv'
         return var_path
 
     def get_expr_pred_out_file(self):
         # python/output/math/math_1/math_1.expr.csv
-        if not os.path.exists(self.__output_path__):
-            os.makedirs(self.__output_path__)
+        if not os.path.exists(self.__output_base_path__):
+            os.makedirs(self.__output_base_path__)
         var_path = self.__output_base_path__ + '/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr_pred.csv'
         return var_path
 
     def get_joint_predict_file(self):
         # python/output/math/math_1/math_1.joint.csv
-        if not os.path.exists(self.__output_path__):
-            os.makedirs(self.__output_path__)
-        return self.__output_base_path__ + '/' + self.__project_name__ + '_' + self.__bug_id__ + '.csv_joint.csv'
-
-    # def get_var_valid_file(self):
-    #     # python/input/math/math_1/var/math_1.var_valid.csv
-    #     return self.__input_base_path__ + '/var/' + self.__project_name__ + '_' + self.__bug_id__ + '.var_valid.csv'
-    #
-    # def get_expr_valid_file(self):
-    #     # python/input/math/math_1/expr/math_1.expr_valid.csv
-    #     return self.__input_base_path__ + '/expr/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr_valid.csv'
-    #
+        if not os.path.exists(self.__output_base_path__):
+            os.makedirs(self.__output_base_path__)
+        return self.__output_base_path__ + '/' + self.__project_name__ + '_' + self.__bug_id__ + '.joint.csv'
 
 class Dumper(object):
 

@@ -49,23 +49,23 @@ public class Main {
 		String targetVarPath = outPath + "/var/" + subject.getName() + "_" + subject.getId() + ".var.csv";
 		String targetExprPath = outPath + "/expr/" + subject.getName() + "_" + subject.getId() + ".expr.csv";
 		File file = new File(targetVarPath);
-		if(!file.exists()){
+		if (!file.exists()) {
 			file.getParentFile().mkdirs();
 		}
 		file = new File(targetExprPath);
-		if(!file.exists()){
+		if (!file.exists()) {
 			file.getParentFile().mkdirs();
 		}
 		FeatureGenerator.generateTrainFeature(srcPath, targetVarPath, targetExprPath);
 
-		// // train model
-		// try {
-		// LevelLogger.info(">>>>>> Begin Trainning ...");
-		// ExecuteCommand.executeTrain(subject);
-		// LevelLogger.info(">>>>>> End Trainning !");
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		// train model
+		try {
+			LevelLogger.info(">>>>>> Begin Trainning ...");
+			ExecuteCommand.executeTrain(subject);
+			LevelLogger.info(">>>>>> End Trainning !");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void proceed() {
@@ -84,55 +84,44 @@ public class Main {
 		// train predicate prediction model
 		trainModel(subject);
 
-		// // copy auxiliary file to subject path
-		// LevelLogger.info("copying auxiliary file to subject path.");
-		// Configure.config_dumper(subject);
-		//
-		// LevelLogger.info("step 1: collect all tests.");
-		// Pair<Set<Integer>, Set<Integer>> allTests =
-		// Collector.collectAllTestCases(subject);
-		//
-		// LevelLogger.info("step 2: compute original coverage information.");
-		// Map<String, CoverInfo> coverage = Coverage.computeCoverage(subject,
-		// allTests);
-		//
-		// LevelLogger.info("output original coverage information to file :
-		// ori_coverage.csv");
-		// printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" +
-		// subject.getName() + "/" + subject.getName() + "_"
-		// + subject.getId() + "/ori_coverage.csv");
-		//
-		// LevelLogger.info("step 3: compute statements covered by failed
-		// tests");
-		// Set<String> allCoveredStatement =
-		// Coverage.getAllCoveredStatement(subject, allTests.getFirst());
-		//
-		// LevelLogger.info("step 4: compute predicate coverage information");
-		// Map<String, CoverInfo> predicateCoverage =
-		// Coverage.computePredicateCoverage(subject, allCoveredStatement,
-		// allTests.getFirst());
-		//
-		// LevelLogger.info("output predicate coverage information to file :
-		// pred_coverage.csv");
-		// printCoverage(predicateCoverage, Constant.STR_INFO_OUT_PATH + "/" +
-		// subject.getName() + "/" + subject.getName() + "_"
-		// + subject.getId() + "/pred_coverage.csv");
-		//
-		// LevelLogger.info("step 5: combine all coverage informaiton");
-		// for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {
-		// CoverInfo coverInfo = coverage.get(entry.getKey());
-		// if (coverInfo != null) {
-		// coverInfo.combine(entry.getValue());
-		// } else {
-		// coverage.put(entry.getKey(), entry.getValue());
-		// }
-		// }
-		//
-		// LevelLogger.info("step 6: output coverage information to file :
-		// coverage.csv");
-		// printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" +
-		// subject.getName() + "/" + subject.getName() + "_"
-		// + subject.getId() + "/coverage.csv");
+		// copy auxiliary file to subject path
+		LevelLogger.info("copying auxiliary file to subject path.");
+		Configure.config_dumper(subject);
+
+		LevelLogger.info("step 1: collect all tests.");
+		Pair<Set<Integer>, Set<Integer>> allTests = Collector.collectAllTestCases(subject);
+
+		LevelLogger.info("step 2: compute original coverage information.");
+		Map<String, CoverInfo> coverage = Coverage.computeCoverage(subject, allTests);
+
+		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
+		printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_"
+				+ subject.getId() + "/ori_coverage.csv");
+
+		LevelLogger.info("step 3: compute statements covered by failed tests");
+		Set<String> allCoveredStatement = Coverage.getAllCoveredStatement(subject, allTests.getFirst());
+
+		LevelLogger.info("step 4: compute predicate coverage information");
+		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
+				allTests.getFirst());
+
+		LevelLogger.info("output predicate coverage information to file : pred_coverage.csv");
+		printCoverage(predicateCoverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName()
+				+ "_" + subject.getId() + "/pred_coverage.csv");
+
+		LevelLogger.info("step 5: combine all coverage informaiton");
+		for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {
+			CoverInfo coverInfo = coverage.get(entry.getKey());
+			if (coverInfo != null) {
+				coverInfo.combine(entry.getValue());
+			} else {
+				coverage.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		LevelLogger.info("step 6: output coverage information to file : coverage.csv");
+		printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_"
+				+ subject.getId() + "/coverage.csv");
 	}
 
 	private static void printCoverage(Map<String, CoverInfo> coverage, String filePath) {

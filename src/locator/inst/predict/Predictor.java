@@ -56,8 +56,8 @@ public class Predictor {
 			List<String> expFeatures) {
 		Pair<Set<String>, Set<String>> conditions = new Pair<>();
 		// TODO : return conditions for left variable and right variables
-		File varFile = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + "/" + subject.getName() + "/var/"
-				+ subject.getName() + "_" + subject.getId() + ".var.csv");
+		File varFile = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + "/" + subject.getName() + "/" + subject.getName()
+				+ "_" + subject.getId() + "/pred/" + subject.getName() + "_" + subject.getId() + ".var.csv");
 		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
 		for (String string : varFeatures) {
 			// TODO : for debug
@@ -65,8 +65,8 @@ public class Predictor {
 			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 
-		File expFile = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + "/" + subject.getName() + "/expr/"
-				+ subject.getName() + "_" + subject.getId() + ".expr.csv");
+		File expFile = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + "/" + subject.getName() + "/" + subject.getName()
+				+ "_" + subject.getId() + "/pred/" + subject.getName() + "_" + subject.getId() + ".expr.csv");
 		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
 		for (String string : expFeatures) {
 			// TODO : for debug
@@ -83,7 +83,7 @@ public class Predictor {
 		}
 
 		File rslFile = new File(Constant.STR_ML_PREDICT_EXP_PATH + "/" + subject.getName() + "/" + subject.getName()
-				+ "_" + subject.getId() + ".joint.csv");
+				+ "_" + subject.getId() + "/" + subject.getName() + "_" + subject.getId() + ".joint.csv");
 		BufferedReader bReader = null;
 		try {
 			bReader = new BufferedReader(new FileReader(rslFile));

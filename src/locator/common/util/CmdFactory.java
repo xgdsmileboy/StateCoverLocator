@@ -100,7 +100,7 @@ public class CmdFactory {
 		stringBuffer.append(Constant.STR_ML_HOME);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_PYTHON);
-		stringBuffer.append(Constant.STR_ML_HOME + "/run_all.py ");
+		stringBuffer.append(Constant.STR_ML_HOME + "/run_predict.py ");
 		stringBuffer.append(subject.getName());
 		stringBuffer.append(" ");
 		stringBuffer.append(subject.getId());

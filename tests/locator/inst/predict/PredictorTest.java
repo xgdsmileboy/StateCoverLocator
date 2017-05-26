@@ -26,7 +26,7 @@ public class PredictorTest {
 //			System.out.println(string);
 //		}
 
-		Subject subject = new Subject("math", 3, "/src/main/java", "/src/test/java", "/target/classes",
+		Subject subject = new Subject("math", 4, "/src/main/java", "/src/test/java", "/target/classes",
 				"/target/test-classes");
 		Pair<Set<String>, Set<String>> conditions = Predictor.predict(subject, vars.getFirst(), vars.getSecond());
 
