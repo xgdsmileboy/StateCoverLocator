@@ -13,7 +13,7 @@ if __name__ == '__main__':
     config = Configure(
         sys.argv[1],
         sys.argv[2],
-        5,
+        4,
         'model/',
         'input/',
         'output/',
