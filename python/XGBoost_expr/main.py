@@ -16,7 +16,6 @@ class XGExpr(object):
         print('Training expr model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
         ## construct the path strings with params
-        feature_num = 6
         trainExpr = TrainExpr(self.__configure__)
         # train the model
         trainExpr.train(feature_num, 'multi:softprob', var_encoder)
