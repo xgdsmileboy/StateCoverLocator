@@ -17,7 +17,7 @@ if __name__ == '__main__':
         'model/',
         'input/',
         'output/',
-        100
+        200     #TOP: 10, 100, sys.maxint
     )
 
     cluster = Cluster(config)

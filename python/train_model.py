@@ -13,7 +13,7 @@ if __name__ == '__main__':
     config = Configure(
         sys.argv[1],
         sys.argv[2],
-        4,
+        1,
         'model/',
         'input/',
         'output/',
@@ -25,7 +25,6 @@ if __name__ == '__main__':
     xgvar = XGVar(config)
     var_feature_num = var_column - 4
     xgvar.train_var(var_encoder, var_feature_num)
-
 
     xgexpr = XGExpr(config)
     expr_feature_num = expr_column - 4

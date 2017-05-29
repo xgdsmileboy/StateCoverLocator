@@ -86,7 +86,7 @@ def join_prob(config):
                 if mulProb <= 0:
                     continue
                 # prob = math.log(varProbMap[key] * predicate[1])
-                prob = varProbMap[key] * predicate[1]
+                prob = varProbMap[key] + predicate[1]
                 newkey = (key[0], key[1], predicate[0])
                 varPredicateProbMap[newkey] = prob
 
@@ -105,23 +105,11 @@ def join_prob(config):
     for key in idConsMap:
         valueTupleList = idConsMap[key]
         for valueTuple in valueTupleList:
-            if (valueTuple[2] > 0.01):
+            if (valueTuple[2] > 0.005):
                 fOut.write(key + "\t" + valueTuple[0] + "\t" + valueTuple[1] + "\t" + str(valueTuple[2]) + "\n")
     fOut.close()
 
 
-if __name__ == '__main__':
-    params ={
-        'project':'math',
-        'bugid':'3',
-        'type': 'expr',
-        'expr_frequency': 10,
-        'model_path': 'model/',
-        'input_path':'input/',
-        'output_path':'output/',
-        'gen_expr_top': 10
-    }
-    join_prob(params)
 
 
 

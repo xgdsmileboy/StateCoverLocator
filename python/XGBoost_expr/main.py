@@ -59,6 +59,11 @@ class XGExpr(object):
                 line = y_prob[i]
                 # the predicted indices, ordered with the classes in alphabet order
                 # so classes = np.unique(Y) required to decode
+
+                #fix bug of max
+                if top > line.shape[0]:
+                    top = line.shape[0]
+
                 alts = hq.nlargest(top, range(len(line)), line.__getitem__)
                 # print(alts)
                 for j in range(top):
