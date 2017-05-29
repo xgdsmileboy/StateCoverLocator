@@ -12,6 +12,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.eclipse.core.internal.runtime.DataArea;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
@@ -34,7 +38,10 @@ public class Runner {
 	 */
 	public static boolean testSuite(Subject subject) {
 		try {
+			long begin = System.currentTimeMillis();
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
+			long end = System.currentTimeMillis();
+			System.out.print("Run all test cases cost : " + ((end - begin)/1000)); 
 		} catch (Exception e) {
 			LevelLogger.fatal(__name__ + "#testSuite run test suite failed !", e);
 		}
