@@ -105,7 +105,7 @@ public class ExprFilter {
 			String parent = null;
 			Type superType = node.getSuperclassType();
 			if (superType != null) {
-				parent = null;
+				parent = superType.toString();
 			}
 			if (_typeInfo.containsKey(clazzName)) {
 				LevelLogger.warn(__name__ + "#visitor class name conflict : " + clazzName);

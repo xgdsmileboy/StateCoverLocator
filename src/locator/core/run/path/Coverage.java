@@ -35,7 +35,9 @@ import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MethodInstrumentVisitor;
 import locator.inst.visitor.PredicateInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
+import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
+import polyglot.ast.Expr;
 
 /**
  * @author Jiajun
@@ -210,6 +212,9 @@ public class Coverage {
 		String testPath = subject.getHome() + subject.getTsrc();
 		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST);
 		Instrument.execute(testPath, methodInstrumentVisitor);
+		
+		//parse all object type
+		ExprFilter.init(subject);
 
 		for (String stmt : allStatements) {
 			String[] stmtInfo = stmt.split("#");

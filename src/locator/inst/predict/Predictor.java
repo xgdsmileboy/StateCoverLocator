@@ -13,17 +13,24 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.sun.xml.internal.ws.message.StringHeader;
+
+import jas.VisibilityAnnotationAttr;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureEntry;
+import polyglot.ast.Expr;
 
 /**
  * @author Jiajun
@@ -55,6 +62,7 @@ public class Predictor {
 	public static Pair<Set<String>, Set<String>> predict(Subject subject, List<String> varFeatures,
 			List<String> expFeatures) {
 		Pair<Set<String>, Set<String>> conditions = new Pair<>();
+		Map<String, String> varTypeMap = new HashMap<>();
 		// TODO : return conditions for left variable and right variables
 		File varFile = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + "/" + subject.getName() + "/" + subject.getName()
 				+ "_" + subject.getId() + "/pred/" + subject.getName() + "_" + subject.getId() + ".var.csv");
@@ -62,6 +70,10 @@ public class Predictor {
 		for (String string : varFeatures) {
 			// TODO : for debug
 			System.out.println(string);
+			String[] features = string.split("\t");
+			String varName = features[Constant.FEATURE_VAR_NAME_INDEX];
+			String varType = features[Constant.FEATURE_VAR_TYPE_INDEX];
+			varTypeMap.put(varName, varType);
 			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 
@@ -105,7 +117,13 @@ public class Predictor {
 					}
 					String varName = columns[1];
 					String condition = columns[2].replace("$", varName);
-					rightConditions.add(condition);
+					String varType = varTypeMap.get(varName);
+					if(ExprFilter.isLegalExpr(varType, varName, condition)){
+						rightConditions.add(condition);
+					} else {
+						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
+					}
+					
 				}
 			}
 			bReader.close();
