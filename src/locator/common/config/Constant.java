@@ -49,7 +49,9 @@ public class Constant {
 	// header for feature
 	public final static String FEATURE_VAR_HEADER = "id	line	column	filename	methodname	varname	vartype	lastassign	dis0	preassnum	isparam	infor	incondnum	bodyuse	if\n";
 	public final static String FEATURE_EXPR_HEADER = "id	line	column	filename	methodname	varname	vartype	else	return	right\n";
-
+	public final static int FEATURE_VAR_NAME_INDEX = 5;
+	public final static int FEATURE_VAR_TYPE_INDEX = 6;
+	
 	// system command
 	public static String COMMAND_CD = null;
 	public static String COMMAND_RM = null;

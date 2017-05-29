@@ -76,6 +76,10 @@ public class Main {
 			return;
 		}
 		Subject subject = allSubject.get(0);
+		// remove auxiliary file
+		String path = subject.getHome() + subject.getSsrc();
+		String auxiliary = path + Constant.PATH_SEPARATOR + "auxiliary/Dumper.java";
+		ExecuteCommand.deleteGivenFile(auxiliary);
 		// preprocess : remove all instrument
 		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
 		Instrument.execute(subject.getHome() + subject.getSsrc(), deInstrumentVisitor);

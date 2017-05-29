@@ -85,7 +85,10 @@ def join_prob(config):
                 mulProb = varProbMap[key] * predicate[1]
                 if mulProb <= 0:
                     continue
-                # prob = math.log(varProbMap[key] * predicate[1])
+
+                #prob = math.log(varProbMap[key] * predicate[1])
+                #prob = varProbMap[key] * predicate[1]
+                #prob = math.log(varProbMap[key]) + math.log(predicate[1])
                 prob = varProbMap[key] + predicate[1]
                 newkey = (key[0], key[1], predicate[0])
                 varPredicateProbMap[newkey] = prob
