@@ -21,12 +21,12 @@ if __name__ == '__main__':
     )
 
     cluster = Cluster(config)
-    var_encoder = cluster.get_var_encoder()
+    var_encoder, kmeans = cluster.get_var_cluster()
 
     xgvar = XGVar(config)
-    xgvar.run_predict_vars(var_encoder)
+    xgvar.run_predict_vars(var_encoder, kmeans)
 
     xgexpr = XGExpr(config)
-    xgexpr.run_gen_exprs(var_encoder)
+    xgexpr.run_gen_exprs(var_encoder, kmeans)
 
     join_prob(config)

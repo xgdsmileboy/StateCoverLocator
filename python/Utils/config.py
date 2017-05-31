@@ -56,6 +56,11 @@ class Configure(object):
             os.makedirs(self.__model_path__)
         return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.expr_model.pkl'
 
+    def get_cluster_model_file(self):
+        # python/model/math_1.cluster_model.pkl
+        if not os.path.exists(self.__model_path__):
+            os.makedirs(self.__model_path__)
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.cluster_model.pkl'
 
     def get_raw_var_pred_in_file(self):
         # python/input/math/math_1/pred/math_1.var.csv

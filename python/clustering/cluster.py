@@ -4,11 +4,32 @@ from math import isnan
 from sklearn.cluster import KMeans
 import os
 from Utils.config import *
+from sklearn.externals import joblib
 
 class Cluster(object):
 
 	def __init__(self, configure):
 		self.__configure__ = configure
+
+	@staticmethod
+	def var_to_vec(v):
+		result = np.array(np.zeros(27 * 27 + 1))
+		if len(v) == 1:
+			result[26 * 26] = 1
+		else:
+			for j in range(0, len(v) - 1):
+				first = ord(v[j]) - ord('a')
+				second = ord(v[j + 1]) - ord('a')
+				if first < 0 or first >= 26:
+					first = 26
+				if second < 0 or second >= 26:
+					second = 26
+				# print(first)
+				# print(second)
+				pos = first * 27 + second
+				# print(pos)
+				result[pos] = 1
+		return result
 
 	def cluster_var(self):
 		# config file path
@@ -38,28 +59,16 @@ class Cluster(object):
 
 		i = 0
 		for v in unique_var:
-			# print(v)
-			if len(v) == 1:
-				X[i, 26 * 26] = 1
-			else:
-				for j in range(0, len(v) - 1):
-					first = ord(v[j]) - ord('a')
-					second = ord(v[j + 1]) - ord('a')
-					if first < 0 or first >= 26:
-						first = 26
-					if second < 0 or second >= 26:
-						second = 26
-					# print(first)
-					# print(second)
-					pos = first * 27 + second
-					# print(pos)
-					X[i, pos] = 1
+			X[i] = self.var_to_vec(v)
 			varnames.append(v)
 			i = i + 1
 
 		print len(unique_var) / 20
 
 		kmeans = KMeans(n_clusters=len(unique_var) / 20, random_state=0).fit(X)
+
+		# export model
+		joblib.dump(kmeans, self.__configure__.get_cluster_model_file())
 
 		result = {}
 		if (os.path.exists(output_file_path)):
@@ -71,7 +80,7 @@ class Cluster(object):
 				f.write('%d\n' % kmeans.labels_[i])
 		return result, var_data.shape[1], expr_data.shape[1]
 
-	def get_var_encoder(self):
+	def get_var_cluster(self):
 		result = {}
 		# train_file_path = params['input_path'] + params['project'] + "/" + params['project'] + '_' + params['bugid']
 		# cluster_file_path = train_file_path + '/cluster/' + params['project'] + '_'+params['bugid']+'.cluster.csv';
@@ -80,4 +89,6 @@ class Cluster(object):
 		dataset = data.values
 		for i in range(0, dataset.shape[0]):
 			result[str(dataset[i, 0])] = dataset[i, 1]
-		return result
+
+		kmeans = joblib.load(self.__configure__.get_cluster_model_file())
+		return result, kmeans

@@ -1,7 +1,7 @@
 from training import *
 from Utils.config import *
 import pandas as pd
-
+from clustering.cluster import *
 
 class XGVar(object):
 
@@ -69,16 +69,16 @@ class XGVar(object):
                 f.write('\n')
 
 
-    def run_predict_vars(self, var_encoder):
+    def run_predict_vars(self, var_encoder, kmeans):
 
         print('Predicting var for {}...'.format(self.__configure__.get_bug_id()))
 
-        encoded_var = self.encode_var(var_encoder)
+        encoded_var = self.encode_var(var_encoder, kmeans)
         # get the predicted varnames
         self.predict_vars(encoded_var)
 
 
-    def encode_var(self, var_encoder):
+    def encode_var(self, var_encoder, kmeans):
         data_file_path = self.__configure__.get_raw_var_pred_in_file()
 
         original_data_file_path = self.__configure__.get_raw_var_train_in_file()
@@ -114,7 +114,11 @@ class XGVar(object):
                 except Exception as e:
                     print(e)
                     if j == 2:
-                        feature.append(len(var_encoder))
+                        # feature.append(len(var_encoder))
+                        X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
+                        X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
+                        pred = kmeans.predict(X_0)
+                        feature.append(pred[0])
                     else:
                         feature.append(x_encoders[j].classes_.shape[0])
 

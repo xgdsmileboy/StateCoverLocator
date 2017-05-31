@@ -2,6 +2,7 @@ from training import *
 import datetime
 from Utils.config import *
 import heapq as hq
+from clustering.cluster import *
 
 class XGExpr(object):
 
@@ -21,7 +22,7 @@ class XGExpr(object):
         trainExpr.train(feature_num, 'multi:softprob', var_encoder)
 
 
-    def run_gen_exprs(self, var_encoder):
+    def run_gen_exprs(self, var_encoder, kmeans):
         print('Predicting expr for {}...'.format(self.__configure__.get_bug_id()))
 
         expr_predicted = self.__configure__.get_expr_pred_out_file()
@@ -29,7 +30,7 @@ class XGExpr(object):
 
         top = self.__configure__.get_gen_expr_top()
 
-        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(var_encoder)
+        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(var_encoder, kmeans)
 
         ## load the model
         if not os.path.exists(expr_model_path):
@@ -77,7 +78,7 @@ class XGExpr(object):
                     f.write('\n')
 
 
-    def encode_expr(self, var_encoder):
+    def encode_expr(self, var_encoder, kmeans):
 
         data_file_path = self.__configure__.get_raw_expr_pred_in_file()
         original_data_file_path = self.__configure__.get_raw_expr_train_in_file()
@@ -117,7 +118,11 @@ class XGExpr(object):
                 except Exception as e:
                     print(e)
                     if j == 2:
-                        feature.append(len(var_encoder))
+                        # feature.append(len(var_encoder))
+                        X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
+                        X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
+                        pred = kmeans.predict(X_0)
+                        feature.append(pred[0])
                     else:
                         feature.append(x_encoders[j].classes_.shape[0])
             encoded_x.append(feature)
