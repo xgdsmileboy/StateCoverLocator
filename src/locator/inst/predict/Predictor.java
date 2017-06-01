@@ -39,6 +39,8 @@ import polyglot.ast.Expr;
 public class Predictor {
 
 	private final static String __name__ = "@Predictor ";
+	
+	private static Set<String> _uniqueFeatures = new HashSet<>();
 
 	public static List<String> predict(FeatureEntry featureEntry) {
 		List<String> insertedStatement = new ArrayList<>();
@@ -68,6 +70,11 @@ public class Predictor {
 				+ "_" + subject.getId() + "/pred/" + subject.getName() + "_" + subject.getId() + ".var.csv");
 		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
 		for (String string : varFeatures) {
+			// filter duplicated features
+			if(_uniqueFeatures.contains(string)){
+				continue;
+			}
+			_uniqueFeatures.add(string);
 			// TODO : for debug
 			System.out.println(string);
 			String[] features = string.split("\t");
@@ -81,6 +88,11 @@ public class Predictor {
 				+ "_" + subject.getId() + "/pred/" + subject.getName() + "_" + subject.getId() + ".expr.csv");
 		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
 		for (String string : expFeatures) {
+			// filter duplicated features
+			if(_uniqueFeatures.contains(string)){
+				continue;
+			}
+			_uniqueFeatures.add(string);
 			// TODO : for debug
 			System.out.println(string);
 			JavaFile.writeStringToFile(expFile, string + "\n", true);

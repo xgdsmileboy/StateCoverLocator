@@ -19,9 +19,12 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
@@ -52,6 +55,27 @@ public class ExprFilter {
 	}
 
 	public static boolean isLegalExpr(String type, String varName, String condition) {
+		if(!isPrimitiveType(type)){
+			
+			if(varName.equals("THIS")){
+				varName = "this";
+			}
+			
+			if(condition.equals(varName) || condition.startsWith(varName + " >") || condition.startsWith(varName + " <")){
+				return false;
+			}
+			if(condition.endsWith(">= " + varName) || condition.endsWith("<= " + varName) || condition.endsWith("> " + varName) || condition.endsWith("< " + varName)){
+				return false;
+			}
+			if(condition.contains("[" + varName + "]")){
+				return false;
+			}
+			if(condition.startsWith(varName + " -") || condition.startsWith(varName + " +")){
+				return false;
+			}
+			
+		}
+		
 		// user-defined class
 		if (_typeInfo.containsKey(type)) {
 			ASTNode node = JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
@@ -82,6 +106,14 @@ public class ExprFilter {
 		case "double":
 		case "boolean":
 		case "byte":
+		case "Integer":
+		case "Long":
+		case "Double":
+		case "Float":
+		case "Character":
+		case "Short":
+		case "Boolean":
+		case "Byte":
 			return true;
 		default:
 			return false;
@@ -208,6 +240,50 @@ public class ExprFilter {
 					if(!_legal){
 						return false;
 					}
+				}
+			}
+			return true;
+		}
+		
+		public boolean visit(FieldAccess node){
+			String qualifier = node.getExpression().toString();
+			String name = node.getName().toString();
+			if(_varName.equals(qualifier)){
+				_legal = false;
+				Pair<Set<String>, String> pair = _typeInfo.get(_type);
+				while(pair != null){
+					if(pair.getFirst().contains(name)){
+						_legal = true;
+						break;
+					} else {
+						String parent = pair.getSecond();
+						if(parent != null){
+							pair = _typeInfo.get(parent);
+						} else {
+							pair = null;
+						}
+					}
+				}
+				if(!_legal){
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		public boolean visit(InfixExpression node){
+			String left = node.getLeftOperand().toString();
+			if(left.equals("this")){
+				if(node.getRightOperand() instanceof NumberLiteral || node.getRightOperand().toString().equals("this")){
+					_legal = false;
+					return false;
+				}
+			}
+			String right = node.getRightOperand().toString();
+			if(right.equals("this")){
+				if(node.getLeftOperand() instanceof NumberLiteral || node.getLeftOperand().toString().equals("this")){
+					_legal = false;
+					return false;
 				}
 			}
 			return true;

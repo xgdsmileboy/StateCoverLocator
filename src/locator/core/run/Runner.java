@@ -41,7 +41,7 @@ public class Runner {
 			long begin = System.currentTimeMillis();
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
 			long end = System.currentTimeMillis();
-			System.out.print("Run all test cases cost : " + ((end - begin)/1000)); 
+			System.out.println("Run all test cases cost : " + ((end - begin)/1000) + " sec"); 
 		} catch (Exception e) {
 			LevelLogger.fatal(__name__ + "#testSuite run test suite failed !", e);
 		}

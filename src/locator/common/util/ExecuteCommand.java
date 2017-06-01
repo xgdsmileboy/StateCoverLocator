@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
@@ -200,7 +201,8 @@ public class ExecuteCommand {
 	 */
 	public static void executePredict(Subject subject) throws IOException, InterruptedException {
 		String[] cmd = CmdFactory.createPredictCmd(subject);
-		executeAndOutputConsole(cmd);
+//		executeAndOutputConsole(cmd);
+		executeAndOutputFile(cmd, Constant.STR_TMP_ML_LOG_FILE);
 	}
 
 	/**
