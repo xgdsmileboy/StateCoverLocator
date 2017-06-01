@@ -74,10 +74,13 @@ public class Coverage {
 		Instrument.execute(subject.getHome() + subject.getSsrc(), statementInstrumentVisitor);
 
 		// run all failed test
+		int allTestCount = allTests.getFirst().size();
+		int currentCount = 1;
 		for (Integer failedTestID : allTests.getFirst()) {
 			String testString = Identifier.getMessage(failedTestID);
 
-			System.out.println("failed test : " + testString);
+			System.out.println("Failed test [" + currentCount + " / " + allTestCount + "] : " + testString);
+			currentCount ++;
 
 			String[] testInfo = testString.split("#");
 			if (testInfo.length < 4) {
@@ -108,11 +111,14 @@ public class Coverage {
 			}
 		}
 
+		allTestCount = allTests.getSecond().size();
+		currentCount = 1;
 		// run all passed test
 		for (Integer passTestID : allTests.getSecond()) {
 			String testString = Identifier.getMessage(passTestID);
 
-			System.out.println("passed test : " + testString);
+			System.out.println("Passed test [" + currentCount + " / " + allTestCount + "] : " + testString);
+			currentCount ++;
 
 			String[] testInfo = testString.split("#");
 			if (testInfo.length < 4) {
@@ -168,10 +174,14 @@ public class Coverage {
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
 		Instrument.execute(subject.getHome() + subject.getSsrc(), statementInstrumentVisitor);
 
+		
+		int allTestCount = testcases.size();
+		int currentCount = 1;
 		for (Integer testID : testcases) {
 			String testString = Identifier.getMessage(testID);
 
-			System.out.println("test : " + testString);
+			System.out.println("Test [" + currentCount + " / " + allTestCount + "] : " + testString);
+			currentCount ++;
 
 			String[] testInfo = testString.split("#");
 			if (testInfo.length < 4) {
@@ -216,7 +226,14 @@ public class Coverage {
 		//parse all object type
 		ExprFilter.init(subject);
 
+		
+		int allStmtCount = allStatements.size();
+		int currentStmtCount = 1;
 		for (String stmt : allStatements) {
+			
+			System.out.println("There are [" + currentStmtCount + " / " + allStmtCount + "] to test.");
+			currentStmtCount ++;
+			
 			String[] stmtInfo = stmt.split("#");
 			if (stmtInfo.length != 2) {
 				LevelLogger.error(__name__ + "#computePredicateCoverage statement parse error : " + stmt);
