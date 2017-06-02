@@ -16,7 +16,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleEdge;
 import org.jfree.data.Range;
 /** 
- * An annotation that allows an image to be placed within a rectangle specified in data coordinates on an                                                                                               {@link XYPlot}.  Note that this annotation is not currently serializable, so don't use it if you plan on serializing your chart(s).
+ * An annotation that allows an image to be placed within a rectangle specified in data coordinates on an                                                                                                                                                                {@link XYPlot}.  Note that this annotation is not currently serializable, so don't use it if you plan on serializing your chart(s).
  * @since 1.0.11
  */
 public class XYDataImageAnnotation extends AbstractXYAnnotation implements Cloneable, PublicCloneable, XYAnnotationBoundsInfo {
@@ -138,7 +138,7 @@ public class XYDataImageAnnotation extends AbstractXYAnnotation implements Clone
     return new Range(this.y,this.y + this.h);
   }
   /** 
- * Draws the annotation.  This method is called by the drawing code in the                                                                                              {@link XYPlot} class, you don't normally need to call this methoddirectly.
+ * Draws the annotation.  This method is called by the drawing code in the                                                                                                                                                               {@link XYPlot} class, you don't normally need to call this methoddirectly.
  * @param g2  the graphics device.
  * @param plot  the plot.
  * @param dataArea  the data area.

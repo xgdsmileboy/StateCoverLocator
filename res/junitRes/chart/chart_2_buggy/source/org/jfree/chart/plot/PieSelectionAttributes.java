@@ -11,7 +11,7 @@ import org.jfree.chart.util.PaintList;
 import org.jfree.chart.util.PaintMap;
 import org.jfree.chart.util.StrokeMap;
 /** 
- * A set of attributes that a                                                                                               {@link PiePlot} can use for rendering a selecteddata item.
+ * A set of attributes that a                                                                                                                                                                {@link PiePlot} can use for rendering a selecteddata item.
  * @since 1.2.0
  */
 public class PieSelectionAttributes implements Cloneable, Serializable {

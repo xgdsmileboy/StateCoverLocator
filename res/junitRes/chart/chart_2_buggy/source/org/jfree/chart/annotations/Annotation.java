@@ -1,7 +1,7 @@
 package org.jfree.chart.annotations;
 import org.jfree.chart.event.AnnotationChangeListener;
 /** 
- * The base interface for annotations.  All annotations should support the                                                                                              {@link AnnotationChangeEvent} mechanism by allowing listeners to registerand receive notification of any changes to the annotation.
+ * The base interface for annotations.  All annotations should support the                                                                                                                                                               {@link AnnotationChangeEvent} mechanism by allowing listeners to registerand receive notification of any changes to the annotation.
  */
 public interface Annotation {
   /** 

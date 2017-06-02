@@ -35,7 +35,7 @@ public abstract class TraversalVisitor extends ASTVisitor {
 	private final String __name__ = "@TraversalVisitor ";
 
 	protected CompilationUnit _cu;
-	protected Set<Method> _methods;
+	protected Set<Integer> _methods;
 	protected String _clazzName;
 	protected String _methodFlag = Constant.INSTRUMENT_K_SOURCE;
 
@@ -43,7 +43,7 @@ public abstract class TraversalVisitor extends ASTVisitor {
 		_methodFlag = methodFlag;
 	}
 
-	public void setMethod(Set<Method> methods) {
+	public void setMethod(Set<Integer> methods) {
 		_methods = methods;
 	}
 
@@ -69,8 +69,8 @@ public abstract class TraversalVisitor extends ASTVisitor {
 		// filter unrelative files
 		if (_methods != null) {
 			boolean continueVisit = false;
-			for (Method method : _methods) {
-				String methodInfo = Identifier.getMessage(method.getMethodID());
+			for (Integer method : _methods) {
+				String methodInfo = Identifier.getMessage(method);
 				if (methodInfo.contains(_cu.getPackage().getName().getFullyQualifiedName())) {
 					continueVisit = true;
 					break;
@@ -123,14 +123,7 @@ public abstract class TraversalVisitor extends ASTVisitor {
 	protected boolean shouldSkip(MethodDeclaration node, int methodID) {
 
 		if (_methods != null) {
-			boolean skip = true;
-			for (Method method : _methods) {
-				if (method.getMethodID() == methodID) {
-					skip = false;
-					break;
-				}
-			}
-			if (skip) {
+			if(!_methods.contains(methodID)){
 				return true;
 			}
 		}

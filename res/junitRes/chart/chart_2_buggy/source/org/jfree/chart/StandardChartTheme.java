@@ -61,7 +61,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleInsets;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A default implementation of the                                                                                               {@link ChartTheme} interface.  Thisimplementation just collects a whole bunch of chart attributes and mimics the manual process of applying each attribute to the right sub-object within the JFreeChart instance.  It's not elegant code, but it works.
+ * A default implementation of the                                                                                                                                                                {@link ChartTheme} interface.  Thisimplementation just collects a whole bunch of chart attributes and mimics the manual process of applying each attribute to the right sub-object within the JFreeChart instance.  It's not elegant code, but it works.
  * @since 1.0.11
  */
 public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneable, Serializable {
@@ -183,15 +183,15 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
  */
   private transient Paint wallPaint;
   /** 
- * The error indicator paint for the                                                                                               {@link StatisticalBarRenderer}. 
+ * The error indicator paint for the                                                                                                                                                                {@link StatisticalBarRenderer}. 
  */
   private transient Paint errorIndicatorPaint;
   /** 
- * The grid band paint for a                                                                                               {@link SymbolAxis}. 
+ * The grid band paint for a                                                                                                                                                                {@link SymbolAxis}. 
  */
   private transient Paint gridBandPaint=SymbolAxis.DEFAULT_GRID_BAND_PAINT;
   /** 
- * The grid band alternate paint for a                                                                                               {@link SymbolAxis}. 
+ * The grid band alternate paint for a                                                                                                                                                                {@link SymbolAxis}. 
  */
   private transient Paint gridBandAlternatePaint=SymbolAxis.DEFAULT_GRID_BAND_ALTERNATE_PAINT;
   /** 
@@ -229,7 +229,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     return theme;
   }
   /** 
- * Creates and returns a                                                                                               {@link ChartTheme} that doesn't apply any changesto the JFreeChart defaults.  This produces the "legacy" look for JFreeChart.
+ * Creates and returns a                                                                                                                                                                {@link ChartTheme} that doesn't apply any changesto the JFreeChart defaults.  This produces the "legacy" look for JFreeChart.
  * @return A legacy theme.
  */
   public static ChartTheme createLegacyTheme(){
@@ -828,7 +828,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     this.gridBandPaint=paint;
   }
   /** 
- * Returns the grid band alternate paint (used for a                                                                                               {@link SymbolAxis}).
+ * Returns the grid band alternate paint (used for a                                                                                                                                                                {@link SymbolAxis}).
  * @return The paint (never <code>null</code>).
  * @see #setGridBandAlternatePaint(Paint)
  */
@@ -836,7 +836,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     return this.gridBandAlternatePaint;
   }
   /** 
- * Sets the grid band alternate paint (used for a                                                                                               {@link SymbolAxis}).
+ * Sets the grid band alternate paint (used for a                                                                                                                                                                {@link SymbolAxis}).
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getGridBandAlternatePaint()
  */
@@ -1039,7 +1039,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes of this theme to a                                                                                               {@link PiePlot} instance.This method also clears any set values for the section paint, outline etc, so that the theme's  {@link DrawingSupplier} will be used.
+ * Applies the attributes of this theme to a                                                                                                                                                                {@link PiePlot} instance.This method also clears any set values for the section paint, outline etc, so that the theme's  {@link DrawingSupplier} will be used.
  * @param plot  the plot (<code>null</code> not permitted).
  */
   protected void applyToPiePlot(  PiePlot plot){
@@ -1057,14 +1057,14 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes of this theme to a                                                                                               {@link MultiplePiePlot}.
+ * Applies the attributes of this theme to a                                                                                                                                                                {@link MultiplePiePlot}.
  * @param plot  the plot (<code>null</code> not permitted).
  */
   protected void applyToMultiplePiePlot(  MultiplePiePlot plot){
     apply(plot.getPieChart());
   }
   /** 
- * Applies the attributes of this theme to a                                                                                               {@link CategoryPlot}.
+ * Applies the attributes of this theme to a                                                                                                                                                                {@link CategoryPlot}.
  * @param plot  the plot (<code>null</code> not permitted).
  */
   protected void applyToCategoryPlot(  CategoryPlot plot){
@@ -1115,7 +1115,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes of this theme to a                                                                                               {@link XYPlot}.
+ * Applies the attributes of this theme to a                                                                                                                                                                {@link XYPlot}.
  * @param plot  the plot (<code>null</code> not permitted).
  */
   protected void applyToXYPlot(  XYPlot plot){
@@ -1174,7 +1174,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes of this theme to a                                                                                               {@link FastScatterPlot}.
+ * Applies the attributes of this theme to a                                                                                                                                                                {@link FastScatterPlot}.
  * @param plot
  */
   protected void applyToFastScatterPlot(  FastScatterPlot plot){
@@ -1190,7 +1190,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes of this theme to a                                                                                               {@link PolarPlot}.  This method is called from the                                                                                               {@link #applyToPlot(Plot)} method.
+ * Applies the attributes of this theme to a                                                                                                                                                                {@link PolarPlot}.  This method is called from the                                                                                                                                                                {@link #applyToPlot(Plot)} method.
  * @param plot  the plot (<code>null</code> not permitted).
  */
   protected void applyToPolarPlot(  PolarPlot plot){
@@ -1204,7 +1204,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes of this theme to a                                                                                               {@link SpiderWebPlot}.
+ * Applies the attributes of this theme to a                                                                                                                                                                {@link SpiderWebPlot}.
  * @param plot  the plot (<code>null</code> not permitted).
  */
   protected void applyToSpiderWebPlot(  SpiderWebPlot plot){
@@ -1213,7 +1213,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     plot.setAxisLinePaint(this.axisLabelPaint);
   }
   /** 
- * Applies the attributes of this theme to a                                                                                               {@link MeterPlot}.
+ * Applies the attributes of this theme to a                                                                                                                                                                {@link MeterPlot}.
  * @param plot  the plot (<code>null</code> not permitted).
  */
   protected void applyToMeterPlot(  MeterPlot plot){
@@ -1226,7 +1226,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     plot.setTickLabelPaint(this.tickLabelPaint);
   }
   /** 
- * Applies the attributes for this theme to a                                                                                               {@link ThermometerPlot}. This method is called from the                                                                                               {@link #applyToPlot(Plot)} method.
+ * Applies the attributes for this theme to a                                                                                                                                                                {@link ThermometerPlot}. This method is called from the                                                                                                                                                                {@link #applyToPlot(Plot)} method.
  * @param plot  the plot.
  */
   protected void applyToThermometerPlot(  ThermometerPlot plot){
@@ -1238,7 +1238,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes for this theme to a                                                                                               {@link CategoryAxis}.
+ * Applies the attributes for this theme to a                                                                                                                                                                {@link CategoryAxis}.
  * @param axis  the axis (<code>null</code> not permitted).
  */
   protected void applyToCategoryAxis(  CategoryAxis axis){
@@ -1253,7 +1253,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes for this theme to a                                                                                               {@link ValueAxis}.
+ * Applies the attributes for this theme to a                                                                                                                                                                {@link ValueAxis}.
  * @param axis  the axis (<code>null</code> not permitted).
  */
   protected void applyToValueAxis(  ValueAxis axis){
@@ -1269,7 +1269,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     }
   }
   /** 
- * Applies the attributes for this theme to a                                                                                               {@link SymbolAxis}.
+ * Applies the attributes for this theme to a                                                                                                                                                                {@link SymbolAxis}.
  * @param axis  the axis (<code>null</code> not permitted).
  */
   protected void applyToSymbolAxis(  SymbolAxis axis){
@@ -1277,7 +1277,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     axis.setGridBandAlternatePaint(this.gridBandAlternatePaint);
   }
   /** 
- * Applies the attributes for this theme to a                                                                                               {@link PeriodAxis}.
+ * Applies the attributes for this theme to a                                                                                                                                                                {@link PeriodAxis}.
  * @param axis  the axis (<code>null</code> not permitted).
  */
   protected void applyToPeriodAxis(  PeriodAxis axis){
@@ -1290,7 +1290,7 @@ public class StandardChartTheme implements ChartTheme, Cloneable, PublicCloneabl
     axis.setLabelInfo(info);
   }
   /** 
- * Applies the attributes for this theme to an                                                                                               {@link AbstractRenderer}.
+ * Applies the attributes for this theme to an                                                                                                                                                                {@link AbstractRenderer}.
  * @param renderer  the renderer (<code>null</code> not permitted).
  */
   protected void applyToAbstractRenderer(  AbstractRenderer renderer){

@@ -49,7 +49,7 @@ public class ValueMarker extends Marker {
     return this.value;
   }
   /** 
- * Sets the value for the marker and sends a                                                                                               {@link MarkerChangeEvent} toall registered listeners.
+ * Sets the value for the marker and sends a                                                                                                                                                                {@link MarkerChangeEvent} toall registered listeners.
  * @param value  the value.
  * @see #getValue()
  * @since 1.0.3

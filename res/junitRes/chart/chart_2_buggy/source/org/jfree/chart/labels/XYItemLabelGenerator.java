@@ -1,7 +1,7 @@
 package org.jfree.chart.labels;
 import org.jfree.data.xy.XYDataset;
 /** 
- * Interface for a label generator for plots that use data from an                                                                                              {@link XYDataset}.
+ * Interface for a label generator for plots that use data from an                                                                                                                                                               {@link XYDataset}.
  */
 public interface XYItemLabelGenerator {
   /** 

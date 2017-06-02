@@ -13,7 +13,7 @@ import java.util.List;
 import javax.swing.event.EventListenerList;
 import org.jfree.chart.event.DatasetChangeInfo;
 /** 
- * An abstract implementation of the                                                                                               {@link Dataset} interface, containing amechanism for registering change listeners.
+ * An abstract implementation of the                                                                                                                                                                {@link Dataset} interface, containing amechanism for registering change listeners.
  */
 public abstract class AbstractDataset implements Dataset, Cloneable, Serializable, ObjectInputValidation {
   /** 
@@ -105,7 +105,7 @@ public abstract class AbstractDataset implements Dataset, Cloneable, Serializabl
     }
   }
   /** 
- * Returns a clone of the dataset. The cloned dataset will NOT include the                                                                                              {@link DatasetChangeListener} references that have been registered withthis dataset.
+ * Returns a clone of the dataset. The cloned dataset will NOT include the                                                                                                                                                               {@link DatasetChangeListener} references that have been registered withthis dataset.
  * @return A clone.
  * @throws CloneNotSupportedException  if the dataset does not supportcloning.
  */

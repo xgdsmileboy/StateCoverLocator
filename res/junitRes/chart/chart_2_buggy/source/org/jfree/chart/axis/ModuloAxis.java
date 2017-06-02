@@ -228,14 +228,14 @@ public class ModuloAxis extends NumberAxis {
     return mapValueToFixedRange(this.displayStart + (getDisplayLength() / 2));
   }
   /** 
- * Increases or decreases the axis range by the specified percentage about the central value and sends an                                                                                               {@link AxisChangeEvent} to all registeredlisteners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
+ * Increases or decreases the axis range by the specified percentage about the central value and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registeredlisteners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
  * @param percent  the resize factor.
  */
   public void resizeRange(  double percent){
     resizeRange(percent,getDisplayCentralValue());
   }
   /** 
- * Increases or decreases the axis range by the specified percentage about the specified anchor value and sends an                                                                                               {@link AxisChangeEvent} to allregistered listeners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
+ * Increases or decreases the axis range by the specified percentage about the specified anchor value and sends an                                                                                                                                                                {@link AxisChangeEvent} to allregistered listeners. <P> To double the length of the axis range, use 200% (2.0). To halve the length of the axis range, use 50% (0.5).
  * @param percent  the resize factor.
  * @param anchorValue  the new central value after the resize.
  */

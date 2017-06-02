@@ -10,7 +10,7 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 /** 
- * Adapter class for the Sun JPEG Encoder.  The                                                                                               {@link ImageEncoderFactory}will only return a reference to this class by default if the library has been compiled under a JDK 1.4+ and is being run using a JRE 1.4+.
+ * Adapter class for the Sun JPEG Encoder.  The                                                                                                                                                                {@link ImageEncoderFactory}will only return a reference to this class by default if the library has been compiled under a JDK 1.4+ and is being run using a JRE 1.4+.
  */
 public class SunJPEGEncoderAdapter implements ImageEncoder {
   /** 

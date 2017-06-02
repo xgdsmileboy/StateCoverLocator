@@ -13,7 +13,7 @@ public class BooleanList extends AbstractObjectList {
   public BooleanList(){
   }
   /** 
- * Returns a                                                                                               {@link Boolean} from the list.
+ * Returns a                                                                                                                                                                {@link Boolean} from the list.
  * @param index the index (zero-based).
  * @return a {@link Boolean} from the list.
  */

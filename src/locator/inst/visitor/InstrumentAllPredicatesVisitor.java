@@ -100,7 +100,8 @@ public class InstrumentAllPredicatesVisitor extends TraversalVisitor {
 
 		String keyValue = String.valueOf(methodID);
 		// optimize instrument
-		message = Constant.INSTRUMENT_FLAG + _methodFlag + "#" + keyValue;
+//		message = Constant.INSTRUMENT_FLAG + _methodFlag + Constant.INSTRUMENT_STR_SEP + keyValue;
+		message = keyValue;
 
 		Block methodBody = node.getBody();
 

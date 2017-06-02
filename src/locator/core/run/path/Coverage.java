@@ -33,6 +33,8 @@ import locator.inst.Instrument;
 import locator.inst.predict.Predictor;
 import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MethodInstrumentVisitor;
+import locator.inst.visitor.NewPredicateInstrumentVisitor;
+import locator.inst.visitor.NewTestMethodInstrumentVisitor;
 import locator.inst.visitor.PredicateInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.feature.ExprFilter;
@@ -47,6 +49,32 @@ public class Coverage {
 
 	private final static String __name__ = "@Coverage ";
 
+	
+	public static Map<String, CoverInfo> computeOriginalCoverage(Subject subject, Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods){
+		// initialize coverage information
+		Map<String, CoverInfo> coverage = new HashMap<>();
+
+		String src = subject.getHome() + subject.getSsrc();
+		String test = subject.getHome() + subject.getTsrc();
+		
+		// instrument those methods ran by failed tests
+		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+		Instrument.execute(src, statementInstrumentVisitor);
+		
+		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTestAndCoveredMethods.getFirst());
+		Instrument.execute(test, newTestMethodInstrumentVisitor);
+		
+		if(!Runner.testSuite(subject)){
+			System.err.println(__name__ + "Failed to compute original coverage information for build failed.");
+			System.exit(0);
+		}
+		
+		Instrument.execute(src, new DeInstrumentVisitor());
+		Instrument.execute(test, new DeInstrumentVisitor());
+		
+		return ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+	}
+	
 	/**
 	 * compute coverage information for each statement
 	 * 
@@ -57,102 +85,102 @@ public class Coverage {
 	 *            cases and the second set should be the passed test cases
 	 * @return a map for each statement with its coverage information
 	 */
-	public static Map<String, CoverInfo> computeCoverage(Subject subject, Pair<Set<Integer>, Set<Integer>> allTests) {
-		// compute path for failed test cases
-		Set<Method> failedPath = Collector.collectCoveredMethod(subject, allTests.getFirst());
-
-		// //TODO : for debugging
-		// for(Method method : failedPath){
-		// System.out.println(method);
-		// }
-
-		// initialize coverage information
-		Map<String, CoverInfo> coverage = new HashMap<>();
-
-		// instrument those methods ran by failed tests
-		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(failedPath);
-		Instrument.execute(subject.getHome() + subject.getSsrc(), statementInstrumentVisitor);
-
-		// run all failed test
-		int allTestCount = allTests.getFirst().size();
-		int currentCount = 1;
-		for (Integer failedTestID : allTests.getFirst()) {
-			String testString = Identifier.getMessage(failedTestID);
-
-			System.out.println("Failed test [" + currentCount + " / " + allTestCount + "] : " + testString);
-			currentCount ++;
-
-			String[] testInfo = testString.split("#");
-			if (testInfo.length < 4) {
-				LevelLogger.error(__name__ + "#computeCoverage test format error : " + testString);
-				System.exit(0);
-			}
-			String testcase = testInfo[0] + "::" + testInfo[2];
-			// run each test case and collect all test statements covered
-			try {
-				ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject, testcase));
-			} catch (Exception e) {
-				LevelLogger.fatal(__name__ + "#computeCoverage run test suite failed !", e);
-			}
-
-			Map<String, Integer> tmpCover = ExecutionPathBuilder
-					.collectAllExecutedStatements(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-			for (Entry<String, Integer> entry : tmpCover.entrySet()) {
-				String statement = entry.getKey();
-				Integer coverCount = entry.getValue();
-				CoverInfo coverInfo = coverage.get(statement);
-				if (coverInfo == null) {
-					coverInfo = new CoverInfo();
-					coverInfo.failedAdd(coverCount);
-					coverage.put(statement, coverInfo);
-				} else {
-					coverInfo.failedAdd(coverCount);
-				}
-			}
-		}
-
-		allTestCount = allTests.getSecond().size();
-		currentCount = 1;
-		// run all passed test
-		for (Integer passTestID : allTests.getSecond()) {
-			String testString = Identifier.getMessage(passTestID);
-
-			System.out.println("Passed test [" + currentCount + " / " + allTestCount + "] : " + testString);
-			currentCount ++;
-
-			String[] testInfo = testString.split("#");
-			if (testInfo.length < 4) {
-				LevelLogger.error(__name__ + "#computeCoverage test format error : " + testString);
-				System.exit(0);
-			}
-			String testcase = testInfo[0] + "::" + testInfo[2];
-			// run each test case and collect all test statements covered
-			try {
-				ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject, testcase));
-			} catch (Exception e) {
-				LevelLogger.fatal(__name__ + "#computeCoverage run test suite failed !", e);
-			}
-
-			Map<String, Integer> tmpCover = ExecutionPathBuilder
-					.collectAllExecutedStatements(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-			for (Entry<String, Integer> entry : tmpCover.entrySet()) {
-				String statement = entry.getKey();
-				Integer coverCount = entry.getValue();
-				CoverInfo coverInfo = coverage.get(statement);
-				if (coverInfo == null) {
-					coverInfo = new CoverInfo();
-					coverInfo.passedAdd(coverCount);
-					coverage.put(statement, coverInfo);
-				} else {
-					coverInfo.passedAdd(coverCount);
-				}
-			}
-		}
-
-		Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
-
-		return coverage;
-	}
+//	public static Map<String, CoverInfo> computeCoverage(Subject subject, Pair<Set<Integer>, Set<Integer>> allTests) {
+//		// compute path for failed test cases
+//		Set<Method> failedPath = Collector.collectCoveredMethod(subject, allTests.getFirst());
+//
+//		// //TODO : for debugging
+//		// for(Method method : failedPath){
+//		// System.out.println(method);
+//		// }
+//
+//		// initialize coverage information
+//		Map<String, CoverInfo> coverage = new HashMap<>();
+//
+//		// instrument those methods ran by failed tests
+//		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(failedPath);
+//		Instrument.execute(subject.getHome() + subject.getSsrc(), statementInstrumentVisitor);
+//
+//		// run all failed test
+//		int allTestCount = allTests.getFirst().size();
+//		int currentCount = 1;
+//		for (Integer failedTestID : allTests.getFirst()) {
+//			String testString = Identifier.getMessage(failedTestID);
+//
+//			System.out.println("Failed test [" + currentCount + " / " + allTestCount + "] : " + testString);
+//			currentCount ++;
+//
+//			String[] testInfo = testString.split("#");
+//			if (testInfo.length < 4) {
+//				LevelLogger.error(__name__ + "#computeCoverage test format error : " + testString);
+//				System.exit(0);
+//			}
+//			String testcase = testInfo[0] + "::" + testInfo[2];
+//			// run each test case and collect all test statements covered
+//			try {
+//				ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject, testcase));
+//			} catch (Exception e) {
+//				LevelLogger.fatal(__name__ + "#computeCoverage run test suite failed !", e);
+//			}
+//
+//			Map<String, Integer> tmpCover = ExecutionPathBuilder
+//					.collectAllExecutedStatements(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+//			for (Entry<String, Integer> entry : tmpCover.entrySet()) {
+//				String statement = entry.getKey();
+//				Integer coverCount = entry.getValue();
+//				CoverInfo coverInfo = coverage.get(statement);
+//				if (coverInfo == null) {
+//					coverInfo = new CoverInfo();
+//					coverInfo.failedAdd(coverCount);
+//					coverage.put(statement, coverInfo);
+//				} else {
+//					coverInfo.failedAdd(coverCount);
+//				}
+//			}
+//		}
+//
+//		allTestCount = allTests.getSecond().size();
+//		currentCount = 1;
+//		// run all passed test
+//		for (Integer passTestID : allTests.getSecond()) {
+//			String testString = Identifier.getMessage(passTestID);
+//
+//			System.out.println("Passed test [" + currentCount + " / " + allTestCount + "] : " + testString);
+//			currentCount ++;
+//
+//			String[] testInfo = testString.split("#");
+//			if (testInfo.length < 4) {
+//				LevelLogger.error(__name__ + "#computeCoverage test format error : " + testString);
+//				System.exit(0);
+//			}
+//			String testcase = testInfo[0] + "::" + testInfo[2];
+//			// run each test case and collect all test statements covered
+//			try {
+//				ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject, testcase));
+//			} catch (Exception e) {
+//				LevelLogger.fatal(__name__ + "#computeCoverage run test suite failed !", e);
+//			}
+//
+//			Map<String, Integer> tmpCover = ExecutionPathBuilder
+//					.collectAllExecutedStatements(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+//			for (Entry<String, Integer> entry : tmpCover.entrySet()) {
+//				String statement = entry.getKey();
+//				Integer coverCount = entry.getValue();
+//				CoverInfo coverInfo = coverage.get(statement);
+//				if (coverInfo == null) {
+//					coverInfo = new CoverInfo();
+//					coverInfo.passedAdd(coverCount);
+//					coverage.put(statement, coverInfo);
+//				} else {
+//					coverInfo.passedAdd(coverCount);
+//				}
+//			}
+//		}
+//
+//		Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
+//
+//		return coverage;
+//	}
 
 	/**
 	 * get all statements covered by given test cases
@@ -220,8 +248,11 @@ public class Coverage {
 		Map<String, CoverInfo> coverage = new HashMap<>();
 		String srcPath = subject.getHome() + subject.getSsrc();
 		String testPath = subject.getHome() + subject.getTsrc();
-		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST);
-		Instrument.execute(testPath, methodInstrumentVisitor);
+//		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST);
+//		Instrument.execute(testPath, methodInstrumentVisitor);
+		
+		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests);
+		Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 		
 		//parse all object type
 		ExprFilter.init(subject);
@@ -231,7 +262,7 @@ public class Coverage {
 		int currentStmtCount = 1;
 		for (String stmt : allStatements) {
 			
-			System.out.println("There are [" + currentStmtCount + " / " + allStmtCount + "] to test.");
+			System.out.println("There are [" + currentStmtCount + "/" + allStmtCount + "] to test.");
 			currentStmtCount ++;
 			
 			String[] stmtInfo = stmt.split("#");
@@ -269,56 +300,39 @@ public class Coverage {
 				// the source file will instrumented iteratively, before which
 				// the original source file should be saved
 				ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
-				PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(null, line);
+//				PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(null, line);
+				NewPredicateInstrumentVisitor newPredicateInstrumentVisitor = new NewPredicateInstrumentVisitor(null, line);
 				// read original file once
 				String source = JavaFile.readFileToString(javaFile);
 				for (String condition : conditionsForRightVars) {
 					// instrument one condition statement into source file
 					CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
 							ASTParser.K_COMPILATION_UNIT);
-					predicateInstrumentVisitor.setCondition(condition);
-					compilationUnit.accept(predicateInstrumentVisitor);
+					
+//					predicateInstrumentVisitor.setCondition(condition);
+//					compilationUnit.accept(predicateInstrumentVisitor);
+					newPredicateInstrumentVisitor.setCondition(condition);
+					compilationUnit.accept(newPredicateInstrumentVisitor);
+					
 					JavaFile.writeStringToFile(javaFile, compilationUnit.toString());
+					ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
 					// if the instrumented project builds success, and the test
 					// result is the same with original project
 					if (Runner.testSuite(subject) && isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)) {
 						// TODO : save current instrumented condition for future
 						// study
 						// collect predicate coverage information :
-						// <TestMethodID, <StatementString, coveredTimes>>
-						Map<Integer, Map<String, Integer>> coveInfo = ExecutionPathBuilder
-								.collectPredicateCoverageInfo(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-						System.out.println(line + " : " + condition);
-						for (Entry<Integer, Map<String, Integer>> entry : coveInfo.entrySet()) {
-							Integer currMethodID = entry.getKey();
-							if (failedTests.contains(currMethodID)) {
-								for (Entry<String, Integer> stmtCover : entry.getValue().entrySet()) {
-									String statementString = stmtCover.getKey();
-									CoverInfo coverInfo = coverage.get(statementString);
-									if (coverInfo != null) {
-										coverInfo.failedAdd(stmtCover.getValue());
-									} else {
-										coverInfo = new CoverInfo();
-										coverInfo.failedAdd(stmtCover.getValue());
-										coverage.put(statementString, coverInfo);
-									}
-								} // end of "for(Entry<String, Integer>
+						Map<String, CoverInfo> tmpCover = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+						for(Entry<String, CoverInfo> entry : tmpCover.entrySet()){
+							String coveredSt = entry.getKey();
+							CoverInfo coverInfo = coverage.get(coveredSt);
+							if(coverInfo != null){
+								coverInfo.combine(entry.getValue());
 							} else {
-								for (Entry<String, Integer> stmtCover : entry.getValue().entrySet()) {
-									String statementString = stmtCover.getKey();
-									CoverInfo coverInfo = coverage.get(statementString);
-									if (coverInfo != null) {
-										coverInfo.passedAdd(stmtCover.getValue());
-									} else {
-										coverInfo = new CoverInfo();
-										coverInfo.passedAdd(stmtCover.getValue());
-										coverage.put(statementString, coverInfo);
-									}
-								} // end of "for(Entry<String, Integer>
-									// stmtCover : entry.getValue().entrySet())"
-							} // end else
-
-						} // end of "for(Entry<Integer, Map<String, Integer>>
+								coverage.put(coveredSt, entry.getValue());
+							}
+						}
+						
 					} // end of "Runner.testSuite"
 				} // end of "condition"
 					// restore original source file

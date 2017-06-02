@@ -175,7 +175,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     this.radiusGridlinePaint=DEFAULT_GRIDLINE_PAINT;
   }
   /** 
- * Add text to be displayed in the lower right hand corner and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Add text to be displayed in the lower right hand corner and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param text  the text to display (<code>null</code> not permitted).
  * @see #removeCornerTextItem(String)
  */
@@ -187,7 +187,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     fireChangeEvent();
   }
   /** 
- * Remove the given text from the list of corner text items and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Remove the given text from the list of corner text items and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param text  the text to remove (<code>null</code> ignored).
  * @see #addCornerTextItem(String)
  */
@@ -198,7 +198,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     }
   }
   /** 
- * Clear the list of corner text items and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Clear the list of corner text items and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @see #addCornerTextItem(String)
  * @see #removeCornerTextItem(String)
  */
@@ -224,7 +224,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.axis;
   }
   /** 
- * Sets the axis for the plot and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the axis for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param axis  the new axis (<code>null</code> permitted).
  */
   public void setAxis(  ValueAxis axis){
@@ -299,7 +299,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.angleTickUnit;
   }
   /** 
- * Sets the tick unit that controls the spacing of the angular grid lines, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the tick unit that controls the spacing of the angular grid lines, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param unit  the tick unit (<code>null</code> not permitted).
  * @since 1.0.10
  */
@@ -319,7 +319,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.angleLabelsVisible;
   }
   /** 
- * Sets the flag that controls whether or not the angle labels are visible, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the flag that controls whether or not the angle labels are visible, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param visible  the flag.
  * @see #isAngleLabelsVisible()
  */
@@ -338,7 +338,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.angleLabelFont;
   }
   /** 
- * Sets the font used to display the angle labels and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the font used to display the angle labels and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getAngleLabelFont()
  */
@@ -358,7 +358,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.angleLabelPaint;
   }
   /** 
- * Sets the paint used to display the angle labels and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to display the angle labels and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  */
   public void setAngleLabelPaint(  Paint paint){
@@ -377,7 +377,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.angleGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the angular grid-lines are visible. <p> If the flag value is changed, a                                                                                               {@link PlotChangeEvent} is sent to allregistered listeners.
+ * Sets the flag that controls whether or not the angular grid-lines are visible. <p> If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} is sent to allregistered listeners.
  * @param visible  the new value of the flag.
  * @see #isAngleGridlinesVisible()
  */
@@ -396,7 +396,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.angleGridlineStroke;
   }
   /** 
- * Sets the stroke for the grid lines plotted against the angular axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.<p> If you set this to <code>null</code>, no grid lines will be drawn.
+ * Sets the stroke for the grid lines plotted against the angular axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.<p> If you set this to <code>null</code>, no grid lines will be drawn.
  * @param stroke  the stroke (<code>null</code> permitted).
  * @see #getAngleGridlineStroke()
  */
@@ -430,7 +430,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.radiusGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the radius axis grid lines are visible. <p> If the flag value is changed, a                                                                                               {@link PlotChangeEvent} is sent to allregistered listeners.
+ * Sets the flag that controls whether or not the radius axis grid lines are visible. <p> If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} is sent to allregistered listeners.
  * @param visible  the new value of the flag.
  * @see #isRadiusGridlinesVisible()
  */
@@ -449,7 +449,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.radiusGridlineStroke;
   }
   /** 
- * Sets the stroke for the grid lines plotted against the radius axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.<p> If you set this to <code>null</code>, no grid lines will be drawn.
+ * Sets the stroke for the grid lines plotted against the radius axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.<p> If you set this to <code>null</code>, no grid lines will be drawn.
  * @param stroke  the stroke (<code>null</code> permitted).
  * @see #getRadiusGridlineStroke()
  */
@@ -466,7 +466,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return this.radiusGridlinePaint;
   }
   /** 
- * Sets the paint for the grid lines plotted against the radius axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.<p> If you set this to <code>null</code>, no grid lines will be drawn.
+ * Sets the paint for the grid lines plotted against the radius axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.<p> If you set this to <code>null</code>, no grid lines will be drawn.
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getRadiusGridlinePaint()
  */
@@ -488,7 +488,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     return ticks;
   }
   /** 
- * Draws the plot on a Java 2D graphics device (such as the screen or a printer). <P> This plot relies on a                                                                                               {@link PolarItemRenderer} to draw eachitem in the plot.  This allows the visual representation of the data to be changed easily. <P> The optional info argument collects information about the rendering of the plot (dimensions, tooltip information etc).  Just pass in <code>null</code> if you do not need this information.
+ * Draws the plot on a Java 2D graphics device (such as the screen or a printer). <P> This plot relies on a                                                                                                                                                                {@link PolarItemRenderer} to draw eachitem in the plot.  This allows the visual representation of the data to be changed easily. <P> The optional info argument collects information about the rendering of the plot (dimensions, tooltip information etc).  Just pass in <code>null</code> if you do not need this information.
  * @param g2  the graphics device.
  * @param area  the area within which the plot (including axes andlabels) should be drawn.
  * @param anchor  the anchor point (<code>null</code> permitted).
@@ -802,7 +802,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
     }
   }
   /** 
- * This method is required by the                                                                                               {@link Zoomable} interface, but sincethe plot does not have any domain axes, it does nothing.
+ * This method is required by the                                                                                                                                                                {@link Zoomable} interface, but sincethe plot does not have any domain axes, it does nothing.
  * @param factor  the zoom factor.
  * @param state  the plot state.
  * @param source  the source point (in Java2D coordinates).
@@ -810,7 +810,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
   public void zoomDomainAxes(  double factor,  PlotRenderingInfo state,  Point2D source){
   }
   /** 
- * This method is required by the                                                                                               {@link Zoomable} interface, but sincethe plot does not have any domain axes, it does nothing.
+ * This method is required by the                                                                                                                                                                {@link Zoomable} interface, but sincethe plot does not have any domain axes, it does nothing.
  * @param factor  the zoom factor.
  * @param state  the plot state.
  * @param source  the source point (in Java2D coordinates).
@@ -820,7 +820,7 @@ public class PolarPlot extends Plot implements ValueAxisPlot, Zoomable, Renderer
   public void zoomDomainAxes(  double factor,  PlotRenderingInfo state,  Point2D source,  boolean useAnchor){
   }
   /** 
- * This method is required by the                                                                                               {@link Zoomable} interface, but sincethe plot does not have any domain axes, it does nothing.
+ * This method is required by the                                                                                                                                                                {@link Zoomable} interface, but sincethe plot does not have any domain axes, it does nothing.
  * @param lowerPercent  the new lower bound.
  * @param upperPercent  the new upper bound.
  * @param state  the plot state.

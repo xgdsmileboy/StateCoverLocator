@@ -7,7 +7,7 @@ import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.event.DatasetChangeEvent;
 /** 
- * A                                                                                               {@link CategoryDataset} implementation that presents a subset of thecategories in an underlying dataset.  The index of the first "visible" category can be modified, which provides a means of "sliding" through the categories in the underlying dataset.
+ * A                                                                                                                                                                {@link CategoryDataset} implementation that presents a subset of thecategories in an underlying dataset.  The index of the first "visible" category can be modified, which provides a means of "sliding" through the categories in the underlying dataset.
  * @since 1.0.10
  */
 public class SlidingCategoryDataset extends AbstractDataset implements CategoryDataset {
@@ -50,7 +50,7 @@ public class SlidingCategoryDataset extends AbstractDataset implements CategoryD
     return this.firstCategoryIndex;
   }
   /** 
- * Sets the index of the first category that should be used from the underlying dataset, and sends a                                                                                               {@link DatasetChangeEvent} to allregistered listeners.
+ * Sets the index of the first category that should be used from the underlying dataset, and sends a                                                                                                                                                                {@link DatasetChangeEvent} to allregistered listeners.
  * @param first  the index.
  * @see #getFirstCategoryIndex()
  */
@@ -70,7 +70,7 @@ public class SlidingCategoryDataset extends AbstractDataset implements CategoryD
     return this.maximumCategoryCount;
   }
   /** 
- * Sets the maximum category count and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Sets the maximum category count and sends a                                                                                                                                                                {@link DatasetChangeEvent}to all registered listeners.
  * @param max  the maximum.
  * @see #getMaximumCategoryCount()
  */
@@ -220,7 +220,7 @@ public class SlidingCategoryDataset extends AbstractDataset implements CategoryD
     return true;
   }
   /** 
- * Returns an independent copy of the dataset.  Note that: <ul> <li>the underlying dataset is only cloned if it implements the                                                                                              {@link PublicCloneable} interface;</li><li>the listeners registered with this dataset are not carried over to the cloned dataset.</li> </ul>
+ * Returns an independent copy of the dataset.  Note that: <ul> <li>the underlying dataset is only cloned if it implements the                                                                                                                                                               {@link PublicCloneable} interface;</li><li>the listeners registered with this dataset are not carried over to the cloned dataset.</li> </ul>
  * @return An independent copy of the dataset.
  * @throws CloneNotSupportedException if the dataset cannot be cloned forany reason.
  */

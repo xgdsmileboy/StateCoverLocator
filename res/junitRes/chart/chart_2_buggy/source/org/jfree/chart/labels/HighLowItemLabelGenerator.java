@@ -8,7 +8,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A standard item label generator for plots that use data from a                                                                                               {@link OHLCDataset}.
+ * A standard item label generator for plots that use data from a                                                                                                                                                                {@link OHLCDataset}.
  */
 public class HighLowItemLabelGenerator implements XYItemLabelGenerator, XYToolTipGenerator, Cloneable, PublicCloneable, Serializable {
   /** 

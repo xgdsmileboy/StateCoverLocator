@@ -4,7 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.EventListener;
 /** 
- * A dial layer draws itself within a reference frame.  The view frame is a subset of the reference frame, and defines the area that is actually visible. <br><br> Classes that implement this interface should be                                                                                               {@link Serializable}, otherwise chart serialization may fail.
+ * A dial layer draws itself within a reference frame.  The view frame is a subset of the reference frame, and defines the area that is actually visible. <br><br> Classes that implement this interface should be                                                                                                                                                                {@link Serializable}, otherwise chart serialization may fail.
  * @since 1.0.7
  */
 public interface DialLayer {
@@ -30,7 +30,7 @@ public interface DialLayer {
  */
   public boolean hasListener(  EventListener listener);
   /** 
- * Returns <code>true</code> if the drawing should be clipped to the dial window (which is defined by the                                                                                               {@link DialFrame}), and <code>false</code> otherwise.
+ * Returns <code>true</code> if the drawing should be clipped to the dial window (which is defined by the                                                                                                                                                                {@link DialFrame}), and <code>false</code> otherwise.
  * @return A boolean.
  */
   public boolean isClippedToWindow();

@@ -45,7 +45,7 @@ public class SerialUtilities {
     return Serializable.class.isAssignableFrom(c);
   }
   /** 
- * Reads a <code>Paint</code> object that has been serialised by the                                                                                              {@link SerialUtilities#writePaint(Paint,ObjectOutputStream)} method.
+ * Reads a <code>Paint</code> object that has been serialised by the                                                                                                                                                               {@link SerialUtilities#writePaint(Paint,ObjectOutputStream)} method.
  * @param stream  the input stream (<code>null</code> not permitted).
  * @return The paint object (possibly <code>null</code>).
  * @throws IOException  if there is an I/O problem.
@@ -111,7 +111,7 @@ public class SerialUtilities {
     }
   }
   /** 
- * Reads a <code>Stroke</code> object that has been serialised by the                                                                                              {@link SerialUtilities#writeStroke(Stroke,ObjectOutputStream)} method.
+ * Reads a <code>Stroke</code> object that has been serialised by the                                                                                                                                                               {@link SerialUtilities#writeStroke(Stroke,ObjectOutputStream)} method.
  * @param stream  the input stream (<code>null</code> not permitted).
  * @return The stroke object (possibly <code>null</code>).
  * @throws IOException  if there is an I/O problem.
@@ -172,7 +172,7 @@ public class SerialUtilities {
     }
   }
   /** 
- * Reads a <code>Shape</code> object that has been serialised by the                                                                                              {@link #writeShape(Shape,ObjectOutputStream)} method.
+ * Reads a <code>Shape</code> object that has been serialised by the                                                                                                                                                               {@link #writeShape(Shape,ObjectOutputStream)} method.
  * @param stream  the input stream (<code>null</code> not permitted).
  * @return The shape object (possibly <code>null</code>).
  * @throws IOException  if there is an I/O problem.
@@ -345,7 +345,7 @@ stream.writeBoolean(true);
 }
 }
 /** 
- * Reads a <code>Point2D</code> object that has been serialised by the                                                                                              {@link #writePoint2D(Point2D,ObjectOutputStream)} method.
+ * Reads a <code>Point2D</code> object that has been serialised by the                                                                                                                                                               {@link #writePoint2D(Point2D,ObjectOutputStream)} method.
  * @param stream  the input stream (<code>null</code> not permitted).
  * @return The point object (possibly <code>null</code>).
  * @throws IOException  if there is an I/O problem.
@@ -383,7 +383,7 @@ stream.writeBoolean(true);
 }
 }
 /** 
- * Reads a <code>AttributedString</code> object that has been serialised by the                                                                                               {@link SerialUtilities#writeAttributedString(AttributedString,ObjectOutputStream)} method.
+ * Reads a <code>AttributedString</code> object that has been serialised by the                                                                                                                                                                {@link SerialUtilities#writeAttributedString(AttributedString,ObjectOutputStream)} method.
  * @param stream  the input stream (<code>null</code> not permitted).
  * @return The attributed string object (possibly <code>null</code>).
  * @throws IOException  if there is an I/O problem.

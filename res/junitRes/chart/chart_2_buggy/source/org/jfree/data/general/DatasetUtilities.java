@@ -37,7 +37,7 @@ public final class DatasetUtilities {
   private DatasetUtilities(){
   }
   /** 
- * Calculates the total of all the values in a                                                                                               {@link PieDataset}.  If the dataset contains negative or <code>null</code> values, they are ignored.
+ * Calculates the total of all the values in a                                                                                                                                                               {@link PieDataset}.  If the dataset contains negative or <code>null</code> values, they are ignored.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The total.
  */
@@ -99,7 +99,7 @@ public final class DatasetUtilities {
     return createPieDatasetForColumn(dataset,column);
   }
   /** 
- * Creates a pie dataset from a                                                                                               {@link CategoryDataset} by taking all thevalues for a single column.
+ * Creates a pie dataset from a                                                                                                                                                               {@link CategoryDataset} by taking all thevalues for a single column.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param column  the column (zero-based index).
  * @return A pie dataset.
@@ -167,7 +167,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Creates a                                                                                               {@link CategoryDataset} that contains a copy of the data in anarray (instances of <code>Double</code> are created to represent the data items). <p> Row and column keys are created by appending 0, 1, 2, ... to the supplied prefixes.
+ * Creates a                                                                                                                                                               {@link CategoryDataset} that contains a copy of the data in anarray (instances of <code>Double</code> are created to represent the data items). <p> Row and column keys are created by appending 0, 1, 2, ... to the supplied prefixes.
  * @param rowKeyPrefix  the row key prefix.
  * @param columnKeyPrefix  the column key prefix.
  * @param data  the data.
@@ -185,7 +185,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Creates a                                                                                               {@link CategoryDataset} that contains a copy of the data inan array. <p> Row and column keys are created by appending 0, 1, 2, ... to the supplied prefixes.
+ * Creates a                                                                                                                                                               {@link CategoryDataset} that contains a copy of the data inan array. <p> Row and column keys are created by appending 0, 1, 2, ... to the supplied prefixes.
  * @param rowKeyPrefix  the row key prefix.
  * @param columnKeyPrefix  the column key prefix.
  * @param data  the data.
@@ -203,7 +203,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Creates a                                                                                               {@link CategoryDataset} that contains a copy of the data inan array (instances of <code>Double</code> are created to represent the data items). <p> Row and column keys are taken from the supplied arrays.
+ * Creates a                                                                                                                                                               {@link CategoryDataset} that contains a copy of the data inan array (instances of <code>Double</code> are created to represent the data items). <p> Row and column keys are taken from the supplied arrays.
  * @param rowKeys  the row keys (<code>null</code> not permitted).
  * @param columnKeys  the column keys (<code>null</code> not permitted).
  * @param data  the data.
@@ -243,7 +243,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Creates a                                                                                               {@link CategoryDataset} by copying the data from the supplied{@link KeyedValues} instance.
+ * Creates a                                                                                                                                                               {@link CategoryDataset} by copying the data from the supplied{@link KeyedValues} instance.
  * @param rowKey  the row key (<code>null</code> not permitted).
  * @param rowData  the row data (<code>null</code> not permitted).
  * @return A dataset.
@@ -262,7 +262,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Creates an                                                                                               {@link XYDataset} by sampling the specified function over afixed range.
+ * Creates an                                                                                                                                                               {@link XYDataset} by sampling the specified function over afixed range.
  * @param f  the function (<code>null</code> not permitted).
  * @param start  the start value for the range.
  * @param end  the end value for the range.
@@ -276,7 +276,7 @@ public final class DatasetUtilities {
     return collection;
   }
   /** 
- * Creates an                                                                                               {@link XYSeries} by sampling the specified function over afixed range.
+ * Creates an                                                                                                                                                               {@link XYSeries} by sampling the specified function over afixed range.
  * @param f  the function (<code>null</code> not permitted).
  * @param start  the start value for the range.
  * @param end  the end value for the range.
@@ -419,7 +419,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Iterates over the items in an                                                                                               {@link XYDataset} to findthe range of x-values.  If the dataset is an instance of {@link IntervalXYDataset}, the starting and ending x-values will be used for the bounds calculation.
+ * Iterates over the items in an                                                                                                                                                               {@link XYDataset} to findthe range of x-values.  If the dataset is an instance of {@link IntervalXYDataset}, the starting and ending x-values will be used for the bounds calculation.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The range (possibly <code>null</code>).
  */
@@ -427,7 +427,7 @@ public final class DatasetUtilities {
     return iterateDomainBounds(dataset,true);
   }
   /** 
- * Iterates over the items in an                                                                                               {@link XYDataset} to findthe range of x-values.
+ * Iterates over the items in an                                                                                                                                                               {@link XYDataset} to findthe range of x-values.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param includeInterval  a flag that determines, for an{@link IntervalXYDataset}, whether the x-interval or just the x-value is used to determine the overall range.
  * @return The range (possibly <code>null</code>).
@@ -528,7 +528,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Returns the range of values in the range for the dataset.  This method is the partner for the                                                                                               {@link #findDomainBounds(XYDataset)} method.
+ * Returns the range of values in the range for the dataset.  This method is the partner for the                                                                                                                                                               {@link #findDomainBounds(XYDataset)} method.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The range (possibly <code>null</code>).
  */
@@ -536,7 +536,7 @@ public final class DatasetUtilities {
     return findRangeBounds(dataset,true);
   }
   /** 
- * Returns the range of values in the range for the dataset.  This method is the partner for the                                                                                               {@link #findDomainBounds(XYDataset,boolean)}method.
+ * Returns the range of values in the range for the dataset.  This method is the partner for the                                                                                                                                                               {@link #findDomainBounds(XYDataset,boolean)}method.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param includeInterval  a flag that determines whether or not they-interval is taken into account.
  * @return The range (possibly <code>null</code>).
@@ -1051,7 +1051,7 @@ public final class DatasetUtilities {
     }
   }
   /** 
- * Finds the minimum domain (or X) value for the specified dataset.  This is easy if the dataset implements the                                                                                               {@link DomainInfo} interface (agood idea if there is an efficient way to determine the minimum value). Otherwise, it involves iterating over the entire data-set. <p> Returns <code>null</code> if all the data values in the dataset are <code>null</code>.
+ * Finds the minimum domain (or X) value for the specified dataset.  This is easy if the dataset implements the                                                                                                                                                               {@link DomainInfo} interface (agood idea if there is an efficient way to determine the minimum value). Otherwise, it involves iterating over the entire data-set. <p> Returns <code>null</code> if all the data values in the dataset are <code>null</code>.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The minimum value (possibly <code>null</code>).
  */
@@ -1093,7 +1093,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Returns the maximum domain value for the specified dataset.  This is easy if the dataset implements the                                                                                               {@link DomainInfo} interface (a goodidea if there is an efficient way to determine the maximum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values in the dataset are <code>null</code>.
+ * Returns the maximum domain value for the specified dataset.  This is easy if the dataset implements the                                                                                                                                                               {@link DomainInfo} interface (a goodidea if there is an efficient way to determine the maximum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values in the dataset are <code>null</code>.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The maximum value (possibly <code>null</code>).
  */
@@ -1135,7 +1135,7 @@ public final class DatasetUtilities {
     return result;
   }
   /** 
- * Returns the minimum range value for the specified dataset.  This is easy if the dataset implements the                                                                                               {@link RangeInfo} interface (a goodidea if there is an efficient way to determine the minimum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values in the dataset are <code>null</code>.
+ * Returns the minimum range value for the specified dataset.  This is easy if the dataset implements the                                                                                                                                                               {@link RangeInfo} interface (a goodidea if there is an efficient way to determine the minimum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values in the dataset are <code>null</code>.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The minimum value (possibly <code>null</code>).
  */
@@ -1175,7 +1175,7 @@ public final class DatasetUtilities {
     }
   }
   /** 
- * Returns the minimum range value for the specified dataset.  This is easy if the dataset implements the                                                                                               {@link RangeInfo} interface (a goodidea if there is an efficient way to determine the minimum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values in the dataset are <code>null</code>.
+ * Returns the minimum range value for the specified dataset.  This is easy if the dataset implements the                                                                                                                                                               {@link RangeInfo} interface (a goodidea if there is an efficient way to determine the minimum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values in the dataset are <code>null</code>.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The minimum value (possibly <code>null</code>).
  */
@@ -1221,7 +1221,7 @@ public final class DatasetUtilities {
     }
   }
   /** 
- * Returns the maximum range value for the specified dataset.  This is easy if the dataset implements the                                                                                               {@link RangeInfo} interface (a good ideaif there is an efficient way to determine the maximum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values are <code>null</code>.
+ * Returns the maximum range value for the specified dataset.  This is easy if the dataset implements the                                                                                                                                                               {@link RangeInfo} interface (a good ideaif there is an efficient way to determine the maximum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values are <code>null</code>.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The maximum value (possibly <code>null</code>).
  */
@@ -1261,7 +1261,7 @@ public final class DatasetUtilities {
     }
   }
   /** 
- * Returns the maximum range value for the specified dataset.  This is easy if the dataset implements the                                                                                               {@link RangeInfo} interface (a goodidea if there is an efficient way to determine the maximum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values are <code>null</code>.
+ * Returns the maximum range value for the specified dataset.  This is easy if the dataset implements the                                                                                                                                                               {@link RangeInfo} interface (a goodidea if there is an efficient way to determine the maximum value). Otherwise, it involves iterating over the entire data-set.  Returns <code>null</code> if all the data values are <code>null</code>.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @return The maximum value (possibly <code>null</code>).
  */

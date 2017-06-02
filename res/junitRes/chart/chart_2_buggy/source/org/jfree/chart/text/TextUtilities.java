@@ -35,7 +35,7 @@ static {
   private TextUtilities(){
   }
   /** 
- * Creates a                                                                                               {@link TextBlock} from a <code>String</code>.  Line breaksare added where the <code>String</code> contains '\n' characters.
+ * Creates a                                                                                                                                                                {@link TextBlock} from a <code>String</code>.  Line breaksare added where the <code>String</code> contains '\n' characters.
  * @param text  the text.
  * @param font  the font.
  * @param paint  the paint.

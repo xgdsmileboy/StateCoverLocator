@@ -10,7 +10,7 @@ import javax.swing.event.EventListenerList;
 import org.jfree.chart.event.AnnotationChangeEvent;
 import org.jfree.chart.event.AnnotationChangeListener;
 /** 
- * An abstract implementation of the                                                                                               {@link Annotation} interface, containing amechanism for registering change listeners.
+ * An abstract implementation of the                                                                                                                                                                {@link Annotation} interface, containing amechanism for registering change listeners.
  * @since 1.0.14
  */
 public abstract class AbstractAnnotation implements Annotation, Cloneable, Serializable {
@@ -98,7 +98,7 @@ public abstract class AbstractAnnotation implements Annotation, Cloneable, Seria
     }
   }
   /** 
- * Returns a clone of the annotation. The cloned annotation will NOT include the                                                                                               {@link AnnotationChangeListener} references that have beenregistered with this annotation.
+ * Returns a clone of the annotation. The cloned annotation will NOT include the                                                                                                                                                                {@link AnnotationChangeListener} references that have beenregistered with this annotation.
  * @return A clone.
  * @throws CloneNotSupportedException  if the annotation does not supportcloning.
  */

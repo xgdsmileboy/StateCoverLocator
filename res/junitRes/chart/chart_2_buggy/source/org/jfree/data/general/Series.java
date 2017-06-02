@@ -7,7 +7,7 @@ import java.io.Serializable;
 import javax.swing.event.EventListenerList;
 import org.jfree.chart.util.ObjectUtilities;
 /** 
- * Base class representing a data series.  Subclasses are left to implement the actual data structures. <P> The series has two properties ("Key" and "Description") for which you can register a <code>PropertyChangeListener</code>. <P> You can also register a                                                                                               {@link SeriesChangeListener} to receive notificationof changes to the series data.
+ * Base class representing a data series.  Subclasses are left to implement the actual data structures. <P> The series has two properties ("Key" and "Description") for which you can register a <code>PropertyChangeListener</code>. <P> You can also register a                                                                                                                                                               {@link SeriesChangeListener} to receive notificationof changes to the series data.
  */
 public abstract class Series implements Cloneable, Serializable {
   /** 
@@ -170,7 +170,7 @@ public abstract class Series implements Cloneable, Serializable {
     return result;
   }
   /** 
- * Registers an object with this series, to receive notification whenever the series changes. <P> Objects being registered must implement the                                                                                               {@link SeriesChangeListener}interface.
+ * Registers an object with this series, to receive notification whenever the series changes. <P> Objects being registered must implement the                                                                                                                                                               {@link SeriesChangeListener}interface.
  * @param listener  the listener to register.
  */
   public void addChangeListener(  SeriesChangeListener listener){

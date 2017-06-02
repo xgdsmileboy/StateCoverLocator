@@ -2,7 +2,7 @@ package org.jfree.chart.event;
 import java.util.EventListener;
 import org.jfree.chart.plot.Marker;
 /** 
- * The interface that must be supported by classes that wish to receive notification of changes to a                                                                                               {@link Marker}.
+ * The interface that must be supported by classes that wish to receive notification of changes to a                                                                                                                                                                {@link Marker}.
  * @since 1.0.3
  */
 public interface MarkerChangeListener extends EventListener {

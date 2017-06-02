@@ -2,7 +2,7 @@ package org.jfree.chart.renderer;
 import java.awt.Paint;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
 /** 
- * A source for <code>Paint</code> instances, used by the                                                                                              {@link XYBlockRenderer}. <br><br> NOTE: Classes that implement this interface should also implement <code>PublicCloneable</code> and <code>Serializable</code>, so that any renderer (or other object instance) that references an instance of this interface can still be cloned or serialized.
+ * A source for <code>Paint</code> instances, used by the                                                                                                                                                               {@link XYBlockRenderer}. <br><br> NOTE: Classes that implement this interface should also implement <code>PublicCloneable</code> and <code>Serializable</code>, so that any renderer (or other object instance) that references an instance of this interface can still be cloned or serialized.
  * @since 1.0.4
  */
 public interface PaintScale {

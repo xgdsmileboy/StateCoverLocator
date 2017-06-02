@@ -13,7 +13,7 @@ import org.jfree.data.general.Series;
 import org.jfree.data.event.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
 /** 
- * Represents a sequence of zero or more data items in the form (period, value) where 'period' is some instance of a subclass of                                                                                               {@link RegularTimePeriod}. The time series will ensure that (a) all data items have the same type of period (for example,                                                                                               {@link Day}) and (b) that each period appears at most one time in the series.
+ * Represents a sequence of zero or more data items in the form (period, value) where 'period' is some instance of a subclass of                                                                                                                                                               {@link RegularTimePeriod}. The time series will ensure that (a) all data items have the same type of period (for example,                                                                                                                                                               {@link Day}) and (b) that each period appears at most one time in the series.
  */
 public class TimeSeries extends Series implements Cloneable, Serializable {
   /** 
@@ -131,7 +131,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     return this.data.size();
   }
   /** 
- * Returns the list of data items for the series (the list contains                                                                                              {@link TimeSeriesDataItem} objects and is unmodifiable).
+ * Returns the list of data items for the series (the list contains                                                                                                                                                              {@link TimeSeriesDataItem} objects and is unmodifiable).
  * @return The list of data items.
  */
   public List getItems(){
@@ -199,7 +199,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     return this.maxY;
   }
   /** 
- * Returns the time period class for this series. <p> Only one time period class can be used within a single series (enforced). If you add a data item with a                                                                                               {@link Year} for the time period, then allsubsequent data items must also have a  {@link Year} for the time period.
+ * Returns the time period class for this series. <p> Only one time period class can be used within a single series (enforced). If you add a data item with a                                                                                                                                                               {@link Year} for the time period, then allsubsequent data items must also have a  {@link Year} for the time period.
  * @return The time period class (may be <code>null</code> but only foran empty series).
  */
   public Class getTimePeriodClass(){
@@ -334,14 +334,14 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     }
   }
   /** 
- * Adds a data item to the series and sends a                                                                                               {@link SeriesChangeEvent} toall registered listeners.
+ * Adds a data item to the series and sends a                                                                                                                                                               {@link SeriesChangeEvent} toall registered listeners.
  * @param item  the (timeperiod, value) pair (<code>null</code> notpermitted).
  */
   public void add(  TimeSeriesDataItem item){
     add(item,true);
   }
   /** 
- * Adds a data item to the series and sends a                                                                                               {@link SeriesChangeEvent} toall registered listeners.
+ * Adds a data item to the series and sends a                                                                                                                                                               {@link SeriesChangeEvent} toall registered listeners.
  * @param item  the (timeperiod, value) pair (<code>null</code> notpermitted).
  * @param notify  notify listeners?
  */
@@ -409,7 +409,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     }
   }
   /** 
- * Adds a new data item to the series and sends a                                                                                               {@link SeriesChangeEvent}to all registered listeners.
+ * Adds a new data item to the series and sends a                                                                                                                                                               {@link SeriesChangeEvent}to all registered listeners.
  * @param period  the time period (<code>null</code> not permitted).
  * @param value  the value.
  */
@@ -417,7 +417,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     add(period,value,true);
   }
   /** 
- * Adds a new data item to the series and sends a                                                                                               {@link SeriesChangeEvent}to all registered listeners.
+ * Adds a new data item to the series and sends a                                                                                                                                                               {@link SeriesChangeEvent}to all registered listeners.
  * @param period  the time period (<code>null</code> not permitted).
  * @param value  the value.
  * @param notify  notify listeners?
@@ -427,7 +427,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     add(item,notify);
   }
   /** 
- * Adds a new data item to the series and sends a                                                                                               {@link org.jfree.data.general.SeriesChangeEvent} to all registeredlisteners.
+ * Adds a new data item to the series and sends a                                                                                                                                                               {@link org.jfree.data.general.SeriesChangeEvent} to all registeredlisteners.
  * @param period  the time period (<code>null</code> not permitted).
  * @param value  the value (<code>null</code> permitted).
  */
@@ -435,7 +435,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     add(period,value,true);
   }
   /** 
- * Adds a new data item to the series and sends a                                                                                               {@link SeriesChangeEvent}to all registered listeners.
+ * Adds a new data item to the series and sends a                                                                                                                                                               {@link SeriesChangeEvent}to all registered listeners.
  * @param period  the time period (<code>null</code> not permitted).
  * @param value  the value (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -445,7 +445,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     add(item,notify);
   }
   /** 
- * Updates (changes) the value for a time period.  Throws a                                                                                              {@link SeriesException} if the period does not exist.
+ * Updates (changes) the value for a time period.  Throws a                                                                                                                                                              {@link SeriesException} if the period does not exist.
  * @param period  the period (<code>null</code> not permitted).
  * @param value  the value (<code>null</code> permitted).
  */
@@ -502,7 +502,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     return overwritten;
   }
   /** 
- * Adds or updates an item in the times series and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Adds or updates an item in the times series and sends a                                                                                                                                                              {@link SeriesChangeEvent} to all registered listeners.
  * @param period  the time period to add/update (<code>null</code> notpermitted).
  * @param value  the new value.
  * @return A copy of the overwritten data item, or <code>null</code> if noitem was overwritten.
@@ -511,7 +511,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     return addOrUpdate(period,new Double(value));
   }
   /** 
- * Adds or updates an item in the times series and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Adds or updates an item in the times series and sends a                                                                                                                                                              {@link SeriesChangeEvent} to all registered listeners.
  * @param period  the time period to add/update (<code>null</code> notpermitted).
  * @param value  the new value (<code>null</code> permitted).
  * @return A copy of the overwritten data item, or <code>null</code> if noitem was overwritten.
@@ -520,7 +520,7 @@ public class TimeSeries extends Series implements Cloneable, Serializable {
     return addOrUpdate(new TimeSeriesDataItem(period,value));
   }
   /** 
- * Adds or updates an item in the times series and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Adds or updates an item in the times series and sends a                                                                                                                                                              {@link SeriesChangeEvent} to all registered listeners.
  * @param item  the data item (<code>null</code> not permitted).
  * @return A copy of the overwritten data item, or <code>null</code> if noitem was overwritten.
  * @since 1.0.14
@@ -632,7 +632,7 @@ catch (    InvocationTargetException e) {
     }
   }
   /** 
- * Removes all data items from the series and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Removes all data items from the series and sends a                                                                                                                                                              {@link SeriesChangeEvent} to all registered listeners.
  */
   public void clear(){
     if (this.data.size() > 0) {
@@ -644,7 +644,7 @@ catch (    InvocationTargetException e) {
     }
   }
   /** 
- * Deletes the data item for the given time period and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.  If there is noitem with the specified time period, this method does nothing.
+ * Deletes the data item for the given time period and sends a                                                                                                                                                              {@link SeriesChangeEvent} to all registered listeners.  If there is noitem with the specified time period, this method does nothing.
  * @param period  the period of the item to delete (<code>null</code> notpermitted).
  */
   public void delete(  RegularTimePeriod period){

@@ -109,7 +109,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     return getObject(index);
   }
   /** 
- * Adds a new object to the collection, or overwrites an existing object. This is the same as the                                                                                               {@link #setObject(Comparable,Object)} method.
+ * Adds a new object to the collection, or overwrites an existing object. This is the same as the                                                                                                                                                               {@link #setObject(Comparable,Object)} method.
  * @param key  the key.
  * @param object  the object.
  * @see #getObject(Comparable)
@@ -118,7 +118,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     setObject(key,object);
   }
   /** 
- * Replaces an existing object, or adds a new object to the collection. This is the same as the                                                                                               {@link #addObject(Comparable,Object)}method.
+ * Replaces an existing object, or adds a new object to the collection. This is the same as the                                                                                                                                                               {@link #addObject(Comparable,Object)}method.
  * @param key  the key (<code>null</code> not permitted).
  * @param object  the object.
  * @see #getObject(Comparable)
@@ -207,7 +207,7 @@ public class KeyedObjects implements Cloneable, PublicCloneable, Serializable {
     Collections.sort(this.data,comparator);
   }
   /** 
- * Returns a clone of this object.  Keys in the list should be immutable and are not cloned.  Objects in the list are cloned only if they implement                                                                                               {@link PublicCloneable}.
+ * Returns a clone of this object.  Keys in the list should be immutable and are not cloned.  Objects in the list are cloned only if they implement                                                                                                                                                               {@link PublicCloneable}.
  * @return A clone.
  * @throws CloneNotSupportedException if there is a problem cloning.
  */

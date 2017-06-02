@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 /** 
- * Represents a millisecond.  This class is immutable, which is a requirement for all                                                                                               {@link RegularTimePeriod} subclasses.
+ * Represents a millisecond.  This class is immutable, which is a requirement for all                                                                                                                                                               {@link RegularTimePeriod} subclasses.
  */
 public class Millisecond extends RegularTimePeriod implements Serializable {
   /** 
@@ -113,7 +113,7 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
     return this.millisecond;
   }
   /** 
- * Returns the first millisecond of the second.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                              {@link #peg(Calendar)} method.
+ * Returns the first millisecond of the second.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
  * @return The first millisecond of the second.
  * @see #getLastMillisecond()
  */
@@ -121,7 +121,7 @@ public class Millisecond extends RegularTimePeriod implements Serializable {
     return this.firstMillisecond;
   }
   /** 
- * Returns the last millisecond of the second.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                              {@link #peg(Calendar)} method.
+ * Returns the last millisecond of the second.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
  * @return The last millisecond of the second.
  * @see #getFirstMillisecond()
  */

@@ -40,8 +40,8 @@ public class MethodInstrumentVIsitorTest {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		String methodString = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
-		Set<Method> methods = new HashSet<>();
-		methods.add(new Method(Identifier.getIdentifier(methodString)));
+		Set<Integer> methods = new HashSet<>();
+		methods.add(Identifier.getIdentifier(methodString));
 		compilationUnit.accept(new MethodInstrumentVisitor(methods));
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);
 	}
@@ -51,13 +51,13 @@ public class MethodInstrumentVIsitorTest {
 		String filePath = "res/junitRes/BigFraction.java";
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
-		Set<Method> methods = new HashSet<>();
+		Set<Integer> methods = new HashSet<>();
 		String methodString1 = "org.apache.commons.math3.fraction.BigFraction#?#BigFraction#?,BigInteger,BigInteger";
-		methods.add(new Method(Identifier.getIdentifier(methodString1)));
+		methods.add(Identifier.getIdentifier(methodString1));
 		String methodString2 = "org.apache.commons.math3.fraction.BigFraction#BigFraction#divide#?,BigInteger";
-		methods.add(new Method(Identifier.getIdentifier(methodString2)));
+		methods.add(Identifier.getIdentifier(methodString2));
 		String methodString3 = "org.apache.commons.math3.fraction.BigFraction$TroubleClazz#boolean#method2#?";
-		methods.add(new Method(Identifier.getIdentifier(methodString3)));
+		methods.add(Identifier.getIdentifier(methodString3));
 		compilationUnit.accept(new MethodInstrumentVisitor(methods));
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 3);
 	}

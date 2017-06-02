@@ -2,7 +2,7 @@ package org.jfree.chart.plot;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 /** 
- * Used to indicate the background shape for a                                                                                              {@link org.jfree.chart.plot.MeterPlot}.
+ * Used to indicate the background shape for a                                                                                                                                                               {@link org.jfree.chart.plot.MeterPlot}.
  */
 public final class DialShape implements Serializable {
   /** 

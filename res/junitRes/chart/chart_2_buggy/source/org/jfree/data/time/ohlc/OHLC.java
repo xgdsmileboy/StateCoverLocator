@@ -2,7 +2,7 @@ package org.jfree.data.time.ohlc;
 import java.io.Serializable;
 import org.jfree.chart.util.HashUtilities;
 /** 
- * A high low data record (immutable).  This class is used internally by the                                                                                              {@link OHLCItem} class.
+ * A high low data record (immutable).  This class is used internally by the                                                                                                                                                              {@link OHLCItem} class.
  * @since 1.0.4
  */
 public class OHLC implements Serializable {

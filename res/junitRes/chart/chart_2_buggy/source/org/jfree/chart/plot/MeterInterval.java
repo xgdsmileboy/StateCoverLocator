@@ -12,7 +12,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.Range;
 /** 
- * An interval to be highlighted on a                                                                                               {@link MeterPlot}.  Instances of this class are immutable.
+ * An interval to be highlighted on a                                                                                                                                                                {@link MeterPlot}.  Instances of this class are immutable.
  */
 public class MeterInterval implements Serializable {
   /** 

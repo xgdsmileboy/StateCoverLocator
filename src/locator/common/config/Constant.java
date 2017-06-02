@@ -29,7 +29,8 @@ public class Constant {
 
 	// used for instrument
 	public final static String INSTRUMENT_DOT_SEPARATOR = ".";
-	public final static String INSTRUMENT_FLAG = "[INST]";
+	public final static String INSTRUMENT_STR_SEP = "";//"#"
+	public final static String INSTRUMENT_FLAG = "";//"[INST]"
 	public final static String INSTRUMENT_K_TEST = "T";
 	public final static String INSTRUMENT_K_SOURCE = "M";
 	public final static String HOME = System.getProperty("user.dir");

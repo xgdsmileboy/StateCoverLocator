@@ -37,7 +37,7 @@ import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.general.ValueDataset;
 /** 
- * A plot that displays a single value (from a                                                                                               {@link ValueDataset}) in a thermometer type display. <p> This plot supports a number of options: <ol> <li>three sub-ranges which could be viewed as 'Normal', 'Warning' and 'Critical' ranges.</li> <li>the thermometer can be run in two modes: <ul> <li>fixed range, or</li> <li>range adjusts to current sub-range.</li> </ul> </li> <li>settable units to be displayed.</li> <li>settable display location for the value text.</li> </ol>
+ * A plot that displays a single value (from a                                                                                                                                                                {@link ValueDataset}) in a thermometer type display. <p> This plot supports a number of options: <ol> <li>three sub-ranges which could be viewed as 'Normal', 'Warning' and 'Critical' ranges.</li> <li>the thermometer can be run in two modes: <ul> <li>fixed range, or</li> <li>range adjusts to current sub-range.</li> </ul> </li> <li>settable units to be displayed.</li> <li>settable display location for the value text.</li> </ol>
  */
 public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cloneable, Serializable {
   /** 
@@ -307,7 +307,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.dataset;
   }
   /** 
- * Sets the dataset for the plot, replacing the existing dataset if there is one, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the dataset for the plot, replacing the existing dataset if there is one, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param dataset  the dataset (<code>null</code> permitted).
  * @see #getDataset()
  */
@@ -333,7 +333,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.rangeAxis;
   }
   /** 
- * Sets the range axis for the plot and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the range axis for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param axis  the new axis (<code>null</code> not permitted).
  * @see #getRangeAxis()
  */
@@ -400,7 +400,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.padding;
   }
   /** 
- * Sets the padding for the thermometer and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the padding for the thermometer and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param padding  the padding (<code>null</code> not permitted).
  * @see #getPadding()
  */
@@ -421,7 +421,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.thermometerStroke;
   }
   /** 
- * Sets the stroke used to draw the thermometer outline and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the thermometer outline and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param s  the new stroke (<code>null</code> ignored).
  * @see #getThermometerStroke()
  */
@@ -441,7 +441,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.thermometerPaint;
   }
   /** 
- * Sets the paint used to draw the thermometer outline and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the thermometer outline and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the new paint (<code>null</code> ignored).
  * @see #getThermometerPaint()
  */
@@ -452,7 +452,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     }
   }
   /** 
- * Returns a code indicating the unit display type.  This is one of                                                                                              {@link #UNITS_NONE},                                                                                               {@link #UNITS_FAHRENHEIT},                                                                                               {@link #UNITS_CELCIUS}and                                                                                               {@link #UNITS_KELVIN}.
+ * Returns a code indicating the unit display type.  This is one of                                                                                                                                                               {@link #UNITS_NONE},                                                                                                                                                                {@link #UNITS_FAHRENHEIT},                                                                                                                                                                {@link #UNITS_CELCIUS}and                                                                                                                                                                {@link #UNITS_KELVIN}.
  * @return The units type.
  * @see #setUnits(int)
  */
@@ -474,13 +474,13 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
   }
   /** 
  * Returns a code indicating the location at which the value label is displayed.
- * @return The location (one of {@link #NONE},                                                                                               {@link #RIGHT},                                                                                              {@link #LEFT} and {@link #BULB}.).
+ * @return The location (one of {@link #NONE},                                                                                                                                                                {@link #RIGHT},                                                                                                                                                               {@link #LEFT} and {@link #BULB}.).
  */
   public int getValueLocation(){
     return this.valueLocation;
   }
   /** 
- * Sets the location at which the current value is displayed and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.<P> The location can be one of the constants: <code>NONE</code>, <code>RIGHT</code> <code>LEFT</code> and <code>BULB</code>.
+ * Sets the location at which the current value is displayed and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> The location can be one of the constants: <code>NONE</code>, <code>RIGHT</code> <code>LEFT</code> and <code>BULB</code>.
  * @param location  the location.
  */
   public void setValueLocation(  int location){
@@ -494,15 +494,15 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
   }
   /** 
  * Returns the axis location.
- * @return The location (one of {@link #NONE},                                                                                               {@link #LEFT} and{@link #RIGHT}).
+ * @return The location (one of {@link #NONE},                                                                                                                                                                {@link #LEFT} and{@link #RIGHT}).
  * @see #setAxisLocation(int)
  */
   public int getAxisLocation(){
     return this.axisLocation;
   }
   /** 
- * Sets the location at which the axis is displayed relative to the thermometer, and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.
- * @param location  the location (one of {@link #NONE},                                                                                               {@link #LEFT} and{@link #RIGHT}).
+ * Sets the location at which the axis is displayed relative to the thermometer, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.
+ * @param location  the location (one of {@link #NONE},                                                                                                                                                                {@link #LEFT} and{@link #RIGHT}).
  * @see #getAxisLocation()
  */
   public void setAxisLocation(  int location){
@@ -545,7 +545,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.valuePaint;
   }
   /** 
- * Sets the paint used to display the current value and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to display the current value and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the new paint (<code>null</code> not permitted).
  * @see #getValuePaint()
  */
@@ -559,7 +559,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     }
   }
   /** 
- * Sets the formatter for the value label and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the formatter for the value label and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param formatter  the new formatter (<code>null</code> not permitted).
  */
   public void setValueFormat(  NumberFormat formatter){
@@ -578,7 +578,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.mercuryPaint;
   }
   /** 
- * Sets the default mercury paint and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the default mercury paint and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param paint  the new paint (<code>null</code> not permitted).
  * @see #getMercuryPaint()
  */
@@ -659,7 +659,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     }
   }
   /** 
- * Sets the paint to be used for a subrange and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint to be used for a subrange and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param range  the range (0, 1 or 2).
  * @param paint  the paint to be applied (<code>null</code> not permitted).
  * @see #getSubrangePaint(int)
@@ -711,7 +711,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.bulbRadius;
   }
   /** 
- * Sets the bulb radius (in Java2D units) and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the bulb radius (in Java2D units) and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param r  the new radius (in Java2D units).
  * @see #getBulbRadius()
  * @since 1.0.7
@@ -721,7 +721,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     fireChangeEvent();
   }
   /** 
- * Returns the bulb diameter, which is always twice the value returned by                                                                                               {@link #getBulbRadius()}.
+ * Returns the bulb diameter, which is always twice the value returned by                                                                                                                                                                {@link #getBulbRadius()}.
  * @return The bulb diameter.
  * @since 1.0.7
  */
@@ -738,7 +738,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.columnRadius;
   }
   /** 
- * Sets the column radius (in Java2D units) and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the column radius (in Java2D units) and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param r  the new radius.
  * @see #getColumnRadius()
  * @since 1.0.7
@@ -748,7 +748,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     fireChangeEvent();
   }
   /** 
- * Returns the column diameter, which is always twice the value returned by                                                                                               {@link #getColumnRadius()}.
+ * Returns the column diameter, which is always twice the value returned by                                                                                                                                                                {@link #getColumnRadius()}.
  * @return The column diameter.
  * @since 1.0.7
  */
@@ -765,7 +765,7 @@ public class ThermometerPlot extends Plot implements ValueAxisPlot, Zoomable, Cl
     return this.gap;
   }
   /** 
- * Sets the gap (in Java2D units) between the two outlines that represent the thermometer, and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets the gap (in Java2D units) between the two outlines that represent the thermometer, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.
  * @param gap  the new gap.
  * @see #getGap()
  * @since 1.0.7
@@ -1004,7 +1004,7 @@ private boolean inSubrange(int subrange,double value){
 return (value > this.subrangeInfo[subrange][RANGE_LOW] && value <= this.subrangeInfo[subrange][RANGE_HIGH]);
 }
 /** 
- * Returns the mercury paint corresponding to the current data value. Called from the                                                                                               {@link #draw(Graphics2D,Rectangle2D,Point2D,PlotState,PlotRenderingInfo)} method.
+ * Returns the mercury paint corresponding to the current data value. Called from the                                                                                                                                                                {@link #draw(Graphics2D,Rectangle2D,Point2D,PlotState,PlotRenderingInfo)} method.
  * @return The paint (never <code>null</code>).
  */
 private Paint getCurrentPaint(){

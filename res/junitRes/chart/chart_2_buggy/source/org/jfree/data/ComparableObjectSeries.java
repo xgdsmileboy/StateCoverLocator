@@ -76,7 +76,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     return this.maximumItemCount;
   }
   /** 
- * Sets the maximum number of items that will be retained in the series. If you add a new item to the series such that the number of items will exceed the maximum item count, then the first element in the series is automatically removed, ensuring that the maximum item count is not exceeded. <p> Typically this value is set before the series is populated with data, but if it is applied later, it may cause some items to be removed from the series (in which case a                                                                                               {@link SeriesChangeEvent} will be sent toall registered listeners.
+ * Sets the maximum number of items that will be retained in the series. If you add a new item to the series such that the number of items will exceed the maximum item count, then the first element in the series is automatically removed, ensuring that the maximum item count is not exceeded. <p> Typically this value is set before the series is populated with data, but if it is applied later, it may cause some items to be removed from the series (in which case a                                                                                                                                                                {@link SeriesChangeEvent} will be sent toall registered listeners.
  * @param maximum  the maximum number of items for the series.
  */
   public void setMaximumItemCount(  int maximum){
@@ -91,7 +91,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     }
   }
   /** 
- * Adds new data to the series and sends a                                                                                               {@link SeriesChangeEvent} toall registered listeners. <P> Throws an exception if the x-value is a duplicate AND the allowDuplicateXValues flag is false.
+ * Adds new data to the series and sends a                                                                                                                                                                {@link SeriesChangeEvent} toall registered listeners. <P> Throws an exception if the x-value is a duplicate AND the allowDuplicateXValues flag is false.
  * @param x  the x-value (<code>null</code> not permitted).
  * @param y  the y-value (<code>null</code> permitted).
  */
@@ -99,7 +99,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     add(x,y,true);
   }
   /** 
- * Adds new data to the series and, if requested, sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.<P> Throws an exception if the x-value is a duplicate AND the allowDuplicateXValues flag is false.
+ * Adds new data to the series and, if requested, sends a                                                                                                                                                               {@link SeriesChangeEvent} to all registered listeners.<P> Throws an exception if the x-value is a duplicate AND the allowDuplicateXValues flag is false.
  * @param x  the x-value (<code>null</code> not permitted).
  * @param y  the y-value (<code>null</code> permitted).
  * @param notify  a flag the controls whether or not a{@link SeriesChangeEvent} is sent to all registeredlisteners.
@@ -109,7 +109,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     add(item,notify);
   }
   /** 
- * Adds a data item to the series and, if requested, sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Adds a data item to the series and, if requested, sends a                                                                                                                                                               {@link SeriesChangeEvent} to all registered listeners.
  * @param item  the (x, y) item (<code>null</code> not permitted).
  * @param notify  a flag that controls whether or not a{@link SeriesChangeEvent} is sent to all registeredlisteners.
  */
@@ -193,7 +193,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     }
   }
   /** 
- * Updates the value of an item in the series and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Updates the value of an item in the series and sends a                                                                                                                                                               {@link SeriesChangeEvent} to all registered listeners.
  * @param index  the item (zero based index).
  * @param y  the new value (<code>null</code> permitted).
  */
@@ -211,7 +211,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     return (ComparableObjectItem)this.data.get(index);
   }
   /** 
- * Deletes a range of items from the series and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Deletes a range of items from the series and sends a                                                                                                                                                               {@link SeriesChangeEvent} to all registered listeners.
  * @param start  the start index (zero-based).
  * @param end  the end index (zero-based).
  */
@@ -222,7 +222,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     fireSeriesChanged();
   }
   /** 
- * Removes all data items from the series and, unless the series is already empty, sends a                                                                                               {@link SeriesChangeEvent} to all registeredlisteners.
+ * Removes all data items from the series and, unless the series is already empty, sends a                                                                                                                                                                {@link SeriesChangeEvent} to all registeredlisteners.
  */
   public void clear(){
     if (this.data.size() > 0) {
@@ -231,7 +231,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     }
   }
   /** 
- * Removes the item at the specified index and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Removes the item at the specified index and sends a                                                                                                                                                               {@link SeriesChangeEvent} to all registered listeners.
  * @param index  the index.
  * @return The item removed.
  */
@@ -241,7 +241,7 @@ public class ComparableObjectSeries extends Series implements Cloneable, Seriali
     return result;
   }
   /** 
- * Removes the item with the specified x-value and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Removes the item with the specified x-value and sends a                                                                                                                                                               {@link SeriesChangeEvent} to all registered listeners.
  * @param x  the x-value.
  * @return The item removed.
  */

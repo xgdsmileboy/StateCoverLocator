@@ -148,7 +148,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     return this.text;
   }
   /** 
- * Sets the title to the specified text and sends a                                                                                              {@link TitleChangeEvent} to all registered listeners.
+ * Sets the title to the specified text and sends a                                                                                                                                                               {@link TitleChangeEvent} to all registered listeners.
  * @param text  the text (<code>null</code> not permitted).
  */
   public void setText(  String text){
@@ -168,7 +168,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     return this.textAlignment;
   }
   /** 
- * Sets the text alignment and sends a                                                                                               {@link TitleChangeEvent} toall registered listeners.
+ * Sets the text alignment and sends a                                                                                                                                                                {@link TitleChangeEvent} toall registered listeners.
  * @param alignment  the alignment (<code>null</code> not permitted).
  */
   public void setTextAlignment(  HorizontalAlignment alignment){
@@ -230,7 +230,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     return this.backgroundPaint;
   }
   /** 
- * Sets the background paint and sends a                                                                                               {@link TitleChangeEvent} to allregistered listeners.  If you set this attribute to <code>null</code>, no background is painted (which makes the title background transparent).
+ * Sets the background paint and sends a                                                                                                                                                                {@link TitleChangeEvent} to allregistered listeners.  If you set this attribute to <code>null</code>, no background is painted (which makes the title background transparent).
  * @param paint  the background paint (<code>null</code> permitted).
  */
   public void setBackgroundPaint(  Paint paint){
@@ -245,7 +245,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     return this.toolTipText;
   }
   /** 
- * Sets the tool tip text to the specified text and sends a                                                                                              {@link TitleChangeEvent} to all registered listeners.
+ * Sets the tool tip text to the specified text and sends a                                                                                                                                                               {@link TitleChangeEvent} to all registered listeners.
  * @param text  the text (<code>null</code> permitted).
  */
   public void setToolTipText(  String text){
@@ -260,7 +260,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     return this.urlText;
   }
   /** 
- * Sets the URL text to the specified text and sends a                                                                                              {@link TitleChangeEvent} to all registered listeners.
+ * Sets the URL text to the specified text and sends a                                                                                                                                                               {@link TitleChangeEvent} to all registered listeners.
  * @param text  the text (<code>null</code> permitted).
  */
   public void setURLText(  String text){
@@ -275,7 +275,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     return this.expandToFitSpace;
   }
   /** 
- * Sets the flag that controls whether the title expands to fit the available space, and sends a                                                                                               {@link TitleChangeEvent} to all registeredlisteners.
+ * Sets the flag that controls whether the title expands to fit the available space, and sends a                                                                                                                                                                {@link TitleChangeEvent} to all registeredlisteners.
  * @param expand  the flag.
  */
   public void setExpandToFitSpace(  boolean expand){
@@ -292,7 +292,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     return this.maximumLinesToDisplay;
   }
   /** 
- * Sets the maximum number of lines to display and sends a                                                                                              {@link TitleChangeEvent} to all registered listeners.
+ * Sets the maximum number of lines to display and sends a                                                                                                                                                               {@link TitleChangeEvent} to all registered listeners.
  * @param max  the maximum.
  * @since 1.0.10.
  * @see #getMaximumLinesToDisplay()
@@ -525,7 +525,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     return result;
   }
   /** 
- * Draws a the title horizontally within the specified area.  This method will be called from the                                                                                               {@link #draw(Graphics2D,Rectangle2D) draw}method.
+ * Draws a the title horizontally within the specified area.  This method will be called from the                                                                                                                                                                {@link #draw(Graphics2D,Rectangle2D) draw}method.
  * @param g2  the graphics device.
  * @param area  the area for the title.
  */
@@ -578,7 +578,7 @@ public class TextTitle extends Title implements Serializable, Cloneable, PublicC
     this.content.draw(g2,x,y,anchor);
   }
   /** 
- * Draws a the title vertically within the specified area.  This method will be called from the                                                                                               {@link #draw(Graphics2D,Rectangle2D) draw}method.
+ * Draws a the title vertically within the specified area.  This method will be called from the                                                                                                                                                                {@link #draw(Graphics2D,Rectangle2D) draw}method.
  * @param g2  the graphics device.
  * @param area  the area for the title.
  */

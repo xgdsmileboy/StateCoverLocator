@@ -2,7 +2,7 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import java.io.Serializable;
 /** 
- * A chart entity that represents an annotation on an                                                                                              {@link org.jfree.chart.plot.XYPlot}.
+ * A chart entity that represents an annotation on an                                                                                                                                                               {@link org.jfree.chart.plot.XYPlot}.
  */
 public class XYAnnotationEntity extends ChartEntity implements Serializable {
   /** 

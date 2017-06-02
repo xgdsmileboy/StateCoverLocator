@@ -1,7 +1,7 @@
 package org.jfree.chart.labels;
 import org.jfree.data.pie.PieDataset;
 /** 
- * A tool tip generator that is used by the                                                                                              {@link org.jfree.chart.plot.PiePlot} class.
+ * A tool tip generator that is used by the                                                                                                                                                               {@link org.jfree.chart.plot.PiePlot} class.
  */
 public interface PieToolTipGenerator {
   /** 

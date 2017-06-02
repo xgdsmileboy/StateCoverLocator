@@ -17,7 +17,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A text annotation for a                                                                                               {@link DialPlot}.
+ * A text annotation for a                                                                                                                                                                {@link DialPlot}.
  * @since 1.0.7
  */
 public class DialTextAnnotation extends AbstractDialLayer implements DialLayer, Cloneable, PublicCloneable, Serializable {
@@ -73,7 +73,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer, 
     return this.label;
   }
   /** 
- * Sets the label and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the label and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param label  the label (<code>null</code> not permitted).
  * @see #getLabel()
  */
@@ -93,7 +93,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer, 
     return this.font;
   }
   /** 
- * Sets the font used to display the label and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the font used to display the label and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getFont()
  */
@@ -113,7 +113,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer, 
     return this.paint;
   }
   /** 
- * Sets the paint used to display the label and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the paint used to display the label and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -134,7 +134,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer, 
     return this.angle;
   }
   /** 
- * Sets the angle used to calculate the anchor point and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the angle used to calculate the anchor point and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param angle  the angle (in degrees).
  * @see #getAngle()
  * @see #setRadius(double)
@@ -153,7 +153,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer, 
     return this.radius;
   }
   /** 
- * Sets the radius used to calculate the anchor point and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the radius used to calculate the anchor point and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param radius  the radius (as a percentage of the dial's framingrectangle).
  * @see #getRadius()
  * @see #setAngle(double)
@@ -166,7 +166,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer, 
     notifyListeners(new DialLayerChangeEvent(this));
   }
   /** 
- * Returns the text anchor point that will be aligned to the position specified by                                                                                               {@link #getAngle()} and {@link #getRadius()}.
+ * Returns the text anchor point that will be aligned to the position specified by                                                                                                                                                                {@link #getAngle()} and {@link #getRadius()}.
  * @return The anchor point.
  * @see #setAnchor(TextAnchor)
  */
@@ -174,7 +174,7 @@ public class DialTextAnnotation extends AbstractDialLayer implements DialLayer, 
     return this.anchor;
   }
   /** 
- * Sets the text anchor point and sends a                                                                                               {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the text anchor point and sends a                                                                                                                                                                {@link DialLayerChangeEvent} toall registered listeners.
  * @param anchor  the anchor point (<code>null</code> not permitted).
  * @see #getAnchor()
  */

@@ -13,12 +13,12 @@ import org.jfree.data.xy.AbstractIntervalXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.TableXYDataset;
 /** 
- * A dataset for regular time periods that implements the                                                                                              {@link TableXYDataset} interface.  Note that the {@link TableXYDataset}interface requires all series to share the same set of x-values.  When adding a new item <code>(x, y)</code> to one series, all other series automatically get a new item <code>(x, null)</code> unless a non-null item has already been specified.
+ * A dataset for regular time periods that implements the                                                                                                                                                              {@link TableXYDataset} interface.  Note that the {@link TableXYDataset}interface requires all series to share the same set of x-values.  When adding a new item <code>(x, y)</code> to one series, all other series automatically get a new item <code>(x, null)</code> unless a non-null item has already been specified.
  * @see org.jfree.data.xy.TableXYDataset
  */
 public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Cloneable, PublicCloneable, IntervalXYDataset, DomainInfo, TableXYDataset {
   /** 
- * The data structure to store the values.  Each column represents a series (elsewhere in JFreeChart rows are typically used for series, but it doesn't matter that much since this data structure is private and symmetrical anyway), each row contains values for the same                                                                                              {@link RegularTimePeriod} (the rows are sorted into ascending order).
+ * The data structure to store the values.  Each column represents a series (elsewhere in JFreeChart rows are typically used for series, but it doesn't matter that much since this data structure is private and symmetrical anyway), each row contains values for the same                                                                                                                                                              {@link RegularTimePeriod} (the rows are sorted into ascending order).
  */
   private DefaultKeyedValues2D values;
   /** 
@@ -26,7 +26,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Clo
  */
   private boolean domainIsPointsInTime;
   /** 
- * The point within each time period that is used for the X value when this collection is used as an                                                                                               {@link org.jfree.data.xy.XYDataset}.  This can be the start, middle or end of the time period.
+ * The point within each time period that is used for the X value when this collection is used as an                                                                                                                                                               {@link org.jfree.data.xy.XYDataset}.  This can be the start, middle or end of the time period.
  */
   private TimePeriodAnchor xPosition;
   /** 
@@ -71,7 +71,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Clo
     return this.domainIsPointsInTime;
   }
   /** 
- * Sets a flag that controls whether the domain is treated as 'points in time', or time periods.  A                                                                                               {@link DatasetChangeEvent} is sent to allregistered listeners.
+ * Sets a flag that controls whether the domain is treated as 'points in time', or time periods.  A                                                                                                                                                               {@link DatasetChangeEvent} is sent to allregistered listeners.
  * @param flag  the new value of the flag.
  * @see #getDomainIsPointsInTime()
  */
@@ -88,7 +88,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Clo
     return this.xPosition;
   }
   /** 
- * Sets the position within each time period that is used for the X values, then sends a                                                                                               {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the position within each time period that is used for the X values, then sends a                                                                                                                                                               {@link DatasetChangeEvent} to all registered listeners.
  * @param anchor  the anchor position (<code>null</code> not permitted).
  * @see #getXPosition()
  */
@@ -100,7 +100,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Clo
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Adds a new data item to the dataset and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Adds a new data item to the dataset and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param period  the time period.
  * @param y  the value for this period.
  * @param seriesName  the name of the series to add the value.
@@ -110,7 +110,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Clo
     add(period,new Double(y),seriesName,true);
   }
   /** 
- * Adds a new data item to the dataset and, if requested, sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Adds a new data item to the dataset and, if requested, sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param period  the time period (<code>null</code> not permitted).
  * @param y  the value for this period (<code>null</code> permitted).
  * @param seriesName  the name of the series to add the value(<code>null</code> not permitted).
@@ -137,7 +137,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Clo
     remove(period,seriesName,true);
   }
   /** 
- * Removes an existing data item from the dataset and, if requested, sends a                                                                                               {@link DatasetChangeEvent} to all registered listeners.
+ * Removes an existing data item from the dataset and, if requested, sends a                                                                                                                                                               {@link DatasetChangeEvent} to all registered listeners.
  * @param period  the (existing!) time period of the value to remove(<code>null</code> not permitted).
  * @param seriesName  the (existing!) series name to remove the value(<code>null</code> not permitted).
  * @param notify  whether dataset listener are notified or not.
@@ -150,7 +150,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Clo
     }
   }
   /** 
- * Removes all data items from the dataset and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes all data items from the dataset and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @since 1.0.7
  */
   public void clear(){
@@ -175,7 +175,7 @@ public class TimeTableXYDataset extends AbstractIntervalXYDataset implements Clo
     return this.values.getRowCount();
   }
   /** 
- * Returns the number of items in a series.  This is the same value that is returned by                                                                                               {@link #getItemCount()} since all seriesshare the same x-values (time periods).
+ * Returns the number of items in a series.  This is the same value that is returned by                                                                                                                                                               {@link #getItemCount()} since all seriesshare the same x-values (time periods).
  * @param series  the series (zero-based index, ignored).
  * @return The number of items within the series.
  */

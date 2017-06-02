@@ -14,7 +14,7 @@ import org.jfree.data.RangeInfo;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.event.DatasetChangeEvent;
 /** 
- * Represents a collection of                                                                                               {@link XYSeries} objects that can be used as adataset.
+ * Represents a collection of                                                                                                                                                              {@link XYSeries} objects that can be used as adataset.
  */
 public class XYSeriesCollection extends AbstractIntervalXYDataset implements IntervalXYDataset, DomainInfo, RangeInfo, XYDatasetSelectionState, SelectableXYDataset, PublicCloneable, Serializable {
   /** 
@@ -64,7 +64,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset implements Int
     return DomainOrder.ASCENDING;
   }
   /** 
- * Adds a series to the collection and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Adds a series to the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent}to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void addSeries(  XYSeries series){
@@ -76,7 +76,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset implements Int
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes a series from the collection and sends a                                                                                                                                                             {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series index (zero-based).
  */
   public void removeSeries(  int series){
@@ -89,7 +89,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset implements Int
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes a series from the collection and sends a                                                                                                                                                             {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void removeSeries(  XYSeries series){
@@ -103,7 +103,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset implements Int
     }
   }
   /** 
- * Removes all the series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes all the series from the collection and sends a                                                                                                                                                             {@link DatasetChangeEvent} to all registered listeners.
  */
   public void removeAllSeries(){
     for (int i=0; i < this.data.size(); i++) {
@@ -258,7 +258,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset implements Int
     return i.isSelected();
   }
   /** 
- * Sets the selection state for the specified data item and sends a                                                                                               {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the selection state for the specified data item and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series index.
  * @param item  the item index.
  * @param selected  the selection state.
@@ -268,7 +268,7 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset implements Int
     setSelected(series,item,selected,true);
   }
   /** 
- * Sets the selection state for the specified data item and, if requested, sends a                                                                                               {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the selection state for the specified data item and, if requested, sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series index.
  * @param item  the item index.
  * @param selected  the selection state.
@@ -429,14 +429,14 @@ public class XYSeriesCollection extends AbstractIntervalXYDataset implements Int
     }
   }
   /** 
- * Returns the interval width. This is used to calculate the start and end x-values, if/when the dataset is used as an                                                                                               {@link IntervalXYDataset}.
+ * Returns the interval width. This is used to calculate the start and end x-values, if/when the dataset is used as an                                                                                                                                                              {@link IntervalXYDataset}.
  * @return The interval width.
  */
   public double getIntervalWidth(){
     return this.intervalDelegate.getIntervalWidth();
   }
   /** 
- * Sets the interval width and sends a                                                                                               {@link DatasetChangeEvent} to allregistered listeners.
+ * Sets the interval width and sends a                                                                                                                                                              {@link DatasetChangeEvent} to allregistered listeners.
  * @param width  the width (negative values not permitted).
  */
   public void setIntervalWidth(  double width){

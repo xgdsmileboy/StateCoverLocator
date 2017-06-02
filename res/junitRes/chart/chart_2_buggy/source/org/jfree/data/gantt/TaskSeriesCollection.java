@@ -9,7 +9,7 @@ import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.event.SeriesChangeEvent;
 import org.jfree.data.time.TimePeriod;
 /** 
- * A collection of                                                                                               {@link TaskSeries} objects.  This class provides oneimplementation of the  {@link GanttCategoryDataset} interface.
+ * A collection of                                                                                                                                                                {@link TaskSeries} objects.  This class provides oneimplementation of the  {@link GanttCategoryDataset} interface.
  */
 public class TaskSeriesCollection extends AbstractSeriesDataset implements GanttCategoryDataset, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -150,7 +150,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset implements Gantt
     return series.getKey();
   }
   /** 
- * Adds a series to the dataset and sends a                                                                                              {@link org.jfree.data.general.DatasetChangeEvent} to all registeredlisteners.
+ * Adds a series to the dataset and sends a                                                                                                                                                               {@link org.jfree.data.general.DatasetChangeEvent} to all registeredlisteners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void add(  TaskSeries series){
@@ -171,7 +171,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset implements Gantt
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a series from the collection and sends a                                                                                               {@link org.jfree.data.general.DatasetChangeEvent}to all registered listeners.
+ * Removes a series from the collection and sends a                                                                                                                                                                {@link org.jfree.data.general.DatasetChangeEvent}to all registered listeners.
  * @param series  the series.
  */
   public void remove(  TaskSeries series){
@@ -185,7 +185,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset implements Gantt
     }
   }
   /** 
- * Removes a series from the collection and sends a                                                                                               {@link org.jfree.data.general.DatasetChangeEvent}to all registered listeners.
+ * Removes a series from the collection and sends a                                                                                                                                                                {@link org.jfree.data.general.DatasetChangeEvent}to all registered listeners.
  * @param series  the series (zero based index).
  */
   public void remove(  int series){
@@ -198,7 +198,7 @@ public class TaskSeriesCollection extends AbstractSeriesDataset implements Gantt
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes all the series from the collection and sends a                                                                                               {@link org.jfree.data.general.DatasetChangeEvent}to all registered listeners.
+ * Removes all the series from the collection and sends a                                                                                                                                                                {@link org.jfree.data.general.DatasetChangeEvent}to all registered listeners.
  */
   public void removeAll(){
     Iterator iterator=this.data.iterator();

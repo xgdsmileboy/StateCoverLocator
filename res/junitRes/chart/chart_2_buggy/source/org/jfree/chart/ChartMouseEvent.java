@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.EventObject;
 import org.jfree.chart.entity.ChartEntity;
 /** 
- * A mouse event for a chart that is displayed in a                                                                                               {@link ChartPanel}.
+ * A mouse event for a chart that is displayed in a                                                                                                                                                                {@link ChartPanel}.
  * @see ChartMouseListener
  */
 public class ChartMouseEvent extends EventObject implements Serializable {

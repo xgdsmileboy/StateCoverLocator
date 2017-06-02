@@ -21,7 +21,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A scale for a                                                                                               {@link DialPlot}.
+ * A scale for a                                                                                                                                                                {@link DialPlot}.
  * @since 1.0.7
  */
 public class StandardDialScale extends AbstractDialLayer implements DialScale, Cloneable, PublicCloneable, Serializable {
@@ -151,7 +151,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.lowerBound;
   }
   /** 
- * Sets the lower bound for the scale and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the lower bound for the scale and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param lower  the lower bound.
  * @see #getLowerBound()
  * @since 1.0.8
@@ -170,7 +170,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.upperBound;
   }
   /** 
- * Sets the upper bound for the scale and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the upper bound for the scale and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param upper  the upper bound.
  * @see #getUpperBound()
  * @since 1.0.8
@@ -188,7 +188,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.startAngle;
   }
   /** 
- * Sets the start angle for the scale and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the start angle for the scale and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param angle  the angle (in degrees).
  * @see #getStartAngle()
  */
@@ -205,7 +205,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.extent;
   }
   /** 
- * Sets the extent and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the extent and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param extent  the extent.
  * @see #getExtent()
  */
@@ -222,7 +222,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.tickRadius;
   }
   /** 
- * Sets the tick radius and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the tick radius and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param radius  the radius.
  * @see #getTickRadius()
  */
@@ -242,7 +242,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.majorTickIncrement;
   }
   /** 
- * Sets the increment (in data units) between major tick labels and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the increment (in data units) between major tick labels and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param increment  the increment.
  * @see #getMajorTickIncrement()
  */
@@ -262,7 +262,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.majorTickLength;
   }
   /** 
- * Sets the length factor for the major tick marks and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the length factor for the major tick marks and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param length  the length.
  * @see #getMajorTickLength()
  */
@@ -282,7 +282,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.majorTickPaint;
   }
   /** 
- * Sets the major tick paint and sends a                                                                                               {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the major tick paint and sends a                                                                                                                                                                {@link DialLayerChangeEvent} toall registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getMajorTickPaint()
  */
@@ -302,7 +302,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.majorTickStroke;
   }
   /** 
- * Sets the stroke used to draw the major tick marks and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the major tick marks and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getMajorTickStroke()
  */
@@ -322,7 +322,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.minorTickCount;
   }
   /** 
- * Sets the number of minor tick marks between major tick marks and sends a                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the number of minor tick marks between major tick marks and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to all registered listeners.
  * @param count  the count.
  * @see #getMinorTickCount()
  */
@@ -342,7 +342,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.minorTickLength;
   }
   /** 
- * Sets the length factor for the minor tick marks and sends a                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the length factor for the minor tick marks and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to all registered listeners.
  * @param length  the length.
  * @see #getMinorTickLength()
  */
@@ -362,7 +362,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.minorTickPaint;
   }
   /** 
- * Sets the paint used to draw the minor tick marks and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the minor tick marks and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getMinorTickPaint()
  */
@@ -383,7 +383,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.minorTickStroke;
   }
   /** 
- * Sets the stroke used to draw the minor tick marks and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the minor tick marks and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getMinorTickStroke()
  * @since 1.0.8
@@ -404,7 +404,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.tickLabelOffset;
   }
   /** 
- * Sets the tick label offset and sends a                                                                                               {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the tick label offset and sends a                                                                                                                                                                {@link DialLayerChangeEvent} toall registered listeners.
  * @param offset  the offset.
  * @see #getTickLabelOffset()
  */
@@ -421,7 +421,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.tickLabelFont;
   }
   /** 
- * Sets the font used to display the tick labels and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the font used to display the tick labels and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getTickLabelFont()
  */
@@ -441,7 +441,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.tickLabelPaint;
   }
   /** 
- * Sets the paint used to draw the tick labels and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the tick labels and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  */
   public void setTickLabelPaint(  Paint paint){
@@ -460,7 +460,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.tickLabelsVisible;
   }
   /** 
- * Sets the flag that controls whether or not the tick labels are displayed, and sends a                                                                                               {@link DialLayerChangeEvent} to all registeredlisteners.
+ * Sets the flag that controls whether or not the tick labels are displayed, and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to all registeredlisteners.
  * @param visible  the new flag value.
  * @see #getTickLabelsVisible()
  */
@@ -477,7 +477,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.tickLabelFormatter;
   }
   /** 
- * Sets the number formatter used to convert the tick label values to strings, and sends a                                                                                               {@link DialLayerChangeEvent} to all registeredlisteners.
+ * Sets the number formatter used to convert the tick label values to strings, and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to all registeredlisteners.
  * @param formatter  the formatter (<code>null</code> not permitted).
  * @see #getTickLabelFormatter()
  */
@@ -497,7 +497,7 @@ public class StandardDialScale extends AbstractDialLayer implements DialScale, C
     return this.firstTickLabelVisible;
   }
   /** 
- * Sets a flag that controls whether or not the first tick label is visible, and sends a                                                                                               {@link DialLayerChangeEvent} to all registeredlisteners.
+ * Sets a flag that controls whether or not the first tick label is visible, and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to all registeredlisteners.
  * @param visible  the new flag value.
  * @see #getFirstTickLabelVisible()
  */

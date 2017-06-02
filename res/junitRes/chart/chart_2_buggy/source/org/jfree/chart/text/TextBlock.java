@@ -12,7 +12,7 @@ import org.jfree.chart.util.HorizontalAlignment;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.util.Size2D;
 /** 
- * A list of                                                                                               {@link TextLine} objects that form a block of text.
+ * A list of                                                                                                                                                                {@link TextLine} objects that form a block of text.
  * @see TextUtilities#createTextBlock(String,Font,Paint)
  */
 public class TextBlock implements Serializable {
@@ -62,7 +62,7 @@ public class TextBlock implements Serializable {
     addLine(new TextLine(text,font,paint));
   }
   /** 
- * Adds a                                                                                               {@link TextLine} to the block.
+ * Adds a                                                                                                                                                                {@link TextLine} to the block.
  * @param line  the line.
  */
   public void addLine(  TextLine line){

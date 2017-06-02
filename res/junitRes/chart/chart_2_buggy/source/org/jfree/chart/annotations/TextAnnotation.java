@@ -107,7 +107,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
     return this.font;
   }
   /** 
- * Sets the font for the annotation and sends an                                                                                              {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the font for the annotation and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getFont()
  */
@@ -127,7 +127,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
     return this.paint;
   }
   /** 
- * Sets the paint for the annotation and sends an                                                                                              {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the paint for the annotation and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -147,7 +147,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
     return this.textAnchor;
   }
   /** 
- * Sets the text anchor (the point on the text bounding rectangle that is aligned to the (x, y) coordinate of the annotation) and sends an                                                                                              {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the text anchor (the point on the text bounding rectangle that is aligned to the (x, y) coordinate of the annotation) and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
  * @param anchor  the anchor point (<code>null</code> not permitted).
  * @see #getTextAnchor()
  */
@@ -167,7 +167,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
     return this.rotationAnchor;
   }
   /** 
- * Sets the rotation anchor point and sends an                                                                                              {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the rotation anchor point and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
  * @param anchor  the anchor (<code>null</code> not permitted).
  * @see #getRotationAnchor()
  */
@@ -184,7 +184,7 @@ public class TextAnnotation extends AbstractAnnotation implements Serializable {
     return this.rotationAngle;
   }
   /** 
- * Sets the rotation angle and sends an                                                                                               {@link AnnotationChangeEvent} toall registered listeners.  The angle is measured clockwise in radians.
+ * Sets the rotation angle and sends an                                                                                                                                                                {@link AnnotationChangeEvent} toall registered listeners.  The angle is measured clockwise in radians.
  * @param angle  the angle (in radians).
  * @see #getRotationAngle()
  */

@@ -3,7 +3,7 @@ import java.util.Date;
 import org.jfree.chart.text.TextAnchor;
 import org.jfree.chart.util.ObjectUtilities;
 /** 
- * A tick used by the                                                                                               {@link DateAxis} class.
+ * A tick used by the                                                                                                                                                                {@link DateAxis} class.
  */
 public class DateTick extends ValueTick {
   /** 

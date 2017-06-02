@@ -1,6 +1,6 @@
 package org.jfree.data;
 /** 
- * An interface (optional) that can be implemented by a dataset to assist in determining the minimum and maximum values.  See also                                                                                               {@link DomainInfo}.
+ * An interface (optional) that can be implemented by a dataset to assist in determining the minimum and maximum values.  See also                                                                                                                                                               {@link DomainInfo}.
  */
 public interface RangeInfo {
   /** 

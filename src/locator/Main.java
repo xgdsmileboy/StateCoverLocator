@@ -86,28 +86,29 @@ public class Main {
 		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
 
 		// train predicate prediction model
-		trainModel(subject);
+//		trainModel(subject);
 
 		// copy auxiliary file to subject path
 		LevelLogger.info("copying auxiliary file to subject path.");
 		Configure.config_dumper(subject);
 
-		LevelLogger.info("step 1: collect all tests.");
-		Pair<Set<Integer>, Set<Integer>> allTests = Collector.collectAllTestCases(subject);
-
+		LevelLogger.info("step 1: collect failed test and covered methods.");
+		Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
+		
 		LevelLogger.info("step 2: compute original coverage information.");
-		Map<String, CoverInfo> coverage = Coverage.computeCoverage(subject, allTests);
-
+		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods);
+		
 		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
 		printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_"
 				+ subject.getId() + "/ori_coverage.csv");
 
+
 		LevelLogger.info("step 3: compute statements covered by failed tests");
-		Set<String> allCoveredStatement = Coverage.getAllCoveredStatement(subject, allTests.getFirst());
+		Set<String> allCoveredStatement = coverage.keySet();
 
 		LevelLogger.info("step 4: compute predicate coverage information");
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
-				allTests.getFirst());
+				failedTestsAndCoveredMethods.getFirst());
 
 		LevelLogger.info("output predicate coverage information to file : pred_coverage.csv");
 		printCoverage(predicateCoverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName()
@@ -130,9 +131,8 @@ public class Main {
 
 	private static void printCoverage(Map<String, CoverInfo> coverage, String filePath) {
 		File file = new File(filePath);
-		if (file.exists()) {
-			file.delete();
-		}
+		String header = "line" + "\t" + "fcover" + "\t" + "pcover" + "\n";
+		JavaFile.writeStringToFile(file, header, false);
 		for (Entry<String, CoverInfo> entry : coverage.entrySet()) {
 			StringBuffer stringBuffer = new StringBuffer();
 			String key = entry.getKey();
@@ -157,7 +157,8 @@ public class Main {
 		String begin = simpleDateFormat.format(new Date());
 		System.out.println("BEGIN : " + begin);
 
-		Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
+//		Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
+		Constant.PROJECT_HOME = "/Users/Jiajun/Code/Java/fault-localization/StateCoverLocator/res/junitRes";
 
 		proceed();
 

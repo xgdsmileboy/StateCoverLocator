@@ -86,7 +86,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
     return this.separatorsVisible;
   }
   /** 
- * Sets the flag that controls whether or not separators are drawn between the sections in the chart, and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the flag that controls whether or not separators are drawn between the sections in the chart, and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param visible  the flag.
  * @see #getSeparatorsVisible()
  */
@@ -103,7 +103,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
     return this.separatorStroke;
   }
   /** 
- * Sets the stroke used to draw the separator between sections and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the separator between sections and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getSeparatorStroke()
  */
@@ -123,7 +123,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
     return this.separatorPaint;
   }
   /** 
- * Sets the paint used to draw the separator between sections and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the separator between sections and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getSeparatorPaint()
  */
@@ -143,7 +143,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
     return this.innerSeparatorExtension;
   }
   /** 
- * Sets the length of the inner extension of the separator line that is drawn between sections, as a percentage of the depth of the sections, and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets the length of the inner extension of the separator line that is drawn between sections, as a percentage of the depth of the sections, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.
  * @param percent  the percentage.
  * @see #getInnerSeparatorExtension()
  * @see #setOuterSeparatorExtension(double)
@@ -161,7 +161,7 @@ public class RingPlot extends PiePlot implements Cloneable, Serializable {
     return this.outerSeparatorExtension;
   }
   /** 
- * Sets the length of the outer extension of the separator line that is drawn between sections, as a percentage of the depth of the sections, and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets the length of the outer extension of the separator line that is drawn between sections, as a percentage of the depth of the sections, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.
  * @param percent  the percentage.
  * @see #getOuterSeparatorExtension()
  */

@@ -5,7 +5,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.XYPlot;
 /** 
- * The interface that must be supported by annotations that are to be added to an                                                                                               {@link XYPlot}.
+ * The interface that must be supported by annotations that are to be added to an                                                                                                                                                                {@link XYPlot}.
  */
 public interface XYAnnotation extends Annotation {
   /** 

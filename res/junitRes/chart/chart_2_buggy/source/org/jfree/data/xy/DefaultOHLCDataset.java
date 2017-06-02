@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Date;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * A simple implementation of the                                                                                               {@link OHLCDataset} interface.  Thisimplementation supports only one series.
+ * A simple implementation of the                                                                                                                                                               {@link OHLCDataset} interface.  Thisimplementation supports only one series.
  */
 public class DefaultOHLCDataset extends AbstractXYDataset implements OHLCDataset, PublicCloneable {
   /** 

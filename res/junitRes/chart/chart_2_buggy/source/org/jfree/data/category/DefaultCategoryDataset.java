@@ -8,7 +8,7 @@ import org.jfree.data.SelectableValue;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.event.DatasetChangeEvent;
 /** 
- * A default implementation of the                                                                                               {@link CategoryDataset} interface.
+ * A default implementation of the                                                                                                                                                                {@link CategoryDataset} interface.
  */
 public class DefaultCategoryDataset extends AbstractCategoryDataset implements CategoryDataset, SelectableCategoryDataset, CategoryDatasetSelectionState, PublicCloneable, Serializable {
   /** 
@@ -153,7 +153,7 @@ public class DefaultCategoryDataset extends AbstractCategoryDataset implements C
     addValue(new Double(value),rowKey,columnKey);
   }
   /** 
- * Adds or updates a value in the table and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Adds or updates a value in the table and sends a                                                                                                                                                               {@link DatasetChangeEvent} to all registered listeners.
  * @param value  the value (<code>null</code> permitted).
  * @param rowKey  the row key (<code>null</code> not permitted).
  * @param columnKey  the column key (<code>null</code> not permitted).
@@ -164,7 +164,7 @@ public class DefaultCategoryDataset extends AbstractCategoryDataset implements C
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Adds or updates a value in the table and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Adds or updates a value in the table and sends a                                                                                                                                                               {@link DatasetChangeEvent} to all registered listeners.
  * @param value  the value.
  * @param rowKey  the row key (<code>null</code> not permitted).
  * @param columnKey  the column key (<code>null</code> not permitted).
@@ -189,7 +189,7 @@ public class DefaultCategoryDataset extends AbstractCategoryDataset implements C
     setValue(existing + value,rowKey,columnKey);
   }
   /** 
- * Removes a value from the dataset and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a value from the dataset and sends a                                                                                                                                                                {@link DatasetChangeEvent}to all registered listeners.
  * @param rowKey  the row key (<code>null</code> not permitted).
  * @param columnKey  the column key (<code>null</code> not permitted).
  * @see #addValue(Number,Comparable,Comparable)
@@ -200,7 +200,7 @@ public class DefaultCategoryDataset extends AbstractCategoryDataset implements C
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a row from the dataset and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a row from the dataset and sends a                                                                                                                                                                {@link DatasetChangeEvent}to all registered listeners.
  * @param rowIndex  the row index.
  * @see #removeColumn(int)
  */
@@ -209,7 +209,7 @@ public class DefaultCategoryDataset extends AbstractCategoryDataset implements C
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a row from the dataset and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a row from the dataset and sends a                                                                                                                                                                {@link DatasetChangeEvent}to all registered listeners.
  * @param rowKey  the row key.
  * @see #removeColumn(Comparable)
  */
@@ -218,7 +218,7 @@ public class DefaultCategoryDataset extends AbstractCategoryDataset implements C
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a column from the dataset and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a column from the dataset and sends a                                                                                                                                                                {@link DatasetChangeEvent}to all registered listeners.
  * @param columnIndex  the column index.
  * @see #removeRow(int)
  */
@@ -227,7 +227,7 @@ public class DefaultCategoryDataset extends AbstractCategoryDataset implements C
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a column from the dataset and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a column from the dataset and sends a                                                                                                                                                                {@link DatasetChangeEvent}to all registered listeners.
  * @param columnKey  the column key (<code>null</code> not permitted).
  * @see #removeRow(Comparable)
  * @throws UnknownKeyException if <code>columnKey</code> is not definedin the dataset.
@@ -237,7 +237,7 @@ public class DefaultCategoryDataset extends AbstractCategoryDataset implements C
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Clears all data from the dataset and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Clears all data from the dataset and sends a                                                                                                                                                                {@link DatasetChangeEvent}to all registered listeners.
  */
   public void clear(){
     this.data.clear();

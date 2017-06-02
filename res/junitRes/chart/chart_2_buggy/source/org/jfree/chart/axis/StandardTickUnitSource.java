@@ -2,7 +2,7 @@ package org.jfree.chart.axis;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 /** 
- * A source that can used by the                                                                                               {@link NumberAxis} class to obtain asuitable  {@link TickUnit}.  Instances of this class are                                                                                               {@link Serializable}from version 1.0.7 onwards.  Cloning is not supported, because instances are immutable.
+ * A source that can used by the                                                                                                                                                                {@link NumberAxis} class to obtain asuitable  {@link TickUnit}.  Instances of this class are                                                                                                                                                                {@link Serializable}from version 1.0.7 onwards.  Cloning is not supported, because instances are immutable.
  */
 public class StandardTickUnitSource implements TickUnitSource, Serializable {
   /** 

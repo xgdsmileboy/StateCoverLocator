@@ -18,7 +18,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleEdge;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A category item renderer that draws area charts.  You can use this renderer with the                                                                                               {@link CategoryPlot} class.  The example shown here is generatedby the <code>AreaChartDemo1.java</code> program included in the JFreeChart Demo Collection: <br><br> <img src="../../../../../images/AreaRendererSample.png" alt="AreaRendererSample.png" />
+ * A category item renderer that draws area charts.  You can use this renderer with the                                                                                                                                                                {@link CategoryPlot} class.  The example shown here is generatedby the <code>AreaChartDemo1.java</code> program included in the JFreeChart Demo Collection: <br><br> <img src="../../../../../images/AreaRendererSample.png" alt="AreaRendererSample.png" />
  */
 public class AreaRenderer extends AbstractCategoryItemRenderer implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -38,7 +38,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer implements Clonea
     setBaseLegendShape(new Rectangle2D.Double(-4.0,-4.0,8.0,8.0));
   }
   /** 
- * Returns a token that controls how the renderer draws the end points. The default value is                                                                                               {@link AreaRendererEndType#TAPER}.
+ * Returns a token that controls how the renderer draws the end points. The default value is                                                                                                                                                                {@link AreaRendererEndType#TAPER}.
  * @return The end type (never <code>null</code>).
  * @see #setEndType
  */
@@ -46,7 +46,7 @@ public class AreaRenderer extends AbstractCategoryItemRenderer implements Clonea
     return this.endType;
   }
   /** 
- * Sets a token that controls how the renderer draws the end points, and sends a                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets a token that controls how the renderer draws the end points, and sends a                                                                                                                                                                {@link RendererChangeEvent} to all registered listeners.
  * @param type  the end type (<code>null</code> not permitted).
  * @see #getEndType()
  */

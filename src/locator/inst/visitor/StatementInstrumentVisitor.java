@@ -28,6 +28,7 @@ import org.eclipse.jdt.core.dom.LabeledStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
@@ -58,7 +59,7 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 		_methodFlag = methodFlag;
 	}
 
-	public StatementInstrumentVisitor(Set<Method> methods) {
+	public StatementInstrumentVisitor(Set<Integer> methods) {
 		_methods = methods;
 	}
 
@@ -76,7 +77,8 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 		}
 
 		// optimize instrument
-		message = Constant.INSTRUMENT_FLAG + _methodFlag + "#" + String.valueOf(keyValue);
+//		message = Constant.INSTRUMENT_FLAG + _methodFlag + Constant.INSTRUMENT_STR_SEP + String.valueOf(keyValue);
+		message = String.valueOf(keyValue);
 
 		Block methodBody = node.getBody();
 
@@ -306,7 +308,7 @@ public class StatementInstrumentVisitor extends TraversalVisitor {
 			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(AST.JLS8), statement);
 			Statement insert = GenStatement.genASTNode(message, lineNumber);
 
-			if (statement instanceof ConstructorInvocation) {
+			if (statement instanceof ConstructorInvocation || statement instanceof SuperConstructorInvocation) {
 				result.add(copy);
 				result.add(insert);
 			} else if (statement instanceof ContinueStatement || statement instanceof BreakStatement

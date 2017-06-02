@@ -7,7 +7,7 @@ import org.jfree.data.general.Series;
 import org.jfree.data.event.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
 /** 
- * A structure containing zero, one or many                                                                                               {@link TimePeriodValue} instances.  The time periods can overlap, and are maintained in the order that they are  added to the collection. <p> This is similar to the  {@link TimeSeries} class, except that the time periods can have irregular lengths.
+ * A structure containing zero, one or many                                                                                                                                                               {@link TimePeriodValue} instances.  The time periods can overlap, and are maintained in the order that they are  added to the collection. <p> This is similar to the  {@link TimeSeries} class, except that the time periods can have irregular lengths.
  */
 public class TimePeriodValues extends Series implements Serializable {
   /** 
@@ -149,7 +149,7 @@ public class TimePeriodValues extends Series implements Serializable {
     return getDataItem(index).getValue();
   }
   /** 
- * Adds a data item to the series and sends a                                                                                               {@link SeriesChangeEvent} toall registered listeners.
+ * Adds a data item to the series and sends a                                                                                                                                                               {@link SeriesChangeEvent} toall registered listeners.
  * @param item  the item (<code>null</code> not permitted).
  */
   public void add(  TimePeriodValue item){
@@ -244,7 +244,7 @@ public class TimePeriodValues extends Series implements Serializable {
     }
   }
   /** 
- * Adds a new data item to the series and sends a                                                                                               {@link SeriesChangeEvent}to all registered listeners.
+ * Adds a new data item to the series and sends a                                                                                                                                                               {@link SeriesChangeEvent}to all registered listeners.
  * @param period  the time period (<code>null</code> not permitted).
  * @param value  the value.
  * @see #add(TimePeriod,Number)
@@ -254,7 +254,7 @@ public class TimePeriodValues extends Series implements Serializable {
     add(item);
   }
   /** 
- * Adds a new data item to the series and sends a                                                                                               {@link SeriesChangeEvent}to all registered listeners.
+ * Adds a new data item to the series and sends a                                                                                                                                                               {@link SeriesChangeEvent}to all registered listeners.
  * @param period  the time period (<code>null</code> not permitted).
  * @param value  the value (<code>null</code> permitted).
  */
@@ -263,7 +263,7 @@ public class TimePeriodValues extends Series implements Serializable {
     add(item);
   }
   /** 
- * Updates (changes) the value of a data item and sends a                                                                                               {@link SeriesChangeEvent} to all registered listeners.
+ * Updates (changes) the value of a data item and sends a                                                                                                                                                               {@link SeriesChangeEvent} to all registered listeners.
  * @param index  the index of the data item to update.
  * @param value  the new value (<code>null</code> not permitted).
  */
@@ -273,7 +273,7 @@ public class TimePeriodValues extends Series implements Serializable {
     fireSeriesChanged();
   }
   /** 
- * Deletes data from start until end index (end inclusive) and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Deletes data from start until end index (end inclusive) and sends a                                                                                                                                                              {@link SeriesChangeEvent} to all registered listeners.
  * @param start  the index of the first period to delete.
  * @param end  the index of the last period to delete.
  */

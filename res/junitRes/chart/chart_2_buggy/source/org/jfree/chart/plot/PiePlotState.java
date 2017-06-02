@@ -139,7 +139,7 @@ public class PiePlotState extends RendererState {
     this.pieCenterX=x;
   }
   /** 
- * Returns the y-coordinate (in Java2D space) of the center of the pie chart.  For the                                                                                               {@link PiePlot3D} class, we derive this from the top ofthe pie.
+ * Returns the y-coordinate (in Java2D space) of the center of the pie chart.  For the                                                                                                                                                                {@link PiePlot3D} class, we derive this from the top ofthe pie.
  * @return The y-coordinate (in Java2D space).
  */
   public double getPieCenterY(){

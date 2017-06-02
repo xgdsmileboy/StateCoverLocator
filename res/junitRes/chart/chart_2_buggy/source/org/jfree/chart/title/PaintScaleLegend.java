@@ -26,7 +26,7 @@ import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.Size2D;
 import org.jfree.data.Range;
 /** 
- * A legend that shows a range of values and their associated colors, driven by an underlying                                                                                               {@link PaintScale} implementation.
+ * A legend that shows a range of values and their associated colors, driven by an underlying                                                                                                                                                                {@link PaintScale} implementation.
  * @since 1.0.4
  */
 public class PaintScaleLegend extends Title implements AxisChangeListener, PublicCloneable {
@@ -106,7 +106,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.scale;
   }
   /** 
- * Sets the scale and sends a                                                                                               {@link TitleChangeEvent} to all registeredlisteners.
+ * Sets the scale and sends a                                                                                                                                                                {@link TitleChangeEvent} to all registeredlisteners.
  * @param scale  the scale (<code>null</code> not permitted).
  * @see #getScale()
  */
@@ -126,7 +126,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.axis;
   }
   /** 
- * Sets the axis for the paint scale and sends a                                                                                               {@link TitleChangeEvent}to all registered listeners.
+ * Sets the axis for the paint scale and sends a                                                                                                                                                                {@link TitleChangeEvent}to all registered listeners.
  * @param axis  the axis (<code>null</code> not permitted).
  * @see #getAxis()
  */
@@ -148,7 +148,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.axisLocation;
   }
   /** 
- * Sets the axis location and sends a                                                                                               {@link TitleChangeEvent} to allregistered listeners.
+ * Sets the axis location and sends a                                                                                                                                                                {@link TitleChangeEvent} to allregistered listeners.
  * @param location  the location (<code>null</code> not permitted).
  * @see #getAxisLocation()
  */
@@ -168,7 +168,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.axisOffset;
   }
   /** 
- * Sets the offset between the axis and the paint strip and sends a                                                                                              {@link TitleChangeEvent} to all registered listeners.
+ * Sets the offset between the axis and the paint strip and sends a                                                                                                                                                               {@link TitleChangeEvent} to all registered listeners.
  * @param offset  the offset.
  */
   public void setAxisOffset(  double offset){
@@ -184,7 +184,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.stripWidth;
   }
   /** 
- * Sets the width of the paint strip and sends a                                                                                               {@link TitleChangeEvent}to all registered listeners.
+ * Sets the width of the paint strip and sends a                                                                                                                                                                {@link TitleChangeEvent}to all registered listeners.
  * @param width  the width.
  * @see #getStripWidth()
  */
@@ -201,7 +201,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.stripOutlineVisible;
   }
   /** 
- * Sets the flag that controls whether or not an outline is drawn around the paint strip, and sends a                                                                                               {@link TitleChangeEvent} to all registeredlisteners.
+ * Sets the flag that controls whether or not an outline is drawn around the paint strip, and sends a                                                                                                                                                                {@link TitleChangeEvent} to all registeredlisteners.
  * @param visible  the flag.
  * @see #isStripOutlineVisible()
  */
@@ -218,7 +218,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.stripOutlinePaint;
   }
   /** 
- * Sets the paint used to draw the outline of the paint strip, and sends a                                                                                               {@link TitleChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the outline of the paint strip, and sends a                                                                                                                                                                {@link TitleChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getStripOutlinePaint()
  */
@@ -238,7 +238,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.stripOutlineStroke;
   }
   /** 
- * Sets the stroke used to draw the outline around the paint strip and sends a                                                                                               {@link TitleChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the outline around the paint strip and sends a                                                                                                                                                                {@link TitleChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getStripOutlineStroke()
  */
@@ -257,7 +257,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.backgroundPaint;
   }
   /** 
- * Sets the background paint and sends a                                                                                               {@link TitleChangeEvent} to allregistered listeners.
+ * Sets the background paint and sends a                                                                                                                                                                {@link TitleChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> permitted).
  */
   public void setBackgroundPaint(  Paint paint){
@@ -273,7 +273,7 @@ public class PaintScaleLegend extends Title implements AxisChangeListener, Publi
     return this.subdivisions;
   }
   /** 
- * Sets the subdivision count and sends a                                                                                               {@link TitleChangeEvent} toall registered listeners.
+ * Sets the subdivision count and sends a                                                                                                                                                                {@link TitleChangeEvent} toall registered listeners.
  * @param count  the count.
  * @since 1.0.11
  */

@@ -20,7 +20,7 @@ import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.RectangleInsets;
 import org.jfree.data.Range;
 /** 
- * A numerical axis that uses a logarithmic scale.  The class is an alternative to the                                                                                               {@link LogarithmicAxis} class.
+ * A numerical axis that uses a logarithmic scale.  The class is an alternative to the                                                                                                                                                                {@link LogarithmicAxis} class.
  * @since 1.0.7
  */
 public class LogAxis extends ValueAxis {
@@ -68,7 +68,7 @@ public class LogAxis extends ValueAxis {
     return this.base;
   }
   /** 
- * Sets the base for the logarithm calculation and sends an                                                                                              {@link AxisChangeEvent} to all registered listeners.
+ * Sets the base for the logarithm calculation and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
  * @param base  the base value (must be > 1.0).
  * @see #getBase()
  */
@@ -89,7 +89,7 @@ public class LogAxis extends ValueAxis {
     return this.smallestValue;
   }
   /** 
- * Sets the smallest value represented by the axis and sends an                                                                                              {@link AxisChangeEvent} to all registered listeners.
+ * Sets the smallest value represented by the axis and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
  * @param value  the value.
  * @see #getSmallestValue()
  */
@@ -109,7 +109,7 @@ public class LogAxis extends ValueAxis {
     return this.tickUnit;
   }
   /** 
- * Sets the tick unit for the axis and sends an                                                                                               {@link AxisChangeEvent} toall registered listeners.  A side effect of calling this method is that the "auto-select" feature for tick units is switched off (you can restore it using the  {@link ValueAxis#setAutoTickUnitSelection(boolean)}method).
+ * Sets the tick unit for the axis and sends an                                                                                                                                                                {@link AxisChangeEvent} toall registered listeners.  A side effect of calling this method is that the "auto-select" feature for tick units is switched off (you can restore it using the  {@link ValueAxis#setAutoTickUnitSelection(boolean)}method).
  * @param unit  the new tick unit (<code>null</code> not permitted).
  * @see #getTickUnit()
  */
@@ -117,7 +117,7 @@ public class LogAxis extends ValueAxis {
     setTickUnit(unit,true,true);
   }
   /** 
- * Sets the tick unit for the axis and, if requested, sends an                                                                                              {@link AxisChangeEvent} to all registered listeners.  In addition, anoption is provided to turn off the "auto-select" feature for tick units (you can restore it using the {@link ValueAxis#setAutoTickUnitSelection(boolean)} method).
+ * Sets the tick unit for the axis and, if requested, sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.  In addition, anoption is provided to turn off the "auto-select" feature for tick units (you can restore it using the {@link ValueAxis#setAutoTickUnitSelection(boolean)} method).
  * @param unit  the new tick unit (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @param turnOffAutoSelect  turn off the auto-tick selection?

@@ -34,7 +34,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 /** 
- * Tests for the                                          {@link DatasetUtilities} class.
+ * Tests for the                                                                          {@link DatasetUtilities} class.
  */
 public class DatasetUtilitiesTests extends TestCase {
   private static final double EPSILON=0.0000000001;
@@ -56,6 +56,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests to verify that Java does what I think it does!
  */
   public void testJava(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     assertTrue(Double.isNaN(Math.min(1.0,Double.NaN)));
     assertTrue(Double.isNaN(Math.max(1.0,Double.NaN)));
   }
@@ -63,6 +67,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the calculatePieDatasetTotal() method.
  */
   public void testCalculatePieDatasetTotal(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultPieDataset d=new DefaultPieDataset();
     assertEquals(0.0,DatasetUtilities.calculatePieDatasetTotal(d),EPSILON);
     d.setValue("A",1.0);
@@ -74,6 +82,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the findDomainBounds() method.
  */
   public void testFindDomainBounds(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYDataset dataset=createXYDataset1();
     Range r=DatasetUtilities.findDomainBounds(dataset);
     assertEquals(1.0,r.getLowerBound(),EPSILON);
@@ -83,6 +95,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * This test checks that the standard method has 'includeInterval' defaulting to true.
  */
   public void testFindDomainBounds2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultIntervalXYDataset dataset=new DefaultIntervalXYDataset();
     double[] x1=new double[]{1.0,2.0,3.0};
     double[] x1Start=new double[]{0.9,1.9,2.9};
@@ -100,6 +116,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * This test checks that when the 'includeInterval' flag is false, the bounds come from the regular x-values.
  */
   public void testFindDomainBounds3(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultIntervalXYDataset dataset=new DefaultIntervalXYDataset();
     double[] x1=new double[]{1.0,2.0,3.0};
     double[] x1Start=new double[]{0.9,1.9,2.9};
@@ -117,6 +137,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * This test checks that NaN values are ignored.
  */
   public void testFindDomainBounds_NaN(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultIntervalXYDataset dataset=new DefaultIntervalXYDataset();
     double[] x1=new double[]{1.0,2.0,Double.NaN};
     double[] x1Start=new double[]{0.9,1.9,Double.NaN};
@@ -137,6 +161,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the iterateDomainBounds() method.
  */
   public void testIterateDomainBounds(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYDataset dataset=createXYDataset1();
     Range r=DatasetUtilities.iterateDomainBounds(dataset);
     assertEquals(1.0,r.getLowerBound(),EPSILON);
@@ -146,6 +174,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Check that NaN values in the dataset are ignored.
  */
   public void testIterateDomainBounds_NaN(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultXYDataset dataset=new DefaultXYDataset();
     double[] x=new double[]{1.0,2.0,Double.NaN,3.0};
     double[] y=new double[]{9.0,8.0,7.0,6.0};
@@ -158,6 +190,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Check that NaN values in the IntervalXYDataset are ignored.
  */
   public void testIterateDomainBounds_NaN2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultIntervalXYDataset dataset=new DefaultIntervalXYDataset();
     double[] x1=new double[]{Double.NaN,2.0,3.0};
     double[] x1Start=new double[]{0.9,Double.NaN,2.9};
@@ -178,6 +214,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the findRangeBounds() for a CategoryDataset method.
  */
   public void testFindRangeBounds_CategoryDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     CategoryDataset dataset=createCategoryDataset1();
     Range r=DatasetUtilities.findRangeBounds(dataset);
     assertEquals(1.0,r.getLowerBound(),EPSILON);
@@ -187,6 +227,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the findRangeBounds() method on an XYDataset.
  */
   public void testFindRangeBounds(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYDataset dataset=createXYDataset1();
     Range r=DatasetUtilities.findRangeBounds(dataset);
     assertEquals(100.0,r.getLowerBound(),EPSILON);
@@ -196,6 +240,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A test for the findRangeBounds(XYDataset) method using an IntervalXYDataset.
  */
   public void testFindRangeBounds2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     YIntervalSeriesCollection dataset=new YIntervalSeriesCollection();
     Range r=DatasetUtilities.findRangeBounds(dataset);
     assertNull(r);
@@ -231,6 +279,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the iterateRangeBounds() method.
  */
   public void testIterateRangeBounds_CategoryDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     CategoryDataset dataset=createCategoryDataset1();
     Range r=DatasetUtilities.iterateRangeBounds(dataset,false);
     assertEquals(1.0,r.getLowerBound(),EPSILON);
@@ -240,6 +292,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the iterateRangeBounds() method.
  */
   public void testIterateRangeBounds2_CategoryDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     Range r=DatasetUtilities.iterateRangeBounds(dataset,false);
     assertNull(r);
@@ -260,6 +316,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the iterateRangeBounds() method using an IntervalCategoryDataset.
  */
   public void testIterateRangeBounds3_CategoryDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     Number[][] starts=new Double[2][3];
     Number[][] ends=new Double[2][3];
     starts[0][0]=new Double(1.0);
@@ -286,6 +346,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the iterateRangeBounds() method.
  */
   public void testIterateRangeBounds(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYDataset dataset=createXYDataset1();
     Range r=DatasetUtilities.iterateRangeBounds(dataset);
     assertEquals(100.0,r.getLowerBound(),EPSILON);
@@ -295,6 +359,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Check the range returned when a series contains a null value.
  */
   public void testIterateRangeBounds2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYSeries s1=new XYSeries("S1");
     s1.add(1.0,1.1);
     s1.add(2.0,null);
@@ -308,6 +376,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the iterateRangeBounds() method.
  */
   public void testIterateRangeBounds3(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYSeriesCollection dataset=new XYSeriesCollection();
     Range r=DatasetUtilities.iterateRangeBounds(dataset);
     assertNull(r);
@@ -329,9 +401,13 @@ public class DatasetUtilitiesTests extends TestCase {
     assertEquals(1.23,r.getUpperBound(),EPSILON);
   }
   /** 
- * Some checks for the range bounds of a dataset that implements the                                         {@link IntervalXYDataset} interface.
+ * Some checks for the range bounds of a dataset that implements the                                                                         {@link IntervalXYDataset} interface.
  */
   public void testIterateRangeBounds4(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     YIntervalSeriesCollection dataset=new YIntervalSeriesCollection();
     Range r=DatasetUtilities.iterateRangeBounds(dataset);
     assertNull(r);
@@ -361,6 +437,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the findMinimumDomainValue() method.
  */
   public void testFindMinimumDomainValue(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYDataset dataset=createXYDataset1();
     Number minimum=DatasetUtilities.findMinimumDomainValue(dataset);
     assertEquals(new Double(1.0),minimum);
@@ -369,6 +449,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the findMaximumDomainValue() method.
  */
   public void testFindMaximumDomainValue(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYDataset dataset=createXYDataset1();
     Number maximum=DatasetUtilities.findMaximumDomainValue(dataset);
     assertEquals(new Double(3.0),maximum);
@@ -377,6 +461,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the findMinimumRangeValue() method.
  */
   public void testFindMinimumRangeValue(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     CategoryDataset d1=createCategoryDataset1();
     Number min1=DatasetUtilities.findMinimumRangeValue(d1);
     assertEquals(new Double(1.0),min1);
@@ -388,6 +476,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the findMaximumRangeValue() method.
  */
   public void testFindMaximumRangeValue(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     CategoryDataset d1=createCategoryDataset1();
     Number max1=DatasetUtilities.findMaximumRangeValue(d1);
     assertEquals(new Double(6.0),max1);
@@ -399,6 +491,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A quick test of the min and max range value methods.
  */
   public void testMinMaxRange(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     dataset.addValue(100.0,"Series 1","Type 1");
     dataset.addValue(101.1,"Series 1","Type 2");
@@ -411,6 +507,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A test to reproduce bug report 803660.
  */
   public void test803660(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     dataset.addValue(100.0,"Series 1","Type 1");
     dataset.addValue(101.1,"Series 1","Type 2");
@@ -421,6 +521,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A simple test for the cumulative range calculation.  The sequence of "cumulative" values are considered to be { 0.0, 10.0, 25.0, 18.0 } so the range should be 0.0 -> 25.0.
  */
   public void testCumulativeRange1(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     dataset.addValue(10.0,"Series 1","Start");
     dataset.addValue(15.0,"Series 1","Delta 1");
@@ -433,6 +537,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A further test for the cumulative range calculation.
  */
   public void testCumulativeRange2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     dataset.addValue(-21.4,"Series 1","Start Value");
     dataset.addValue(11.57,"Series 1","Delta 1");
@@ -452,6 +560,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A further test for the cumulative range calculation.
  */
   public void testCumulativeRange3(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     dataset.addValue(15.76,"Product 1","Labour");
     dataset.addValue(8.66,"Product 1","Administration");
@@ -466,6 +578,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Check that the findCumulativeRangeBounds() method ignores Double.NaN values.
  */
   public void testCumulativeRange_NaN(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     dataset.addValue(10.0,"Series 1","Start");
     dataset.addValue(15.0,"Series 1","Delta 1");
@@ -478,6 +594,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Test the creation of a dataset from an array.
  */
   public void testCreateCategoryDataset1(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     String[] rowKeys={"R1","R2","R3"};
     String[] columnKeys={"C1","C2"};
     double[][] data=new double[3][];
@@ -492,6 +612,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Test the creation of a dataset from an array.  This time is should fail because the array dimensions are around the wrong way.
  */
   public void testCreateCategoryDataset2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     boolean pass=false;
     String[] rowKeys={"R1","R2","R3"};
     String[] columnKeys={"C1","C2"};
@@ -512,6 +636,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Test for a bug reported in the forum: http://www.jfree.org/phpBB2/viewtopic.php?t=7903
  */
   public void testMaximumStackedRangeValue(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     double v1=24.3;
     double v2=14.2;
     double v3=33.2;
@@ -533,6 +661,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the findStackedRangeBounds() method.
  */
   public void testFindStackedRangeBounds_CategoryDataset1(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     CategoryDataset d1=createCategoryDataset1();
     Range r=DatasetUtilities.findStackedRangeBounds(d1);
     assertEquals(0.0,r.getLowerBound(),EPSILON);
@@ -546,6 +678,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the findStackedRangeBounds() method.
  */
   public void testFindStackedRangeBounds_CategoryDataset2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     Range r=DatasetUtilities.findStackedRangeBounds(dataset);
     assertTrue(r == null);
@@ -570,6 +706,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the findStackedRangeBounds(CategoryDataset, KeyToGroupMap) method.
  */
   public void testFindStackedRangeBounds_CategoryDataset3(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     KeyToGroupMap map=new KeyToGroupMap("Group A");
     Range r=DatasetUtilities.findStackedRangeBounds(dataset,map);
@@ -598,6 +738,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the findStackedRangeBounds() method.
  */
   public void testFindStackedRangeBoundsForTableXYDataset1(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     TableXYDataset d2=createTableXYDataset1();
     Range r=DatasetUtilities.findStackedRangeBounds(d2);
     assertEquals(-2.0,r.getLowerBound(),EPSILON);
@@ -607,6 +751,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the findStackedRangeBounds() method.
  */
   public void testFindStackedRangeBoundsForTableXYDataset2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultTableXYDataset d=new DefaultTableXYDataset();
     Range r=DatasetUtilities.findStackedRangeBounds(d);
     assertEquals(r,new Range(0.0,0.0));
@@ -615,6 +763,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Tests the stacked range extent calculation.
  */
   public void testStackedRangeWithMap(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     CategoryDataset d=createCategoryDataset1();
     KeyToGroupMap map=new KeyToGroupMap("G0");
     map.mapKeyToGroup("R2","G1");
@@ -626,6 +778,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the isEmptyOrNull(XYDataset) method.
  */
   public void testIsEmptyOrNullXYDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     XYSeriesCollection dataset=null;
     assertTrue(DatasetUtilities.isEmptyOrNull(dataset));
     dataset=new XYSeriesCollection();
@@ -642,6 +798,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the limitPieDataset() methods.
  */
   public void testLimitPieDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultPieDataset d1=new DefaultPieDataset();
     PieDataset d2=DatasetUtilities.createConsolidatedPieDataset(d1,"Other",0.05);
     assertEquals(0,d2.getItemCount());
@@ -665,6 +825,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the sampleFunction2D() method.
  */
   public void testSampleFunction2D(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     Function2D f=new LineFunction2D(0,1);
     XYDataset dataset=DatasetUtilities.sampleFunction2D(f,0.0,1.0,2,"S1");
     assertEquals(1,dataset.getSeriesCount());
@@ -679,6 +843,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A simple check for the findMinimumStackedRangeValue() method.
  */
   public void testFindMinimumStackedRangeValue(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     Number min=DatasetUtilities.findMinimumStackedRangeValue(dataset);
     assertNull(min);
@@ -699,6 +867,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A simple check for the findMaximumStackedRangeValue() method.
  */
   public void testFindMinimumStackedRangeValue2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     dataset.addValue(-1.0,"R1","C1");
     Number min=DatasetUtilities.findMinimumStackedRangeValue(dataset);
@@ -711,6 +883,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A simple check for the findMaximumStackedRangeValue() method.
  */
   public void testFindMaximumStackedRangeValue(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     Number max=DatasetUtilities.findMaximumStackedRangeValue(dataset);
     assertNull(max);
@@ -731,6 +907,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * A simple check for the findMaximumStackedRangeValue() method.
  */
   public void testFindMaximumStackedRangeValue2(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultCategoryDataset dataset=new DefaultCategoryDataset();
     dataset.addValue(-1.0,"R1","C1");
     Number max=DatasetUtilities.findMaximumStackedRangeValue(dataset);
@@ -804,6 +984,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the iteratorToFindRangeBounds(XYDataset...) method.
  */
   public void testIterateToFindRangeBounds1_XYDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     boolean pass=false;
     try {
       DatasetUtilities.iterateToFindRangeBounds(null,new ArrayList(),new Range(0.0,1.0),true);
@@ -833,6 +1017,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some tests for the iterateToFindRangeBounds() method.
  */
   public void testIterateToFindRangeBounds2_XYDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     List visibleSeriesKeys=new ArrayList();
     Range xRange=new Range(0.0,10.0);
     XYSeriesCollection dataset=new XYSeriesCollection();
@@ -875,6 +1063,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the iterateToFindRangeBounds() method when applied to a BoxAndWhiskerXYDataset.
  */
   public void testIterateToFindRangeBounds_BoxAndWhiskerXYDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultBoxAndWhiskerXYDataset dataset=new DefaultBoxAndWhiskerXYDataset("Series 1");
     List visibleSeriesKeys=new ArrayList();
     visibleSeriesKeys.add("Series 1");
@@ -888,6 +1080,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the iterateToFindRangeBounds(CategoryDataset...) method.
  */
   public void testIterateToFindRangeBounds_StatisticalCategoryDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultStatisticalCategoryDataset dataset=new DefaultStatisticalCategoryDataset();
     List visibleSeriesKeys=new ArrayList();
     assertNull(DatasetUtilities.iterateToFindRangeBounds(dataset,visibleSeriesKeys,false));
@@ -897,9 +1093,13 @@ public class DatasetUtilitiesTests extends TestCase {
     assertEquals(new Range(0.5,1.5),DatasetUtilities.iterateToFindRangeBounds(dataset,visibleSeriesKeys,true));
   }
   /** 
- * Some checks for the iterateToFindRangeBounds(CategoryDataset...) method with a                                          {@link MultiValueCategoryDataset}.
+ * Some checks for the iterateToFindRangeBounds(CategoryDataset...) method with a                                                                          {@link MultiValueCategoryDataset}.
  */
   public void testIterateToFindRangeBounds_MultiValueCategoryDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
     DefaultMultiValueCategoryDataset dataset=new DefaultMultiValueCategoryDataset();
     List visibleSeriesKeys=new ArrayList();
     assertNull(DatasetUtilities.iterateToFindRangeBounds(dataset,visibleSeriesKeys,true));
@@ -920,16 +1120,28 @@ public class DatasetUtilitiesTests extends TestCase {
  * Some checks for the iterateRangeBounds() method when passed an IntervalCategoryDataset.
  */
   public void testIterateRangeBounds_IntervalCategoryDataset(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
   }
   /** 
  * A test for bug 2849731.
  */
   public void testBug2849731(){
+{
+      auxiliary.Dumper.SUCC_TEST=true;
+      auxiliary.Dumper.reset();
+    }
   }
   /** 
  * Another test for bug 2849731.
  */
   public void testBug2849731_2(){
+{
+      auxiliary.Dumper.SUCC_TEST=false;
+      auxiliary.Dumper.reset();
+    }
     XYIntervalSeriesCollection d=new XYIntervalSeriesCollection();
     XYIntervalSeries s=new XYIntervalSeries("S1");
     s.add(1.0,Double.NaN,Double.NaN,Double.NaN,1.5,Double.NaN);
@@ -950,6 +1162,10 @@ public class DatasetUtilitiesTests extends TestCase {
  * Yet another test for bug 2849731.
  */
   public void testBug2849731_3(){
+{
+      auxiliary.Dumper.SUCC_TEST=false;
+      auxiliary.Dumper.reset();
+    }
     XYIntervalSeriesCollection d=new XYIntervalSeriesCollection();
     XYIntervalSeries s=new XYIntervalSeries("S1");
     s.add(1.0,Double.NaN,Double.NaN,1.5,Double.NaN,Double.NaN);

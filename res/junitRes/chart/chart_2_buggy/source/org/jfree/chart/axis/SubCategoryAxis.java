@@ -49,7 +49,7 @@ public class SubCategoryAxis extends CategoryAxis implements Cloneable, Serializ
     this.subCategories=new java.util.ArrayList();
   }
   /** 
- * Adds a sub-category to the axis and sends an                                                                                               {@link AxisChangeEvent} toall registered listeners.
+ * Adds a sub-category to the axis and sends an                                                                                                                                                                {@link AxisChangeEvent} toall registered listeners.
  * @param subCategory  the sub-category (<code>null</code> not permitted).
  */
   public void addSubCategory(  Comparable subCategory){
@@ -68,7 +68,7 @@ public class SubCategoryAxis extends CategoryAxis implements Cloneable, Serializ
     return this.subLabelFont;
   }
   /** 
- * Sets the font used to display the sub-category labels and sends an                                                                                              {@link AxisChangeEvent} to all registered listeners.
+ * Sets the font used to display the sub-category labels and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getSubLabelFont()
  */
@@ -88,7 +88,7 @@ public class SubCategoryAxis extends CategoryAxis implements Cloneable, Serializ
     return this.subLabelPaint;
   }
   /** 
- * Sets the paint used to display the sub-category labels and sends an                                                                                              {@link AxisChangeEvent} to all registered listeners.
+ * Sets the paint used to display the sub-category labels and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getSubLabelPaint()
  */

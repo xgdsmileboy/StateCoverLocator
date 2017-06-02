@@ -1,7 +1,7 @@
 package org.jfree.data.statistics;
 import java.io.Serializable;
 /** 
- * A bin for the                                                                                               {@link HistogramDataset} class.
+ * A bin for the                                                                                                                                                               {@link HistogramDataset} class.
  */
 public class HistogramBin implements Cloneable, Serializable {
   /** 

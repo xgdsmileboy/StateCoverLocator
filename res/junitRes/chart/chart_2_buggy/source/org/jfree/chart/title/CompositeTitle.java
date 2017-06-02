@@ -14,7 +14,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.Size2D;
 /** 
- * A title that contains multiple titles within a                                                                                               {@link BlockContainer}.
+ * A title that contains multiple titles within a                                                                                                                                                                {@link BlockContainer}.
  */
 public class CompositeTitle extends Title implements Cloneable, Serializable {
   /** 
@@ -56,7 +56,7 @@ public class CompositeTitle extends Title implements Cloneable, Serializable {
     return this.backgroundPaint;
   }
   /** 
- * Sets the background paint and sends a                                                                                               {@link TitleChangeEvent} to allregistered listeners.  If you set this attribute to <code>null</code>, no background is painted (which makes the title background transparent).
+ * Sets the background paint and sends a                                                                                                                                                                {@link TitleChangeEvent} to allregistered listeners.  If you set this attribute to <code>null</code>, no background is painted (which makes the title background transparent).
  * @param paint  the background paint (<code>null</code> permitted).
  * @since 1.0.11
  */

@@ -6,7 +6,7 @@ import java.util.List;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 /** 
- * A utility class for reading                                                                                               {@link CategoryDataset} data from a CSV file.This initial version is very basic, and won't handle errors in the data file very gracefully.
+ * A utility class for reading                                                                                                                                                               {@link CategoryDataset} data from a CSV file.This initial version is very basic, and won't handle errors in the data file very gracefully.
  */
 public class CSV {
   /** 
@@ -33,7 +33,7 @@ public class CSV {
     this.textDelimiter=textDelimiter;
   }
   /** 
- * Reads a                                                                                               {@link CategoryDataset} from a CSV file or input source.
+ * Reads a                                                                                                                                                               {@link CategoryDataset} from a CSV file or input source.
  * @param in  the input source.
  * @return A category dataset.
  * @throws IOException if there is an I/O problem.

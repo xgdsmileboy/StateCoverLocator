@@ -7,7 +7,7 @@ import org.jfree.data.xy.XYSeriesCollection;
  */
 public class MovingAverage {
   /** 
- * Creates a new                                                                                               {@link TimeSeriesCollection} containing a moving averageseries for each series in the source collection.
+ * Creates a new                                                                                                                                                               {@link TimeSeriesCollection} containing a moving averageseries for each series in the source collection.
  * @param source  the source collection.
  * @param suffix  the suffix added to each source series name to create thecorresponding moving average series name.
  * @param periodCount  the number of periods in the moving averagecalculation.
@@ -30,7 +30,7 @@ public class MovingAverage {
     return result;
   }
   /** 
- * Creates a new                                                                                               {@link TimeSeries} containing moving average values forthe given series.  If the series is empty (contains zero items), the result is an empty series.
+ * Creates a new                                                                                                                                                               {@link TimeSeries} containing moving average values forthe given series.  If the series is empty (contains zero items), the result is an empty series.
  * @param source  the source series.
  * @param name  the name of the new series.
  * @param periodCount  the number of periods used in the averagecalculation.
@@ -86,7 +86,7 @@ public class MovingAverage {
     return result;
   }
   /** 
- * Creates a new                                                                                               {@link TimeSeries} containing moving average values forthe given series, calculated by number of points (irrespective of the 'age' of those points).  If the series is empty (contains zero items), the result is an empty series. <p> Developed by Benoit Xhenseval (www.ObjectLab.co.uk).
+ * Creates a new                                                                                                                                                               {@link TimeSeries} containing moving average values forthe given series, calculated by number of points (irrespective of the 'age' of those points).  If the series is empty (contains zero items), the result is an empty series. <p> Developed by Benoit Xhenseval (www.ObjectLab.co.uk).
  * @param source  the source series.
  * @param name  the name of the new series.
  * @param pointCount  the number of POINTS used in the average calculation(not periods!)
@@ -119,7 +119,7 @@ public class MovingAverage {
     return result;
   }
   /** 
- * Creates a new                                                                                               {@link XYDataset} containing the moving averages of eachseries in the <code>source</code> dataset.
+ * Creates a new                                                                                                                                                               {@link XYDataset} containing the moving averages of eachseries in the <code>source</code> dataset.
  * @param source  the source dataset.
  * @param suffix  the string to append to source series names to createtarget series names.
  * @param period  the averaging period.
@@ -130,7 +130,7 @@ public class MovingAverage {
     return createMovingAverage(source,suffix,(double)period,(double)skip);
   }
   /** 
- * Creates a new                                                                                               {@link XYDataset} containing the moving averages of eachseries in the <code>source</code> dataset.
+ * Creates a new                                                                                                                                                               {@link XYDataset} containing the moving averages of eachseries in the <code>source</code> dataset.
  * @param source  the source dataset.
  * @param suffix  the string to append to source series names to createtarget series names.
  * @param period  the averaging period.
@@ -149,7 +149,7 @@ public class MovingAverage {
     return result;
   }
   /** 
- * Creates a new                                                                                               {@link XYSeries} containing the moving averages of oneseries in the <code>source</code> dataset.
+ * Creates a new                                                                                                                                                               {@link XYSeries} containing the moving averages of oneseries in the <code>source</code> dataset.
  * @param source  the source dataset.
  * @param series  the series index (zero based).
  * @param name  the name for the new series.

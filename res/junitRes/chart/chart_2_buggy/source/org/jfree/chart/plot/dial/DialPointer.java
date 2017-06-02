@@ -18,7 +18,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A base class for the pointer in a                                                                                               {@link DialPlot}.
+ * A base class for the pointer in a                                                                                                                                                                {@link DialPlot}.
  * @since 1.0.7
  */
 public abstract class DialPointer extends AbstractDialLayer implements DialLayer, Cloneable, PublicCloneable, Serializable {
@@ -53,7 +53,7 @@ public abstract class DialPointer extends AbstractDialLayer implements DialLayer
     return this.datasetIndex;
   }
   /** 
- * Sets the dataset index for the pointer and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the dataset index for the pointer and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param index  the index.
  * @see #getDatasetIndex()
  */
@@ -70,7 +70,7 @@ public abstract class DialPointer extends AbstractDialLayer implements DialLayer
     return this.radius;
   }
   /** 
- * Sets the radius of the pointer and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the radius of the pointer and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param radius  the radius.
  * @see #getRadius()
  */
@@ -163,7 +163,7 @@ public static class Pin extends DialPointer {
       return this.paint;
     }
     /** 
- * Sets the paint and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the paint and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -183,7 +183,7 @@ public static class Pin extends DialPointer {
       return this.stroke;
     }
     /** 
- * Sets the stroke and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the stroke and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getStroke()
  */
@@ -313,7 +313,7 @@ public static class Pointer extends DialPointer {
       return this.widthRadius;
     }
     /** 
- * Sets the width radius and sends a                                                                                               {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the width radius and sends a                                                                                                                                                                {@link DialLayerChangeEvent} toall registered listeners.
  * @param radius  the radius
  * @see #getWidthRadius()
  */
@@ -331,7 +331,7 @@ public static class Pointer extends DialPointer {
       return this.fillPaint;
     }
     /** 
- * Sets the fill paint and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the fill paint and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getFillPaint()
  * @since 1.0.8
@@ -353,7 +353,7 @@ public static class Pointer extends DialPointer {
       return this.outlinePaint;
     }
     /** 
- * Sets the outline paint and sends a                                                                                               {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the outline paint and sends a                                                                                                                                                                {@link DialLayerChangeEvent} toall registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getOutlinePaint()
  * @since 1.0.8

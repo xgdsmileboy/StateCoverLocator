@@ -2,7 +2,7 @@ package org.jfree.chart.entity;
 import java.util.Collection;
 import java.util.Iterator;
 /** 
- * This interface defines the methods used to access an ordered list of                                                                                              {@link ChartEntity} objects.
+ * This interface defines the methods used to access an ordered list of                                                                                                                                                               {@link ChartEntity} objects.
  */
 public interface EntityCollection {
   /** 

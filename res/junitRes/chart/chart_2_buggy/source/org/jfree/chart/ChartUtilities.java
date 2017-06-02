@@ -23,7 +23,7 @@ import org.jfree.chart.encoders.ImageFormat;
  */
 public abstract class ChartUtilities {
   /** 
- * Applies the current theme to the specified chart.  This method is provided for convenience, the theme itself is stored in the                                                                                              {@link ChartFactory} class.
+ * Applies the current theme to the specified chart.  This method is provided for convenience, the theme itself is stored in the                                                                                                                                                               {@link ChartFactory} class.
  * @param chart  the chart (<code>null</code> not permitted).
  * @since 1.0.11
  */
@@ -55,7 +55,7 @@ public abstract class ChartUtilities {
     ChartUtilities.writeChartAsPNG(out,chart,width,height,null,encodeAlpha,compression);
   }
   /** 
- * Writes a chart to an output stream in PNG format.  This method allows you to pass in a                                                                                               {@link ChartRenderingInfo} object, to collectinformation about the chart dimensions/entities.  You will need this info if you want to create an HTML image map.
+ * Writes a chart to an output stream in PNG format.  This method allows you to pass in a                                                                                                                                                                {@link ChartRenderingInfo} object, to collectinformation about the chart dimensions/entities.  You will need this info if you want to create an HTML image map.
  * @param out  the output stream (<code>null</code> not permitted).
  * @param chart  the chart (<code>null</code> not permitted).
  * @param width  the image width.
@@ -71,7 +71,7 @@ public abstract class ChartUtilities {
     EncoderUtil.writeBufferedImage(bufferedImage,ImageFormat.PNG,out);
   }
   /** 
- * Writes a chart to an output stream in PNG format.  This method allows you to pass in a                                                                                               {@link ChartRenderingInfo} object, to collectinformation about the chart dimensions/entities.  You will need this info if you want to create an HTML image map.
+ * Writes a chart to an output stream in PNG format.  This method allows you to pass in a                                                                                                                                                                {@link ChartRenderingInfo} object, to collectinformation about the chart dimensions/entities.  You will need this info if you want to create an HTML image map.
  * @param out  the output stream (<code>null</code> not permitted).
  * @param chart  the chart (<code>null</code> not permitted).
  * @param width  the image width.
@@ -144,7 +144,7 @@ public abstract class ChartUtilities {
     saveChartAsPNG(file,chart,width,height,null);
   }
   /** 
- * Saves a chart to a file in PNG format.  This method allows you to pass in a                                                                                               {@link ChartRenderingInfo} object, to collect information about thechart dimensions/entities.  You will need this info if you want to create an HTML image map.
+ * Saves a chart to a file in PNG format.  This method allows you to pass in a                                                                                                                                                                {@link ChartRenderingInfo} object, to collect information about thechart dimensions/entities.  You will need this info if you want to create an HTML image map.
  * @param file  the file (<code>null</code> not permitted).
  * @param chart  the chart (<code>null</code> not permitted).
  * @param width  the image width.
@@ -165,7 +165,7 @@ public abstract class ChartUtilities {
     }
   }
   /** 
- * Saves a chart to a file in PNG format.  This method allows you to pass in a                                                                                               {@link ChartRenderingInfo} object, to collect information about thechart dimensions/entities.  You will need this info if you want to create an HTML image map.
+ * Saves a chart to a file in PNG format.  This method allows you to pass in a                                                                                                                                                                {@link ChartRenderingInfo} object, to collect information about thechart dimensions/entities.  You will need this info if you want to create an HTML image map.
  * @param file  the file (<code>null</code> not permitted).
  * @param chart  the chart (<code>null</code> not permitted).
  * @param width  the image width.
@@ -214,7 +214,7 @@ public abstract class ChartUtilities {
     ChartUtilities.writeChartAsJPEG(out,quality,chart,width,height,null);
   }
   /** 
- * Writes a chart to an output stream in JPEG format. This method allows you to pass in a                                                                                               {@link ChartRenderingInfo} object, to collectinformation about the chart dimensions/entities.  You will need this info if you want to create an HTML image map.
+ * Writes a chart to an output stream in JPEG format. This method allows you to pass in a                                                                                                                                                                {@link ChartRenderingInfo} object, to collectinformation about the chart dimensions/entities.  You will need this info if you want to create an HTML image map.
  * @param out  the output stream (<code>null</code> not permitted).
  * @param chart  the chart (<code>null</code> not permitted).
  * @param width  the image width.
@@ -230,7 +230,7 @@ public abstract class ChartUtilities {
     EncoderUtil.writeBufferedImage(image,ImageFormat.JPEG,out);
   }
   /** 
- * Writes a chart to an output stream in JPEG format.  This method allows you to pass in a                                                                                               {@link ChartRenderingInfo} object, to collectinformation about the chart dimensions/entities.  You will need this info if you want to create an HTML image map.
+ * Writes a chart to an output stream in JPEG format.  This method allows you to pass in a                                                                                                                                                                {@link ChartRenderingInfo} object, to collectinformation about the chart dimensions/entities.  You will need this info if you want to create an HTML image map.
  * @param out  the output stream (<code>null</code> not permitted).
  * @param quality  the output quality (0.0f to 1.0f).
  * @param chart  the chart (<code>null</code> not permitted).
@@ -270,7 +270,7 @@ public abstract class ChartUtilities {
     saveChartAsJPEG(file,quality,chart,width,height,null);
   }
   /** 
- * Saves a chart to a file in JPEG format.  This method allows you to pass in a                                                                                               {@link ChartRenderingInfo} object, to collect information about thechart dimensions/entities.  You will need this info if you want to create an HTML image map.
+ * Saves a chart to a file in JPEG format.  This method allows you to pass in a                                                                                                                                                                {@link ChartRenderingInfo} object, to collect information about thechart dimensions/entities.  You will need this info if you want to create an HTML image map.
  * @param file  the file name (<code>null</code> not permitted).
  * @param chart  the chart (<code>null</code> not permitted).
  * @param width  the image width.
@@ -294,7 +294,7 @@ public abstract class ChartUtilities {
     }
   }
   /** 
- * Saves a chart to a file in JPEG format.  This method allows you to pass in a                                                                                               {@link ChartRenderingInfo} object, to collect information about thechart dimensions/entities.  You will need this info if you want to create an HTML image map.
+ * Saves a chart to a file in JPEG format.  This method allows you to pass in a                                                                                                                                                                {@link ChartRenderingInfo} object, to collect information about thechart dimensions/entities.  You will need this info if you want to create an HTML image map.
  * @param file  the file name (<code>null</code> not permitted).
  * @param quality  the quality setting.
  * @param chart  the chart (<code>null</code> not permitted).
@@ -319,7 +319,7 @@ public abstract class ChartUtilities {
     }
   }
   /** 
- * Writes a                                                                                               {@link BufferedImage} to an output stream in JPEG format.
+ * Writes a                                                                                                                                                                {@link BufferedImage} to an output stream in JPEG format.
  * @param out  the output stream (<code>null</code> not permitted).
  * @param image  the image (<code>null</code> not permitted).
  * @throws IOException if there are any I/O errors.
@@ -328,7 +328,7 @@ public abstract class ChartUtilities {
     writeBufferedImageAsJPEG(out,0.75f,image);
   }
   /** 
- * Writes a                                                                                               {@link BufferedImage} to an output stream in JPEG format.
+ * Writes a                                                                                                                                                                {@link BufferedImage} to an output stream in JPEG format.
  * @param out  the output stream (<code>null</code> not permitted).
  * @param quality  the image quality (0.0f to 1.0f).
  * @param image  the image (<code>null</code> not permitted).
@@ -338,7 +338,7 @@ public abstract class ChartUtilities {
     EncoderUtil.writeBufferedImage(image,ImageFormat.JPEG,out,quality);
   }
   /** 
- * Writes a                                                                                               {@link BufferedImage} to an output stream in PNG format.
+ * Writes a                                                                                                                                                                {@link BufferedImage} to an output stream in PNG format.
  * @param out  the output stream (<code>null</code> not permitted).
  * @param image  the image (<code>null</code> not permitted).
  * @throws IOException if there are any I/O errors.
@@ -347,7 +347,7 @@ public abstract class ChartUtilities {
     EncoderUtil.writeBufferedImage(image,ImageFormat.PNG,out);
   }
   /** 
- * Writes a                                                                                               {@link BufferedImage} to an output stream in PNG format.
+ * Writes a                                                                                                                                                                {@link BufferedImage} to an output stream in PNG format.
  * @param out  the output stream (<code>null</code> not permitted).
  * @param image  the image (<code>null</code> not permitted).
  * @param encodeAlpha  encode alpha?
@@ -358,7 +358,7 @@ public abstract class ChartUtilities {
     EncoderUtil.writeBufferedImage(image,ImageFormat.PNG,out,compression,encodeAlpha);
   }
   /** 
- * Encodes a                                                                                               {@link BufferedImage} to PNG format.
+ * Encodes a                                                                                                                                                                {@link BufferedImage} to PNG format.
  * @param image  the image (<code>null</code> not permitted).
  * @return A byte array in PNG format.
  * @throws IOException if there is an I/O problem.
@@ -367,7 +367,7 @@ public abstract class ChartUtilities {
     return EncoderUtil.encode(image,ImageFormat.PNG);
   }
   /** 
- * Encodes a                                                                                               {@link BufferedImage} to PNG format.
+ * Encodes a                                                                                                                                                                {@link BufferedImage} to PNG format.
  * @param image  the image (<code>null</code> not permitted).
  * @param encodeAlpha  encode alpha?
  * @param compression  the PNG compression level (0-9).
@@ -408,7 +408,7 @@ public abstract class ChartUtilities {
     writer.println(ImageMapUtilities.getImageMap(name,info,toolTipTagFragmentGenerator,urlTagFragmentGenerator));
   }
   /** 
- * Creates an HTML image map.  This method maps to                                                                                              {@link ImageMapUtilities#getImageMap(String,ChartRenderingInfo,ToolTipTagFragmentGenerator,URLTagFragmentGenerator)}, using default generators.
+ * Creates an HTML image map.  This method maps to                                                                                                                                                               {@link ImageMapUtilities#getImageMap(String,ChartRenderingInfo,ToolTipTagFragmentGenerator,URLTagFragmentGenerator)}, using default generators.
  * @param name  the map name (<code>null</code> not permitted).
  * @param info  the chart rendering info (<code>null</code> not permitted).
  * @return The map tag.
@@ -417,7 +417,7 @@ public abstract class ChartUtilities {
     return ImageMapUtilities.getImageMap(name,info,new StandardToolTipTagFragmentGenerator(),new StandardURLTagFragmentGenerator());
   }
   /** 
- * Creates an HTML image map.  This method maps directly to                                                                                              {@link ImageMapUtilities#getImageMap(String,ChartRenderingInfo,ToolTipTagFragmentGenerator,URLTagFragmentGenerator)}.
+ * Creates an HTML image map.  This method maps directly to                                                                                                                                                               {@link ImageMapUtilities#getImageMap(String,ChartRenderingInfo,ToolTipTagFragmentGenerator,URLTagFragmentGenerator)}.
  * @param name  the map name (<code>null</code> not permitted).
  * @param info  the chart rendering info (<code>null</code> not permitted).
  * @param toolTipTagFragmentGenerator  a generator for the HTML fragmentthat will contain the tooltip text (<code>null</code> not permitted if <code>info</code> contains tooltip information).

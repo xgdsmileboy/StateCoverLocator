@@ -6,7 +6,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.event.DatasetChangeEvent;
 /** 
- * A collection of                                                                                               {@link VectorSeries} objects.
+ * A collection of                                                                                                                                                               {@link VectorSeries} objects.
  * @since 1.0.6
  */
 public class VectorSeriesCollection extends AbstractXYDataset implements VectorXYDataset, PublicCloneable, Serializable {
@@ -21,7 +21,7 @@ public class VectorSeriesCollection extends AbstractXYDataset implements VectorX
     this.data=new java.util.ArrayList();
   }
   /** 
- * Adds a series to the collection and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Adds a series to the collection and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void addSeries(  VectorSeries series){
@@ -33,7 +33,7 @@ public class VectorSeriesCollection extends AbstractXYDataset implements VectorX
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes the specified series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes the specified series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  * @return A boolean indicating whether the series has actually beenremoved.
  */
@@ -49,7 +49,7 @@ public class VectorSeriesCollection extends AbstractXYDataset implements VectorX
     return removed;
   }
   /** 
- * Removes all the series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes all the series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  */
   public void removeAllSeries(){
     for (int i=0; i < this.data.size(); i++) {
@@ -119,7 +119,7 @@ public class VectorSeriesCollection extends AbstractXYDataset implements VectorX
     return di.getXValue();
   }
   /** 
- * Returns the x-value for an item within a series.  Note that this method creates a new                                                                                               {@link Double} instance every time it is called---use{@link #getXValue(int,int)} instead, if possible.
+ * Returns the x-value for an item within a series.  Note that this method creates a new                                                                                                                                                               {@link Double} instance every time it is called---use{@link #getXValue(int,int)} instead, if possible.
  * @param series  the series index.
  * @param item  the item index.
  * @return The x-value.
@@ -139,7 +139,7 @@ public class VectorSeriesCollection extends AbstractXYDataset implements VectorX
     return di.getYValue();
   }
   /** 
- * Returns the y-value for an item within a series.  Note that this method creates a new                                                                                               {@link Double} instance every time it is called---use{@link #getYValue(int,int)} instead, if possible.
+ * Returns the y-value for an item within a series.  Note that this method creates a new                                                                                                                                                               {@link Double} instance every time it is called---use{@link #getYValue(int,int)} instead, if possible.
  * @param series  the series index.
  * @param item  the item index.
  * @return The y-value.

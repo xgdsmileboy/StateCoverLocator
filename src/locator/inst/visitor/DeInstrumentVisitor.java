@@ -13,21 +13,19 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 
 import locator.common.config.Identifier;
-import locator.common.java.Method;
-import locator.common.util.LevelLogger;
+import soot.coffi.constant_element_value;
 
 /**
  * delete all print statement instrumented into the source code
@@ -43,15 +41,17 @@ public class DeInstrumentVisitor extends TraversalVisitor {
 
 	}
 
-	public DeInstrumentVisitor(Set<Method> methods) {
+	public DeInstrumentVisitor(Set<Integer> methods) {
 		_methods = methods;
 	}
 
 	public boolean visit(MethodDeclaration node) {
 		if (_methods != null) {
 			boolean flag = false;
-			for (Method method : _methods) {
-				if (method.match(node, _clazzName)) {
+			for (Integer method : _methods) {
+				String mString = buildMethodInfoString(node);
+				int id = Identifier.getIdentifier(mString);
+				if (method == id) {
 					flag = true;
 				}
 			}
@@ -77,7 +77,22 @@ class RemoveStatementVisitor extends ASTVisitor {
 
 		node.statements().clear();
 		for (ASTNode astNode : statements) {
-			if (astNode instanceof ExpressionStatement) {
+			if(astNode instanceof Block){
+				Block block = (Block) astNode;
+				int size = block.statements().size();
+				if(size == 2){
+					boolean isInstrument = true;
+					for(int i = 0; i < size; i++){
+						if(block.statements().get(i).toString().startsWith("auxiliary.Dumper")){
+							continue;
+						}
+						isInstrument = false;
+					}
+					if(isInstrument){
+						continue;
+					}
+				}
+			} else if (astNode instanceof ExpressionStatement) {
 				ExpressionStatement expressionStatement = (ExpressionStatement) astNode;
 				if (expressionStatement.getExpression() instanceof MethodInvocation) {
 					MethodInvocation methodInvocation = (MethodInvocation) expressionStatement.getExpression();
@@ -109,16 +124,11 @@ class RemoveStatementVisitor extends ASTVisitor {
 			} else if (astNode instanceof IfStatement) {
 				IfStatement ifStatement = (IfStatement) astNode;
 				if (ifStatement.getThenStatement() instanceof Block && ifStatement.getElseStatement() == null) {
-					Block thenBlock = (Block) ifStatement.getThenStatement();
-					if (thenBlock.statements().size() == 1) {
-						Statement thenStatement = (Statement) thenBlock.statements().get(0);
-						if (thenStatement instanceof ExpressionStatement) {
-							ExpressionStatement thenExpression = (ExpressionStatement) thenStatement;
-							if (thenExpression.getExpression() instanceof MethodInvocation) {
-								if (IsInstrumentation((MethodInvocation) thenExpression.getExpression())) {
-									continue;
-								}
-							}
+					Block block = (Block) ifStatement.getThenStatement();
+					if(block.statements().size() == 1 && block.statements().get(0) instanceof ExpressionStatement){
+						ExpressionStatement es = (ExpressionStatement) block.statements().get(0);
+						if(es.getExpression() instanceof MethodInvocation && IsInstrumentation((MethodInvocation)es.getExpression())){
+							continue;
 						}
 					}
 				}
@@ -131,8 +141,7 @@ class RemoveStatementVisitor extends ASTVisitor {
 
 	private boolean IsInstrumentation(MethodInvocation node) {
 		Expression expression = node.getExpression();
-		if (expression != null && expression.toString().equals("auxiliary.Dumper")
-				&& node.getName().getFullyQualifiedName().equals("write")) {
+		if (expression != null && expression.toString().equals("auxiliary.Dumper")) {
 			return true;
 		}
 		return false;

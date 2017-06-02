@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
  */
 public class DatasetReader {
   /** 
- * Reads a                                                                                               {@link PieDataset} from an XML file.
+ * Reads a                                                                                                                                                               {@link PieDataset} from an XML file.
  * @param file  the file.
  * @return A dataset.
  * @throws IOException if there is a problem reading the file.
@@ -24,7 +24,7 @@ public class DatasetReader {
     return readPieDatasetFromXML(in);
   }
   /** 
- * Reads a                                                                                               {@link PieDataset} from a stream.
+ * Reads a                                                                                                                                                               {@link PieDataset} from a stream.
  * @param in  the input stream.
  * @return A dataset.
  * @throws IOException if there is an I/O error.
@@ -47,7 +47,7 @@ catch (    ParserConfigurationException e2) {
     return result;
   }
   /** 
- * Reads a                                                                                               {@link CategoryDataset} from a file.
+ * Reads a                                                                                                                                                               {@link CategoryDataset} from a file.
  * @param file  the file.
  * @return A dataset.
  * @throws IOException if there is a problem reading the file.
@@ -57,7 +57,7 @@ catch (    ParserConfigurationException e2) {
     return readCategoryDatasetFromXML(in);
   }
   /** 
- * Reads a                                                                                               {@link CategoryDataset} from a stream.
+ * Reads a                                                                                                                                                               {@link CategoryDataset} from a stream.
  * @param in  the stream.
  * @return A dataset.
  * @throws IOException if there is a problem reading the file.

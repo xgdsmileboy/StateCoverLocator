@@ -6,7 +6,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.event.DatasetChangeEvent;
 /** 
- * A collection of                                                                                               {@link XIntervalSeries} objects.
+ * A collection of                                                                                                                                                               {@link XIntervalSeries} objects.
  * @since 1.0.3
  * @see XIntervalSeries
  */
@@ -22,7 +22,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset impleme
     this.data=new java.util.ArrayList();
   }
   /** 
- * Adds a series to the collection and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Adds a series to the collection and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void addSeries(  XIntervalSeries series){
@@ -145,7 +145,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset impleme
     return new Double(di.getXHighValue());
   }
   /** 
- * Returns the start y-value for an item within a series.  This method maps directly to                                                                                               {@link #getY(int,int)}.
+ * Returns the start y-value for an item within a series.  This method maps directly to                                                                                                                                                               {@link #getY(int,int)}.
  * @param series  the series index.
  * @param item  the item index.
  * @return The start y-value.
@@ -154,7 +154,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset impleme
     return getY(series,item);
   }
   /** 
- * Returns the end y-value for an item within a series.  This method maps directly to                                                                                               {@link #getY(int,int)}.
+ * Returns the end y-value for an item within a series.  This method maps directly to                                                                                                                                                               {@link #getY(int,int)}.
  * @param series  the series index.
  * @param item  the item index.
  * @return The end y-value.
@@ -163,7 +163,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset impleme
     return getY(series,item);
   }
   /** 
- * Removes a series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes a series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series index (zero-based).
  * @since 1.0.10
  */
@@ -177,7 +177,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset impleme
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes a series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  * @since 1.0.10
  */
@@ -192,7 +192,7 @@ public class XIntervalSeriesCollection extends AbstractIntervalXYDataset impleme
     }
   }
   /** 
- * Removes all the series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes all the series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @since 1.0.10
  */
   public void removeAllSeries(){

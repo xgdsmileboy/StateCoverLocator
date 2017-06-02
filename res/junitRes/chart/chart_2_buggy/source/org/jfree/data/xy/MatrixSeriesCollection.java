@@ -5,7 +5,7 @@ import org.jfree.chart.event.DatasetChangeInfo;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * Represents a collection of                                                                                               {@link MatrixSeries} that can be used as adataset.
+ * Represents a collection of                                                                                                                                                               {@link MatrixSeries} that can be used as adataset.
  * @see org.jfree.data.xy.MatrixSeries
  */
 public class MatrixSeriesCollection extends AbstractXYZDataset implements XYZDataset, PublicCloneable, Serializable {

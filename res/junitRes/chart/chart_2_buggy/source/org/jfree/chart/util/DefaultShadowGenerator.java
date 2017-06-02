@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.Serializable;
 /** 
- * A default implementation of the                                                                                               {@link ShadowGenerator} interface, based oncode in a <a href="http://www.jroller.com/gfx/entry/fast_or_good_drop_shadows">blog post by Romain Guy</a>.
+ * A default implementation of the                                                                                                                                                                {@link ShadowGenerator} interface, based oncode in a <a href="http://www.jroller.com/gfx/entry/fast_or_good_drop_shadows">blog post by Romain Guy</a>.
  * @since 1.0.14
  */
 public class DefaultShadowGenerator implements ShadowGenerator, Serializable {

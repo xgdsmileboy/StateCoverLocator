@@ -71,7 +71,7 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 		}
 		String keyValue = String.valueOf(Identifier.getIdentifier(message));
 		// optimize instrument
-		message = Constant.INSTRUMENT_FLAG + _methodFlag + "#" + keyValue;
+		message = Constant.INSTRUMENT_FLAG + _methodFlag + Constant.INSTRUMENT_STR_SEP + keyValue;
 
 		Block methodBody = node.getBody();
 

@@ -1,7 +1,7 @@
 package org.jfree.data.xy;
 import java.io.Serializable;
 /** 
- * A y-value plus the bounds for the related x-interval.  This curious combination exists as an implementation detail, to fit into the structure of the ComparableObjectSeries class.  It would have been possible to simply reuse the                                                                                               {@link YInterval} class by assuming that the y-intervalin fact represents the x-interval, however I decided it was better to duplicate some code in order to document the real intent.
+ * A y-value plus the bounds for the related x-interval.  This curious combination exists as an implementation detail, to fit into the structure of the ComparableObjectSeries class.  It would have been possible to simply reuse the                                                                                                                                                              {@link YInterval} class by assuming that the y-intervalin fact represents the x-interval, however I decided it was better to duplicate some code in order to document the real intent.
  * @since 1.0.3
  */
 public class YWithXInterval implements Serializable {

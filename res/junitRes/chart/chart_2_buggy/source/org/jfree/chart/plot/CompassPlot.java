@@ -36,7 +36,7 @@ import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.general.ValueDataset;
 /** 
- * A specialised plot that draws a compass to indicate a direction based on the value from a                                                                                               {@link ValueDataset}.
+ * A specialised plot that draws a compass to indicate a direction based on the value from a                                                                                                                                                                {@link ValueDataset}.
  */
 public class CompassPlot extends Plot implements Cloneable, Serializable {
   /** 
@@ -141,7 +141,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     setSeriesNeedle(0);
   }
   /** 
- * Returns the label type.  Defined by the constants:                                                                                               {@link #NO_LABELS}and                                                                                               {@link #VALUE_LABELS}.
+ * Returns the label type.  Defined by the constants:                                                                                                                                                                {@link #NO_LABELS}and                                                                                                                                                                {@link #VALUE_LABELS}.
  * @return The label type.
  * @see #setLabelType(int)
  */
@@ -149,7 +149,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     return this.labelType;
   }
   /** 
- * Sets the label type (either                                                                                               {@link #NO_LABELS} or {@link #VALUE_LABELS}.
+ * Sets the label type (either                                                                                                                                                                {@link #NO_LABELS} or {@link #VALUE_LABELS}.
  * @param type  the type.
  * @see #getLabelType()
  */
@@ -171,7 +171,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     return this.labelFont;
   }
   /** 
- * Sets the label font and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the label font and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param font  the new label font.
  * @see #getLabelFont()
  */
@@ -191,7 +191,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     return this.rosePaint;
   }
   /** 
- * Sets the paint used to fill the outer circle of the compass, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to fill the outer circle of the compass, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRosePaint()
  */
@@ -211,7 +211,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     return this.roseCenterPaint;
   }
   /** 
- * Sets the paint used to fill the inner background area of the compass, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to fill the inner background area of the compass, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRoseCenterPaint()
  */
@@ -231,7 +231,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     return this.roseHighlightPaint;
   }
   /** 
- * Sets the paint used to draw the circles, symbols and labels of the compass, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the circles, symbols and labels of the compass, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRoseHighlightPaint()
  */
@@ -301,7 +301,7 @@ public class CompassPlot extends Plot implements Cloneable, Serializable {
     setSeriesNeedle(0,type);
   }
   /** 
- * Sets the needle for a series.  The needle type is one of the following: <ul> <li>0 =                                                                                               {@link ArrowNeedle};</li> <li>1 =                                                                                               {@link LineNeedle};</li> <li>2 =                                                                                               {@link LongNeedle};</li> <li>3 =                                                                                               {@link PinNeedle};</li> <li>4 =                                                                                               {@link PlumNeedle};</li> <li>5 =                                                                                               {@link PointerNeedle};</li> <li>6 =                                                                                               {@link ShipNeedle};</li> <li>7 =                                                                                               {@link WindNeedle};</li> <li>8 =                                                                                               {@link ArrowNeedle};</li> <li>9 =                                                                                               {@link MiddlePinNeedle};</li> </ul>
+ * Sets the needle for a series.  The needle type is one of the following: <ul> <li>0 =                                                                                                                                                                {@link ArrowNeedle};</li> <li>1 =                                                                                                                                                                {@link LineNeedle};</li> <li>2 =                                                                                                                                                                {@link LongNeedle};</li> <li>3 =                                                                                                                                                                {@link PinNeedle};</li> <li>4 =                                                                                                                                                                {@link PlumNeedle};</li> <li>5 =                                                                                                                                                                {@link PointerNeedle};</li> <li>6 =                                                                                                                                                                {@link ShipNeedle};</li> <li>7 =                                                                                                                                                                {@link WindNeedle};</li> <li>8 =                                                                                                                                                                {@link ArrowNeedle};</li> <li>9 =                                                                                                                                                                {@link MiddlePinNeedle};</li> </ul>
  * @param index  the series index.
  * @param type  the needle type.
  * @see #setSeriesNeedle(int)
@@ -350,7 +350,7 @@ throw new IllegalArgumentException("Unrecognised type.");
 }
 }
 /** 
- * Sets the needle for a series and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the needle for a series and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param index  the series index.
  * @param needle  the needle.
  */

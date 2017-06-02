@@ -13,10 +13,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import locator.common.config.Constant;
-import locator.common.java.Method;
+import locator.common.java.CoverInfo;
 import locator.common.util.LevelLogger;
 
 /**
@@ -30,6 +32,66 @@ public class ExecutionPathBuilder {
 
 	private final static String __name__ = "@ExecutionPathBuilder ";
 
+	public static Map<String, CoverInfo> buildCoverage(String outputFile){
+		Map<String, CoverInfo> coverage = new HashMap<>();
+		File file = new File(outputFile);
+		if (!file.exists()) {
+			LevelLogger.warn(__name__ + "#collectAllExecutedMethods file : " + outputFile + " does not exist.");
+			return coverage;
+		}
+
+		BufferedReader bReader = null;
+
+		try {
+			bReader = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			LevelLogger.fatal(__name__ + "#collectAllExecutedMethods open file failed !", e);
+			return coverage;
+		}
+
+		String line = null;
+		try {
+			while ((line = bReader.readLine()) != null) {
+				String[] lineInfo = line.split("\t");
+				if (lineInfo.length < 2) {
+					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
+					System.exit(0);
+				}
+				String lineNum = lineInfo[0];
+				String[] cover = lineInfo[1].split(",");
+				if(cover.length != 2){
+					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
+					System.exit(0);
+				}
+				int succNum = Integer.parseInt(cover[0]);
+				int failNum = Integer.parseInt(cover[1]);
+				CoverInfo coverInfo = coverage.get(lineNum);
+				if(coverInfo != null){
+					coverInfo.passedAdd(succNum);
+					coverInfo.failedAdd(failNum);
+				} else {
+					coverInfo = new CoverInfo();
+					coverInfo.passedAdd(succNum);
+					coverInfo.failedAdd(failNum);
+					coverage.put(lineNum, coverInfo);
+				}
+			}
+			bReader.close();
+		} catch (IOException e) {
+			LevelLogger.fatal(__name__ + "#collectAllExecutedMethods read file failed !", e);
+			return null;
+		} finally {
+			if (bReader != null) {
+				try {
+					bReader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+
+		return coverage;
+	}
+	
 	/**
 	 * collect all methods executed from the given {@code outputFile}
 	 * 
@@ -37,8 +99,8 @@ public class ExecutionPathBuilder {
 	 *            : file contains the output instrument information
 	 * @return a map that maps each method to the executed numbers
 	 */
-	public static Map<Method, Integer> collectAllExecutedMethods(String outputFile) {
-		Map<Method, Integer> allMethods = new HashMap<>();
+	public static Set<Integer> collectAllExecutedMethods(String outputFile) {
+		Set<Integer> allMethods = new HashSet<>();
 		File file = new File(outputFile);
 		if (!file.exists()) {
 			LevelLogger.warn(__name__ + "#collectAllExecutedMethods file : " + outputFile + " does not exist.");
@@ -58,17 +120,12 @@ public class ExecutionPathBuilder {
 		try {
 			while ((line = bReader.readLine()) != null) {
 				String[] methodInfo = line.split("#");
-				if (methodInfo.length < 3) {
+				if (methodInfo.length < 2) {
 					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
 					System.exit(0);
 				}
-				int mID = Integer.parseInt(methodInfo[1]);
-				Method method = new Method(mID);
-				Integer count = allMethods.get(method);
-				if (count == null) {
-					count = 0;
-				}
-				allMethods.put(method, count + 1);
+				int mID = Integer.parseInt(methodInfo[0]);
+				allMethods.add(mID);
 			}
 			bReader.close();
 		} catch (IOException e) {

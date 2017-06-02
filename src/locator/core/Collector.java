@@ -38,16 +38,9 @@ public class Collector {
 
 	private final static String __name__ = "@Collector ";
 
-	/**
-	 * collect all failed test cases and passed test cases
-	 * 
-	 * @param subject
-	 *            : current considered subject
-	 * @return a pair of test cases, the first element is a set of failed test
-	 *         cases and the second element is a set of passed test cases
-	 */
-	public static Pair<Set<Integer>, Set<Integer>> collectAllTestCases(Subject subject) {
-		Pair<Set<Integer>, Set<Integer>> allTests = new Pair<>();
+	
+	public static Pair<Set<Integer>, Set<Integer>> collectFailedTestAndCoveredMethod(Subject subject){
+		Pair<Set<Integer>, Set<Integer>> testsAndMethods = new Pair<>();
 		// run all test
 		try {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
@@ -57,34 +50,57 @@ public class Collector {
 		}
 
 		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
-		String srcPath = subject.getHome() + subject.getSsrc();
-		String tsrPath = subject.getHome() + subject.getTsrc();
-		Set<Method> coveredMethods = collectCoveredMethod(subject, failedTest);
-
-		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(coveredMethods);
-		Instrument.execute(srcPath, methodInstrumentVisitor);
-
-		// test case instrument
-		Instrument.execute(tsrPath, new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST));
-		// run all test
-		try {
-			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
-		} catch (Exception e) {
-			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
-			return null;
-		}
-		Instrument.execute(tsrPath, new DeInstrumentVisitor());
-		Instrument.execute(srcPath, new DeInstrumentVisitor());
-
-		Set<Integer> passedTest = collectAllPassedTestCases(Constant.STR_TMP_INSTR_OUTPUT_FILE, failedTest);
-		// Set<Integer> passedTest = collectAllPassedTestCases(subject.getHome()
-		// + "/all-tests.txt", failedTest);
-
-		allTests.setFirst(failedTest);
-		allTests.setSecond(passedTest);
-
-		return allTests;
+		Set<Integer> coveredMethods = collectCoveredMethod(subject, failedTest);
+		return new Pair<Set<Integer>, Set<Integer>>(failedTest, coveredMethods);
 	}
+	
+	/**
+	 * collect all failed test cases and passed test cases
+	 * 
+	 * @param subject
+	 *            : current considered subject
+	 * @return a pair of test cases, the first element is a set of failed test
+	 *         cases and the second element is a set of passed test cases
+	 */
+//	public static Pair<Set<Integer>, Set<Integer>> collectAllTestCases(Subject subject) {
+//		Pair<Set<Integer>, Set<Integer>> allTests = new Pair<>();
+//		// run all test
+//		try {
+//			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
+//		} catch (Exception e) {
+//			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
+//			return null;
+//		}
+//
+//		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
+//		String srcPath = subject.getHome() + subject.getSsrc();
+//		String tsrPath = subject.getHome() + subject.getTsrc();
+//		Set<Method> coveredMethods = collectCoveredMethod(subject, failedTest);
+//
+//		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(coveredMethods);
+//		Instrument.execute(srcPath, methodInstrumentVisitor);
+//
+//		// test case instrument
+//		Instrument.execute(tsrPath, new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST));
+//		// run all test
+//		try {
+//			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
+//		} catch (Exception e) {
+//			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
+//			return null;
+//		}
+//		Instrument.execute(tsrPath, new DeInstrumentVisitor());
+//		Instrument.execute(srcPath, new DeInstrumentVisitor());
+//
+//		Set<Integer> passedTest = collectAllPassedTestCases(Constant.STR_TMP_INSTR_OUTPUT_FILE, failedTest);
+//		// Set<Integer> passedTest = collectAllPassedTestCases(subject.getHome()
+//		// + "/all-tests.txt", failedTest);
+//
+//		allTests.setFirst(failedTest);
+//		allTests.setSecond(passedTest);
+//
+//		return allTests;
+//	}
 
 	/**
 	 * collect all passed test cases based on the output info, before which the
@@ -96,7 +112,7 @@ public class Collector {
 	 *            : failed test cases to be filtered
 	 * @return a set of method ids of passed test cases
 	 */
-	private static Set<Integer> collectAllPassedTestCases(String outputFile, Set<Integer> failedTests) {
+	public static Set<Integer> collectAllPassedTestCases(String outputFile, Set<Integer> failedTests) {
 		Set<Integer> allPassedTestCases = new HashSet<>();
 		File file = new File(outputFile);
 		if (!file.exists()) {
@@ -226,11 +242,11 @@ public class Collector {
 	 *            :a set of method ids of test cases to be collected
 	 * @return a set of method ids covered by the given test cases
 	 */
-	public static Set<Method> collectCoveredMethod(Subject subject, Set<Integer> testcases) {
+	public static Set<Integer> collectCoveredMethod(Subject subject, Set<Integer> testcases) {
 		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor();
 		String subjectSourcePath = subject.getHome() + subject.getSsrc();
 		Instrument.execute(subjectSourcePath, methodInstrumentVisitor);
-		Set<Method> allMethods = new HashSet<>();
+		Set<Integer> allMethods = new HashSet<>();
 		for (Integer methodID : testcases) {
 			String methodString = Identifier.getMessage(methodID);
 			String[] methodInfo = methodString.split("#");
@@ -247,11 +263,11 @@ public class Collector {
 						.error(__name__ + "#collectCoveredMethod build subject failed when running single test case.");
 				System.exit(0);
 			}
-			Map<Method, Integer> pathMap = ExecutionPathBuilder
+			Set<Integer> coveredMethodes = ExecutionPathBuilder
 					.collectAllExecutedMethods(Constant.STR_TMP_INSTR_OUTPUT_FILE);
 
-			if (pathMap != null) {
-				allMethods.addAll(pathMap.keySet());
+			if (coveredMethodes != null) {
+				allMethods.addAll(coveredMethodes);
 			}
 		}
 

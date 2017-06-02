@@ -3,14 +3,21 @@ package locator.inst.gen;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.StringLiteral;
 
+import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 
 public class GenStatement {
@@ -73,6 +80,7 @@ public class GenStatement {
 	 *            : line number
 	 * @return a if statement with a line number printer
 	 */
+	@Deprecated
 	public static IfStatement genPredicateStatement(String condition, String message, int line) {
 		IfStatement ifStatement = ast.newIfStatement();
 		Expression conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
@@ -80,6 +88,62 @@ public class GenStatement {
 		Statement statement = genASTNode(message, line);
 		Block thenBlock = ast.newBlock();
 		thenBlock.statements().add(statement);
+		ifStatement.setThenStatement(thenBlock);
+		return ifStatement;
+	}
+	
+	public static Block genInstrumentStatementForTestWithReset(boolean succTest){
+		Block block = ast.newBlock();
+		
+		// auxiliary.Dumper.SUCC_TEST = succTest;
+		QualifiedName qName = ast.newQualifiedName(ast.newName("auxiliary.Dumper"), ast.newSimpleName("SUCC_TEST"));
+		Assignment assignment = ast.newAssignment();
+		assignment.setLeftHandSide(qName);
+		assignment.setRightHandSide(ast.newBooleanLiteral(succTest));
+		ExpressionStatement assignStatement = ast.newExpressionStatement(assignment);
+		
+		// auxiliary.Dumper.reset();
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation.setName(ast.newSimpleName("reset"));
+		ExpressionStatement resetStatement = ast.newExpressionStatement(methodInvocation);
+		
+		
+		// {
+		//    auxiliary.Dumper.SUCC_TEST = succTest;
+		//    auxiliary.Dumper.reset();
+		// }
+		block.statements().add(assignStatement);
+		block.statements().add(resetStatement);
+		
+		return block;
+	}
+	
+	
+	public static IfStatement newGenPredicateStatement(String condition, String message) {
+		
+		// condition
+		Expression conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
+		
+		// if(condition)
+		IfStatement ifStatement = ast.newIfStatement();
+		ifStatement.setExpression((Expression) ASTNode.copySubtree(ast, conditionExp));
+		
+		// auxiliary.Dumper.write(message);
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation.setName(ast.newSimpleName("write"));
+		
+		StringLiteral stringLiteral = ast.newStringLiteral();
+		stringLiteral.setLiteralValue(message);
+		methodInvocation.arguments().add(stringLiteral);
+		ExpressionStatement invokeStatement = ast.newExpressionStatement(methodInvocation);
+		
+		// if(auxiliary.Dumper.PRINT && condition){
+		//     auxiliary.Dumper.write(message);
+		// }
+		Block thenBlock = ast.newBlock();
+		thenBlock.statements().add(invokeStatement);
 		ifStatement.setThenStatement(thenBlock);
 		return ifStatement;
 	}

@@ -12,7 +12,7 @@ import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.event.SeriesChangeEvent;
 /** 
- * An                                                                                               {@link XYDataset} where every series shares the same x-values (requiredfor generating stacked area charts).
+ * An                                                                                                                                                               {@link XYDataset} where every series shares the same x-values (requiredfor generating stacked area charts).
  */
 public class DefaultTableXYDataset extends AbstractIntervalXYDataset implements TableXYDataset, IntervalXYDataset, DomainInfo, PublicCloneable {
   /** 
@@ -60,7 +60,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset implements 
     return this.autoPrune;
   }
   /** 
- * Adds a series to the collection and sends a                                                                                               {@link DatasetChangeEvent}to all registered listeners.  The series should be configured to NOT allow duplicate x-values.
+ * Adds a series to the collection and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.  The series should be configured to NOT allow duplicate x-values.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void addSeries(  XYSeries series){
@@ -225,7 +225,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset implements 
     return getY(series,item);
   }
   /** 
- * Removes all the series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes all the series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  */
   public void removeAllSeries(){
     for (int i=0; i < this.data.size(); i++) {
@@ -237,7 +237,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset implements 
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes a series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void removeSeries(  XYSeries series){
@@ -254,7 +254,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset implements 
     }
   }
   /** 
- * Removes a series from the collection and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes a series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series (zero based index).
  */
   public void removeSeries(  int series){
@@ -320,7 +320,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset implements 
     }
   }
   /** 
- * This method receives notification when a series belonging to the dataset changes.  It responds by updating the x-points for the entire dataset and sending a                                                                                               {@link DatasetChangeEvent} to all registered listeners.
+ * This method receives notification when a series belonging to the dataset changes.  It responds by updating the x-points for the entire dataset and sending a                                                                                                                                                               {@link DatasetChangeEvent} to all registered listeners.
  * @param event  information about the change.
  */
   public void seriesChanged(  SeriesChangeEvent event){
@@ -440,7 +440,7 @@ public class DefaultTableXYDataset extends AbstractIntervalXYDataset implements 
     return this.intervalDelegate.getIntervalWidth();
   }
   /** 
- * Sets the interval width to a fixed value, and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the interval width to a fixed value, and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param d  the new interval width (must be > 0).
  */
   public void setIntervalWidth(  double d){

@@ -8,7 +8,7 @@ import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.event.DatasetChangeListener;
 import org.jfree.data.pie.PieDataset;
 /** 
- * A                                                                                               {@link PieDataset} implementation that obtains its data from one row orcolumn of a  {@link CategoryDataset}.
+ * A                                                                                                                                                                {@link PieDataset} implementation that obtains its data from one row orcolumn of a  {@link CategoryDataset}.
  */
 public class CategoryToPieDataset extends AbstractPieDataset implements PieDataset, DatasetChangeListener {
   /** 
@@ -28,7 +28,7 @@ public class CategoryToPieDataset extends AbstractPieDataset implements PieDatas
  */
   private int index;
   /** 
- * An adaptor class that converts any                                                                                               {@link CategoryDataset} into a{@link PieDataset}, by taking the values from a single row or column. <p> If <code>source</code> is <code>null</code>, the created dataset will be empty.
+ * An adaptor class that converts any                                                                                                                                                                {@link CategoryDataset} into a{@link PieDataset}, by taking the values from a single row or column. <p> If <code>source</code> is <code>null</code>, the created dataset will be empty.
  * @param source  the source dataset (<code>null</code> permitted).
  * @param extract  extract data from rows or columns? (<code>null</code>not permitted).
  * @param index  the row or column index.
@@ -186,7 +186,7 @@ public class CategoryToPieDataset extends AbstractPieDataset implements PieDatas
     return result;
   }
   /** 
- * Sends a                                                                                               {@link DatasetChangeEvent} to all registered listeners, withthis (not the underlying) dataset as the source.
+ * Sends a                                                                                                                                                                {@link DatasetChangeEvent} to all registered listeners, withthis (not the underlying) dataset as the source.
  * @param event  the event (ignored, a new event with this dataset as thesource is sent to the listeners).
  */
   public void datasetChanged(  DatasetChangeEvent event){

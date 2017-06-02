@@ -133,7 +133,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.paint;
   }
   /** 
- * Sets the paint and sends a                                                                                               {@link MarkerChangeEvent} to all registeredlisteners.
+ * Sets the paint and sends a                                                                                                                                                                {@link MarkerChangeEvent} to all registeredlisteners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -153,7 +153,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.stroke;
   }
   /** 
- * Sets the stroke and sends a                                                                                               {@link MarkerChangeEvent} to all registeredlisteners.
+ * Sets the stroke and sends a                                                                                                                                                                {@link MarkerChangeEvent} to all registeredlisteners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getStroke()
  */
@@ -173,7 +173,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.outlinePaint;
   }
   /** 
- * Sets the outline paint and sends a                                                                                               {@link MarkerChangeEvent} to allregistered listeners.
+ * Sets the outline paint and sends a                                                                                                                                                                {@link MarkerChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getOutlinePaint()
  */
@@ -190,7 +190,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.outlineStroke;
   }
   /** 
- * Sets the outline stroke and sends a                                                                                               {@link MarkerChangeEvent} to allregistered listeners.
+ * Sets the outline stroke and sends a                                                                                                                                                                {@link MarkerChangeEvent} to allregistered listeners.
  * @param stroke  the stroke (<code>null</code> permitted).
  * @see #getOutlineStroke()
  */
@@ -207,7 +207,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.alpha;
   }
   /** 
- * Sets the alpha transparency that should be used when drawing the marker, and sends a                                                                                               {@link MarkerChangeEvent} to all registeredlisteners.  The alpha transparency is a value in the range 0.0f (completely transparent) to 1.0f (completely opaque).
+ * Sets the alpha transparency that should be used when drawing the marker, and sends a                                                                                                                                                                {@link MarkerChangeEvent} to all registeredlisteners.  The alpha transparency is a value in the range 0.0f (completely transparent) to 1.0f (completely opaque).
  * @param alpha  the alpha transparency (must be in the range 0.0f to1.0f).
  * @throws IllegalArgumentException if <code>alpha</code> is not in thespecified range.
  * @see #getAlpha()
@@ -228,7 +228,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.label;
   }
   /** 
- * Sets the label (if <code>null</code> no label is displayed) and sends a                                                                                              {@link MarkerChangeEvent} to all registered listeners.
+ * Sets the label (if <code>null</code> no label is displayed) and sends a                                                                                                                                                               {@link MarkerChangeEvent} to all registered listeners.
  * @param label  the label (<code>null</code> permitted).
  * @see #getLabel()
  */
@@ -245,7 +245,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.labelFont;
   }
   /** 
- * Sets the label font and sends a                                                                                               {@link MarkerChangeEvent} to allregistered listeners.
+ * Sets the label font and sends a                                                                                                                                                                {@link MarkerChangeEvent} to allregistered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getLabelFont()
  */
@@ -265,7 +265,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.labelPaint;
   }
   /** 
- * Sets the label paint and sends a                                                                                               {@link MarkerChangeEvent} to allregistered listeners.
+ * Sets the label paint and sends a                                                                                                                                                                {@link MarkerChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getLabelPaint()
  */
@@ -285,7 +285,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.labelAnchor;
   }
   /** 
- * Sets the label anchor and sends a                                                                                               {@link MarkerChangeEvent} to allregistered listeners.  The anchor defines the position of the label anchor, relative to the bounds of the marker.
+ * Sets the label anchor and sends a                                                                                                                                                                {@link MarkerChangeEvent} to allregistered listeners.  The anchor defines the position of the label anchor, relative to the bounds of the marker.
  * @param anchor  the anchor (<code>null</code> not permitted).
  * @see #getLabelAnchor()
  */
@@ -305,7 +305,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.labelOffset;
   }
   /** 
- * Sets the label offset and sends a                                                                                               {@link MarkerChangeEvent} to allregistered listeners.
+ * Sets the label offset and sends a                                                                                                                                                                {@link MarkerChangeEvent} to allregistered listeners.
  * @param offset  the label offset (<code>null</code> not permitted).
  * @see #getLabelOffset()
  */
@@ -325,7 +325,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.labelOffsetType;
   }
   /** 
- * Sets the label offset type and sends a                                                                                               {@link MarkerChangeEvent} to allregistered listeners.
+ * Sets the label offset type and sends a                                                                                                                                                                {@link MarkerChangeEvent} to allregistered listeners.
  * @param adj  the type (<code>null</code> not permitted).
  * @see #getLabelOffsetType()
  */
@@ -345,7 +345,7 @@ public abstract class Marker implements Cloneable, Serializable {
     return this.labelTextAnchor;
   }
   /** 
- * Sets the label text anchor and sends a                                                                                               {@link MarkerChangeEvent} toall registered listeners.
+ * Sets the label text anchor and sends a                                                                                                                                                                {@link MarkerChangeEvent} toall registered listeners.
  * @param anchor  the label text anchor (<code>null</code> not permitted).
  * @see #getLabelTextAnchor()
  */

@@ -35,7 +35,7 @@ public class VectorSeries extends ComparableObjectSeries {
     super.add(new VectorDataItem(x,y,deltaX,deltaY),true);
   }
   /** 
- * Removes the item at the specified index and sends a                                                                                              {@link SeriesChangeEvent} to all registered listeners.
+ * Removes the item at the specified index and sends a                                                                                                                                                              {@link SeriesChangeEvent} to all registered listeners.
  * @param index  the index.
  * @return The item removed.
  */

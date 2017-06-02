@@ -20,7 +20,7 @@ import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A renderer that draws line charts.  The renderer doesn't necessarily plot every data item - instead, it tries to plot only those data items that make a difference to the visual output (the other data items are skipped). This renderer is designed for use with the                                                                                               {@link XYPlot} class.
+ * A renderer that draws line charts.  The renderer doesn't necessarily plot every data item - instead, it tries to plot only those data items that make a difference to the visual output (the other data items are skipped). This renderer is designed for use with the                                                                                                                                                                {@link XYPlot} class.
  * @since 1.0.13
  */
 public class SamplingXYLineRenderer extends AbstractXYItemRenderer implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
@@ -91,7 +91,7 @@ public static class State extends XYItemRendererState {
       super(info);
     }
     /** 
- * This method is called by the                                                                                               {@link XYPlot} at the start of eachseries pass.  We reset the state for the current series.
+ * This method is called by the                                                                                                                                                                {@link XYPlot} at the start of eachseries pass.  We reset the state for the current series.
  * @param dataset  the dataset.
  * @param series  the series index.
  * @param firstItem  the first item index for this pass.

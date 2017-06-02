@@ -5,7 +5,7 @@ import java.text.NumberFormat;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A standard label generator that can be used with a                                                                                              {@link org.jfree.chart.renderer.category.CategoryItemRenderer}.
+ * A standard label generator that can be used with a                                                                                                                                                               {@link org.jfree.chart.renderer.category.CategoryItemRenderer}.
  */
 public class StandardCategoryItemLabelGenerator extends AbstractCategoryItemLabelGenerator implements CategoryItemLabelGenerator, Cloneable, PublicCloneable, Serializable {
   /** 

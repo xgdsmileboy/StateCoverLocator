@@ -61,7 +61,7 @@ public class StatisticalBarRenderer extends BarRenderer implements CategoryItemR
     return this.errorIndicatorPaint;
   }
   /** 
- * Sets the paint used for the error indicators (if <code>null</code>, the item outline paint is used instead) and sends a                                                                                              {@link RendererChangeEvent} to all registered listeners.
+ * Sets the paint used for the error indicators (if <code>null</code>, the item outline paint is used instead) and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getErrorIndicatorPaint()
  */
@@ -79,7 +79,7 @@ public class StatisticalBarRenderer extends BarRenderer implements CategoryItemR
     return this.errorIndicatorStroke;
   }
   /** 
- * Sets the stroke used to draw the error indicators, and sends a                                                                                              {@link RendererChangeEvent} to all registered listeners.  If you setthis to <code>null</code>, the renderer will use the item outline stroke.
+ * Sets the stroke used to draw the error indicators, and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.  If you setthis to <code>null</code>, the renderer will use the item outline stroke.
  * @param stroke  the stroke (<code>null</code> permitted).
  * @see #getErrorIndicatorStroke()
  * @since 1.0.8

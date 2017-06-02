@@ -1,7 +1,7 @@
 package org.jfree.chart.event;
 import org.jfree.chart.annotations.Annotation;
 /** 
- * An event that can be forwarded to any                                                                                               {@link AnnotationChangeListener} tosignal a change to an  {@link Annotation}.
+ * An event that can be forwarded to any                                                                                                                                                                {@link AnnotationChangeListener} tosignal a change to an  {@link Annotation}.
  * @since 1.0.14
  */
 public class AnnotationChangeEvent extends ChartChangeEvent {

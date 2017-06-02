@@ -162,7 +162,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.data;
   }
   /** 
- * Sets the data array used by the plot and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the data array used by the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param data  the data array (<code>null</code> permitted).
  * @see #getData()
  */
@@ -186,7 +186,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.domainAxis;
   }
   /** 
- * Sets the domain axis and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param axis  the axis (<code>null</code> not permitted).
  * @since 1.0.3
  * @see #getDomainAxis()
@@ -207,7 +207,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.rangeAxis;
   }
   /** 
- * Sets the range axis and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param axis  the axis (<code>null</code> not permitted).
  * @since 1.0.3
  * @see #getRangeAxis()
@@ -228,7 +228,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.paint;
   }
   /** 
- * Sets the color for the data points and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the color for the data points and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -249,7 +249,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.domainGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the domain grid-lines are visible.  If the flag value is changed, a                                                                                               {@link PlotChangeEvent} issent to all registered listeners.
+ * Sets the flag that controls whether or not the domain grid-lines are visible.  If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} issent to all registered listeners.
  * @param visible  the new value of the flag.
  * @see #getDomainGridlinePaint()
  */
@@ -268,7 +268,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.domainGridlineStroke;
   }
   /** 
- * Sets the stroke for the grid lines plotted against the domain axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the grid lines plotted against the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getDomainGridlineStroke()
  */
@@ -288,7 +288,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.domainGridlinePaint;
   }
   /** 
- * Sets the paint for the grid lines plotted against the domain axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the grid lines plotted against the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getDomainGridlinePaint()
  */
@@ -308,7 +308,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.rangeGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the range axis grid lines are visible.  If the flag value is changed, a                                                                                               {@link PlotChangeEvent} issent to all registered listeners.
+ * Sets the flag that controls whether or not the range axis grid lines are visible.  If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} issent to all registered listeners.
  * @param visible  the new value of the flag.
  * @see #isRangeGridlinesVisible()
  */
@@ -327,7 +327,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.rangeGridlineStroke;
   }
   /** 
- * Sets the stroke for the grid lines plotted against the range axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the grid lines plotted against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> permitted).
  * @see #getRangeGridlineStroke()
  */
@@ -347,7 +347,7 @@ public class FastScatterPlot extends Plot implements ValueAxisPlot, Pannable, Zo
     return this.rangeGridlinePaint;
   }
   /** 
- * Sets the paint for the grid lines plotted against the range axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the grid lines plotted against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRangeGridlinePaint()
  */

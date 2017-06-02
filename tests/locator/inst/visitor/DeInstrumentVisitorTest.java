@@ -32,15 +32,15 @@ public class DeInstrumentVisitorTest {
 		CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(path),
 				ASTParser.K_COMPILATION_UNIT);
 		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
-		Set<Method> methods = new HashSet<>();
-		methods.add(new Method(Identifier.getIdentifier(methodString)));
+		Set<Integer> methods = new HashSet<>();
+		methods.add(Identifier.getIdentifier(methodString));
 
 		deInstrumentVisitor.setMethod(methods);
 		unit.accept(deInstrumentVisitor);
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(unit) == 18);
 
 		String anotherMethod = "org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegratorTest#void#testQuinticFunction#?";
-		methods.add(new Method(Identifier.getIdentifier(anotherMethod)));
+		methods.add(Identifier.getIdentifier(anotherMethod));
 		deInstrumentVisitor.setMethod(methods);
 		unit.accept(deInstrumentVisitor);
 		Assert.assertTrue(InstrumentCount.getInstrumentCount(unit) == 0);

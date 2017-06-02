@@ -7,7 +7,7 @@ import org.jfree.chart.renderer.RendererState;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYDatasetSelectionState;
 /** 
- * The state for an                                                                                               {@link XYItemRenderer}.
+ * The state for an                                                                                                                                                                {@link XYItemRenderer}.
  */
 public class XYItemRendererState extends RendererState {
   /** 
@@ -67,7 +67,7 @@ public class XYItemRendererState extends RendererState {
     this.processVisibleItemsOnly=flag;
   }
   /** 
- * Returns the first item index (this is updated with each call to                                                                                              {@link #startSeriesPass(XYDataset,int,int,int,int,int)}.
+ * Returns the first item index (this is updated with each call to                                                                                                                                                               {@link #startSeriesPass(XYDataset,int,int,int,int,int)}.
  * @return The first item index.
  * @since 1.0.11
  */
@@ -75,7 +75,7 @@ public class XYItemRendererState extends RendererState {
     return this.firstItemIndex;
   }
   /** 
- * Returns the last item index (this is updated with each call to                                                                                              {@link #startSeriesPass(XYDataset,int,int,int,int,int)}.
+ * Returns the last item index (this is updated with each call to                                                                                                                                                               {@link #startSeriesPass(XYDataset,int,int,int,int,int)}.
  * @return The last item index.
  * @since 1.0.11
  */
@@ -117,7 +117,7 @@ public class XYItemRendererState extends RendererState {
     this.selectionState=state;
   }
   /** 
- * This method is called by the                                                                                               {@link XYPlot} when it starts a passthrough the (visible) items in a series.  The default implementation records the first and last item indices - override this method to implement additional specialised behaviour.
+ * This method is called by the                                                                                                                                                                {@link XYPlot} when it starts a passthrough the (visible) items in a series.  The default implementation records the first and last item indices - override this method to implement additional specialised behaviour.
  * @param dataset  the dataset.
  * @param series  the series index.
  * @param firstItem  the index of the first item in the series.
@@ -132,7 +132,7 @@ public class XYItemRendererState extends RendererState {
     this.lastItemIndex=lastItem;
   }
   /** 
- * This method is called by the                                                                                               {@link XYPlot} when it ends a passthrough the (visible) items in a series.  The default implementation does nothing, but you can override this method to implement specialised behaviour.
+ * This method is called by the                                                                                                                                                                {@link XYPlot} when it ends a passthrough the (visible) items in a series.  The default implementation does nothing, but you can override this method to implement specialised behaviour.
  * @param dataset  the dataset.
  * @param series  the series index.
  * @param firstItem  the index of the first item in the series.

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 /** 
- * A calendar week.  All years are considered to have 53 weeks, numbered from 1 to 53, although in many cases the 53rd week is empty.  Most of the time, the 1st week of the year *begins* in the previous calendar year, but it always finishes in the current year (this behaviour matches the workings of the <code>GregorianCalendar</code> class). <P> This class is immutable, which is a requirement for all                                                                                              {@link RegularTimePeriod} subclasses.
+ * A calendar week.  All years are considered to have 53 weeks, numbered from 1 to 53, although in many cases the 53rd week is empty.  Most of the time, the 1st week of the year *begins* in the previous calendar year, but it always finishes in the current year (this behaviour matches the workings of the <code>GregorianCalendar</code> class). <P> This class is immutable, which is a requirement for all                                                                                                                                                              {@link RegularTimePeriod} subclasses.
  */
 public class Week extends RegularTimePeriod implements Serializable {
   /** 
@@ -141,7 +141,7 @@ public class Week extends RegularTimePeriod implements Serializable {
     return this.week;
   }
   /** 
- * Returns the first millisecond of the week.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                              {@link #peg(Calendar)} method.
+ * Returns the first millisecond of the week.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
  * @return The first millisecond of the week.
  * @see #getLastMillisecond()
  */
@@ -149,7 +149,7 @@ public class Week extends RegularTimePeriod implements Serializable {
     return this.firstMillisecond;
   }
   /** 
- * Returns the last millisecond of the week.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                              {@link #peg(Calendar)} method.
+ * Returns the last millisecond of the week.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
  * @return The last millisecond of the week.
  * @see #getFirstMillisecond()
  */

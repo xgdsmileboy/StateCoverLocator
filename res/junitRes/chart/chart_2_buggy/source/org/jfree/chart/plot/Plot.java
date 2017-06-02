@@ -49,7 +49,7 @@ import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.event.DatasetChangeListener;
 import org.jfree.data.general.DatasetGroup;
 /** 
- * The base class for all plots in JFreeChart.  The                                                                                               {@link JFreeChart} classdelegates the drawing of axes and data to the plot.  This base class provides facilities common to most plot types.
+ * The base class for all plots in JFreeChart.  The                                                                                                                                                                {@link JFreeChart} classdelegates the drawing of axes and data to the plot.  This base class provides facilities common to most plot types.
  */
 public abstract class Plot implements AxisChangeListener, DatasetChangeListener, AnnotationChangeListener, MarkerChangeListener, LegendItemSource, PublicCloneable, Cloneable, Serializable {
   /** 
@@ -221,7 +221,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.noDataMessage;
   }
   /** 
- * Sets the message that is displayed when the dataset is empty or <code>null</code>, and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets the message that is displayed when the dataset is empty or <code>null</code>, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.
  * @param message  the message (<code>null</code> permitted).
  * @see #getNoDataMessage()
  */
@@ -239,7 +239,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.noDataMessageFont;
   }
   /** 
- * Sets the font used to display the 'no data' message and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the font used to display the 'no data' message and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getNoDataMessageFont()
  */
@@ -260,7 +260,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.noDataMessagePaint;
   }
   /** 
- * Sets the paint used to display the 'no data' message and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to display the 'no data' message and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getNoDataMessagePaint()
  */
@@ -308,7 +308,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     }
   }
   /** 
- * Returns <code>true</code> if this plot is part of a combined plot structure (that is,                                                                                               {@link #getParent()} returns a non-<code>null</code>value), and <code>false</code> otherwise.
+ * Returns <code>true</code> if this plot is part of a combined plot structure (that is,                                                                                                                                                                {@link #getParent()} returns a non-<code>null</code>value), and <code>false</code> otherwise.
  * @return <code>true</code> if this plot is part of a combined plotstructure.
  * @see #getParent()
  */
@@ -324,7 +324,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.insets;
   }
   /** 
- * Sets the insets for the plot and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the insets for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param insets  the new insets (<code>null</code> not permitted).
  * @see #getInsets()
  * @see #setInsets(RectangleInsets,boolean)
@@ -333,7 +333,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     setInsets(insets,true);
   }
   /** 
- * Sets the insets for the plot and, if requested,  and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the insets for the plot and, if requested,  and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param insets  the new insets (<code>null</code> not permitted).
  * @param notify  a flag that controls whether the registered listeners arenotified.
  * @see #getInsets()
@@ -359,7 +359,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.backgroundPaint;
   }
   /** 
- * Sets the background color of the plot area and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the background color of the plot area and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getBackgroundPaint()
  */
@@ -416,7 +416,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return result;
   }
   /** 
- * Sets the drawing supplier for the plot and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.  The drawingsupplier is responsible for supplying a limitless (possibly repeating) sequence of <code>Paint</code>, <code>Stroke</code> and <code>Shape</code> objects that the plot's renderer(s) can use to populate its (their) tables.
+ * Sets the drawing supplier for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  The drawingsupplier is responsible for supplying a limitless (possibly repeating) sequence of <code>Paint</code>, <code>Stroke</code> and <code>Shape</code> objects that the plot's renderer(s) can use to populate its (their) tables.
  * @param supplier  the new supplier.
  * @see #getDrawingSupplier()
  */
@@ -425,7 +425,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     fireChangeEvent();
   }
   /** 
- * Sets the drawing supplier for the plot and, if requested, sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.  The drawingsupplier is responsible for supplying a limitless (possibly repeating) sequence of <code>Paint</code>, <code>Stroke</code> and <code>Shape</code> objects that the plot's renderer(s) can use to populate its (their) tables.
+ * Sets the drawing supplier for the plot and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  The drawingsupplier is responsible for supplying a limitless (possibly repeating) sequence of <code>Paint</code>, <code>Stroke</code> and <code>Shape</code> objects that the plot's renderer(s) can use to populate its (their) tables.
  * @param supplier  the new supplier.
  * @param notify  notify listeners?
  * @see #getDrawingSupplier()
@@ -446,7 +446,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.backgroundImage;
   }
   /** 
- * Sets the background image for the plot and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the background image for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param image  the image (<code>null</code> permitted).
  * @see #getBackgroundImage()
  */
@@ -455,7 +455,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     fireChangeEvent();
   }
   /** 
- * Returns the background image alignment. Alignment constants are defined in the                                                                                               {@link Align} class.
+ * Returns the background image alignment. Alignment constants are defined in the                                                                                                                                                                {@link Align} class.
  * @return The alignment.
  * @see #setBackgroundImageAlignment(int)
  */
@@ -463,7 +463,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.backgroundImageAlignment;
   }
   /** 
- * Sets the alignment for the background image and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.  Alignment optionsare defined by the  {@link Align} class.
+ * Sets the alignment for the background image and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  Alignment optionsare defined by the  {@link Align} class.
  * @param alignment  the alignment.
  * @see #getBackgroundImageAlignment()
  */
@@ -506,7 +506,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.outlineVisible;
   }
   /** 
- * Sets the flag that controls whether or not the plot's outline is drawn, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the flag that controls whether or not the plot's outline is drawn, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param visible  the new flag value.
  * @since 1.0.6
  * @see #isOutlineVisible()
@@ -524,7 +524,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.outlineStroke;
   }
   /** 
- * Sets the stroke used to outline the plot area and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners. If you set thisattribute to <code>null</code>, no outline will be drawn.
+ * Sets the stroke used to outline the plot area and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners. If you set thisattribute to <code>null</code>, no outline will be drawn.
  * @param stroke  the stroke (<code>null</code> permitted).
  * @see #getOutlineStroke()
  */
@@ -554,7 +554,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.outlinePaint;
   }
   /** 
- * Sets the paint used to draw the outline of the plot area and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.  If you set thisattribute to <code>null</code>, no outline will be drawn.
+ * Sets the paint used to draw the outline of the plot area and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  If you set thisattribute to <code>null</code>, no outline will be drawn.
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getOutlinePaint()
  */
@@ -584,7 +584,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.foregroundAlpha;
   }
   /** 
- * Sets the alpha-transparency for the plot and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the alpha-transparency for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param alpha  the new alpha transparency.
  * @see #getForegroundAlpha()
  */
@@ -595,7 +595,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     }
   }
   /** 
- * Returns the legend items for the plot.  By default, this method returns <code>null</code>.  Subclasses should override to return a                                                                                              {@link LegendItemCollection}.
+ * Returns the legend items for the plot.  By default, this method returns <code>null</code>.  Subclasses should override to return a                                                                                                                                                               {@link LegendItemCollection}.
  * @return The legend items for the plot (possibly <code>null</code>).
  */
   public LegendItemCollection getLegendItems(){
@@ -611,7 +611,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     return this.notify;
   }
   /** 
- * Sets a flag that controls whether or not listeners receive                                                                                              {@link PlotChangeEvent} notifications.
+ * Sets a flag that controls whether or not listeners receive                                                                                                                                                               {@link PlotChangeEvent} notifications.
  * @param notify  a boolean.
  * @see #isNotify()
  * @since 1.0.13
@@ -654,7 +654,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
     }
   }
   /** 
- * Sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @since 1.0.10
  */
   protected void fireChangeEvent(){
@@ -806,7 +806,7 @@ public abstract class Plot implements AxisChangeListener, DatasetChangeListener,
   public void zoom(  double percent){
   }
   /** 
- * Receives notification of a change to an                                                                                               {@link Annotation} added tothis plot.
+ * Receives notification of a change to an                                                                                                                                                                {@link Annotation} added tothis plot.
  * @param event  information about the event (not used here).
  * @since 1.0.14
  */

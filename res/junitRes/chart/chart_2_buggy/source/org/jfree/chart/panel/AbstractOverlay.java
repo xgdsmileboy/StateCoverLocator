@@ -5,7 +5,7 @@ import org.jfree.chart.event.ChartChangeEvent;
 import org.jfree.chart.event.OverlayChangeEvent;
 import org.jfree.chart.event.OverlayChangeListener;
 /** 
- * A base class for implementing overlays for a                                                                                               {@link ChartPanel}.
+ * A base class for implementing overlays for a                                                                                                                                                                {@link ChartPanel}.
  * @since 1.0.13
  */
 public class AbstractOverlay {
@@ -42,14 +42,14 @@ public class AbstractOverlay {
     this.changeListeners.remove(OverlayChangeListener.class,listener);
   }
   /** 
- * Sends a default                                                                                               {@link ChartChangeEvent} to all registered listeners.<P> This method is for convenience only.
+ * Sends a default                                                                                                                                                                {@link ChartChangeEvent} to all registered listeners.<P> This method is for convenience only.
  */
   public void fireOverlayChanged(){
     OverlayChangeEvent event=new OverlayChangeEvent(this);
     notifyListeners(event);
   }
   /** 
- * Sends a                                                                                               {@link ChartChangeEvent} to all registered listeners.
+ * Sends a                                                                                                                                                                {@link ChartChangeEvent} to all registered listeners.
  * @param event  information about the event that triggered thenotification.
  */
   protected void notifyListeners(  OverlayChangeEvent event){

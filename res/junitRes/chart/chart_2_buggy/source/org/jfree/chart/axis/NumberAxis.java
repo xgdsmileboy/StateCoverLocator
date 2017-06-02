@@ -115,7 +115,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     return this.autoRangeIncludesZero;
   }
   /** 
- * Sets the flag that indicates whether or not the axis range, if automatically calculated, is forced to include zero. <p> If the flag is changed to <code>true</code>, the axis range is recalculated. <p> Any change to the flag will trigger an                                                                                               {@link AxisChangeEvent}.
+ * Sets the flag that indicates whether or not the axis range, if automatically calculated, is forced to include zero. <p> If the flag is changed to <code>true</code>, the axis range is recalculated. <p> Any change to the flag will trigger an                                                                                                                                                                {@link AxisChangeEvent}.
  * @param flag  the new value of the flag.
  * @see #getAutoRangeIncludesZero()
  */
@@ -160,7 +160,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     return this.tickUnit;
   }
   /** 
- * Sets the tick unit for the axis and sends an                                                                                               {@link AxisChangeEvent} toall registered listeners.  A side effect of calling this method is that the "auto-select" feature for tick units is switched off (you can restore it using the  {@link ValueAxis#setAutoTickUnitSelection(boolean)}method).
+ * Sets the tick unit for the axis and sends an                                                                                                                                                                {@link AxisChangeEvent} toall registered listeners.  A side effect of calling this method is that the "auto-select" feature for tick units is switched off (you can restore it using the  {@link ValueAxis#setAutoTickUnitSelection(boolean)}method).
  * @param unit  the new tick unit (<code>null</code> not permitted).
  * @see #getTickUnit()
  * @see #setTickUnit(NumberTickUnit,boolean,boolean)
@@ -169,7 +169,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     setTickUnit(unit,true,true);
   }
   /** 
- * Sets the tick unit for the axis and, if requested, sends an                                                                                              {@link AxisChangeEvent} to all registered listeners.  In addition, anoption is provided to turn off the "auto-select" feature for tick units (you can restore it using the {@link ValueAxis#setAutoTickUnitSelection(boolean)} method).
+ * Sets the tick unit for the axis and, if requested, sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.  In addition, anoption is provided to turn off the "auto-select" feature for tick units (you can restore it using the {@link ValueAxis#setAutoTickUnitSelection(boolean)} method).
  * @param unit  the new tick unit (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @param turnOffAutoSelect  turn off the auto-tick selection?
@@ -555,7 +555,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     return units;
   }
   /** 
- * Creates a collection of standard tick units.  The supplied locale is used to create the number formatter (a localised instance of <code>NumberFormat</code>). <P> If you don't like these defaults, create your own instance of                                                                                              {@link TickUnits} and then pass it to the<code>setStandardTickUnits()</code> method.
+ * Creates a collection of standard tick units.  The supplied locale is used to create the number formatter (a localised instance of <code>NumberFormat</code>). <P> If you don't like these defaults, create your own instance of                                                                                                                                                               {@link TickUnits} and then pass it to the<code>setStandardTickUnits()</code> method.
  * @param locale  the locale.
  * @return A tick unit collection.
  * @see #setStandardTickUnits(TickUnitSource)

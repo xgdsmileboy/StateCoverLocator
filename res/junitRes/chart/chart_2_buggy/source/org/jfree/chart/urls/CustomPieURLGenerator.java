@@ -21,7 +21,7 @@ public class CustomPieURLGenerator implements PieURLGenerator, Cloneable, Public
  */
   private ArrayList urls;
   /** 
- * Creates a new <code>CustomPieURLGenerator</code> instance, initially empty.  Call                                                                                               {@link #addURLs(Map)} to specify the URL fragments to beused.
+ * Creates a new <code>CustomPieURLGenerator</code> instance, initially empty.  Call                                                                                                                                                                {@link #addURLs(Map)} to specify the URL fragments to beused.
  */
   public CustomPieURLGenerator(){
     this.urls=new ArrayList();
@@ -76,7 +76,7 @@ public class CustomPieURLGenerator implements PieURLGenerator, Cloneable, Public
     return result;
   }
   /** 
- * Adds a map containing <code>(key, URL)</code> mappings where each <code>key</code> is an instance of <code>Comparable</code> (corresponding to the key for an item in a pie dataset) and each <code>URL</code> is a <code>String</code> representing a URL fragment. <br><br> The map is appended to an internal list...you can add multiple maps if you are working with, say, a                                                                                               {@link MultiplePiePlot}.
+ * Adds a map containing <code>(key, URL)</code> mappings where each <code>key</code> is an instance of <code>Comparable</code> (corresponding to the key for an item in a pie dataset) and each <code>URL</code> is a <code>String</code> representing a URL fragment. <br><br> The map is appended to an internal list...you can add multiple maps if you are working with, say, a                                                                                                                                                                {@link MultiplePiePlot}.
  * @param urlMap  the URLs (<code>null</code> permitted).
  */
   public void addURLs(  Map urlMap){

@@ -74,7 +74,7 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
 /** 
- * A general plotting class that uses data from a                                                                                               {@link CategoryDataset} andrenders each data item using a  {@link CategoryItemRenderer}.
+ * A general plotting class that uses data from a                                                                                                                                                                {@link CategoryDataset} andrenders each data item using a  {@link CategoryItemRenderer}.
  */
 public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selectable, Zoomable, AnnotationChangeListener, RendererChangeListener, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -430,7 +430,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.orientation;
   }
   /** 
- * Sets the orientation for the plot and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the orientation for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param orientation  the orientation (<code>null</code> not permitted).
  * @see #getOrientation()
  */
@@ -450,7 +450,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.axisOffset;
   }
   /** 
- * Sets the axis offsets (gap between the data area and the axes) and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the axis offsets (gap between the data area and the axes) and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param offset  the offset (<code>null</code> not permitted).
  * @see #getAxisOffset()
  */
@@ -490,7 +490,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return result;
   }
   /** 
- * Sets the domain axis for the plot and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the domain axis for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param axis  the axis (<code>null</code> permitted).
  * @see #getDomainAxis()
  */
@@ -498,7 +498,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setDomainAxis(0,axis);
   }
   /** 
- * Sets a domain axis and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets a domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param index  the axis index.
  * @param axis  the axis (<code>null</code> permitted).
  * @see #getDomainAxis(int)
@@ -507,7 +507,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setDomainAxis(index,axis,true);
   }
   /** 
- * Sets a domain axis and, if requested, sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets a domain axis and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param index  the axis index.
  * @param axis  the axis (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -530,7 +530,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Sets the domain axes for this plot and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the domain axes for this plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param axes  the axes (<code>null</code> not permitted).
  * @see #setRangeAxes(ValueAxis[])
  */
@@ -579,7 +579,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return result;
   }
   /** 
- * Sets the location of the domain axis and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the location of the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param location  the axis location (<code>null</code> not permitted).
  * @see #getDomainAxisLocation()
  * @see #setDomainAxisLocation(int,AxisLocation)
@@ -588,7 +588,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setDomainAxisLocation(0,location,true);
   }
   /** 
- * Sets the location of the domain axis and, if requested, sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the location of the domain axis and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param location  the axis location (<code>null</code> not permitted).
  * @param notify  a flag that controls whether listeners are notified.
  */
@@ -596,7 +596,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setDomainAxisLocation(0,location,notify);
   }
   /** 
- * Sets the location for a domain axis and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the location for a domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param index  the axis index.
  * @param location  the location.
  * @see #getDomainAxisLocation(int)
@@ -606,7 +606,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setDomainAxisLocation(index,location,true);
   }
   /** 
- * Sets the location for a domain axis and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the location for a domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param index  the axis index.
  * @param location  the location.
  * @param notify  notify listeners?
@@ -654,7 +654,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.domainAxes.size();
   }
   /** 
- * Clears the domain axes from the plot and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Clears the domain axes from the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  */
   public void clearDomainAxes(){
     for (int i=0; i < this.domainAxes.size(); i++) {
@@ -704,14 +704,14 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return result;
   }
   /** 
- * Sets the range axis for the plot and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the range axis for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param axis  the axis (<code>null</code> permitted).
  */
   public void setRangeAxis(  ValueAxis axis){
     setRangeAxis(0,axis);
   }
   /** 
- * Sets a range axis and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets a range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.
  * @param index  the axis index.
  * @param axis  the axis.
  */
@@ -719,7 +719,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setRangeAxis(index,axis,true);
   }
   /** 
- * Sets a range axis and, if requested, sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets a range axis and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param index  the axis index.
  * @param axis  the axis.
  * @param notify  notify listeners?
@@ -742,7 +742,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Sets the range axes for this plot and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the range axes for this plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param axes  the axes (<code>null</code> not permitted).
  * @see #setDomainAxes(CategoryAxis[])
  */
@@ -798,7 +798,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return result;
   }
   /** 
- * Sets the location of the range axis and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the location of the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param location  the location (<code>null</code> not permitted).
  * @see #setRangeAxisLocation(AxisLocation,boolean)
  * @see #setDomainAxisLocation(AxisLocation)
@@ -807,7 +807,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setRangeAxisLocation(location,true);
   }
   /** 
- * Sets the location of the range axis and, if requested, sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the location of the range axis and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param location  the location (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @see #setDomainAxisLocation(AxisLocation,boolean)
@@ -816,7 +816,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setRangeAxisLocation(0,location,notify);
   }
   /** 
- * Sets the location for a range axis and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the location for a range axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param index  the axis index.
  * @param location  the location.
  * @see #getRangeAxisLocation(int)
@@ -826,7 +826,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setRangeAxisLocation(index,location,true);
   }
   /** 
- * Sets the location for a range axis and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the location for a range axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param index  the axis index.
  * @param location  the location.
  * @param notify  notify listeners?
@@ -870,7 +870,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeAxes.size();
   }
   /** 
- * Clears the range axes from the plot and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Clears the range axes from the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  */
   public void clearRangeAxes(){
     for (int i=0; i < this.rangeAxes.size(); i++) {
@@ -915,7 +915,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return result;
   }
   /** 
- * Sets the dataset for the plot, replacing the existing dataset, if there is one.  This method also calls the                                                                                              {@link #datasetChanged(DatasetChangeEvent)} method, which adjusts theaxis ranges if necessary and sends a  {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the dataset for the plot, replacing the existing dataset, if there is one.  This method also calls the                                                                                                                                                               {@link #datasetChanged(DatasetChangeEvent)} method, which adjusts theaxis ranges if necessary and sends a  {@link PlotChangeEvent} to allregistered listeners.
  * @param dataset  the dataset (<code>null</code> permitted).
  * @see #getDataset()
  */
@@ -1015,7 +1015,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Returns the domain axis for a dataset.  You can change the axis for a dataset using the                                                                                               {@link #mapDatasetToDomainAxis(int,int)} method.
+ * Returns the domain axis for a dataset.  You can change the axis for a dataset using the                                                                                                                                                                {@link #mapDatasetToDomainAxis(int,int)} method.
  * @param index  the dataset index.
  * @return The domain axis.
  * @see #mapDatasetToDomainAxis(int,int)
@@ -1062,7 +1062,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     datasetChanged(new DatasetChangeEvent(this,getDataset(index),new DatasetChangeInfo()));
   }
   /** 
- * Returns the range axis for a dataset.  You can change the axis for a dataset using the                                                                                               {@link #mapDatasetToRangeAxis(int,int)} method.
+ * Returns the range axis for a dataset.  You can change the axis for a dataset using the                                                                                                                                                                {@link #mapDatasetToRangeAxis(int,int)} method.
  * @param index  the dataset index.
  * @return The range axis.
  * @see #mapDatasetToRangeAxis(int,int)
@@ -1112,7 +1112,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return result;
   }
   /** 
- * Sets the renderer at index 0 (sometimes referred to as the "primary" renderer) and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets the renderer at index 0 (sometimes referred to as the "primary" renderer) and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.
  * @param renderer  the renderer (<code>null</code> permitted.
  * @see #getRenderer()
  */
@@ -1120,7 +1120,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setRenderer(0,renderer,true);
   }
   /** 
- * Sets the renderer at index 0 (sometimes referred to as the "primary" renderer) and, if requested, sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners. <p> You can set the renderer to <code>null</code>, but this is not recommended because: <ul> <li>no data will be displayed;</li> <li>the plot background will not be painted;</li> </ul>
+ * Sets the renderer at index 0 (sometimes referred to as the "primary" renderer) and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners. <p> You can set the renderer to <code>null</code>, but this is not recommended because: <ul> <li>no data will be displayed;</li> <li>the plot background will not be painted;</li> </ul>
  * @param renderer  the renderer (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @see #getRenderer()
@@ -1129,7 +1129,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setRenderer(0,renderer,notify);
   }
   /** 
- * Sets the renderer at the specified index and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the renderer at the specified index and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param index  the index.
  * @param renderer  the renderer (<code>null</code> permitted).
  * @see #getRenderer(int)
@@ -1139,7 +1139,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setRenderer(index,renderer,true);
   }
   /** 
- * Sets a renderer.  A                                                                                               {@link PlotChangeEvent} is sent to all registeredlisteners.
+ * Sets a renderer.  A                                                                                                                                                                {@link PlotChangeEvent} is sent to all registeredlisteners.
  * @param index  the index.
  * @param renderer  the renderer (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -1162,7 +1162,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Sets the renderers for this plot and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the renderers for this plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param renderers  the renderers.
  */
   public void setRenderers(  CategoryItemRenderer[] renderers){
@@ -1203,7 +1203,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.renderingOrder;
   }
   /** 
- * Sets the rendering order and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.  By default, the plot renders the primary dataset last (so that the primary dataset overlays the secondary datasets).  You can reverse this if you want to.
+ * Sets the rendering order and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.  By default, the plot renders the primary dataset last (so that the primary dataset overlays the secondary datasets).  You can reverse this if you want to.
  * @param order  the rendering order (<code>null</code> not permitted).
  * @see #getDatasetRenderingOrder()
  */
@@ -1223,7 +1223,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.columnRenderingOrder;
   }
   /** 
- * Sets the column order in which the items in each dataset should be rendered and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.  Note that this affects the order in which items are drawn, NOT their position in the chart.
+ * Sets the column order in which the items in each dataset should be rendered and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.  Note that this affects the order in which items are drawn, NOT their position in the chart.
  * @param order  the order (<code>null</code> not permitted).
  * @see #getColumnRenderingOrder()
  * @see #setRowRenderingOrder(SortOrder)
@@ -1244,7 +1244,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rowRenderingOrder;
   }
   /** 
- * Sets the row order in which the items in each dataset should be rendered and sends a                                                                                               {@link PlotChangeEvent} to all registeredlisteners.  Note that this affects the order in which items are drawn, NOT their position in the chart.
+ * Sets the row order in which the items in each dataset should be rendered and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.  Note that this affects the order in which items are drawn, NOT their position in the chart.
  * @param order  the order (<code>null</code> not permitted).
  * @see #getRowRenderingOrder()
  * @see #setColumnRenderingOrder(SortOrder)
@@ -1265,7 +1265,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.domainGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not grid-lines are drawn against the domain axis. <p> If the flag value changes, a                                                                                               {@link PlotChangeEvent} is sent to allregistered listeners.
+ * Sets the flag that controls whether or not grid-lines are drawn against the domain axis. <p> If the flag value changes, a                                                                                                                                                                {@link PlotChangeEvent} is sent to allregistered listeners.
  * @param visible  the new value of the flag.
  * @see #isDomainGridlinesVisible()
  */
@@ -1284,7 +1284,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.domainGridlinePosition;
   }
   /** 
- * Sets the position used for the domain gridlines and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the position used for the domain gridlines and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param position  the position (<code>null</code> not permitted).
  * @see #getDomainGridlinePosition()
  */
@@ -1304,7 +1304,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.domainGridlineStroke;
   }
   /** 
- * Sets the stroke used to draw grid-lines against the domain axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw grid-lines against the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getDomainGridlineStroke()
  */
@@ -1324,7 +1324,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.domainGridlinePaint;
   }
   /** 
- * Sets the paint used to draw the grid-lines (if any) against the domain axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the grid-lines (if any) against the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getDomainGridlinePaint()
  */
@@ -1345,7 +1345,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeZeroBaselineVisible;
   }
   /** 
- * Sets the flag that controls whether or not the zero baseline is displayed for the range axis, and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the flag that controls whether or not the zero baseline is displayed for the range axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param visible  the flag.
  * @see #isRangeZeroBaselineVisible()
  * @since 1.0.13
@@ -1364,7 +1364,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeZeroBaselineStroke;
   }
   /** 
- * Sets the stroke for the zero baseline for the range axis, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the zero baseline for the range axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getRangeZeroBaselineStroke()
  * @since 1.0.13
@@ -1386,7 +1386,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeZeroBaselinePaint;
   }
   /** 
- * Sets the paint for the zero baseline plotted against the range axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the zero baseline plotted against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRangeZeroBaselinePaint()
  * @since 1.0.13
@@ -1407,7 +1407,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not grid-lines are drawn against the range axis.  If the flag changes value, a                                                                                               {@link PlotChangeEvent} issent to all registered listeners.
+ * Sets the flag that controls whether or not grid-lines are drawn against the range axis.  If the flag changes value, a                                                                                                                                                                {@link PlotChangeEvent} issent to all registered listeners.
  * @param visible  the new value of the flag.
  * @see #isRangeGridlinesVisible()
  */
@@ -1426,7 +1426,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeGridlineStroke;
   }
   /** 
- * Sets the stroke used to draw the grid-lines against the range axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the grid-lines against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getRangeGridlineStroke()
  */
@@ -1446,7 +1446,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeGridlinePaint;
   }
   /** 
- * Sets the paint used to draw the grid lines against the range axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the grid lines against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRangeGridlinePaint()
  */
@@ -1467,7 +1467,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeMinorGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the range axis minor grid lines are visible. <p> If the flag value is changed, a                                                                                               {@link PlotChangeEvent} is sent to allregistered listeners.
+ * Sets the flag that controls whether or not the range axis minor grid lines are visible. <p> If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} is sent to allregistered listeners.
  * @param visible  the new value of the flag.
  * @see #isRangeMinorGridlinesVisible()
  * @since 1.0.13
@@ -1488,7 +1488,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeMinorGridlineStroke;
   }
   /** 
- * Sets the stroke for the minor grid lines plotted against the range axis, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the minor grid lines plotted against the range axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getRangeMinorGridlineStroke()
  * @since 1.0.13
@@ -1510,7 +1510,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeMinorGridlinePaint;
   }
   /** 
- * Sets the paint for the minor grid lines plotted against the range axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the minor grid lines plotted against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRangeMinorGridlinePaint()
  * @since 1.0.13
@@ -1605,7 +1605,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Receives notification of a change to an                                                                                               {@link Annotation} added tothis plot.
+ * Receives notification of a change to an                                                                                                                                                                {@link Annotation} added tothis plot.
  * @param event  information about the event (not used here).
  * @since 1.0.14
  */
@@ -1661,7 +1661,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Adds a marker for display (in the foreground) against the domain axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners. Typically amarker will be drawn by the renderer as a line perpendicular to the domain axis, however this is entirely up to the renderer.
+ * Adds a marker for display (in the foreground) against the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners. Typically amarker will be drawn by the renderer as a line perpendicular to the domain axis, however this is entirely up to the renderer.
  * @param marker  the marker (<code>null</code> not permitted).
  * @see #removeDomainMarker(Marker)
  */
@@ -1669,7 +1669,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     addDomainMarker(marker,Layer.FOREGROUND);
   }
   /** 
- * Adds a marker for display against the domain axis and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.  Typically a markerwill be drawn by the renderer as a line perpendicular to the domain axis, however this is entirely up to the renderer.
+ * Adds a marker for display against the domain axis and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  Typically a markerwill be drawn by the renderer as a line perpendicular to the domain axis, however this is entirely up to the renderer.
  * @param marker  the marker (<code>null</code> not permitted).
  * @param layer  the layer (foreground or background) (<code>null</code>not permitted).
  * @see #removeDomainMarker(Marker,Layer)
@@ -1678,7 +1678,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     addDomainMarker(0,marker,layer);
   }
   /** 
- * Adds a marker for display by a particular renderer and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to a domain axis, however this is entirely up to the renderer.
+ * Adds a marker for display by a particular renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to a domain axis, however this is entirely up to the renderer.
  * @param index  the renderer index.
  * @param marker  the marker (<code>null</code> not permitted).
  * @param layer  the layer (<code>null</code> not permitted).
@@ -1688,7 +1688,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     addDomainMarker(index,marker,layer,true);
   }
   /** 
- * Adds a marker for display by a particular renderer and, if requested, sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to a domain axis, however this is entirely up to the renderer.
+ * Adds a marker for display by a particular renderer and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to a domain axis, however this is entirely up to the renderer.
  * @param index  the renderer index.
  * @param marker  the marker (<code>null</code> not permitted).
  * @param layer  the layer (<code>null</code> not permitted).
@@ -1728,7 +1728,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Clears all the domain markers for the plot and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Clears all the domain markers for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @see #clearRangeMarkers()
  */
   public void clearDomainMarkers(){
@@ -1814,7 +1814,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     fireChangeEvent();
   }
   /** 
- * Removes a marker for the domain axis and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Removes a marker for the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param marker  the marker.
  * @return A boolean indicating whether or not the marker was actuallyremoved.
  * @since 1.0.7
@@ -1823,7 +1823,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removeDomainMarker(marker,Layer.FOREGROUND);
   }
   /** 
- * Removes a marker for the domain axis in the specified layer and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for the domain axis in the specified layer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param marker the marker (<code>null</code> not permitted).
  * @param layer the layer (foreground or background).
  * @return A boolean indicating whether or not the marker was actuallyremoved.
@@ -1833,7 +1833,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removeDomainMarker(0,marker,layer);
   }
   /** 
- * Removes a marker for a specific dataset/renderer and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param index the dataset/renderer index.
  * @param marker the marker.
  * @param layer the layer (foreground or background).
@@ -1844,7 +1844,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removeDomainMarker(index,marker,layer,true);
   }
   /** 
- * Removes a marker for a specific dataset/renderer and, if requested, sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for a specific dataset/renderer and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param index the dataset/renderer index.
  * @param marker the marker.
  * @param layer the layer (foreground or background).
@@ -1870,7 +1870,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removed;
   }
   /** 
- * Adds a marker for display (in the foreground) against the range axis and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners. Typically amarker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
+ * Adds a marker for display (in the foreground) against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners. Typically amarker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
  * @param marker  the marker (<code>null</code> not permitted).
  * @see #removeRangeMarker(Marker)
  */
@@ -1878,7 +1878,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     addRangeMarker(marker,Layer.FOREGROUND);
   }
   /** 
- * Adds a marker for display against the range axis and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.  Typically a markerwill be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
+ * Adds a marker for display against the range axis and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  Typically a markerwill be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
  * @param marker  the marker (<code>null</code> not permitted).
  * @param layer  the layer (foreground or background) (<code>null</code>not permitted).
  * @see #removeRangeMarker(Marker,Layer)
@@ -1887,7 +1887,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     addRangeMarker(0,marker,layer);
   }
   /** 
- * Adds a marker for display by a particular renderer and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to a range axis, however this is entirely up to the renderer.
+ * Adds a marker for display by a particular renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to a range axis, however this is entirely up to the renderer.
  * @param index  the renderer index.
  * @param marker  the marker.
  * @param layer  the layer.
@@ -1897,7 +1897,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     addRangeMarker(index,marker,layer,true);
   }
   /** 
- * Adds a marker for display by a particular renderer and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to a range axis, however this is entirely up to the renderer.
+ * Adds a marker for display by a particular renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to a range axis, however this is entirely up to the renderer.
  * @param index  the renderer index.
  * @param marker  the marker.
  * @param layer  the layer.
@@ -1931,7 +1931,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Clears all the range markers for the plot and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Clears all the range markers for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @see #clearDomainMarkers()
  */
   public void clearRangeMarkers(){
@@ -2018,7 +2018,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     fireChangeEvent();
   }
   /** 
- * Removes a marker for the range axis and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Removes a marker for the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param marker the marker.
  * @return A boolean indicating whether or not the marker was actuallyremoved.
  * @since 1.0.7
@@ -2028,7 +2028,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removeRangeMarker(marker,Layer.FOREGROUND);
   }
   /** 
- * Removes a marker for the range axis in the specified layer and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for the range axis in the specified layer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param marker the marker (<code>null</code> not permitted).
  * @param layer the layer (foreground or background).
  * @return A boolean indicating whether or not the marker was actuallyremoved.
@@ -2039,7 +2039,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removeRangeMarker(0,marker,layer);
   }
   /** 
- * Removes a marker for a specific dataset/renderer and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param index the dataset/renderer index.
  * @param marker the marker.
  * @param layer the layer (foreground or background).
@@ -2051,7 +2051,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removeRangeMarker(index,marker,layer,true);
   }
   /** 
- * Removes a marker for a specific dataset/renderer and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param index  the dataset/renderer index.
  * @param marker  the marker.
  * @param layer  the layer (foreground or background).
@@ -2090,7 +2090,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.domainCrosshairVisible;
   }
   /** 
- * Sets the flag that controls whether or not the domain crosshair is displayed by the plot, and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the flag that controls whether or not the domain crosshair is displayed by the plot, and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param flag  the new flag value.
  * @since 1.0.11
  * @see #isDomainCrosshairVisible()
@@ -2139,7 +2139,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.domainCrosshairColumnKey;
   }
   /** 
- * Sets the column key for the domain crosshair and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the column key for the domain crosshair and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param key  the key.
  * @since 1.0.11
  */
@@ -2147,7 +2147,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setDomainCrosshairColumnKey(key,true);
   }
   /** 
- * Sets the column key for the domain crosshair and, if requested, sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the column key for the domain crosshair and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param key  the key.
  * @param notify  notify listeners?
  * @since 1.0.11
@@ -2167,7 +2167,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.crosshairDatasetIndex;
   }
   /** 
- * Sets the dataset index for the crosshair and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the dataset index for the crosshair and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param index  the index.
  * @since 1.0.11
  */
@@ -2175,7 +2175,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setCrosshairDatasetIndex(index,true);
   }
   /** 
- * Sets the dataset index for the crosshair and, if requested, sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the dataset index for the crosshair and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param index  the index.
  * @param notify  notify listeners?
  * @since 1.0.11
@@ -2220,7 +2220,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.domainCrosshairStroke;
   }
   /** 
- * Sets the stroke used to draw the domain crosshair, and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the domain crosshair, and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @since 1.0.11
  * @see #getDomainCrosshairStroke()
@@ -2259,7 +2259,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeCrosshairLockedOnData;
   }
   /** 
- * Sets the flag indicating whether or not the range crosshair should "lock-on" to actual data values, and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the flag indicating whether or not the range crosshair should "lock-on" to actual data values, and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param flag  the flag.
  * @see #isRangeCrosshairLockedOnData()
  */
@@ -2278,7 +2278,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeCrosshairValue;
   }
   /** 
- * Sets the range crosshair value and, if the crosshair is visible, sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the range crosshair value and, if the crosshair is visible, sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param value  the new value.
  * @see #getRangeCrosshairValue()
  */
@@ -2286,7 +2286,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setRangeCrosshairValue(value,true);
   }
   /** 
- * Sets the range crosshair value and, if requested, sends a                                                                                              {@link PlotChangeEvent} to all registered listeners (but only if thecrosshair is visible).
+ * Sets the range crosshair value and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners (but only if thecrosshair is visible).
  * @param value  the new value.
  * @param notify  a flag that controls whether or not listeners arenotified.
  * @see #getRangeCrosshairValue()
@@ -2308,7 +2308,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeCrosshairStroke;
   }
   /** 
- * Sets the pen-style (<code>Stroke</code>) used to draw the range crosshair (if visible), and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the pen-style (<code>Stroke</code>) used to draw the range crosshair (if visible), and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param stroke  the new crosshair stroke (<code>null</code> notpermitted).
  * @see #getRangeCrosshairStroke()
  */
@@ -2330,7 +2330,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.rangeCrosshairPaint;
   }
   /** 
- * Sets the paint used to draw the range crosshair (if visible) and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the range crosshair (if visible) and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRangeCrosshairPaint()
  */
@@ -2351,7 +2351,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.annotations;
   }
   /** 
- * Adds an annotation to the plot and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Adds an annotation to the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @see #removeAnnotation(CategoryAnnotation)
  */
@@ -2359,7 +2359,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     addAnnotation(annotation,true);
   }
   /** 
- * Adds an annotation to the plot and, if requested, sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Adds an annotation to the plot and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @since 1.0.10
@@ -2374,7 +2374,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     }
   }
   /** 
- * Removes an annotation from the plot and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Removes an annotation from the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @return A boolean (indicates whether or not the annotation was removed).
  * @see #addAnnotation(CategoryAnnotation)
@@ -2383,7 +2383,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removeAnnotation(annotation,true);
   }
   /** 
- * Removes an annotation from the plot and, if requested, sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Removes an annotation from the plot and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @return A boolean (indicates whether or not the annotation was removed).
@@ -2401,7 +2401,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return removed;
   }
   /** 
- * Clears all the annotations and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Clears all the annotations and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  */
   public void clearAnnotations(){
     for (int i=0; i < this.annotations.size(); i++) {
@@ -2420,7 +2420,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.shadowGenerator;
   }
   /** 
- * Sets the shadow generator for the plot and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.  Note that this isa btmap drop-shadow generation facility and is separate from the vector based show option that is controlled via the {@link setShadowPaint()} method.
+ * Sets the shadow generator for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  Note that this isa btmap drop-shadow generation facility and is separate from the vector based show option that is controlled via the {@link setShadowPaint()} method.
  * @param generator  the generator (<code>null</code> permitted).
  * @since 1.0.14
  */
@@ -2525,7 +2525,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return space;
   }
   /** 
- * Draws the plot on a Java 2D graphics device (such as the screen or a printer). <P> At your option, you may supply an instance of                                                                                               {@link PlotRenderingInfo}. If you do, it will be populated with information about the drawing, including various plot dimensions and tooltip info.
+ * Draws the plot on a Java 2D graphics device (such as the screen or a printer). <P> At your option, you may supply an instance of                                                                                                                                                                {@link PlotRenderingInfo}. If you do, it will be populated with information about the drawing, including various plot dimensions and tooltip info.
  * @param g2  the graphics device.
  * @param area  the area within which the plot (including axes) shouldbe drawn.
  * @param anchor  the anchor point (<code>null</code> permitted).
@@ -3180,7 +3180,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.weight;
   }
   /** 
- * Sets the weight for the plot and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the weight for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param weight  the weight.
  * @see #getWeight()
  */
@@ -3197,7 +3197,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.fixedDomainAxisSpace;
   }
   /** 
- * Sets the fixed domain axis space and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the fixed domain axis space and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param space  the space (<code>null</code> permitted).
  * @see #getFixedDomainAxisSpace()
  */
@@ -3205,7 +3205,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setFixedDomainAxisSpace(space,true);
   }
   /** 
- * Sets the fixed domain axis space and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the fixed domain axis space and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param space  the space (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @see #getFixedDomainAxisSpace()
@@ -3226,7 +3226,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.fixedRangeAxisSpace;
   }
   /** 
- * Sets the fixed range axis space and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the fixed range axis space and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param space  the space (<code>null</code> permitted).
  * @see #getFixedRangeAxisSpace()
  */
@@ -3234,7 +3234,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setFixedRangeAxisSpace(space,true);
   }
   /** 
- * Sets the fixed range axis space and sends a                                                                                               {@link PlotChangeEvent} toall registered listeners.
+ * Sets the fixed range axis space and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
  * @param space  the space (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @see #getFixedRangeAxisSpace()
@@ -3463,7 +3463,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     return this.anchorValue;
   }
   /** 
- * Sets the anchor value and sends a                                                                                               {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the anchor value and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
  * @param value  the anchor value.
  * @see #getAnchorValue()
  */
@@ -3471,7 +3471,7 @@ public class CategoryPlot extends Plot implements ValueAxisPlot, Pannable, Selec
     setAnchorValue(value,true);
   }
   /** 
- * Sets the anchor value and, if requested, sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the anchor value and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
  * @param value  the value.
  * @param notify  notify listeners?
  * @see #getAnchorValue()

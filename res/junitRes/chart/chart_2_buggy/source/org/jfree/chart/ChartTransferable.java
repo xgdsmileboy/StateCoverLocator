@@ -68,7 +68,7 @@ public class ChartTransferable implements Transferable {
     this(chart,width,height,0,0,Integer.MAX_VALUE,Integer.MAX_VALUE,true);
   }
   /** 
- * Creates a new chart selection.  The minimum and maximum drawing dimensions are used to match the scaling behaviour in the                                                                                              {@link ChartPanel} class.
+ * Creates a new chart selection.  The minimum and maximum drawing dimensions are used to match the scaling behaviour in the                                                                                                                                                               {@link ChartPanel} class.
  * @param chart  the chart.
  * @param width  the chart width.
  * @param height  the chart height.

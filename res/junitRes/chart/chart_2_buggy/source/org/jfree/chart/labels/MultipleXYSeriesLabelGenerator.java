@@ -10,7 +10,7 @@ import org.jfree.chart.util.HashUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A series label generator for plots that use data from an                                                                                               {@link org.jfree.data.xy.XYDataset}.
+ * A series label generator for plots that use data from an                                                                                                                                                                {@link org.jfree.data.xy.XYDataset}.
  */
 public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -98,7 +98,7 @@ public class MultipleXYSeriesLabelGenerator implements XYSeriesLabelGenerator, C
     return label.toString();
   }
   /** 
- * Creates the array of items that can be passed to the                                                                                              {@link MessageFormat} class for creating labels.
+ * Creates the array of items that can be passed to the                                                                                                                                                               {@link MessageFormat} class for creating labels.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param series  the series (zero-based index).
  * @return The items (never <code>null</code>).

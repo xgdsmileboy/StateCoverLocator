@@ -10,7 +10,7 @@ import java.io.Serializable;
 import org.jfree.chart.util.HashUtilities;
 import org.jfree.chart.util.RectangleEdge;
 /** 
- * An implementation of the                                                                                               {@link XYBarPainter} interface that uses severalgradient fills to enrich the appearance of the bars.
+ * An implementation of the                                                                                                                                                                {@link XYBarPainter} interface that uses severalgradient fills to enrich the appearance of the bars.
  * @since 1.0.11
  */
 public class GradientXYBarPainter implements XYBarPainter, Serializable {

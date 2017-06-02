@@ -48,7 +48,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset implements
     setSelectionState(this);
   }
   /** 
- * Returns a flag that controls whether or not the bin count is divided by the bin size in the                                                                                               {@link #getXValue(int,int)} method.
+ * Returns a flag that controls whether or not the bin count is divided by the bin size in the                                                                                                                                                               {@link #getXValue(int,int)} method.
  * @return A boolean.
  * @see #setAdjustForBinSize(boolean)
  */
@@ -56,7 +56,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset implements
     return this.adjustForBinSize;
   }
   /** 
- * Sets the flag that controls whether or not the bin count is divided by the bin size in the                                                                                               {@link #getYValue(int,int)} method, and sends a{@link DatasetChangeEvent} to all registered listeners.
+ * Sets the flag that controls whether or not the bin count is divided by the bin size in the                                                                                                                                                               {@link #getYValue(int,int)} method, and sends a{@link DatasetChangeEvent} to all registered listeners.
  * @param adjust  the flag.
  * @see #getAdjustForBinSize()
  */
@@ -140,7 +140,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset implements
     }
   }
   /** 
- * Adds a set of values to the dataset and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Adds a set of values to the dataset and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @param values  the values (<code>null</code> not permitted).
  * @see #clearObservations()
  */
@@ -151,7 +151,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset implements
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes all current observation data and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes all current observation data and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @since 1.0.6
  * @see #addObservations(double[])
  * @see #removeAllBins()
@@ -165,7 +165,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset implements
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes all bins and sends a                                                                                               {@link DatasetChangeEvent} to allregistered listeners.
+ * Removes all bins and sends a                                                                                                                                                               {@link DatasetChangeEvent} to allregistered listeners.
  * @since 1.0.6
  * @see #addBin(SimpleHistogramBin)
  */
@@ -302,14 +302,14 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset implements
     return bin.isSelected();
   }
   /** 
- * Sets the selection state of the specified item and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the selection state of the specified item and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @since 1.2.0
  */
   public void setSelected(  int series,  int item,  boolean selected){
     setSelected(series,item,selected,true);
   }
   /** 
- * Sets the selection state of the specified item and, if requested, sends a                                                                                               {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the selection state of the specified item and, if requested, sends a                                                                                                                                                               {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series index.
  * @param item  the item index.
  * @param selected  the selection state.
@@ -324,7 +324,7 @@ public class SimpleHistogramDataset extends AbstractIntervalXYDataset implements
     }
   }
   /** 
- * Clears the selection state of all items in the dataset and sends a                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Clears the selection state of all items in the dataset and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
  * @since 1.2.0
  */
   public void clearSelection(){

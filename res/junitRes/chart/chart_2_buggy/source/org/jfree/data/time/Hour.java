@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 /** 
- * Represents an hour in a specific day.  This class is immutable, which is a requirement for all                                                                                               {@link RegularTimePeriod} subclasses.
+ * Represents an hour in a specific day.  This class is immutable, which is a requirement for all                                                                                                                                                               {@link RegularTimePeriod} subclasses.
  */
 public class Hour extends RegularTimePeriod implements Serializable {
   /** 
@@ -126,7 +126,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
     return this.day.getDayOfMonth();
   }
   /** 
- * Returns the first millisecond of the hour.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                              {@link #peg(Calendar)} method.
+ * Returns the first millisecond of the hour.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
  * @return The first millisecond of the hour.
  * @see #getLastMillisecond()
  */
@@ -134,7 +134,7 @@ public class Hour extends RegularTimePeriod implements Serializable {
     return this.firstMillisecond;
   }
   /** 
- * Returns the last millisecond of the hour.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                              {@link #peg(Calendar)} method.
+ * Returns the last millisecond of the hour.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
  * @return The last millisecond of the hour.
  * @see #getFirstMillisecond()
  */

@@ -59,7 +59,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot implements PlotChan
     return this.gap;
   }
   /** 
- * Sets the amount of space between subplots and sends a                                                                                              {@link PlotChangeEvent} to all registered listeners.
+ * Sets the amount of space between subplots and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
  * @param gap  the gap between subplots (in Java2D units).
  */
   public void setGap(  double gap){
@@ -67,14 +67,14 @@ public class CombinedDomainCategoryPlot extends CategoryPlot implements PlotChan
     fireChangeEvent();
   }
   /** 
- * Adds a subplot to the combined chart and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners. <br><br> The domain axis for the subplot will be set to <code>null</code>.  You must ensure that the subplot has a non-null range axis.
+ * Adds a subplot to the combined chart and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners. <br><br> The domain axis for the subplot will be set to <code>null</code>.  You must ensure that the subplot has a non-null range axis.
  * @param subplot  the subplot (<code>null</code> not permitted).
  */
   public void add(  CategoryPlot subplot){
     add(subplot,1);
   }
   /** 
- * Adds a subplot to the combined chart and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners. <br><br> The domain axis for the subplot will be set to <code>null</code>.  You must ensure that the subplot has a non-null range axis.
+ * Adds a subplot to the combined chart and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners. <br><br> The domain axis for the subplot will be set to <code>null</code>.  You must ensure that the subplot has a non-null range axis.
  * @param subplot  the subplot (<code>null</code> not permitted).
  * @param weight  the weight (must be >= 1).
  */
@@ -99,7 +99,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot implements PlotChan
     fireChangeEvent();
   }
   /** 
- * Removes a subplot from the combined chart.  Potentially, this removes some unique categories from the overall union of the datasets...so the domain axis is reconfigured, then a                                                                                               {@link PlotChangeEvent} is sent toall registered listeners.
+ * Removes a subplot from the combined chart.  Potentially, this removes some unique categories from the overall union of the datasets...so the domain axis is reconfigured, then a                                                                                                                                                                {@link PlotChangeEvent} is sent toall registered listeners.
  * @param subplot  the subplot (<code>null</code> not permitted).
  */
   public void remove(  CategoryPlot subplot){
@@ -346,7 +346,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot implements PlotChan
     }
   }
   /** 
- * Returns a range representing the extent of the data values in this plot (obtained from the subplots) that will be rendered against the specified axis.  NOTE: This method is intended for internal JFreeChart use, and is public only so that code in the axis classes can call it.  Since, for this class, the domain axis is a                                                                                               {@link CategoryAxis}(not a <code>ValueAxis</code}) and subplots have independent range axes, the JFreeChart code will never call this method (although this is not checked/enforced).
+ * Returns a range representing the extent of the data values in this plot (obtained from the subplots) that will be rendered against the specified axis.  NOTE: This method is intended for internal JFreeChart use, and is public only so that code in the axis classes can call it.  Since, for this class, the domain axis is a                                                                                                                                                                {@link CategoryAxis}(not a <code>ValueAxis</code}) and subplots have independent range axes, the JFreeChart code will never call this method (although this is not checked/enforced).
  * @param axis  the axis.
  * @return The range.
  */
@@ -420,7 +420,7 @@ public class CombinedDomainCategoryPlot extends CategoryPlot implements PlotChan
     }
   }
   /** 
- * Receives a                                                                                               {@link PlotChangeEvent} and responds by notifying alllisteners.
+ * Receives a                                                                                                                                                                {@link PlotChangeEvent} and responds by notifying alllisteners.
  * @param event  the event.
  */
   public void plotChanged(  PlotChangeEvent event){

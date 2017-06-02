@@ -6,7 +6,7 @@ import java.util.List;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * A data structure that stores zero, one or many values, where each value is associated with two keys (a 'row' key and a 'column' key).  The keys should be (a) instances of                                                                                               {@link Comparable} and (b) immutable.
+ * A data structure that stores zero, one or many values, where each value is associated with two keys (a 'row' key and a 'column' key).  The keys should be (a) instances of                                                                                                                                                                {@link Comparable} and (b) immutable.
  */
 public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable, Cloneable, Serializable {
   /** 
@@ -148,7 +148,7 @@ public class DefaultKeyedValues2D implements KeyedValues2D, PublicCloneable, Clo
     return Collections.unmodifiableList(this.columnKeys);
   }
   /** 
- * Returns the value for the given row and column keys.  This method will throw an                                                                                               {@link UnknownKeyException} if either key is not defined in thedata structure.
+ * Returns the value for the given row and column keys.  This method will throw an                                                                                                                                                                {@link UnknownKeyException} if either key is not defined in thedata structure.
  * @param rowKey  the row key (<code>null</code> not permitted).
  * @param columnKey  the column key (<code>null</code> not permitted).
  * @return The value (possibly <code>null</code>).

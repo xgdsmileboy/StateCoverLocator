@@ -42,7 +42,7 @@ public class MethodInstrumentVisitor extends TraversalVisitor {
 		_methodFlag = methodFlag;
 	}
 
-	public MethodInstrumentVisitor(Set<Method> methods) {
+	public MethodInstrumentVisitor(Set<Integer> methods) {
 		_methods = methods;
 	}
 
@@ -81,7 +81,8 @@ public class MethodInstrumentVisitor extends TraversalVisitor {
 			}
 
 			// optimize instrument
-			message = Constant.INSTRUMENT_FLAG + _methodFlag + "#" + String.valueOf(keyValue);
+//			message = Constant.INSTRUMENT_FLAG + _methodFlag + Constant.INSTRUMENT_STR_SEP + String.valueOf(keyValue);
+			message = String.valueOf(keyValue);
 
 			int lineNumber = _cu.getLineNumber(node.getBody().getStartPosition());
 

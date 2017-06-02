@@ -26,7 +26,7 @@ import org.jfree.chart.util.RectangleInsets;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.pie.PieDataset;
 /** 
- * A plot that displays data in the form of a 3D pie chart, using data from any class that implements the                                                                                               {@link PieDataset} interface.<P> Although this class extends  {@link PiePlot}, it does not currently support exploded sections.
+ * A plot that displays data in the form of a 3D pie chart, using data from any class that implements the                                                                                                                                                                {@link PieDataset} interface.<P> Although this class extends  {@link PiePlot}, it does not currently support exploded sections.
  */
 public class PiePlot3D extends PiePlot implements Serializable {
   /** 
@@ -65,7 +65,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
     return this.depthFactor;
   }
   /** 
- * Sets the pie depth as a percentage of the height of the plot area, and sends a                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the pie depth as a percentage of the height of the plot area, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
  * @param factor  the depth factor (for example, 0.20 is twenty percent).
  * @see #getDepthFactor()
  */
@@ -74,7 +74,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
     fireChangeEvent();
   }
   /** 
- * Returns a flag that controls whether or not the sides of the pie chart are rendered using a darker colour.  This is only applied if the section colour is an instance of                                                                                               {@link java.awt.Color}.
+ * Returns a flag that controls whether or not the sides of the pie chart are rendered using a darker colour.  This is only applied if the section colour is an instance of                                                                                                                                                                {@link java.awt.Color}.
  * @return A boolean.
  * @see #setDarkerSides(boolean)
  * @since 1.0.7
@@ -83,7 +83,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
     return this.darkerSides;
   }
   /** 
- * Sets a flag that controls whether or not the sides of the pie chart are rendered using a darker colour, and sends a                                                                                               {@link PlotChangeEvent}to all registered listeners.  This is only applied if the section colour is an instance of                                                                                               {@link java.awt.Color}.
+ * Sets a flag that controls whether or not the sides of the pie chart are rendered using a darker colour, and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.  This is only applied if the section colour is an instance of                                                                                                                                                                {@link java.awt.Color}.
  * @param darker true to darken the sides, false to use the defaultbehaviour.
  * @see #getDarkerSides()
  * @since 1.0.7.
@@ -93,7 +93,7 @@ public class PiePlot3D extends PiePlot implements Serializable {
     fireChangeEvent();
   }
   /** 
- * Draws the plot on a Java 2D graphics device (such as the screen or a printer).  This method is called by the                                                                                              {@link org.jfree.chart.JFreeChart} class, you don't normally needto call it yourself.
+ * Draws the plot on a Java 2D graphics device (such as the screen or a printer).  This method is called by the                                                                                                                                                               {@link org.jfree.chart.JFreeChart} class, you don't normally needto call it yourself.
  * @param g2  the graphics device.
  * @param plotArea  the area within which the plot should be drawn.
  * @param anchor  the anchor point.

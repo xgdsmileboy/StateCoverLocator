@@ -9,7 +9,7 @@ import org.jfree.data.time.TimePeriod;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 /** 
- * A dataset implementation that wraps a                                                                                               {@link TaskSeriesCollection} andpresents it as an  {@link IntervalXYDataset}, allowing a set of tasks to be displayed using an                                                                                               {@link XYBarRenderer} (and usually a{@link SymbolAxis}).  This is a very specialised dataset implementation ---before using it, you should take some time to understand the use-cases that it is designed for.
+ * A dataset implementation that wraps a                                                                                                                                                                {@link TaskSeriesCollection} andpresents it as an  {@link IntervalXYDataset}, allowing a set of tasks to be displayed using an                                                                                                                                                                {@link XYBarRenderer} (and usually a{@link SymbolAxis}).  This is a very specialised dataset implementation ---before using it, you should take some time to understand the use-cases that it is designed for.
  * @since 1.0.11
  */
 public class XYTaskDataset extends AbstractXYDataset implements IntervalXYDataset, DatasetChangeListener {
@@ -53,7 +53,7 @@ public class XYTaskDataset extends AbstractXYDataset implements IntervalXYDatase
     return this.seriesWidth;
   }
   /** 
- * Sets the series interval width and sends a                                                                                               {@link DatasetChangeEvent} toall registered listeners.
+ * Sets the series interval width and sends a                                                                                                                                                                {@link DatasetChangeEvent} toall registered listeners.
  * @param w  the width.
  * @see #getSeriesWidth()
  */
@@ -73,7 +73,7 @@ public class XYTaskDataset extends AbstractXYDataset implements IntervalXYDatase
     return this.transposed;
   }
   /** 
- * Sets the flag that controls whether or not the dataset is transposed and sends a                                                                                               {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the flag that controls whether or not the dataset is transposed and sends a                                                                                                                                                                {@link DatasetChangeEvent} to all registered listeners.
  * @param transposed  the new flag value.
  * @see #isTransposed()
  */

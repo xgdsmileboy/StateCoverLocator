@@ -106,7 +106,7 @@ public class PlotRenderingInfo implements Cloneable, Serializable {
     return (PlotRenderingInfo)this.subplotInfo.get(index);
   }
   /** 
- * Returns the index of the subplot that contains the specified (x, y) point (the "source" point).  The source point will usually come from a mouse click on a                                                                                               {@link org.jfree.chart.ChartPanel}, and this method is then used to determine the subplot that contains the source point.
+ * Returns the index of the subplot that contains the specified (x, y) point (the "source" point).  The source point will usually come from a mouse click on a                                                                                                                                                                {@link org.jfree.chart.ChartPanel}, and this method is then used to determine the subplot that contains the source point.
  * @param source  the source point (in Java2D space, <code>null</code> notpermitted).
  * @return The subplot index (or -1 if no subplot contains<code>source</code>).
  */

@@ -16,7 +16,7 @@ public class DatasetChangeEvent extends java.util.EventObject {
  */
   private DatasetChangeInfo info;
   /** 
- * Constructs a new event.  The source is either the dataset or the                                                                                              {@link Plot} class.  The dataset can be <code>null</code> (in this casethe source will be the  {@link Plot} class).
+ * Constructs a new event.  The source is either the dataset or the                                                                                                                                                               {@link Plot} class.  The dataset can be <code>null</code> (in this casethe source will be the  {@link Plot} class).
  * @param source  the source of the event.
  * @param dataset  the dataset that generated the event (<code>null</code>permitted).
  * @param info  information about the change (<code>null</code> notpermitted).

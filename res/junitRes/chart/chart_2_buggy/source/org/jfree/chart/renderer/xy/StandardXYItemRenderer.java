@@ -31,7 +31,7 @@ import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.util.UnitType;
 import org.jfree.data.xy.XYDataset;
 /** 
- * Standard item renderer for an                                                                                               {@link XYPlot}.  This class can draw (a) shapes at each point, or (b) lines between points, or (c) both shapes and lines. <P> This renderer has been retained for historical reasons and, in general, you should use the                                                                                               {@link XYLineAndShapeRenderer} class instead.
+ * Standard item renderer for an                                                                                                                                                                {@link XYPlot}.  This class can draw (a) shapes at each point, or (b) lines between points, or (c) both shapes and lines. <P> This renderer has been retained for historical reasons and, in general, you should use the                                                                                                                                                                {@link XYLineAndShapeRenderer} class instead.
  */
 public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XYItemRenderer, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -109,14 +109,14 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     this(LINES,null);
   }
   /** 
- * Constructs a new renderer.  To specify the type of renderer, use one of the constants:                                                                                               {@link #SHAPES},                                                                                               {@link #LINES} or{@link #SHAPES_AND_LINES}.
+ * Constructs a new renderer.  To specify the type of renderer, use one of the constants:                                                                                                                                                                {@link #SHAPES},                                                                                                                                                                {@link #LINES} or{@link #SHAPES_AND_LINES}.
  * @param type  the type.
  */
   public StandardXYItemRenderer(  int type){
     this(type,null);
   }
   /** 
- * Constructs a new renderer.  To specify the type of renderer, use one of the constants:                                                                                               {@link #SHAPES},                                                                                               {@link #LINES} or{@link #SHAPES_AND_LINES}.
+ * Constructs a new renderer.  To specify the type of renderer, use one of the constants:                                                                                                                                                                {@link #SHAPES},                                                                                                                                                                {@link #LINES} or{@link #SHAPES_AND_LINES}.
  * @param type  the type of renderer.
  * @param toolTipGenerator  the item label generator (<code>null</code>permitted).
  */
@@ -124,7 +124,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     this(type,toolTipGenerator,null);
   }
   /** 
- * Constructs a new renderer.  To specify the type of renderer, use one of the constants:                                                                                               {@link #SHAPES},                                                                                               {@link #LINES} or{@link #SHAPES_AND_LINES}.
+ * Constructs a new renderer.  To specify the type of renderer, use one of the constants:                                                                                                                                                                {@link #SHAPES},                                                                                                                                                                {@link #LINES} or{@link #SHAPES_AND_LINES}.
  * @param type  the type of renderer.
  * @param toolTipGenerator  the item label generator (<code>null</code>permitted).
  * @param urlGenerator  the URL generator.
@@ -194,7 +194,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     return this.seriesShapesFilled.getBoolean(series);
   }
   /** 
- * Sets the 'shapes filled' flag for a series and sends a                                                                                              {@link RendererChangeEvent} to all registered listeners.
+ * Sets the 'shapes filled' flag for a series and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero-based).
  * @param flag  the flag.
  * @see #getSeriesShapesFilled(int)
@@ -212,7 +212,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     return this.baseShapesFilled;
   }
   /** 
- * Sets the base 'shapes filled' flag and sends a                                                                                              {@link RendererChangeEvent} to all registered listeners.
+ * Sets the base 'shapes filled' flag and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
  * @param flag  the flag.
  * @see #getBaseShapesFilled()
  */
@@ -228,7 +228,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     return this.plotLines;
   }
   /** 
- * Sets the flag that controls whether or not a line is plotted between each data point and sends a                                                                                               {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the flag that controls whether or not a line is plotted between each data point and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.
  * @param flag  the flag.
  * @see #getPlotLines()
  */
@@ -247,7 +247,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     return this.gapThresholdType;
   }
   /** 
- * Sets the gap threshold type and sends a                                                                                               {@link RendererChangeEvent} toall registered listeners.
+ * Sets the gap threshold type and sends a                                                                                                                                                                {@link RendererChangeEvent} toall registered listeners.
  * @param thresholdType  the type (<code>null</code> not permitted).
  * @see #getGapThresholdType()
  */
@@ -267,7 +267,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     return this.gapThreshold;
   }
   /** 
- * Sets the gap threshold for discontinuous lines and sends a                                                                                              {@link RendererChangeEvent} to all registered listeners.
+ * Sets the gap threshold for discontinuous lines and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
  * @param t  the threshold.
  * @see #getGapThreshold()
  */
@@ -284,7 +284,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     return this.plotImages;
   }
   /** 
- * Sets the flag that controls whether or not an image is drawn at each data point and sends a                                                                                               {@link RendererChangeEvent} to all registeredlisteners.
+ * Sets the flag that controls whether or not an image is drawn at each data point and sends a                                                                                                                                                                {@link RendererChangeEvent} to all registeredlisteners.
  * @param flag  the flag.
  * @see #getPlotImages()
  */
@@ -302,7 +302,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     return this.plotDiscontinuous;
   }
   /** 
- * Sets the flag that controls whether or not the renderer shows discontinuous lines, and sends a                                                                                               {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the flag that controls whether or not the renderer shows discontinuous lines, and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.
  * @param flag  the new flag value.
  * @since 1.0.5
  */
@@ -337,7 +337,7 @@ public class StandardXYItemRenderer extends AbstractXYItemRenderer implements XY
     return this.legendLine;
   }
   /** 
- * Sets the shape used as a line in each legend item and sends a                                                                                              {@link RendererChangeEvent} to all registered listeners.
+ * Sets the shape used as a line in each legend item and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
  * @param line  the line (<code>null</code> not permitted).
  * @see #getLegendLine()
  */

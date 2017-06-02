@@ -17,7 +17,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * The base class used to represent the needle on a                                                                                              {@link org.jfree.chart.plot.CompassPlot}.
+ * The base class used to represent the needle on a                                                                                                                                                               {@link org.jfree.chart.plot.CompassPlot}.
  */
 public abstract class MeterNeedle implements Serializable {
   /** 

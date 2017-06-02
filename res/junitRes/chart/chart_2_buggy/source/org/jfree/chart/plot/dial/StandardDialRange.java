@@ -78,7 +78,7 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer, C
     return this.scaleIndex;
   }
   /** 
- * Sets the scale index and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the scale index and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param index  the scale index.
  * @see #getScaleIndex()
  */
@@ -95,7 +95,7 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer, C
     return this.lowerBound;
   }
   /** 
- * Sets the lower bound of the dial range and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the lower bound of the dial range and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param bound  the lower bound.
  * @see #getLowerBound()
  */
@@ -115,7 +115,7 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer, C
     return this.upperBound;
   }
   /** 
- * Sets the upper bound of the dial range and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the upper bound of the dial range and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param bound  the upper bound.
  * @see #getUpperBound()
  */
@@ -127,7 +127,7 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer, C
     notifyListeners(new DialLayerChangeEvent(this));
   }
   /** 
- * Sets the bounds for the range and sends a                                                                                               {@link DialLayerChangeEvent}to all registered listeners.
+ * Sets the bounds for the range and sends a                                                                                                                                                                {@link DialLayerChangeEvent}to all registered listeners.
  * @param lower  the lower bound.
  * @param upper  the upper bound.
  */
@@ -148,7 +148,7 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer, C
     return this.paint;
   }
   /** 
- * Sets the paint used to highlight the range and sends a                                                                                              {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the paint used to highlight the range and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -168,7 +168,7 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer, C
     return this.innerRadius;
   }
   /** 
- * Sets the inner radius and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the inner radius and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param radius  the radius.
  * @see #getInnerRadius()
  */
@@ -185,7 +185,7 @@ public class StandardDialRange extends AbstractDialLayer implements DialLayer, C
     return this.outerRadius;
   }
   /** 
- * Sets the outer radius and sends a                                                                                               {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the outer radius and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
  * @param radius  the radius.
  * @see #getOuterRadius()
  */

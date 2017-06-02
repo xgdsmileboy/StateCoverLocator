@@ -32,7 +32,7 @@ import org.jfree.chart.ui.StrokeSample;
 import org.jfree.chart.util.RectangleInsets;
 import org.jfree.chart.util.ResourceBundleWrapper;
 /** 
- * A panel for editing the properties of a                                                                                               {@link Plot}.
+ * A panel for editing the properties of a                                                                                                                                                                {@link Plot}.
  */
 class DefaultPlotEditor extends JPanel implements ActionListener {
   /** 
