@@ -13,6 +13,8 @@ import java.util.Map;
 
 import org.eclipse.jdt.core.dom.Type;
 
+import locator.common.util.LevelLogger;
+
 /**
  * @author Jiajun
  * @date May 12, 2017
@@ -30,7 +32,7 @@ public class TypingInfo {
 	public static boolean addFieldType(String fieldName, Type type) {
 		if (fieldTypeMap.containsKey(fieldName) && !fieldTypeMap.get(fieldName).equals(type)
 				&& !fieldTypeMap.get(fieldName).toString().equals(type.toString())) {
-			System.out.println("Field type inconsistancy '" + fieldName + "' with types : "
+			LevelLogger.info("Field type inconsistancy '" + fieldName + "' with types : "
 					+ fieldTypeMap.get(fieldName) + " and " + type);
 			return false;
 		}
@@ -48,7 +50,7 @@ public class TypingInfo {
 			Map<String, Type> map = localTypeMap.get(methodName);
 			if (map.containsKey(varName) && !map.get(varName).equals(type)
 					&& !map.get(varName).toString().equals(type.toString())) {
-				System.out.println("Variable type inconsistancy of '" + varName + "' in method '" + methodName
+				LevelLogger.info("Variable type inconsistancy of '" + varName + "' in method '" + methodName
 						+ "' with types : " + map.get(varName) + " and " + type);
 				return false;
 			}

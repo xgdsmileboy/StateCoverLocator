@@ -26,6 +26,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
@@ -54,46 +55,81 @@ public class ExprFilter {
 		}
 	}
 
-	public static boolean isLegalExpr(String type, String varName, String condition) {
-		if(!isPrimitiveType(type)){
-			
-			if(varName.equals("THIS")){
+	public static boolean isLegalExpr(String type, String varName, String condition, Set<String> locaLegalVarNames,
+			String currentClassName) {
+		if (!isPrimitiveType(type)) {
+
+			if (varName.equals("THIS")) {
 				varName = "this";
 			}
-			
-			if(condition.equals(varName) || condition.startsWith(varName + " >") || condition.startsWith(varName + " <")){
+
+			if (condition.equals(varName) || condition.startsWith(varName + " >")
+					|| condition.startsWith(varName + " <")) {
 				return false;
 			}
-			if(condition.endsWith(">= " + varName) || condition.endsWith("<= " + varName) || condition.endsWith("> " + varName) || condition.endsWith("< " + varName)){
+			if (condition.endsWith(">= " + varName) || condition.endsWith("<= " + varName)
+					|| condition.endsWith("> " + varName) || condition.endsWith("< " + varName)) {
 				return false;
 			}
-			if(condition.contains("[" + varName + "]")){
+			if (condition.contains("[" + varName + "]")) {
 				return false;
 			}
-			if(condition.startsWith(varName + " -") || condition.startsWith(varName + " +")){
+			if (condition.startsWith(varName + " -") || condition.startsWith(varName + " +")) {
 				return false;
 			}
-			
+
+		}
+
+		ASTNode node = JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
+		
+		if(node instanceof InfixExpression){
+			InfixExpression infixExpression = (InfixExpression) node;
+			if(infixExpression.getLeftOperand().toString().equals(infixExpression.getRightOperand().toString())){
+				return false;
+			}
 		}
 		
+		ExprAnalysisVisitor visitor = new ExprAnalysisVisitor(varName, type);
+		node.accept(visitor);
 		// user-defined class
-		if (_typeInfo.containsKey(type)) {
-			ASTNode node = JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
-			ExprAnalysisVisitor visitor = new ExprAnalysisVisitor(varName, type);
-			node.accept(visitor);
-			return visitor.isLegal();
+		if (_typeInfo.containsKey(type) && !visitor.isLegal()) {
+			return false;
 		}
-		//condition expressions contains array access
+		Set<String> singleVars = visitor.getSingleVariables();
+		for (String var : singleVars) {
+			if (!locaLegalVarNames.contains(var) && !isField(var, currentClassName)) {
+				return false;
+			}
+		}
+		
+		// condition expressions contains array access
 		boolean isArrayAccess = condition.contains(varName + "[");
-		//is primitive type, illegal field/method/array access
+		// is primitive type, illegal field/method/array access
 		if (isPrimitiveType(type) && (condition.contains(varName + ".") || isArrayAccess)) {
 			return false;
 		}
-		//array access non-array
-		if(isArrayAccess && !type.contains("[")){
+		// array access non-array
+		if (isArrayAccess && !type.contains("[")) {
 			return false;
 		}
 		return true;
+	}
+	
+	private static boolean isField(String varName, String type){
+		Pair<Set<String>, String> pair = _typeInfo.get(type);
+		while(pair != null){
+			if(pair.getFirst().contains(varName)){
+				return true;
+			} else {
+				String parent = pair.getSecond();
+				if(parent != null){
+					pair = _typeInfo.get(parent);
+				} else {
+					pair = null;
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean isPrimitiveType(String type) {
@@ -124,13 +160,6 @@ public class ExprFilter {
 
 		private final String __name__ = "@ExprFilter$MethodAndFieldCollectorVisitor ";
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jdt.core.dom.ASTVisitor#visit(org.eclipse.jdt.core.dom.
-		 * TypeDeclaration)
-		 */
 		@Override
 		public boolean visit(TypeDeclaration node) {
 			String clazzName = node.getName().getFullyQualifiedName();
@@ -170,6 +199,7 @@ public class ExprFilter {
 		private boolean _legal = true;
 		private String _varName = null;
 		private String _type = null;
+		private Set<String> _singleVariableNames = new HashSet<>();
 
 		public ExprAnalysisVisitor(String varName, String type) {
 			_varName = varName;
@@ -178,6 +208,10 @@ public class ExprFilter {
 
 		public boolean isLegal() {
 			return _legal;
+		}
+		
+		public Set<String> getSingleVariables(){
+			return _singleVariableNames;
 		}
 		
 		public boolean visit(ArrayAccess node){
@@ -194,25 +228,24 @@ public class ExprFilter {
 			String qualifier = node.getQualifier().toString();
 			String name = node.getName().toString();
 			if(_varName.equals(qualifier)){
-				_legal = false;
-				Pair<Set<String>, String> pair = _typeInfo.get(_type);
-				while(pair != null){
-					if(pair.getFirst().contains(name)){
-						_legal = true;
-						break;
-					} else {
-						String parent = pair.getSecond();
-						if(parent != null){
-							pair = _typeInfo.get(parent);
-						} else {
-							pair = null;
-						}
-					}
-				}
+				_legal = isField(name, _type);
 				if(!_legal){
 					return false;
 				}
 			}
+			return true;
+		}
+		
+		public boolean visit(SimpleName node){
+			String name = node.getFullyQualifiedName();
+			ASTNode parent = node.getParent();
+			if(parent != null){
+				String parentStr = parent.toString().replace("this.", "");
+				if(!parentStr.contains("." + name)){
+					_singleVariableNames.add(name);
+				}
+			}
+			
 			return true;
 		}
 		
@@ -222,21 +255,7 @@ public class ExprFilter {
 				String var = node.getExpression().toString();
 				String name = node.getName().toString();
 				if(_varName.equals(var)){
-					_legal = false;
-					Pair<Set<String>, String> pair = _typeInfo.get(_type);
-					while(pair != null){
-						if(pair.getFirst().contains(name)){
-							_legal = true;
-							break;
-						} else {
-							String parent = pair.getSecond();
-							if(parent != null){
-								pair = _typeInfo.get(parent);
-							} else {
-								pair = null;
-							}
-						}
-					}
+					_legal = isField(name, _type);
 					if(!_legal){
 						return false;
 					}
@@ -249,21 +268,7 @@ public class ExprFilter {
 			String qualifier = node.getExpression().toString();
 			String name = node.getName().toString();
 			if(_varName.equals(qualifier)){
-				_legal = false;
-				Pair<Set<String>, String> pair = _typeInfo.get(_type);
-				while(pair != null){
-					if(pair.getFirst().contains(name)){
-						_legal = true;
-						break;
-					} else {
-						String parent = pair.getSecond();
-						if(parent != null){
-							pair = _typeInfo.get(parent);
-						} else {
-							pair = null;
-						}
-					}
-				}
+				_legal = isField(name, _type);
 				if(!_legal){
 					return false;
 				}
@@ -274,14 +279,14 @@ public class ExprFilter {
 		public boolean visit(InfixExpression node){
 			String left = node.getLeftOperand().toString();
 			if(left.equals("this")){
-				if(node.getRightOperand() instanceof NumberLiteral || node.getRightOperand().toString().equals("this")){
+				if(node.getRightOperand() instanceof NumberLiteral){
 					_legal = false;
 					return false;
 				}
 			}
 			String right = node.getRightOperand().toString();
 			if(right.equals("this")){
-				if(node.getLeftOperand() instanceof NumberLiteral || node.getLeftOperand().toString().equals("this")){
+				if(node.getLeftOperand() instanceof NumberLiteral || left.equals("this")){
 					_legal = false;
 					return false;
 				}
@@ -290,5 +295,5 @@ public class ExprFilter {
 		}
 
 	}
-
+	
 }

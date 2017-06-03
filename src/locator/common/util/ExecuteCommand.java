@@ -14,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
@@ -205,6 +207,57 @@ public class ExecuteCommand {
 		executeAndOutputFile(cmd, Constant.STR_TMP_ML_LOG_FILE);
 	}
 
+	public static List<String> executeCompile(String[] command) throws IOException, InterruptedException {
+		final Process process = Runtime.getRuntime().exec(command);
+
+		List<String> message = new ArrayList<>();
+		
+		new Thread() {
+			public void run() {
+				InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
+				int num = 0;
+				byte[] bs = new byte[1024];
+				try {
+					while ((num = errorInStream.read(bs)) != -1) {
+						String string = new String(bs, 0, num, "UTF-8");
+						message.add(string);
+					}
+				} catch (IOException e) {
+					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
+				} finally {
+					try {
+						errorInStream.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		}.start();
+
+		new Thread() {
+			public void run() {
+				InputStream processInStream = new BufferedInputStream(process.getInputStream());
+				int num = 0;
+				byte[] bs = new byte[1024];
+				try {
+					while ((num = processInStream.read(bs)) != -1) {
+						String string = new String(bs, 0, num, "UTF-8");
+						message.add(string);
+					}
+				} catch (IOException e) {
+					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
+				} finally {
+					try {
+						processInStream.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		}.start();
+
+		process.waitFor();
+		return message;
+	}
+	
 	/**
 	 * execute outside command when given command and output execution
 	 * information to console

@@ -8,6 +8,7 @@
 package locator.inst.visitor.feature;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class FeatureExtraction {
 		return features;
 	}
 
-	public static Pair<List<String>, List<String>> extractAllFeatures(String srcPath, String relJavaPath, int line) {
+	public static Pair<List<String>, List<String>> extractAllFeatures(String srcPath, String relJavaPath, int line, Map<String, String> allLegalLocalVariables) {
 		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
 		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
 
@@ -77,9 +78,10 @@ public class FeatureExtraction {
 		List<String> filteredVarFeatures = new ArrayList<>();
 		for (String feature : varFeature) {
 			String[] elements = feature.split("\t");
-			if (rightVars.contains(elements[5])) {
-				// TODO : should be removed after re-train the prediction model
-				feature = feature.replace("CALLER_USE", "CLALLER_USE");
+			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
+			String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
+			allLegalLocalVariables.put(varName, varType);
+			if (rightVars.contains(varName)) {
 				filteredVarFeatures.add(feature);
 			}
 		}
@@ -87,7 +89,7 @@ public class FeatureExtraction {
 		List<String> filteredExpFeatures = new ArrayList<>();
 		for (String feature : expFeature) {
 			String[] elements = feature.split("\t");
-			if (rightVars.contains(elements[5])) {
+			if (rightVars.contains(elements[Constant.FEATURE_VAR_NAME_INDEX])) {
 				filteredExpFeatures.add(feature);
 			}
 		}

@@ -7,9 +7,13 @@
 
 package locator.inst.visitor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.junit.Assert;
 import org.junit.Test;
 
 import locator.common.java.JavaFile;
@@ -25,7 +29,9 @@ public class NewPredicateInstrumentVisitorTest {
 		String filePath = "res/junitRes/BigFraction.java";
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
-		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor("a > b", 23);
+		List<String> conditions = new ArrayList<>();
+		conditions.add("a > b");
+		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 23);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 //		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);

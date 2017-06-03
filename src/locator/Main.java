@@ -10,6 +10,7 @@ package locator;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -26,6 +27,7 @@ import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
 import locator.core.Collector;
+import locator.core.run.Runner;
 import locator.core.run.path.Coverage;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
@@ -79,6 +81,7 @@ public class Main {
 		// remove auxiliary file
 		String path = subject.getHome() + subject.getSsrc();
 		String auxiliary = path + Constant.PATH_SEPARATOR + "auxiliary/Dumper.java";
+		
 		ExecuteCommand.deleteGivenFile(auxiliary);
 		// preprocess : remove all instrument
 		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
@@ -104,8 +107,13 @@ public class Main {
 
 
 		LevelLogger.info("step 3: compute statements covered by failed tests");
-		Set<String> allCoveredStatement = coverage.keySet();
-
+		Set<String> allCoveredStatement = new HashSet<>();
+		for(Entry<String, CoverInfo> entry : coverage.entrySet()){
+			if(entry.getValue().getFailedCount() > 0){
+				allCoveredStatement.add(entry.getKey());
+			}
+		}
+		
 		LevelLogger.info("step 4: compute predicate coverage information");
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
 				failedTestsAndCoveredMethods.getFirst());
@@ -155,15 +163,16 @@ public class Main {
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
 		String begin = simpleDateFormat.format(new Date());
-		System.out.println("BEGIN : " + begin);
+		LevelLogger.info("BEGIN : " + begin);
 
-//		Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
-		Constant.PROJECT_HOME = "/Users/Jiajun/Code/Java/fault-localization/StateCoverLocator/res/junitRes";
+		Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
 
 		proceed();
 
 		String end = simpleDateFormat.format(new Date());
-		System.out.println("BEGIN : " + begin + " - END : " + end);
+		LevelLogger.info("BEGIN : " + begin + " - END : " + end);
+		
+		
 	}
 
 }

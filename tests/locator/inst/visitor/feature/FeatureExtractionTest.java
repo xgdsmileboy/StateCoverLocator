@@ -7,6 +7,7 @@
 
 package locator.inst.visitor.feature;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -24,7 +25,7 @@ public class FeatureExtractionTest {
 	public void test_print() {
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 48);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 48, new HashMap<>());
 		System.out.println("Variables : ");
 		for (String string : vars.getFirst()) {
 			System.out.println(string);
@@ -40,7 +41,7 @@ public class FeatureExtractionTest {
 		// test variable declaration statement " List keys=dataset.getKeys();"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 48);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 48, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -57,7 +58,7 @@ public class FeatureExtractionTest {
 		// current++)"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 85);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 85, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -70,7 +71,7 @@ public class FeatureExtractionTest {
 		// column=dataset.getColumnIndex(columnKey);"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 98);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 98, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -82,7 +83,7 @@ public class FeatureExtractionTest {
 		// test return statement "return createPieDatasetForRow(dataset,row);"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 74);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 74, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -95,7 +96,7 @@ public class FeatureExtractionTest {
 		// "result.setValue(columnKey,dataset.getValue(row,current));"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 87);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 87, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -107,7 +108,7 @@ public class FeatureExtractionTest {
 		// test if statement "if (value / total < minimumPercent) {"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 145);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 145, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -120,7 +121,7 @@ public class FeatureExtractionTest {
 		// argument.");"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 290);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 290, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -132,7 +133,7 @@ public class FeatureExtractionTest {
 		// test constant statement "double minimum=Double.POSITIVE_INFINITY;"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 824);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 824, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -144,7 +145,7 @@ public class FeatureExtractionTest {
 		// test switch statement "switch(a){"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 1574);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 1574, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -156,7 +157,7 @@ public class FeatureExtractionTest {
 		// test switch case statement "int b = a --;"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 1577);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 1577, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -168,7 +169,7 @@ public class FeatureExtractionTest {
 		// test assignment statement "runningTotal=runningTotal + value;"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 1558);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 1558, new HashMap<>());
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
@@ -180,7 +181,7 @@ public class FeatureExtractionTest {
 		// test assignment statement "num = num.divide(gcd);"
 		String path = System.getProperty("user.dir") + "/res/junitRes/math/math_3_buggy/src/main/java";
 		String relJavaPath = "/org/apache/commons/math3/fraction/BigFraction.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 134);
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 134, new HashMap<>());
 		// System.out.println("Variables : ");
 		// for (String string : vars.getFirst()) {
 		// System.out.println(string);

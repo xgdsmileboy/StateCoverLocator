@@ -79,6 +79,24 @@ public class Subject {
 	public String getHome() {
 		return Constant.PROJECT_HOME + "/" + _name + "/" + _name + "_" + _id + "_buggy";
 	}
+	
+	public String getVarFeatureOutputPath() {
+		String file = Constant.STR_ML_VAR_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
+				+ _id + ".var.csv";
+		return file;
+	}
+
+	public String getExprFeatureOutputPath() {
+		String file = Constant.STR_ML_EXP_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
+				+ _id + ".expr.csv";
+		return file;
+	}
+
+	public String getPredicResultPath() {
+		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id + "/" + _name + "_" + _id
+				+ ".joint.csv";
+		return file;
+	}
 
 	@Override
 	public String toString() {

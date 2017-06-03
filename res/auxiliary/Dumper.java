@@ -1,9 +1,14 @@
 package auxiliary;
 
+import java.awt.image.BufferedImageFilter;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,16 +22,13 @@ import java.util.Set;
 public class Dumper {
 
 	public static boolean SUCC_TEST = false;
-	private static int count_succ_cover = 0;
-	private static int count_fail_cover = 0;
 	private static List statements = new ArrayList();
 	private static List coverage = new ArrayList();
 	private static Set alreadyRun = new HashSet();
 
 	private static final long MAX_OUTPUT_FILE_SIZE = 5; // max file size in GB
-	private static final String OUT_AND_LIB_PATH = "/Users/Jiajun/Code/Java/fault-localization/StateCoverLocator";
+	private static final String OUT_AND_LIB_PATH = "/home/jiajun/code/space/StateCoverLocator";
 	private static final String OUT_FILE_NAME = OUT_AND_LIB_PATH + "/out/path.out";
-
 
 	public static void reset() {
 		alreadyRun = new HashSet();
@@ -35,13 +37,16 @@ public class Dumper {
 	public static boolean write(String stmt) {
 		if (!alreadyRun.contains(stmt)) {
 			alreadyRun.add(stmt);
+
+			read();
+
 			int index = statements.indexOf(stmt);
-			if(index >= 0){
-				Record record = (Record)coverage.get(index);
+			if (index >= 0) {
+				Record record = (Record) coverage.get(index);
 				record.inc(SUCC_TEST);
 			} else {
 				statements.add(stmt);
-				Record record = new Record();
+				Record record = new Record(0, 0);
 				record.inc(SUCC_TEST);
 				coverage.add(record);
 			}
@@ -62,13 +67,10 @@ public class Dumper {
 				return false;
 			}
 			try {
-				
-				for(int i = 0; i < statements.size(); i++){
-				    Record record = (Record) coverage.get(i);
-					if(record.getFail() == 0){
-						continue;
-					}
-					String content = (String)statements.get(i) + "\t" + record.getValue();
+
+				for (int i = 0; i < statements.size(); i++) {
+					Record record = (Record) coverage.get(i);
+					String content = (String) statements.get(i) + "\t" + record.getValue();
 					bufferedWriter.write(content);
 					bufferedWriter.write("\n");
 				}
@@ -84,17 +86,14 @@ public class Dumper {
 					}
 				}
 			}
-			
+
 		}
 		return true;
 	}
 
-	public static boolean write() {
-		if (SUCC_TEST) {
-			count_succ_cover++;
-		} else {
-			count_fail_cover++;
-		}
+	public static boolean read() {
+		statements = new ArrayList();
+		coverage = new ArrayList();
 		File file = new File(OUT_FILE_NAME);
 		if (!file.exists()) {
 			try {
@@ -104,23 +103,30 @@ public class Dumper {
 				return false;
 			}
 		}
-		BufferedWriter bufferedWriter = null;
+		BufferedReader bufferedReader = null;
 		try {
-			bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), "UTF-8"));
+			bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 		} catch (IOException e) {
 			return false;
 		}
 		try {
-			bufferedWriter.write(count_succ_cover);
-			bufferedWriter.write("\n");
-			bufferedWriter.write(count_fail_cover);
-			bufferedWriter.close();
+			String line = null;
+			while ((line = bufferedReader.readLine()) != null) {
+				String[] strings = line.split("\t");
+				if (strings.length < 3) {
+					continue;
+				}
+				statements.add(strings[0]);
+				coverage.add(new Record(Integer.parseInt(strings[1]), Integer.parseInt(strings[2])));
+			}
+
+			bufferedReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (bufferedWriter != null) {
+			if (bufferedReader != null) {
 				try {
-					bufferedWriter.close();
+					bufferedReader.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -132,27 +138,31 @@ public class Dumper {
 }
 
 class Record {
-	private int succ = 0;
+	private int pass = 0;
 	private int fail = 0;
 
-	public void inc(boolean succTest) {
-		if (succTest) {
-			succ++;
+	public Record(int f, int p) {
+		fail = f;
+		pass = p;
+	}
+
+	public void inc(boolean passTest) {
+		if (passTest) {
+			pass++;
 		} else {
 			fail++;
 		}
 	}
 
 	public int getSuc() {
-		return succ;
+		return pass;
 	}
 
 	public int getFail() {
 		return fail;
 	}
-	
-	public String getValue() {
-		return succ + "," + fail;
-	}
 
+	public String getValue() {
+		return fail + "\t" + pass;
+	}
 }

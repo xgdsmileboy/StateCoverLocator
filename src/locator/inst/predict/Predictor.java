@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -58,12 +57,11 @@ public class Predictor {
 	 *         conditions for right variables
 	 */
 	public static Pair<Set<String>, Set<String>> predict(Subject subject, List<String> varFeatures,
-			List<String> expFeatures) {
+			List<String> expFeatures, Map<String, String> allLegalVariablesMap) {
 		Pair<Set<String>, Set<String>> conditions = new Pair<>();
-		Map<String, String> varTypeMap = new HashMap<>();
+		String currentClassName = null;
 		// TODO : return conditions for left variable and right variables
-		File varFile = new File(Constant.STR_ML_VAR_OUT_FILE_PATH + "/" + subject.getName() + "/" + subject.getName()
-				+ "_" + subject.getId() + "/pred/" + subject.getName() + "_" + subject.getId() + ".var.csv");
+		File varFile = new File(subject.getVarFeatureOutputPath());
 		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
 		for (String string : varFeatures) {
 			// filter duplicated features
@@ -72,16 +70,17 @@ public class Predictor {
 			}
 			_uniqueFeatures.add(string);
 			// TODO : for debug
-			System.out.println(string);
-			String[] features = string.split("\t");
-			String varName = features[Constant.FEATURE_VAR_NAME_INDEX];
-			String varType = features[Constant.FEATURE_VAR_TYPE_INDEX];
-			varTypeMap.put(varName, varType);
+			LevelLogger.info(string);
+			if(currentClassName == null){
+				String[] features = string.split("\t");
+				int index = features[Constant.FEATURE_FILE_NAME_INDEX].length();
+				// name.java -> name
+				currentClassName = features[Constant.FEATURE_FILE_NAME_INDEX].substring(0, index - 5);
+			}
 			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 
-		File expFile = new File(Constant.STR_ML_EXP_OUT_FILE_PATH + "/" + subject.getName() + "/" + subject.getName()
-				+ "_" + subject.getId() + "/pred/" + subject.getName() + "_" + subject.getId() + ".expr.csv");
+		File expFile = new File(subject.getExprFeatureOutputPath());
 		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
 		for (String string : expFeatures) {
 			// filter duplicated features
@@ -90,7 +89,7 @@ public class Predictor {
 			}
 			_uniqueFeatures.add(string);
 			// TODO : for debug
-			System.out.println(string);
+			LevelLogger.info(string);
 			JavaFile.writeStringToFile(expFile, string + "\n", true);
 		}
 
@@ -102,8 +101,7 @@ public class Predictor {
 			e.printStackTrace();
 		}
 
-		File rslFile = new File(Constant.STR_ML_PREDICT_EXP_PATH + "/" + subject.getName() + "/" + subject.getName()
-				+ "_" + subject.getId() + "/" + subject.getName() + "_" + subject.getId() + ".joint.csv");
+		File rslFile = new File(subject.getPredicResultPath());
 		BufferedReader bReader = null;
 		try {
 			bReader = new BufferedReader(new FileReader(rslFile));
@@ -125,8 +123,8 @@ public class Predictor {
 					}
 					String varName = columns[1];
 					String condition = columns[2].replace("$", varName);
-					String varType = varTypeMap.get(varName);
-					if(ExprFilter.isLegalExpr(varType, varName, condition)){
+					String varType = allLegalVariablesMap.get(varName);
+					if(ExprFilter.isLegalExpr(varType, varName, condition, allLegalVariablesMap.keySet(), currentClassName)){
 						rightConditions.add(condition);
 					} else {
 						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);

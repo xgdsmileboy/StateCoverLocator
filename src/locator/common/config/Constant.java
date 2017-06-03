@@ -54,6 +54,7 @@ public class Constant {
 	public final static String FEATURE_EXPR_HEADER = SplIfStmtVisitor.getExprHeader();
 	public final static int FEATURE_VAR_NAME_INDEX = 5;
 	public final static int FEATURE_VAR_TYPE_INDEX = 6;
+	public final static int FEATURE_FILE_NAME_INDEX = 3;
 	
 	// system command
 	public static String COMMAND_CD = null;

@@ -9,6 +9,7 @@ package locator.inst.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -48,17 +49,17 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 
 	private int _line = -1;
 
-	private String _condition = null;
+	private List<String> _condition = null;
 
 	/**
 	 * 
 	 */
-	public NewPredicateInstrumentVisitor(String condition, int line) {
+	public NewPredicateInstrumentVisitor(List<String> condition, int line) {
 		_condition = condition;
 		_line = line;
 	}
 
-	public void setCondition(String condition) {
+	public void setCondition(List<String> condition) {
 		_condition = condition;
 	}
 
@@ -121,8 +122,10 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
-				ASTNode inserted = GenStatement.newGenPredicateStatement(_condition, message);
-				result.add(inserted);
+				for(int count = 0; count < _condition.size(); count ++){
+					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					result.add(inserted);
+				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
 			}
@@ -174,8 +177,10 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
-				ASTNode inserted = GenStatement.newGenPredicateStatement(_condition, message);
-				result.add(inserted);
+				for(int count = 0; count < _condition.size(); count ++){
+					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					result.add(inserted);
+				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
 			}
@@ -209,8 +214,10 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
-				ASTNode inserted = GenStatement.newGenPredicateStatement(_condition, message);
-				result.add(inserted);
+				for(int count = 0; count < _condition.size(); count ++){
+					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					result.add(inserted);
+				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
 			}
@@ -246,8 +253,10 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
-				ASTNode inserted = GenStatement.newGenPredicateStatement(_condition, message);
-				result.add(inserted);
+				for(int count = 0; count < _condition.size(); count ++){
+					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					result.add(inserted);
+				}
 				return result;
 			}
 
@@ -284,8 +293,10 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
-				ASTNode inserted = GenStatement.newGenPredicateStatement(_condition, message);
-				result.add(inserted);
+				for(int count = 0; count < _condition.size(); count ++){
+					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					result.add(inserted);
+				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
 			}
@@ -321,8 +332,10 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
-				ASTNode inserted = GenStatement.newGenPredicateStatement(_condition, message);
-				result.add(inserted);
+				for(int count = 0; count < _condition.size(); count ++){
+					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					result.add(inserted);
+				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
 			}
@@ -385,27 +398,37 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(AST.JLS8), statement);
 			// Statement insert = GenStatement.genPredicateStatement(_condition,
 			// message, _line);
-			Statement insert = GenStatement.newGenPredicateStatement(_condition, message);
+			List<ASTNode> tmpInserted = new ArrayList<>();
+			for(int count = 0; count < _condition.size(); count ++){
+				ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+				tmpInserted.add(inserted);
+			}
+//			Statement insert = GenStatement.newGenPredicateStatement(_condition, message);
 
 			if (statement instanceof ConstructorInvocation) {
 				result.add(copy);
-				result.add(insert);
+//				result.add(insert);
+				result.addAll(tmpInserted);
 			} else if (statement instanceof ContinueStatement || statement instanceof BreakStatement
 					|| statement instanceof ReturnStatement || statement instanceof ThrowStatement
 					|| statement instanceof AssertStatement || statement instanceof ExpressionStatement
 					|| statement instanceof ConstructorInvocation
 					|| statement instanceof VariableDeclarationStatement) {
-				result.add(insert);
+//				result.add(insert);
+				result.addAll(tmpInserted);
 				result.add(copy);
 
 			} else if (statement instanceof LabeledStatement) {
-				result.add(insert);
+//				result.add(insert);
+				result.addAll(tmpInserted);
 				result.add(copy);
 			} else if (statement instanceof SynchronizedStatement) {
-				result.add(insert);
+//				result.add(insert);
+				result.addAll(tmpInserted);
 				result.add(copy);
 			} else {
-				result.add(insert);
+//				result.add(insert);
+				result.addAll(tmpInserted);
 				result.add(copy);
 			}
 		}

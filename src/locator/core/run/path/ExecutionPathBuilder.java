@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jdt.core.dom.IfStatement;
+
 import locator.common.config.Constant;
 import locator.common.java.CoverInfo;
 import locator.common.util.LevelLogger;
@@ -32,7 +34,7 @@ public class ExecutionPathBuilder {
 
 	private final static String __name__ = "@ExecutionPathBuilder ";
 
-	public static Map<String, CoverInfo> buildCoverage(String outputFile){
+	public static Map<String, CoverInfo> buildCoverage(String outputFile, Set<Integer> onlyCoveredByFailedTest){
 		Map<String, CoverInfo> coverage = new HashMap<>();
 		File file = new File(outputFile);
 		if (!file.exists()) {
@@ -53,18 +55,22 @@ public class ExecutionPathBuilder {
 		try {
 			while ((line = bReader.readLine()) != null) {
 				String[] lineInfo = line.split("\t");
-				if (lineInfo.length < 2) {
+				if (lineInfo.length < 3) {
 					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
 					System.exit(0);
 				}
 				String lineNum = lineInfo[0];
-				String[] cover = lineInfo[1].split(",");
-				if(cover.length != 2){
-					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
-					System.exit(0);
+				int failNum = Integer.parseInt(lineInfo[1]);
+				int succNum = Integer.parseInt(lineInfo[2]);
+				
+				String[] str = lineNum.split("#");
+				if(str.length > 2){
+					if(succNum == 0){
+						onlyCoveredByFailedTest.add(Integer.parseInt(str[2]));
+					}
+					lineNum = str[0] + "#" + str[1];
 				}
-				int succNum = Integer.parseInt(cover[0]);
-				int failNum = Integer.parseInt(cover[1]);
+				
 				CoverInfo coverInfo = coverage.get(lineNum);
 				if(coverInfo != null){
 					coverInfo.passedAdd(succNum);
