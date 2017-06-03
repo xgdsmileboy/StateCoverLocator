@@ -5,7 +5,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.data.DefaultKeyedValue;
 import org.jfree.data.KeyedValue;
 /** 
- * A default implementation of the                                                                                                                                                               {@link KeyedValueDataset} interface.
+ * A default implementation of the                                                                                                                                                                    {@link KeyedValueDataset} interface.
  */
 public class DefaultKeyedValueDataset extends AbstractDataset implements KeyedValueDataset, Serializable {
   /** 
@@ -31,7 +31,7 @@ public class DefaultKeyedValueDataset extends AbstractDataset implements KeyedVa
     this(new DefaultKeyedValue(key,value));
   }
   /** 
- * Creates a new dataset that uses the data from a                                                                                                                                                               {@link KeyedValue}instance.
+ * Creates a new dataset that uses the data from a                                                                                                                                                                    {@link KeyedValue}instance.
  * @param data  the data (<code>null</code> permitted).
  */
   public DefaultKeyedValueDataset(  KeyedValue data){
@@ -70,7 +70,7 @@ public class DefaultKeyedValueDataset extends AbstractDataset implements KeyedVa
     setValue(this.data.getKey(),value);
   }
   /** 
- * Sets the value for the dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent} toall registered listeners.
+ * Sets the value for the dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent} toall registered listeners.
  * @param key  the key.
  * @param value  the value (<code>null</code> permitted).
  */

@@ -25,7 +25,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable, Month
     return result;
   }
   /** 
- * Returns a subclass of                                                                                                                                                               {@link RegularTimePeriod} that is smaller thanthe specified class.
+ * Returns a subclass of                                                                                                                                                                    {@link RegularTimePeriod} that is smaller thanthe specified class.
  * @param c  a subclass of {@link RegularTimePeriod}.
  * @return A class.
  */
@@ -105,7 +105,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable, Month
     return new Date(getLastMillisecond());
   }
   /** 
- * Returns the first millisecond of the time period.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
+ * Returns the first millisecond of the time period.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                                   {@link #peg(Calendar)} method.
  * @return The first millisecond of the time period.
  * @see #getLastMillisecond()
  */
@@ -119,7 +119,7 @@ public abstract class RegularTimePeriod implements TimePeriod, Comparable, Month
  */
   public abstract long getFirstMillisecond(  Calendar calendar);
   /** 
- * Returns the last millisecond of the time period.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
+ * Returns the last millisecond of the time period.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                                   {@link #peg(Calendar)} method.
  * @return The last millisecond of the time period.
  * @see #getFirstMillisecond()
  */

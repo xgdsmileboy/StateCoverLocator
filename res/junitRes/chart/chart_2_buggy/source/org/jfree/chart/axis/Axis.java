@@ -34,7 +34,7 @@ import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.RectangleInsets;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * The base class for all axes in JFreeChart.  Subclasses are divided into those that display values (                                                                                                                                                               {@link ValueAxis}) and those that display categories (                                                                                                                                                               {@link CategoryAxis}).
+ * The base class for all axes in JFreeChart.  Subclasses are divided into those that display values (                                                                                                                                                                    {@link ValueAxis}) and those that display categories (                                                                                                                                                                    {@link CategoryAxis}).
  */
 public abstract class Axis implements Cloneable, Serializable {
   /** 
@@ -250,7 +250,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.visible;
   }
   /** 
- * Sets a flag that controls whether or not the axis is visible and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets a flag that controls whether or not the axis is visible and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param flag  the flag.
  * @see #isVisible()
  */
@@ -271,7 +271,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.label;
   }
   /** 
- * Sets the label for the axis and sends an                                                                                                                                                                {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the label for the axis and sends an                                                                                                                                                                     {@link AxisChangeEvent} to allregistered listeners.
  * @param label  the new label (<code>null</code> permitted).
  * @see #getLabel()
  * @see #setLabelFont(Font)
@@ -301,7 +301,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.labelFont;
   }
   /** 
- * Sets the font for the axis label and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the font for the axis label and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getLabelFont()
  */
@@ -323,7 +323,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.labelPaint;
   }
   /** 
- * Sets the paint used to draw the axis label and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the axis label and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getLabelPaint()
  */
@@ -343,7 +343,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.labelInsets;
   }
   /** 
- * Sets the insets for the axis label, and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the insets for the axis label, and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param insets  the insets (<code>null</code> not permitted).
  * @see #getLabelInsets()
  */
@@ -351,7 +351,7 @@ public abstract class Axis implements Cloneable, Serializable {
     setLabelInsets(insets,true);
   }
   /** 
- * Sets the insets for the axis label, and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the insets for the axis label, and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param insets  the insets (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @since 1.0.10
@@ -376,7 +376,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.labelAngle;
   }
   /** 
- * Sets the angle for the label and sends an                                                                                                                                                                {@link AxisChangeEvent} to allregistered listeners.
+ * Sets the angle for the label and sends an                                                                                                                                                                     {@link AxisChangeEvent} to allregistered listeners.
  * @param angle  the angle (in radians).
  * @see #getLabelAngle()
  */
@@ -394,7 +394,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.labelToolTip;
   }
   /** 
- * Sets the tool tip text for the axis label and sends a .                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the tool tip text for the axis label and sends a .                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param text  the tool tip text (<code>null</code> permitted).
  * @see #getLabelToolTip()
  * @since 1.2.0
@@ -413,7 +413,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.labelURL;
   }
   /** 
- * Sets the URL for the axis label and sends an                                                                                                                                                                {@link AxisChangeEvent} toall registered listeners.
+ * Sets the URL for the axis label and sends an                                                                                                                                                                     {@link AxisChangeEvent} toall registered listeners.
  * @param url  the URL (<code>null</code> permitted).
  * @see #getLabelURL()
  * @since 1.2.0
@@ -433,7 +433,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.axisLineVisible;
   }
   /** 
- * Sets a flag that controls whether or not the axis line is visible and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets a flag that controls whether or not the axis line is visible and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param visible  the flag.
  * @see #isAxisLineVisible()
  * @see #setAxisLinePaint(Paint)
@@ -452,7 +452,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.axisLinePaint;
   }
   /** 
- * Sets the paint used to draw the axis line and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the axis line and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getAxisLinePaint()
  */
@@ -472,7 +472,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.axisLineStroke;
   }
   /** 
- * Sets the stroke used to draw the axis line and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the axis line and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getAxisLineStroke()
  */
@@ -494,7 +494,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickLabelsVisible;
   }
   /** 
- * Sets the flag that determines whether or not the tick labels are visible and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registeredlisteners.
+ * Sets the flag that determines whether or not the tick labels are visible and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registeredlisteners.
  * @param flag  the flag.
  * @see #isTickLabelsVisible()
  * @see #setTickLabelFont(Font)
@@ -516,7 +516,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.minorTickMarksVisible;
   }
   /** 
- * Sets the flag that indicates whether or not the minor tick marks are showing and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registeredlisteners.
+ * Sets the flag that indicates whether or not the minor tick marks are showing and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registeredlisteners.
  * @param flag  the flag.
  * @see #isMinorTickMarksVisible()
  * @since 1.0.12
@@ -536,7 +536,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickLabelFont;
   }
   /** 
- * Sets the font for the tick labels and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the font for the tick labels and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param font  the font (<code>null</code> not allowed).
  * @see #getTickLabelFont()
  */
@@ -558,7 +558,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickLabelPaint;
   }
   /** 
- * Sets the paint used to draw tick labels (if they are showing) and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the paint used to draw tick labels (if they are showing) and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getTickLabelPaint()
  */
@@ -578,7 +578,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickLabelInsets;
   }
   /** 
- * Sets the insets for the tick labels and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the insets for the tick labels and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param insets  the insets (<code>null</code> not permitted).
  * @see #getTickLabelInsets()
  */
@@ -600,7 +600,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickMarksVisible;
   }
   /** 
- * Sets the flag that indicates whether or not the tick marks are showing and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the flag that indicates whether or not the tick marks are showing and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param flag  the flag.
  * @see #isTickMarksVisible()
  */
@@ -620,7 +620,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickMarkInsideLength;
   }
   /** 
- * Sets the inside length of the tick marks and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the inside length of the tick marks and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param length  the new length.
  * @see #getTickMarkInsideLength()
  */
@@ -638,7 +638,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickMarkOutsideLength;
   }
   /** 
- * Sets the outside length of the tick marks and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the outside length of the tick marks and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param length  the new length.
  * @see #getTickMarkInsideLength()
  */
@@ -655,7 +655,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickMarkStroke;
   }
   /** 
- * Sets the stroke used to draw tick marks and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw tick marks and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getTickMarkStroke()
  */
@@ -677,7 +677,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.tickMarkPaint;
   }
   /** 
- * Sets the paint used to draw tick marks and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the paint used to draw tick marks and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getTickMarkPaint()
  */
@@ -699,7 +699,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.minorTickMarkInsideLength;
   }
   /** 
- * Sets the inside length of the minor tick marks and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the inside length of the minor tick marks and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param length  the new length.
  * @see #getMinorTickMarkInsideLength()
  * @since 1.0.12
@@ -719,7 +719,7 @@ public abstract class Axis implements Cloneable, Serializable {
     return this.minorTickMarkOutsideLength;
   }
   /** 
- * Sets the outside length of the minor tick marks and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the outside length of the minor tick marks and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param length  the new length.
  * @see #getMinorTickMarkInsideLength()
  * @since 1.0.12
@@ -870,7 +870,7 @@ public abstract class Axis implements Cloneable, Serializable {
     }
   }
   /** 
- * Sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @since 1.0.12
  */
   protected void fireChangeEvent(){

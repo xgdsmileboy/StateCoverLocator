@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 /** 
- * Utility methods for                                                                                                                                                                {@link Shape} objects.
+ * Utility methods for                                                                                                                                                                     {@link Shape} objects.
  */
 public class ShapeUtilities {
   /** 

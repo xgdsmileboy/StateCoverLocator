@@ -14,7 +14,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleEdge;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A text annotation that can be placed on a                                                                                                                                                                {@link CategoryPlot}.
+ * A text annotation that can be placed on a                                                                                                                                                                     {@link CategoryPlot}.
  */
 public class CategoryTextAnnotation extends TextAnnotation implements CategoryAnnotation, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -76,7 +76,7 @@ public class CategoryTextAnnotation extends TextAnnotation implements CategoryAn
     return this.categoryAnchor;
   }
   /** 
- * Sets the category anchor point and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the category anchor point and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param anchor  the anchor point (<code>null</code> not permitted).
  * @see #getCategoryAnchor()
  */
@@ -96,7 +96,7 @@ public class CategoryTextAnnotation extends TextAnnotation implements CategoryAn
     return this.value;
   }
   /** 
- * Sets the value and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the value and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param value  the value.
  * @see #getValue()
  */

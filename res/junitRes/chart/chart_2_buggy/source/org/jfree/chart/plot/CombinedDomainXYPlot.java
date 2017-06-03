@@ -18,7 +18,7 @@ import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.RectangleInsets;
 import org.jfree.data.Range;
 /** 
- * An extension of                                                                                                                                                                {@link XYPlot} that contains multiple subplots that share acommon domain axis.
+ * An extension of                                                                                                                                                                     {@link XYPlot} that contains multiple subplots that share acommon domain axis.
  */
 public class CombinedDomainXYPlot extends XYPlot implements PlotChangeListener {
   /** 
@@ -94,7 +94,7 @@ public class CombinedDomainXYPlot extends XYPlot implements PlotChangeListener {
     return this.gap;
   }
   /** 
- * Sets the amount of space between subplots and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the amount of space between subplots and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param gap  the gap between subplots (in Java2D units).
  */
   public void setGap(  double gap){
@@ -102,14 +102,14 @@ public class CombinedDomainXYPlot extends XYPlot implements PlotChangeListener {
     fireChangeEvent();
   }
   /** 
- * Adds a subplot (with a default 'weight' of 1) and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> The domain axis for the subplot will be set to <code>null</code>.  You must ensure that the subplot has a non-null range axis.
+ * Adds a subplot (with a default 'weight' of 1) and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.<P> The domain axis for the subplot will be set to <code>null</code>.  You must ensure that the subplot has a non-null range axis.
  * @param subplot  the subplot (<code>null</code> not permitted).
  */
   public void add(  XYPlot subplot){
     add(subplot,1);
   }
   /** 
- * Adds a subplot with the specified weight and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  The weightdetermines how much space is allocated to the subplot relative to all the other subplots. <P> The domain axis for the subplot will be set to <code>null</code>.  You must ensure that the subplot has a non-null range axis.
+ * Adds a subplot with the specified weight and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.  The weightdetermines how much space is allocated to the subplot relative to all the other subplots. <P> The domain axis for the subplot will be set to <code>null</code>.  You must ensure that the subplot has a non-null range axis.
  * @param subplot  the subplot (<code>null</code> not permitted).
  * @param weight  the weight (must be >= 1).
  */
@@ -133,7 +133,7 @@ public class CombinedDomainXYPlot extends XYPlot implements PlotChangeListener {
     fireChangeEvent();
   }
   /** 
- * Removes a subplot from the combined chart and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Removes a subplot from the combined chart and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param subplot  the subplot (<code>null</code> not permitted).
  */
   public void remove(  XYPlot subplot){
@@ -379,7 +379,7 @@ public class CombinedDomainXYPlot extends XYPlot implements PlotChangeListener {
     }
   }
   /** 
- * Sets the fixed range axis space and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets the fixed range axis space and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param space  the space (<code>null</code> permitted).
  */
   public void setFixedRangeAxisSpace(  AxisSpace space){
@@ -415,7 +415,7 @@ public class CombinedDomainXYPlot extends XYPlot implements PlotChangeListener {
     }
   }
   /** 
- * Receives a                                                                                                                                                                {@link PlotChangeEvent} and responds by notifying alllisteners.
+ * Receives a                                                                                                                                                                     {@link PlotChangeEvent} and responds by notifying alllisteners.
  * @param event  the event.
  */
   public void plotChanged(  PlotChangeEvent event){

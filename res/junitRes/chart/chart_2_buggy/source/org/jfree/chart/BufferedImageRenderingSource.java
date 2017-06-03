@@ -16,7 +16,7 @@ public class BufferedImageRenderingSource implements RenderingSource {
  */
   private BufferedImage image;
   /** 
- * A list of                                                                                                                                                                {@link DatasetAndSelection} objects.
+ * A list of                                                                                                                                                                     {@link DatasetAndSelection} objects.
  */
   private List selectionStates=new java.util.ArrayList();
   /** 

@@ -3,7 +3,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 /** 
- * A handler for mouse events in a                                                                                                                                                                {@link ChartPanel}.  A handler can be assigned a modifier and installed on the panel to be invoked by the user.
+ * A handler for mouse events in a                                                                                                                                                                     {@link ChartPanel}.  A handler can be assigned a modifier and installed on the panel to be invoked by the user.
  * @since 1.2.0
  */
 public class AbstractMouseHandler implements MouseListener, MouseMotionListener {

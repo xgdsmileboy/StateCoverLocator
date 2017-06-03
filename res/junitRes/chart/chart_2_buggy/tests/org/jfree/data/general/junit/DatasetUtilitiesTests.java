@@ -34,7 +34,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.data.xy.YIntervalSeries;
 import org.jfree.data.xy.YIntervalSeriesCollection;
 /** 
- * Tests for the                                                                          {@link DatasetUtilities} class.
+ * Tests for the                                                                              {@link DatasetUtilities} class.
  */
 public class DatasetUtilitiesTests extends TestCase {
   private static final double EPSILON=0.0000000001;
@@ -401,7 +401,7 @@ public class DatasetUtilitiesTests extends TestCase {
     assertEquals(1.23,r.getUpperBound(),EPSILON);
   }
   /** 
- * Some checks for the range bounds of a dataset that implements the                                                                         {@link IntervalXYDataset} interface.
+ * Some checks for the range bounds of a dataset that implements the                                                                             {@link IntervalXYDataset} interface.
  */
   public void testIterateRangeBounds4(){
 {
@@ -1093,7 +1093,7 @@ public class DatasetUtilitiesTests extends TestCase {
     assertEquals(new Range(0.5,1.5),DatasetUtilities.iterateToFindRangeBounds(dataset,visibleSeriesKeys,true));
   }
   /** 
- * Some checks for the iterateToFindRangeBounds(CategoryDataset...) method with a                                                                          {@link MultiValueCategoryDataset}.
+ * Some checks for the iterateToFindRangeBounds(CategoryDataset...) method with a                                                                              {@link MultiValueCategoryDataset}.
  */
   public void testIterateToFindRangeBounds_MultiValueCategoryDataset(){
 {

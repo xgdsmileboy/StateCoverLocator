@@ -15,7 +15,7 @@ import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.XYDataset;
 /** 
- * This class provides an                                                                                                                                                               {@link XYDataset} implementation over a databaseJDBC result set.  The dataset is populated via a call to executeQuery with the string sql query.  The sql query must return at least two columns. The first column will be the x-axis and remaining columns y-axis values. executeQuery can be called a number of times. The database connection is read-only and no write back facility exists.
+ * This class provides an                                                                                                                                                                    {@link XYDataset} implementation over a databaseJDBC result set.  The dataset is populated via a call to executeQuery with the string sql query.  The sql query must return at least two columns. The first column will be the x-axis and remaining columns y-axis values. executeQuery can be called a number of times. The database connection is read-only and no write back facility exists.
  */
 public class JDBCXYDataset extends AbstractXYDataset implements XYDataset, TableXYDataset, RangeInfo {
   /** 
@@ -293,7 +293,7 @@ public int getItemCount(int seriesIndex){
 return this.rows.size();
 }
 /** 
- * Returns the number of items in all series.  This method is defined by the                                                                                                                                                               {@link TableXYDataset} interface.
+ * Returns the number of items in all series.  This method is defined by the                                                                                                                                                                    {@link TableXYDataset} interface.
  * @return The item count.
  */
 public int getItemCount(){

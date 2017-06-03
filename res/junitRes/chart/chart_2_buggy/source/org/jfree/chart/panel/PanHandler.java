@@ -10,7 +10,7 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.PlotRenderingInfo;
 /** 
- * Handles panning operations in a                                                                                                                                                                {@link ChartPanel} if the plot supportspanning (see the  {@link Pannable} interface).
+ * Handles panning operations in a                                                                                                                                                                     {@link ChartPanel} if the plot supportspanning (see the  {@link Pannable} interface).
  * @since 1.2.0
  */
 public class PanHandler extends AbstractMouseHandler {

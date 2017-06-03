@@ -5,7 +5,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 /** 
- * A SAX handler for reading a                                                                                                                                                               {@link PieDataset} from an XML file.
+ * A SAX handler for reading a                                                                                                                                                                    {@link PieDataset} from an XML file.
  */
 public class PieDatasetHandler extends RootHandler implements DatasetTags {
   /** 

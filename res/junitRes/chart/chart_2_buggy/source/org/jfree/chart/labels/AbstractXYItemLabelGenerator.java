@@ -154,7 +154,7 @@ public class AbstractXYItemLabelGenerator implements Cloneable, Serializable {
     return this.nullYString;
   }
   /** 
- * Creates the array of items that can be passed to the                                                                                                                                                               {@link MessageFormat} class for creating labels.
+ * Creates the array of items that can be passed to the                                                                                                                                                                    {@link MessageFormat} class for creating labels.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param series  the series (zero-based index).
  * @param item  the item (zero-based index).

@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 /** 
- * Represents a single day in the range 1-Jan-1900 to 31-Dec-9999.  This class is immutable, which is a requirement for all                                                                                                                                                               {@link RegularTimePeriod}subclasses.
+ * Represents a single day in the range 1-Jan-1900 to 31-Dec-9999.  This class is immutable, which is a requirement for all                                                                                                                                                                    {@link RegularTimePeriod}subclasses.
  */
 public class Day extends RegularTimePeriod implements Serializable {
   /** 
@@ -98,7 +98,7 @@ public class Day extends RegularTimePeriod implements Serializable {
     peg(calendar);
   }
   /** 
- * Returns the day as a                                                                                                                                                               {@link SerialDate}.  Note: the reference that is returned should be an instance of an immutable                                                                                                                                                               {@link SerialDate}(otherwise the caller could use the reference to alter the state of this <code>Day</code> instance, and <code>Day</code> is supposed to be immutable).
+ * Returns the day as a                                                                                                                                                                    {@link SerialDate}.  Note: the reference that is returned should be an instance of an immutable                                                                                                                                                                    {@link SerialDate}(otherwise the caller could use the reference to alter the state of this <code>Day</code> instance, and <code>Day</code> is supposed to be immutable).
  * @return The day as a {@link SerialDate}.
  */
   public SerialDate getSerialDate(){
@@ -126,7 +126,7 @@ public class Day extends RegularTimePeriod implements Serializable {
     return this.serialDate.getDayOfMonth();
   }
   /** 
- * Returns the first millisecond of the day.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
+ * Returns the first millisecond of the day.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                                   {@link #peg(Calendar)} method.
  * @return The first millisecond of the day.
  * @see #getLastMillisecond()
  */
@@ -134,7 +134,7 @@ public class Day extends RegularTimePeriod implements Serializable {
     return this.firstMillisecond;
   }
   /** 
- * Returns the last millisecond of the day.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                              {@link #peg(Calendar)} method.
+ * Returns the last millisecond of the day.  This will be determined relative to the time zone specified in the constructor, or in the calendar instance passed in the most recent call to the                                                                                                                                                                   {@link #peg(Calendar)} method.
  * @return The last millisecond of the day.
  * @see #getFirstMillisecond()
  */

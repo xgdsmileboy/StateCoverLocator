@@ -72,7 +72,7 @@ import org.jfree.data.xy.SelectableXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYDatasetSelectionState;
 /** 
- * A general class for plotting data in the form of (x, y) pairs.  This plot can use data from any class that implements the                                                                                                                                                                {@link XYDataset} interface.<P> <code>XYPlot</code> makes use of an  {@link XYItemRenderer} to draw each pointon the plot.  By using different renderers, various chart types can be produced. <p> The  {@link ChartFactory} class contains static methods forcreating pre-configured charts.
+ * A general class for plotting data in the form of (x, y) pairs.  This plot can use data from any class that implements the                                                                                                                                                                     {@link XYDataset} interface.<P> <code>XYPlot</code> makes use of an  {@link XYItemRenderer} to draw each pointon the plot.  By using different renderers, various chart types can be produced. <p> The  {@link ChartFactory} class contains static methods forcreating pre-configured charts.
  */
 public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable, Zoomable, RendererChangeListener, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -439,7 +439,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.orientation;
   }
   /** 
- * Sets the orientation for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets the orientation for the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param orientation  the orientation (<code>null</code> not allowed).
  * @see #getOrientation()
  */
@@ -461,7 +461,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.axisOffset;
   }
   /** 
- * Sets the axis offsets (gap between the data area and the axes) and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the axis offsets (gap between the data area and the axes) and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param offset  the offset (<code>null</code> not permitted).
  * @see #getAxisOffset()
  */
@@ -502,7 +502,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return result;
   }
   /** 
- * Sets the domain axis for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the domain axis for the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param axis  the new axis (<code>null</code> permitted).
  * @see #getDomainAxis()
  * @see #setDomainAxis(int,ValueAxis)
@@ -511,7 +511,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setDomainAxis(0,axis);
   }
   /** 
- * Sets a domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets a domain axis and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param index  the axis index.
  * @param axis  the axis (<code>null</code> permitted).
  * @see #getDomainAxis(int)
@@ -521,7 +521,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setDomainAxis(index,axis,true);
   }
   /** 
- * Sets a domain axis and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets a domain axis and, if requested, sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param index  the axis index.
  * @param axis  the axis.
  * @param notify  notify listeners?
@@ -545,7 +545,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     }
   }
   /** 
- * Sets the domain axes for this plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the domain axes for this plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param axes  the axes (<code>null</code> not permitted).
  * @see #setRangeAxes(ValueAxis[])
  */
@@ -564,7 +564,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return (AxisLocation)this.domainAxisLocations.get(0);
   }
   /** 
- * Sets the location of the primary domain axis and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the location of the primary domain axis and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param location  the location (<code>null</code> not permitted).
  * @see #getDomainAxisLocation()
  */
@@ -572,7 +572,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setDomainAxisLocation(0,location,true);
   }
   /** 
- * Sets the location of the domain axis and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the location of the domain axis and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param location  the location (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @see #getDomainAxisLocation()
@@ -598,7 +598,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainAxes.size();
   }
   /** 
- * Clears the domain axes from the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Clears the domain axes from the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @see #clearRangeAxes()
  */
   public void clearDomainAxes(){
@@ -639,7 +639,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return result;
   }
   /** 
- * Sets the location for a domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the location for a domain axis and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param index  the axis index.
  * @param location  the location (<code>null</code> not permitted for index0).
  * @see #getDomainAxisLocation(int)
@@ -648,7 +648,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setDomainAxisLocation(index,location,true);
   }
   /** 
- * Sets the axis location for a domain axis and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the axis location for a domain axis and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param index  the axis index.
  * @param location  the location (<code>null</code> not permitted forindex 0).
  * @param notify  notify listeners?
@@ -689,7 +689,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return getRangeAxis(0);
   }
   /** 
- * Sets the range axis for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets the range axis for the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param axis  the axis (<code>null</code> permitted).
  * @see #getRangeAxis()
  * @see #setRangeAxis(int,ValueAxis)
@@ -718,7 +718,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return (AxisLocation)this.rangeAxisLocations.get(0);
   }
   /** 
- * Sets the location of the primary range axis and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the location of the primary range axis and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param location  the location (<code>null</code> not permitted).
  * @see #getRangeAxisLocation()
  */
@@ -726,7 +726,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setRangeAxisLocation(0,location,true);
   }
   /** 
- * Sets the location of the primary range axis and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the location of the primary range axis and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param location  the location (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @see #getRangeAxisLocation()
@@ -764,7 +764,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return result;
   }
   /** 
- * Sets a range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registeredlisteners.
+ * Sets a range axis and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registeredlisteners.
  * @param index  the axis index.
  * @param axis  the axis (<code>null</code> permitted).
  * @see #getRangeAxis(int)
@@ -773,7 +773,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setRangeAxis(index,axis,true);
   }
   /** 
- * Sets a range axis and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets a range axis and, if requested, sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param index  the axis index.
  * @param axis  the axis (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -797,7 +797,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     }
   }
   /** 
- * Sets the range axes for this plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the range axes for this plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param axes  the axes (<code>null</code> not permitted).
  * @see #setDomainAxes(ValueAxis[])
  */
@@ -816,7 +816,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeAxes.size();
   }
   /** 
- * Clears the range axes from the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Clears the range axes from the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @see #clearDomainAxes()
  */
   public void clearRangeAxes(){
@@ -858,7 +858,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return result;
   }
   /** 
- * Sets the location for a range axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the location for a range axis and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param index  the axis index.
  * @param location  the location (<code>null</code> permitted).
  * @see #getRangeAxisLocation(int)
@@ -867,7 +867,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setRangeAxisLocation(index,location,true);
   }
   /** 
- * Sets the axis location for a domain axis and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the axis location for a domain axis and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param index  the axis index.
  * @param location  the location (<code>null</code> not permitted forindex 0).
  * @param notify  notify listeners?
@@ -1076,7 +1076,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return result;
   }
   /** 
- * Sets the renderer for the primary dataset and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  If the rendereris set to <code>null</code>, no data will be displayed.
+ * Sets the renderer for the primary dataset and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.  If the rendereris set to <code>null</code>, no data will be displayed.
  * @param renderer  the renderer (<code>null</code> permitted).
  * @see #getRenderer()
  */
@@ -1084,7 +1084,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setRenderer(0,renderer);
   }
   /** 
- * Sets a renderer and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets a renderer and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param index  the index.
  * @param renderer  the renderer.
  * @see #getRenderer(int)
@@ -1093,7 +1093,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setRenderer(index,renderer,true);
   }
   /** 
- * Sets a renderer and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets a renderer and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param index  the index.
  * @param renderer  the renderer.
  * @param notify  notify listeners?
@@ -1116,7 +1116,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     }
   }
   /** 
- * Sets the renderers for this plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the renderers for this plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param renderers  the renderers (<code>null</code> not permitted).
  */
   public void setRenderers(  XYItemRenderer[] renderers){
@@ -1134,7 +1134,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.datasetRenderingOrder;
   }
   /** 
- * Sets the rendering order and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.  By default, the plot renders the primary dataset last (so that the primary dataset overlays the secondary datasets). You can reverse this if you want to.
+ * Sets the rendering order and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.  By default, the plot renders the primary dataset last (so that the primary dataset overlays the secondary datasets). You can reverse this if you want to.
  * @param order  the rendering order (<code>null</code> not permitted).
  * @see #getDatasetRenderingOrder()
  */
@@ -1154,7 +1154,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.seriesRenderingOrder;
   }
   /** 
- * Sets the series order and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.  By default, the plot renders the primary series last (so that the primary series appears to be on top). You can reverse this if you want to.
+ * Sets the series order and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.  By default, the plot renders the primary series last (so that the primary series appears to be on top). You can reverse this if you want to.
  * @param order  the rendering order (<code>null</code> not permitted).
  * @see #getSeriesRenderingOrder()
  */
@@ -1200,7 +1200,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.weight;
   }
   /** 
- * Sets the weight for the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the weight for the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param weight  the weight.
  * @see #getWeight()
  */
@@ -1217,7 +1217,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the domain grid-lines are visible. <p> If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} is sent to allregistered listeners.
+ * Sets the flag that controls whether or not the domain grid-lines are visible. <p> If the flag value is changed, a                                                                                                                                                                     {@link PlotChangeEvent} is sent to allregistered listeners.
  * @param visible  the new value of the flag.
  * @see #isDomainGridlinesVisible()
  */
@@ -1237,7 +1237,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainMinorGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the domain minor grid-lines are visible. <p> If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} is sent to allregistered listeners.
+ * Sets the flag that controls whether or not the domain minor grid-lines are visible. <p> If the flag value is changed, a                                                                                                                                                                     {@link PlotChangeEvent} is sent to allregistered listeners.
  * @param visible  the new value of the flag.
  * @see #isDomainMinorGridlinesVisible()
  * @since 1.0.12
@@ -1257,7 +1257,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainGridlineStroke;
   }
   /** 
- * Sets the stroke for the grid lines plotted against the domain axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the grid lines plotted against the domain axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @throws IllegalArgumentException if <code>stroke</code> is<code>null</code>.
  * @see #getDomainGridlineStroke()
@@ -1279,7 +1279,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainMinorGridlineStroke;
   }
   /** 
- * Sets the stroke for the minor grid lines plotted against the domain axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the minor grid lines plotted against the domain axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @throws IllegalArgumentException if <code>stroke</code> is<code>null</code>.
  * @see #getDomainMinorGridlineStroke()
@@ -1301,7 +1301,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainGridlinePaint;
   }
   /** 
- * Sets the paint for the grid lines plotted against the domain axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the grid lines plotted against the domain axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @throws IllegalArgumentException if <code>paint</code> is<code>null</code>.
  * @see #getDomainGridlinePaint()
@@ -1323,7 +1323,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainMinorGridlinePaint;
   }
   /** 
- * Sets the paint for the minor grid lines plotted against the domain axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the minor grid lines plotted against the domain axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @throws IllegalArgumentException if <code>paint</code> is<code>null</code>.
  * @see #getDomainMinorGridlinePaint()
@@ -1345,7 +1345,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the range axis grid lines are visible. <p> If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} is sent to allregistered listeners.
+ * Sets the flag that controls whether or not the range axis grid lines are visible. <p> If the flag value is changed, a                                                                                                                                                                     {@link PlotChangeEvent} is sent to allregistered listeners.
  * @param visible  the new value of the flag.
  * @see #isRangeGridlinesVisible()
  */
@@ -1364,7 +1364,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeGridlineStroke;
   }
   /** 
- * Sets the stroke for the grid lines plotted against the range axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the grid lines plotted against the range axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getRangeGridlineStroke()
  */
@@ -1384,7 +1384,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeGridlinePaint;
   }
   /** 
- * Sets the paint for the grid lines plotted against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the grid lines plotted against the range axis and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRangeGridlinePaint()
  */
@@ -1405,7 +1405,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeMinorGridlinesVisible;
   }
   /** 
- * Sets the flag that controls whether or not the range axis minor grid lines are visible. <p> If the flag value is changed, a                                                                                                                                                                {@link PlotChangeEvent} is sent to allregistered listeners.
+ * Sets the flag that controls whether or not the range axis minor grid lines are visible. <p> If the flag value is changed, a                                                                                                                                                                     {@link PlotChangeEvent} is sent to allregistered listeners.
  * @param visible  the new value of the flag.
  * @see #isRangeMinorGridlinesVisible()
  * @since 1.0.12
@@ -1426,7 +1426,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeMinorGridlineStroke;
   }
   /** 
- * Sets the stroke for the minor grid lines plotted against the range axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the minor grid lines plotted against the range axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getRangeMinorGridlineStroke()
  * @since 1.0.12
@@ -1448,7 +1448,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeMinorGridlinePaint;
   }
   /** 
- * Sets the paint for the minor grid lines plotted against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the minor grid lines plotted against the range axis and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRangeMinorGridlinePaint()
  * @since 1.0.12
@@ -1470,7 +1470,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainZeroBaselineVisible;
   }
   /** 
- * Sets the flag that controls whether or not the zero baseline is displayed for the domain axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets the flag that controls whether or not the zero baseline is displayed for the domain axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param visible  the flag.
  * @since 1.0.5
  * @see #isDomainZeroBaselineVisible()
@@ -1489,7 +1489,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainZeroBaselineStroke;
   }
   /** 
- * Sets the stroke for the zero baseline for the domain axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the zero baseline for the domain axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @since 1.0.5
  * @see #getRangeZeroBaselineStroke()
@@ -1511,7 +1511,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainZeroBaselinePaint;
   }
   /** 
- * Sets the paint for the zero baseline plotted against the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the zero baseline plotted against the domain axis and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @since 1.0.5
  * @see #getDomainZeroBaselinePaint()
@@ -1532,7 +1532,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeZeroBaselineVisible;
   }
   /** 
- * Sets the flag that controls whether or not the zero baseline is displayed for the range axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets the flag that controls whether or not the zero baseline is displayed for the range axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param visible  the flag.
  * @see #isRangeZeroBaselineVisible()
  */
@@ -1549,7 +1549,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeZeroBaselineStroke;
   }
   /** 
- * Sets the stroke for the zero baseline for the range axis, and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke for the zero baseline for the range axis, and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getRangeZeroBaselineStroke()
  */
@@ -1569,7 +1569,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeZeroBaselinePaint;
   }
   /** 
- * Sets the paint for the zero baseline plotted against the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint for the zero baseline plotted against the range axis and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getRangeZeroBaselinePaint()
  */
@@ -1623,7 +1623,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.quadrantOrigin;
   }
   /** 
- * Sets the quadrant origin and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the quadrant origin and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param origin  the origin (<code>null</code> not permitted).
  * @see #getQuadrantOrigin()
  */
@@ -1647,7 +1647,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.quadrantPaint[index];
   }
   /** 
- * Sets the paint used for the specified quadrant and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used for the specified quadrant and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param index  the quadrant index (0-3).
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getQuadrantPaint(int)
@@ -1660,7 +1660,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     fireChangeEvent();
   }
   /** 
- * Adds a marker for the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners. <P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
+ * Adds a marker for the domain axis and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners. <P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
  * @param marker  the marker (<code>null</code> not permitted).
  * @see #addDomainMarker(Marker,Layer)
  * @see #clearDomainMarkers()
@@ -1669,7 +1669,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     addDomainMarker(marker,Layer.FOREGROUND);
   }
   /** 
- * Adds a marker for the domain axis in the specified layer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
+ * Adds a marker for the domain axis in the specified layer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
  * @param marker  the marker (<code>null</code> not permitted).
  * @param layer  the layer (foreground or background).
  * @see #addDomainMarker(int,Marker,Layer)
@@ -1678,7 +1678,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     addDomainMarker(0,marker,layer);
   }
   /** 
- * Clears all the (foreground and background) domain markers and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Clears all the (foreground and background) domain markers and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @see #addDomainMarker(int,Marker,Layer)
  */
   public void clearDomainMarkers(){
@@ -1734,7 +1734,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     fireChangeEvent();
   }
   /** 
- * Adds a marker for a specific dataset/renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the domain axis (that the renderer is mapped to), however this is entirely up to the renderer.
+ * Adds a marker for a specific dataset/renderer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the domain axis (that the renderer is mapped to), however this is entirely up to the renderer.
  * @param index  the dataset/renderer index.
  * @param marker  the marker.
  * @param layer  the layer (foreground or background).
@@ -1745,7 +1745,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     addDomainMarker(index,marker,layer,true);
   }
   /** 
- * Adds a marker for a specific dataset/renderer and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the domain axis (that the renderer is mapped to), however this is entirely up to the renderer.
+ * Adds a marker for a specific dataset/renderer and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the domain axis (that the renderer is mapped to), however this is entirely up to the renderer.
  * @param index  the dataset/renderer index.
  * @param marker  the marker.
  * @param layer  the layer (foreground or background).
@@ -1784,7 +1784,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     }
   }
   /** 
- * Removes a marker for the domain axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Removes a marker for the domain axis and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param marker  the marker.
  * @return A boolean indicating whether or not the marker was actuallyremoved.
  * @since 1.0.7
@@ -1793,7 +1793,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removeDomainMarker(marker,Layer.FOREGROUND);
   }
   /** 
- * Removes a marker for the domain axis in the specified layer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for the domain axis in the specified layer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param marker the marker (<code>null</code> not permitted).
  * @param layer the layer (foreground or background).
  * @return A boolean indicating whether or not the marker was actuallyremoved.
@@ -1803,7 +1803,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removeDomainMarker(0,marker,layer);
   }
   /** 
- * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param index the dataset/renderer index.
  * @param marker the marker.
  * @param layer the layer (foreground or background).
@@ -1814,7 +1814,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removeDomainMarker(index,marker,layer,true);
   }
   /** 
- * Removes a marker for a specific dataset/renderer and, if requested, sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for a specific dataset/renderer and, if requested, sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param index  the dataset/renderer index.
  * @param marker  the marker.
  * @param layer  the layer (foreground or background).
@@ -1840,7 +1840,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removed;
   }
   /** 
- * Adds a marker for the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners. <P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
+ * Adds a marker for the range axis and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners. <P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
  * @param marker  the marker (<code>null</code> not permitted).
  * @see #addRangeMarker(Marker,Layer)
  */
@@ -1848,7 +1848,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     addRangeMarker(marker,Layer.FOREGROUND);
   }
   /** 
- * Adds a marker for the range axis in the specified layer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
+ * Adds a marker for the range axis in the specified layer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
  * @param marker  the marker (<code>null</code> not permitted).
  * @param layer  the layer (foreground or background).
  * @see #addRangeMarker(int,Marker,Layer)
@@ -1857,7 +1857,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     addRangeMarker(0,marker,layer);
   }
   /** 
- * Clears all the range markers and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Clears all the range markers and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @see #clearRangeMarkers()
  */
   public void clearRangeMarkers(){
@@ -1882,7 +1882,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     fireChangeEvent();
   }
   /** 
- * Adds a marker for a specific dataset/renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
+ * Adds a marker for a specific dataset/renderer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
  * @param index  the dataset/renderer index.
  * @param marker  the marker.
  * @param layer  the layer (foreground or background).
@@ -1893,7 +1893,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     addRangeMarker(index,marker,layer,true);
   }
   /** 
- * Adds a marker for a specific dataset/renderer and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
+ * Adds a marker for a specific dataset/renderer and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.<P> Typically a marker will be drawn by the renderer as a line perpendicular to the range axis, however this is entirely up to the renderer.
  * @param index  the dataset/renderer index.
  * @param marker  the marker.
  * @param layer  the layer (foreground or background).
@@ -1956,7 +1956,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     fireChangeEvent();
   }
   /** 
- * Removes a marker for the range axis and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Removes a marker for the range axis and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param marker the marker.
  * @return A boolean indicating whether or not the marker was actuallyremoved.
  * @since 1.0.7
@@ -1965,7 +1965,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removeRangeMarker(marker,Layer.FOREGROUND);
   }
   /** 
- * Removes a marker for the range axis in the specified layer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for the range axis in the specified layer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param marker the marker (<code>null</code> not permitted).
  * @param layer the layer (foreground or background).
  * @return A boolean indicating whether or not the marker was actuallyremoved.
@@ -1975,7 +1975,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removeRangeMarker(0,marker,layer);
   }
   /** 
- * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param index the dataset/renderer index.
  * @param marker the marker.
  * @param layer the layer (foreground or background).
@@ -1986,7 +1986,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removeRangeMarker(index,marker,layer,true);
   }
   /** 
- * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Removes a marker for a specific dataset/renderer and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param index  the dataset/renderer index.
  * @param marker  the marker.
  * @param layer  the layer (foreground or background).
@@ -2015,7 +2015,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removed;
   }
   /** 
- * Adds an annotation to the plot and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Adds an annotation to the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @see #getAnnotations()
  * @see #removeAnnotation(XYAnnotation)
@@ -2024,7 +2024,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     addAnnotation(annotation,true);
   }
   /** 
- * Adds an annotation to the plot and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Adds an annotation to the plot and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @since 1.0.10
@@ -2040,7 +2040,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     }
   }
   /** 
- * Removes an annotation from the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Removes an annotation from the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @return A boolean (indicates whether or not the annotation was removed).
  * @see #addAnnotation(XYAnnotation)
@@ -2050,7 +2050,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return removeAnnotation(annotation,true);
   }
   /** 
- * Removes an annotation from the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Removes an annotation from the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @param notify  notify listeners?
  * @return A boolean (indicates whether or not the annotation was removed).
@@ -2077,7 +2077,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return new ArrayList(this.annotations);
   }
   /** 
- * Clears all the annotations and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Clears all the annotations and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @see #addAnnotation(XYAnnotation)
  */
   public void clearAnnotations(){
@@ -2097,7 +2097,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.shadowGenerator;
   }
   /** 
- * Sets the shadow generator for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.  Note that this isa btmap drop-shadow generation facility and is separate from the vector based show option that is controlled via the {@link setShadowPaint()} method.
+ * Sets the shadow generator for the plot and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.  Note that this isa btmap drop-shadow generation facility and is separate from the vector based show option that is controlled via the {@link setShadowPaint()} method.
  * @param generator  the generator (<code>null</code> permitted).
  * @since 1.0.14
  */
@@ -3278,7 +3278,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return result;
   }
   /** 
- * Receives notification of a change to an                                                                                                                                                                {@link Annotation} added tothis plot.
+ * Receives notification of a change to an                                                                                                                                                                     {@link Annotation} added tothis plot.
  * @param event  information about the event (not used here).
  * @since 1.0.14
  */
@@ -3327,7 +3327,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainCrosshairVisible;
   }
   /** 
- * Sets the flag indicating whether or not the domain crosshair is visible and, if the flag changes, sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the flag indicating whether or not the domain crosshair is visible and, if the flag changes, sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param flag  the new value of the flag.
  * @see #isDomainCrosshairVisible()
  */
@@ -3346,7 +3346,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainCrosshairLockedOnData;
   }
   /** 
- * Sets the flag indicating whether or not the domain crosshair should "lock-on" to actual data values.  If the flag value changes, this method sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the flag indicating whether or not the domain crosshair should "lock-on" to actual data values.  If the flag value changes, this method sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param flag  the flag.
  * @see #isDomainCrosshairLockedOnData()
  */
@@ -3365,7 +3365,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainCrosshairValue;
   }
   /** 
- * Sets the domain crosshair value and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners (provided that the domain crosshair is visible).
+ * Sets the domain crosshair value and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners (provided that the domain crosshair is visible).
  * @param value  the value.
  * @see #getDomainCrosshairValue()
  */
@@ -3373,7 +3373,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setDomainCrosshairValue(value,true);
   }
   /** 
- * Sets the domain crosshair value and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners (provided that thedomain crosshair is visible).
+ * Sets the domain crosshair value and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners (provided that thedomain crosshair is visible).
  * @param value  the new value.
  * @param notify  notify listeners?
  * @see #getDomainCrosshairValue()
@@ -3385,7 +3385,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     }
   }
   /** 
- * Returns the                                                                                                                                                                {@link Stroke} used to draw the crosshair (if visible).
+ * Returns the                                                                                                                                                                     {@link Stroke} used to draw the crosshair (if visible).
  * @return The crosshair stroke (never <code>null</code>).
  * @see #setDomainCrosshairStroke(Stroke)
  * @see #isDomainCrosshairVisible()
@@ -3417,7 +3417,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.domainCrosshairPaint;
   }
   /** 
- * Sets the paint used to draw the crosshairs (if visible) and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the crosshairs (if visible) and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param paint the new crosshair paint (<code>null</code> not permitted).
  * @see #getDomainCrosshairPaint()
  */
@@ -3438,7 +3438,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeCrosshairVisible;
   }
   /** 
- * Sets the flag indicating whether or not the range crosshair is visible. If the flag value changes, this method sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the flag indicating whether or not the range crosshair is visible. If the flag value changes, this method sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param flag  the new value of the flag.
  * @see #isRangeCrosshairVisible()
  */
@@ -3457,7 +3457,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeCrosshairLockedOnData;
   }
   /** 
- * Sets the flag indicating whether or not the range crosshair should "lock-on" to actual data values.  If the flag value changes, this method sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the flag indicating whether or not the range crosshair should "lock-on" to actual data values.  If the flag value changes, this method sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param flag  the flag.
  * @see #isRangeCrosshairLockedOnData()
  */
@@ -3484,7 +3484,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setRangeCrosshairValue(value,true);
   }
   /** 
- * Sets the range crosshair value and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners, but only if the crosshair is visible.
+ * Sets the range crosshair value and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners, but only if the crosshair is visible.
  * @param value  the new value.
  * @param notify  a flag that controls whether or not listeners arenotified.
  * @see #getRangeCrosshairValue()
@@ -3506,7 +3506,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeCrosshairStroke;
   }
   /** 
- * Sets the stroke used to draw the crosshairs (if visible) and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the crosshairs (if visible) and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the new crosshair stroke (<code>null</code> notpermitted).
  * @see #getRangeCrosshairStroke()
  */
@@ -3528,7 +3528,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.rangeCrosshairPaint;
   }
   /** 
- * Sets the paint used to color the crosshairs (if visible) and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to color the crosshairs (if visible) and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param paint the new crosshair paint (<code>null</code> not permitted).
  * @see #getRangeCrosshairPaint()
  */
@@ -3548,7 +3548,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.fixedDomainAxisSpace;
   }
   /** 
- * Sets the fixed domain axis space and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets the fixed domain axis space and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param space  the space (<code>null</code> permitted).
  * @see #getFixedDomainAxisSpace()
  */
@@ -3556,7 +3556,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setFixedDomainAxisSpace(space,true);
   }
   /** 
- * Sets the fixed domain axis space and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the fixed domain axis space and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param space  the space (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @see #getFixedDomainAxisSpace()
@@ -3577,7 +3577,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     return this.fixedRangeAxisSpace;
   }
   /** 
- * Sets the fixed range axis space and sends a                                                                                                                                                                {@link PlotChangeEvent} toall registered listeners.
+ * Sets the fixed range axis space and sends a                                                                                                                                                                     {@link PlotChangeEvent} toall registered listeners.
  * @param space  the space (<code>null</code> permitted).
  * @see #getFixedRangeAxisSpace()
  */
@@ -3585,7 +3585,7 @@ public class XYPlot extends Plot implements ValueAxisPlot, Pannable, Selectable,
     setFixedRangeAxisSpace(space,true);
   }
   /** 
- * Sets the fixed range axis space and, if requested, sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the fixed range axis space and, if requested, sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param space  the space (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @see #getFixedRangeAxisSpace()

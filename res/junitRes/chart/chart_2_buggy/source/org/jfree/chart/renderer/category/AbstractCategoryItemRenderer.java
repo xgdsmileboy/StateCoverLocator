@@ -58,7 +58,7 @@ import org.jfree.data.category.CategoryDatasetSelectionState;
 import org.jfree.data.category.SelectableCategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
 /** 
- * An abstract base class that you can use to implement a new                                                                                                                                                               {@link CategoryItemRenderer}.  When you create a new                                                                                                                                                               {@link CategoryItemRenderer} you are not required to extend this class,but it makes the job easier.
+ * An abstract base class that you can use to implement a new                                                                                                                                                                    {@link CategoryItemRenderer}.  When you create a new                                                                                                                                                                    {@link CategoryItemRenderer} you are not required to extend this class,but it makes the job easier.
  */
 public abstract class AbstractCategoryItemRenderer extends AbstractRenderer implements CategoryItemRenderer, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -150,7 +150,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return this.plot;
   }
   /** 
- * Sets the plot that the renderer has been assigned to.  This method is usually called by the                                                                                                                                                                {@link CategoryPlot}, in normal usage you shouldn't need to call this method directly.
+ * Sets the plot that the renderer has been assigned to.  This method is usually called by the                                                                                                                                                                     {@link CategoryPlot}, in normal usage you shouldn't need to call this method directly.
  * @param plot  the plot (<code>null</code> not permitted).
  * @see #getPlot()
  */
@@ -185,7 +185,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return (CategoryItemLabelGenerator)this.itemLabelGeneratorList.get(series);
   }
   /** 
- * Sets the item label generator for a series and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the item label generator for a series and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero based).
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getSeriesItemLabelGenerator(int)
@@ -194,7 +194,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     setSeriesItemLabelGenerator(series,generator,true);
   }
   /** 
- * Sets the item label generator for a series and, if requested, sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the item label generator for a series and, if requested, sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero based).
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -216,7 +216,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return this.baseItemLabelGenerator;
   }
   /** 
- * Sets the base item label generator and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the base item label generator and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getBaseItemLabelGenerator()
  */
@@ -224,7 +224,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     setBaseItemLabelGenerator(generator,true);
   }
   /** 
- * Sets the base item label generator and, if requested, sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the base item label generator and, if requested, sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @since 1.2.0
@@ -262,7 +262,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return (CategoryToolTipGenerator)this.toolTipGeneratorList.get(series);
   }
   /** 
- * Sets the tool tip generator for a series and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the tool tip generator for a series and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero-based).
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getSeriesToolTipGenerator(int)
@@ -271,7 +271,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     setSeriesToolTipGenerator(series,generator,true);
   }
   /** 
- * Sets the tool tip generator for a series and sends a                                                                                                                                                               {@link org.jfree.chart.event.RendererChangeEvent} to all registeredlisteners.
+ * Sets the tool tip generator for a series and sends a                                                                                                                                                                    {@link org.jfree.chart.event.RendererChangeEvent} to all registeredlisteners.
  * @param series  the series index (zero-based).
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -293,7 +293,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return this.baseToolTipGenerator;
   }
   /** 
- * Sets the base tool tip generator and sends a                                                                                                                                                                {@link RendererChangeEvent}to all registered listeners.
+ * Sets the base tool tip generator and sends a                                                                                                                                                                     {@link RendererChangeEvent}to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getBaseToolTipGenerator()
  */
@@ -301,7 +301,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     setBaseToolTipGenerator(generator,true);
   }
   /** 
- * Sets the base tool tip generator and sends a                                                                                                                                                                {@link RendererChangeEvent}to all registered listeners.
+ * Sets the base tool tip generator and sends a                                                                                                                                                                     {@link RendererChangeEvent}to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
  * @since 1.2.0
@@ -338,7 +338,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return (CategoryURLGenerator)this.urlGeneratorList.get(series);
   }
   /** 
- * Sets the URL generator for a series and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the URL generator for a series and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero based).
  * @param generator  the generator.
  * @see #getSeriesURLGenerator(int)
@@ -347,7 +347,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     setSeriesURLGenerator(series,generator,true);
   }
   /** 
- * Sets the URL generator for a series and, if requested, sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the URL generator for a series and, if requested, sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param series  the series index (zero based).
  * @param generator  the generator (<code>null</code> permitted).
  * @param notify  notify listeners?
@@ -390,7 +390,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     }
   }
   /** 
- * Adds an annotation and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.  The annotation is added to the foreground layer.
+ * Adds an annotation and sends a                                                                                                                                                                     {@link RendererChangeEvent} to allregistered listeners.  The annotation is added to the foreground layer.
  * @param annotation  the annotation (<code>null</code> not permitted).
  * @since 1.2.0
  */
@@ -422,7 +422,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     }
   }
   /** 
- * Removes the specified annotation and sends a                                                                                                                                                                {@link RendererChangeEvent}to all registered listeners.
+ * Removes the specified annotation and sends a                                                                                                                                                                     {@link RendererChangeEvent}to all registered listeners.
  * @param annotation  the annotation to remove (<code>null</code> notpermitted).
  * @return A boolean to indicate whether or not the annotation wassuccessfully removed.
  * @since 1.2.0
@@ -434,7 +434,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return removed;
   }
   /** 
- * Removes all annotations and sends a                                                                                                                                                                {@link RendererChangeEvent}to all registered listeners.
+ * Removes all annotations and sends a                                                                                                                                                                     {@link RendererChangeEvent}to all registered listeners.
  * @since 1.2.0
  */
   public void removeAnnotations(){
@@ -451,7 +451,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return this.legendItemLabelGenerator;
   }
   /** 
- * Sets the legend item label generator and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the legend item label generator and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> not permitted).
  * @see #getLegendItemLabelGenerator()
  */
@@ -471,7 +471,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return this.legendItemToolTipGenerator;
   }
   /** 
- * Sets the legend item tool tip generator and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the legend item tool tip generator and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #setLegendItemToolTipGenerator(CategorySeriesLabelGenerator)
  */
@@ -488,7 +488,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return this.legendItemURLGenerator;
   }
   /** 
- * Sets the legend item URL generator and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the legend item URL generator and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getLegendItemURLGenerator()
  */
@@ -497,21 +497,21 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     fireChangeEvent();
   }
   /** 
- * Returns the number of rows in the dataset.  This value is updated in the                                                                                                                                                               {@link AbstractCategoryItemRenderer#initialise} method.
+ * Returns the number of rows in the dataset.  This value is updated in the                                                                                                                                                                    {@link AbstractCategoryItemRenderer#initialise} method.
  * @return The row count.
  */
   public int getRowCount(){
     return this.rowCount;
   }
   /** 
- * Returns the number of columns in the dataset.  This value is updated in the                                                                                                                                                                {@link AbstractCategoryItemRenderer#initialise} method.
+ * Returns the number of columns in the dataset.  This value is updated in the                                                                                                                                                                     {@link AbstractCategoryItemRenderer#initialise} method.
  * @return The column count.
  */
   public int getColumnCount(){
     return this.columnCount;
   }
   /** 
- * Creates a new state instance---this method is called from the                                                                                                                                                               {@link #initialise(Graphics2D,Rectangle2D,CategoryPlot,int,PlotRenderingInfo)} method.  Subclasses can override this method ifthey need to use a subclass of  {@link CategoryItemRendererState}.
+ * Creates a new state instance---this method is called from the                                                                                                                                                                    {@link #initialise(Graphics2D,Rectangle2D,CategoryPlot,int,PlotRenderingInfo)} method.  Subclasses can override this method ifthey need to use a subclass of  {@link CategoryItemRendererState}.
  * @param info  collects plot rendering info (<code>null</code> permitted).
  * @return The new state instance (never <code>null</code>).
  * @since 1.0.5
@@ -935,7 +935,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer impl
     return RectangleAnchor.coordinates(anchorRect,anchor);
   }
   /** 
- * Returns a legend item for a series.  This default implementation will return <code>null</code> if                                                                                                                                                                {@link #isSeriesVisible(int)} or{@link #isSeriesVisibleInLegend(int)} returns <code>false</code>.
+ * Returns a legend item for a series.  This default implementation will return <code>null</code> if                                                                                                                                                                     {@link #isSeriesVisible(int)} or{@link #isSeriesVisibleInLegend(int)} returns <code>false</code>.
  * @param datasetIndex  the dataset index (zero-based).
  * @param series  the series index (zero-based).
  * @return The legend item (possibly <code>null</code>).

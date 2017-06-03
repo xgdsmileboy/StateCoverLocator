@@ -22,7 +22,7 @@ import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.chart.util.ShapeUtilities;
 /** 
- * A simple line annotation that can be placed on an                                                                                                                                                                {@link XYPlot}.
+ * A simple line annotation that can be placed on an                                                                                                                                                                     {@link XYPlot}.
  */
 public class XYLineAnnotation extends AbstractXYAnnotation implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -88,7 +88,7 @@ public class XYLineAnnotation extends AbstractXYAnnotation implements Cloneable,
     this.paint=paint;
   }
   /** 
- * Draws the annotation.  This method is called by the                                                                                                                                                                {@link XYPlot}class, you won't normally need to call it yourself.
+ * Draws the annotation.  This method is called by the                                                                                                                                                                     {@link XYPlot}class, you won't normally need to call it yourself.
  * @param g2  the graphics device.
  * @param plot  the plot.
  * @param dataArea  the data area.

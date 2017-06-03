@@ -9,7 +9,7 @@ import org.jfree.data.Range;
 import org.jfree.data.xy.AbstractIntervalXYDataset;
 import org.jfree.data.xy.IntervalXYDataset;
 /** 
- * A collection of                                                                                                                                                               {@link TimePeriodValues} objects.<P> This class implements the  {@link org.jfree.data.xy.XYDataset} interface, aswell as the extended  {@link IntervalXYDataset} interface.  This makes it aconvenient dataset for use with the  {@link org.jfree.chart.plot.XYPlot}class.
+ * A collection of                                                                                                                                                                    {@link TimePeriodValues} objects.<P> This class implements the  {@link org.jfree.data.xy.XYDataset} interface, aswell as the extended  {@link IntervalXYDataset} interface.  This makes it aconvenient dataset for use with the  {@link org.jfree.chart.plot.XYPlot}class.
  */
 public class TimePeriodValuesCollection extends AbstractIntervalXYDataset implements IntervalXYDataset, DomainInfo, Serializable {
   /** 
@@ -88,7 +88,7 @@ public class TimePeriodValuesCollection extends AbstractIntervalXYDataset implem
     return getSeries(series).getKey();
   }
   /** 
- * Adds a series to the collection.  A                                                                                                                                                              {@link org.jfree.data.general.DatasetChangeEvent} is sent to allregistered listeners.
+ * Adds a series to the collection.  A                                                                                                                                                                   {@link org.jfree.data.general.DatasetChangeEvent} is sent to allregistered listeners.
  * @param series  the time series.
  */
   public void addSeries(  TimePeriodValues series){

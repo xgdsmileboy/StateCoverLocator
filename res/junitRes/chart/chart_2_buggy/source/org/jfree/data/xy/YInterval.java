@@ -1,7 +1,7 @@
 package org.jfree.data.xy;
 import java.io.Serializable;
 /** 
- * A y-interval.  This class is used internally by the                                                                                                                                                             {@link YIntervalDataItem} class.
+ * A y-interval.  This class is used internally by the                                                                                                                                                                  {@link YIntervalDataItem} class.
  * @since 1.0.3
  */
 public class YInterval implements Serializable {

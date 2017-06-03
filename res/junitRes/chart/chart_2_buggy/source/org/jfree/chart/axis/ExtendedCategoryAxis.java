@@ -16,7 +16,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * An extended version of the                                                                                                                                                                {@link CategoryAxis} class that supportssublabels on the axis.
+ * An extended version of the                                                                                                                                                                     {@link CategoryAxis} class that supportssublabels on the axis.
  */
 public class ExtendedCategoryAxis extends CategoryAxis {
   /** 
@@ -54,7 +54,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
     return this.sublabelFont;
   }
   /** 
- * Sets the font for the sublabels and sends an                                                                                                                                                                {@link AxisChangeEvent} toall registered listeners.
+ * Sets the font for the sublabels and sends an                                                                                                                                                                     {@link AxisChangeEvent} toall registered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getSubLabelFont()
  */
@@ -74,7 +74,7 @@ public class ExtendedCategoryAxis extends CategoryAxis {
     return this.sublabelPaint;
   }
   /** 
- * Sets the paint for the sublabels and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the paint for the sublabels and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getSubLabelPaint()
  */

@@ -110,7 +110,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer implements XYItem
     return this.showOutline;
   }
   /** 
- * Sets a flag that controls whether or not outlines of the areas are drawn, and sends a                                                                                                                                                                {@link RendererChangeEvent} to all registeredlisteners.
+ * Sets a flag that controls whether or not outlines of the areas are drawn, and sends a                                                                                                                                                                     {@link RendererChangeEvent} to all registeredlisteners.
  * @param show  the flag.
  * @see #isOutline()
  */
@@ -127,7 +127,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer implements XYItem
     return this.shapesVisible;
   }
   /** 
- * Sets the flag that controls whether or not shapes are displayed for each data item, and sends a                                                                                                                                                                {@link RendererChangeEvent} to all registeredlisteners.
+ * Sets the flag that controls whether or not shapes are displayed for each data item, and sends a                                                                                                                                                                     {@link RendererChangeEvent} to all registeredlisteners.
  * @param flag  the flag.
  * @see #getShapesVisible()
  */
@@ -144,7 +144,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer implements XYItem
     return this.shapesFilled;
   }
   /** 
- * Sets the 'shapes filled' for ALL series and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the 'shapes filled' for ALL series and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param filled  the flag.
  * @see #isShapesFilled()
  */
@@ -161,7 +161,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer implements XYItem
     return this.plotArea;
   }
   /** 
- * Sets a flag that controls whether or not areas are drawn for each data item and sends a                                                                                                                                                                {@link RendererChangeEvent} to all registeredlisteners.
+ * Sets a flag that controls whether or not areas are drawn for each data item and sends a                                                                                                                                                                     {@link RendererChangeEvent} to all registeredlisteners.
  * @param flag  the flag.
  * @see #getPlotArea()
  */
@@ -178,7 +178,7 @@ public class XYStepAreaRenderer extends AbstractXYItemRenderer implements XYItem
     return this.rangeBase;
   }
   /** 
- * Sets the value on the range axis which defines the default border of the area, and sends a                                                                                                                                                                {@link RendererChangeEvent} to all registeredlisteners.  E.g. setRangeBase(Double.NEGATIVE_INFINITY) lets areas always reach the lower border of the plotArea.
+ * Sets the value on the range axis which defines the default border of the area, and sends a                                                                                                                                                                     {@link RendererChangeEvent} to all registeredlisteners.  E.g. setRangeBase(Double.NEGATIVE_INFINITY) lets areas always reach the lower border of the plotArea.
  * @param val  the value on the range axis which defines the default borderof the area.
  * @see #getRangeBase()
  */

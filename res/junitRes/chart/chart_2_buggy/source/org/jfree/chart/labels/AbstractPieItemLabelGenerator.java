@@ -67,7 +67,7 @@ public class AbstractPieItemLabelGenerator implements Serializable {
     return this.percentFormat;
   }
   /** 
- * Creates the array of items that can be passed to the                                                                                                                                                               {@link MessageFormat} class for creating labels.  The returned arraycontains four values: <ul> <li>result[0] = the section key converted to a <code>String</code>;</li> <li>result[1] = the formatted data value;</li> <li>result[2] = the formatted percentage (of the total);</li> <li>result[3] = the formatted total value.</li> </ul>
+ * Creates the array of items that can be passed to the                                                                                                                                                                    {@link MessageFormat} class for creating labels.  The returned arraycontains four values: <ul> <li>result[0] = the section key converted to a <code>String</code>;</li> <li>result[1] = the formatted data value;</li> <li>result[2] = the formatted percentage (of the total);</li> <li>result[3] = the formatted total value.</li> </ul>
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param key  the key (<code>null</code> not permitted).
  * @return The items (never <code>null</code>).

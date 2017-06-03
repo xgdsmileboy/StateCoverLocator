@@ -1,7 +1,7 @@
 package org.jfree.data;
 import java.util.List;
 /** 
- * An extension of the                                                                                                                                                               {@link Values2D} interface where a unique key isassociated with the row and column indices.
+ * An extension of the                                                                                                                                                                    {@link Values2D} interface where a unique key isassociated with the row and column indices.
  */
 public interface KeyedValues2D extends Values2D {
   /** 

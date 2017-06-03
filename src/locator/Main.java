@@ -86,7 +86,7 @@ public class Main {
 		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
 
 		// train predicate prediction model
-//		trainModel(subject);
+		trainModel(subject);
 
 		// copy auxiliary file to subject path
 		LevelLogger.info("copying auxiliary file to subject path.");

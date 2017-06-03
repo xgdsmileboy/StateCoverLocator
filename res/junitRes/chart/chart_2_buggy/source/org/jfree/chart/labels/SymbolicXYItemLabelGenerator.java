@@ -7,7 +7,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XisSymbolic;
 import org.jfree.data.xy.YisSymbolic;
 /** 
- * A standard item label generator for plots that use data from an                                                                                                                                                               {@link XYDataset}.
+ * A standard item label generator for plots that use data from an                                                                                                                                                                    {@link XYDataset}.
  */
 public class SymbolicXYItemLabelGenerator implements XYItemLabelGenerator, XYToolTipGenerator, Cloneable, PublicCloneable, Serializable {
   /** 

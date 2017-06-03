@@ -1,7 +1,7 @@
 package org.jfree.chart;
 import java.util.EventListener;
 /** 
- * The interface that must be implemented by classes that wish to receive                                                                                                                                                               {@link ChartMouseEvent} notifications from a {@link ChartPanel}.
+ * The interface that must be implemented by classes that wish to receive                                                                                                                                                                    {@link ChartMouseEvent} notifications from a {@link ChartPanel}.
  * @see ChartPanel#addChartMouseListener(ChartMouseListener)
  */
 public interface ChartMouseListener extends EventListener {

@@ -1,7 +1,7 @@
 package org.jfree.chart.block;
 import org.jfree.chart.entity.EntityCollection;
 /** 
- * Provides access to the                                                                                                                                                                {@link EntityCollection} generated when a block isdrawn.
+ * Provides access to the                                                                                                                                                                     {@link EntityCollection} generated when a block isdrawn.
  */
 public interface EntityBlockResult {
   /** 

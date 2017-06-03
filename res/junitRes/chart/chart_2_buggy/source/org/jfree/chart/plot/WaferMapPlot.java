@@ -111,7 +111,7 @@ public class WaferMapPlot extends Plot implements RendererChangeListener, Clonea
     return this.dataset;
   }
   /** 
- * Sets the dataset used by the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the dataset used by the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param dataset  the dataset (<code>null</code> permitted).
  */
   public void setDataset(  WaferMapDataset dataset){

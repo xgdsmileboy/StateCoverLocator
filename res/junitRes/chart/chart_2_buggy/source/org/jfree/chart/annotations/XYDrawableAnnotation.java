@@ -13,7 +13,7 @@ import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleEdge;
 /** 
- * A general annotation that can be placed on an                                                                                                                                                                {@link XYPlot}.
+ * A general annotation that can be placed on an                                                                                                                                                                     {@link XYPlot}.
  */
 public class XYDrawableAnnotation extends AbstractXYAnnotation implements Cloneable, PublicCloneable, Serializable {
   /** 

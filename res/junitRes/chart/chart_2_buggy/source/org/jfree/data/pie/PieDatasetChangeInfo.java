@@ -1,7 +1,7 @@
 package org.jfree.data.pie;
 import org.jfree.chart.event.DatasetChangeInfo;
 /** 
- * Summarises a change to a                                                                                                                                                               {@link PieDataset}.
+ * Summarises a change to a                                                                                                                                                                    {@link PieDataset}.
  * @since 1.2.0
  */
 public class PieDatasetChangeInfo extends DatasetChangeInfo {

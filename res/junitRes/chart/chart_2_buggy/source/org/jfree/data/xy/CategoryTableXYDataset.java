@@ -7,7 +7,7 @@ import org.jfree.data.Range;
 import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
 /** 
- * An implementation variant of the                                                                                                                                                               {@link TableXYDataset} where every seriesshares the same x-values (required for generating stacked area charts). This implementation uses a  {@link DefaultKeyedValues2D} Object as backendimplementation and is hence more "category oriented" than the  {@link DefaultTableXYDataset} implementation.<p> This implementation provides no means to remove data items yet. This is due to the lack of such facility in the DefaultKeyedValues2D class. <p> This class also implements the  {@link IntervalXYDataset} interface, but thisimplementation is provisional.
+ * An implementation variant of the                                                                                                                                                                    {@link TableXYDataset} where every seriesshares the same x-values (required for generating stacked area charts). This implementation uses a  {@link DefaultKeyedValues2D} Object as backendimplementation and is hence more "category oriented" than the  {@link DefaultTableXYDataset} implementation.<p> This implementation provides no means to remove data items yet. This is due to the lack of such facility in the DefaultKeyedValues2D class. <p> This class also implements the  {@link IntervalXYDataset} interface, but thisimplementation is provisional.
  */
 public class CategoryTableXYDataset extends AbstractIntervalXYDataset implements TableXYDataset, IntervalXYDataset, DomainInfo, PublicCloneable {
   /** 
@@ -27,7 +27,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset implements
     addChangeListener(this.intervalDelegate);
   }
   /** 
- * Adds a data item to this dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Adds a data item to this dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent}to all registered listeners.
  * @param x  the x value.
  * @param y  the y value.
  * @param seriesName  the name of the series to add the data item.
@@ -36,7 +36,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset implements
     add(new Double(x),new Double(y),seriesName,true);
   }
   /** 
- * Adds a data item to this dataset and, if requested, sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Adds a data item to this dataset and, if requested, sends a                                                                                                                                                                   {@link DatasetChangeEvent} to all registered listeners.
  * @param x  the x value.
  * @param y  the y value.
  * @param seriesName  the name of the series to add the data item.
@@ -91,7 +91,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset implements
     return this.values.getRowCount();
   }
   /** 
- * Returns the number of items in the specified series. Returns the same as                                                                                                                                                               {@link CategoryTableXYDataset#getItemCount()}.
+ * Returns the number of items in the specified series. Returns the same as                                                                                                                                                                    {@link CategoryTableXYDataset#getItemCount()}.
  * @param series  the series index (zero-based).
  * @return The item count.
  */
@@ -204,7 +204,7 @@ public class CategoryTableXYDataset extends AbstractIntervalXYDataset implements
     return this.intervalDelegate.getIntervalWidth();
   }
   /** 
- * Sets the interval width to a fixed value, and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Sets the interval width to a fixed value, and sends a                                                                                                                                                                   {@link DatasetChangeEvent} to all registered listeners.
  * @param d  the new interval width (must be > 0).
  */
   public void setIntervalWidth(  double d){

@@ -9,7 +9,7 @@ import org.jfree.data.RangeInfo;
 import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.xy.AbstractXYDataset;
 /** 
- * A simple implementation of the                                                                                                                                                               {@link BoxAndWhiskerXYDataset} interface.This dataset implementation can hold only one series.
+ * A simple implementation of the                                                                                                                                                                    {@link BoxAndWhiskerXYDataset} interface.This dataset implementation can hold only one series.
  */
 public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset implements BoxAndWhiskerXYDataset, RangeInfo {
   /** 
@@ -109,7 +109,7 @@ public class DefaultBoxAndWhiskerXYDataset extends AbstractXYDataset implements 
     return this.dates.size();
   }
   /** 
- * Adds an item to the dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent} toall registered listeners.
+ * Adds an item to the dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent} toall registered listeners.
  * @param date  the date (<code>null</code> not permitted).
  * @param item  the item (<code>null</code> not permitted).
  */

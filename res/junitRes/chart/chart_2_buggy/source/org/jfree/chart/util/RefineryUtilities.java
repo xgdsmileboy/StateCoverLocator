@@ -156,7 +156,7 @@ public class RefineryUtilities {
     return result;
   }
   /** 
- * Creates a                                                                                                                                                                {@link JButton}.
+ * Creates a                                                                                                                                                                     {@link JButton}.
  * @param label  the label.
  * @param font  the font.
  * @return The button.

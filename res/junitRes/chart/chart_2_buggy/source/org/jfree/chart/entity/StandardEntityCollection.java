@@ -7,7 +7,7 @@ import java.util.List;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * A standard implementation of the                                                                                                                                                                {@link EntityCollection} interface.
+ * A standard implementation of the                                                                                                                                                                     {@link EntityCollection} interface.
  */
 public class StandardEntityCollection implements EntityCollection, Cloneable, PublicCloneable, Serializable {
   /** 

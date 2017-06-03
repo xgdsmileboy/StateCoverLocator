@@ -7,7 +7,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 /** 
- * A utility class for the                                                                                                                                                               {@link HeatMapDataset}.
+ * A utility class for the                                                                                                                                                                    {@link HeatMapDataset}.
  * @since 1.0.13
  */
 public abstract class HeatMapUtilities {

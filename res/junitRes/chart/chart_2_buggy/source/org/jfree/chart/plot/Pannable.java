@@ -2,7 +2,7 @@ package org.jfree.chart.plot;
 import java.awt.geom.Point2D;
 import org.jfree.chart.ChartPanel;
 /** 
- * An interface that the                                                                                                                                                                {@link ChartPanel} class uses to communicate withplots that support panning.
+ * An interface that the                                                                                                                                                                     {@link ChartPanel} class uses to communicate withplots that support panning.
  * @since 1.0.13
  */
 public interface Pannable {

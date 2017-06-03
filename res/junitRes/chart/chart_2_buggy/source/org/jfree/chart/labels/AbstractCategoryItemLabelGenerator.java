@@ -9,7 +9,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.DataUtilities;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A base class that can be used to create a label or tooltip generator that can be assigned to a                                                                                                                                                               {@link org.jfree.chart.renderer.category.CategoryItemRenderer}.
+ * A base class that can be used to create a label or tooltip generator that can be assigned to a                                                                                                                                                                    {@link org.jfree.chart.renderer.category.CategoryItemRenderer}.
  */
 public abstract class AbstractCategoryItemLabelGenerator implements PublicCloneable, Cloneable, Serializable {
   /** 
@@ -141,7 +141,7 @@ public abstract class AbstractCategoryItemLabelGenerator implements PublicClonea
     return result;
   }
   /** 
- * Creates the array of items that can be passed to the                                                                                                                                                               {@link MessageFormat} class for creating labels.
+ * Creates the array of items that can be passed to the                                                                                                                                                                    {@link MessageFormat} class for creating labels.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param row  the row index (zero-based).
  * @param column  the column index (zero-based).

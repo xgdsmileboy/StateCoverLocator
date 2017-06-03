@@ -8,7 +8,7 @@ import org.jfree.data.Range;
 import org.jfree.data.RangeInfo;
 import org.jfree.data.general.AbstractDataset;
 /** 
- * A convenience class that provides a default implementation of the                                                                                                                                                              {@link BoxAndWhiskerCategoryDataset} interface.
+ * A convenience class that provides a default implementation of the                                                                                                                                                                   {@link BoxAndWhiskerCategoryDataset} interface.
  */
 public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset implements BoxAndWhiskerCategoryDataset, RangeInfo, PublicCloneable {
   /** 
@@ -113,7 +113,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset impleme
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes an item from the dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes an item from the dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent}to all registered listeners.
  * @param rowKey  the row key (<code>null</code> not permitted).
  * @param columnKey  the column key (<code>null</code> not permitted).
  * @see #add(BoxAndWhiskerItem,Comparable,Comparable)
@@ -129,7 +129,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset impleme
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a row from the dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a row from the dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent}to all registered listeners.
  * @param rowIndex  the row index.
  * @see #removeColumn(int)
  * @since 1.0.7
@@ -140,7 +140,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset impleme
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a row from the dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a row from the dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent}to all registered listeners.
  * @param rowKey  the row key.
  * @see #removeColumn(Comparable)
  * @since 1.0.7
@@ -151,7 +151,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset impleme
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a column from the dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a column from the dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent}to all registered listeners.
  * @param columnIndex  the column index.
  * @see #removeRow(int)
  * @since 1.0.7
@@ -162,7 +162,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset impleme
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Removes a column from the dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Removes a column from the dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent}to all registered listeners.
  * @param columnKey  the column key.
  * @see #removeRow(Comparable)
  * @since 1.0.7
@@ -173,7 +173,7 @@ public class DefaultBoxAndWhiskerCategoryDataset extends AbstractDataset impleme
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Clears all data from the dataset and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Clears all data from the dataset and sends a                                                                                                                                                                    {@link DatasetChangeEvent}to all registered listeners.
  * @since 1.0.7
  */
   public void clear(){

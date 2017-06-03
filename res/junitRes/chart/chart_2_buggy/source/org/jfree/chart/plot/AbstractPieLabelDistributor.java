@@ -2,7 +2,7 @@ package org.jfree.chart.plot;
 import java.io.Serializable;
 import java.util.List;
 /** 
- * A base class for handling the distribution of pie section labels.  Create your own subclass and set it using the                                                                                                                                                               {@link PiePlot#setLabelDistributor(AbstractPieLabelDistributor)} methodif you want to customise the label distribution.
+ * A base class for handling the distribution of pie section labels.  Create your own subclass and set it using the                                                                                                                                                                    {@link PiePlot#setLabelDistributor(AbstractPieLabelDistributor)} methodif you want to customise the label distribution.
  */
 public abstract class AbstractPieLabelDistributor implements Serializable {
   /** 
@@ -47,7 +47,7 @@ public abstract class AbstractPieLabelDistributor implements Serializable {
     this.labels.clear();
   }
   /** 
- * Called by the                                                                                                                                                                {@link PiePlot} class.  Implementations should distributethe labels in this.labels then return.
+ * Called by the                                                                                                                                                                     {@link PiePlot} class.  Implementations should distributethe labels in this.labels then return.
  * @param minY  the y-coordinate for the top of the label area.
  * @param height  the height of the label area.
  */

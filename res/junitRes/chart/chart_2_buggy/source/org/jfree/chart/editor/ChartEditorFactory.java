@@ -1,7 +1,7 @@
 package org.jfree.chart.editor;
 import org.jfree.chart.JFreeChart;
 /** 
- * A factory for creating new                                                                                                                                                                {@link ChartEditor} instances.
+ * A factory for creating new                                                                                                                                                                     {@link ChartEditor} instances.
  */
 public interface ChartEditorFactory {
   /** 

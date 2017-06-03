@@ -88,7 +88,7 @@ public class LineRenderer3D extends LineAndShapeRenderer implements Effect3D, Se
     return this.yOffset;
   }
   /** 
- * Sets the x-offset and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the x-offset and sends a                                                                                                                                                                     {@link RendererChangeEvent} to allregistered listeners.
  * @param xOffset  the x-offset.
  * @see #getXOffset()
  */
@@ -97,7 +97,7 @@ public class LineRenderer3D extends LineAndShapeRenderer implements Effect3D, Se
     fireChangeEvent();
   }
   /** 
- * Sets the y-offset and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the y-offset and sends a                                                                                                                                                                     {@link RendererChangeEvent} to allregistered listeners.
  * @param yOffset  the y-offset.
  * @see #getYOffset()
  */
@@ -114,7 +114,7 @@ public class LineRenderer3D extends LineAndShapeRenderer implements Effect3D, Se
     return this.wallPaint;
   }
   /** 
- * Sets the paint used to hightlight the left and bottom walls in the plot background, and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the paint used to hightlight the left and bottom walls in the plot background, and sends a                                                                                                                                                                     {@link RendererChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getWallPaint()
  */

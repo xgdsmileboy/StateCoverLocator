@@ -1,7 +1,7 @@
 package org.jfree.chart.event;
 import org.jfree.chart.plot.Marker;
 /** 
- * An event that can be forwarded to any                                                                                                                                                                {@link MarkerChangeListener} tosignal a change to a  {@link Marker}.
+ * An event that can be forwarded to any                                                                                                                                                                     {@link MarkerChangeListener} tosignal a change to a  {@link Marker}.
  * @since 1.0.3
  */
 public class MarkerChangeEvent extends ChartChangeEvent {

@@ -29,6 +29,7 @@ public class Dumper {
     if (!alreadyRun.contains(stmt)) {
       alreadyRun.add(stmt);
       int index=statements.indexOf(stmt);
+
       if (index >= 0) {
         Record record=(Record)coverage.get(index);
         record.inc(SUCC_TEST);
@@ -59,9 +60,9 @@ public class Dumper {
       try {
         for (int i=0; i < statements.size(); i++) {
           Record record=(Record)coverage.get(i);
-          if (record.getFail() == 0) {
-            continue;
-          }
+         // if (record.getFail() == 0) {
+          //  continue;
+          //}
           String content=(String)statements.get(i) + "\t" + record.getValue();
           bufferedWriter.write(content);
           bufferedWriter.write("\n");

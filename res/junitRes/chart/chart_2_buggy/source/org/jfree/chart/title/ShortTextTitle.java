@@ -9,7 +9,7 @@ import org.jfree.chart.text.TextUtilities;
 import org.jfree.chart.util.Size2D;
 import org.jfree.data.Range;
 /** 
- * A text title that is only displayed if the entire text will be visible without line wrapping.  It is only intended for use with short titles - for general purpose titles, you should use the                                                                                                                                                                {@link TextTitle} class.
+ * A text title that is only displayed if the entire text will be visible without line wrapping.  It is only intended for use with short titles - for general purpose titles, you should use the                                                                                                                                                                     {@link TextTitle} class.
  * @since 1.0.10
  * @see TextTitle
  */

@@ -13,7 +13,7 @@ import org.jfree.chart.util.ShapeUtilities;
 import org.jfree.chart.util.Size2D;
 import org.jfree.data.Range;
 /** 
- * A convenience class for creating new classes that implement the                                                                                                                                                                {@link Block} interface.
+ * A convenience class for creating new classes that implement the                                                                                                                                                                     {@link Block} interface.
  */
 public class AbstractBlock implements Cloneable, Serializable {
   /** 
@@ -117,7 +117,7 @@ public class AbstractBlock implements Cloneable, Serializable {
     return this.margin;
   }
   /** 
- * Sets the margin (use                                                                                                                                                                {@link RectangleInsets#ZERO_INSETS} for nopadding).
+ * Sets the margin (use                                                                                                                                                                     {@link RectangleInsets#ZERO_INSETS} for nopadding).
  * @param margin  the margin (<code>null</code> not permitted).
  * @see #getMargin()
  */
@@ -168,7 +168,7 @@ public class AbstractBlock implements Cloneable, Serializable {
     return this.padding;
   }
   /** 
- * Sets the padding (use                                                                                                                                                                {@link RectangleInsets#ZERO_INSETS} for nopadding).
+ * Sets the padding (use                                                                                                                                                                     {@link RectangleInsets#ZERO_INSETS} for nopadding).
  * @param padding  the padding (<code>null</code> not permitted).
  * @see #getPadding()
  */

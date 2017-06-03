@@ -17,7 +17,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A simple circular frame for the                                                                                                                                                                {@link DialPlot} class.
+ * A simple circular frame for the                                                                                                                                                                     {@link DialPlot} class.
  * @since 1.0.7
  */
 public class StandardDialFrame extends AbstractDialLayer implements DialFrame, Cloneable, PublicCloneable, Serializable {
@@ -59,7 +59,7 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame, C
     return this.radius;
   }
   /** 
- * Sets the radius and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the radius and sends a                                                                                                                                                                     {@link DialLayerChangeEvent} to allregistered listeners.
  * @param radius  the radius (must be positive).
  * @see #getRadius()
  */
@@ -79,7 +79,7 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame, C
     return this.backgroundPaint;
   }
   /** 
- * Sets the background paint and sends a                                                                                                                                                                {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the background paint and sends a                                                                                                                                                                     {@link DialLayerChangeEvent} toall registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getBackgroundPaint()
  */
@@ -99,7 +99,7 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame, C
     return this.foregroundPaint;
   }
   /** 
- * Sets the foreground paint and sends a                                                                                                                                                                {@link DialLayerChangeEvent} toall registered listeners.
+ * Sets the foreground paint and sends a                                                                                                                                                                     {@link DialLayerChangeEvent} toall registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getForegroundPaint()
  */
@@ -119,7 +119,7 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame, C
     return this.stroke;
   }
   /** 
- * Sets the stroke and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to allregistered listeners.
+ * Sets the stroke and sends a                                                                                                                                                                     {@link DialLayerChangeEvent} to allregistered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getStroke()
  */
@@ -147,7 +147,7 @@ public class StandardDialFrame extends AbstractDialLayer implements DialFrame, C
     return false;
   }
   /** 
- * Draws the frame.  This method is called by the                                                                                                                                                                {@link DialPlot} class,you shouldn't need to call it directly.
+ * Draws the frame.  This method is called by the                                                                                                                                                                     {@link DialPlot} class,you shouldn't need to call it directly.
  * @param g2  the graphics target (<code>null</code> not permitted).
  * @param plot  the plot (<code>null</code> not permitted).
  * @param frame  the frame (<code>null</code> not permitted).

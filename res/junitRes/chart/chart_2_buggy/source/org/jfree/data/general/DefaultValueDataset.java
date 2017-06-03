@@ -4,7 +4,7 @@ import org.jfree.chart.event.DatasetChangeInfo;
 import org.jfree.chart.util.ObjectUtilities;
 import org.jfree.chart.util.PublicCloneable;
 /** 
- * A dataset that stores a single value (that is possibly <code>null</code>). This class provides a default implementation of the                                                                                                                                                               {@link ValueDataset}interface.
+ * A dataset that stores a single value (that is possibly <code>null</code>). This class provides a default implementation of the                                                                                                                                                                    {@link ValueDataset}interface.
  */
 public class DefaultValueDataset extends AbstractDataset implements ValueDataset, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -44,7 +44,7 @@ public class DefaultValueDataset extends AbstractDataset implements ValueDataset
     return this.value;
   }
   /** 
- * Sets the value and sends a                                                                                                                                                               {@link DatasetChangeEvent} to all registeredlisteners.
+ * Sets the value and sends a                                                                                                                                                                    {@link DatasetChangeEvent} to all registeredlisteners.
  * @param value  the new value (<code>null</code> permitted).
  */
   public void setValue(  Number value){

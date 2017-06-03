@@ -5,12 +5,12 @@ package org.jfree.data.general;
  */
 public interface HeatMapDataset {
   /** 
- * Returns the number of x values across the width of the dataset.  The values are evenly spaced between                                                                                                                                                               {@link #getMinimumXValue()} and{@link #getMaximumXValue()}.
+ * Returns the number of x values across the width of the dataset.  The values are evenly spaced between                                                                                                                                                                    {@link #getMinimumXValue()} and{@link #getMaximumXValue()}.
  * @return The number of x-values (always > 0).
  */
   public int getXSampleCount();
   /** 
- * Returns the number of y values (or samples) for the dataset.  The values are evenly spaced between                                                                                                                                                               {@link #getMinimumYValue()} and{@link #getMaximumYValue()}.
+ * Returns the number of y values (or samples) for the dataset.  The values are evenly spaced between                                                                                                                                                                    {@link #getMinimumYValue()} and{@link #getMaximumYValue()}.
  * @return The number of y-values (always > 0).
  */
   public int getYSampleCount();
@@ -54,7 +54,7 @@ public interface HeatMapDataset {
  */
   public double getZValue(  int xIndex,  int yIndex);
   /** 
- * Returns the z-value at the specified sample position in the dataset. This method can return <code>null</code> to indicate a missing/unknown value. <br><br> Bear in mind that the class implementing this interface may store its data using primitives rather than objects, so calling this method may require a new <code>Number</code> object to be allocated... for this reason, it is generally preferable to use the                                                                                                                                                              {@link #getZValue(int,int)} method unless you *know* that the datasetimplementation stores the z-values using objects.
+ * Returns the z-value at the specified sample position in the dataset. This method can return <code>null</code> to indicate a missing/unknown value. <br><br> Bear in mind that the class implementing this interface may store its data using primitives rather than objects, so calling this method may require a new <code>Number</code> object to be allocated... for this reason, it is generally preferable to use the                                                                                                                                                                   {@link #getZValue(int,int)} method unless you *know* that the datasetimplementation stores the z-values using objects.
  * @param xIndex  the position of the x sample in the dataset.
  * @param yIndex  the position of the y sample in the dataset.
  * @return The z-value (possibly <code>null</code>).

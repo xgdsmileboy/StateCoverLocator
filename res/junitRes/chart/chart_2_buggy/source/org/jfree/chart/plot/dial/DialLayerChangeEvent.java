@@ -1,7 +1,7 @@
 package org.jfree.chart.plot.dial;
 import org.jfree.chart.event.ChartChangeEvent;
 /** 
- * An event that can be forwarded to any                                                                                                                                                                {@link DialLayerChangeListener} tosignal a change to a  {@link DialLayer}.
+ * An event that can be forwarded to any                                                                                                                                                                     {@link DialLayerChangeListener} tosignal a change to a  {@link DialLayer}.
  * @since 1.0.7
  */
 public class DialLayerChangeEvent extends ChartChangeEvent {

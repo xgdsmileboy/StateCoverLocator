@@ -3,7 +3,7 @@ import org.jfree.data.ComparableObjectItem;
 import org.jfree.data.ComparableObjectSeries;
 import org.jfree.data.time.RegularTimePeriod;
 /** 
- * A list of (                                                                                                                                                              {@link RegularTimePeriod}, open, high, low, close) data items.
+ * A list of (                                                                                                                                                                   {@link RegularTimePeriod}, open, high, low, close) data items.
  * @since 1.0.4
  * @see OHLCSeriesCollection
  */

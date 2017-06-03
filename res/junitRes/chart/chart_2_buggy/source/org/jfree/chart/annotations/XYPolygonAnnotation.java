@@ -23,7 +23,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A polygon annotation that can be placed on an                                                                                                                                                                {@link XYPlot}.  The polygon coordinates are specified in data space.
+ * A polygon annotation that can be placed on an                                                                                                                                                                     {@link XYPlot}.  The polygon coordinates are specified in data space.
  */
 public class XYPolygonAnnotation extends AbstractXYAnnotation implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -115,7 +115,7 @@ public class XYPolygonAnnotation extends AbstractXYAnnotation implements Cloneab
     return this.outlinePaint;
   }
   /** 
- * Draws the annotation.  This method is usually called by the                                                                                                                                                               {@link XYPlot} class, you shouldn't need to call it directly.
+ * Draws the annotation.  This method is usually called by the                                                                                                                                                                    {@link XYPlot} class, you shouldn't need to call it directly.
  * @param g2  the graphics device.
  * @param plot  the plot.
  * @param dataArea  the data area.

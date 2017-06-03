@@ -111,7 +111,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
     return this.gridBandPaint;
   }
   /** 
- * Sets the grid band paint and sends an                                                                                                                                                                {@link AxisChangeEvent} toall registered listeners.
+ * Sets the grid band paint and sends an                                                                                                                                                                     {@link AxisChangeEvent} toall registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getGridBandPaint()
  */
@@ -133,7 +133,7 @@ public class SymbolAxis extends NumberAxis implements Serializable {
     return this.gridBandAlternatePaint;
   }
   /** 
- * Sets the paint used for alternate grid bands and sends a                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the paint used for alternate grid bands and sends a                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getGridBandAlternatePaint()
  * @see #setGridBandPaint(Paint)

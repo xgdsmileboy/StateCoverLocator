@@ -4,7 +4,7 @@ import org.jfree.chart.text.TextBlock;
 import org.jfree.chart.text.TextBlockAnchor;
 import org.jfree.chart.util.ObjectUtilities;
 /** 
- * A tick for a                                                                                                                                                                {@link CategoryAxis}.
+ * A tick for a                                                                                                                                                                     {@link CategoryAxis}.
  */
 public class CategoryTick extends Tick {
   /** 

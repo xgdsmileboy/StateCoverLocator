@@ -5,7 +5,7 @@ import java.text.NumberFormat;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A standard tool tip generator for use with an                                                                                                                                                               {@link org.jfree.chart.renderer.xy.XYItemRenderer}.
+ * A standard tool tip generator for use with an                                                                                                                                                                    {@link org.jfree.chart.renderer.xy.XYItemRenderer}.
  */
 public class StandardXYToolTipGenerator extends AbstractXYItemLabelGenerator implements XYToolTipGenerator, Cloneable, PublicCloneable, Serializable {
   /** 

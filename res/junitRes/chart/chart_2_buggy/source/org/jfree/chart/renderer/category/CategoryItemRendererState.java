@@ -4,7 +4,7 @@ import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.renderer.RendererState;
 import org.jfree.data.category.CategoryDatasetSelectionState;
 /** 
- * An object that retains temporary state information for a                                                                                                                                                               {@link CategoryItemRenderer}.
+ * An object that retains temporary state information for a                                                                                                                                                                    {@link CategoryItemRenderer}.
  */
 public class CategoryItemRendererState extends RendererState {
   /** 

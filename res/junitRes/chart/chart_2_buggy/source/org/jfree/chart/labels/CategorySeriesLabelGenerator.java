@@ -1,7 +1,7 @@
 package org.jfree.chart.labels;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A generator that creates labels for the series in a                                                                                                                                                                {@link CategoryDataset}. <P> Classes that implement this interface should be either (a) immutable, or (b) cloneable via the <code>PublicCloneable</code> interface (defined in the JCommon class library).  This provides a mechanism for the referring renderer to clone the generator if necessary.
+ * A generator that creates labels for the series in a                                                                                                                                                                     {@link CategoryDataset}. <P> Classes that implement this interface should be either (a) immutable, or (b) cloneable via the <code>PublicCloneable</code> interface (defined in the JCommon class library).  This provides a mechanism for the referring renderer to clone the generator if necessary.
  */
 public interface CategorySeriesLabelGenerator {
   /** 

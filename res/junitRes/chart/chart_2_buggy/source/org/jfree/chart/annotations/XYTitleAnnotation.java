@@ -22,7 +22,7 @@ import org.jfree.chart.util.Size2D;
 import org.jfree.data.Range;
 import org.jfree.chart.util.XYCoordinateType;
 /** 
- * An annotation that allows any                                                                                                                                                                {@link Title} to be placed at a location onan  {@link XYPlot}.
+ * An annotation that allows any                                                                                                                                                                     {@link Title} to be placed at a location onan  {@link XYPlot}.
  * @since 1.0.11
  */
 public class XYTitleAnnotation extends AbstractXYAnnotation implements Cloneable, PublicCloneable, Serializable {
@@ -133,7 +133,7 @@ public class XYTitleAnnotation extends AbstractXYAnnotation implements Cloneable
     return this.maxWidth;
   }
   /** 
- * Sets the maximum width and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the maximum width and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param max  the maximum width (0.0 or less means no maximum).
  */
   public void setMaxWidth(  double max){
@@ -148,7 +148,7 @@ public class XYTitleAnnotation extends AbstractXYAnnotation implements Cloneable
     return this.maxHeight;
   }
   /** 
- * Sets the maximum height and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the maximum height and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param max  the maximum height.
  */
   public void setMaxHeight(  double max){
@@ -156,7 +156,7 @@ public class XYTitleAnnotation extends AbstractXYAnnotation implements Cloneable
     fireAnnotationChanged();
   }
   /** 
- * Draws the annotation.  This method is called by the drawing code in the                                                                                                                                                               {@link XYPlot} class, you don't normally need to call this methoddirectly.
+ * Draws the annotation.  This method is called by the drawing code in the                                                                                                                                                                    {@link XYPlot} class, you don't normally need to call this methoddirectly.
  * @param g2  the graphics device.
  * @param plot  the plot.
  * @param dataArea  the data area.

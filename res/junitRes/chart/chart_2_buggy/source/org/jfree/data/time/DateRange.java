@@ -46,7 +46,7 @@ public class DateRange extends Range implements Serializable {
     this.upperDate=(long)upper;
   }
   /** 
- * Constructs a new range that is based on another                                                                                                                                                               {@link Range}.  The other range does not have to be a                                                                                                                                                               {@link DateRange}.  If it is not, the upper and lower bounds are evaluated as milliseconds since midnight GMT, 1-Jan-1970.
+ * Constructs a new range that is based on another                                                                                                                                                                    {@link Range}.  The other range does not have to be a                                                                                                                                                                    {@link DateRange}.  If it is not, the upper and lower bounds are evaluated as milliseconds since midnight GMT, 1-Jan-1970.
  * @param other  the other range (<code>null</code> not permitted).
  */
   public DateRange(  Range other){

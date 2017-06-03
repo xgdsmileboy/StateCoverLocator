@@ -122,7 +122,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return this.lowerMargin;
   }
   /** 
- * Sets the lower margin for the axis and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the lower margin for the axis and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param margin  the margin as a percentage of the axis length (forexample, 0.05 is five percent).
  * @see #getLowerMargin()
  */
@@ -140,7 +140,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return this.upperMargin;
   }
   /** 
- * Sets the upper margin for the axis and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the upper margin for the axis and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param margin  the margin as a percentage of the axis length (forexample, 0.05 is five percent).
  * @see #getUpperMargin()
  */
@@ -157,7 +157,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return this.categoryMargin;
   }
   /** 
- * Sets the category margin and sends an                                                                                                                                                                {@link AxisChangeEvent} to allregistered listeners.  The overall category margin is distributed over N-1 gaps, where N is the number of categories on the axis.
+ * Sets the category margin and sends an                                                                                                                                                                     {@link AxisChangeEvent} to allregistered listeners.  The overall category margin is distributed over N-1 gaps, where N is the number of categories on the axis.
  * @param margin  the margin as a percentage of the axis length (forexample, 0.05 is five percent).
  * @see #getCategoryMargin()
  */
@@ -174,7 +174,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return this.maximumCategoryLabelLines;
   }
   /** 
- * Sets the maximum number of lines to use for each category label and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the maximum number of lines to use for each category label and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param lines  the maximum number of lines.
  * @see #getMaximumCategoryLabelLines()
  */
@@ -191,7 +191,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return this.maximumCategoryLabelWidthRatio;
   }
   /** 
- * Sets the maximum category label width ratio and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the maximum category label width ratio and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param ratio  the ratio.
  * @see #getMaximumCategoryLabelWidthRatio()
  */
@@ -225,7 +225,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return this.categoryLabelPositions;
   }
   /** 
- * Sets the category label position specification for the axis and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the category label position specification for the axis and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param positions  the positions (<code>null</code> not permitted).
  * @see #getCategoryLabelPositions()
  */
@@ -253,7 +253,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return result;
   }
   /** 
- * Sets the font for the tick label for the specified category and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the font for the tick label for the specified category and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param category  the category (<code>null</code> not permitted).
  * @param font  the font (<code>null</code> permitted).
  * @see #getTickLabelFont(Comparable)
@@ -287,7 +287,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return result;
   }
   /** 
- * Sets the paint for the tick label for the specified category and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the paint for the tick label for the specified category and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param category  the category (<code>null</code> not permitted).
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getTickLabelPaint(Comparable)
@@ -305,7 +305,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     notifyListeners(new AxisChangeEvent(this));
   }
   /** 
- * Adds a tooltip to the specified category and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Adds a tooltip to the specified category and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param category  the category (<code>null<code> not permitted).
  * @param tooltip  the tooltip text (<code>null</code> permitted).
  * @see #removeCategoryLabelToolTip(Comparable)
@@ -331,7 +331,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     return (String)this.categoryLabelToolTips.get(category);
   }
   /** 
- * Removes the tooltip for the specified category and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Removes the tooltip for the specified category and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param category  the category (<code>null<code> not permitted).
  * @see #addCategoryLabelToolTip(Comparable,String)
  * @see #clearCategoryLabelToolTips()
@@ -344,7 +344,7 @@ public class CategoryAxis extends Axis implements Cloneable, Serializable {
     notifyListeners(new AxisChangeEvent(this));
   }
   /** 
- * Clears the category label tooltips and sends an                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Clears the category label tooltips and sends an                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @see #addCategoryLabelToolTip(Comparable,String)
  * @see #removeCategoryLabelToolTip(Comparable)
  */

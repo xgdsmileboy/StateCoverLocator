@@ -6,7 +6,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotRenderingInfo;
 /** 
- * The interface that must be supported by annotations that are to be added to a                                                                                                                                                                {@link CategoryPlot}.
+ * The interface that must be supported by annotations that are to be added to a                                                                                                                                                                     {@link CategoryPlot}.
  */
 public interface CategoryAnnotation extends Annotation {
   /** 

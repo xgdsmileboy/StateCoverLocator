@@ -17,7 +17,7 @@ import org.jfree.chart.util.RectangleInsets;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.time.RegularTimePeriod;
 /** 
- * A record that contains information for one "band" of date labels in a                                                                                                                                                                {@link PeriodAxis}.
+ * A record that contains information for one "band" of date labels in a                                                                                                                                                                     {@link PeriodAxis}.
  */
 public class PeriodAxisLabelInfo implements Cloneable, Serializable {
   /** 
@@ -45,7 +45,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
  */
   public static final Paint DEFAULT_DIVIDER_PAINT=Color.gray;
   /** 
- * The subclass of                                                                                                                                                                {@link RegularTimePeriod} to use for this band. 
+ * The subclass of                                                                                                                                                                     {@link RegularTimePeriod} to use for this band. 
  */
   private Class periodClass;
   /** 
@@ -127,7 +127,7 @@ public class PeriodAxisLabelInfo implements Cloneable, Serializable {
     this.dividerPaint=dividerPaint;
   }
   /** 
- * Returns the subclass of                                                                                                                                                                {@link RegularTimePeriod} that should be usedto generate the date labels.
+ * Returns the subclass of                                                                                                                                                                     {@link RegularTimePeriod} that should be usedto generate the date labels.
  * @return The class.
  */
   public Class getPeriodClass(){

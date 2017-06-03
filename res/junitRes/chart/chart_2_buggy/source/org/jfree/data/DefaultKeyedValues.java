@@ -8,7 +8,7 @@ import java.util.List;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.SortOrder;
 /** 
- * An ordered list of (key, value) items.  This class provides a default implementation of the                                                                                                                                                                {@link KeyedValues} interface.
+ * An ordered list of (key, value) items.  This class provides a default implementation of the                                                                                                                                                                     {@link KeyedValues} interface.
  */
 public class DefaultKeyedValues implements KeyedValues, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -107,7 +107,7 @@ public class DefaultKeyedValues implements KeyedValues, Cloneable, PublicCloneab
     addValue(key,new Double(value));
   }
   /** 
- * Adds a new value to the collection, or updates an existing value. This method passes control directly to the                                                                                                                                                               {@link #setValue(Comparable,Number)} method.
+ * Adds a new value to the collection, or updates an existing value. This method passes control directly to the                                                                                                                                                                    {@link #setValue(Comparable,Number)} method.
  * @param key  the key (<code>null</code> not permitted).
  * @param value  the value (<code>null</code> permitted).
  */

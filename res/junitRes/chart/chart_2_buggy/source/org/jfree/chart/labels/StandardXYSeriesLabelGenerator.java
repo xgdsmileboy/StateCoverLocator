@@ -5,7 +5,7 @@ import org.jfree.chart.util.HashUtilities;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A standard series label generator for plots that use data from an                                                                                                                                                                {@link org.jfree.data.xy.XYDataset}. <br><br> This class implements <code>PublicCloneable</code> by mistake but we retain this for the sake of backward compatibility.
+ * A standard series label generator for plots that use data from an                                                                                                                                                                     {@link org.jfree.data.xy.XYDataset}. <br><br> This class implements <code>PublicCloneable</code> by mistake but we retain this for the sake of backward compatibility.
  */
 public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -21,7 +21,7 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator, C
  */
   private String formatPattern;
   /** 
- * Creates a default series label generator (uses                                                                                                                                                               {@link #DEFAULT_LABEL_FORMAT}).
+ * Creates a default series label generator (uses                                                                                                                                                                    {@link #DEFAULT_LABEL_FORMAT}).
  */
   public StandardXYSeriesLabelGenerator(){
     this(DEFAULT_LABEL_FORMAT);
@@ -50,7 +50,7 @@ public class StandardXYSeriesLabelGenerator implements XYSeriesLabelGenerator, C
     return label;
   }
   /** 
- * Creates the array of items that can be passed to the                                                                                                                                                               {@link MessageFormat} class for creating labels.
+ * Creates the array of items that can be passed to the                                                                                                                                                                    {@link MessageFormat} class for creating labels.
  * @param dataset  the dataset (<code>null</code> not permitted).
  * @param series  the series (zero-based index).
  * @return The items (never <code>null</code>).

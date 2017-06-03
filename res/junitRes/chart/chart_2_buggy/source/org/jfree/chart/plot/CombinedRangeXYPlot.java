@@ -18,7 +18,7 @@ import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.RectangleInsets;
 import org.jfree.data.Range;
 /** 
- * An extension of                                                                                                                                                                {@link XYPlot} that contains multiple subplots that share acommon range axis.
+ * An extension of                                                                                                                                                                     {@link XYPlot} that contains multiple subplots that share acommon range axis.
  */
 public class CombinedRangeXYPlot extends XYPlot implements PlotChangeListener {
   /** 
@@ -396,7 +396,7 @@ public class CombinedRangeXYPlot extends XYPlot implements PlotChangeListener {
     }
   }
   /** 
- * Receives a                                                                                                                                                                {@link PlotChangeEvent} and responds by notifying alllisteners.
+ * Receives a                                                                                                                                                                     {@link PlotChangeEvent} and responds by notifying alllisteners.
  * @param event  the event.
  */
   public void plotChanged(  PlotChangeEvent event){

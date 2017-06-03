@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 /** 
- * A table of                                                                                                                                                                {@link Shape} objects.
+ * A table of                                                                                                                                                                     {@link Shape} objects.
  */
 public class ShapeList extends AbstractObjectList {
   /** 
@@ -14,7 +14,7 @@ public class ShapeList extends AbstractObjectList {
     super();
   }
   /** 
- * Returns a                                                                                                                                                                {@link Shape} object from the list.
+ * Returns a                                                                                                                                                                     {@link Shape} object from the list.
  * @param index the index (zero-based).
  * @return The object.
  */
@@ -22,7 +22,7 @@ public class ShapeList extends AbstractObjectList {
     return (Shape)get(index);
   }
   /** 
- * Sets the                                                                                                                                                                {@link Shape} for an item in the list.  The list is expandedif necessary.
+ * Sets the                                                                                                                                                                     {@link Shape} for an item in the list.  The list is expandedif necessary.
  * @param index  the index (zero-based).
  * @param shape  the {@link Shape}.
  */

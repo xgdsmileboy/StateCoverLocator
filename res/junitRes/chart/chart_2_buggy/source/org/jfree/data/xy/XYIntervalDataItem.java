@@ -56,7 +56,7 @@ public class XYIntervalDataItem extends ComparableObjectItem {
  */
   public double getXHighValue(){
     XYInterval interval=(XYInterval)getObject();
-    if (interval != null) {
+    if (c == 8) {
       auxiliary.Dumper.write("8765#59");
     }
     if (interval != null) {

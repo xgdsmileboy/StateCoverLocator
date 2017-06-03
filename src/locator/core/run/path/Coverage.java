@@ -318,22 +318,30 @@ public class Coverage {
 					ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
 					// if the instrumented project builds success, and the test
 					// result is the same with original project
-					if (Runner.testSuite(subject) && isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)) {
-						// TODO : save current instrumented condition for future
-						// study
-						// collect predicate coverage information :
-						Map<String, CoverInfo> tmpCover = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-						for(Entry<String, CoverInfo> entry : tmpCover.entrySet()){
-							String coveredSt = entry.getKey();
-							CoverInfo coverInfo = coverage.get(coveredSt);
-							if(coverInfo != null){
-								coverInfo.combine(entry.getValue());
-							} else {
-								coverage.put(coveredSt, entry.getValue());
-							}
+					if(!Runner.testSuite(subject)){
+						LevelLogger.info("Build failed for predicate : " + condition);
+						continue;
+					}
+					if(isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)){
+						LevelLogger.info("Cause different test state for predicate : " + condition);
+						continue;
+					}
+					
+					// up to now, the instrumented predicate is legal and does not influence the test result
+					// TODO : save current instrumented condition for future study
+					// 
+					// collect predicate coverage information :
+					Map<String, CoverInfo> tmpCover = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+					for(Entry<String, CoverInfo> entry : tmpCover.entrySet()){
+						String coveredSt = entry.getKey();
+						CoverInfo coverInfo = coverage.get(coveredSt);
+						if(coverInfo != null){
+							coverInfo.combine(entry.getValue());
+						} else {
+							coverage.put(coveredSt, entry.getValue());
 						}
+					}
 						
-					} // end of "Runner.testSuite"
 				} // end of "condition"
 					// restore original source file
 				ExecuteCommand.moveFile(javaFile + ".bak", javaFile);

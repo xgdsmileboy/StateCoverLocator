@@ -2,7 +2,7 @@ package org.jfree.chart.entity;
 import java.awt.Shape;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A chart entity that represents one item within an                                                                                                                                                               {@link org.jfree.chart.plot.XYPlot}.
+ * A chart entity that represents one item within an                                                                                                                                                                    {@link org.jfree.chart.plot.XYPlot}.
  */
 public class XYItemEntity extends ChartEntity {
   /** 

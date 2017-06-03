@@ -589,7 +589,7 @@ protected class ValueSequence {
     return this.seriesKeys[series];
   }
   /** 
- * Sends a                                                                                                                                                               {@link SeriesChangeEvent} to all registered listeners.
+ * Sends a                                                                                                                                                                    {@link SeriesChangeEvent} to all registered listeners.
  */
   protected void fireSeriesChanged(){
     seriesChanged(new SeriesChangeEvent(this));

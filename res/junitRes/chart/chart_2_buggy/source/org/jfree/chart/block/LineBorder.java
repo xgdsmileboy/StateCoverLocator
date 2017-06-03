@@ -15,7 +15,7 @@ import org.jfree.chart.util.PaintUtilities;
 import org.jfree.chart.util.RectangleInsets;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A line border for any                                                                                                                                                                {@link AbstractBlock}.
+ * A line border for any                                                                                                                                                                     {@link AbstractBlock}.
  * @since 1.0.5
  */
 public class LineBorder implements BlockFrame, Serializable {

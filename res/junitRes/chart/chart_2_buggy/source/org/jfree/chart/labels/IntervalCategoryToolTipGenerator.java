@@ -4,7 +4,7 @@ import java.text.NumberFormat;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.IntervalCategoryDataset;
 /** 
- * A tooltip generator for plots that use data from an                                                                                                                                                               {@link IntervalCategoryDataset}.
+ * A tooltip generator for plots that use data from an                                                                                                                                                                    {@link IntervalCategoryDataset}.
  */
 public class IntervalCategoryToolTipGenerator extends StandardCategoryToolTipGenerator {
   /** 

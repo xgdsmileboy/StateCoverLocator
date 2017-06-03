@@ -529,7 +529,7 @@ return "ERROR : Relative To String";
 }
 }
 /** 
- * Factory method that returns an instance of some concrete subclass of                                                                                                                                                              {@link SerialDate}.
+ * Factory method that returns an instance of some concrete subclass of                                                                                                                                                                   {@link SerialDate}.
  * @param day  the day (1-31).
  * @param month  the month (1-12).
  * @param yyyy  the year (in the range 1900 to 9999).
@@ -539,7 +539,7 @@ public static SerialDate createInstance(final int day,final int month,final int 
 return new SpreadsheetDate(day,month,yyyy);
 }
 /** 
- * Factory method that returns an instance of some concrete subclass of                                                                                                                                                              {@link SerialDate}.
+ * Factory method that returns an instance of some concrete subclass of                                                                                                                                                                   {@link SerialDate}.
  * @param serial  the serial number for the day (1 January 1900 = 2).
  * @return a instance of SerialDate.
  */
@@ -644,14 +644,14 @@ public abstract boolean isAfter(SerialDate other);
  */
 public abstract boolean isOnOrAfter(SerialDate other);
 /** 
- * Returns <code>true</code> if this                                                                                                                                                               {@link SerialDate} is within thespecified range (INCLUSIVE).  The date order of d1 and d2 is not important.
+ * Returns <code>true</code> if this                                                                                                                                                                    {@link SerialDate} is within thespecified range (INCLUSIVE).  The date order of d1 and d2 is not important.
  * @param d1  a boundary date for the range.
  * @param d2  the other boundary date for the range.
  * @return A boolean.
  */
 public abstract boolean isInRange(SerialDate d1,SerialDate d2);
 /** 
- * Returns <code>true</code> if this                                                                                                                                                               {@link SerialDate} is within thespecified range (caller specifies whether or not the end-points are included).  The date order of d1 and d2 is not important.
+ * Returns <code>true</code> if this                                                                                                                                                                    {@link SerialDate} is within thespecified range (caller specifies whether or not the end-points are included).  The date order of d1 and d2 is not important.
  * @param d1  a boundary date for the range.
  * @param d2  the other boundary date for the range.
  * @param include  a code that controls whether or not the start and enddates are included in the range.

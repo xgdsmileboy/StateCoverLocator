@@ -2,7 +2,7 @@ package org.jfree.data.category;
 import org.jfree.chart.event.DatasetChangeInfo;
 import org.jfree.data.general.AbstractDataset;
 /** 
- * A base class that is convenient for implementing the                                                                                                                                                                {@link CategoryDataset}interface.
+ * A base class that is convenient for implementing the                                                                                                                                                                     {@link CategoryDataset}interface.
  */
 public class AbstractCategoryDataset extends AbstractDataset {
   /** 

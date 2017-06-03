@@ -1,7 +1,7 @@
 package org.jfree.data.general;
 import org.jfree.data.event.DatasetChangeListener;
 /** 
- * The base interface for data sets. <P> All datasets are required to support the                                                                                                                                                                {@link DatasetChangeEvent}mechanism by allowing listeners to register and receive notification of any changes to the dataset. <P> In addition, all datasets must belong to one (and only one)                                                                                                                                                               {@link DatasetGroup}.  The group object maintains a reader-writer lock which provides synchronised access to the datasets in multi-threaded code.
+ * The base interface for data sets. <P> All datasets are required to support the                                                                                                                                                                     {@link DatasetChangeEvent}mechanism by allowing listeners to register and receive notification of any changes to the dataset. <P> In addition, all datasets must belong to one (and only one)                                                                                                                                                                    {@link DatasetGroup}.  The group object maintains a reader-writer lock which provides synchronised access to the datasets in multi-threaded code.
  */
 public interface Dataset {
   /** 

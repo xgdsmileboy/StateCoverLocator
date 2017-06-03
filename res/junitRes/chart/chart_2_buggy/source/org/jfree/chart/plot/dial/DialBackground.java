@@ -58,7 +58,7 @@ public class DialBackground extends AbstractDialLayer implements DialLayer, Clon
     return this.paint;
   }
   /** 
- * Sets the paint for the dial background and sends a                                                                                                                                                               {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the paint for the dial background and sends a                                                                                                                                                                    {@link DialLayerChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -78,7 +78,7 @@ public class DialBackground extends AbstractDialLayer implements DialLayer, Clon
     return this.gradientPaintTransformer;
   }
   /** 
- * Sets the transformer used to adjust the coordinates of any <code>GradientPaint</code> instance used for the background paint, and sends a                                                                                                                                                                {@link DialLayerChangeEvent} to all registered listeners.
+ * Sets the transformer used to adjust the coordinates of any <code>GradientPaint</code> instance used for the background paint, and sends a                                                                                                                                                                     {@link DialLayerChangeEvent} to all registered listeners.
  * @param t  the transformer (<code>null</code> not permitted).
  * @see #getGradientPaintTransformer()
  */

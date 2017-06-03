@@ -18,7 +18,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleAnchor;
 import org.jfree.chart.util.RectangleEdge;
 /** 
- * An annotation that allows an image to be placed at some location on an                                                                                                                                                                {@link XYPlot}. TODO:  implement serialization properly (image is not serializable).
+ * An annotation that allows an image to be placed at some location on an                                                                                                                                                                     {@link XYPlot}. TODO:  implement serialization properly (image is not serializable).
  */
 public class XYImageAnnotation extends AbstractXYAnnotation implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -105,7 +105,7 @@ public class XYImageAnnotation extends AbstractXYAnnotation implements Cloneable
     return this.anchor;
   }
   /** 
- * Draws the annotation.  This method is called by the drawing code in the                                                                                                                                                               {@link XYPlot} class, you don't normally need to call this methoddirectly.
+ * Draws the annotation.  This method is called by the drawing code in the                                                                                                                                                                    {@link XYPlot} class, you don't normally need to call this methoddirectly.
  * @param g2  the graphics device.
  * @param plot  the plot.
  * @param dataArea  the data area.

@@ -10,7 +10,7 @@ import org.jfree.data.DataUtilities;
 import org.jfree.data.UnknownKeyException;
 import org.jfree.data.general.AbstractSeriesDataset;
 /** 
- * A convenience class that provides a default implementation of the                                                                                                                                                               {@link IntervalCategoryDataset} interface.<p> The standard constructor accepts data in a two dimensional array where the first dimension is the series, and the second dimension is the category.
+ * A convenience class that provides a default implementation of the                                                                                                                                                                    {@link IntervalCategoryDataset} interface.<p> The standard constructor accepts data in a two dimensional array where the first dimension is the series, and the second dimension is the category.
  */
 public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset implements IntervalCategoryDataset {
   /** 
@@ -38,7 +38,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset implem
     this(DataUtilities.createNumberArray2D(starts),DataUtilities.createNumberArray2D(ends));
   }
   /** 
- * Constructs a dataset and populates it with data from the array. <p> The arrays are indexed as data[series][category].  Series and category names are automatically generated - you can change them using the                                                                                                                                                               {@link #setSeriesKeys(Comparable[])} and{@link #setCategoryKeys(Comparable[])} methods.
+ * Constructs a dataset and populates it with data from the array. <p> The arrays are indexed as data[series][category].  Series and category names are automatically generated - you can change them using the                                                                                                                                                                    {@link #setSeriesKeys(Comparable[])} and{@link #setCategoryKeys(Comparable[])} methods.
  * @param starts  the start values data.
  * @param ends  the end values data.
  */
@@ -177,7 +177,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset implem
     return result;
   }
   /** 
- * Returns a list of the categories in the dataset.  This method supports the                                                                                                                                                                {@link CategoryDataset} interface.
+ * Returns a list of the categories in the dataset.  This method supports the                                                                                                                                                                     {@link CategoryDataset} interface.
  * @return A list of the categories in the dataset.
  * @see #getRowKeys()
  */
@@ -404,7 +404,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset implem
     return getSeriesIndex(rowKey);
   }
   /** 
- * Returns a list of the series in the dataset.  This method supports the                                                                                                                                                               {@link CategoryDataset} interface.
+ * Returns a list of the series in the dataset.  This method supports the                                                                                                                                                                    {@link CategoryDataset} interface.
  * @return A list of the series in the dataset.
  * @see #getColumnKeys()
  */
@@ -429,7 +429,7 @@ public class DefaultIntervalCategoryDataset extends AbstractSeriesDataset implem
     return this.seriesKeys[row];
   }
   /** 
- * Returns the number of categories in the dataset.  This method is part of the                                                                                                                                                                {@link CategoryDataset} interface.
+ * Returns the number of categories in the dataset.  This method is part of the                                                                                                                                                                     {@link CategoryDataset} interface.
  * @return The number of categories in the dataset.
  * @see #getCategoryCount()
  * @see #getRowCount()

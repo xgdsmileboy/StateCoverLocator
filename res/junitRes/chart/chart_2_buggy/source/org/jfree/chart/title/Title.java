@@ -117,7 +117,7 @@ public abstract class Title extends AbstractBlock implements Block, Cloneable, S
     return this.visible;
   }
   /** 
- * Sets a flag that controls whether or not the title should be drawn, and sends a                                                                                                                                                                {@link TitleChangeEvent} to all registered listeners.
+ * Sets a flag that controls whether or not the title should be drawn, and sends a                                                                                                                                                                     {@link TitleChangeEvent} to all registered listeners.
  * @param visible  the new flag value.
  * @see #isVisible()
  * @since 1.0.11
@@ -134,7 +134,7 @@ public abstract class Title extends AbstractBlock implements Block, Cloneable, S
     return this.position;
   }
   /** 
- * Sets the position for the title and sends a                                                                                                                                                                {@link TitleChangeEvent} toall registered listeners.
+ * Sets the position for the title and sends a                                                                                                                                                                     {@link TitleChangeEvent} toall registered listeners.
  * @param position  the position (<code>null</code> not permitted).
  */
   public void setPosition(  RectangleEdge position){
@@ -154,7 +154,7 @@ public abstract class Title extends AbstractBlock implements Block, Cloneable, S
     return this.horizontalAlignment;
   }
   /** 
- * Sets the horizontal alignment for the title and sends a                                                                                                                                                               {@link TitleChangeEvent} to all registered listeners.
+ * Sets the horizontal alignment for the title and sends a                                                                                                                                                                    {@link TitleChangeEvent} to all registered listeners.
  * @param alignment  the horizontal alignment (<code>null</code> notpermitted).
  */
   public void setHorizontalAlignment(  HorizontalAlignment alignment){

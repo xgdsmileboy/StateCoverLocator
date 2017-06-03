@@ -1,7 +1,7 @@
 package org.jfree.data.gantt;
 import org.jfree.data.category.IntervalCategoryDataset;
 /** 
- * An extension of the                                                                                                                                                                {@link IntervalCategoryDataset} interface that addssupport for multiple sub-intervals.
+ * An extension of the                                                                                                                                                                     {@link IntervalCategoryDataset} interface that addssupport for multiple sub-intervals.
  */
 public interface GanttCategoryDataset extends IntervalCategoryDataset {
   /** 

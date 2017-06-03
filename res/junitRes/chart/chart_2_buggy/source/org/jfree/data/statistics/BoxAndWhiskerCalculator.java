@@ -8,7 +8,7 @@ import java.util.List;
  */
 public abstract class BoxAndWhiskerCalculator {
   /** 
- * Calculates the statistics required for a                                                                                                                                                               {@link BoxAndWhiskerItem}from a list of <code>Number</code> objects.  Any items in the list that are <code>null</code>, not an instance of <code>Number</code>, or equivalent to <code>Double.NaN</code>, will be ignored.
+ * Calculates the statistics required for a                                                                                                                                                                    {@link BoxAndWhiskerItem}from a list of <code>Number</code> objects.  Any items in the list that are <code>null</code>, not an instance of <code>Number</code>, or equivalent to <code>Double.NaN</code>, will be ignored.
  * @param values  a list of numbers (a <code>null</code> list is notpermitted).
  * @return A box-and-whisker item.
  */
@@ -16,7 +16,7 @@ public abstract class BoxAndWhiskerCalculator {
     return calculateBoxAndWhiskerStatistics(values,true);
   }
   /** 
- * Calculates the statistics required for a                                                                                                                                                               {@link BoxAndWhiskerItem}from a list of <code>Number</code> objects.  Any items in the list that are <code>null</code>, not an instance of <code>Number</code>, or equivalent to <code>Double.NaN</code>, will be ignored.
+ * Calculates the statistics required for a                                                                                                                                                                    {@link BoxAndWhiskerItem}from a list of <code>Number</code> objects.  Any items in the list that are <code>null</code>, not an instance of <code>Number</code>, or equivalent to <code>Double.NaN</code>, will be ignored.
  * @param values  a list of numbers (a <code>null</code> list is notpermitted).
  * @param stripNullAndNaNItems  a flag that controls the handling of nulland NaN items.
  * @return A box-and-whisker item.

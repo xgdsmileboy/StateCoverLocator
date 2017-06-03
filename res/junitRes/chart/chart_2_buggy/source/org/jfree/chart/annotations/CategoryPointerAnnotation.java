@@ -24,7 +24,7 @@ import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * An arrow and label that can be placed on a                                                                                                                                                                {@link CategoryPlot}.  The arrow is drawn at a user-definable angle so that it points towards the (category, value) location for the annotation. <p> The arrow length (and its offset from the (category, value) location) is controlled by the tip radius and the base radius attributes.  Imagine two circles around the (category, value) coordinate: the inner circle defined by the tip radius, and the outer circle defined by the base radius.  Now, draw the arrow starting at some point on the outer circle (the point is determined by the angle), with the arrow tip being drawn at a corresponding point on the inner circle.
+ * An arrow and label that can be placed on a                                                                                                                                                                     {@link CategoryPlot}.  The arrow is drawn at a user-definable angle so that it points towards the (category, value) location for the annotation. <p> The arrow length (and its offset from the (category, value) location) is controlled by the tip radius and the base radius attributes.  Imagine two circles around the (category, value) coordinate: the inner circle defined by the tip radius, and the outer circle defined by the base radius.  Now, draw the arrow starting at some point on the outer circle (the point is determined by the angle), with the arrow tip being drawn at a corresponding point on the inner circle.
  * @since 1.0.3
  */
 public class CategoryPointerAnnotation extends CategoryTextAnnotation implements Cloneable, PublicCloneable, Serializable {
@@ -111,7 +111,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation implements
     return this.angle;
   }
   /** 
- * Sets the angle of the arrow and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the angle of the arrow and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param angle  the angle (in radians).
  * @see #getAngle()
  */
@@ -128,7 +128,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation implements
     return this.tipRadius;
   }
   /** 
- * Sets the tip radius and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the tip radius and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param radius  the radius (in Java2D units).
  * @see #getTipRadius()
  */
@@ -145,7 +145,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation implements
     return this.baseRadius;
   }
   /** 
- * Sets the base radius and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the base radius and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param radius  the radius (in Java2D units).
  * @see #getBaseRadius()
  */
@@ -162,7 +162,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation implements
     return this.labelOffset;
   }
   /** 
- * Sets the label offset (from the arrow base, continuing in a straight line, in Java2D units) and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the label offset (from the arrow base, continuing in a straight line, in Java2D units) and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param offset  the offset (in Java2D units).
  * @see #getLabelOffset()
  */
@@ -179,7 +179,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation implements
     return this.arrowLength;
   }
   /** 
- * Sets the arrow length and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the arrow length and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param length  the length.
  * @see #getArrowLength()
  */
@@ -195,7 +195,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation implements
     return this.arrowWidth;
   }
   /** 
- * Sets the arrow width and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the arrow width and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param width  the width (in Java2D units).
  * @see #getArrowWidth()
  */
@@ -212,7 +212,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation implements
     return this.arrowStroke;
   }
   /** 
- * Sets the stroke used to draw the arrow line and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the arrow line and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getArrowStroke()
  */
@@ -232,7 +232,7 @@ public class CategoryPointerAnnotation extends CategoryTextAnnotation implements
     return this.arrowPaint;
   }
   /** 
- * Sets the paint used for the arrow and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the paint used for the arrow and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param paint  the arrow paint (<code>null</code> not permitted).
  * @see #getArrowPaint()
  */

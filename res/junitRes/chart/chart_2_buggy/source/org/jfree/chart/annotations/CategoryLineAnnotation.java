@@ -24,7 +24,7 @@ import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.category.CategoryDataset;
 /** 
- * A line annotation that can be placed on a                                                                                                                                                                {@link CategoryPlot}.
+ * A line annotation that can be placed on a                                                                                                                                                                     {@link CategoryPlot}.
  */
 public class CategoryLineAnnotation extends AbstractAnnotation implements CategoryAnnotation, Cloneable, PublicCloneable, Serializable {
   /** 
@@ -94,7 +94,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation implements Catego
     return this.category1;
   }
   /** 
- * Sets the category for the start of the line and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the category for the start of the line and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param category  the category (<code>null</code> not permitted).
  * @see #getCategory1()
  */
@@ -114,7 +114,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation implements Catego
     return this.value1;
   }
   /** 
- * Sets the y-value for the start of the line and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the y-value for the start of the line and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param value  the value.
  * @see #getValue1()
  */
@@ -131,7 +131,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation implements Catego
     return this.category2;
   }
   /** 
- * Sets the category for the end of the line and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the category for the end of the line and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param category  the category (<code>null</code> not permitted).
  * @see #getCategory2()
  */
@@ -151,7 +151,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation implements Catego
     return this.value2;
   }
   /** 
- * Sets the y-value for the end of the line and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the y-value for the end of the line and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param value  the value.
  * @see #getValue2()
  */
@@ -168,7 +168,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation implements Catego
     return this.paint;
   }
   /** 
- * Sets the paint used to draw the connecting line and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the connecting line and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getPaint()
  */
@@ -188,7 +188,7 @@ public class CategoryLineAnnotation extends AbstractAnnotation implements Catego
     return this.stroke;
   }
   /** 
- * Sets the stroke used to draw the connecting line and sends an                                                                                                                                                               {@link AnnotationChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the connecting line and sends an                                                                                                                                                                    {@link AnnotationChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getStroke()
  */

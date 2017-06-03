@@ -4,7 +4,7 @@ import java.awt.geom.Rectangle2D;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleInsets;
 /** 
- * A block frame is a type of border that can be drawn around the outside of any                                                                                                                                                                {@link AbstractBlock}.  Classes that implement this interface should implement                                                                                                                                                                {@link PublicCloneable} OR be immutable.
+ * A block frame is a type of border that can be drawn around the outside of any                                                                                                                                                                     {@link AbstractBlock}.  Classes that implement this interface should implement                                                                                                                                                                     {@link PublicCloneable} OR be immutable.
  * @since 1.0.5
  */
 public interface BlockFrame {

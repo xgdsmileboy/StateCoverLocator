@@ -3,7 +3,7 @@ import org.jfree.chart.event.DatasetChangeInfo;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.general.AbstractSeriesDataset;
 /** 
- * An base class that you can use to create new implementations of the                                                                                                                                                              {@link XYDataset} interface.
+ * An base class that you can use to create new implementations of the                                                                                                                                                                   {@link XYDataset} interface.
  */
 public abstract class AbstractXYDataset extends AbstractSeriesDataset implements XYDataset {
   /** 

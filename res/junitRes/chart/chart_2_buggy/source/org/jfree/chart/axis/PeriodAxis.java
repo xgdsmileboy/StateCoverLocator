@@ -37,7 +37,7 @@ import org.jfree.data.time.Month;
 import org.jfree.data.time.RegularTimePeriod;
 import org.jfree.data.time.Year;
 /** 
- * An axis that displays a date scale based on a                                                                                                                                                               {@link org.jfree.data.time.RegularTimePeriod}.  This axis works when displayed across the bottom or top of a plot, but is broken for display at the left or right of charts.
+ * An axis that displays a date scale based on a                                                                                                                                                                    {@link org.jfree.data.time.RegularTimePeriod}.  This axis works when displayed across the bottom or top of a plot, but is broken for display at the left or right of charts.
  */
 public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -66,11 +66,11 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
  */
   private Calendar calendar;
   /** 
- * The                                                                                                                                                                {@link RegularTimePeriod} subclass used to automatically determinethe axis range.
+ * The                                                                                                                                                                     {@link RegularTimePeriod} subclass used to automatically determinethe axis range.
  */
   private Class autoRangeTimePeriodClass;
   /** 
- * Indicates the                                                                                                                                                                {@link RegularTimePeriod} subclass that is used todetermine the spacing of the major tick marks.
+ * Indicates the                                                                                                                                                                     {@link RegularTimePeriod} subclass that is used todetermine the spacing of the major tick marks.
  */
   private Class majorTickTimePeriodClass;
   /** 
@@ -78,7 +78,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
  */
   private boolean minorTickMarksVisible;
   /** 
- * Indicates the                                                                                                                                                                {@link RegularTimePeriod} subclass that is used todetermine the spacing of the minor tick marks.
+ * Indicates the                                                                                                                                                                     {@link RegularTimePeriod} subclass that is used todetermine the spacing of the minor tick marks.
  */
   private Class minorTickTimePeriodClass;
   /** 
@@ -158,7 +158,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.first;
   }
   /** 
- * Sets the first time period in the axis range and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the first time period in the axis range and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param first  the time period (<code>null</code> not permitted).
  */
   public void setFirst(  RegularTimePeriod first){
@@ -177,7 +177,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.last;
   }
   /** 
- * Sets the last time period in the axis range and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the last time period in the axis range and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param last  the time period (<code>null</code> not permitted).
  */
   public void setLast(  RegularTimePeriod last){
@@ -225,7 +225,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.autoRangeTimePeriodClass;
   }
   /** 
- * Sets the class used to create the first and last time periods for the axis range when the auto-range flag is set to <code>true</code> and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the class used to create the first and last time periods for the axis range when the auto-range flag is set to <code>true</code> and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param c  the class (<code>null</code> not permitted).
  */
   public void setAutoRangeTimePeriodClass(  Class c){
@@ -243,7 +243,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.majorTickTimePeriodClass;
   }
   /** 
- * Sets the class that controls the spacing of the major tick marks, and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the class that controls the spacing of the major tick marks, and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param c  the class (a subclass of {@link RegularTimePeriod} isexpected).
  */
   public void setMajorTickTimePeriodClass(  Class c){
@@ -261,7 +261,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.minorTickMarksVisible;
   }
   /** 
- * Sets the flag that controls whether or not minor tick marks are displayed for the axis, and sends a                                                                                                                                                                {@link AxisChangeEvent}to all registered listeners.
+ * Sets the flag that controls whether or not minor tick marks are displayed for the axis, and sends a                                                                                                                                                                     {@link AxisChangeEvent}to all registered listeners.
  * @param visible  the flag.
  */
   public void setMinorTickMarksVisible(  boolean visible){
@@ -276,7 +276,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.minorTickTimePeriodClass;
   }
   /** 
- * Sets the class that controls the spacing of the minor tick marks, and sends an                                                                                                                                                                {@link AxisChangeEvent} to all registered listeners.
+ * Sets the class that controls the spacing of the minor tick marks, and sends an                                                                                                                                                                     {@link AxisChangeEvent} to all registered listeners.
  * @param c  the class (a subclass of {@link RegularTimePeriod} isexpected).
  */
   public void setMinorTickTimePeriodClass(  Class c){
@@ -294,7 +294,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.minorTickMarkStroke;
   }
   /** 
- * Sets the stroke used to display minor tick marks, if they are visible, and sends a                                                                                                                                                                {@link AxisChangeEvent} to all registeredlisteners.
+ * Sets the stroke used to display minor tick marks, if they are visible, and sends a                                                                                                                                                                     {@link AxisChangeEvent} to all registeredlisteners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  */
   public void setMinorTickMarkStroke(  Stroke stroke){
@@ -312,7 +312,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.minorTickMarkPaint;
   }
   /** 
- * Sets the paint used to display minor tick marks, if they are visible, and sends a                                                                                                                                                                {@link AxisChangeEvent} to all registeredlisteners.
+ * Sets the paint used to display minor tick marks, if they are visible, and sends a                                                                                                                                                                     {@link AxisChangeEvent} to all registeredlisteners.
  * @param paint  the paint (<code>null</code> not permitted).
  */
   public void setMinorTickMarkPaint(  Paint paint){
@@ -330,7 +330,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.minorTickMarkInsideLength;
   }
   /** 
- * Sets the inside length of the minor tick marks and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the inside length of the minor tick marks and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param length  the length.
  */
   public void setMinorTickMarkInsideLength(  float length){
@@ -345,7 +345,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.minorTickMarkOutsideLength;
   }
   /** 
- * Sets the outside length of the minor tick marks and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the outside length of the minor tick marks and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param length  the length.
  */
   public void setMinorTickMarkOutsideLength(  float length){
@@ -360,7 +360,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return this.labelInfo;
   }
   /** 
- * Sets the array of label info records and sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.
+ * Sets the array of label info records and sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.
  * @param info  the info.
  */
   public void setLabelInfo(  PeriodAxisLabelInfo[] info){
@@ -375,7 +375,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return new Range(this.first.getFirstMillisecond(this.calendar),this.last.getLastMillisecond(this.calendar));
   }
   /** 
- * Sets the range for the axis, if requested, sends an                                                                                                                                                               {@link AxisChangeEvent} to all registered listeners.  As a side-effect,the auto-range flag is set to <code>false</code> (optional).
+ * Sets the range for the axis, if requested, sends an                                                                                                                                                                    {@link AxisChangeEvent} to all registered listeners.  As a side-effect,the auto-range flag is set to <code>false</code> (optional).
  * @param range  the range (<code>null</code> not permitted).
  * @param turnOffAutoRange  a flag that controls whether or not the autorange is turned off.
  * @param notify  a flag that controls whether or not listeners arenotified.
@@ -863,7 +863,7 @@ public class PeriodAxis extends ValueAxis implements Cloneable, PublicCloneable,
     return clone;
   }
   /** 
- * A utility method used to create a particular subclass of the                                                                                                                                                               {@link RegularTimePeriod} class that includes the specified millisecond,assuming the specified time zone.
+ * A utility method used to create a particular subclass of the                                                                                                                                                                    {@link RegularTimePeriod} class that includes the specified millisecond,assuming the specified time zone.
  * @param periodClass  the class.
  * @param millisecond  the time.
  * @param zone  the time zone.

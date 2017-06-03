@@ -4,7 +4,7 @@ import java.awt.geom.Rectangle2D;
 import org.jfree.chart.Drawable;
 import org.jfree.chart.util.Size2D;
 /** 
- * A block is an arbitrary item that can be drawn (in Java2D space) within a rectangular area, has a preferred size, and can be arranged by an                                                                                                                                                               {@link Arrangement} manager.
+ * A block is an arbitrary item that can be drawn (in Java2D space) within a rectangular area, has a preferred size, and can be arranged by an                                                                                                                                                                    {@link Arrangement} manager.
  */
 public interface Block extends Drawable {
   /** 

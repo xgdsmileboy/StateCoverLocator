@@ -2,7 +2,7 @@ package org.jfree.data.general;
 import java.io.Serializable;
 import org.jfree.data.category.DefaultCategoryDataset;
 /** 
- * A default implementation of the                                                                                                                                                               {@link KeyedValues2DDataset} interface.
+ * A default implementation of the                                                                                                                                                                    {@link KeyedValues2DDataset} interface.
  */
 public class DefaultKeyedValues2DDataset extends DefaultCategoryDataset implements KeyedValues2DDataset, Serializable {
   /** 

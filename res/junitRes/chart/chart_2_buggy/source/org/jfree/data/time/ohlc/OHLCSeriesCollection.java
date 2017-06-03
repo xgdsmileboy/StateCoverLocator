@@ -11,7 +11,7 @@ import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A collection of                                                                                                                                                               {@link OHLCSeries} objects.
+ * A collection of                                                                                                                                                                    {@link OHLCSeries} objects.
  * @since 1.0.4
  * @see OHLCSeries
  */
@@ -28,7 +28,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset implements OHLCDatas
     this.data=new java.util.ArrayList();
   }
   /** 
- * Returns the position within each time period that is used for the X value when the collection is used as an                                                                                                                                                               {@link XYDataset}.
+ * Returns the position within each time period that is used for the X value when the collection is used as an                                                                                                                                                                    {@link XYDataset}.
  * @return The anchor position (never <code>null</code>).
  * @since 1.0.11
  */
@@ -36,7 +36,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset implements OHLCDatas
     return this.xPosition;
   }
   /** 
- * Sets the position within each time period that is used for the X values when the collection is used as an                                                                                                                                                               {@link XYDataset}, then sends a                                                                                                                                                              {@link DatasetChangeEvent} is sent to all registered listeners.
+ * Sets the position within each time period that is used for the X values when the collection is used as an                                                                                                                                                                    {@link XYDataset}, then sends a                                                                                                                                                                   {@link DatasetChangeEvent} is sent to all registered listeners.
  * @param anchor  the anchor position (<code>null</code> not permitted).
  * @since 1.0.11
  */
@@ -48,7 +48,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset implements OHLCDatas
     fireDatasetChanged(new DatasetChangeInfo());
   }
   /** 
- * Adds a series to the collection and sends a                                                                                                                                                               {@link DatasetChangeEvent}to all registered listeners.
+ * Adds a series to the collection and sends a                                                                                                                                                                    {@link DatasetChangeEvent}to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  */
   public void addSeries(  OHLCSeries series){
@@ -249,7 +249,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset implements OHLCDatas
     return Double.NaN;
   }
   /** 
- * Removes the series with the specified index and sends a                                                                                                                                                               {@link DatasetChangeEvent} to all registered listeners.
+ * Removes the series with the specified index and sends a                                                                                                                                                                    {@link DatasetChangeEvent} to all registered listeners.
  * @param index  the series index.
  * @since 1.0.14
  */
@@ -260,7 +260,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset implements OHLCDatas
     }
   }
   /** 
- * Removes the specified series from the dataset and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes the specified series from the dataset and sends a                                                                                                                                                                   {@link DatasetChangeEvent} to all registered listeners.
  * @param series  the series (<code>null</code> not permitted).
  * @return <code>true</code> if the series was removed, and<code>false</code> otherwise.
  * @since 1.0.14
@@ -277,7 +277,7 @@ public class OHLCSeriesCollection extends AbstractXYDataset implements OHLCDatas
     return removed;
   }
   /** 
- * Removes all the series from the collection and sends a                                                                                                                                                              {@link DatasetChangeEvent} to all registered listeners.
+ * Removes all the series from the collection and sends a                                                                                                                                                                   {@link DatasetChangeEvent} to all registered listeners.
  * @since 1.0.14
  */
   public void removeAllSeries(){

@@ -34,7 +34,7 @@ import org.jfree.chart.util.SerialUtilities;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.statistics.BoxAndWhiskerCategoryDataset;
 /** 
- * A box-and-whisker renderer.  This renderer requires a                                                                                                                                                               {@link BoxAndWhiskerCategoryDataset} and is for use with the{@link CategoryPlot} class.  The example shown here is generatedby the <code>BoxAndWhiskerChartDemo1.java</code> program included in the JFreeChart Demo Collection: <br><br> <img src="../../../../../images/BoxAndWhiskerRendererSample.png" alt="BoxAndWhiskerRendererSample.png" />
+ * A box-and-whisker renderer.  This renderer requires a                                                                                                                                                                    {@link BoxAndWhiskerCategoryDataset} and is for use with the{@link CategoryPlot} class.  The example shown here is generatedby the <code>BoxAndWhiskerChartDemo1.java</code> program included in the JFreeChart Demo Collection: <br><br> <img src="../../../../../images/BoxAndWhiskerRendererSample.png" alt="BoxAndWhiskerRendererSample.png" />
  */
 public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -88,7 +88,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer implemen
     return this.artifactPaint;
   }
   /** 
- * Sets the paint used to color the median and average markers and sends a                                                                                                                                                                {@link RendererChangeEvent} to all registered listeners.
+ * Sets the paint used to color the median and average markers and sends a                                                                                                                                                                     {@link RendererChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getArtifactPaint()
  */
@@ -108,7 +108,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer implemen
     return this.fillBox;
   }
   /** 
- * Sets the flag that controls whether or not the box is filled and sends a                                                                                                                                                               {@link RendererChangeEvent} to all registered listeners.
+ * Sets the flag that controls whether or not the box is filled and sends a                                                                                                                                                                    {@link RendererChangeEvent} to all registered listeners.
  * @param flag  the flag.
  * @see #getFillBox()
  */
@@ -125,7 +125,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer implemen
     return this.itemMargin;
   }
   /** 
- * Sets the item margin and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the item margin and sends a                                                                                                                                                                     {@link RendererChangeEvent} to allregistered listeners.
  * @param margin  the margin (a percentage).
  * @see #getItemMargin()
  */
@@ -143,7 +143,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer implemen
     return this.maximumBarWidth;
   }
   /** 
- * Sets the maximum bar width, which is specified as a percentage of the available space for all bars, and sends a                                                                                                                                                                {@link RendererChangeEvent}to all registered listeners.
+ * Sets the maximum bar width, which is specified as a percentage of the available space for all bars, and sends a                                                                                                                                                                     {@link RendererChangeEvent}to all registered listeners.
  * @param percent  the maximum Bar Width (a percentage).
  * @see #getMaximumBarWidth()
  * @since 1.0.10
@@ -162,7 +162,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer implemen
     return this.meanVisible;
   }
   /** 
- * Sets the flag that controls whether or not the mean indicator is drawn for each item, and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the flag that controls whether or not the mean indicator is drawn for each item, and sends a                                                                                                                                                                     {@link RendererChangeEvent} to allregistered listeners.
  * @param visible  the new flag value.
  * @see #isMeanVisible()
  * @since 1.0.13
@@ -184,7 +184,7 @@ public class BoxAndWhiskerRenderer extends AbstractCategoryItemRenderer implemen
     return this.medianVisible;
   }
   /** 
- * Sets the flag that controls whether or not the median indicator is drawn for each item, and sends a                                                                                                                                                                {@link RendererChangeEvent} to allregistered listeners.
+ * Sets the flag that controls whether or not the median indicator is drawn for each item, and sends a                                                                                                                                                                     {@link RendererChangeEvent} to allregistered listeners.
  * @param visible  the new flag value.
  * @see #isMedianVisible()
  * @since 1.0.13

@@ -1,6 +1,6 @@
 package org.jfree.chart.event;
 /** 
- * An event that can be forwarded to any                                                                                                                                                                {@link RendererChangeListener} tosignal a change to a renderer.
+ * An event that can be forwarded to any                                                                                                                                                                     {@link RendererChangeListener} tosignal a change to a renderer.
  */
 public class RendererChangeEvent extends ChartChangeEvent {
   /** 

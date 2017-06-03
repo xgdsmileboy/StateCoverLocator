@@ -23,7 +23,7 @@ import org.jfree.chart.util.PublicCloneable;
 import org.jfree.chart.util.RectangleEdge;
 import org.jfree.chart.util.SerialUtilities;
 /** 
- * A simple <code>Shape</code> annotation that can be placed on an                                                                                                                                                               {@link XYPlot}.  The shape coordinates are specified in data space.
+ * A simple <code>Shape</code> annotation that can be placed on an                                                                                                                                                                    {@link XYPlot}.  The shape coordinates are specified in data space.
  */
 public class XYShapeAnnotation extends AbstractXYAnnotation implements Cloneable, PublicCloneable, Serializable {
   /** 
@@ -80,7 +80,7 @@ public class XYShapeAnnotation extends AbstractXYAnnotation implements Cloneable
     this.fillPaint=fillPaint;
   }
   /** 
- * Draws the annotation.  This method is usually called by the                                                                                                                                                               {@link XYPlot} class, you shouldn't need to call it directly.
+ * Draws the annotation.  This method is usually called by the                                                                                                                                                                    {@link XYPlot} class, you shouldn't need to call it directly.
  * @param g2  the graphics device.
  * @param plot  the plot.
  * @param dataArea  the data area.

@@ -2,7 +2,7 @@ package org.jfree.data.pie;
 import org.jfree.data.general.*;
 import org.jfree.chart.event.DatasetChangeInfo;
 /** 
- * A base class that is convenient for implementing the                                                                                                                                                               {@link PieDataset}interface.
+ * A base class that is convenient for implementing the                                                                                                                                                                    {@link PieDataset}interface.
  */
 public class AbstractPieDataset extends AbstractDataset implements SelectablePieDataset {
   /** 

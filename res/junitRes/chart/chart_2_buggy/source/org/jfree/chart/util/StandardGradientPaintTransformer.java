@@ -16,7 +16,7 @@ public class StandardGradientPaintTransformer implements GradientPaintTransforme
  */
   private GradientPaintTransformType type;
   /** 
- * Creates a new transformer with the type                                                                                                                                                               {@link GradientPaintTransformType#VERTICAL}.
+ * Creates a new transformer with the type                                                                                                                                                                    {@link GradientPaintTransformType#VERTICAL}.
  */
   public StandardGradientPaintTransformer(){
     this(GradientPaintTransformType.VERTICAL);

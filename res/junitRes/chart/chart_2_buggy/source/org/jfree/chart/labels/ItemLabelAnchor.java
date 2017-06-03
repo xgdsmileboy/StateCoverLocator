@@ -2,7 +2,7 @@ package org.jfree.chart.labels;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 /** 
- * An enumeration of the positions that a value label can take, relative to an item in a                                                                                                                                                                {@link org.jfree.chart.plot.CategoryPlot}.
+ * An enumeration of the positions that a value label can take, relative to an item in a                                                                                                                                                                     {@link org.jfree.chart.plot.CategoryPlot}.
  */
 public final class ItemLabelAnchor implements Serializable {
   /** 

@@ -9,7 +9,7 @@ import org.jfree.chart.util.RefineryUtilities;
 import org.jfree.data.pie.DefaultPieDataset;
 import org.jfree.data.pie.PieDataset;
 /** 
- * A simple demonstration application showing how to create a pie chart using data from a                                                                                                                                                                {@link DefaultPieDataset}.
+ * A simple demonstration application showing how to create a pie chart using data from a                                                                                                                                                                     {@link DefaultPieDataset}.
  */
 public class PieChartDemo1 extends ApplicationFrame {
   /** 

@@ -5,7 +5,7 @@ import java.text.NumberFormat;
 import org.jfree.chart.util.PublicCloneable;
 import org.jfree.data.xy.XYDataset;
 /** 
- * A standard item label generator for plots that use data from an                                                                                                                                                               {@link org.jfree.data.xy.XYDataset}.
+ * A standard item label generator for plots that use data from an                                                                                                                                                                    {@link org.jfree.data.xy.XYDataset}.
  */
 public class StandardXYItemLabelGenerator extends AbstractXYItemLabelGenerator implements XYItemLabelGenerator, Cloneable, PublicCloneable, Serializable {
   /** 

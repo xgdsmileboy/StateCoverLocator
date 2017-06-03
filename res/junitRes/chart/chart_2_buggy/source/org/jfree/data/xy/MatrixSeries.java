@@ -96,7 +96,7 @@ public class MatrixSeries extends Series implements Serializable {
     fireSeriesChanged();
   }
   /** 
- * Sets all matrix values to zero and sends a                                                                                                                                                              {@link org.jfree.data.general.SeriesChangeEvent} to all registeredlisteners.
+ * Sets all matrix values to zero and sends a                                                                                                                                                                   {@link org.jfree.data.general.SeriesChangeEvent} to all registeredlisteners.
  */
   public void zeroAll(){
     int rows=getRowCount();

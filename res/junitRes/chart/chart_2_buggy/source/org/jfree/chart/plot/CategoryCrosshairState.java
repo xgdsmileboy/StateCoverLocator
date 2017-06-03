@@ -2,7 +2,7 @@ package org.jfree.chart.plot;
 import java.awt.geom.Point2D;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 /** 
- * Represents state information for the crosshairs in a                                                                                                                                                                {@link CategoryPlot}. An instance of this class is created at the start of the rendering process, and updated as each data item is rendered.  At the end of the rendering process, this class holds the row key, column key and value for the crosshair location.
+ * Represents state information for the crosshairs in a                                                                                                                                                                     {@link CategoryPlot}. An instance of this class is created at the start of the rendering process, and updated as each data item is rendered.  At the end of the rendering process, this class holds the row key, column key and value for the crosshair location.
  * @since 1.0.11
  */
 public class CategoryCrosshairState extends CrosshairState {
@@ -50,7 +50,7 @@ public class CategoryCrosshairState extends CrosshairState {
     this.columnKey=key;
   }
   /** 
- * Evaluates a data point from a                                                                                                                                                                {@link CategoryItemRenderer} and if it isthe closest to the anchor point it becomes the new crosshair point.
+ * Evaluates a data point from a                                                                                                                                                                     {@link CategoryItemRenderer} and if it isthe closest to the anchor point it becomes the new crosshair point.
  * @param rowKey  the row key.
  * @param columnKey  the column key.
  * @param value  y coordinate (measured against the range axis).

@@ -46,7 +46,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.event.DatasetChangeEvent;
 import org.jfree.data.general.DatasetUtilities;
 /** 
- * A plot that displays data from a                                                                                                                                                                {@link CategoryDataset} in the form of a"spider web".  Multiple series can be plotted on the same axis to allow easy comparison.  This plot doesn't support negative values at present.
+ * A plot that displays data from a                                                                                                                                                                     {@link CategoryDataset} in the form of a"spider web".  Multiple series can be plotted on the same axis to allow easy comparison.  This plot doesn't support negative values at present.
  */
 public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
   /** 
@@ -223,7 +223,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
   /** 
  * Creates a new spider web plot with the given dataset.
  * @param dataset  the dataset.
- * @param extract  controls how data is extracted ({@link TableOrder#BY_ROW}or                                                                                                                                                                {@link TableOrder#BY_COLUMN}).
+ * @param extract  controls how data is extracted ({@link TableOrder#BY_ROW}or                                                                                                                                                                     {@link TableOrder#BY_COLUMN}).
  */
   public SpiderWebPlot(  CategoryDataset dataset,  TableOrder extract){
     super();
@@ -273,7 +273,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.dataset;
   }
   /** 
- * Sets the dataset used by the plot and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the dataset used by the plot and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param dataset  the dataset (<code>null</code> permitted).
  * @see #getDataset()
  */
@@ -297,7 +297,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.webFilled;
   }
   /** 
- * Sets the webFilled flag and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the webFilled flag and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param flag  the flag.
  * @see #isWebFilled()
  */
@@ -314,7 +314,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.dataExtractOrder;
   }
   /** 
- * Sets the data extract order (by row or by column) and sends a                                                                                                                                                               {@link PlotChangeEvent}to all registered listeners.
+ * Sets the data extract order (by row or by column) and sends a                                                                                                                                                                    {@link PlotChangeEvent}to all registered listeners.
  * @param order the order (<code>null</code> not permitted).
  * @throws IllegalArgumentException if <code>order</code> is<code>null</code>.
  * @see #getDataExtractOrder()
@@ -335,7 +335,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.headPercent;
   }
   /** 
- * Sets the head percent and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the head percent and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param percent  the percent.
  * @see #getHeadPercent()
  */
@@ -352,7 +352,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.startAngle;
   }
   /** 
- * Sets the starting angle and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners. <P> The initial default value is 90 degrees, which corresponds to 12 o'clock. A value of zero corresponds to 3 o'clock... this is the encoding used by Java's Arc2D class.
+ * Sets the starting angle and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners. <P> The initial default value is 90 degrees, which corresponds to 12 o'clock. A value of zero corresponds to 3 o'clock... this is the encoding used by Java's Arc2D class.
  * @param angle  the angle (in degrees).
  * @see #getStartAngle()
  */
@@ -369,7 +369,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.maxValue;
   }
   /** 
- * Sets the maximum value any category axis can take and sends a                                                                                                                                                                {@link PlotChangeEvent} to all registered listeners.
+ * Sets the maximum value any category axis can take and sends a                                                                                                                                                                     {@link PlotChangeEvent} to all registered listeners.
  * @param value  the maximum value.
  * @see #getMaxValue()
  */
@@ -386,7 +386,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.direction;
   }
   /** 
- * Sets the direction in which the radar axes are drawn and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the direction in which the radar axes are drawn and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param direction  the direction (<code>null</code> not permitted).
  * @see #getDirection()
  */
@@ -406,7 +406,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.interiorGap;
   }
   /** 
- * Sets the interior gap and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners. This controls the space between the edges of the plot and the plot area itself (the region where the axis labels appear).
+ * Sets the interior gap and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners. This controls the space between the edges of the plot and the plot area itself (the region where the axis labels appear).
  * @param percent  the gap (as a percentage of the available drawing space).
  * @see #getInteriorGap()
  */
@@ -428,7 +428,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.axisLabelGap;
   }
   /** 
- * Sets the axis label gap and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the axis label gap and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param gap  the gap.
  * @see #getAxisLabelGap()
  */
@@ -447,7 +447,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.axisLinePaint;
   }
   /** 
- * Sets the paint used to draw the axis lines and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to draw the axis lines and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getAxisLinePaint()
  * @since 1.0.4
@@ -470,7 +470,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.axisLineStroke;
   }
   /** 
- * Sets the stroke used to draw the axis lines and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke used to draw the axis lines and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param stroke  the stroke (<code>null</code> not permitted).
  * @see #getAxisLineStroke()
  * @since 1.0.4
@@ -524,7 +524,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return result;
   }
   /** 
- * Sets the paint used to fill a series of the radar and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to fill a series of the radar and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param series  the series index (zero-based).
  * @param paint  the paint (<code>null</code> permitted).
  * @see #getSeriesPaint(int)
@@ -584,7 +584,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return result;
   }
   /** 
- * Sets the paint used to fill a series of the radar and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the paint used to fill a series of the radar and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param series  the series index (zero-based).
  * @param paint  the paint (<code>null</code> permitted).
  */
@@ -641,7 +641,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return result;
   }
   /** 
- * Sets the stroke used to fill a series of the radar and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the stroke used to fill a series of the radar and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param series  the series index (zero-based).
  * @param stroke  the stroke (<code>null</code> permitted).
  */
@@ -676,7 +676,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.legendItemShape;
   }
   /** 
- * Sets the shape used for legend items and sends a                                                                                                                                                                {@link PlotChangeEvent}to all registered listeners.
+ * Sets the shape used for legend items and sends a                                                                                                                                                                     {@link PlotChangeEvent}to all registered listeners.
  * @param shape  the shape (<code>null</code> not permitted).
  * @see #getLegendItemShape()
  */
@@ -696,7 +696,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.labelFont;
   }
   /** 
- * Sets the series label font and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the series label font and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param font  the font (<code>null</code> not permitted).
  * @see #getLabelFont()
  */
@@ -716,7 +716,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.labelPaint;
   }
   /** 
- * Sets the series label paint and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the series label paint and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param paint  the paint (<code>null</code> not permitted).
  * @see #getLabelPaint()
  */
@@ -736,7 +736,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.labelGenerator;
   }
   /** 
- * Sets the label generator and sends a                                                                                                                                                                {@link PlotChangeEvent} to allregistered listeners.
+ * Sets the label generator and sends a                                                                                                                                                                     {@link PlotChangeEvent} to allregistered listeners.
  * @param generator  the generator (<code>null</code> not permitted).
  * @see #getLabelGenerator()
  */
@@ -756,7 +756,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.toolTipGenerator;
   }
   /** 
- * Sets the tool tip generator for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the tool tip generator for the plot and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getToolTipGenerator()
  * @since 1.0.2
@@ -775,7 +775,7 @@ public class SpiderWebPlot extends Plot implements Cloneable, Serializable {
     return this.urlGenerator;
   }
   /** 
- * Sets the URL generator for the plot and sends a                                                                                                                                                               {@link PlotChangeEvent} to all registered listeners.
+ * Sets the URL generator for the plot and sends a                                                                                                                                                                    {@link PlotChangeEvent} to all registered listeners.
  * @param generator  the generator (<code>null</code> permitted).
  * @see #getURLGenerator()
  * @since 1.0.2

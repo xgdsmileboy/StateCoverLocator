@@ -93,7 +93,7 @@ public abstract class Statistics {
     return total / count;
   }
   /** 
- * Calculates the median for a list of values (<code>Number</code> objects). The list of values will be copied, and the copy sorted, before calculating the median.  To avoid this step (if your list of values is already sorted), use the                                                                                                                                                               {@link #calculateMedian(List,boolean)}method.
+ * Calculates the median for a list of values (<code>Number</code> objects). The list of values will be copied, and the copy sorted, before calculating the median.  To avoid this step (if your list of values is already sorted), use the                                                                                                                                                                    {@link #calculateMedian(List,boolean)}method.
  * @param values  the values (<code>null</code> permitted).
  * @return The median.
  */

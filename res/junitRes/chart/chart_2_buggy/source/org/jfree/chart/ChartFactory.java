@@ -129,7 +129,7 @@ public abstract class ChartFactory {
     }
   }
   /** 
- * Creates a pie chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                {@link PiePlot} instance as the plot.
+ * Creates a pie chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                     {@link PiePlot} instance as the plot.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset for the chart (<code>null</code> permitted).
  * @param legend  a flag specifying whether or not a legend is required.
@@ -139,7 +139,7 @@ public abstract class ChartFactory {
     return createPieChart(title,dataset,legend,Locale.getDefault());
   }
   /** 
- * Creates a pie chart with default settings. <P> The chart object returned by this method uses a                                                                                                                                                                {@link PiePlot} instanceas the plot.
+ * Creates a pie chart with default settings. <P> The chart object returned by this method uses a                                                                                                                                                                     {@link PiePlot} instanceas the plot.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset for the chart (<code>null</code> permitted).
  * @param legend  a flag specifying whether or not a legend is required.
@@ -157,7 +157,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a pie chart with default settings that compares 2 datasets. The colour of each section will be determined by the move from the value for the same key in <code>previousDataset</code>. ie if value1 > value2 then the section will be in green (unless <code>greenForIncrease</code> is <code>false</code>, in which case it would be <code>red</code>). Each section can have a shade of red or green as the difference can be tailored between 0% (black) and percentDiffForMaxScale% (bright red/green). <p> For instance if <code>percentDiffForMaxScale</code> is 10 (10%), a difference of 5% will have a half shade of red/green, a difference of 10% or more will have a maximum shade/brightness of red/green. <P> The chart object returned by this method uses a                                                                                                                                                                {@link PiePlot} instanceas the plot. <p> Written by <a href="mailto:opensource@objectlab.co.uk">Benoit Xhenseval</a>.
+ * Creates a pie chart with default settings that compares 2 datasets. The colour of each section will be determined by the move from the value for the same key in <code>previousDataset</code>. ie if value1 > value2 then the section will be in green (unless <code>greenForIncrease</code> is <code>false</code>, in which case it would be <code>red</code>). Each section can have a shade of red or green as the difference can be tailored between 0% (black) and percentDiffForMaxScale% (bright red/green). <p> For instance if <code>percentDiffForMaxScale</code> is 10 (10%), a difference of 5% will have a half shade of red/green, a difference of 10% or more will have a maximum shade/brightness of red/green. <P> The chart object returned by this method uses a                                                                                                                                                                     {@link PiePlot} instanceas the plot. <p> Written by <a href="mailto:opensource@objectlab.co.uk">Benoit Xhenseval</a>.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset for the chart (<code>null</code> permitted).
  * @param previousDataset  the dataset for the last run, this will be usedto compare each key in the dataset
@@ -223,7 +223,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a pie chart with default settings that compares 2 datasets. The colour of each section will be determined by the move from the value for the same key in <code>previousDataset</code>. ie if value1 > value2 then the section will be in green (unless <code>greenForIncrease</code> is <code>false</code>, in which case it would be <code>red</code>). Each section can have a shade of red or green as the difference can be tailored between 0% (black) and percentDiffForMaxScale% (bright red/green). <p> For instance if <code>percentDiffForMaxScale</code> is 10 (10%), a difference of 5% will have a half shade of red/green, a difference of 10% or more will have a maximum shade/brightness of red/green. <P> The chart object returned by this method uses a                                                                                                                                                                {@link PiePlot} instanceas the plot. <p> Written by <a href="mailto:opensource@objectlab.co.uk">Benoit Xhenseval</a>.
+ * Creates a pie chart with default settings that compares 2 datasets. The colour of each section will be determined by the move from the value for the same key in <code>previousDataset</code>. ie if value1 > value2 then the section will be in green (unless <code>greenForIncrease</code> is <code>false</code>, in which case it would be <code>red</code>). Each section can have a shade of red or green as the difference can be tailored between 0% (black) and percentDiffForMaxScale% (bright red/green). <p> For instance if <code>percentDiffForMaxScale</code> is 10 (10%), a difference of 5% will have a half shade of red/green, a difference of 10% or more will have a maximum shade/brightness of red/green. <P> The chart object returned by this method uses a                                                                                                                                                                     {@link PiePlot} instanceas the plot. <p> Written by <a href="mailto:opensource@objectlab.co.uk">Benoit Xhenseval</a>.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset for the chart (<code>null</code> permitted).
  * @param previousDataset  the dataset for the last run, this will be usedto compare each key in the dataset
@@ -287,7 +287,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a ring chart with default settings. The chart object returned by this method uses a                                                                                                                                                                {@link RingPlot} instance as the plot.
+ * Creates a ring chart with default settings. The chart object returned by this method uses a                                                                                                                                                                     {@link RingPlot} instance as the plot.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset for the chart (<code>null</code> permitted).
  * @param legend  a flag specifying whether or not a legend is required.
@@ -297,7 +297,7 @@ public abstract class ChartFactory {
     return createRingChart(title,dataset,legend,Locale.getDefault());
   }
   /** 
- * Creates a ring chart with default settings. <P> The chart object returned by this method uses a                                                                                                                                                                {@link RingPlot}instance as the plot.
+ * Creates a ring chart with default settings. <P> The chart object returned by this method uses a                                                                                                                                                                     {@link RingPlot}instance as the plot.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset for the chart (<code>null</code> permitted).
  * @param legend  a flag specifying whether or not a legend is required.
@@ -315,7 +315,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a chart that displays multiple pie plots.  The chart object returned by this method uses a                                                                                                                                                                {@link MultiplePiePlot} instance as theplot.
+ * Creates a chart that displays multiple pie plots.  The chart object returned by this method uses a                                                                                                                                                                     {@link MultiplePiePlot} instance as theplot.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset (<code>null</code> permitted).
  * @param order  the order that the data is extracted (by row or by column)(<code>null</code> not permitted).
@@ -338,7 +338,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a 3D pie chart using the specified dataset.  The chart object returned by this method uses a                                                                                                                                                                {@link PiePlot3D} instance as theplot.
+ * Creates a 3D pie chart using the specified dataset.  The chart object returned by this method uses a                                                                                                                                                                     {@link PiePlot3D} instance as theplot.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset for the chart (<code>null</code> permitted).
  * @param legend  a flag specifying whether or not a legend is required.
@@ -355,7 +355,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a 3D pie chart using the specified dataset.  The chart object returned by this method uses a                                                                                                                                                                {@link PiePlot3D} instance as theplot.
+ * Creates a 3D pie chart using the specified dataset.  The chart object returned by this method uses a                                                                                                                                                                     {@link PiePlot3D} instance as theplot.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset for the chart (<code>null</code> permitted).
  * @param legend  a flag specifying whether or not a legend is required.
@@ -370,7 +370,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a chart that displays multiple pie plots.  The chart object returned by this method uses a                                                                                                                                                                {@link MultiplePiePlot} instance as theplot.
+ * Creates a chart that displays multiple pie plots.  The chart object returned by this method uses a                                                                                                                                                                     {@link MultiplePiePlot} instance as theplot.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset (<code>null</code> permitted).
  * @param order  the order that the data is extracted (by row or by column)(<code>null</code> not permitted).
@@ -400,7 +400,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a bar chart.  The chart object returned by this method uses a                                                                                                                                                               {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}for the domain axis, a                                                                                                                                                                {@link NumberAxis} as the range axis, and a{@link BarRenderer} as the renderer.
+ * Creates a bar chart.  The chart object returned by this method uses a                                                                                                                                                                    {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}for the domain axis, a                                                                                                                                                                     {@link NumberAxis} as the range axis, and a{@link BarRenderer} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  the label for the value axis(<code>null</code> permitted).
@@ -423,7 +423,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a stacked bar chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                {@link CategoryPlot} instance as theplot, with a  {@link CategoryAxis} for the domain axis, a{@link NumberAxis} as the range axis, and a {@link StackedBarRenderer}as the renderer.
+ * Creates a stacked bar chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                     {@link CategoryPlot} instance as theplot, with a  {@link CategoryAxis} for the domain axis, a{@link NumberAxis} as the range axis, and a {@link StackedBarRenderer}as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param domainAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param rangeAxisLabel  the label for the value axis(<code>null</code> permitted).
@@ -442,7 +442,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a bar chart with a 3D effect. The chart object returned by this method uses a                                                                                                                                                                {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} asthe range axis, and a  {@link BarRenderer3D} as the renderer.
+ * Creates a bar chart with a 3D effect. The chart object returned by this method uses a                                                                                                                                                                     {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} asthe range axis, and a  {@link BarRenderer3D} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  the label for the value axis (<code>null</code>permitted).
@@ -462,7 +462,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a stacked bar chart with a 3D effect and default settings. The chart object returned by this method uses a                                                                                                                                                                {@link CategoryPlot}instance as the plot, with a                                                                                                                                                                {@link CategoryAxis3D} for the domain axis,a  {@link NumberAxis3D} as the range axis, and a{@link StackedBarRenderer3D} as the renderer.
+ * Creates a stacked bar chart with a 3D effect and default settings. The chart object returned by this method uses a                                                                                                                                                                     {@link CategoryPlot}instance as the plot, with a                                                                                                                                                                     {@link CategoryAxis3D} for the domain axis,a  {@link NumberAxis3D} as the range axis, and a{@link StackedBarRenderer3D} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  the label for the value axis (<code>null</code>permitted).
@@ -481,7 +481,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates an area chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis} for the domain axis, a {@link NumberAxis} as therange axis, and an  {@link AreaRenderer} as the renderer.
+ * Creates an area chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                     {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis} for the domain axis, a {@link NumberAxis} as therange axis, and an  {@link AreaRenderer} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  the label for the value axis (<code>null</code>permitted).
@@ -501,7 +501,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a stacked area chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                {@link CategoryPlot} instance as theplot, with a  {@link CategoryAxis} for the domain axis, a{@link NumberAxis} as the range axis, and a {@link StackedAreaRenderer}as the renderer.
+ * Creates a stacked area chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                     {@link CategoryPlot} instance as theplot, with a  {@link CategoryAxis} for the domain axis, a{@link NumberAxis} as the range axis, and a {@link StackedAreaRenderer}as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  the label for the value axis (<code>null</code>permitted).
@@ -521,7 +521,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a line chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis} for the domain axis, a {@link NumberAxis} as therange axis, and a  {@link LineAndShapeRenderer} as the renderer.
+ * Creates a line chart with default settings.  The chart object returned by this method uses a                                                                                                                                                                     {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis} for the domain axis, a {@link NumberAxis} as therange axis, and a  {@link LineAndShapeRenderer} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  the label for the value axis (<code>null</code>permitted).
@@ -540,7 +540,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a line chart with default settings. The chart object returned by this method uses a                                                                                                                                                                {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} asthe range axis, and a  {@link LineRenderer3D} as the renderer.
+ * Creates a line chart with default settings. The chart object returned by this method uses a                                                                                                                                                                     {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis3D} for the domain axis, a {@link NumberAxis3D} asthe range axis, and a  {@link LineRenderer3D} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  the label for the value axis (<code>null</code>permitted).
@@ -559,7 +559,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a Gantt chart using the supplied attributes plus default values where required.  The chart object returned by this method uses a                                                                                                                                                               {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}for the domain axis, a                                                                                                                                                                {@link DateAxis} as the range axis, and a{@link GanttRenderer} as the renderer.
+ * Creates a Gantt chart using the supplied attributes plus default values where required.  The chart object returned by this method uses a                                                                                                                                                                    {@link CategoryPlot} instance as the plot, with a {@link CategoryAxis}for the domain axis, a                                                                                                                                                                     {@link DateAxis} as the range axis, and a{@link GanttRenderer} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param dateAxisLabel  the label for the date axis(<code>null</code> permitted).
@@ -579,7 +579,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a waterfall chart.  The chart object returned by this method uses a                                                                                                                                                                {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis} for the domain axis, a {@link NumberAxis} as therange axis, and a  {@link WaterfallBarRenderer} as the renderer.
+ * Creates a waterfall chart.  The chart object returned by this method uses a                                                                                                                                                                     {@link CategoryPlot} instance as the plot, with a{@link CategoryAxis} for the domain axis, a {@link NumberAxis} as therange axis, and a  {@link WaterfallBarRenderer} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  the label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  the label for the value axis (<code>null</code>permitted).
@@ -607,7 +607,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a polar plot for the specified dataset (x-values interpreted as angles in degrees).  The chart object returned by this method uses a                                                                                                                                                               {@link PolarPlot} instance as the plot, with a {@link NumberAxis} forthe radial axis.
+ * Creates a polar plot for the specified dataset (x-values interpreted as angles in degrees).  The chart object returned by this method uses a                                                                                                                                                                    {@link PolarPlot} instance as the plot, with a {@link NumberAxis} forthe radial axis.
  * @param title  the chart title (<code>null</code> permitted).
  * @param dataset  the dataset (<code>null</code> permitted).
  * @param legend  legend required?
@@ -627,7 +627,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a scatter plot with default settings.  The chart object returned by this method uses an                                                                                                                                                                {@link XYPlot} instance as the plot,with a  {@link NumberAxis} for the domain axis, a  {@link NumberAxis}as the range axis, and an                                                                                                                                                                {@link XYLineAndShapeRenderer} as therenderer.
+ * Creates a scatter plot with default settings.  The chart object returned by this method uses an                                                                                                                                                                     {@link XYPlot} instance as the plot,with a  {@link NumberAxis} for the domain axis, a  {@link NumberAxis}as the range axis, and an                                                                                                                                                                     {@link XYLineAndShapeRenderer} as therenderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
  * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
@@ -649,7 +649,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates and returns a default instance of an XY bar chart. <P> The chart object returned by this method uses an                                                                                                                                                                {@link XYPlot} instanceas the plot, with a  {@link DateAxis} for the domain axis, a{@link NumberAxis} as the range axis, and a {@link XYBarRenderer} as therenderer.
+ * Creates and returns a default instance of an XY bar chart. <P> The chart object returned by this method uses an                                                                                                                                                                     {@link XYPlot} instanceas the plot, with a  {@link DateAxis} for the domain axis, a{@link NumberAxis} as the range axis, and a {@link XYBarRenderer} as therenderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
  * @param dateAxis  make the domain axis display dates?
@@ -684,7 +684,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates an area chart using an                                                                                                                                                                {@link XYDataset}. <P> The chart object returned by this method uses an                                                                                                                                                                {@link XYPlot} instanceas the plot, with a  {@link NumberAxis} for the domain axis, a{@link NumberAxis} as the range axis, and a {@link XYAreaRenderer} asthe renderer.
+ * Creates an area chart using an                                                                                                                                                                     {@link XYDataset}. <P> The chart object returned by this method uses an                                                                                                                                                                     {@link XYPlot} instanceas the plot, with a  {@link NumberAxis} for the domain axis, a{@link NumberAxis} as the range axis, and a {@link XYAreaRenderer} asthe renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
  * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
@@ -706,7 +706,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a stacked XY area plot.  The chart object returned by this method uses an                                                                                                                                                                {@link XYPlot} instance as the plot, with a{@link NumberAxis} for the domain axis, a {@link NumberAxis} as therange axis, and a  {@link StackedXYAreaRenderer2} as the renderer.
+ * Creates a stacked XY area plot.  The chart object returned by this method uses an                                                                                                                                                                     {@link XYPlot} instance as the plot, with a{@link NumberAxis} for the domain axis, a {@link NumberAxis} as therange axis, and a  {@link StackedXYAreaRenderer2} as the renderer.
  * @param title  the chart title (<code>null</code> permitted).
  * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
  * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
@@ -730,7 +730,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a line chart (based on an                                                                                                                                                                {@link XYDataset}) with default settings.
+ * Creates a line chart (based on an                                                                                                                                                                     {@link XYDataset}) with default settings.
  * @param title  the chart title (<code>null</code> permitted).
  * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
  * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
@@ -796,7 +796,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates and returns a time series chart.  A time series chart is an                                                                                                                                                               {@link XYPlot} with a {@link DateAxis} for the x-axis and a{@link NumberAxis} for the y-axis.  The default renderer is an{@link XYLineAndShapeRenderer}. A convenient dataset to use with this chart is a                                                                                                                                                                {@link TimeSeriesCollection}.
+ * Creates and returns a time series chart.  A time series chart is an                                                                                                                                                                    {@link XYPlot} with a {@link DateAxis} for the x-axis and a{@link NumberAxis} for the y-axis.  The default renderer is an{@link XYLineAndShapeRenderer}. A convenient dataset to use with this chart is a                                                                                                                                                                     {@link TimeSeriesCollection}.
  * @param title  the chart title (<code>null</code> permitted).
  * @param timeAxisLabel  a label for the time axis (<code>null</code>permitted).
  * @param valueAxisLabel  a label for the value axis (<code>null</code>permitted).
@@ -858,7 +858,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates and returns a default instance of a high-low-open-close chart with a special timeline. This timeline can be a                                                                                                                                                               {@link org.jfree.chart.axis.SegmentedTimeline} such as the Mondaythrough Friday timeline that will remove Saturdays and Sundays from the axis.
+ * Creates and returns a default instance of a high-low-open-close chart with a special timeline. This timeline can be a                                                                                                                                                                    {@link org.jfree.chart.axis.SegmentedTimeline} such as the Mondaythrough Friday timeline that will remove Saturdays and Sundays from the axis.
  * @param title  the chart title (<code>null</code> permitted).
  * @param timeAxisLabel  a label for the time axis (<code>null</code>permitted).
  * @param valueAxisLabel  a label for the value axis (<code>null</code>permitted).
@@ -879,7 +879,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a bubble chart with default settings.  The chart is composed of an                                                                                                                                                                {@link XYPlot}, with a                                                                                                                                                                {@link NumberAxis} for the domain axis,a  {@link NumberAxis} for the range axis, and an {@link XYBubbleRenderer}to draw the data items.
+ * Creates a bubble chart with default settings.  The chart is composed of an                                                                                                                                                                     {@link XYPlot}, with a                                                                                                                                                                     {@link NumberAxis} for the domain axis,a  {@link NumberAxis} for the range axis, and an {@link XYBubbleRenderer}to draw the data items.
  * @param title  the chart title (<code>null</code> permitted).
  * @param xAxisLabel  a label for the X-axis (<code>null</code> permitted).
  * @param yAxisLabel  a label for the Y-axis (<code>null</code> permitted).
@@ -901,7 +901,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates a histogram chart.  This chart is constructed with an                                                                                                                                                               {@link XYPlot} using an {@link XYBarRenderer}.  The domain and range axes are                                                                                                                                                                {@link NumberAxis} instances.
+ * Creates a histogram chart.  This chart is constructed with an                                                                                                                                                                    {@link XYPlot} using an {@link XYBarRenderer}.  The domain and range axes are                                                                                                                                                                     {@link NumberAxis} instances.
  * @param title  the chart title (<code>null</code> permitted).
  * @param xAxisLabel  the x axis label (<code>null</code> permitted).
  * @param yAxisLabel  the y axis label (<code>null</code> permitted).
@@ -921,7 +921,7 @@ public abstract class ChartFactory {
     return chart;
   }
   /** 
- * Creates and returns a default instance of a box and whisker chart based on data from a                                                                                                                                                                {@link BoxAndWhiskerCategoryDataset}.
+ * Creates and returns a default instance of a box and whisker chart based on data from a                                                                                                                                                                     {@link BoxAndWhiskerCategoryDataset}.
  * @param title  the chart title (<code>null</code> permitted).
  * @param categoryAxisLabel  a label for the category axis(<code>null</code> permitted).
  * @param valueAxisLabel  a label for the value axis (<code>null</code>permitted).

@@ -3,7 +3,7 @@ import java.awt.Graphics2D;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DatasetSelectionState;
 /** 
- * A <code>RenderingSource</code> is an object that calls the <code>draw(...)</code> method in the                                                                                                                                                                {@link JFreeChart} class.  An exampleis the  {@link ChartPanel} class.
+ * A <code>RenderingSource</code> is an object that calls the <code>draw(...)</code> method in the                                                                                                                                                                     {@link JFreeChart} class.  An exampleis the  {@link ChartPanel} class.
  * @since 1.2.0
  */
 public interface RenderingSource {

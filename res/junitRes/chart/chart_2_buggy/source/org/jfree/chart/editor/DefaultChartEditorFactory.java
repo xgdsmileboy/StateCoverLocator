@@ -1,7 +1,7 @@
 package org.jfree.chart.editor;
 import org.jfree.chart.JFreeChart;
 /** 
- * A default implementation of the                                                                                                                                                                {@link ChartEditorFactory} interface.
+ * A default implementation of the                                                                                                                                                                     {@link ChartEditorFactory} interface.
  */
 public class DefaultChartEditorFactory implements ChartEditorFactory {
   /** 
@@ -10,7 +10,7 @@ public class DefaultChartEditorFactory implements ChartEditorFactory {
   public DefaultChartEditorFactory(){
   }
   /** 
- * Returns a new instance of a                                                                                                                                                                {@link ChartEditor}.
+ * Returns a new instance of a                                                                                                                                                                     {@link ChartEditor}.
  * @param chart  the chart.
  * @return A chart editor for the given chart.
  */
