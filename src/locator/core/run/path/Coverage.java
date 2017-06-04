@@ -434,6 +434,8 @@ public class Coverage {
 						}
 					}
 				}
+				// delete corresponding class file to enable re-compile for next loop.
+				ExecuteCommand.deleteGivenFile(binFile);
 				// restore original source file
 				ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
 			} // end of "conditionsForRightVars != null"

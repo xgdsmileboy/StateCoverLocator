@@ -78,6 +78,9 @@ public class Main {
 			return;
 		}
 		Subject subject = allSubject.get(0);
+		
+		LevelLogger.info("------------------ Begin : " + subject.getName() + "_" + subject.getId() + " ----------------");
+		
 		// remove auxiliary file
 		String path = subject.getHome() + subject.getSsrc();
 		String auxiliary = path + Constant.PATH_SEPARATOR + "auxiliary/Dumper.java";
