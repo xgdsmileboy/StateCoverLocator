@@ -50,6 +50,9 @@ class TrainExpr(object):
                 # variable name
                 for j in range(0, X.shape[0]):
                     feature[j] = var_encoder[str(X[j, i]).lower()]
+            if i == 5:
+                # dist0
+                feature = X[:, i].reshape(X.shape[0], 1)
             if encoded_x is None:
                 encoded_x = feature
             else:

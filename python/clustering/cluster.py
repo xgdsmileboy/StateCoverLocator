@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from math import isnan
 from sklearn.cluster import KMeans
+from sklearn.cluster import AgglomerativeClustering
 import os
 from Utils.config import *
 from sklearn.externals import joblib
@@ -66,6 +67,7 @@ class Cluster(object):
 		print len(unique_var) / 20
 
 		kmeans = KMeans(n_clusters=len(unique_var) / 20, random_state=0).fit(X)
+		# ac = AgglomerativeClustering(n_clusters=len(unique_var) / 20, linkage="complete").fit(X)
 
 		# export model
 		joblib.dump(kmeans, self.__configure__.get_cluster_model_file())
