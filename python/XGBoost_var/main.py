@@ -114,7 +114,7 @@ class XGVar(object):
                     elif j == 2:
                         feature.append(str_encoder['var'][str(dataset[i, 3 + j]).lower()])
                     elif j == 5:
-                        feature.append(dataset[i, 3 + j])
+                        feature.append(int(dataset[i, 3 + j]))
                     else:
                         feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
                 except Exception as e:

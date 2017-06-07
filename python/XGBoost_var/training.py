@@ -60,7 +60,8 @@ class Train(object):
                     feature[j] = str_encoder['var'][str(X[j, i]).lower()]
             elif i == 5:
                 # dist0
-                feature = X[:, i].reshape(X.shape[0], 1)
+                for j in range(0, X.shape[0]):
+                    feature[j] = int(X[j, i])
             if encoded_X is None:
                 encoded_X = feature
             else:
