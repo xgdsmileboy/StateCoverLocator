@@ -13,16 +13,16 @@ class XGExpr(object):
         """
         self.__configure__ = configure
 
-    def train_expr(self, var_encoder, feature_num):
+    def train_expr(self, str_encoder, feature_num):
         print('Training expr model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
         ## construct the path strings with params
         trainExpr = TrainExpr(self.__configure__)
         # train the model
-        trainExpr.train(feature_num, 'multi:softprob', var_encoder)
+        trainExpr.train(feature_num, 'multi:softprob', str_encoder)
 
 
-    def run_gen_exprs(self, var_encoder, kmeans):
+    def run_gen_exprs(self, str_encoder, kmeans_model):
         print('Predicting expr for {}...'.format(self.__configure__.get_bug_id()))
 
         expr_predicted = self.__configure__.get_expr_pred_out_file()
@@ -30,7 +30,7 @@ class XGExpr(object):
 
         top = self.__configure__.get_gen_expr_top()
 
-        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(var_encoder, kmeans)
+        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(str_encoder, kmeans_model)
 
         ## load the model
         if not os.path.exists(expr_model_path):
@@ -78,7 +78,7 @@ class XGExpr(object):
                     f.write('\n')
 
 
-    def encode_expr(self, var_encoder, kmeans):
+    def encode_expr(self, str_encoder, kmeans_model):
 
         data_file_path = self.__configure__.get_raw_expr_pred_in_file()
         original_data_file_path = self.__configure__.get_raw_expr_train_in_file()
@@ -111,8 +111,12 @@ class XGExpr(object):
             feature = list()
             for j in range(0, feature_num):
                 try:
-                    if j == 2:
-                        feature.append(var_encoder[str(dataset[i, 3 + j]).lower()])
+                    if j == 0:
+                        feature.append(str_encoder['file'][str(dataset[i, 3 + j])])
+                    elif j == 1:
+                        feature.append(str_encoder['func'][str(dataset[i, 3 + j])])
+                    elif j == 2:
+                        feature.append(str_encoder['var'][str(dataset[i, 3 + j]).lower()])
                     elif j == 5:
                         feature.append(dataset[i, 3 + j])
                     else:

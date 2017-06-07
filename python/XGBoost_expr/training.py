@@ -21,7 +21,7 @@ class TrainExpr(object):
         self.__configure__ = configure
 
 
-    def train(self, feature_num, training_objective, var_encoder):
+    def train(self, feature_num, training_objective, str_encoder):
 
         start_time = datetime.datetime.now()
 
@@ -46,11 +46,19 @@ class TrainExpr(object):
             x_encoders[i] = LabelEncoder()
             feature = x_encoders[i].fit_transform(X[:, i])
             feature = feature.reshape(X.shape[0], 1)
+            # if i == 0:
+            #     # file name
+            #     for j in range(0, X.shape[0]):
+            #         feature[j] = str_encoder['file'][str(X[j, i])]
+            # elif i == 1:
+            #     # function name
+            #     for j in range(0, X.shape[0]):
+            #         feature[j] = str_encoder['func'][str(X[j, i])]
             if i == 2:
                 # variable name
                 for j in range(0, X.shape[0]):
-                    feature[j] = var_encoder[str(X[j, i]).lower()]
-            if i == 5:
+                    feature[j] = str_encoder['var'][str(X[j, i]).lower()]
+            elif i == 5:
                 # dist0
                 feature = X[:, i].reshape(X.shape[0], 1)
             if encoded_x is None:
@@ -58,6 +66,7 @@ class TrainExpr(object):
             else:
                 encoded_x = np.concatenate((encoded_x, feature), axis=1)
 
+        print(encoded_x)
         y_encoder = LabelEncoder()
         encoded_y = y_encoder.fit_transform(Y)
 

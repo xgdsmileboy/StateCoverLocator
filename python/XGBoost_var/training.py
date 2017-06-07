@@ -20,7 +20,7 @@ class Train(object):
         self.__configure__ = configure
 
 
-    def train(self, feature_num, training_objective, var_encoder):
+    def train(self, feature_num, training_objective, str_encoder):
         start_time = datetime.datetime.now()
 
         data_file_path = self.__configure__.get_raw_var_train_in_file()
@@ -46,11 +46,19 @@ class Train(object):
             x_encoders[i] = LabelEncoder()
             feature = x_encoders[i].fit_transform(X[:, i])
             feature = feature.reshape(X.shape[0], 1)
-            if i == 2:
+            if i == 0:
+                # file name
+                for j in range(0, X.shape[0]):
+                    feature[j] = str_encoder['file'][str(X[j, i])]
+            elif i == 1:
+                # function name
+                for j in range(0, X.shape[0]):
+                    feature[j] = str_encoder['func'][str(X[j, i])]
+            elif i == 2:
                 # variable name
                 for j in range(0, X.shape[0]):
-                    feature[j] = var_encoder[str(X[j, i]).lower()]
-            if i == 5:
+                    feature[j] = str_encoder['var'][str(X[j, i]).lower()]
+            elif i == 5:
                 # dist0
                 feature = X[:, i].reshape(X.shape[0], 1)
             if encoded_X is None:
@@ -61,6 +69,7 @@ class Train(object):
         y_encoder = LabelEncoder()
         encoded_Y = y_encoder.fit_transform(Y)
 
+        print(encoded_X)
         # split the data into training and validating set
         X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.2, random_state=7)
         print('Training set size: {}'.format(X_train.shape))

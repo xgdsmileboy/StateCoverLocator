@@ -12,13 +12,13 @@ class XGVar(object):
         """
         self.__configure__ = configure;
 
-    def train_var(self, var_encoder, feature_num):
+    def train_var(self, str_encoder, feature_num):
         print('Training var model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
 
         # feature_num = # cols - 1(only one target)
         train = Train(self.__configure__)
-        train.train(feature_num, 'binary:logistic', var_encoder)
+        train.train(feature_num, 'binary:logistic', str_encoder)
 
 
     def predict_vars(self, encoded_var):
@@ -69,16 +69,16 @@ class XGVar(object):
                 f.write('\n')
 
 
-    def run_predict_vars(self, var_encoder, kmeans):
+    def run_predict_vars(self, str_encoder, kmeans_model):
 
         print('Predicting var for {}...'.format(self.__configure__.get_bug_id()))
 
-        encoded_var = self.encode_var(var_encoder, kmeans)
+        encoded_var = self.encode_var(str_encoder, kmeans_model)
         # get the predicted varnames
         self.predict_vars(encoded_var)
 
 
-    def encode_var(self, var_encoder, kmeans):
+    def encode_var(self, str_encoder, kmeans_model):
         data_file_path = self.__configure__.get_raw_var_pred_in_file()
 
         original_data_file_path = self.__configure__.get_raw_var_train_in_file()
@@ -107,8 +107,12 @@ class XGVar(object):
             for j in range(0, feature_num):
                 # TODO : if the key does not exit in the encoder, how to transform
                 try:
-                    if j == 2:
-                        feature.append(var_encoder[str(dataset[i, 3 + j]).lower()])
+                    if j == 0:
+                        feature.append(str_encoder['file'][str(dataset[i, 3 + j])])
+                    elif j == 1:
+                        feature.append(str_encoder['func'][str(dataset[i, 3 + j])])
+                    elif j == 2:
+                        feature.append(str_encoder['var'][str(dataset[i, 3 + j]).lower()])
                     elif j == 5:
                         feature.append(dataset[i, 3 + j])
                     else:

@@ -36,13 +36,26 @@ class Configure(object):
         return self.__input_base_path__ + '/expr/' + self.__project_name__ + '_' + self.__bug_id__ + '.expr.csv'
 
 
-    def get_cluster_file(self):
-        # python/input/math/math_1/cluster/math_1.cluster.csv
+    def get_var_cluster_file(self):
+        # python/input/math/math_1/cluster/math_1.var_cluster.csv
         path = self.__input_base_path__ + '/cluster/'
         if not os.path.exists(path):
             os.makedirs(path)
-        return path + self.__project_name__ + '_' + self.__bug_id__ + '.cluster.csv'
+        return path + self.__project_name__ + '_' + self.__bug_id__ + '.var_cluster.csv'
 
+    def get_func_cluster_file(self):
+        # python/input/math/math_1/cluster/math_1.func_cluster.csv
+        path = self.__input_base_path__ + '/cluster/'
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + self.__project_name__ + '_' + self.__bug_id__ + '.func_cluster.csv'
+
+    def get_file_cluster_file(self):
+        # python/input/math/math_1/cluster/math_1.file_cluster.csv
+        path = self.__input_base_path__ + '/cluster/'
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + self.__project_name__ + '_' + self.__bug_id__ + '.file_cluster.csv'
 
     def get_var_model_file(self):
         # python/model/math_1.var_model.pkl
@@ -56,11 +69,23 @@ class Configure(object):
             os.makedirs(self.__model_path__)
         return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.expr_model.pkl'
 
-    def get_cluster_model_file(self):
-        # python/model/math_1.cluster_model.pkl
+    def get_var_cluster_model_file(self):
+        # python/model/math_1.var_cluster_model.pkl
         if not os.path.exists(self.__model_path__):
             os.makedirs(self.__model_path__)
-        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.cluster_model.pkl'
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.var_cluster_model.pkl'
+
+    def get_func_cluster_model_file(self):
+        # python/model/math_1.func_cluster_model.pkl
+        if not os.path.exists(self.__model_path__):
+            os.makedirs(self.__model_path__)
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.func_cluster_model.pkl'
+
+    def get_file_cluster_model_file(self):
+        # python/model/math_1.file_cluster_model.pkl
+        if not os.path.exists(self.__model_path__):
+            os.makedirs(self.__model_path__)
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.file_cluster_model.pkl'
 
     def get_raw_var_pred_in_file(self):
         # python/input/math/math_1/pred/math_1.var.csv
