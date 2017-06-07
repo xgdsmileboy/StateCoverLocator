@@ -46,15 +46,15 @@ class TrainExpr(object):
             x_encoders[i] = LabelEncoder()
             feature = x_encoders[i].fit_transform(X[:, i])
             feature = feature.reshape(X.shape[0], 1)
-            # if i == 0:
-            #     # file name
-            #     for j in range(0, X.shape[0]):
-            #         feature[j] = str_encoder['file'][str(X[j, i])]
-            # elif i == 1:
-            #     # function name
-            #     for j in range(0, X.shape[0]):
-            #         feature[j] = str_encoder['func'][str(X[j, i])]
-            if i == 2:
+            if i == 0:
+                # file name
+                for j in range(0, X.shape[0]):
+                    feature[j] = str_encoder['file'][str(X[j, i])]
+            elif i == 1:
+                # function name
+                for j in range(0, X.shape[0]):
+                    feature[j] = str_encoder['func'][str(X[j, i])]
+            elif i == 2:
                 # variable name
                 for j in range(0, X.shape[0]):
                     feature[j] = str_encoder['var'][str(X[j, i]).lower()]
@@ -67,7 +67,6 @@ class TrainExpr(object):
             else:
                 encoded_x = np.concatenate((encoded_x, feature), axis=1)
 
-        print(encoded_x)
         y_encoder = LabelEncoder()
         encoded_y = y_encoder.fit_transform(Y)
 

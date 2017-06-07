@@ -127,7 +127,7 @@ class XGExpr(object):
                         # feature.append(len(var_encoder))
                         X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
                         X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
-                        pred = kmeans.predict(X_0)
+                        pred = kmeans_model['var'].predict(X_0)
                         feature.append(pred[0])
                     else:
                         feature.append(x_encoders[j].classes_.shape[0])

@@ -70,7 +70,6 @@ class Train(object):
         y_encoder = LabelEncoder()
         encoded_Y = y_encoder.fit_transform(Y)
 
-        print(encoded_X)
         # split the data into training and validating set
         X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.2, random_state=7)
         print('Training set size: {}'.format(X_train.shape))
