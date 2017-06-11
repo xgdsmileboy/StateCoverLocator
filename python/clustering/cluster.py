@@ -6,6 +6,8 @@ from sklearn.cluster import AgglomerativeClustering
 import os
 from Utils.config import *
 from sklearn.externals import joblib
+from nltk.stem.porter import PorterStemmer
+
 
 class Cluster(object):
 
@@ -34,7 +36,6 @@ class Cluster(object):
 
 	def split_and_lower(self, s):
 		result = list()
-
 		current = ''
 		for cur in s:
 			i = ord(cur)
@@ -141,7 +142,7 @@ class Cluster(object):
 		for i in range(0, all_data.shape[0]):
 			current = str(all_data[i][0])
 			unique_f.add(current)
-			words = self.split_and_lower(current.split('.', 1)[0])
+			words = self.split_and_lower(current.split('.', 1)[0])	#remove '.java'
 			for w in words:
 				if not (w in unique_words):
 					unique_words[w] = len(unique_words)

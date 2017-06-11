@@ -87,9 +87,9 @@ def join_prob(config):
                     continue
 
                 #prob = math.log(varProbMap[key] * predicate[1])
-                #prob = varProbMap[key] * predicate[1]
+                prob = varProbMap[key] * predicate[1]
                 #prob = math.log(varProbMap[key]) + math.log(predicate[1])
-                prob = varProbMap[key] + predicate[1]
+                # prob = varProbMap[key] + predicate[1]
                 newkey = (key[0], key[1], predicate[0])
                 varPredicateProbMap[newkey] = prob
 
@@ -108,7 +108,7 @@ def join_prob(config):
     for key in idConsMap:
         valueTupleList = idConsMap[key]
         for valueTuple in valueTupleList:
-            if (valueTuple[2] > 0.005):
+            if (valueTuple[2] > 0.0):
                 fOut.write(key + "\t" + valueTuple[0] + "\t" + valueTuple[1] + "\t" + str(valueTuple[2]) + "\n")
     fOut.close()
 

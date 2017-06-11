@@ -10,6 +10,8 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
+
+
 class Train(object):
 
     def __init__(self, configure):
@@ -58,8 +60,8 @@ class Train(object):
                 # variable name
                 for j in range(0, X.shape[0]):
                     feature[j] = str_encoder['var'][str(X[j, i]).lower()]
-            elif i == 5:
-                # dist0
+            elif i == 5 or i == 6 or i == 9 or i == 10 or i == 11:
+                # dist0, preassnum, incondnum, filecondnum, totcondnum
                 for j in range(0, X.shape[0]):
                     feature[j] = int(X[j, i])
             if encoded_X is None:

@@ -11,6 +11,8 @@ import collections
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 
+
+
 class TrainExpr(object):
 
     def __init__(self, configure):
@@ -58,8 +60,8 @@ class TrainExpr(object):
                 # variable name
                 for j in range(0, X.shape[0]):
                     feature[j] = str_encoder['var'][str(X[j, i]).lower()]
-            elif i == 5:
-                # dist0
+            elif i == 5 or i == 6:
+                # dist0 AND preassnum
                 for j in range(0, X.shape[0]):
                     feature[j] = int(X[j, i])
             if encoded_x is None:
@@ -131,7 +133,7 @@ class TrainExpr(object):
             'num_class': class_num
         }
         num_round = 1000
-        early_stop = 30
+        early_stop = 20
         learning_rates = [(num_round - i) / (num_round * 10.0) for i in range(num_round)]
 
         watchlist = [(M_train, 'train'), (M_valid, 'eval')]

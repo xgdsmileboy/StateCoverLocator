@@ -113,7 +113,7 @@ class XGVar(object):
                         feature.append(str_encoder['func'][str(dataset[i, 3 + j])])
                     elif j == 2:
                         feature.append(str_encoder['var'][str(dataset[i, 3 + j]).lower()])
-                    elif j == 5:
+                    elif j == 5 or j == 6 or j == 9 or j == 10 or j == 11: # dis0, preassnum, incondnum, filecondnum, totcondnum
                         feature.append(int(dataset[i, 3 + j]))
                     else:
                         feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
