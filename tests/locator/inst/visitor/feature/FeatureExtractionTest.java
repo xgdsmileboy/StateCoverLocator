@@ -23,6 +23,21 @@ public class FeatureExtractionTest {
 
 	@Test
 	public void test_print() {
+		String path = System.getProperty("user.dir") + "/res/junitRes";
+		String relJavaPath = "BigFraction.java";
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 76, new HashMap<>());
+		System.out.println("Variables : ");
+		for (String string : vars.getFirst()) {
+			System.out.println(string);
+		}
+		System.out.println("Expressions : ");
+		for (String string : vars.getSecond()) {
+			System.out.println(string);
+		}
+	}
+	
+	@Test
+	public void test_print_2() {
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 48, new HashMap<>());
@@ -46,10 +61,6 @@ public class FeatureExtractionTest {
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 1);
-		Assert.assertTrue(varFeature.get(0).equals(
-				"x	48	0	DatasetUtilities.java	calculatePieDatasetTotal	dataset	PieDataset	PARAM_AS	1	1	CALLER_USE	?"));
-		Assert.assertTrue(expFeature.get(0).equals(
-				"x	48	0	DatasetUtilities.java	calculatePieDatasetTotal	dataset	PieDataset	0	DEF	?"));
 	}
 
 	@Test
@@ -161,7 +172,7 @@ public class FeatureExtractionTest {
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
-		Assert.assertTrue(varFeature.size() == 1);
+		Assert.assertTrue(varFeature.size() == 0);
 	}
 
 	@Test
@@ -181,7 +192,7 @@ public class FeatureExtractionTest {
 		// test assignment statement "num = num.divide(gcd);"
 		String path = System.getProperty("user.dir") + "/res/junitRes/math/math_3_buggy/src/main/java";
 		String relJavaPath = "/org/apache/commons/math3/fraction/BigFraction.java";
-		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 134, new HashMap<>());
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, 36, new HashMap<>());
 		// System.out.println("Variables : ");
 		// for (String string : vars.getFirst()) {
 		// System.out.println(string);
@@ -193,6 +204,6 @@ public class FeatureExtractionTest {
 		List<String> varFeature = vars.getFirst();
 		List<String> expFeature = vars.getSecond();
 		Assert.assertTrue(varFeature.size() == expFeature.size());
-		Assert.assertTrue(varFeature.size() == 2);
+		Assert.assertTrue(varFeature.size() == 0);
 	}
 }

@@ -13,6 +13,10 @@ import org.apache.commons.math3.util.ArithmeticUtils;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
 
+import com.sun.javafx.image.impl.IntArgb;
+
+import java_cup.internal_error;
+
 public class BigFraction extends Number implements FieldElement<BigFraction>, Comparable<BigFraction>, Serializable {
 	private final BigInteger numerator;
 	private final BigInteger denominator;

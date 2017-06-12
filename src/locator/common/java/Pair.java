@@ -43,5 +43,28 @@ public class Pair<A, B> {
 	public B getSecond() {
 		return _second;
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return _first.hashCode() + _second.hashCode();
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null){
+			return false;
+		}
+		if(!(obj instanceof Pair<?, ?>)){
+			return false;
+		}
+		Pair<?, ?> other = (Pair<?, ?>) obj;
+		return _first.equals(other.getFirst()) && _second.equals(other.getSecond());
+	}
 
 }
