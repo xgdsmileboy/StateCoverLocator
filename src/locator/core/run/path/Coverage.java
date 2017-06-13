@@ -383,6 +383,8 @@ public class Coverage {
 							stringBuffer.append(", ");
 						}
 						LevelLogger.error("Build failed by predicates : " + stringBuffer.toString());
+						// delete corresponding class file to enable re-compile for next loop
+						ExecuteCommand.deleteGivenFile(binFile);
 						ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
 						//should be failed 
 //						System.exit(0);
@@ -395,6 +397,8 @@ public class Coverage {
 							stringBuffer.append(", ");
 						}
 						LevelLogger.info("Cause different test state by predicates :" + stringBuffer.toString());
+						// delete corresponding class file to enable re-compile for next loop
+						ExecuteCommand.deleteGivenFile(binFile);
 						ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
 						continue;
 					}
