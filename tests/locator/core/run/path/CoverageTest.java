@@ -23,7 +23,6 @@ import locator.common.java.CoverInfo;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
-import locator.core.Collector;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
 

@@ -27,7 +27,6 @@ import locator.common.java.Subject;
 import locator.common.util.CmdFactory;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
-import locator.core.Collector;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.predict.Predictor;

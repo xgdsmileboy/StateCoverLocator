@@ -5,7 +5,7 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.core;
+package locator.core.run.path;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,7 +25,6 @@ import locator.common.util.CmdFactory;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
 import locator.core.run.Runner;
-import locator.core.run.path.ExecutionPathBuilder;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MethodInstrumentVisitor;

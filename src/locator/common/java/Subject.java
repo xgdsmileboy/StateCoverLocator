@@ -97,6 +97,10 @@ public class Subject {
 				+ ".joint.csv";
 		return file;
 	}
+	
+	public String getCoverageInfoPath() {
+		return Constant.STR_INFO_OUT_PATH + "/" + _name + "/" + _name + "_" + _id;
+	}
 
 	@Override
 	public String toString() {

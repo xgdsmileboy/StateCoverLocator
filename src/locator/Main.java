@@ -9,11 +9,16 @@ package locator;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+
 import java.util.Set;
 
 import edu.pku.sei.conditon.simple.FeatureGenerator;
@@ -26,11 +31,19 @@ import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
-import locator.core.Collector;
+import locator.core.Algorithm;
+import locator.core.Barinel;
+import locator.core.DStar;
+import locator.core.Ochiai;
+import locator.core.Op2;
+import locator.core.Suspicious;
+import locator.core.Tarantula;
 import locator.core.run.Runner;
+import locator.core.run.path.Collector;
 import locator.core.run.path.Coverage;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
+import sun.security.x509.AlgorithmId;
 
 public class Main {
 
@@ -105,8 +118,7 @@ public class Main {
 		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods);
 		
 		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
-		printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_"
-				+ subject.getId() + "/ori_coverage.csv");
+		printCoverage(coverage, subject.getCoverageInfoPath() + "/ori_coverage.csv");
 
 
 		LevelLogger.info("step 3: compute statements covered by failed tests");
@@ -122,9 +134,18 @@ public class Main {
 				failedTestsAndCoveredMethods.getFirst());
 
 		LevelLogger.info("output predicate coverage information to file : pred_coverage.csv");
-		printCoverage(predicateCoverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName()
-				+ "_" + subject.getId() + "/pred_coverage.csv");
+		printCoverage(predicateCoverage, subject.getCoverageInfoPath() + "/pred_coverage.csv");
 
+		LevelLogger.info("Compute suspicious for each statement and out put to file.");
+		List<Algorithm> algorithms = new ArrayList<>();
+		// add different computation algorithms
+		algorithms.add(new Ochiai());
+		algorithms.add(new Tarantula());
+		algorithms.add(new DStar());
+		algorithms.add(new Barinel());
+		algorithms.add(new Op2());
+		Suspicious.compute(subject, algorithms);
+		
 //		LevelLogger.info("step 5: combine all coverage informaiton");
 //		for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {
 //			CoverInfo coverInfo = coverage.get(entry.getKey());
