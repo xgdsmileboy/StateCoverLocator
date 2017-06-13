@@ -17,16 +17,11 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.junit.Assert;
-
-import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.CoverInfo;
 import locator.common.java.JavaFile;
-import locator.common.java.Method;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.CmdFactory;
@@ -37,15 +32,11 @@ import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.predict.Predictor;
 import locator.inst.visitor.DeInstrumentVisitor;
-import locator.inst.visitor.MethodInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
 import locator.inst.visitor.NewTestMethodInstrumentVisitor;
-import locator.inst.visitor.PredicateInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
-import polyglot.ast.Expr;
-import sun.security.ec.ECDHKeyAgreement;
 
 /**
  * @author Jiajun
@@ -297,9 +288,9 @@ public class Coverage {
 					line, allLegalVariablesMap);
 			List<String> varFeatures = features.getFirst();
 			List<String> expFeatures = features.getSecond();
-			Pair<Set<String>, Set<String>> allConditions = Predictor.predict(subject, varFeatures, expFeatures, allLegalVariablesMap);
+			Pair<Set<Pair<String, String>>, Set<Pair<String, String>>> allConditions = Predictor.predict(subject, varFeatures, expFeatures, allLegalVariablesMap);
 			// TODO : currently, only instrument predicates for left variables
-			Set<String> conditionsForRightVars = allConditions.getSecond();
+			Set<Pair<String, String>> conditionsForRightVars = allConditions.getSecond();
 			// if predicted conditions are not empty for right variables,
 			// instrument each condition one by one and compute coverage
 			// information for each predicate
@@ -310,13 +301,13 @@ public class Coverage {
 				ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
 //				PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(null, line);
 				NewPredicateInstrumentVisitor newPredicateInstrumentVisitor = new NewPredicateInstrumentVisitor(null, line);
-				List<String> legalConditions = new ArrayList<>();
+				List<Pair<String, String>> legalConditions = new ArrayList<>();
 				// read original file once
 				String source = JavaFile.readFileToString(javaFile);
 				String binFile = subject.getHome() + subject.getSbin() + "/" + clazz + ".class";
 				int allConditionCount = conditionsForRightVars.size();
 				int currentConditionCount = 1;
-				for (String condition : conditionsForRightVars) {
+				for (Pair<String, String> condition : conditionsForRightVars) {
 					
 					LevelLogger.info("Validate conditions by compiling : [" + currentConditionCount + "/" + allConditionCount + "].");
 					currentConditionCount ++;
@@ -326,7 +317,7 @@ public class Coverage {
 							ASTParser.K_COMPILATION_UNIT);
 					
 					
-					List<String> onePredicate = new ArrayList<>();
+					List<Pair<String, String>> onePredicate = new ArrayList<>();
 					onePredicate.add(condition);
 					newPredicateInstrumentVisitor.setCondition(onePredicate);
 					
@@ -388,8 +379,8 @@ public class Coverage {
 					// result is the same with original project
 					if(!Runner.testSuite(subject)){
 						StringBuffer stringBuffer = new StringBuffer();
-						for(String string : legalConditions){
-							stringBuffer.append(string);
+						for(Pair<String, String> condition : legalConditions){
+							stringBuffer.append(condition.getFirst());
 							stringBuffer.append(", ");
 						}
 						LevelLogger.error("Build failed by predicates : " + stringBuffer.toString());
@@ -400,8 +391,8 @@ public class Coverage {
 					}
 					if(!isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)){
 						StringBuffer stringBuffer = new StringBuffer();
-						for(String string : legalConditions){
-							stringBuffer.append(string);
+						for(Pair<String, String> condition: legalConditions){
+							stringBuffer.append(condition.getFirst());
 							stringBuffer.append(", ");
 						}
 						LevelLogger.info("Cause different test state by predicates :" + stringBuffer.toString());

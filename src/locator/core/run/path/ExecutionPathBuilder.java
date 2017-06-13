@@ -64,11 +64,24 @@ public class ExecutionPathBuilder {
 				int succNum = Integer.parseInt(lineInfo[2]);
 				
 				String[] str = lineNum.split("#");
+				// when collecting the original coverage information, the length
+				// of str should exactly be 2 formatted as methodID#lineNumber
+				// otherwise, it exactly should be 5 items formatted as
+				// methodID#line#condition#prob#conditionCountFlag
+				// for predicted predicates
 				if(str.length > 2){
-					if(succNum == 0){
-						onlyCoveredByFailedTest.add(Integer.parseInt(str[2]));
+					int index = lineNum.lastIndexOf("#");
+					if(index > 0){
+						if(succNum == 0){
+							Integer conditionFlag = Integer.parseInt(lineNum.substring(index + 1, lineNum.length()));
+							onlyCoveredByFailedTest.add(conditionFlag);
+						}
+						lineNum = lineNum.substring(0, index);
+					} else {
+						LevelLogger.error(__name__ + "#collectAllExecutedMethods line format error : " + lineNum);
+						System.exit(0);
 					}
-					lineNum = str[0] + "#" + str[1];
+//					lineNum = str[0] + "#" + str[1];
 				}
 				
 				CoverInfo coverInfo = coverage.get(lineNum);

@@ -125,19 +125,19 @@ public class Main {
 		printCoverage(predicateCoverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName()
 				+ "_" + subject.getId() + "/pred_coverage.csv");
 
-		LevelLogger.info("step 5: combine all coverage informaiton");
-		for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {
-			CoverInfo coverInfo = coverage.get(entry.getKey());
-			if (coverInfo != null) {
-				coverInfo.combine(entry.getValue());
-			} else {
-				coverage.put(entry.getKey(), entry.getValue());
-			}
-		}
-
-		LevelLogger.info("step 6: output coverage information to file : coverage.csv");
-		printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_"
-				+ subject.getId() + "/coverage.csv");
+//		LevelLogger.info("step 5: combine all coverage informaiton");
+//		for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {
+//			CoverInfo coverInfo = coverage.get(entry.getKey());
+//			if (coverInfo != null) {
+//				coverInfo.combine(entry.getValue());
+//			} else {
+//				coverage.put(entry.getKey(), entry.getValue());
+//			}
+//		}
+//
+//		LevelLogger.info("step 6: output coverage information to file : coverage.csv");
+//		printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_"
+//				+ subject.getId() + "/coverage.csv");
 	}
 
 	private static void printCoverage(Map<String, CoverInfo> coverage, String filePath) {

@@ -37,6 +37,7 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
+import locator.common.java.Pair;
 import locator.inst.gen.GenStatement;
 
 /**
@@ -49,17 +50,17 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 
 	private int _line = -1;
 
-	private List<String> _condition = null;
+	private List<Pair<String, String>> _condition = null;
 
 	/**
 	 * 
 	 */
-	public NewPredicateInstrumentVisitor(List<String> condition, int line) {
+	public NewPredicateInstrumentVisitor(List<Pair<String, String>> condition, int line) {
 		_condition = condition;
 		_line = line;
 	}
 
-	public void setCondition(List<String> condition) {
+	public void setCondition(List<Pair<String, String>> condition) {
 		_condition = condition;
 	}
 
@@ -123,7 +124,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
 				for(int count = 0; count < _condition.size(); count ++){
-					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					String condition = _condition.get(count).getFirst();
+					String prob = _condition.get(count).getSecond();
+					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					result.add(inserted);
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
@@ -178,7 +181,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
 				for(int count = 0; count < _condition.size(); count ++){
-					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					String condition = _condition.get(count).getFirst();
+					String prob = _condition.get(count).getSecond();
+					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					result.add(inserted);
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
@@ -215,7 +220,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
 				for(int count = 0; count < _condition.size(); count ++){
-					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					String condition = _condition.get(count).getFirst();
+					String prob = _condition.get(count).getSecond();
+					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					result.add(inserted);
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
@@ -254,7 +261,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
 				for(int count = 0; count < _condition.size(); count ++){
-					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					String condition = _condition.get(count).getFirst();
+					String prob = _condition.get(count).getSecond();
+					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					result.add(inserted);
 				}
 				return result;
@@ -294,7 +303,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
 				for(int count = 0; count < _condition.size(); count ++){
-					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					String condition = _condition.get(count).getFirst();
+					String prob = _condition.get(count).getSecond();
+					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					result.add(inserted);
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
@@ -333,7 +344,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
 				for(int count = 0; count < _condition.size(); count ++){
-					ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+					String condition = _condition.get(count).getFirst();
+					String prob = _condition.get(count).getSecond();
+					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					result.add(inserted);
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
@@ -400,7 +413,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 			// message, _line);
 			List<ASTNode> tmpInserted = new ArrayList<>();
 			for(int count = 0; count < _condition.size(); count ++){
-				ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(count), message + "#" + count);
+				String condition = _condition.get(count).getFirst();
+				String prob = _condition.get(count).getSecond();
+				ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 				tmpInserted.add(inserted);
 			}
 //			Statement insert = GenStatement.newGenPredicateStatement(_condition, message);

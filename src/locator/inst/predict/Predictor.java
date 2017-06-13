@@ -56,9 +56,9 @@ public class Predictor {
 	 *         left variable [currently, not use] the second set contains all
 	 *         conditions for right variables
 	 */
-	public static Pair<Set<String>, Set<String>> predict(Subject subject, List<String> varFeatures,
+	public static Pair<Set<Pair<String, String>>, Set<Pair<String, String>>> predict(Subject subject, List<String> varFeatures,
 			List<String> expFeatures, Map<String, String> allLegalVariablesMap) {
-		Pair<Set<String>, Set<String>> conditions = new Pair<>();
+		Pair<Set<Pair<String, String>>, Set<Pair<String, String>>> conditions = new Pair<>();
 		String currentClassName = null;
 		// TODO : return conditions for left variable and right variables
 		File varFile = new File(subject.getVarFeatureOutputPath());
@@ -109,7 +109,7 @@ public class Predictor {
 			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
 			return conditions;
 		}
-		Set<String> rightConditions = new HashSet<>();
+		Set<Pair<String, String>> rightConditions = new HashSet<>();
 		String line = null;
 		try {
 			// filter title
@@ -124,8 +124,10 @@ public class Predictor {
 					String varName = columns[1];
 					String condition = columns[2].replace("$", varName);
 					String varType = allLegalVariablesMap.get(varName);
+					String prob = columns[3];
 					if(ExprFilter.isLegalExpr(varType, varName, condition, allLegalVariablesMap.keySet(), currentClassName)){
-						rightConditions.add(condition);
+						Pair<String, String> pair = new Pair<String, String>(condition, prob);
+						rightConditions.add(pair);
 					} else {
 						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
 					}
