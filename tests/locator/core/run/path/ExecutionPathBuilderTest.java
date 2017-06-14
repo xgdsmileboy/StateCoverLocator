@@ -7,11 +7,29 @@
 
 package locator.core.run.path;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.junit.Test;
+
+import locator.common.config.Constant;
+import locator.common.java.CoverInfo;
+
 /**
  * @author Jiajun
  * @date May 10, 2017
  */
 public class ExecutionPathBuilderTest {
+	
+	@Test
+	public void test_buildCoverage(){
+		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE, new HashSet<>());
+		for(Entry<String, CoverInfo> entry : coverage.entrySet()){
+			System.out.println(entry.getKey() + " " + entry.getValue().getFailedCount() + " " + entry.getValue().getPassedCount());
+		}
+	}
+	
 
 	// @Test
 	// public void test_findFailedTestFromFile(){

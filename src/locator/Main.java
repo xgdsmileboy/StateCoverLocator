@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.ui.internal.e4.migration.InfoReader;
 
 import java.util.Set;
 
@@ -171,8 +172,10 @@ public class Main {
 			String[] info = key.split("#");
 			String methodString = Identifier.getMessage(Integer.parseInt(info[0]));
 			stringBuffer.append(methodString);
+			String moreInfo = key.substring(info[0].length() + 1);
 			stringBuffer.append("#");
-			stringBuffer.append(info[1]);
+			stringBuffer.append(moreInfo);
+			
 			stringBuffer.append("\t");
 			stringBuffer.append(entry.getValue().getFailedCount());
 			stringBuffer.append("\t");
