@@ -7,17 +7,11 @@
 
 package locator.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import locator.common.java.Pair;
-import locator.common.java.Subject;
-
 /**
  * @author Jiajun
  * @date Jun 13, 2017
  */
-public class Op2 implements Algorithm {
+public class Op2 extends Algorithm {
 
 	@Override
 	public String getName() {
@@ -28,14 +22,9 @@ public class Op2 implements Algorithm {
 	 * failed(s) − (passed(s) / (totalPassed + 1))
 	 */
 	@Override
-	public List<Pair<String, Float>> compute(Subject subject) {
-		List<Pair<String, Float>> result = new ArrayList<>();
-		String ori_coverage = subject.getCoverageInfoPath() + "/ori_coverage.csv";
-		String pred_coverage = subject.getCoverageInfoPath() + "/pred_coverage.csv";
-		
-		// TODO Auto-generated method stub
-		
-		return result;
+	public double getScore(int fcover, int pcover, int totalFailed,
+			int totalPassed) {
+		return fcover - (pcover * 1.0 / (totalPassed + 1));
 	}
 
 }

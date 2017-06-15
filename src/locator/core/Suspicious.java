@@ -39,10 +39,10 @@ public class Suspicious {
 		for(int i = 0; i < listLen; i++){
 			header.append(seperator);
 			header.append(algorithms.get(i).getName());
-			List<Pair<String, Float>> result = algorithms.get(i).compute(subject);
-			for(Pair<String, Float> pair : result){
+			List<Pair<String, Double>> result = algorithms.get(i).compute(subject);
+			for(Pair<String, Double> pair : result){
 				String line = pair.getFirst();
-				Float susp = pair.getSecond();
+				Double susp = pair.getSecond();
 				if(suspicious.containsKey(line)){
 					suspicious.get(line).set(i, susp);
 				} else {

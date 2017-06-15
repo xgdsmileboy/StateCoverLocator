@@ -17,14 +17,14 @@ import locator.common.util.LevelLogger;
  * @date Jun 13, 2017
  */
 public class CList {
-	private List<Float> _data = null;
+	private List<Double> _data = null;
 	private int _length = 0;
 	
 	public CList(int length) {
 		_length = length;
 		_data = new ArrayList<>();
 		for(int i = 0; i < length; i++){
-			_data.add(0f);
+			_data.add(0d);
 		}
 	}
 	
@@ -32,7 +32,7 @@ public class CList {
 		return _length;
 	}
 	
-	public void set(int index, Float f){
+	public void set(int index, Double f){
 		if(index >= _length){
 			LevelLogger.error("@Clist #set index out of boundary.");
 		} else {
@@ -40,10 +40,10 @@ public class CList {
 		}
 	}
 	
-	public Float get(int index){
+	public Double get(int index){
 		if(index >= _length){
 			LevelLogger.error("@Clist #set index out of boundary.");
-			return Float.valueOf(0f);
+			return Double.valueOf(0f);
 		} else {
 			return _data.get(index);
 		}
