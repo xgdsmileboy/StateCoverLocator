@@ -113,7 +113,11 @@ public class Main {
 		Configure.config_dumper(subject);
 
 		LevelLogger.info("step 1: collect failed test and covered methods.");
+		String testsPath = subject.getHome() + "/all-tests.txt";
+		ExecuteCommand.deleteGivenFile(testsPath);
 		Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
+		int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
+		int totalTestNum = JavaFile.readFileToStringList(testsPath).size();
 		
 		LevelLogger.info("step 2: compute original coverage information.");
 		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods);
@@ -145,7 +149,7 @@ public class Main {
 		algorithms.add(new DStar());
 		algorithms.add(new Barinel());
 		algorithms.add(new Op2());
-		Suspicious.compute(subject, algorithms);
+		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed);
 		
 //		LevelLogger.info("step 5: combine all coverage informaiton");
 //		for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {

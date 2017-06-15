@@ -8,6 +8,7 @@
 package locator.core;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,15 +30,12 @@ public abstract class Algorithm {
 	
 	public abstract double getScore(int fcover, int pcover, int totalFailed, int totalPassed);
 	
-	public List<Pair<String, Double>> compute(Subject subject) {
+	public List<Pair<String, Double>> compute(Subject subject, int totalFailed, int totalPassed) {
 //		Map<String, ArrayList<PredicateCoverage>> predCoverage = new HashMap<String , ArrayList<PredicateCoverage>>();
 		List<Pair<String, Double>> result = new ArrayList<Pair<String, Double>>();
 		String oriCoveragePath = subject.getCoverageInfoPath() + "/ori_coverage.csv";
 		String predCoveragePath = subject.getCoverageInfoPath() + "/pred_coverage.csv";
 
-		int totalFailed = 1; // TODO
-		int totalPassed = 1; // TODO
-		
 		List<String> oriContent = JavaFile.readFileToStringList(oriCoveragePath);
 		for(String line : oriContent) {
 			String parts[] = line.split("\t");
@@ -84,11 +82,28 @@ public abstract class Algorithm {
 			}
 		}
 		
+		List<Pair<Double, String>> contents = new ArrayList<Pair<Double, String>>();
 		for(Pair<String, Double> p : result) {
 			Double predScore = statementScore.get(p.getFirst());
 			double s = predScore == null ? 0 : predScore;
+			contents.add(new Pair<>(p.getSecond() + s,
+					p.getFirst() + "\t" + Double.toString(p.getSecond()) + 
+					"\t" + Double.toString(s) + "\t" + Double.toString(p.getSecond() + s)));
 			p.setSecond(p.getSecond() + s); // add original and pred together
 		}
+		
+		contents.sort(new Comparator<Pair<Double, String>>() {
+			@Override
+			public int compare(Pair<Double, String> o1, Pair<Double, String> o2) {
+				return -Double.compare(o1.getFirst(), o2.getFirst());
+			}
+			
+		});
+		String sortedResult = "line\toriginal\tpredicate_max\ttotal\n";
+		for(Pair<Double, String> line : contents) {
+			sortedResult += line.getSecond() + "\n";
+		}
+		JavaFile.writeStringToFile(subject.getCoverageInfoPath() + "/" + getName() + "_coverage.csv", sortedResult);
 		
 		return result;
 	}
