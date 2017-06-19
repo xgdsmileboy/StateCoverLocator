@@ -43,7 +43,16 @@ import locator.common.util.LevelLogger;
 public class ExprFilter {
 
 	private static Map<String, Pair<Set<String>, String>> _typeInfo = new HashMap<>();
+	
+	private static Set<String> _legalMethods = new HashSet<>();
 
+	static{
+		_legalMethods.add("size");
+		_legalMethods.add("length");
+		_legalMethods.add("toString");
+		// TODO : need to complete
+	}
+	
 	public static void init(Subject subject) {
 		String path = subject.getHome() + subject.getSsrc();
 		List<String> fileList = JavaFile.ergodic(path, new ArrayList<>());
@@ -98,6 +107,12 @@ public class ExprFilter {
 		Set<String> singleVars = visitor.getSingleVariables();
 		for (String var : singleVars) {
 			if (!locaLegalVarNames.contains(var) && !isField(var, currentClassName)) {
+				return false;
+			}
+		}
+		
+		for(String methodName : visitor.getMethods()){
+			if(!_legalMethods.contains(methodName)){
 				return false;
 			}
 		}
@@ -200,6 +215,7 @@ public class ExprFilter {
 		private String _varName = null;
 		private String _type = null;
 		private Set<String> _singleVariableNames = new HashSet<>();
+		private Set<String> _methodInvacations = new HashSet<>();
 
 		public ExprAnalysisVisitor(String varName, String type) {
 			_varName = varName;
@@ -208,6 +224,10 @@ public class ExprFilter {
 
 		public boolean isLegal() {
 			return _legal;
+		}
+		
+		public Set<String> getMethods(){
+			return _methodInvacations;
 		}
 		
 		public Set<String> getSingleVariables(){
@@ -249,8 +269,8 @@ public class ExprFilter {
 			return true;
 		}
 		
-		
 		public boolean visit(MethodInvocation node){
+			_methodInvacations.add(node.getName().getFullyQualifiedName());
 			if(node.getExpression() != null){
 				String var = node.getExpression().toString();
 				String name = node.getName().toString();

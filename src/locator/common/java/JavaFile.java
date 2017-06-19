@@ -43,6 +43,10 @@ public class JavaFile {
 
 	private final static String __name__ = "@JavaFile ";
 
+	
+	public static CompilationUnit genAST(String fileName){
+		return (CompilationUnit)genASTFromSource(readFileToString(fileName), ASTParser.K_COMPILATION_UNIT);
+	}
 	/**
 	 * generate {@code CompilationUnit} from {@code ICompilationUnit}
 	 * 

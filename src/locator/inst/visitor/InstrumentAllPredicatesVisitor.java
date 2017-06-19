@@ -37,7 +37,6 @@ import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.inst.gen.GenStatement;
 

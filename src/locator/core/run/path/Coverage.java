@@ -13,11 +13,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.locks.Condition;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import com.sun.corba.se.impl.orbutil.DenseIntMapImpl;
+import com.sun.org.apache.bcel.internal.generic.LNEG;
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath.Step;
+
+import java_cup.terminal;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.CoverInfo;
@@ -31,6 +37,7 @@ import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.predict.Predictor;
 import locator.inst.visitor.DeInstrumentVisitor;
+import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
 import locator.inst.visitor.NewTestMethodInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
@@ -241,29 +248,69 @@ public class Coverage {
 	 */
 	public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, Set<String> allStatements,
 			Set<Integer> failedTests) {
-		Map<String, CoverInfo> coverage = new HashMap<>();
-		String srcPath = subject.getHome() + subject.getSsrc();
+		ExecuteCommand.copyFolder(subject.getHome() + subject.getSsrc(), subject.getHome() + subject.getSsrc() + "_ori");
 		String testPath = subject.getHome() + subject.getTsrc();
-//		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST);
-//		Instrument.execute(testPath, methodInstrumentVisitor);
-		
 		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests);
 		Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 		
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = getAllPredicates(subject, allStatements);
+		
+		System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
+		printInfo(file2Line2Predicates);
+		
+		MultiLinePredicateInstrumentVisitor instrumentVisitor = new MultiLinePredicateInstrumentVisitor();
+		for(Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()){
+			String fileName = entry.getKey();
+			Map<Integer, List<Pair<String, String>>> allPreds = entry.getValue();
+			CompilationUnit unit = JavaFile.genAST(fileName);
+			instrumentVisitor.setCondition(allPreds);
+			unit.accept(instrumentVisitor);
+			
+			JavaFile.writeStringToFile(fileName, unit.toString());
+		}
+		
+		ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+		// if the instrumented project builds success, and the test
+		// result is the same with original project
+		if(!Runner.testSuite(subject)){
+			System.out.println("Build failed by predicates : ");
+			printInfo(file2Line2Predicates);
+			//should be failed 
+			System.exit(0);
+		}
+		if(!isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)){
+			LevelLogger.info("Cause different test state by predicates :");
+			printInfo(file2Line2Predicates);
+			System.exit(0);
+		}
+		
+		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+		
+		Instrument.execute(testPath, new DeInstrumentVisitor());
+		Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
+		return coverage;
+	}
+	
+	
+	private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject, Set<String> allStatements){
+
 		//parse all object type
 		ExprFilter.init(subject);
-
+		
+		String srcPath = subject.getHome() + subject.getSsrc();
+		
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
 		
 		int allStmtCount = allStatements.size();
 		int currentStmtCount = 1;
+		
 		for (String stmt : allStatements) {
-			
 			LevelLogger.info("======================== [" + currentStmtCount + "/" + allStmtCount + "] statements =================.");
 			currentStmtCount ++;
 			
 			String[] stmtInfo = stmt.split("#");
 			if (stmtInfo.length != 2) {
-				LevelLogger.error(__name__ + "#computePredicateCoverage statement parse error : " + stmt);
+				LevelLogger.error(__name__ + "#getAllPredicates statement parse error : " + stmt);
 				System.exit(0);
 			}
 			Integer methodID = Integer.valueOf(stmtInfo[0]);
@@ -272,7 +319,7 @@ public class Coverage {
 			LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
 			String[] methodInfo = methodString.split("#");
 			if (methodInfo.length < 4) {
-				LevelLogger.error(__name__ + "#computePredicateCoverage method info parse error : " + methodString);
+				LevelLogger.error(__name__ + "#getAllPredicates method info parse error : " + methodString);
 				System.exit(0);
 			}
 			String clazz = methodInfo[0].replace(".", Constant.PATH_SEPARATOR);
@@ -298,7 +345,6 @@ public class Coverage {
 				// the source file will instrumented iteratively, before which
 				// the original source file should be saved
 				ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
-//				PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(null, line);
 				NewPredicateInstrumentVisitor newPredicateInstrumentVisitor = new NewPredicateInstrumentVisitor(null, line);
 				List<Pair<String, String>> legalConditions = new ArrayList<>();
 				// read original file once
@@ -314,7 +360,6 @@ public class Coverage {
 					// instrument one condition statement into source file
 					CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
 							ASTParser.K_COMPILATION_UNIT);
-					
 					
 					List<Pair<String, String>> onePredicate = new ArrayList<>();
 					onePredicate.add(condition);
@@ -333,112 +378,46 @@ public class Coverage {
 					}
 				}
 				
-//				List<String> allPred = new ArrayList<>(conditionsForRightVars);
-//				// instrument one condition statement into source file
-//				CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
-//						ASTParser.K_COMPILATION_UNIT);
-//				newPredicateInstrumentVisitor.setCondition(allPred);
-//				compilationUnit.accept(newPredicateInstrumentVisitor);
-//				JavaFile.writeStringToFile(javaFile, compilationUnit.toString());
-//				Set<String> illegalConditions = new HashSet<>();
-//				boolean success = Runner.compileSubject(subject, illegalConditions);
-//				if(success){
-//					if(illegalConditions.size() > 0){
-//						LevelLogger.error("Find build success flag but find wrong conditions.");
-//						System.exit(0);
-//					}
-//				} else {
-//					if(illegalConditions.size() > 0){
-//						for(String string : allPred){
-//							if(!illegalConditions.contains(string)){
-//								legalConditions.add(string);
-//							}
-//						}
-////						Assert.assertTrue((legalConditions.size() + illegalConditions.size()) == allPred.size());
-//					} else {
-//						LevelLogger.error("Do not find build success flag but find no wrong conditions.");
-//						System.exit(0);
-//					}
-//				}
-				
-				LevelLogger.info("***************[" + legalConditions.size() + "/" + allConditionCount + "] conditions pass compile.*********");
-				
 				if(legalConditions.size() > 0){
-				
-					newPredicateInstrumentVisitor.setCondition(legalConditions);
-					
-					// instrument one condition statement into source file
-					CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
-							ASTParser.K_COMPILATION_UNIT);
-					compilationUnit.accept(newPredicateInstrumentVisitor);
-						
-					JavaFile.writeStringToFile(javaFile, compilationUnit.toString());
-					ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-					// if the instrumented project builds success, and the test
-					// result is the same with original project
-					if(!Runner.testSuite(subject)){
-						StringBuffer stringBuffer = new StringBuffer();
-						for(Pair<String, String> condition : legalConditions){
-							stringBuffer.append(condition.getFirst());
-							stringBuffer.append(", ");
-						}
-						LevelLogger.error("Build failed by predicates : " + stringBuffer.toString());
-						// delete corresponding class file to enable re-compile for next loop
-						ExecuteCommand.deleteGivenFile(binFile);
-						ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
-						//should be failed 
-//						System.exit(0);
-						continue;
+					Map<Integer, List<Pair<String, String>>> line2Predicate = file2Line2Predicates.get(javaFile);
+					if(line2Predicate == null){
+						line2Predicate = new HashMap<>();
 					}
-					if(!isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)){
-						StringBuffer stringBuffer = new StringBuffer();
-						for(Pair<String, String> condition: legalConditions){
-							stringBuffer.append(condition.getFirst());
-							stringBuffer.append(", ");
-						}
-						LevelLogger.info("Cause different test state by predicates :" + stringBuffer.toString());
-						// delete corresponding class file to enable re-compile for next loop
-						ExecuteCommand.deleteGivenFile(binFile);
-						ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
-						continue;
+					List<Pair<String, String>> predicates = line2Predicate.get(line);
+					if(predicates == null){
+						predicates = new ArrayList<>();
 					}
-					
-					// up to now, the instrumented predicate is legal and does not influence the test result
-					// TODO : save current instrumented condition for future study
-					// 
-					// collect predicate coverage information :
-					Set<Integer> onlyCoveredByFailedTest = new HashSet<>();
-					Map<String, CoverInfo> tmpCover = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE, onlyCoveredByFailedTest);
-					
-					if(onlyCoveredByFailedTest.size() > 0){
-						LevelLogger.info("************************************************************************\n");
-						LevelLogger.info("********* !! important, predicates only covered by failed test cases: ");
-						for(Integer condID : onlyCoveredByFailedTest){
-							LevelLogger.info(legalConditions.get(condID));
-						}
-						LevelLogger.info("\n************************************************************************");
-					}
-					for(Entry<String, CoverInfo> entry : tmpCover.entrySet()){
-						String coveredSt = entry.getKey();
-						CoverInfo coverInfo = coverage.get(coveredSt);
-						if(coverInfo != null){
-							coverInfo.combine(entry.getValue());
-						} else {
-							coverage.put(coveredSt, entry.getValue());
-						}
-					}
+					predicates.addAll(legalConditions);
+					line2Predicate.put(line, predicates);
+					file2Line2Predicates.put(javaFile, line2Predicate);
 				}
 				// delete corresponding class file to enable re-compile for next loop.
 				ExecuteCommand.deleteGivenFile(binFile);
 				// restore original source file
 				ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
 			} // end of "conditionsForRightVars != null"
-
 		} // end of "for(String stmt : allStatements)"
-
-		Instrument.execute(testPath, new DeInstrumentVisitor());
-		return coverage;
+		
+		return file2Line2Predicates;
 	}
+	
+	private static void printInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates){
+		System.out.println("\n------------------------begin predicate info------------------------\n");
+		
+		for(Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()){
+			System.out.println("FILE NAME : " + entry.getKey());
+			for(Entry<Integer, List<Pair<String, String>>> line2Preds : entry.getValue().entrySet()){
+				System.out.println("LINE : " + line2Preds.getKey());
+				System.out.print("PREDICATES : ");
+				for(Pair<String, String> pair : line2Preds.getValue()){
+					System.out.print(pair.getFirst() + ",");
+				}
+				System.out.println("\n");
+			}
+		}
+		System.out.println("\n------------------------end predicate info------------------------\n");
+	}
+	
 
 	/**
 	 * test result should have the same failed test cases with the given failed

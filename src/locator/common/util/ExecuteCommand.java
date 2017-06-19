@@ -80,6 +80,11 @@ public class ExecuteCommand {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_CP + source + " " + target };
 		return execute(cmd);
 	}
+	
+	public static String copyFolder(String srcFolder, String tarFolder) {
+		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_CP + "-r " + srcFolder + " " + tarFolder };
+		return execute(cmd);
+	}
 
 	/**
 	 * delete all collected data
