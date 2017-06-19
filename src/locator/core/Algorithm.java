@@ -52,7 +52,7 @@ public abstract class Algorithm {
 		}
 		
 		List<String> predContent = JavaFile.readFileToStringList(predCoveragePath);
-		Map<String, Double> statementScore = new HashMap<String, Double>();
+		Map<String, PredicateCoverage> statementScore = new HashMap<String, PredicateCoverage>();
 		for(String line : predContent) {
 			String parts[] = line.split("\t");
 			if (parts.length != 3) {
@@ -75,20 +75,22 @@ public abstract class Algorithm {
 			predCov.setStatementInfo(statementInfo.substring(0, predPos));
 			predCov.setScore(getScore(fcover, pcover, totalFailed, totalPassed));
 
-			Double previousScore = statementScore.get(predCov.getStatementInfo());
-			if (previousScore == null || predCov.getScore() > previousScore) { // only use the maximum pred score
-				statementScore.put(predCov.getStatementInfo(), predCov.getScore());
+			PredicateCoverage previousPredCov = statementScore.get(predCov.getStatementInfo());
+			if (previousPredCov == null || predCov.getScore() > previousPredCov.getScore()) { // only use the maximum pred score
+				statementScore.put(predCov.getStatementInfo(), predCov);
 				predicate = predCov;
 			}
 		}
 		
 		List<Pair<Double, String>> contents = new ArrayList<Pair<Double, String>>();
 		for(Pair<String, Double> p : result) {
-			Double predScore = statementScore.get(p.getFirst());
-			double s = predScore == null ? 0 : predScore;
+			PredicateCoverage predCov = statementScore.get(p.getFirst());
+			double s = predCov == null ? 0 : predCov.getScore();
+			String predStr = predCov == null ? "" : predCov.getPredicate();
 			contents.add(new Pair<>(p.getSecond() + s,
 					p.getFirst() + "\t" + Double.toString(p.getSecond()) + 
-					"\t" + Double.toString(s) + "\t" + Double.toString(p.getSecond() + s)));
+					"\t" + Double.toString(s) + "\t" + Double.toString(p.getSecond() + s) +
+					"\t" + predStr));
 			p.setSecond(p.getSecond() + s); // add original and pred together
 		}
 		
@@ -99,7 +101,7 @@ public abstract class Algorithm {
 			}
 			
 		});
-		String sortedResult = "line\toriginal\tpredicate_max\ttotal\n";
+		String sortedResult = "line\toriginal_score\tmax_predicate_score\ttotal\tpredicate\n";
 		for(Pair<Double, String> line : contents) {
 			sortedResult += line.getSecond() + "\n";
 		}
