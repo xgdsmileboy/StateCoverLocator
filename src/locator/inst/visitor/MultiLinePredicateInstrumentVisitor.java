@@ -112,6 +112,7 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 		int endLine = _cu.getLineNumber(statement.getStartPosition() + statement.getLength());
 		
 		if(!containLine(startLine, endLine)){
+			result.add(statement);
 			return result;
 		}
 
