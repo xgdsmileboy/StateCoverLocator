@@ -43,7 +43,7 @@ public class Constant {
 	public final static int TRACE_LENGTH_FOR_FAILED_TEST = 20;
 
 	// instrument top K predicates for each variable
-	public final static int TOP_K_PREDICTED_PREDICATE = 2;
+	public final static int TOP_K_PREDICATES_FOR_EACH_VAR = 5;
 
 	// build flags
 	public final static String ANT_BUILD_FAILED = "BUILD FAILED";

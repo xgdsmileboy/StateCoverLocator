@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -56,9 +57,9 @@ public class Predictor {
 	 *         left variable [currently, not use] the second set contains all
 	 *         conditions for right variables
 	 */
-	public static Pair<Set<Pair<String, String>>, Set<Pair<String, String>>> predict(Subject subject, List<String> varFeatures,
+	public static Pair<Map<String, List<Pair<String, String>>>, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
 			List<String> expFeatures, Map<String, String> allLegalVariablesMap) {
-		Pair<Set<Pair<String, String>>, Set<Pair<String, String>>> conditions = new Pair<>();
+		Pair<Map<String, List<Pair<String, String>>>, Map<String, List<Pair<String, String>>>> conditions = new Pair<>();
 		String currentClassName = null;
 		// TODO : return conditions for left variable and right variables
 		File varFile = new File(subject.getVarFeatureOutputPath());
@@ -109,7 +110,7 @@ public class Predictor {
 			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
 			return conditions;
 		}
-		Set<Pair<String, String>> rightConditions = new HashSet<>();
+		Map<String, List<Pair<String, String>>> rightConditions = new HashMap<>();
 		String line = null;
 		try {
 			// filter title
@@ -126,8 +127,14 @@ public class Predictor {
 					String varType = allLegalVariablesMap.get(varName);
 					String prob = columns[3];
 					if(ExprFilter.isLegalExpr(varType, varName, condition, allLegalVariablesMap.keySet(), currentClassName)){
+						List<Pair<String, String>> preds = rightConditions.get(varName);
+						if(preds == null){
+							preds = new ArrayList<>();
+						}
 						Pair<String, String> pair = new Pair<String, String>(condition, prob);
-						rightConditions.add(pair);
+						preds.add(pair);
+						rightConditions.put(varName, preds);
+						
 					} else {
 						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
 					}

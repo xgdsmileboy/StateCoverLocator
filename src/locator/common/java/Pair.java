@@ -66,5 +66,10 @@ public class Pair<A, B> {
 		Pair<?, ?> other = (Pair<?, ?>) obj;
 		return _first.equals(other.getFirst()) && _second.equals(other.getSecond());
 	}
+	
+	@Override
+	public String toString() {
+		return "<" + _first + ", " + _second + ">";
+	}
 
 }

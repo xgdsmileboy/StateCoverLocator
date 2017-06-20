@@ -334,9 +334,9 @@ public class Coverage {
 					line, allLegalVariablesMap);
 			List<String> varFeatures = features.getFirst();
 			List<String> expFeatures = features.getSecond();
-			Pair<Set<Pair<String, String>>, Set<Pair<String, String>>> allConditions = Predictor.predict(subject, varFeatures, expFeatures, allLegalVariablesMap);
+			Pair<Map<String, List<Pair<String, String>>>, Map<String, List<Pair<String, String>>>> allConditions = Predictor.predict(subject, varFeatures, expFeatures, allLegalVariablesMap);
 			// TODO : currently, only instrument predicates for left variables
-			Set<Pair<String, String>> conditionsForRightVars = allConditions.getSecond();
+			Map<String, List<Pair<String, String>>> conditionsForRightVars = allConditions.getSecond();
 			// if predicted conditions are not empty for right variables,
 			// instrument each condition one by one and compute coverage
 			// information for each predicate
@@ -352,29 +352,37 @@ public class Coverage {
 				String binFile = subject.getHome() + subject.getSbin() + "/" + clazz + ".class";
 				int allConditionCount = conditionsForRightVars.size();
 				int currentConditionCount = 1;
-				for (Pair<String, String> condition : conditionsForRightVars) {
-					
-					LevelLogger.info("Validate conditions by compiling : [" + currentConditionCount + "/" + allConditionCount + "].");
-					currentConditionCount ++;
-					
-					// instrument one condition statement into source file
-					CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
-							ASTParser.K_COMPILATION_UNIT);
-					
-					List<Pair<String, String>> onePredicate = new ArrayList<>();
-					onePredicate.add(condition);
-					newPredicateInstrumentVisitor.setCondition(onePredicate);
-					
-					compilationUnit.accept(newPredicateInstrumentVisitor);
-					
-					JavaFile.writeStringToFile(javaFile, compilationUnit.toString());
-					ExecuteCommand.deleteGivenFile(binFile);
-					
-					if(Runner.compileSubject(subject)){
-						legalConditions.add(condition);
-						LevelLogger.info("Passed build : " + condition);
-					} else {
-						LevelLogger.info("Build failed : " + condition);
+				
+				for(Entry<String, List<Pair<String, String>>> entry : conditionsForRightVars.entrySet()){
+					int count = 0;
+					for(Pair<String, String> condition : entry.getValue()){
+						LevelLogger.info("Validate conditions by compiling : [" + currentConditionCount + "/" + allConditionCount + "].");
+						currentConditionCount ++;
+						
+						// instrument one condition statement into source file
+						CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
+								ASTParser.K_COMPILATION_UNIT);
+						
+						List<Pair<String, String>> onePredicate = new ArrayList<>();
+						onePredicate.add(condition);
+						newPredicateInstrumentVisitor.setCondition(onePredicate);
+						
+						compilationUnit.accept(newPredicateInstrumentVisitor);
+						
+						JavaFile.writeStringToFile(javaFile, compilationUnit.toString());
+						ExecuteCommand.deleteGivenFile(binFile);
+						
+						if(Runner.compileSubject(subject)){
+							legalConditions.add(condition);
+							LevelLogger.info("Passed build : " + condition);
+							count ++;
+							// only keep partial predicates "top K"
+							if(count > Constant.TOP_K_PREDICATES_FOR_EACH_VAR){
+								break;
+							}
+						} else {
+							LevelLogger.info("Build failed : " + condition);
+						}
 					}
 				}
 				
