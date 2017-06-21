@@ -63,23 +63,7 @@ public class ExecutionPathBuilder {
 				String lineNum = lineInfo[0];
 				int failNum = Integer.parseInt(lineInfo[1]);
 				int succNum = Integer.parseInt(lineInfo[2]);
-				
-				String[] str = lineNum.split("#");
-				// when collecting the original coverage information, the length
-				// of str should exactly be 2 formatted as methodID#lineNumber
-				// otherwise, it exactly should be 5 items formatted as
-				// methodID#line#condition#prob#conditionCountFlag
-				// for predicted predicates
-				if(str.length > 2){
-					int index = lineNum.lastIndexOf("#");
-					if(index > 0){
-						lineNum = lineNum.substring(0, index);
-					} else {
-						LevelLogger.error(__name__ + "#collectAllExecutedMethods line format error : " + lineNum);
-						System.exit(0);
-					}
-				}
-				
+	
 				CoverInfo coverInfo = coverage.get(lineNum);
 				if(coverInfo != null){
 					coverInfo.passedAdd(succNum);

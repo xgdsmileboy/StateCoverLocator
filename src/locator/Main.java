@@ -42,6 +42,7 @@ import locator.core.Tarantula;
 import locator.core.run.Runner;
 import locator.core.run.path.Collector;
 import locator.core.run.path.Coverage;
+import locator.core.run.path.ExecutionPathBuilder;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
 import sun.security.x509.AlgorithmId;
