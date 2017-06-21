@@ -32,6 +32,7 @@ import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.common.util.ProjectSelector;
 import locator.core.Algorithm;
 import locator.core.Barinel;
 import locator.core.DStar;
@@ -74,6 +75,23 @@ public class Main {
 			file.getParentFile().mkdirs();
 		}
 		FeatureGenerator.generateTrainFeature(srcPath, targetVarPath, targetExprPath);
+		
+		// create necessary directories
+		String clusterDir = outPath + "/cluster";
+		file = new File(clusterDir);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		String predDir = outPath + "/pred";
+		file = new File(predDir);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		String predictResultDir = subject.getPredictResultDir();
+		file = new File(predictResultDir);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
 
 		// train model
 		try {
@@ -85,14 +103,7 @@ public class Main {
 		}
 	}
 
-	private static void proceed() {
-
-		List<Subject> allSubject = Configure.getSubjectFromXML(Constant.HOME + "/res/conf/project.xml");
-		if (allSubject.size() < 1) {
-			LevelLogger.error(__name__ + "#proceed no subjects !");
-			return;
-		}
-		Subject subject = allSubject.get(0);
+	private static void proceed(Subject subject) {
 		
 		LevelLogger.info("------------------ Begin : " + subject.getName() + "_" + subject.getId() + " ----------------");
 		
@@ -124,6 +135,10 @@ public class Main {
 		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods);
 		
 		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
+		File covInfoPath = new File(subject.getCoverageInfoPath());
+		if (!covInfoPath.exists()) {
+			covInfoPath.mkdirs();
+		}
 		printCoverage(coverage, subject.getCoverageInfoPath() + "/ori_coverage.csv");
 
 
@@ -190,21 +205,32 @@ public class Main {
 			JavaFile.writeStringToFile(file, stringBuffer.toString(), true);
 		}
 	}
+	
+	public static void recordSubjects(List<Subject> subjects) {
+		String content = "name\tid\n";
+		for(Subject subject : subjects) {
+			content += subject.getName() + "\t" + Integer.toString(subject.getId()) + "\n";
+		}
+		JavaFile.writeStringToFile(Constant.HOME + "/logs/project.log", content);
+	}
 
 	public static void main(String[] args) {
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
-		String begin = simpleDateFormat.format(new Date());
-		LevelLogger.info("BEGIN : " + begin);
+		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
+		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 30);
+		recordSubjects(allSubjects);
+		for(Subject subject: allSubjects) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
+			String begin = simpleDateFormat.format(new Date());
+			LevelLogger.info("BEGIN : " + begin);
 
-		Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
+			Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
 
-		proceed();
+			proceed(subject);
 
-		String end = simpleDateFormat.format(new Date());
-		LevelLogger.info("BEGIN : " + begin + " - END : " + end);
-		
-		
+			String end = simpleDateFormat.format(new Date());
+			LevelLogger.info("BEGIN : " + begin + " - END : " + end);
+		}
 	}
 
 }

@@ -11,6 +11,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import edu.pku.sei.conditon.simple.SplIfAndVariablePairVisitor;
@@ -67,6 +69,11 @@ public class Constant {
 
 	public static String DUMPER_HOME = null;
 	public static String PROJECT_HOME = null;
+	
+	// project properties
+	public static final String [] PROJECT_NAME = {"chart", "closure", "lang", "math", "time", "mockito"};
+	public static Map<String, ProjectProperties> PROJECT_PROP = new HashMap<String, ProjectProperties>();
+	public static Map<String, Integer> BUG_NUMBER = new HashMap<String, Integer>();
 
 	// system properties
 	/**
@@ -139,6 +146,29 @@ public class Constant {
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_system get properties failed!" + e.getMessage());
 		}
+		
+		try {
+			String filePath = Constant.HOME + "/res/conf/project.properties";
+			InputStream in = new BufferedInputStream(new FileInputStream(filePath));
+			prop.load(in);
+			
+			for(String name : Constant.PROJECT_NAME) {
+				String ssrc = prop.getProperty(name.toUpperCase() + ".SSRC").replace("/", Constant.PATH_SEPARATOR);
+				String tsrc = prop.getProperty(name.toUpperCase() + ".TSRC").replace("/", Constant.PATH_SEPARATOR);
+				String sbin = prop.getProperty(name.toUpperCase() + ".SBIN").replace("/", Constant.PATH_SEPARATOR);
+				String tbin = prop.getProperty(name.toUpperCase() + ".TBIN").replace("/", Constant.PATH_SEPARATOR);
+				Constant.PROJECT_PROP.put(name, new ProjectProperties(ssrc, tsrc, sbin, tbin));
+			}
+			in.close();
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#config_project get properties failed!" + e.getMessage());
+		}
+		
+		BUG_NUMBER.put("chart", 26);
+		BUG_NUMBER.put("closure", 133);
+		BUG_NUMBER.put("lang", 65);
+		BUG_NUMBER.put("math", 106);
+		BUG_NUMBER.put("time", 27);
+		BUG_NUMBER.put("mockito", 38);
 	}
-
 }

@@ -98,6 +98,11 @@ public class Subject {
 		return file;
 	}
 	
+	public String getPredictResultDir() {
+		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id;
+		return file;
+	}
+	
 	public String getCoverageInfoPath() {
 		return Constant.STR_INFO_OUT_PATH + "/" + _name + "/" + _name + "_" + _id;
 	}
