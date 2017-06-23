@@ -44,8 +44,12 @@ class XGExpr(object):
         X_pred = encoded_x
         print(X_pred)
 
-        M_pred = xgb.DMatrix(X_pred)
-        y_prob = model.predict(M_pred)
+        y_prob = list()
+        if (self.__configure__.get_model_type() == 'xgboost'):
+            M_pred = xgb.DMatrix(X_pred)
+            y_prob = model.predict(M_pred)
+        elif (self.__configure__.get_model_type() == 'svm'):
+            y_prob = model.predict_log_proba(X_pred)
 
         print(y_prob.shape)
 

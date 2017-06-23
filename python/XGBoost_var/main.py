@@ -54,9 +54,12 @@ class XGVar(object):
 
         y_pred = y_pred.astype(float)
 
-        M_pred = xgb.DMatrix(X_pred, label=y_pred)
-        y_prob = model.predict(M_pred)
-
+        y_prob = list()
+        if (self.__configure__.get_model_type() == 'xgboost'):
+            M_pred = xgb.DMatrix(X_pred, label=y_pred)
+            y_prob = model.predict(M_pred)
+        elif (self.__configure__.get_model_type() == 'svm'):
+            y_prob = model.predict_log_proba(X_pred)
 
         if os.path.exists(var_predicted):
             os.remove(var_predicted)

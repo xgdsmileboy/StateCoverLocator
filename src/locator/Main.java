@@ -54,8 +54,10 @@ public class Main {
 
 	private static void trainModel(Subject subject) {
 		String modelPath = Constant.STR_ML_HOME + "/model/";
-		File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + ".var_model.pkl");
-		File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() + ".expr_model.pkl");
+		File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + 
+				"_" + Constant.TRAINING_MODEL + ".var_model.pkl");
+		File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() +
+				"_" + Constant.TRAINING_MODEL + ".expr_model.pkl");
 		if (varModel.exists() && exprModel.exists()) {
 			LevelLogger.info("Models are already exist and will be used directly !");
 			return;

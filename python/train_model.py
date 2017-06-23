@@ -7,7 +7,7 @@ import os
 import sys
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("Wrong argument number!")
         sys.exit(1)
     config = Configure(
@@ -17,7 +17,8 @@ if __name__ == '__main__':
         'model/',
         'input/',
         'output/',
-        10
+        10,
+        sys.argv[3]
     )
     cluster = Cluster(config)
     str_encoder, var_column, expr_column  = cluster.cluster_string()

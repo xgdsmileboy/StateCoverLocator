@@ -3,7 +3,7 @@ import sys
 
 class Configure(object):
 
-    def __init__(self, project_name, bug_id, expr_freq, model_path, input_path, output_path, gen_expr_top):
+    def __init__(self, project_name, bug_id, expr_freq, model_path, input_path, output_path, gen_expr_top, model_type):
         self.__project_name__ = project_name
         self.__bug_id__ = bug_id
         self.__expr_freq__ = expr_freq
@@ -13,6 +13,7 @@ class Configure(object):
         self.__gen_expr_top__ = gen_expr_top
         self.__input_base_path__ = input_path + project_name + '/' + project_name + '_' + bug_id
         self.__output_base_path__ = output_path + project_name + '/' + project_name + '_' + bug_id
+        self.__model_type__ = model_type
 
     def get_project_name(self):
         return self.__project_name__
@@ -25,6 +26,9 @@ class Configure(object):
 
     def get_gen_expr_top(self):
         return self.__gen_expr_top__
+
+    def get_model_type(self):
+        return self.__model_type__
 
     def get_raw_var_train_in_file(self):
         # python/input/math/math_1/var/math_1.var.csv
@@ -61,13 +65,13 @@ class Configure(object):
         # python/model/math_1.var_model.pkl
         if not os.path.exists(self.__model_path__):
             os.makedirs(self.__model_path__)
-        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.var_model.pkl'
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '_' + self.__model_type__ + '.var_model.pkl'
 
     def get_expr_model_file(self):
         # python/model/math_1.expr_model.pkl
         if not os.path.exists(self.__model_path__):
             os.makedirs(self.__model_path__)
-        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.expr_model.pkl'
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '_' + self.__model_type__ + '.expr_model.pkl'
 
     def get_var_cluster_model_file(self):
         # python/model/math_1.var_cluster_model.pkl

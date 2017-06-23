@@ -10,6 +10,8 @@ import numpy as np
 import collections
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
+from sklearn import svm
 
 class TrainExpr(object):
 
@@ -94,11 +96,6 @@ class TrainExpr(object):
 
         frequent_X = pd.DataFrame(frequent_X)
         frequent_y = pd.DataFrame(frequent_y)
-        # split the data into training and validing set
-        X_train, X_valid, y_train, y_valid = train_test_split(frequent_X, frequent_y, test_size=0.1, random_state=7)
-        print('Training set size: {}'.format(y_train.shape))
-        print('Validation set size: {}'.format(y_valid.shape))
-
 
         # init the model
         if os.path.exists(model_file):
@@ -112,37 +109,59 @@ class TrainExpr(object):
         # model.fit(X, y)
 
         ### another way to train the model
-        M_train = xgb.DMatrix(X_train, label=y_train)
-        M_valid = xgb.DMatrix(X_valid, label=y_valid)
 
-        params = {
-            'booster': 'gbtree',
-            'objective': training_objective,
-            'max_depth': 6,
-            'eta': 0.1,
-            'gamma': 0.2,
-            'subsample': 0.7,
-            'col_sample_bytree': 0.2,
-            'min_child_weight': 1,
-            'save_period': 0,
-            'eval_metric': 'merror',
-            'silent': 1,
-            'lambda': 2,
-            'num_class': class_num
-        }
-        num_round = 1000
-        early_stop = 30
-        learning_rates = [(num_round - i) / (num_round * 10.0) for i in range(num_round)]
+        if (self.__configure__.get_model_type() == 'xgboost'):
+            # split the data into training and validing set
+            X_train, X_valid, y_train, y_valid = train_test_split(frequent_X, frequent_y, test_size=0.1, random_state=7)
+            print('Training set size: {}'.format(y_train.shape))
+            print('Validation set size: {}'.format(y_valid.shape))
 
-        watchlist = [(M_train, 'train'), (M_valid, 'eval')]
-        model = xgb.Booster()
-        model = xgb.train(params, M_train, num_boost_round=num_round, evals=watchlist,
+            M_train = xgb.DMatrix(X_train, label=y_train)
+            M_valid = xgb.DMatrix(X_valid, label=y_valid)
+
+            params = {
+                'booster': 'gbtree',
+                'objective': training_objective,
+                'max_depth': 6,
+                'eta': 0.1,
+                'gamma': 0.2,
+                'subsample': 0.7,
+                'col_sample_bytree': 0.2,
+                'min_child_weight': 1,
+                'save_period': 0,
+                'eval_metric': 'merror',
+                'silent': 1,
+                'lambda': 2,
+                'num_class': class_num
+            }
+            num_round = 1000
+            early_stop = 30
+            learning_rates = [(num_round - i) / (num_round * 10.0) for i in range(num_round)]
+
+            watchlist = [(M_train, 'train'), (M_valid, 'eval')]
+            model = xgb.Booster()
+            model = xgb.train(params, M_train, num_boost_round=num_round, evals=watchlist,
                         early_stopping_rounds=early_stop, learning_rates=learning_rates)
 
-        # save the best model on the disk
-        with open(model_file, 'w') as f:
-            pk.dump(model, f)
-            print('Model saved in {}'.format(model_file))
+            # save the best model on the disk
+            with open(model_file, 'w') as f:
+                pk.dump(model, f)
+                print('Model saved in {}'.format(model_file))
+        elif (self.__configure__.get_model_type() == 'svm'):
+            cs = (0.1, 1, 10, 100)
+            min_score = 1
+            best_model = svm.SVC(kernel = 'rbf', probability = True, C = 1)
+            for c in cs:
+                model = svm.SVC(kernel = 'rbf', probability = True, C = c)
+                sc = cross_val_score(model, frequent_X, frequent_y, scoring = 'neg_mean_squared_error')
+                if sc.mean() < min_score:
+                    best_model = model
+                    min_score = sc.mean()
+
+            # save the best model on the disk
+            with open(model_file, 'w') as f:
+                pk.dump(best_model, f)
+                print('Model saved in {}'.format(model_file))
 
         # model.save_model(model_file)
         # print('Model saved in {}'.format(model_file))

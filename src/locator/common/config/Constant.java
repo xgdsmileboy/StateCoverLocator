@@ -58,6 +58,10 @@ public class Constant {
 	public final static int FEATURE_VAR_TYPE_INDEX = 6;
 	public final static int FEATURE_FILE_NAME_INDEX = 3;
 	
+	// training model
+	// xgboost or svm
+	public final static String TRAINING_MODEL = "xgboost";
+	
 	// system command
 	public static String COMMAND_CD = null;
 	public static String COMMAND_RM = null;
