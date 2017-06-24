@@ -270,7 +270,8 @@ public class Collector {
 			}
 		}
 
-		Instrument.execute(subjectSourcePath, new DeInstrumentVisitor());
+		ExecuteCommand.copyFolder(subjectSourcePath + "_ori", subjectSourcePath);
+//		Instrument.execute(subjectSourcePath, new DeInstrumentVisitor());
 		return allMethods;
 	}
 

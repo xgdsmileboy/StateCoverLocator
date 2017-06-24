@@ -71,9 +71,11 @@ public class Coverage {
 			System.err.println(__name__ + "Failed to compute original coverage information for build failed.");
 			System.exit(0);
 		}
-		
-		Instrument.execute(src, new DeInstrumentVisitor());
-		Instrument.execute(test, new DeInstrumentVisitor());
+	
+		ExecuteCommand.copyFolder(src + "_ori", src);
+		ExecuteCommand.copyFolder(test + "_ori", test);
+//		Instrument.execute(src, new DeInstrumentVisitor());
+//		Instrument.execute(test, new DeInstrumentVisitor());
 		
 		return ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE, new HashSet<>());
 	}
@@ -248,7 +250,7 @@ public class Coverage {
 	 */
 	public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, Set<String> allStatements,
 			Set<Integer> failedTests) {
-		ExecuteCommand.copyFolder(subject.getHome() + subject.getSsrc(), subject.getHome() + subject.getSsrc() + "_ori");
+		String srcPath = subject.getHome() + subject.getSsrc();
 		String testPath = subject.getHome() + subject.getTsrc();
 		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests);
 		Instrument.execute(testPath, newTestMethodInstrumentVisitor);
@@ -286,8 +288,10 @@ public class Coverage {
 		
 		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
 		
-		Instrument.execute(testPath, new DeInstrumentVisitor());
-		Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
+		ExecuteCommand.copyFolder(srcPath + "_ori", srcPath);
+		ExecuteCommand.copyFolder(testPath + "_ori", testPath);
+//		Instrument.execute(testPath, new DeInstrumentVisitor());
+//		Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
 		return coverage;
 	}
 	
@@ -350,11 +354,11 @@ public class Coverage {
 				// read original file once
 				String source = JavaFile.readFileToString(javaFile);
 				String binFile = subject.getHome() + subject.getSbin() + "/" + clazz + ".class";
-				int allConditionCount = conditionsForRightVars.size();
-				int currentConditionCount = 1;
 				
 				for(Entry<String, List<Pair<String, String>>> entry : conditionsForRightVars.entrySet()){
 					int count = 0;
+					int allConditionCount = entry.getValue().size();
+					int currentConditionCount = 1;
 					for(Pair<String, String> condition : entry.getValue()){
 						LevelLogger.info("Validate conditions by compiling : [" + currentConditionCount + "/" + allConditionCount + "].");
 						currentConditionCount ++;

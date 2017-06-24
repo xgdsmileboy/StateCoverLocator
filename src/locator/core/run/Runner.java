@@ -55,6 +55,7 @@ public class Runner {
 
 	public static boolean testSingleCase(Subject subject, String testcase) {
 		try {
+			LevelLogger.info("TESTING : " + testcase);
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject, testcase));
 		} catch (Exception e) {
 			LevelLogger.fatal(__name__ + "#testSingle run test suite failed !", e);

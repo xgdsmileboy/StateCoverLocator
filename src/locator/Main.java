@@ -114,10 +114,13 @@ public class Main {
 		String auxiliary = path + Constant.PATH_SEPARATOR + "auxiliary/Dumper.java";
 		
 		ExecuteCommand.deleteGivenFile(auxiliary);
-		// preprocess : remove all instrument
-		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
-		Instrument.execute(subject.getHome() + subject.getSsrc(), deInstrumentVisitor);
-		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
+		// deinstrument is useless
+		backupSource(subject);
+		
+//		// preprocess : remove all instrument
+//		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
+//		Instrument.execute(subject.getHome() + subject.getSsrc(), deInstrumentVisitor);
+//		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
 
 		// train predicate prediction model
 		trainModel(subject);
@@ -127,14 +130,14 @@ public class Main {
 		Configure.config_dumper(subject);
 
 		LevelLogger.info("step 1: collect failed test and covered methods.");
-		String testsPath = subject.getHome() + "/all-tests.txt";
-		ExecuteCommand.deleteGivenFile(testsPath);
 		Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
 		int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
-		int totalTestNum = JavaFile.readFileToStringList(testsPath).size();
 		
 		LevelLogger.info("step 2: compute original coverage information.");
+		String testsPath = subject.getHome() + "/all-tests.txt";
+		ExecuteCommand.deleteGivenFile(testsPath);
 		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods);
+		int totalTestNum = JavaFile.readFileToStringList(testsPath).size();
 		
 		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
 		File covInfoPath = new File(subject.getCoverageInfoPath());
@@ -184,6 +187,23 @@ public class Main {
 //				+ subject.getId() + "/coverage.csv");
 	}
 
+	private static void backupSource(Subject subject){
+		String src = subject.getHome() + subject.getSsrc();
+		File file = new File(src + "_ori");
+		if(file.exists()){
+			ExecuteCommand.copyFolder(src + "_ori", src);
+		} else {
+			ExecuteCommand.copyFile(src, src + "_ori");
+		}
+		String test = subject.getHome() + subject.getTsrc();
+		File tfile = new File(test + "_ori");
+		if(tfile.exists()){
+			ExecuteCommand.copyFolder(test + "_ori", test);
+		} else {
+			ExecuteCommand.copyFolder(test, test + "_ori");
+		}
+	}
+	
 	private static void printCoverage(Map<String, CoverInfo> coverage, String filePath) {
 		File file = new File(filePath);
 		String header = "line" + "\t" + "fcover" + "\t" + "pcover" + "\n";
