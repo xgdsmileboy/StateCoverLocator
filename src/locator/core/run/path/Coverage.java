@@ -66,7 +66,9 @@ public class Coverage {
 		
 		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTestAndCoveredMethods.getFirst());
 		Instrument.execute(test, newTestMethodInstrumentVisitor);
-		
+		// delete all bin file to make it re-compiled
+		ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getSbin());
+		ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getTbin());
 		if(!Runner.testSuite(subject)){
 			System.err.println(__name__ + "Failed to compute original coverage information for build failed.");
 			System.exit(0);
@@ -270,7 +272,9 @@ public class Coverage {
 			
 			JavaFile.writeStringToFile(fileName, unit.toString());
 		}
-		
+		// delete all bin file to make it re-compiled
+		ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getSbin());
+		ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getTbin());
 		ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
 		// if the instrumented project builds success, and the test
 		// result is the same with original project

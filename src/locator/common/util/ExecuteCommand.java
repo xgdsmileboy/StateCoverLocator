@@ -101,6 +101,11 @@ public class ExecuteCommand {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_RM + file };
 		return execute(cmd);
 	}
+	
+	public static String deleteGivenFolder(String folder) {
+		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_RM + "-rf " + folder };
+		return execute(cmd);
+	}
 
 	/**
 	 * delete all collected data
