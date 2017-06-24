@@ -403,6 +403,9 @@ public class FeatureExtraction {
 		}
 		
 		private void parseName(ASTNode node, int blockID, int line) {
+			if(node == null){
+				return;
+			}
 			// System.out.println(node);
 			CollectSimpleName collectSimpleName = new CollectSimpleName();
 			node.accept(collectSimpleName);

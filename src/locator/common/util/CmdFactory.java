@@ -84,6 +84,8 @@ public class CmdFactory {
 		stringBuffer.append(subject.getName());
 		stringBuffer.append(" ");
 		stringBuffer.append(subject.getId());
+		stringBuffer.append(" ");
+		stringBuffer.append(Constant.TRAINING_MODEL);
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
 	}
@@ -104,6 +106,8 @@ public class CmdFactory {
 		stringBuffer.append(subject.getName());
 		stringBuffer.append(" ");
 		stringBuffer.append(subject.getId());
+		stringBuffer.append(" ");
+		stringBuffer.append(Constant.TRAINING_MODEL);
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
 	}
