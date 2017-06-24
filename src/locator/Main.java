@@ -193,7 +193,7 @@ public class Main {
 		if(file.exists()){
 			ExecuteCommand.copyFolder(src + "_ori", src);
 		} else {
-			ExecuteCommand.copyFile(src, src + "_ori");
+			ExecuteCommand.copyFolder(src, src + "_ori");
 		}
 		String test = subject.getHome() + subject.getTsrc();
 		File tfile = new File(test + "_ori");
