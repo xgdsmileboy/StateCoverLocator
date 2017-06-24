@@ -59,7 +59,7 @@ public class Constant {
 	public final static int FEATURE_FILE_NAME_INDEX = 3;
 	
 	// training model
-	// xgboost or svm
+	// xgboost, svm or randomforest
 	public final static String TRAINING_MODEL = "xgboost";
 	
 	// system command

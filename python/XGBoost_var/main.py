@@ -24,6 +24,8 @@ class XGVar(object):
     def predict_vars(self, encoded_var):
         # encoded_oracle_var =  oracle[0:-4]+ '.var_encoded.csv'
         var_predicted = self.__configure__.get_var_pred_out_file()
+        if os.path.exists(var_predicted):
+            os.remove(var_predicted)
 
         raw_var_path = self.__configure__.get_raw_var_pred_in_file()
         raw_var = pd.read_csv(raw_var_path, sep='\t', header=0)
@@ -54,23 +56,30 @@ class XGVar(object):
 
         y_pred = y_pred.astype(float)
 
-        y_prob = list()
         if (self.__configure__.get_model_type() == 'xgboost'):
             M_pred = xgb.DMatrix(X_pred, label=y_pred)
             y_prob = model.predict(M_pred)
-        elif (self.__configure__.get_model_type() == 'svm'):
-            y_prob = model.predict_log_proba(X_pred)
 
-        if os.path.exists(var_predicted):
-            os.remove(var_predicted)
+            with open(var_predicted, 'w') as f:
+                for i in range(0, X_pred.shape[0]):
+                    f.write('%s\t' % if_ids[i])
+                    f.write('%s\t' % varnames[i])
+                    f.write('%.4f' % y_prob[i])
+                    f.write('\n')
+        # elif (self.__configure__.get_model_type() == 'svm'):
+            # y_prob = model.predict_proba(X_pred)
+        elif (self.__configure__.get_model_type() == 'randomforest'):
+            y_prob = model.predict_proba(X_pred)
+            print(y_prob)
+            print(model.classes_)
+            one_pos = 1 - model.classes_[0]
 
-        with open(var_predicted, 'w') as f:
-            for i in range(0, X_pred.shape[0]):
-                f.write('%s\t' % if_ids[i])
-                f.write('%s\t' % varnames[i])
-                f.write('%.4f' % y_prob[i])
-                f.write('\n')
-
+            with open(var_predicted, 'w') as f:
+                for i in range(0, X_pred.shape[0]):
+                    f.write('%s\t' % if_ids[i])
+                    f.write('%s\t' % varnames[i])
+                    f.write('%.4f' % y_prob[i][one_pos])
+                    f.write('\n')
 
     def run_predict_vars(self, str_encoder, kmeans_model):
 

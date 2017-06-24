@@ -11,6 +11,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn import svm
+from sklearn.ensemble import RandomForestClassifier
 
 class Train(object):
 
@@ -117,20 +118,27 @@ class Train(object):
             with open(model_file, 'w') as f:
                 pk.dump(model, f)
                 print('Model saved in {}'.format(model_file))
-        elif (self.__configure__.get_model_type() == 'svm'):
-            cs = (0.1, 1, 10, 100)
-            min_score = 1
-            best_model = svm.SVC(kernel = 'rbf', probability = True, C = 1)
-            for c in cs:
-                model = svm.SVC(kernel = 'rbf', probability = True, C = c)
-                sc = cross_val_score(model, encoded_X, encoded_Y, scoring = 'neg_mean_squared_error')
-                if sc.mean() < min_score:
-                    best_model = model
-                    min_score = sc.mean()
+        # elif (self.__configure__.get_model_type() == 'svm'):
+        #     cs = (0.1, 1, 10, 100)
+        #     min_score = 1
+        #     best_model = svm.SVC(kernel = 'rbf', probability = True, C = 1)
+        #     for c in cs:
+        #         model = svm.SVC(kernel = 'rbf', probability = True, C = c)
+        #         sc = cross_val_score(model, encoded_X, encoded_Y, scoring = 'neg_mean_squared_error')
+        #         if sc.mean() < min_score:
+        #             best_model = model
+        #             min_score = sc.mean()
+        #     best_model.fit(encoded_X, encoded_Y);
 
-            # save the best model on the disk
+        #     # save the best model on the disk
+        #     with open(model_file, 'w') as f:
+        #         pk.dump(best_model, f)
+        #         print('Model saved in {}'.format(model_file))
+        elif (self.__configure__.get_model_type() == 'randomforest'):
+            model = RandomForestClassifier(random_state = 0)
+            model.fit(encoded_X, encoded_Y)
             with open(model_file, 'w') as f:
-                pk.dump(best_model, f)
+                pk.dump(model, f)
                 print('Model saved in {}'.format(model_file))
 
         end_time = datetime.datetime.now()

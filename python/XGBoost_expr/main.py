@@ -27,6 +27,8 @@ class XGExpr(object):
 
         expr_predicted = self.__configure__.get_expr_pred_out_file()
         expr_model_path = self.__configure__.get_expr_model_file()
+        if os.path.exists(expr_predicted):
+            os.remove(expr_predicted)
 
         top = self.__configure__.get_gen_expr_top()
 
@@ -48,14 +50,12 @@ class XGExpr(object):
         if (self.__configure__.get_model_type() == 'xgboost'):
             M_pred = xgb.DMatrix(X_pred)
             y_prob = model.predict(M_pred)
-        elif (self.__configure__.get_model_type() == 'svm'):
-            y_prob = model.predict_log_proba(X_pred)
+        # elif (self.__configure__.get_model_type() == 'svm'):
+            # y_prob = model.predict_log_proba(X_pred)
+        elif (self.__configure__.get_model_type() == 'randomforest'):
+            y_prob = model.predict_proba(X_pred)
 
-        print(y_prob.shape)
-
-        ## save the results
-        if os.path.exists(expr_predicted):
-            os.remove(expr_predicted)
+        ## save the result
         with open(expr_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
                 f.write('%s\t' % dataset[i, 0])
@@ -80,7 +80,6 @@ class XGExpr(object):
                     f.write('{}'.format(original))  # predicate
                     f.write('\t%f' % line[alts[j]])
                     f.write('\n')
-
 
     def encode_expr(self, str_encoder, kmeans_model):
 
