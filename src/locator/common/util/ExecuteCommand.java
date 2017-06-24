@@ -17,6 +17,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+
 import locator.common.config.Constant;
 import locator.common.java.Subject;
 
@@ -82,8 +84,12 @@ public class ExecuteCommand {
 	}
 	
 	public static String copyFolder(String srcFolder, String tarFolder) {
-		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_CP + "-r " + srcFolder + " " + tarFolder };
-		return execute(cmd);
+		try {
+			FileUtils.copyDirectory(new File(srcFolder), new File(tarFolder));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	/**

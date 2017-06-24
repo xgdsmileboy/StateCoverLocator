@@ -13,12 +13,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Method;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.CmdFactory;
@@ -26,7 +24,6 @@ import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
-import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MethodInstrumentVisitor;
 
 /**
