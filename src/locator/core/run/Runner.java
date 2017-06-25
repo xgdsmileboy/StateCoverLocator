@@ -94,10 +94,10 @@ public class Runner {
 			LevelLogger.fatal(__name__ + "#buildSubject run build subject failed !", e);
 		}
 		
-		boolean success = false;
+		boolean success = true;
 		for(int i = message.size() - 1; i >= 0; i--){
-			if (message.get(i).contains(Constant.ANT_BUILD_SUCCESS)) {
-				success = true;
+			if (message.get(i).contains(Constant.ANT_BUILD_FAILED)) {
+				success = false;
 				break;
 			}
 		}
