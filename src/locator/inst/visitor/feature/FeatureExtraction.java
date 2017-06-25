@@ -288,8 +288,10 @@ public class FeatureExtraction {
 //					}
 			} else if (statement instanceof ForStatement) {
 				ForStatement forStatement = (ForStatement) statement;
-				int line = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
-				parseName(forStatement.getExpression(), currentBlockID, line);
+				if(forStatement.getExpression() != null){
+					int line = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
+					parseName(forStatement.getExpression(), currentBlockID, line);
+				}
 				process(forStatement.getBody());
 //					if (line == _line) {
 //						return false;
