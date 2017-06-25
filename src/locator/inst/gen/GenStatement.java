@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.FieldAccess;
@@ -14,8 +15,10 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.TryStatement;
 
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
@@ -120,7 +123,7 @@ public class GenStatement {
 	}
 	
 	
-	public static IfStatement newGenPredicateStatement(String condition, String message) {
+	public static TryStatement newGenPredicateStatement(String condition, String message) {
 		
 		// condition
 		Expression conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
@@ -139,13 +142,39 @@ public class GenStatement {
 		methodInvocation.arguments().add(stringLiteral);
 		ExpressionStatement invokeStatement = ast.newExpressionStatement(methodInvocation);
 		
-		// if(auxiliary.Dumper.PRINT && condition){
+		// if(condition){
 		//     auxiliary.Dumper.write(message);
 		// }
 		Block thenBlock = ast.newBlock();
 		thenBlock.statements().add(invokeStatement);
 		ifStatement.setThenStatement(thenBlock);
-		return ifStatement;
+		
+		// try{
+		//    if(condition){
+		//        auxiliary.Dumper.write(message);
+		//    }
+		// }
+		Block tryBody = ast.newBlock();
+		tryBody.statements().add(ifStatement);
+		TryStatement tryStatement = ast.newTryStatement();
+		tryStatement.setBody(tryBody);
+		
+		// catch (Exception e){}
+		CatchClause catchClause = ast.newCatchClause();
+		SingleVariableDeclaration singleVariableDeclaration = ast.newSingleVariableDeclaration();
+		singleVariableDeclaration.setName(ast.newSimpleName("e"));
+		singleVariableDeclaration.setType(ast.newSimpleType(ast.newSimpleName("Exception")));
+		catchClause.setException(singleVariableDeclaration);
+		catchClause.setBody(ast.newBlock());
+		
+		// try{
+		//    if(condition){
+		//        auxiliary.Dumper.write(message);
+		//    }
+		// }catch (Exception e){}
+		tryStatement.catchClauses().add(catchClause);
+		
+		return tryStatement;
 	}
 
 }
