@@ -19,6 +19,7 @@ import java.util.Stack;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BreakStatement;
@@ -30,6 +31,7 @@ import org.eclipse.jdt.core.dom.EmptyStatement;
 import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.LabeledStatement;
@@ -39,6 +41,7 @@ import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SwitchCase;
@@ -56,6 +59,7 @@ import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
+import soot.coffi.field_info;
 
 /**
  * @author Jiajun
@@ -208,7 +212,7 @@ public class FeatureExtraction {
 						}
 					}
 				} else {
-					if(useLine != 0){
+					if(useLine == 0){
 						retVars.add(varName);
 					}
 				}
@@ -350,7 +354,7 @@ public class FeatureExtraction {
 		}
 	
 		private boolean isChildBlock(Integer child, Integer parent){
-			if(child == parent || parent == 0){
+			if(child.equals(parent) || parent == 0){
 				return true;
 			}
 			Integer realParent = _blockParent.get(child);
@@ -489,6 +493,10 @@ public class FeatureExtraction {
 						String name = vdf.getName().getFullyQualifiedName();
 						defVariables.add(name);
 						rightVariables.remove(name);
+					} else if(object instanceof SingleVariableDeclaration){
+						SingleVariableDeclaration svd = (SingleVariableDeclaration) object;
+						String name = svd.getName().getFullyQualifiedName();
+						defVariables.add(name);
 					}
 				}
 				return true;
@@ -503,6 +511,22 @@ public class FeatureExtraction {
 						name = name.substring(0, index);
 					}
 					if (!defVariables.contains(name)) {
+						leftVariable = name;
+					}
+				} else if(expression instanceof ArrayAccess){
+					ArrayAccess access = (ArrayAccess) expression;
+					String name = access.getArray().toString();
+					int index = name.lastIndexOf(".");
+					if(index > 0){
+						name = name.substring(index + 1, name.length());
+					}
+					if(!defVariables.contains(name)){
+						leftVariable = name;
+					}
+				} else if(expression instanceof FieldAccess){
+					FieldAccess fieldAccess = (FieldAccess) expression;
+					String name = fieldAccess.getName().getFullyQualifiedName();
+					if(!defVariables.contains(name)){
 						leftVariable = name;
 					}
 				}

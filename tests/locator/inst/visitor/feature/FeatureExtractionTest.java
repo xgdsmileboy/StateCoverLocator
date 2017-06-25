@@ -22,6 +22,22 @@ import locator.common.java.Pair;
 public class FeatureExtractionTest {
 
 	@Test
+	public void test2(){
+		String path = "/Users/Jiajun/Code/Defects4J/projects/math/math_65_buggy/src/main/java";
+		String relJavaPath = "org/apache/commons/math/linear/LUDecompositionImpl.java";
+		int line = 126;
+		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, line, new HashMap<>());
+		System.out.println("Variables : ");
+		for (String string : vars.getFirst()) {
+			System.out.println(string);
+		}
+		System.out.println("Expressions : ");
+		for (String string : vars.getSecond()) {
+			System.out.println(string);
+		}
+	}
+	
+	@Test
 	public void test_print() {
 		String path = System.getProperty("user.dir") + "/res/junitRes";
 		String relJavaPath = "BigFraction.java";
