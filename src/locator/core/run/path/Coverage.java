@@ -70,6 +70,7 @@ public class Coverage {
 		// delete all bin file to make it re-compiled
 		ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getSbin());
 		ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getTbin());
+		ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
 		if(!Runner.testSuite(subject)){
 			System.err.println(__name__ + "Failed to compute original coverage information for build failed.");
 			System.exit(0);
