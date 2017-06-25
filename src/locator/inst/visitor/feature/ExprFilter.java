@@ -27,6 +27,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Type;
@@ -103,6 +104,9 @@ public class ExprFilter {
 		
 		ExprAnalysisVisitor visitor = new ExprAnalysisVisitor(varName, type);
 		node.accept(visitor);
+		if(visitor.hasSideEffect()){
+			return false;
+		}
 		// user-defined class
 		if (_typeInfo.containsKey(type) && !visitor.isLegal()) {
 			return false;
@@ -215,6 +219,7 @@ public class ExprFilter {
 
 	static class ExprAnalysisVisitor extends ASTVisitor {
 		private boolean _legal = true;
+		private boolean _hasSideEffect = false;
 		private String _varName = null;
 		private String _type = null;
 		private Set<String> _singleVariableNames = new HashSet<>();
@@ -227,6 +232,10 @@ public class ExprFilter {
 
 		public boolean isLegal() {
 			return _legal;
+		}
+		
+		public boolean hasSideEffect(){
+			return _hasSideEffect;
 		}
 		
 		public Set<String> getMethods(){
@@ -299,13 +308,22 @@ public class ExprFilter {
 			return true;
 		}
 		
+		public boolean visit(PrefixExpression node) {
+			if (node.getOperator().equals(PrefixExpression.Operator.DECREMENT)
+					|| node.getOperator().equals(PrefixExpression.Operator.INCREMENT)) {
+				_hasSideEffect = false;
+				return false;
+			}
+			return true;
+		}
+		
 		public boolean visit(PostfixExpression node){
-			_legal = false;
+			_hasSideEffect = false;
 			return false;
 		}
 		
 		public boolean visit(Assignment node){
-			_legal = false;
+			_hasSideEffect = false;
 			return false;
 		}
 		
@@ -328,5 +346,4 @@ public class ExprFilter {
 		}
 
 	}
-	
 }
