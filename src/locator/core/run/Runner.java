@@ -124,7 +124,7 @@ public class Runner {
 		}
 
 		String line = null;
-		boolean buildSuccess = false;
+		boolean buildSuccess = true;
 		try {
 			while ((line = bReader.readLine()) != null) {
 				if (line.startsWith(Constant.ANT_BUILD_SUCCESS)) {
