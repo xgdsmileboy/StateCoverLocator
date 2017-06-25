@@ -116,6 +116,7 @@ public class Main {
 		ExecuteCommand.deleteGivenFile(auxiliary);
 		// deinstrument is useless
 		backupSource(subject);
+		Identifier.resetAll();
 		
 //		// preprocess : remove all instrument
 //		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
