@@ -7,6 +7,7 @@
 
 package locator.core.run.path;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -336,6 +337,14 @@ public class Coverage {
 				clazz = clazz.substring(0, index);
 			}
 			String relJavaPath = clazz + ".java";
+			
+			String fileName = srcPath + "/" + relJavaPath;
+			File file = new File(fileName);
+			if(!file.exists()){
+				LevelLogger.error("Cannot find file : " + fileName);
+				continue;
+			}
+			
 			// <varName, type>
 			Map<String, String> allLegalVariablesMap = new HashMap<>();
 			Pair<List<String>, List<String>> features = FeatureExtraction.extractAllFeatures(srcPath, relJavaPath,
