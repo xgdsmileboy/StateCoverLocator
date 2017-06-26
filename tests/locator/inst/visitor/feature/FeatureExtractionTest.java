@@ -24,8 +24,8 @@ public class FeatureExtractionTest {
 	@Test
 	public void test2(){
 		String path = "/Users/Jiajun/Code/Defects4J/projects/math/math_65_buggy/src/main/java";
-		String relJavaPath = "org/apache/commons/math/linear/LUDecompositionImpl.java";
-		int line = 126;
+		String relJavaPath = "org/apache/commons/math/linear/Array2DRowRealMatrix.java";
+		int line = 132;
 		Pair<List<String>, List<String>> vars = FeatureExtraction.extractAllFeatures(path, relJavaPath, line, new HashMap<>());
 		System.out.println("Variables : ");
 		for (String string : vars.getFirst()) {

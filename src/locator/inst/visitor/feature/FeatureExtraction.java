@@ -50,6 +50,7 @@ import org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.TypeDeclarationStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
@@ -59,6 +60,7 @@ import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
+import soot.coffi.constant_element_value;
 import soot.coffi.field_info;
 
 /**
@@ -166,6 +168,7 @@ public class FeatureExtraction {
 			for(String varName : _rightVars){
 				// find define place
 				Integer defBlock = 0;
+				Integer defLine = 0;
 				Set<Pair<Integer, Integer>> defs = _varDef.get(varName);
 				if(defs != null){
 					for(Pair<Integer, Integer> place : defs){
@@ -175,9 +178,13 @@ public class FeatureExtraction {
 						// define place should be second "a" but not first one;
 						if(isChildBlock(_blockID, place.getFirst())){
 							defBlock = place.getFirst();
+							defLine = place.getSecond();
 							break;
 						}
 					}
+				}
+				if(defLine == _line){
+					continue;
 				}
 				// find last use place between define place and observe place in the same scope
 				Integer useLine = 0;
@@ -236,7 +243,6 @@ public class FeatureExtraction {
 				return true;
 			}
 			int start = _cu.getLineNumber(statement.getStartPosition());
-//			int end = _cu.getLineNumber(statement.getStartPosition() + statement.getLength());
 			Integer currentBlockID = 0;
 			if(!_blockStack.isEmpty()){
 				currentBlockID = _blockStack.peek();
@@ -254,78 +260,65 @@ public class FeatureExtraction {
 					|| statement instanceof EmptyStatement || statement instanceof LabeledStatement
 					|| statement instanceof ThrowStatement || statement instanceof SwitchCase
 					|| statement instanceof TryStatement || statement instanceof TypeDeclarationStatement) {
-//					if(start <= _line && _line <= end){
-//						return false;
-//					}
 			} else if (statement instanceof ConstructorInvocation) {
 				ConstructorInvocation constructorInvocation = (ConstructorInvocation) statement;
 				for (Object object : constructorInvocation.arguments()) {
 					parseName((ASTNode) object, currentBlockID, start);
 				}
-//					if(start == _line){
-//						return false;
-//					}
 			} else if (statement instanceof DoStatement) {
 				DoStatement doStatement = (DoStatement) statement;
 				int line = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
 				parseName(doStatement.getExpression(), currentBlockID, line);
 				process(doStatement.getBody());
-//					if (line == _line) {
-//						return false;
-//					}
 			} else if (statement instanceof EnhancedForStatement) {
 				EnhancedForStatement enhancedForStatement = (EnhancedForStatement) statement;
 				int line = _cu.getLineNumber(enhancedForStatement.getExpression().getStartPosition());
 				parseName(enhancedForStatement.getExpression(), currentBlockID, line);
 				process(enhancedForStatement.getBody());
-//					if (line == _line) {
-//						return false;
-//					}
 			} else if (statement instanceof ExpressionStatement){
 				parseName(statement, currentBlockID, start);
-//					if(start == _line){
-//						return false;
-//					}
 			} else if (statement instanceof ForStatement) {
 				ForStatement forStatement = (ForStatement) statement;
+				if(forStatement.initializers() != null){
+					for(Object object : forStatement.initializers()){
+						ASTNode node = (ASTNode) object;
+						int line = _cu.getLineNumber(node.getStartPosition());
+						parseName(node, currentBlockID, line);
+					}
+				}
+				
 				if(forStatement.getExpression() != null){
 					int line = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
 					parseName(forStatement.getExpression(), currentBlockID, line);
 				}
+				
+				if(forStatement.updaters() != null){
+					for(Object object : forStatement.updaters()){
+						ASTNode node = (ASTNode) object;
+						int line = _cu.getLineNumber(node.getStartPosition());
+						parseName(node, currentBlockID, line);
+					}
+				}
+				
 				process(forStatement.getBody());
-//					if (line == _line) {
-//						return false;
-//					}
 			} else if (statement instanceof IfStatement) {
 				IfStatement ifStatement = (IfStatement) statement;
 				int line = _cu.getLineNumber(ifStatement.getExpression().getStartPosition());
 				parseName(ifStatement.getExpression(), currentBlockID, line);
 				process(ifStatement.getThenStatement());
 				process(ifStatement.getElseStatement());
-//					if (line == _line) {
-//						return false;
-//					}
 			} else if (statement instanceof ReturnStatement) {
 				ReturnStatement returnStatement = (ReturnStatement) statement;
 				parseName(returnStatement.getExpression(), currentBlockID, start);
-//					if(start == _line){
-//						return false;
-//					}
 			} else if (statement instanceof SuperConstructorInvocation) {
 				SuperConstructorInvocation sCI = (SuperConstructorInvocation) statement;
 				for (Object object : sCI.arguments()) {
 					parseName((ASTNode) object, currentBlockID, start);
 				}
-//					if(start == _line){
-//						return false;
-//					}
 			} else if (statement instanceof SwitchStatement) {
 				SwitchStatement switchStatement = (SwitchStatement) statement;
 				int line = _cu.getLineNumber(switchStatement.getExpression().getStartPosition());
 				parseName(switchStatement.getExpression(), currentBlockID, line);
-//					if (line == _line) {
-//						return false;
-//					}
 				for (Object object : switchStatement.statements()) {
 					return process((ASTNode) object);
 				}
@@ -334,23 +327,14 @@ public class FeatureExtraction {
 				int line = _cu.getLineNumber(scs.getExpression().getStartPosition());
 				parseName(scs.getExpression(), currentBlockID, line);
 				process(scs.getBody());
-//					if (line == _line) {
-//						return false;
-//					}
 			} else if (statement instanceof VariableDeclarationStatement) {
 				VariableDeclarationStatement vds = (VariableDeclarationStatement) statement;
 				parseName(vds, currentBlockID, start);
-//					if(start == _line){
-//						return false;
-//					}
 			} else if (statement instanceof WhileStatement) {
 				WhileStatement whileStatement = (WhileStatement) statement;
 				int line = _cu.getLineNumber(whileStatement.getExpression().getStartPosition());
 				parseName(whileStatement.getExpression(), currentBlockID, line);
 				process(whileStatement.getBody());
-//					if (line == _line) {
-//						return false;
-//					}
 			}
 			return true;
 		}
@@ -487,22 +471,51 @@ public class FeatureExtraction {
 				}
 				return true;
 			}
-
-			public boolean visit(VariableDeclarationStatement node) {
-				for (Object object : node.fragments()) {
-					if (object instanceof VariableDeclarationFragment) {
-						VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
-						String name = vdf.getName().getFullyQualifiedName();
-						defVariables.add(name);
-						rightVariables.remove(name);
-					} else if(object instanceof SingleVariableDeclaration){
-						SingleVariableDeclaration svd = (SingleVariableDeclaration) object;
-						String name = svd.getName().getFullyQualifiedName();
-						defVariables.add(name);
-					}
-				}
+			
+			public boolean visit(VariableDeclarationFragment vdf){
+				String name = vdf.getName().getFullyQualifiedName();
+				defVariables.add(name);
+				rightVariables.remove(name);
 				return true;
 			}
+			
+			public boolean visit(SingleVariableDeclaration svd){
+				String name = svd.getName().getFullyQualifiedName();
+				defVariables.add(name);
+				return true;
+			}
+			
+//			public boolean visit(VariableDeclarationExpression node){
+//				for (Object object : node.fragments()) {
+//					if (object instanceof VariableDeclarationFragment) {
+//						VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
+//						String name = vdf.getName().getFullyQualifiedName();
+//						defVariables.add(name);
+//						rightVariables.remove(name);
+//					} else if(object instanceof SingleVariableDeclaration){
+//						SingleVariableDeclaration svd = (SingleVariableDeclaration) object;
+//						String name = svd.getName().getFullyQualifiedName();
+//						defVariables.add(name);
+//					}
+//				}
+//				return true;
+//			}
+//
+//			public boolean visit(VariableDeclarationStatement node) {
+//				for (Object object : node.fragments()) {
+//					if (object instanceof VariableDeclarationFragment) {
+//						VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
+//						String name = vdf.getName().getFullyQualifiedName();
+//						defVariables.add(name);
+//						rightVariables.remove(name);
+//					} else if(object instanceof SingleVariableDeclaration){
+//						SingleVariableDeclaration svd = (SingleVariableDeclaration) object;
+//						String name = svd.getName().getFullyQualifiedName();
+//						defVariables.add(name);
+//					}
+//				}
+//				return true;
+//			}
 
 			public boolean visit(Assignment node) {
 				Expression expression = node.getLeftHandSide();
