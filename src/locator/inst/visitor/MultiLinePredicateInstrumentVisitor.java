@@ -163,8 +163,18 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 		} else if (statement instanceof ForStatement) {
 
 			ForStatement forStatement = (ForStatement) statement;
-			int lineNumber = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
-			result.addAll(genInstrument(methodID, lineNumber));
+			
+			int lineNumber = -1;
+			if(forStatement.getExpression() != null){
+				lineNumber = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
+			} else if(forStatement.initializers() != null && forStatement.initializers().size() > 0){
+				lineNumber = _cu.getLineNumber(((ASTNode)forStatement.initializers().get(0)).getStartPosition());
+			} else if(forStatement.updaters() != null && forStatement.updaters().size() > 0){
+				lineNumber = _cu.getLineNumber(((ASTNode)forStatement.updaters().get(0)).getStartPosition());
+			}
+			if(lineNumber != -1){
+				result.addAll(genInstrument(methodID, lineNumber));
+			}
 
 			Statement forBody = forStatement.getBody();
 

@@ -214,7 +214,15 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 
 			ForStatement forStatement = (ForStatement) statement;
 
-			int lineNumber = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
+			int lineNumber = -1;
+			if(forStatement.getExpression() != null){
+				lineNumber = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
+			} else if(forStatement.initializers() != null && forStatement.initializers().size() > 0){
+				lineNumber = _cu.getLineNumber(((ASTNode)forStatement.initializers().get(0)).getStartPosition());
+			} else if(forStatement.updaters() != null && forStatement.updaters().size() > 0){
+				lineNumber = _cu.getLineNumber(((ASTNode)forStatement.updaters().get(0)).getStartPosition());
+			}
+			
 			if (lineNumber == _line) {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,

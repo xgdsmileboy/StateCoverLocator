@@ -10,6 +10,8 @@ package locator.inst.visitor;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.FlavorException;
+
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AssertStatement;
@@ -34,6 +36,7 @@ import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
+import javafx.scene.shape.Line;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.inst.gen.GenStatement;
@@ -201,7 +204,15 @@ public class PredicateInstrumentVisitor extends TraversalVisitor {
 
 			ForStatement forStatement = (ForStatement) statement;
 
-			int lineNumber = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
+			int lineNumber = -1;
+			if(forStatement.getExpression() != null){
+				lineNumber = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
+			} else if(forStatement.initializers() != null && forStatement.initializers().size() > 0){
+				lineNumber = _cu.getLineNumber(((ASTNode)forStatement.initializers().get(0)).getStartPosition());
+			} else if(forStatement.updaters() != null && forStatement.updaters().size() > 0){
+				lineNumber = _cu.getLineNumber(((ASTNode)forStatement.updaters().get(0)).getStartPosition());
+			}
+			
 			if (lineNumber == _line) {
 				ASTNode inserted = GenStatement.genPredicateStatement(_condition, message, _line);
 				result.add(inserted);
