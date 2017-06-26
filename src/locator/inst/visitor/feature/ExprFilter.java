@@ -311,19 +311,19 @@ public class ExprFilter {
 		public boolean visit(PrefixExpression node) {
 			if (node.getOperator().equals(PrefixExpression.Operator.DECREMENT)
 					|| node.getOperator().equals(PrefixExpression.Operator.INCREMENT)) {
-				_hasSideEffect = false;
+				_hasSideEffect = true;
 				return false;
 			}
 			return true;
 		}
 		
 		public boolean visit(PostfixExpression node){
-			_hasSideEffect = false;
+			_hasSideEffect = true;
 			return false;
 		}
 		
 		public boolean visit(Assignment node){
-			_hasSideEffect = false;
+			_hasSideEffect = true;
 			return false;
 		}
 		
