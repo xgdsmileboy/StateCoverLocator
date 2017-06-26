@@ -156,6 +156,8 @@ public class Main {
 			}
 		}
 		
+		Identifier.backup(subject);
+		
 		LevelLogger.info("step 4: compute predicate coverage information");
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
 				failedTestsAndCoveredMethods.getFirst());

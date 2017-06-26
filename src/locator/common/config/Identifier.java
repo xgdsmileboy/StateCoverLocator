@@ -7,8 +7,22 @@
 
 package locator.common.config;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import com.sun.org.apache.bcel.internal.generic.LNEG;
+
+import locator.common.java.Subject;
+import locator.common.util.LevelLogger;
+import soot.coffi.constant_element_value;
 
 /**
  * Used for label each method with a unique id
@@ -25,6 +39,82 @@ public class Identifier {
 		identifiers = new HashMap<>();
 		inverseIdentifier = new HashMap<>();
 		counter = 0;
+	}
+	
+	public static void backup(Subject subject){
+		String fileName =  Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_" + subject.getId() + "/identifier.txt" ;
+		File file = new File(fileName);
+		if(!file.exists()){
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				LevelLogger.error("Backup identifier information failed!");
+				return;
+			}
+		}
+		
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter(file));
+		} catch (IOException e) {
+			LevelLogger.error("Backup identifier information failed!");
+			return;
+		}
+		
+		for(Entry<Integer, String> pair : identifiers.entrySet()){
+			String line = pair.getKey() + "\t" + pair.getValue() + "\n";
+			try {
+				bw.write(line);
+			} catch (IOException e) {
+				LevelLogger.error("Backup identifier information failed!");
+				return;
+			}
+		}
+		try {
+			bw.close();
+		} catch (IOException e) {
+			LevelLogger.error("Backup identifier information failed!");
+			return;
+		}
+		
+	}
+	
+	public static void restore(Subject subject){
+		String fileName =  Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_" + subject.getId() + "/identifier.txt" ;
+		File file = new File(fileName);
+		if(!file.exists()){
+			LevelLogger.error("Restore identifier information failed for not find file : " + fileName);
+			return;
+		}
+		
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		String line = null;
+		try {
+			while((line = br.readLine()) != null){
+				String[] info = line.split("\t");
+				if(info.length != 2){
+					LevelLogger.error("Restore identifier information format error : " + line);
+					continue;
+				}
+				Integer id = Integer.parseInt(info[0]);
+				String methodStr = info[1];
+				identifiers.put(id, methodStr);
+				inverseIdentifier.put(methodStr, id);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

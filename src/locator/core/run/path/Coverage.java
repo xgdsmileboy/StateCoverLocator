@@ -282,14 +282,14 @@ public class Coverage {
 		// result is the same with original project
 		if(!Runner.testSuite(subject)){
 			System.out.println("Build failed by predicates : ");
-			printInfo(file2Line2Predicates);
+//			printInfo(file2Line2Predicates);
 			//should be failed 
 			System.exit(0);
 		}
 		if(!isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)){
 			LevelLogger.info("Cause different test state by predicates :");
-			printInfo(file2Line2Predicates);
-			System.exit(0);
+//			printInfo(file2Line2Predicates);
+//			System.exit(0);
 		}
 		
 		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
