@@ -27,6 +27,7 @@ import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureEntry;
+import locator.inst.visitor.feature.NewExprFilter;
 
 /**
  * @author Jiajun
@@ -126,12 +127,13 @@ public class Predictor {
 					String condition = columns[2].replace("$", varName);
 					String varType = allLegalVariablesMap.get(varName);
 					String prob = columns[3];
-					if(ExprFilter.isLegalExpr(varType, varName, condition, allLegalVariablesMap.keySet(), currentClassName)){
+					String newCond = NewExprFilter.filter(varType, varName, condition, allLegalVariablesMap, currentClassName);
+					if(newCond != null){
 						List<Pair<String, String>> preds = rightConditions.get(varName);
 						if(preds == null){
 							preds = new ArrayList<>();
 						}
-						Pair<String, String> pair = new Pair<String, String>(condition, prob);
+						Pair<String, String> pair = new Pair<String, String>(newCond, prob);
 						preds.add(pair);
 						rightConditions.put(varName, preds);
 						
