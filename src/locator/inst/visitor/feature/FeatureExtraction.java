@@ -93,7 +93,6 @@ public class FeatureExtraction {
 			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
 			String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
 			allLegalLocalVariables.put(varName, varType);
-			System.out.println(feature);
 			if (rightVars.contains(varName)) {
 				filteredVarFeatures.add(feature);
 			}

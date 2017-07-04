@@ -54,13 +54,22 @@ public class Main {
 
 	private static void trainModel(Subject subject) {
 		String modelPath = Constant.STR_ML_HOME + "/model/";
-		File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + 
-				"_" + Constant.TRAINING_MODEL + ".var_model.pkl");
-		File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() +
-				"_" + Constant.TRAINING_MODEL + ".expr_model.pkl");
-		if (varModel.exists() && exprModel.exists()) {
-			LevelLogger.info("Models are already exist and will be used directly !");
-			return;
+		if (Constant.TRAINING_MODEL.equals("dnn")){
+			File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/var");
+			File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/expr");
+			if (varModel.exists() && exprModel.exists()) {
+				LevelLogger.info("Models are already exist and will be used directly !");
+				return;
+			}
+		} else {
+			File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + 
+					"_" + Constant.TRAINING_MODEL + ".var_model.pkl");
+			File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() +
+					"_" + Constant.TRAINING_MODEL + ".expr_model.pkl");
+			if (varModel.exists() && exprModel.exists()) {
+				LevelLogger.info("Models are already exist and will be used directly !");
+				return;
+			}
 		}
 		// get train features
 		String srcPath = subject.getHome() + subject.getSsrc();
@@ -250,7 +259,6 @@ public class Main {
 			LevelLogger.info("BEGIN : " + begin);
 
 			Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
-
 			proceed(subject);
 
 			String end = simpleDateFormat.format(new Date());

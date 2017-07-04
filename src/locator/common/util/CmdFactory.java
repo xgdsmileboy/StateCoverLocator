@@ -76,6 +76,9 @@ public class CmdFactory {
 	 */
 	public static String[] createTrainCmd(Subject subject) {
 		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("source ");
+		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);
 		stringBuffer.append(" && ");
@@ -86,6 +89,7 @@ public class CmdFactory {
 		stringBuffer.append(subject.getId());
 		stringBuffer.append(" ");
 		stringBuffer.append(Constant.TRAINING_MODEL);
+		stringBuffer.append(" && deactivate");
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
 	}
@@ -98,6 +102,9 @@ public class CmdFactory {
 	 */
 	public static String[] createPredictCmd(Subject subject) {
 		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("source ");
+		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);
 		stringBuffer.append(" && ");
@@ -108,8 +115,8 @@ public class CmdFactory {
 		stringBuffer.append(subject.getId());
 		stringBuffer.append(" ");
 		stringBuffer.append(Constant.TRAINING_MODEL);
+		stringBuffer.append(" && deactivate");
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
 	}
-
 }

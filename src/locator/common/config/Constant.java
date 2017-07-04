@@ -59,7 +59,7 @@ public class Constant {
 	public final static int FEATURE_FILE_NAME_INDEX = 3;
 	
 	// training model
-	// xgboost, svm or randomforest
+	// xgboost, dnn or randomforest
 	public final static String TRAINING_MODEL = "xgboost";
 	
 	// system command
@@ -124,6 +124,7 @@ public class Constant {
 	public final static String STR_ML_VAR_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
+	public final static String TENSORFLOW_ACTIVATE_PATH = "/home/lillian/tensorflow/bin/activate";
 
 	static {
 		Properties prop = new Properties();
