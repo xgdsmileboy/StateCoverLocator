@@ -54,22 +54,13 @@ public class Main {
 
 	private static void trainModel(Subject subject) {
 		String modelPath = Constant.STR_ML_HOME + "/model/";
-		if (Constant.TRAINING_MODEL.equals("dnn")){
-			File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/var");
-			File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/expr");
-			if (varModel.exists() && exprModel.exists()) {
-				LevelLogger.info("Models are already exist and will be used directly !");
-				return;
-			}
-		} else {
-			File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + 
-					"_" + Constant.TRAINING_MODEL + ".var_model.pkl");
-			File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() +
-					"_" + Constant.TRAINING_MODEL + ".expr_model.pkl");
-			if (varModel.exists() && exprModel.exists()) {
-				LevelLogger.info("Models are already exist and will be used directly !");
-				return;
-			}
+		File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + 
+				"_" + Constant.TRAINING_MODEL + ".var_model.pkl");
+		File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() +
+				"_" + Constant.TRAINING_MODEL + ".expr_model.pkl");
+		if (varModel.exists() && exprModel.exists()) {
+			LevelLogger.info("Models are already exist and will be used directly !");
+			return;
 		}
 		// get train features
 		String srcPath = subject.getHome() + subject.getSsrc();
@@ -171,6 +162,10 @@ public class Main {
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
 				failedTestsAndCoveredMethods.getFirst());
 
+		if(predicateCoverage == null){
+			return;
+		}
+		
 		LevelLogger.info("output predicate coverage information to file : pred_coverage.csv");
 		printCoverage(predicateCoverage, subject.getCoverageInfoPath() + "/pred_coverage.csv");
 
@@ -260,6 +255,7 @@ public class Main {
 			LevelLogger.info("BEGIN : " + begin);
 
 			Constant.PROJECT_HOME = "/home/lillian/work/df";
+
 			proceed(subject);
 
 			String end = simpleDateFormat.format(new Date());
