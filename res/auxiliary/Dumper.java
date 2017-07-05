@@ -27,7 +27,8 @@ public class Dumper {
 	private static Set alreadyRun = new HashSet();
 
 	private static final long MAX_OUTPUT_FILE_SIZE = 5; // max file size in GB
-	private static final String OUT_AND_LIB_PATH = "/home/jiajun/code/space/StateCoverLocator";
+//	private static final String OUT_AND_LIB_PATH = "/home/jiajun/code/space/StateCoverLocator";
+	private static final String OUT_AND_LIB_PATH = "/home/lillian/git/StateCoverLocator";
 	private static final String OUT_FILE_NAME = OUT_AND_LIB_PATH + "/out/path.out";
 
 	public static void reset() {

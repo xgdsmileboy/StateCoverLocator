@@ -253,19 +253,18 @@ public class Main {
 //		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
 //		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 30);
 //		recordSubjects(allSubjects);
-		List<Subject> allSubjects = Configure.getSubjectFromXML("res/conf/project.xml");
-		for(Subject subject: allSubjects) {
-			
+//		for(Subject subject: allSubjects) {
+			Subject subject = ProjectSelector.select("math", 3);
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
 			String begin = simpleDateFormat.format(new Date());
 			LevelLogger.info("BEGIN : " + begin);
 
-			Constant.PROJECT_HOME = "/home/jiajun/d4j/projects";
+			Constant.PROJECT_HOME = "/home/lillian/work/df";
 			proceed(subject);
 
 			String end = simpleDateFormat.format(new Date());
 			LevelLogger.info("BEGIN : " + begin + " - END : " + end);
-		}
+//		}
 	}
 
 }

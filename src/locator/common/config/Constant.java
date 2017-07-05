@@ -60,7 +60,7 @@ public class Constant {
 	
 	// training model
 	// xgboost, dnn or randomforest
-	public final static String TRAINING_MODEL = "xgboost";
+	public final static String TRAINING_MODEL = "dnn";
 	
 	// system command
 	public static String COMMAND_CD = null;
