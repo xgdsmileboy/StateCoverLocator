@@ -77,6 +77,9 @@ public class FeatureExtraction {
 	}
 
 	public static Pair<List<String>, List<String>> extractAllFeatures(String srcPath, String relJavaPath, int line, Map<String, String> allLegalLocalVariables) {
+		if(srcPath == null || relJavaPath == null){
+			return new Pair<List<String>, List<String>>(new ArrayList<>(), new ArrayList<>());
+		}
 		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
 		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
 
@@ -93,6 +96,7 @@ public class FeatureExtraction {
 			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
 			String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
 			allLegalLocalVariables.put(varName, varType);
+			System.out.println(feature);
 			if (rightVars.contains(varName)) {
 				filteredVarFeatures.add(feature);
 			}
@@ -454,16 +458,16 @@ public class FeatureExtraction {
 					return true;
 				}
 				if(name.equals(leftVariable)){
-					while(parent != null && !(parent instanceof MethodDeclaration)){
-						if(parent instanceof Assignment){
-							CollectSimpleName collectSimpleName = new CollectSimpleName();
-							((Assignment)parent).getRightHandSide().accept(collectSimpleName);
-							if(collectSimpleName.getVariables().getSecond().getSecond().contains(name)){
-								rightVariables.add(name);
-							}
-						}
-						parent = parent.getParent();
-					}
+//					while(parent != null && !(parent instanceof MethodDeclaration)){
+//						if(parent instanceof Assignment){
+//							CollectSimpleName collectSimpleName = new CollectSimpleName();
+//							((Assignment)parent).getRightHandSide().accept(collectSimpleName);
+//							if(collectSimpleName.getVariables().getSecond().getSecond().contains(name)){
+//								rightVariables.add(name);
+//							}
+//						}
+//						parent = parent.getParent();
+//					}
 					
 				} else if (!defVariables.contains(name)) {
 					rightVariables.add(name);
