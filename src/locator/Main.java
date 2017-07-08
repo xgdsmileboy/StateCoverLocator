@@ -241,10 +241,12 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
-		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 30);
-		recordSubjects(allSubjects);
+//		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
+//		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 30);
+//		recordSubjects(allSubjects);
+		List<Subject> allSubjects = Configure.getSubjectFromXML("res/conf/project.xml");
 		for(Subject subject: allSubjects) {
+			
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
 			String begin = simpleDateFormat.format(new Date());
 			LevelLogger.info("BEGIN : " + begin);
