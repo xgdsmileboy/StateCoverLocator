@@ -162,7 +162,7 @@ public class GenStatement {
 		// catch (Exception e){}
 		CatchClause catchClause = ast.newCatchClause();
 		SingleVariableDeclaration singleVariableDeclaration = ast.newSingleVariableDeclaration();
-		singleVariableDeclaration.setName(ast.newSimpleName("e"));
+		singleVariableDeclaration.setName(ast.newSimpleName("fakeException"));
 		singleVariableDeclaration.setType(ast.newSimpleType(ast.newSimpleName("Exception")));
 		catchClause.setException(singleVariableDeclaration);
 		catchClause.setBody(ast.newBlock());
