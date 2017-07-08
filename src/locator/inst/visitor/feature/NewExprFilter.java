@@ -188,7 +188,7 @@ public class NewExprFilter {
 
 		public boolean visit(SimpleName node) {
 			String name = node.getFullyQualifiedName();
-			if(name.charAt(0) >= 'A' && name.charAt(0) <= 'Z'){
+			if(Character.isUpperCase(name.charAt(0))){
 				return true;
 			}
 			ASTNode parent = node.getParent();
@@ -216,7 +216,7 @@ public class NewExprFilter {
 						return false;
 					}
 				}
-				if (expr.charAt(0) >= 'A' && expr.charAt(0) <= 'Z') {
+				if (Character.isUpperCase(expr.charAt(0))) {
 					name = expr + "." + name;
 				}
 			}
@@ -325,6 +325,10 @@ public class NewExprFilter {
 				}
 			case "==":
 			case "!=":
+				if(normalizeOp){
+					node.setOperator(InfixExpression.Operator.EQUALS);
+					normalizeOp = false;
+				}
 			case "*":
 			case "/":
 			case "+":

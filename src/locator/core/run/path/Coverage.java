@@ -392,14 +392,19 @@ public class Coverage {
 						
 						if(Runner.compileSubject(subject)){
 							legalConditions.add(condition);
-							LevelLogger.info("Passed build : " + condition);
+							// add opposite conditions as well
+							Pair<String, String> otherSide = new Pair<>();
+							otherSide.setFirst("!(" + condition + ")");
+							otherSide.setSecond(condition.getSecond());
+							legalConditions.add(otherSide);
+							LevelLogger.info("Passed build : " + condition.toString() + "\t ADD \t" + otherSide.toString());
 							count ++;
 							// only keep partial predicates "top K"
 							if(count > Constant.TOP_K_PREDICATES_FOR_EACH_VAR){
 								break;
 							}
 						} else {
-							LevelLogger.info("Build failed : " + condition);
+							LevelLogger.info("Build failed : " + condition.toString());
 						}
 					}
 				}
