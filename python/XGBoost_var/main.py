@@ -3,6 +3,8 @@ from Utils.config import *
 import pandas as pd
 from clustering.cluster import *
 
+import tensorflow as tf
+
 class XGVar(object):
 
     def __init__(self,  configure):
@@ -20,8 +22,7 @@ class XGVar(object):
         train = Train(self.__configure__)
         train.train(feature_num, 'binary:logistic', str_encoder)
 
-
-    def predict_vars(self, encoded_var):
+    def predict_vars(self, encoded_var, feature_num):
         # encoded_oracle_var =  oracle[0:-4]+ '.var_encoded.csv'
         var_predicted = self.__configure__.get_var_pred_out_file()
         if os.path.exists(var_predicted):
@@ -37,16 +38,6 @@ class XGVar(object):
             if_ids.append(raw_var_values[r, 0])
             varnames.append(raw_var_values[r, 5])
 
-        # load the model from file
-        var_model_path = self.__configure__.get_var_model_file()
-        if not os.path.exists(var_model_path):
-            print('Model file does not exist!')
-            os._exit(0)
-        with open(var_model_path, 'r') as f:
-            model = pk.load(f)
-            print('Model loaded from {}'.format(var_model_path))
-            print(model)
-
         encoded_rows_array = np.array(encoded_var)
         # print(encoded_rows_array.shape)
         X_pred = encoded_rows_array[:, 0:-1]
@@ -56,38 +47,62 @@ class XGVar(object):
 
         y_pred = y_pred.astype(float)
 
-        if (self.__configure__.get_model_type() == 'xgboost'):
-            M_pred = xgb.DMatrix(X_pred, label=y_pred)
-            y_prob = model.predict(M_pred)
+        # load the model from file
+        if (self.__configure__.get_model_type() != 'dnn'):
+            var_model_path = self.__configure__.get_var_model_file()
+            if not os.path.exists(var_model_path):
+                print('Model file does not exist!')
+                os._exit(0)
+            with open(var_model_path, 'r') as f:
+                model = pk.load(f)
+                print('Model loaded from {}'.format(var_model_path))
+                print(model)
 
+            if (self.__configure__.get_model_type() == 'xgboost'):
+                M_pred = xgb.DMatrix(X_pred, label=y_pred)
+                y_prob = model.predict(M_pred)
+
+                with open(var_predicted, 'w') as f:
+                    for i in range(0, X_pred.shape[0]):
+                        f.write('%s\t' % if_ids[i])
+                        f.write('%s\t' % varnames[i])
+                        f.write('%.4f' % y_prob[i])
+                        f.write('\n')
+            # elif (self.__configure__.get_model_type() == 'svm'):
+                # y_prob = model.predict_proba(X_pred)
+            elif (self.__configure__.get_model_type() == 'randomforest'):
+                y_prob = model.predict_proba(X_pred)
+                print(y_prob)
+                print(model.classes_)
+                one_pos = 1 - model.classes_[0]
+
+                with open(var_predicted, 'w') as f:
+                    for i in range(0, X_pred.shape[0]):
+                        f.write('%s\t' % if_ids[i])
+                        f.write('%s\t' % varnames[i])
+                        f.write('%.4f' % y_prob[i][one_pos])
+                        f.write('\n')
+        else:
+            feature_columns = [tf.contrib.layers.real_valued_column('', dimension = feature_num)]
+            classifier = tf.contrib.learn.DNNClassifier(feature_columns = feature_columns,
+                                              hidden_units = [10, 20, 10],
+                                              n_classes = 2,
+                                              model_dir = self.__configure__.get_var_nn_model_dir())
+            y_prob = list(classifier.predict_proba(x = X_pred))
             with open(var_predicted, 'w') as f:
                 for i in range(0, X_pred.shape[0]):
                     f.write('%s\t' % if_ids[i])
                     f.write('%s\t' % varnames[i])
-                    f.write('%.4f' % y_prob[i])
-                    f.write('\n')
-        # elif (self.__configure__.get_model_type() == 'svm'):
-            # y_prob = model.predict_proba(X_pred)
-        elif (self.__configure__.get_model_type() == 'randomforest'):
-            y_prob = model.predict_proba(X_pred)
-            print(y_prob)
-            print(model.classes_)
-            one_pos = 1 - model.classes_[0]
-
-            with open(var_predicted, 'w') as f:
-                for i in range(0, X_pred.shape[0]):
-                    f.write('%s\t' % if_ids[i])
-                    f.write('%s\t' % varnames[i])
-                    f.write('%.4f' % y_prob[i][one_pos])
+                    f.write('%.4f' % y_prob[i][1])
                     f.write('\n')
 
     def run_predict_vars(self, str_encoder, kmeans_model):
 
         print('Predicting var for {}...'.format(self.__configure__.get_bug_id()))
 
-        encoded_var = self.encode_var(str_encoder, kmeans_model)
+        encoded_var, feature_num = self.encode_var(str_encoder, kmeans_model)
         # get the predicted varnames
-        self.predict_vars(encoded_var)
+        self.predict_vars(encoded_var, feature_num)
 
 
     def encode_var(self, str_encoder, kmeans_model):
@@ -143,4 +158,4 @@ class XGVar(object):
             feature.append(0)
             encoded_feature.append(feature)
 
-        return pd.DataFrame(encoded_feature)
+        return (pd.DataFrame(encoded_feature), feature_num)

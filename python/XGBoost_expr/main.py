@@ -4,6 +4,8 @@ from Utils.config import *
 import heapq as hq
 from clustering.cluster import *
 
+import tensorflow as tf
+
 class XGExpr(object):
 
     def __init__(self, configure):
@@ -32,28 +34,33 @@ class XGExpr(object):
 
         top = self.__configure__.get_gen_expr_top()
 
-        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(str_encoder, kmeans_model)
-
-        ## load the model
-        if not os.path.exists(expr_model_path):
-            print('Model file does not exist!')
-            os._exit(0)
-        with open(expr_model_path, 'r') as f:
-            model = pk.load(f)
-            print('Model loaded from {}'.format(expr_model_path))
-            print(model)
-
+        dataset, encoded_x, encoded_y, x_encoders, y_encoder, feature_num = self.encode_expr(str_encoder, kmeans_model)
         X_pred = encoded_x
-        print(X_pred)
-
         y_prob = list()
-        if (self.__configure__.get_model_type() == 'xgboost'):
-            M_pred = xgb.DMatrix(X_pred)
-            y_prob = model.predict(M_pred)
-        # elif (self.__configure__.get_model_type() == 'svm'):
-            # y_prob = model.predict_log_proba(X_pred)
-        elif (self.__configure__.get_model_type() == 'randomforest'):
-            y_prob = model.predict_proba(X_pred)
+        if (self.__configure__.get_model_type() != 'dnn'):
+            ## load the model
+            if not os.path.exists(expr_model_path):
+                print('Model file does not exist!')
+                os._exit(0)
+            with open(expr_model_path, 'r') as f:
+                model = pk.load(f)
+                print('Model loaded from {}'.format(expr_model_path))
+                print(model)
+
+            if (self.__configure__.get_model_type() == 'xgboost'):
+                M_pred = xgb.DMatrix(X_pred)
+                y_prob = model.predict(M_pred)
+            # elif (self.__configure__.get_model_type() == 'svm'):
+                # y_prob = model.predict_log_proba(X_pred)
+            elif (self.__configure__.get_model_type() == 'randomforest'):
+                y_prob = model.predict_proba(X_pred)
+        else:
+            feature_columns = [tf.contrib.layers.real_valued_column('', dimension = feature_num)]
+            classifier = tf.contrib.learn.DNNClassifier(feature_columns = feature_columns,
+                                              hidden_units = [10, 20, 10],
+                                              n_classes = y_encoder.classes_.shape[0],
+                                              model_dir = self.__configure__.get_expr_nn_model_dir())
+            y_prob = list(classifier.predict_proba(x = X_pred))
 
         ## save the result
         with open(expr_predicted, 'w') as f:
@@ -138,4 +145,4 @@ class XGExpr(object):
 
         encoded_x = pd.DataFrame(encoded_x)
         encoded_y = pd.DataFrame(encoded_y)
-        return (dataset, encoded_x, encoded_y, x_encoders, y_encoder)
+        return (dataset, encoded_x, encoded_y, x_encoders, y_encoder, feature_num)

@@ -1,3 +1,7 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 from sklearn.model_selection import cross_val_score, KFold
 from xgboost import XGBClassifier
 import xgboost as xgb
@@ -13,6 +17,9 @@ from sklearn.model_selection import cross_val_score
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
 
+import tensorflow as tf
+import shutil as su
+
 class Train(object):
 
     def __init__(self, configure):
@@ -22,6 +29,24 @@ class Train(object):
         """
         self.__configure__ = configure
 
+    def train_dnn(self, training_file, feature_num, class_num):
+        su.rmtree(self.__configure__.get_var_nn_model_dir())
+        training_set = tf.contrib.learn.datasets.base.load_csv_without_header(
+            filename = training_file,
+            target_dtype = np.int,
+            features_dtype = np.int)
+        feature_columns = [tf.contrib.layers.real_valued_column('', dimension = feature_num)]
+        classifier = tf.contrib.learn.DNNClassifier(feature_columns = feature_columns,
+                                              hidden_units = [10, 20, 10],
+                                              n_classes = class_num,
+                                              model_dir = self.__configure__.get_var_nn_model_dir())
+
+        def get_train_inputs():
+            x = tf.constant(training_set.data)
+            y = tf.constant(training_set.target)
+            return x, y
+
+        classifier.fit(input_fn=get_train_inputs, steps=2000)
 
     def train(self, feature_num, training_objective, str_encoder):
         start_time = datetime.datetime.now()
@@ -140,6 +165,22 @@ class Train(object):
             with open(model_file, 'w') as f:
                 pk.dump(model, f)
                 print('Model saved in {}'.format(model_file))
+        elif (self.__configure__.get_model_type() == 'dnn'):
+            encoded_input = pd.DataFrame(np.concatenate((encoded_X, encoded_Y.reshape(encoded_Y.shape[0], 1)), axis=1))
+            encoded_input.to_csv(self.__configure__.get_var_nn_training_file(), index = False, header = False)
+
+            # # add header for tensorflow csv
+            # csv_format_data = None
+            # with open(self.__configure__.get_var_nn_training_file(), 'r') as f:
+            #     csv_format_data = f.read()
+
+            # with open(self.__configure__.get_var_nn_training_file(), 'w') as f:
+            #     f.write('%d,' % encoded_X.shape[0])
+            #     f.write('%d,' % feature_num)
+            #     f.write('0,1\n')
+            #     f.write('%s' % csv_format_data)
+
+            self.train_dnn(self.__configure__.get_var_nn_training_file(), feature_num, y_encoder.classes_.shape[0])
 
         end_time = datetime.datetime.now()
         run_time = end_time-start_time
