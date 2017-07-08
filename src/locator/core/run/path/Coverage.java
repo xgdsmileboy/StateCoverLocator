@@ -394,7 +394,7 @@ public class Coverage {
 							legalConditions.add(condition);
 							// add opposite conditions as well
 							Pair<String, String> otherSide = new Pair<>();
-							otherSide.setFirst("!(" + condition + ")");
+							otherSide.setFirst("!(" + condition.getFirst() + ")");
 							otherSide.setSecond(condition.getSecond());
 							legalConditions.add(otherSide);
 							LevelLogger.info("Passed build : " + condition.toString() + "\t ADD \t" + otherSide.toString());
