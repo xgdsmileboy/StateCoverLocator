@@ -455,16 +455,16 @@ public class FeatureExtraction {
 					return true;
 				}
 				if(name.equals(leftVariable)){
-					while(parent != null && !(parent instanceof MethodDeclaration)){
-						if(parent instanceof Assignment){
-							CollectSimpleName collectSimpleName = new CollectSimpleName();
-							((Assignment)parent).getRightHandSide().accept(collectSimpleName);
-							if(collectSimpleName.getVariables().getSecond().getSecond().contains(name)){
-								rightVariables.add(name);
-							}
-						}
-						parent = parent.getParent();
-					}
+//					while(parent != null && !(parent instanceof MethodDeclaration)){
+//						if(parent instanceof Assignment){
+//							CollectSimpleName collectSimpleName = new CollectSimpleName();
+//							((Assignment)parent).getRightHandSide().accept(collectSimpleName);
+//							if(collectSimpleName.getVariables().getSecond().getSecond().contains(name)){
+//								rightVariables.add(name);
+//							}
+//						}
+//						parent = parent.getParent();
+//					}
 					
 				} else if (!defVariables.contains(name)) {
 					rightVariables.add(name);
