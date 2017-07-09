@@ -77,6 +77,9 @@ public class FeatureExtraction {
 	}
 
 	public static Pair<List<String>, List<String>> extractAllFeatures(String srcPath, String relJavaPath, int line, Map<String, String> allLegalLocalVariables) {
+		if(srcPath == null || relJavaPath == null){
+			return new Pair<List<String>, List<String>>(new ArrayList<>(), new ArrayList<>());
+		}
 		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
 		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
 
