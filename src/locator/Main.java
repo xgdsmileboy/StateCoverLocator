@@ -162,6 +162,10 @@ public class Main {
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
 				failedTestsAndCoveredMethods.getFirst());
 
+		if(predicateCoverage == null){
+			return;
+		}
+		
 		LevelLogger.info("output predicate coverage information to file : pred_coverage.csv");
 		printCoverage(predicateCoverage, subject.getCoverageInfoPath() + "/pred_coverage.csv");
 
