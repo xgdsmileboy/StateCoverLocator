@@ -284,12 +284,20 @@ public class Coverage {
 			System.out.println("Build failed by predicates : ");
 //			printInfo(file2Line2Predicates);
 			//should be failed 
-			System.exit(0);
+//			System.exit(0);
+			String file = Constant.HOME + "/rlst.log";
+			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Build failed by predicates!", true);
+			return null;
 		}
 		if(!isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)){
 			LevelLogger.info("Cause different test state by predicates :");
 //			printInfo(file2Line2Predicates);
 //			System.exit(0);
+			String file = Constant.HOME + "/rlst.log";
+			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Different test result!", true);
+		} else {
+			String file = Constant.HOME + "/rlst.log";
+			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Success!", true);
 		}
 		
 		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);

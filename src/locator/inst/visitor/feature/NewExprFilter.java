@@ -325,10 +325,10 @@ public class NewExprFilter {
 				}
 			case "==":
 			case "!=":
-				if(normalizeOp){
-					node.setOperator(InfixExpression.Operator.EQUALS);
-					normalizeOp = false;
-				}
+//				if(normalizeOp){
+//					node.setOperator(InfixExpression.Operator.EQUALS);
+//					normalizeOp = false;
+//				}
 			case "*":
 			case "/":
 			case "+":
