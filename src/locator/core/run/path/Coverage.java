@@ -286,7 +286,7 @@ public class Coverage {
 			//should be failed 
 //			System.exit(0);
 			String file = Constant.HOME + "/rlst.log";
-			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Build failed by predicates!", true);
+			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Build failed by predicates!\n", true);
 			return null;
 		}
 		if(!isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)){
@@ -294,10 +294,10 @@ public class Coverage {
 //			printInfo(file2Line2Predicates);
 //			System.exit(0);
 			String file = Constant.HOME + "/rlst.log";
-			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Different test result!", true);
+			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Different test result!\n", true);
 		} else {
 			String file = Constant.HOME + "/rlst.log";
-			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Success!", true);
+			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Success!\n", true);
 		}
 		
 		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
