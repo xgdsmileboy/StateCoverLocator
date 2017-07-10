@@ -28,6 +28,7 @@ import org.eclipse.jdt.core.dom.LabeledStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
@@ -428,14 +429,13 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 			}
 //			Statement insert = GenStatement.newGenPredicateStatement(_condition, message);
 
-			if (statement instanceof ConstructorInvocation) {
+			if (statement instanceof ConstructorInvocation || statement instanceof SuperConstructorInvocation) {
 				result.add(copy);
 //				result.add(insert);
 				result.addAll(tmpInserted);
 			} else if (statement instanceof ContinueStatement || statement instanceof BreakStatement
 					|| statement instanceof ReturnStatement || statement instanceof ThrowStatement
 					|| statement instanceof AssertStatement || statement instanceof ExpressionStatement
-					|| statement instanceof ConstructorInvocation
 					|| statement instanceof VariableDeclarationStatement) {
 //				result.add(insert);
 				result.addAll(tmpInserted);

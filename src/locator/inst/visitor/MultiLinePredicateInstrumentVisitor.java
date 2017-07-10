@@ -29,6 +29,7 @@ import org.eclipse.jdt.core.dom.LabeledStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
@@ -295,13 +296,12 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(AST.JLS8), statement);
 			List<ASTNode> tmpInserted = genInstrument(methodID, startLine);
 			
-			if (statement instanceof ConstructorInvocation) {
+			if (statement instanceof ConstructorInvocation || statement instanceof SuperConstructorInvocation) {
 				result.add(copy);
 				result.addAll(tmpInserted);
 			} else if (statement instanceof ContinueStatement || statement instanceof BreakStatement
 					|| statement instanceof ReturnStatement || statement instanceof ThrowStatement
 					|| statement instanceof AssertStatement || statement instanceof ExpressionStatement
-					|| statement instanceof ConstructorInvocation
 					|| statement instanceof VariableDeclarationStatement) {
 				result.addAll(tmpInserted);
 				result.add(copy);
