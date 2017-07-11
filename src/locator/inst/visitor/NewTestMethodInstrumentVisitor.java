@@ -51,6 +51,10 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 			return true;
 		}
 		
+		if(node.parameters().size() > 0){
+			return true;
+		}
+		
 		// filter those functional methods in test class path, test method name
 		// starting with "test" in Junit 3 while with annotation as "@Test" in
 		// Junit 4,
