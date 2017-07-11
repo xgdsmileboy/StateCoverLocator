@@ -125,10 +125,14 @@ public class Predictor {
 					}
 					String varName = columns[1];
 					String condition = columns[2].replace("$", varName);
+					if(condition.length() < 1){
+						LevelLogger.error(__name__ + "@predict illegal predicate : " + line);
+						continue;
+					}
 					String varType = allLegalVariablesMap.get(varName);
 					String prob = columns[3];
 					String newCond = NewExprFilter.filter(varType, varName, condition, allLegalVariablesMap, currentClassName);
-					if(newCond != null){
+					if(newCond != null && newCond.length() > 1){
 						List<Pair<String, String>> preds = rightConditions.get(varName);
 						if(preds == null){
 							preds = new ArrayList<>();

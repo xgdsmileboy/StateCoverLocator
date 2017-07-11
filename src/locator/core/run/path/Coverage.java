@@ -384,7 +384,6 @@ public class Coverage {
 					for(Pair<String, String> condition : entry.getValue()){
 						LevelLogger.info("Validate conditions by compiling : [" + currentConditionCount + "/" + allConditionCount + "].");
 						currentConditionCount ++;
-						
 						// instrument one condition statement into source file
 						CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
 								ASTParser.K_COMPILATION_UNIT);
