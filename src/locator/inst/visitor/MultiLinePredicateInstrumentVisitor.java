@@ -329,7 +329,9 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 				String condition = preds.get(count).getFirst();
 				String prob = preds.get(count).getSecond();
 				ASTNode inserted = GenStatement.newGenPredicateStatement(condition, methodID + "#" + line + "#" + condition + "#" + prob);
-				result.add(inserted);
+				if(inserted != null){
+					result.add(inserted);
+				}
 			}
 			_condition.remove(line);
 		}

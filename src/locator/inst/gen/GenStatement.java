@@ -129,7 +129,7 @@ public class GenStatement {
 		try{
 			conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
 		} catch (Exception e){
-			conditionExp = ast.newBooleanLiteral(false);
+			return null;
 		}
 		
 		// if(condition)
