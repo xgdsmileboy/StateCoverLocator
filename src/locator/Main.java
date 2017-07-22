@@ -54,13 +54,22 @@ public class Main {
 
 	private static void trainModel(Subject subject) {
 		String modelPath = Constant.STR_ML_HOME + "/model/";
-		File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + 
-				"_" + Constant.TRAINING_MODEL + ".var_model.pkl");
-		File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() +
-				"_" + Constant.TRAINING_MODEL + ".expr_model.pkl");
-		if (varModel.exists() && exprModel.exists()) {
-			LevelLogger.info("Models are already exist and will be used directly !");
-			return;
+		if (Constant.TRAINING_MODEL.equals("dnn")){
+			File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/var");
+			File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/expr");
+			if (varModel.exists() && exprModel.exists()) {
+				LevelLogger.info("Models are already exist and will be used directly !");
+				return;
+			}
+		} else {
+			File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + 
+					"_" + Constant.TRAINING_MODEL + ".var_model.pkl");
+			File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() +
+					"_" + Constant.TRAINING_MODEL + ".expr_model.pkl");
+			if (varModel.exists() && exprModel.exists()) {
+				LevelLogger.info("Models are already exist and will be used directly !");
+				return;
+			}
 		}
 		// get train features
 		String srcPath = subject.getHome() + subject.getSsrc();
@@ -129,7 +138,7 @@ public class Main {
 		// copy auxiliary file to subject path
 		LevelLogger.info("copying auxiliary file to subject path.");
 		Configure.config_dumper(subject);
-
+//
 		LevelLogger.info("step 1: collect failed test and covered methods.");
 		Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
 		int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
@@ -245,22 +254,26 @@ public class Main {
 
 	public static void main(String[] args) {
 
-//		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
-//		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 30);
-//		recordSubjects(allSubjects);
-//		for(Subject subject: allSubjects) {
-			Subject subject = ProjectSelector.select("math", 3);
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
-			String begin = simpleDateFormat.format(new Date());
-			LevelLogger.info("BEGIN : " + begin);
+		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
+		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 80);
+		recordSubjects(allSubjects);
+		for(Subject subject : allSubjects) {
+			try {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
+				String begin = simpleDateFormat.format(new Date());
+				LevelLogger.info("BEGIN : " + begin);
 
-			Constant.PROJECT_HOME = "/home/lillian/work/df";
+				Constant.PROJECT_HOME = "/home/lillian/work/df";
 
-			proceed(subject);
+				proceed(subject);
 
-			String end = simpleDateFormat.format(new Date());
-			LevelLogger.info("BEGIN : " + begin + " - END : " + end);
-//		}
+				String end = simpleDateFormat.format(new Date());
+				LevelLogger.info("BEGIN : " + begin + " - END : " + end);
+			} catch (Exception e) {
+				JavaFile.writeStringToFile(Constant.HOME + "/logs/" +
+						subject.getName() + "_" + Integer.toString(subject.getId()) + "_error.log", e.getMessage());
+			}
+		}
 	}
 
 }

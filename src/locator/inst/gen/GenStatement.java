@@ -124,9 +124,13 @@ public class GenStatement {
 	
 	
 	public static TryStatement newGenPredicateStatement(String condition, String message) {
-		
+		Expression conditionExp = null;
 		// condition
-		Expression conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
+		try{
+			conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
+		} catch (Exception e){
+			return null;
+		}
 		
 		// if(condition)
 		IfStatement ifStatement = ast.newIfStatement();

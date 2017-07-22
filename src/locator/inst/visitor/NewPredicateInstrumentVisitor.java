@@ -128,7 +128,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
-					result.add(inserted);
+					if(inserted != null){
+						result.add(inserted);
+					}
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -185,7 +187,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
-					result.add(inserted);
+					if(inserted != null){
+						result.add(inserted);
+					}
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -232,7 +236,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
-					result.add(inserted);
+					if(inserted != null){
+						result.add(inserted);
+					}
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -273,7 +279,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
-					result.add(inserted);
+					if(inserted != null){
+						result.add(inserted);
+					}
 				}
 				return result;
 			}
@@ -315,7 +323,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
-					result.add(inserted);
+					if(inserted != null){
+						result.add(inserted);
+					}
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -356,7 +366,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
-					result.add(inserted);
+					if(inserted != null){
+						result.add(inserted);
+					}
 				}
 				result.add(ASTNode.copySubtree(AST.newAST(AST.JLS8), statement));
 				return result;
@@ -425,7 +437,9 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				String condition = _condition.get(count).getFirst();
 				String prob = _condition.get(count).getSecond();
 				ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
-				tmpInserted.add(inserted);
+				if(inserted != null){
+					tmpInserted.add(inserted);
+				}
 			}
 //			Statement insert = GenStatement.newGenPredicateStatement(_condition, message);
 

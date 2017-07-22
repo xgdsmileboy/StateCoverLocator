@@ -1,8 +1,11 @@
 package locator.common.util;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import locator.common.config.Constant;
 import locator.common.config.ProjectProperties;
@@ -109,12 +112,31 @@ public class ProjectSelector {
 		}
 		Random random = new Random(0);
 		List<Subject> result = new ArrayList<Subject>();
+		Set<Integer> selectedProjects = new HashSet<Integer>();
 		for(int i = 0; i < sampleCount; i++) {
 			int projectID = binarySearch(prefixSum, 0, prefixSum.length, random.nextDouble());
 			String whichProject = Constant.PROJECT_NAME[projectID];
-			int whichBug = random.nextInt(Constant.BUG_NUMBER.get(whichProject));
+			int whichBug = random.nextInt(Constant.BUG_NUMBER.get(whichProject)) + 1;
+			int key = whichBug + 1000 * projectID;
+			if (selectedProjects.contains(key)) {
+				sampleCount--;
+				continue;
+			}
+			selectedProjects.add(key);
 			result.add(select(whichProject, whichBug));
 		}
+		
+		result.sort(new Comparator<Subject>(){
+
+			@Override
+			public int compare(Subject o1, Subject o2) {
+				if (!o1.getName().equals(o2.getName())) {
+					return o1.getName().compareTo(o2.getName());
+				}
+				return Integer.compare(o1.getId(), o2.getId());
+			}
+			
+		});
 		return result;
 	}
 	
