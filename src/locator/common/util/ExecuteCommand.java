@@ -8,9 +8,11 @@
 package locator.common.util;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -140,6 +142,12 @@ public class ExecuteCommand {
 		String result = null;
 		try {
 			process = Runtime.getRuntime().exec(command);
+			try {
+				process.waitFor();
+			} catch (InterruptedException e) {
+				LevelLogger.error(__name__ + "#execute Process interrupted !");
+				return "";
+			}
 			ByteArrayOutputStream resultOutStream = new ByteArrayOutputStream();
 			InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
 			InputStream processInStream = new BufferedInputStream(process.getInputStream());
@@ -158,11 +166,6 @@ public class ExecuteCommand {
 			processInStream = null;
 			resultOutStream.close();
 			resultOutStream = null;
-			try {
-				process.waitFor();
-			} catch (InterruptedException e) {
-				LevelLogger.error(__name__ + "#execute Process interrupted !");
-			}
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
 		} finally {
@@ -224,53 +227,8 @@ public class ExecuteCommand {
 	}
 
 	public static List<String> executeCompile(String[] command) throws IOException, InterruptedException {
-		final Process process = Runtime.getRuntime().exec(command);
-
 		List<String> message = new ArrayList<>();
-		
-		new Thread() {
-			public void run() {
-				InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = errorInStream.read(bs)) != -1) {
-						String string = new String(bs, 0, num, "UTF-8");
-						message.add(string);
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						errorInStream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}.start();
-
-		new Thread() {
-			public void run() {
-				InputStream processInStream = new BufferedInputStream(process.getInputStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = processInStream.read(bs)) != -1) {
-						String string = new String(bs, 0, num, "UTF-8");
-						message.add(string);
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						processInStream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}.start();
-
-		process.waitFor();
+		message.add(execute(command));
 		return message;
 	}
 	
@@ -284,51 +242,7 @@ public class ExecuteCommand {
 	 * @throws InterruptedException
 	 */
 	private static void executeAndOutputConsole(String[] command) throws IOException, InterruptedException {
-		final Process process = Runtime.getRuntime().exec(command);
-
-		new Thread() {
-			public void run() {
-				InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = errorInStream.read(bs)) != -1) {
-						String string = new String(bs, 0, num, "UTF-8");
-						LevelLogger.info(string);
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						errorInStream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}.start();
-
-		new Thread() {
-			public void run() {
-				InputStream processInStream = new BufferedInputStream(process.getInputStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = processInStream.read(bs)) != -1) {
-						String string = new String(bs, 0, num, "UTF-8");
-						LevelLogger.info(string);
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						processInStream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}.start();
-
-		process.waitFor();
+		LevelLogger.info(execute(command));
 	}
 
 	/**
@@ -344,53 +258,10 @@ public class ExecuteCommand {
 	 */
 	private static String executeAndOutputFile(String[] command, String outputFile)
 			throws IOException, InterruptedException {
-		final Process process = Runtime.getRuntime().exec(command);
-		final FileOutputStream resultOutStream = new FileOutputStream(outputFile);
-
-		new Thread() {
-			public void run() {
-				InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = errorInStream.read(bs)) != -1) {
-						resultOutStream.write(bs, 0, num);
-						resultOutStream.flush();
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						errorInStream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}.start();
-
-		new Thread() {
-			public void run() {
-				InputStream processInStream = new BufferedInputStream(process.getInputStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = processInStream.read(bs)) != -1) {
-						resultOutStream.write(bs, 0, num);
-						resultOutStream.flush();
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						processInStream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}.start();
-
-		process.waitFor();
-
-		return resultOutStream.toString();
+		BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+		String output = execute(command);
+		writer.write(output);
+		writer.close();
+		return output;
 	}
 }

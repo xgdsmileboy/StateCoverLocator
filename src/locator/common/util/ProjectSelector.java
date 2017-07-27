@@ -119,7 +119,7 @@ public class ProjectSelector {
 			int whichBug = random.nextInt(Constant.BUG_NUMBER.get(whichProject)) + 1;
 			int key = whichBug + 1000 * projectID;
 			if (selectedProjects.contains(key)) {
-				sampleCount--;
+				i--;
 				continue;
 			}
 			selectedProjects.add(key);
