@@ -60,6 +60,7 @@ import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
+import locator.core.run.path.LineInfo;
 import soot.coffi.constant_element_value;
 import soot.coffi.field_info;
 
@@ -76,9 +77,10 @@ public class FeatureExtraction {
 		return features;
 	}
 
-	public static Pair<List<String>, List<String>> extractAllFeatures(String srcPath, String relJavaPath, int line, Map<String, String> allLegalLocalVariables) {
+	public static void extractAllFeatures(String srcPath, String relJavaPath, int line, LineInfo info,
+			List<String> varFeatures, List<String> exprFeatures) {
 		if(srcPath == null || relJavaPath == null){
-			return new Pair<List<String>, List<String>>(new ArrayList<>(), new ArrayList<>());
+			return;
 		}
 		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
 		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
@@ -90,27 +92,22 @@ public class FeatureExtraction {
 		cu.accept(variableCollector);
 		Set<String> rightVars = variableCollector.getObservedVariables();
 
-		List<String> filteredVarFeatures = new ArrayList<>();
 		for (String feature : varFeature) {
 			String[] elements = feature.split("\t");
 			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
 			String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
-			allLegalLocalVariables.put(varName, varType);
-			System.out.println(feature);
+			info.addLegalVariable(varName, varType);
 			if (rightVars.contains(varName)) {
-				filteredVarFeatures.add(feature);
+				varFeatures.add(feature);
 			}
 		}
 
-		List<String> filteredExpFeatures = new ArrayList<>();
 		for (String feature : expFeature) {
 			String[] elements = feature.split("\t");
 			if (rightVars.contains(elements[Constant.FEATURE_VAR_NAME_INDEX])) {
-				filteredExpFeatures.add(feature);
+				exprFeatures.add(feature);
 			}
 		}
-		return new Pair<List<String>, List<String>>(filteredVarFeatures, filteredExpFeatures);
-
 	}
 
 	private static class VariableCollector extends ASTVisitor {

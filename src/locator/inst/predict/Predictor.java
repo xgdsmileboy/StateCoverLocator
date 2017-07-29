@@ -25,6 +25,7 @@ import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.core.run.path.LineInfo;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureEntry;
 import locator.inst.visitor.feature.NewExprFilter;
@@ -58,9 +59,8 @@ public class Predictor {
 	 *         left variable [currently, not use] the second set contains all
 	 *         conditions for right variables
 	 */
-	public static Pair<Map<String, List<Pair<String, String>>>, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
-			List<String> expFeatures, Map<String, String> allLegalVariablesMap) {
-		Pair<Map<String, List<Pair<String, String>>>, Map<String, List<Pair<String, String>>>> conditions = new Pair<>();
+	public static Map<Integer, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
+			List<String> exprFeatures, Map<Integer, LineInfo> lineInfoMapping) {
 		String currentClassName = null;
 		// TODO : return conditions for left variable and right variables
 		File varFile = new File(subject.getVarFeatureOutputPath());
@@ -84,7 +84,7 @@ public class Predictor {
 
 		File expFile = new File(subject.getExprFeatureOutputPath());
 		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
-		for (String string : expFeatures) {
+		for (String string : exprFeatures) {
 			// filter duplicated features
 			if(_uniqueFeatures.contains(string)){
 				continue;
@@ -103,18 +103,20 @@ public class Predictor {
 			e.printStackTrace();
 		}
 
+		Map<Integer, Map<String, List<Pair<String, String>>>> rightConditions = new HashMap<>();
 		File rslFile = new File(subject.getPredicResultPath());
 		BufferedReader bReader = null;
 		try {
 			bReader = new BufferedReader(new FileReader(rslFile));
 		} catch (FileNotFoundException e) {
 			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
-			return conditions;
+			return rightConditions;
 		}
-		Map<String, List<Pair<String, String>>> rightConditions = new HashMap<>();
+		
 		String line = null;
 		try {
 			// filter title
+			int lineNumber = -1;
 			if (bReader.readLine() != null) {
 				// parse predict result "8 u $ == null 0.8319194802"
 				while ((line = bReader.readLine()) != null) {
@@ -123,19 +125,28 @@ public class Predictor {
 						LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
 						continue;
 					}
+					String lineNumberStr = columns[0];
+					if (!lineNumberStr.isEmpty()) {
+						lineNumber = Integer.valueOf(lineNumberStr);
+					}
 					String varName = columns[1];
 					String condition = columns[2].replace("$", varName);
-					String varType = allLegalVariablesMap.get(varName);
+					String varType = lineInfoMapping.get(lineNumber).getLegalVariableType(varName);
 					String prob = columns[3];
-					String newCond = NewExprFilter.filter(varType, varName, condition, allLegalVariablesMap, currentClassName);
+					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(lineNumber), currentClassName);
 					if(newCond != null){
-						List<Pair<String, String>> preds = rightConditions.get(varName);
+						Map<String, List<Pair<String, String>>> linePreds = rightConditions.get(lineNumber);
+						if (linePreds == null) {
+							linePreds = new HashMap<>();
+						}
+						List<Pair<String, String>> preds = linePreds.get(varName);
 						if(preds == null){
 							preds = new ArrayList<>();
 						}
 						Pair<String, String> pair = new Pair<String, String>(newCond, prob);
 						preds.add(pair);
-						rightConditions.put(varName, preds);
+						linePreds.put(varName, preds);
+						rightConditions.put(lineNumber, linePreds);
 						
 					} else {
 						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
@@ -151,8 +162,7 @@ public class Predictor {
 		ExecuteCommand.deleteGivenFile(expFile.getAbsolutePath());
 		ExecuteCommand.deleteGivenFile(rslFile.getAbsolutePath());
 		
-		conditions.setSecond(rightConditions);
-		return conditions;
+		return rightConditions;
 	}
 
 }

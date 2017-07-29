@@ -43,6 +43,7 @@ import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
+import locator.core.run.path.LineInfo;
 
 /**
  * @author Jiajun
@@ -76,7 +77,7 @@ public class NewExprFilter {
 		}
 	}
 
-	public static String filter(String type, String varName, String condition, Map<String, String> locaLegalVar,
+	public static String filter(String type, String varName, String condition, LineInfo info,
 			String currentClassName) {
 		if (varName.equals("THIS")) {
 			return null;
@@ -84,7 +85,7 @@ public class NewExprFilter {
 
 		ASTNode node = JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
 
-		ExprAnalysisVisitor visitor = new ExprAnalysisVisitor(varName, type, locaLegalVar, currentClassName);
+		ExprAnalysisVisitor visitor = new ExprAnalysisVisitor(varName, type, info, currentClassName);
 		node.accept(visitor);
 
 		if (visitor.hasSideEffect() || !visitor.isLegal()) {
@@ -138,13 +139,13 @@ public class NewExprFilter {
 		private boolean _hasSideEffect = false;
 		private String _varName = null;
 		private String _type = null;
-		private Map<String, String> _localVarMap = null;
+		private LineInfo _info = null;
 		private String _currentClass = null;
 
-		public ExprAnalysisVisitor(String varName, String type, Map<String, String> localVarMap, String currentClass) {
+		public ExprAnalysisVisitor(String varName, String type, LineInfo info, String currentClass) {
 			_varName = varName;
 			_type = type;
-			_localVarMap = localVarMap;
+			_info = info;
 			_currentClass = currentClass;
 		}
 
@@ -158,7 +159,7 @@ public class NewExprFilter {
 
 		public boolean visit(ArrayAccess node) {
 			String name = node.getArray().toString();
-			String type = _localVarMap.get(name);
+			String type = _info.getLegalVariableType(name);
 			if (type == null) {
 				type = "";
 			}
@@ -174,8 +175,8 @@ public class NewExprFilter {
 		public boolean visit(QualifiedName node) {
 			String qualifier = node.getQualifier().toString();
 			String name = node.getName().toString();
-			if (_localVarMap.containsKey(qualifier)) {
-				String type = _localVarMap.get(qualifier);
+			if (_info.containsVaraible(qualifier)) {
+				String type = _info.getLegalVariableType(qualifier);
 				if (isPrimitiveType(type)) {
 					_legal = false;
 					return false;
@@ -195,7 +196,7 @@ public class NewExprFilter {
 			if (parent != null) {
 				String parentStr = parent.toString().replace("this.", "");
 				if (!parentStr.contains("." + name)) {
-					if (!_localVarMap.containsKey(name) && !isField(name, _currentClass)) {
+					if (!_info.containsVaraible(name) && !isField(name, _currentClass)) {
 						_legal = false;
 						return false;
 					}
@@ -209,7 +210,7 @@ public class NewExprFilter {
 			String name = node.getName().getFullyQualifiedName();
 			if (node.getExpression() != null) {
 				String expr = node.getExpression().toString();
-				String type = _localVarMap.get(expr);
+				String type = _info.getLegalVariableType(expr);
 				if (type != null) {
 					if (isPrimitiveType(type) || !isField(name, type)) {
 						_legal = false;
@@ -230,8 +231,8 @@ public class NewExprFilter {
 		public boolean visit(FieldAccess node) {
 			String qualifier = node.getExpression().toString();
 			String name = node.getName().toString();
-			if (_localVarMap.containsKey(qualifier)) {
-				String type = _localVarMap.get(qualifier);
+			if (_info.containsVaraible(qualifier)) {
+				String type = _info.getLegalVariableType(qualifier);
 				if (isPrimitiveType(type)) {
 					_legal = false;
 					return false;
@@ -275,8 +276,8 @@ public class NewExprFilter {
 			}
 			;
 
-			String leftType = _localVarMap.get(left);
-			String rightType = _localVarMap.get(right);
+			String leftType = _info.getLegalVariableType(left);
+			String rightType = _info.getLegalVariableType(right);
 
 			// parse literal
 			if (leftExp instanceof BooleanLiteral) {

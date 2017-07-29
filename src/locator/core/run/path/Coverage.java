@@ -322,6 +322,9 @@ public class Coverage {
 		int allStmtCount = allStatements.size();
 		int currentStmtCount = 1;
 		
+		Map<Integer, LineInfo> lineInfoMapping = new HashMap<Integer, LineInfo>();
+		List<String> varFeatures = new ArrayList<String>();
+		List<String> exprFeatures = new ArrayList<String>();
 		for (String stmt : allStatements) {
 			LevelLogger.info("======================== [" + currentStmtCount + "/" + allStmtCount + "] statements =================.");
 			currentStmtCount ++;
@@ -355,19 +358,20 @@ public class Coverage {
 			}
 			
 			// <varName, type>
-			Map<String, String> allLegalVariablesMap = new HashMap<>();
-			Pair<List<String>, List<String>> features = FeatureExtraction.extractAllFeatures(srcPath, relJavaPath,
-					line, allLegalVariablesMap);
-			List<String> varFeatures = features.getFirst();
-			List<String> expFeatures = features.getSecond();
-			Pair<Map<String, List<Pair<String, String>>>, Map<String, List<Pair<String, String>>>> allConditions = Predictor.predict(subject, varFeatures, expFeatures, allLegalVariablesMap);
-			// TODO : currently, only instrument predicates for left variables
-			Map<String, List<Pair<String, String>>> conditionsForRightVars = allConditions.getSecond();
-			// if predicted conditions are not empty for right variables,
-			// instrument each condition one by one and compute coverage
-			// information for each predicate
+			LineInfo info = new LineInfo(line, relJavaPath, clazz);
+			FeatureExtraction.extractAllFeatures(srcPath, relJavaPath, line, info, varFeatures, exprFeatures);
+			lineInfoMapping.put(line, info);
+		}
+		Map<Integer, Map<String, List<Pair<String, String>>>> conditionsForRightVars = Predictor.predict(subject, varFeatures, exprFeatures, lineInfoMapping);
+		// TODO : currently, only instrument predicates for left variables
+		// if predicted conditions are not empty for right variables,
+		// instrument each condition one by one and compute coverage
+		// information for each predicate
+		for(Map.Entry<Integer, Map<String, List<Pair<String, String>>>> entry : conditionsForRightVars.entrySet()) {
+			int line = entry.getKey();
+			final LineInfo info = lineInfoMapping.get(line);
 			if (conditionsForRightVars != null && conditionsForRightVars.size() > 0) {
-				String javaFile = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
+				String javaFile = srcPath + Constant.PATH_SEPARATOR + info.getRelJavaPath();
 				// the source file will instrumented iteratively, before which
 				// the original source file should be saved
 				ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
@@ -375,13 +379,13 @@ public class Coverage {
 				List<Pair<String, String>> legalConditions = new ArrayList<>();
 				// read original file once
 				String source = JavaFile.readFileToString(javaFile);
-				String binFile = subject.getHome() + subject.getSbin() + "/" + clazz + ".class";
+				String binFile = subject.getHome() + subject.getSbin() + "/" + info.getClazz() + ".class";
 				
-				for(Entry<String, List<Pair<String, String>>> entry : conditionsForRightVars.entrySet()){
+				for(Entry<String, List<Pair<String, String>>> innerEntry : entry.getValue().entrySet()){
 					int count = 0;
-					int allConditionCount = entry.getValue().size();
+					int allConditionCount = innerEntry.getValue().size();
 					int currentConditionCount = 1;
-					for(Pair<String, String> condition : entry.getValue()){
+					for(Pair<String, String> condition : innerEntry.getValue()){
 						LevelLogger.info("Validate conditions by compiling : [" + currentConditionCount + "/" + allConditionCount + "].");
 						currentConditionCount ++;
 						

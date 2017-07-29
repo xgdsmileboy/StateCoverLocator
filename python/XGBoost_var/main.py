@@ -33,9 +33,9 @@ class XGVar(object):
         raw_var_values = raw_var.values
 
         varnames = list()
-        if_ids = list()
+        line_ids = list()
         for r in range(0, encoded_var.shape[0]):
-            if_ids.append(raw_var_values[r, 0])
+            line_ids.append(raw_var_values[r, 1])
             varnames.append(raw_var_values[r, 5])
 
         encoded_rows_array = np.array(encoded_var)
@@ -64,7 +64,7 @@ class XGVar(object):
 
                 with open(var_predicted, 'w') as f:
                     for i in range(0, X_pred.shape[0]):
-                        f.write('%s\t' % if_ids[i])
+                        f.write('%s\t' % line_ids[i])
                         f.write('%s\t' % varnames[i])
                         f.write('%.4f' % y_prob[i])
                         f.write('\n')
@@ -78,7 +78,7 @@ class XGVar(object):
 
                 with open(var_predicted, 'w') as f:
                     for i in range(0, X_pred.shape[0]):
-                        f.write('%s\t' % if_ids[i])
+                        f.write('%s\t' % line_ids[i])
                         f.write('%s\t' % varnames[i])
                         f.write('%.4f' % y_prob[i][one_pos])
                         f.write('\n')
@@ -91,7 +91,7 @@ class XGVar(object):
             y_prob = list(classifier.predict_proba(x = X_pred))
             with open(var_predicted, 'w') as f:
                 for i in range(0, X_pred.shape[0]):
-                    f.write('%s\t' % if_ids[i])
+                    f.write('%s\t' % line_ids[i])
                     f.write('%s\t' % varnames[i])
                     f.write('%.4f' % y_prob[i][1])
                     f.write('\n')
