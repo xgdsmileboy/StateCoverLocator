@@ -169,8 +169,8 @@ public class ExecuteCommand {
 			
 			processReader.start();
 			try {
-				processReader.join();
 				process.waitFor();
+				processReader.join();
 			} catch (InterruptedException e) {
 				LevelLogger.error(__name__ + "#execute Process interrupted !");
 				return "";
@@ -241,9 +241,51 @@ public class ExecuteCommand {
 	}
 
 	public static List<String> executeCompile(String[] command) throws IOException, InterruptedException {
-		List<String> message = new ArrayList<>();
-		message.add(execute(command));
-		return message;
+		Process process = null;
+		final List<String> results = new ArrayList<String>();
+		try {
+			ProcessBuilder builder = new ProcessBuilder(command);
+			builder.redirectErrorStream(true);
+			process = builder.start();
+			final InputStream inputStream = process.getInputStream();
+			
+			Thread processReader = new Thread(){
+				public void run() {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+					String line;
+					try {
+						while((line = reader.readLine()) != null) {
+							results.add(line + "\n");
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			
+			processReader.start();
+			try {
+				process.waitFor();
+				processReader.join();
+			} catch (InterruptedException e) {
+				LevelLogger.error(__name__ + "#execute Process interrupted !");
+				return results;
+			}
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
+		} finally {
+			if (process != null) {
+				process.destroy();
+			}
+			process = null;
+		}
+		
+		return results;
 	}
 	
 	/**
@@ -256,7 +298,47 @@ public class ExecuteCommand {
 	 * @throws InterruptedException
 	 */
 	private static void executeAndOutputConsole(String[] command) throws IOException, InterruptedException {
-		LevelLogger.info(execute(command));
+		Process process = null;
+		try {
+			ProcessBuilder builder = new ProcessBuilder(command);
+			builder.redirectErrorStream(true);
+			process = builder.start();
+			final InputStream inputStream = process.getInputStream();
+			
+			Thread processReader = new Thread(){
+				public void run() {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+					String line;
+					try {
+						while((line = reader.readLine()) != null) {
+							LevelLogger.info(line);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			
+			processReader.start();
+			try {
+				process.waitFor();
+				processReader.join();
+			} catch (InterruptedException e) {
+				LevelLogger.error(__name__ + "#execute Process interrupted !");
+			}
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
+		} finally {
+			if (process != null) {
+				process.destroy();
+			}
+			process = null;
+		}
 	}
 
 	/**
@@ -273,9 +355,56 @@ public class ExecuteCommand {
 	private static String executeAndOutputFile(String[] command, String outputFile)
 			throws IOException, InterruptedException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
-		String output = execute(command);
-		writer.write(output);
-		writer.close();
-		return output;
+		Process process = null;
+		final List<String> results = new ArrayList<String>();
+		try {
+			ProcessBuilder builder = new ProcessBuilder(command);
+			builder.redirectErrorStream(true);
+			process = builder.start();
+			final InputStream inputStream = process.getInputStream();
+			
+			Thread processReader = new Thread(){
+				public void run() {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+					String line;
+					try {
+						while((line = reader.readLine()) != null) {
+							writer.write(line + "\n");
+							writer.flush();
+							results.add(line + "\n");
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			
+			processReader.start();
+			try {
+				process.waitFor();
+				processReader.join();
+			} catch (InterruptedException e) {
+				LevelLogger.error(__name__ + "#execute Process interrupted !");
+				return "";
+			}
+			writer.close();
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
+		} finally {
+			if (process != null) {
+				process.destroy();
+			}
+			process = null;
+		}
+		String result = "";
+		for(String s : results) {
+			result += s;
+		}
+		return result;
 	}
 }
