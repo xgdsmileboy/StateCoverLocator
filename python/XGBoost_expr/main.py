@@ -65,7 +65,8 @@ class XGExpr(object):
         ## save the result
         with open(expr_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
-                f.write('%s\t' % dataset[i, 1])
+                key = dataset[i, 3] + "::" + str(dataset[i, 1]) + "::" + dataset[i, 5] 
+                f.write('%s\t' % key)
                 f.write('%s\t' % dataset[i, 5])
                 # f.write('%s' % y_prob[i])
                 line = y_prob[i]

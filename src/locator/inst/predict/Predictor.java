@@ -59,8 +59,8 @@ public class Predictor {
 	 *         left variable [currently, not use] the second set contains all
 	 *         conditions for right variables
 	 */
-	public static Map<Integer, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
-			List<String> exprFeatures, Map<Integer, LineInfo> lineInfoMapping) {
+	public static Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
+			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
 		String currentClassName = null;
 		// TODO : return conditions for left variable and right variables
 		File varFile = new File(subject.getVarFeatureOutputPath());
@@ -103,7 +103,7 @@ public class Predictor {
 			e.printStackTrace();
 		}
 
-		Map<Integer, Map<String, List<Pair<String, String>>>> rightConditions = new HashMap<>();
+		Map<String, Map<String, List<Pair<String, String>>>> rightConditions = new HashMap<>();
 		File rslFile = new File(subject.getPredicResultPath());
 		BufferedReader bReader = null;
 		try {
@@ -116,7 +116,6 @@ public class Predictor {
 		String line = null;
 		try {
 			// filter title
-			int lineNumber = -1;
 			if (bReader.readLine() != null) {
 				// parse predict result "8 u $ == null 0.8319194802"
 				while ((line = bReader.readLine()) != null) {
@@ -125,17 +124,14 @@ public class Predictor {
 						LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
 						continue;
 					}
-					String lineNumberStr = columns[0];
-					if (!lineNumberStr.isEmpty()) {
-						lineNumber = Integer.valueOf(lineNumberStr);
-					}
+					String key = columns[0];
 					String varName = columns[1];
 					String condition = columns[2].replace("$", varName);
-					String varType = lineInfoMapping.get(lineNumber).getLegalVariableType(varName);
+					String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
 					String prob = columns[3];
-					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(lineNumber), currentClassName);
+					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), currentClassName);
 					if(newCond != null){
-						Map<String, List<Pair<String, String>>> linePreds = rightConditions.get(lineNumber);
+						Map<String, List<Pair<String, String>>> linePreds = rightConditions.get(key);
 						if (linePreds == null) {
 							linePreds = new HashMap<>();
 						}
@@ -146,7 +142,7 @@ public class Predictor {
 						Pair<String, String> pair = new Pair<String, String>(newCond, prob);
 						preds.add(pair);
 						linePreds.put(varName, preds);
-						rightConditions.put(lineNumber, linePreds);
+						rightConditions.put(key, linePreds);
 						
 					} else {
 						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);

@@ -141,8 +141,12 @@ public class JavaFile {
 	 * @return
 	 */
 	public static boolean writeStringToFile(File file, String string, boolean append) {
-		if (file == null || string == null) {
-			LevelLogger.error(__name__ + "#writeStringToFile Illegal arguments : null.");
+		if (file == null) {
+			LevelLogger.error(__name__ + "#writeStringToFile Illegal arguments (File) : null.");
+			return false;
+		}
+		if (string == null) {
+			LevelLogger.error(__name__ + "#writeStringToFile Illegal arguments (string) : null.");
 			return false;
 		}
 		if (!file.exists()) {

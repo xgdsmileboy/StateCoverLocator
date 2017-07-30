@@ -8,6 +8,7 @@
 package locator.common.util;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -15,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,33 +141,40 @@ public class ExecuteCommand {
 	 */
 	private static String execute(String... command) {
 		Process process = null;
-		String result = null;
+		final List<String> results = new ArrayList<String>();
 		try {
-			process = Runtime.getRuntime().exec(command);
+			ProcessBuilder builder = new ProcessBuilder(command);
+			builder.redirectErrorStream(true);
+			process = builder.start();
+			final InputStream inputStream = process.getInputStream();
+			
+			Thread processReader = new Thread(){
+				public void run() {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+					String line;
+					try {
+						while((line = reader.readLine()) != null) {
+							results.add(line + "\n");
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			
+			processReader.start();
 			try {
+				processReader.join();
 				process.waitFor();
 			} catch (InterruptedException e) {
 				LevelLogger.error(__name__ + "#execute Process interrupted !");
 				return "";
 			}
-			ByteArrayOutputStream resultOutStream = new ByteArrayOutputStream();
-			InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
-			InputStream processInStream = new BufferedInputStream(process.getInputStream());
-			int num = 0;
-			byte[] bs = new byte[1024];
-			while ((num = errorInStream.read(bs)) != -1) {
-				resultOutStream.write(bs, 0, num);
-			}
-			while ((num = processInStream.read(bs)) != -1) {
-				resultOutStream.write(bs, 0, num);
-			}
-			result = new String(resultOutStream.toByteArray());
-			errorInStream.close();
-			errorInStream = null;
-			processInStream.close();
-			processInStream = null;
-			resultOutStream.close();
-			resultOutStream = null;
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
 		} finally {
@@ -173,6 +182,11 @@ public class ExecuteCommand {
 				process.destroy();
 			}
 			process = null;
+		}
+		
+		String result = "";
+		for(String s: results) {
+			result += s;
 		}
 		return result;
 	}

@@ -57,6 +57,7 @@ public class Constant {
 	public final static int FEATURE_VAR_NAME_INDEX = 5;
 	public final static int FEATURE_VAR_TYPE_INDEX = 6;
 	public final static int FEATURE_FILE_NAME_INDEX = 3;
+	public final static int FEATURE_LINE_INDEX = 1;
 	
 	// training model
 	// xgboost, dnn or randomforest

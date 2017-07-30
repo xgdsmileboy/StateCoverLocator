@@ -77,10 +77,11 @@ public class FeatureExtraction {
 		return features;
 	}
 
-	public static void extractAllFeatures(String srcPath, String relJavaPath, int line, LineInfo info,
+	public static Set<String> extractAllFeatures(String srcPath, String relJavaPath, int line, LineInfo info,
 			List<String> varFeatures, List<String> exprFeatures) {
+		Set<String> keys = new HashSet<String>();
 		if(srcPath == null || relJavaPath == null){
-			return;
+			return keys;
 		}
 		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
 		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
@@ -99,6 +100,9 @@ public class FeatureExtraction {
 			info.addLegalVariable(varName, varType);
 			if (rightVars.contains(varName)) {
 				varFeatures.add(feature);
+				String key = elements[Constant.FEATURE_FILE_NAME_INDEX] + "::" + elements[Constant.FEATURE_LINE_INDEX]
+						+ "::" + varName;
+				keys.add(key);
 			}
 		}
 
@@ -106,8 +110,12 @@ public class FeatureExtraction {
 			String[] elements = feature.split("\t");
 			if (rightVars.contains(elements[Constant.FEATURE_VAR_NAME_INDEX])) {
 				exprFeatures.add(feature);
+				String key = elements[Constant.FEATURE_FILE_NAME_INDEX] + "::" + elements[Constant.FEATURE_LINE_INDEX]
+						+ "::" + elements[Constant.FEATURE_VAR_NAME_INDEX];
+				keys.add(key);
 			}
 		}
+		return keys;
 	}
 
 	private static class VariableCollector extends ASTVisitor {

@@ -322,7 +322,7 @@ public class Coverage {
 		int allStmtCount = allStatements.size();
 		int currentStmtCount = 1;
 		
-		Map<Integer, LineInfo> lineInfoMapping = new HashMap<Integer, LineInfo>();
+		Map<String, LineInfo> lineInfoMapping = new HashMap<String, LineInfo>();
 		List<String> varFeatures = new ArrayList<String>();
 		List<String> exprFeatures = new ArrayList<String>();
 		for (String stmt : allStatements) {
@@ -336,6 +336,9 @@ public class Coverage {
 			}
 			Integer methodID = Integer.valueOf(stmtInfo[0]);
 			int line = Integer.parseInt(stmtInfo[1]);
+			if (line == 2317) {
+				System.out.print("exist");
+			}
 			String methodString = Identifier.getMessage(methodID);
 			LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
 			String[] methodInfo = methodString.split("#");
@@ -359,18 +362,21 @@ public class Coverage {
 			
 			// <varName, type>
 			LineInfo info = new LineInfo(line, relJavaPath, clazz);
-			FeatureExtraction.extractAllFeatures(srcPath, relJavaPath, line, info, varFeatures, exprFeatures);
-			lineInfoMapping.put(line, info);
+			Set<String> newAddedKeys = FeatureExtraction.extractAllFeatures(srcPath, relJavaPath, line, info, varFeatures, exprFeatures);
+			for(String key: newAddedKeys) {
+				lineInfoMapping.put(key, info);
+			}
 		}
-		Map<Integer, Map<String, List<Pair<String, String>>>> conditionsForRightVars = Predictor.predict(subject, varFeatures, exprFeatures, lineInfoMapping);
+		Map<String, Map<String, List<Pair<String, String>>>> conditionsForRightVars = Predictor.predict(subject, varFeatures, exprFeatures, lineInfoMapping);
 		// TODO : currently, only instrument predicates for left variables
 		// if predicted conditions are not empty for right variables,
 		// instrument each condition one by one and compute coverage
 		// information for each predicate
-		for(Map.Entry<Integer, Map<String, List<Pair<String, String>>>> entry : conditionsForRightVars.entrySet()) {
-			int line = entry.getKey();
-			final LineInfo info = lineInfoMapping.get(line);
-			if (conditionsForRightVars != null && conditionsForRightVars.size() > 0) {
+		System.out.println(conditionsForRightVars.size());
+		for(Map.Entry<String, Map<String, List<Pair<String, String>>>> entry : conditionsForRightVars.entrySet()) {
+			int line = lineInfoMapping.get(entry.getKey()).getLine();
+			final LineInfo info = lineInfoMapping.get(entry.getKey());
+			if (entry.getValue() != null && entry.getValue().size() > 0) {
 				String javaFile = srcPath + Constant.PATH_SEPARATOR + info.getRelJavaPath();
 				// the source file will instrumented iteratively, before which
 				// the original source file should be saved

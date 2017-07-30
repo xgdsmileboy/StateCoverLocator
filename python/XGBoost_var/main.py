@@ -35,7 +35,7 @@ class XGVar(object):
         varnames = list()
         line_ids = list()
         for r in range(0, encoded_var.shape[0]):
-            line_ids.append(raw_var_values[r, 1])
+            line_ids.append(raw_var_values[r, 3] + "::" + str(raw_var_values[r, 1]) + "::" + raw_var_values[r, 5])
             varnames.append(raw_var_values[r, 5])
 
         encoded_rows_array = np.array(encoded_var)
