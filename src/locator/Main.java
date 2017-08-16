@@ -114,7 +114,7 @@ public class Main {
 		}
 	}
 
-	private static void proceed(Subject subject) {
+	private static void proceed(Subject subject, boolean useStatisticalDebugging) {
 		
 		LevelLogger.info("------------------ Begin : " + subject.getName() + "_" + subject.getId() + " ----------------");
 		
@@ -133,7 +133,9 @@ public class Main {
 //		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
 
 		// train predicate prediction model
-		trainModel(subject);
+		if (!useStatisticalDebugging) {
+			trainModel(subject);
+		}
 
 		// copy auxiliary file to subject path
 		LevelLogger.info("copying auxiliary file to subject path.");
@@ -169,14 +171,15 @@ public class Main {
 		
 		LevelLogger.info("step 4: compute predicate coverage information");
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
-				failedTestsAndCoveredMethods.getFirst());
+				failedTestsAndCoveredMethods.getFirst(), useStatisticalDebugging);
 
 		if(predicateCoverage == null){
 			return;
 		}
 		
-		LevelLogger.info("output predicate coverage information to file : pred_coverage.csv");
-		printCoverage(predicateCoverage, subject.getCoverageInfoPath() + "/pred_coverage.csv");
+		String predCoverageFile = useStatisticalDebugging ? "pred_coverage_sd.csv" : "pred_coverage.csv";
+		LevelLogger.info("output predicate coverage information to file : " + predCoverageFile);
+		printCoverage(predicateCoverage, subject.getCoverageInfoPath() + "/" + predCoverageFile);
 
 		LevelLogger.info("Compute suspicious for each statement and out put to file.");
 		List<Algorithm> algorithms = new ArrayList<>();
@@ -186,7 +189,7 @@ public class Main {
 		algorithms.add(new DStar());
 		algorithms.add(new Barinel());
 		algorithms.add(new Op2());
-		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed);
+		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed, useStatisticalDebugging);
 		
 //		LevelLogger.info("step 5: combine all coverage informaiton");
 //		for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {
@@ -253,25 +256,33 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-
-		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
-		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 80);
-		recordSubjects(allSubjects);
+//
+//		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
+//		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 80);
+//		recordSubjects(allSubjects);
+//		for(int i = 53; i < allSubjects.size(); i++) {
+//			try {
+		List<Subject> allSubjects = ProjectSelector.select("math");
 		for(Subject subject : allSubjects) {
 			try {
+				if (subject.getId() > 80) break;
+//				File file = new File(subject.getCoverageInfoPath() + "/Barinel_coverage.csv");
+//				if (file.exists()) continue;
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
 				String begin = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin);
 
 				Constant.PROJECT_HOME = "/home/lillian/work/df";
 
-				proceed(subject);
+				proceed(subject, true);
 
 				String end = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);
 			} catch (Exception e) {
-				JavaFile.writeStringToFile(Constant.HOME + "/logs/" +
-						subject.getName() + "_" + Integer.toString(subject.getId()) + "_error.log", e.getMessage());
+				e.printStackTrace();
+//				JavaFile.writeStringToFile(Constant.HOME + "/logs/" +
+//						subject.getName() + "_" + Integer.toString(subject.getId())
+//						+ "_error.log");
 			}
 		}
 	}

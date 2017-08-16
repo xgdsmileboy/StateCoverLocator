@@ -30,11 +30,16 @@ public abstract class Algorithm {
 	
 	public abstract double getScore(int fcover, int pcover, int totalFailed, int totalPassed);
 	
-	public List<Pair<String, Double>> compute(Subject subject, int totalFailed, int totalPassed) {
+	public List<Pair<String, Double>> compute(Subject subject, int totalFailed, int totalPassed, boolean useStatisticalDebugging) {
 //		Map<String, ArrayList<PredicateCoverage>> predCoverage = new HashMap<String , ArrayList<PredicateCoverage>>();
 		List<Pair<String, Double>> result = new ArrayList<Pair<String, Double>>();
 		String oriCoveragePath = subject.getCoverageInfoPath() + "/ori_coverage.csv";
-		String predCoveragePath = subject.getCoverageInfoPath() + "/pred_coverage.csv";
+		String predCoveragePath = subject.getCoverageInfoPath() + "/pred_coverage";
+		if (useStatisticalDebugging) {
+			predCoveragePath += "_sd.csv";
+		} else {
+			predCoveragePath += ".csv";
+		}
 
 		List<String> oriContent = JavaFile.readFileToStringList(oriCoveragePath);
 		for(String line : oriContent) {
@@ -105,7 +110,13 @@ public abstract class Algorithm {
 		for(Pair<Double, String> line : contents) {
 			sortedResult += line.getSecond() + "\n";
 		}
-		JavaFile.writeStringToFile(subject.getCoverageInfoPath() + "/" + getName() + "_coverage.csv", sortedResult);
+		String algOutputFile = subject.getCoverageInfoPath() + "/" + getName() + "_coverage";
+		if (useStatisticalDebugging) {
+			algOutputFile += "_sd.csv";
+		} else {
+			algOutputFile += ".csv";
+		}
+		JavaFile.writeStringToFile(algOutputFile, sortedResult);
 		
 		return result;
 	}

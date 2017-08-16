@@ -42,6 +42,7 @@ import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
 import locator.inst.visitor.NewTestMethodInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
+import locator.inst.visitor.StatisticalDebuggingPredicatesVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
 
@@ -253,13 +254,14 @@ public class Coverage {
 	 *         statementString:"MethodID#line"
 	 */
 	public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, Set<String> allStatements,
-			Set<Integer> failedTests) {
+			Set<Integer> failedTests, boolean useStatisticalDebugging) {
 		String srcPath = subject.getHome() + subject.getSsrc();
 		String testPath = subject.getHome() + subject.getTsrc();
 		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests);
 		Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 		
-		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = getAllPredicates(subject, allStatements);
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = useStatisticalDebugging ?
+				getStatisticalDebuggingPredicates(subject, allStatements) : getAllPredicates(subject, allStatements);
 		
 		System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
 		printInfo(file2Line2Predicates);
@@ -309,6 +311,110 @@ public class Coverage {
 		return coverage;
 	}
 	
+	private static Map<String, Map<Integer, List<Pair<String, String>>>> getStatisticalDebuggingPredicates(Subject subject, Set<String> allStatements) {
+		String srcPath = subject.getHome() + subject.getSsrc();
+		
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
+		
+		int allStmtCount = allStatements.size();
+		int currentStmtCount = 1;
+		
+		for (String stmt : allStatements) {
+			LevelLogger.info("======================== [" + currentStmtCount + "/" + allStmtCount + "] statements (statistical debugging) =================.");
+			currentStmtCount ++;
+			
+			String[] stmtInfo = stmt.split("#");
+			if (stmtInfo.length != 2) {
+				LevelLogger.error(__name__ + "#getAllPredicates statement parse error : " + stmt);
+				System.exit(0);
+			}
+			Integer methodID = Integer.valueOf(stmtInfo[0]);
+			int line = Integer.parseInt(stmtInfo[1]);
+			if (line == 2317) {
+				System.out.print("exist");
+			}
+			String methodString = Identifier.getMessage(methodID);
+			LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
+			String[] methodInfo = methodString.split("#");
+			if (methodInfo.length < 4) {
+				LevelLogger.error(__name__ + "#getAllPredicates method info parse error : " + methodString);
+				System.exit(0);
+			}
+			String clazz = methodInfo[0].replace(".", Constant.PATH_SEPARATOR);
+			int index = clazz.indexOf("$");
+			if (index > 0) {
+				clazz = clazz.substring(0, index);
+			}
+			String relJavaPath = clazz + ".java";
+			
+			String fileName = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
+			File file = new File(fileName);
+			if(!file.exists()){
+				LevelLogger.error("Cannot find file : " + fileName);
+				continue;
+			}
+			
+			CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSourceWithType(
+					JavaFile.readFileToString(fileName), ASTParser.K_COMPILATION_UNIT, fileName, subject);
+			StatisticalDebuggingPredicatesVisitor sdPredicatesVisitor = new StatisticalDebuggingPredicatesVisitor(line, srcPath, relJavaPath);
+			cu.accept(sdPredicatesVisitor);
+			Map<Integer, List<Pair<String, String>>> line2Predicate = file2Line2Predicates.get(fileName);
+			if(line2Predicate == null){
+				line2Predicate = new HashMap<>();
+			}
+			List<Pair<String, String>> predicates = line2Predicate.get(line);
+			if(predicates == null){
+				predicates = new ArrayList<>();
+			}
+			String binFile = subject.getHome() + subject.getSbin() + "/" + clazz + ".class";
+			String source = JavaFile.readFileToString(fileName);
+			List<String> ifAndReturnPredicates = sdPredicatesVisitor.getPredicates();
+			List<String> assignmentPredicates = sdPredicatesVisitor.getAssignmentPredicates();
+			if (!ifAndReturnPredicates.isEmpty()) {
+				if (validatePredicate(ifAndReturnPredicates.get(0), source, fileName, binFile, line, subject)) {
+					for(String p : ifAndReturnPredicates) {
+						predicates.add(new Pair<String, String>(p, "1"));
+					}
+				}
+			}
+			if (!assignmentPredicates.isEmpty()) {
+				if (validatePredicate(assignmentPredicates.get(0), source, fileName, binFile, line, subject)) {
+					for(String p : assignmentPredicates) {
+						predicates.add(new Pair<String, String>(p, "1"));
+					}
+				}
+			}
+			
+			JavaFile.writeStringToFile(fileName, source);
+			line2Predicate.put(line, predicates);
+			file2Line2Predicates.put(fileName, line2Predicate);
+		}
+		return file2Line2Predicates;
+	}
+	
+	
+	private static boolean validatePredicate(String predicate, String source, String fileName, String binFile, int line, Subject subject) {
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
+				ASTParser.K_COMPILATION_UNIT);
+		
+		List<Pair<String, String>> onePredicate = new ArrayList<>();
+		onePredicate.add(new Pair<String, String>(predicate, "1"));
+		NewPredicateInstrumentVisitor newPredicateInstrumentVisitor = new NewPredicateInstrumentVisitor(null, line);
+		newPredicateInstrumentVisitor.setCondition(onePredicate);
+		
+		compilationUnit.accept(newPredicateInstrumentVisitor);
+		
+		JavaFile.writeStringToFile(fileName, compilationUnit.toString());
+		ExecuteCommand.deleteGivenFile(binFile);
+		
+		if(Runner.compileSubject(subject)){
+			LevelLogger.info("Passed build : " + predicate);
+			return true;
+		} else {
+			LevelLogger.info("Build failed : " + predicate + " line: " + Integer.toString(line));
+			return false;
+		}
+	}
 	
 	private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject, Set<String> allStatements){
 

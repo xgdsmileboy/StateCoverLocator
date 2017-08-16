@@ -30,7 +30,7 @@ public class Suspicious {
 	
 	private static String seperator = "\t";
 	
-	public static void compute(Subject subject, List<Algorithm> algorithms, int totalFailed, int totalPassed){
+	public static void compute(Subject subject, List<Algorithm> algorithms, int totalFailed, int totalPassed, boolean useStatisticalDebugging){
 		Map<String, CList> suspicious = new HashMap<>();
 		int listLen = algorithms.size();
 		StringBuffer header = new StringBuffer();
@@ -39,7 +39,7 @@ public class Suspicious {
 		for(int i = 0; i < listLen; i++){
 			header.append(seperator);
 			header.append(algorithms.get(i).getName());
-			List<Pair<String, Double>> result = algorithms.get(i).compute(subject, totalFailed, totalPassed);
+			List<Pair<String, Double>> result = algorithms.get(i).compute(subject, totalFailed, totalPassed, useStatisticalDebugging);
 			for(Pair<String, Double> pair : result){
 				String line = pair.getFirst();
 				Double susp = pair.getSecond();
@@ -54,7 +54,8 @@ public class Suspicious {
 		}
 		
 		// write into file
-		File file = new File(subject.getCoverageInfoPath() + "/result.csv");
+		String outputFile = useStatisticalDebugging ? "result_sd.csv" : "result.csv";
+		File file = new File(subject.getCoverageInfoPath() + "/" + outputFile);
 		if(!file.exists()){
 			file.getParentFile().mkdirs();
 			try {
