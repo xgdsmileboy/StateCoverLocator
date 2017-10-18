@@ -10,18 +10,19 @@ package locator.inst.visitor;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Method;
 import locator.common.util.LevelLogger;
 
 /**
@@ -62,6 +63,13 @@ public abstract class TraversalVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(CompilationUnit node) {
 		_cu = node;
+		// jdt bug : when parse package with reserved keywords
+		if(node.getPackage() == null) {
+			AST ast = AST.newAST(AST.JLS8);
+			PackageDeclaration packageDeclaration = ast.newPackageDeclaration();
+			packageDeclaration.setName(ast.newName("jdt.parse.pkg.bug.keyword"));
+			node.setPackage((PackageDeclaration) ASTNode.copySubtree(node.getAST(), packageDeclaration));
+		}
 		if (node.getPackage().getName() != null
 				&& node.getPackage().getName().getFullyQualifiedName().equals("auxiliary")) {
 			return false;
