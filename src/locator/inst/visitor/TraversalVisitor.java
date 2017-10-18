@@ -67,7 +67,8 @@ public abstract class TraversalVisitor extends ASTVisitor {
 		if(node.getPackage() == null) {
 			AST ast = AST.newAST(AST.JLS8);
 			PackageDeclaration packageDeclaration = ast.newPackageDeclaration();
-			packageDeclaration.setName(ast.newName("jdt.parse.pkg.bug.keyword"));
+			// for lang project
+			packageDeclaration.setName(ast.newName("org.apache.commons.lang.enum"));
 			node.setPackage((PackageDeclaration) ASTNode.copySubtree(node.getAST(), packageDeclaration));
 		}
 		if (node.getPackage().getName() != null
