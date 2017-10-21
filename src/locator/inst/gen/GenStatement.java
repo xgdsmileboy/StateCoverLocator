@@ -25,7 +25,7 @@ import locator.common.java.JavaFile;
 
 public class GenStatement {
 
-	private static AST ast = AST.newAST(AST.JLS8);
+	private static AST ast = AST.newAST(Constant.AST_LEVEL);
 
 	/**
 	 * generate "System.out.println()" statement

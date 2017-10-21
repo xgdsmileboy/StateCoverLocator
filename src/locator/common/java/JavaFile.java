@@ -54,9 +54,9 @@ public class JavaFile {
 	 * @return
 	 */
 	public static CompilationUnit genASTFromICU(ICompilationUnit icu) {
-		ASTParser astParser = ASTParser.newParser(AST.JLS8);
+		ASTParser astParser = ASTParser.newParser(Constant.AST_LEVEL);
 		Map<?, ?> options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		JavaCore.setComplianceOptions(Constant.JAVA_VERSION, options);
 		astParser.setCompilerOptions(options);
 		astParser.setSource(icu);
 		astParser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -73,9 +73,9 @@ public class JavaFile {
 	 * @return
 	 */
 	public static ASTNode genASTFromSource(String icu, int type) {
-		ASTParser astParser = ASTParser.newParser(AST.JLS8);
+		ASTParser astParser = ASTParser.newParser(Constant.AST_LEVEL);
 		Map<?, ?> options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		JavaCore.setComplianceOptions(Constant.JAVA_VERSION, options);
 		astParser.setCompilerOptions(options);
 		astParser.setSource(icu.toCharArray());
 		astParser.setKind(type);
@@ -84,9 +84,9 @@ public class JavaFile {
 	}
 	
 	public static ASTNode genASTFromSourceWithType(String icu, int type, String filePath, Subject subject) {
-		ASTParser astParser = ASTParser.newParser(AST.JLS8);
+		ASTParser astParser = ASTParser.newParser(Constant.AST_LEVEL);
 		Map<?, ?> options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		JavaCore.setComplianceOptions(Constant.JAVA_VERSION, options);
 		astParser.setCompilerOptions(options);
 		astParser.setSource(icu.toCharArray());
 		astParser.setKind(type);

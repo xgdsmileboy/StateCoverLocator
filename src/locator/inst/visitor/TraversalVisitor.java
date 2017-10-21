@@ -63,14 +63,14 @@ public abstract class TraversalVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(CompilationUnit node) {
 		_cu = node;
-		// jdt bug : when parse package with reserved keywords
-		if(node.getPackage() == null) {
-			AST ast = AST.newAST(AST.JLS8);
-			PackageDeclaration packageDeclaration = ast.newPackageDeclaration();
-			// for lang project
-			packageDeclaration.setName(ast.newName("org.apache.commons.lang.enum"));
-			node.setPackage((PackageDeclaration) ASTNode.copySubtree(node.getAST(), packageDeclaration));
-		}
+//		// jdt bug : when parse package with reserved keywords
+//		if(node.getPackage() == null) {
+//			AST ast = AST.newAST(Constant.AST_LEVEL);
+//			PackageDeclaration packageDeclaration = ast.newPackageDeclaration();
+//			// for lang project
+//			packageDeclaration.setName(ast.newName("org.apache.commons.lang.enum"));
+//			node.setPackage((PackageDeclaration) ASTNode.copySubtree(node.getAST(), packageDeclaration));
+//		}
 		if (node.getPackage().getName() != null
 				&& node.getPackage().getName().getFullyQualifiedName().equals("auxiliary")) {
 			return false;

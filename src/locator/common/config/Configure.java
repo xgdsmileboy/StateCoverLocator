@@ -17,6 +17,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -30,6 +32,7 @@ import com.google.googlejavaformat.java.FormatterException;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
+import soot.coffi.constant_element_value;
 
 public class Configure {
 
@@ -74,6 +77,16 @@ public class Configure {
 			LevelLogger.fatal(__name__ + "#getSubjectFromXML parse xml file failed !", e);
 		}
 		return list;
+	}
+	
+	public static void config_astlevel(Subject subject) {
+		if(subject.getName().equals("lang") && subject.getId() >= 42) {
+			Constant.AST_LEVEL = AST.JLS3;
+			Constant.JAVA_VERSION = JavaCore.VERSION_1_4;
+		} else {
+			Constant.AST_LEVEL = AST.JLS8;
+			Constant.JAVA_VERSION = JavaCore.VERSION_1_7;
+		}
 	}
 
 	/**

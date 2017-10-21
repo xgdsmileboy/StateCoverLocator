@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
+
 import edu.pku.sei.conditon.simple.SplIfAndVariablePairVisitor;
 import edu.pku.sei.conditon.simple.SplIfStmtVisitor;
 import locator.common.util.LevelLogger;
@@ -43,6 +46,9 @@ public class Constant {
 
 	// least length for failed test trace
 	public final static int TRACE_LENGTH_FOR_FAILED_TEST = 20;
+	
+	public static int AST_LEVEL = AST.JLS8;
+	public static String JAVA_VERSION = JavaCore.VERSION_1_7;
 
 	// instrument top K predicates for each variable
 	public final static int TOP_K_PREDICATES_FOR_EACH_VAR = 5;
