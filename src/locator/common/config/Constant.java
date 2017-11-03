@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
+
 import edu.pku.sei.conditon.simple.SplIfAndVariablePairVisitor;
 import edu.pku.sei.conditon.simple.SplIfStmtVisitor;
 import locator.common.util.LevelLogger;
@@ -43,6 +46,9 @@ public class Constant {
 
 	// least length for failed test trace
 	public final static int TRACE_LENGTH_FOR_FAILED_TEST = 20;
+	
+	public static int AST_LEVEL = AST.JLS8;
+	public static String JAVA_VERSION = JavaCore.VERSION_1_7;
 
 	// instrument top K predicates for each variable
 	public final static int TOP_K_PREDICATES_FOR_EACH_VAR = 5;
@@ -71,6 +77,7 @@ public class Constant {
 	public static String COMMAND_JAVA = null;
 	public static String COMMAND_D4J = null;
 	public static String COMMAND_PYTHON = null;
+	public static String COMMAND_JAVA_HOME = null;
 
 	public static String DUMPER_HOME = null;
 	public static String PROJECT_HOME = null;
@@ -136,7 +143,9 @@ public class Constant {
 			prop.load(in);
 
 			// System commands
-			Constant.COMMAND_JAVA = prop.getProperty("COMMAND.JAVA").replace("/", Constant.PATH_SEPARATOR) + " ";
+			Constant.COMMAND_JAVA_HOME = prop.getProperty("COMMAND.JAVA_HOME").replace("/", Constant.PATH_SEPARATOR);
+			Constant.COMMAND_JAVA = COMMAND_JAVA_HOME + Constant.PATH_SEPARATOR + "bin" + Constant.PATH_SEPARATOR + "java ";
+			
 			Constant.COMMAND_CD = prop.getProperty("COMMAND.CD").replace("/", Constant.PATH_SEPARATOR) + " ";
 			Constant.COMMAND_CP = prop.getProperty("COMMAND.CP").replace("/", Constant.PATH_SEPARATOR) + " ";
 			// for deleting files

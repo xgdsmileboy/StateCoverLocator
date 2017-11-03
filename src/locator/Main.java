@@ -140,6 +140,8 @@ public class Main {
 		// copy auxiliary file to subject path
 		LevelLogger.info("copying auxiliary file to subject path.");
 		Configure.config_dumper(subject);
+		// fix bug for ast parser
+		Configure.config_astlevel(subject);
 //
 		LevelLogger.info("step 1: collect failed test and covered methods.");
 		Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);

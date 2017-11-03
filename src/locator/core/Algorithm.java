@@ -8,6 +8,7 @@
 package locator.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -98,14 +99,21 @@ public abstract class Algorithm {
 					"\t" + predStr));
 			p.setSecond(p.getSecond() + s); // add original and pred together
 		}
-		
-		contents.sort(new Comparator<Pair<Double, String>>() {
+		// change to java 1.7
+		Collections.sort(contents, new Comparator<Pair<Double, String>>() {
 			@Override
 			public int compare(Pair<Double, String> o1, Pair<Double, String> o2) {
 				return -Double.compare(o1.getFirst(), o2.getFirst());
 			}
 			
 		});
+//		contents.sort(new Comparator<Pair<Double, String>>() {
+//			@Override
+//			public int compare(Pair<Double, String> o1, Pair<Double, String> o2) {
+//				return -Double.compare(o1.getFirst(), o2.getFirst());
+//			}
+//			
+//		});
 		String sortedResult = "line\toriginal_score\tmax_predicate_score\ttotal\tpredicate\n";
 		for(Pair<Double, String> line : contents) {
 			sortedResult += line.getSecond() + "\n";

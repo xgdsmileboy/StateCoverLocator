@@ -37,6 +37,7 @@ import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
+import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.Pair;
 import locator.inst.gen.GenStatement;
@@ -239,7 +240,7 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 			result.addAll(genInstrument(methodID, lineNumber));
 
 			List<ASTNode> statements = new ArrayList<>();
-			AST ast = AST.newAST(AST.JLS8);
+			AST ast = AST.newAST(Constant.AST_LEVEL);
 			for (Object object : switchStatement.statements()) {
 				ASTNode astNode = (ASTNode) object;
 				statements.add(ASTNode.copySubtree(ast, astNode));
@@ -293,7 +294,7 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 
 			result.add(tryStatement);
 		} else {
-			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(AST.JLS8), statement);
+			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), statement);
 			List<ASTNode> tmpInserted = genInstrument(methodID, startLine);
 			
 			if (statement instanceof ConstructorInvocation || statement instanceof SuperConstructorInvocation) {
@@ -339,7 +340,7 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 	}
 
 	private Block processBlock(Block block, String methodID) {
-		Block newBlock = AST.newAST(AST.JLS8).newBlock();
+		Block newBlock = AST.newAST(Constant.AST_LEVEL).newBlock();
 		if (block == null) {
 			return newBlock;
 		}
@@ -359,7 +360,7 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 		if(statement instanceof Block){
 			block = (Block) statement;
 		} else {
-			AST ast = AST.newAST(AST.JLS8);
+			AST ast = AST.newAST(Constant.AST_LEVEL);
 			block = ast.newBlock();
 			block.statements().add(ASTNode.copySubtree(block.getAST(), statement));
 		}

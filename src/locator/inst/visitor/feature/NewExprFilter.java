@@ -39,6 +39,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
+import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
@@ -69,7 +70,7 @@ public class NewExprFilter {
 
 	public static void init(Subject subject) {
 		String path = subject.getHome() + subject.getSsrc();
-		List<String> fileList = JavaFile.ergodic(path, new ArrayList<>());
+		List<String> fileList = JavaFile.ergodic(path, new ArrayList<String>());
 		MethodAndFieldCollectorVisitor visitor = new MethodAndFieldCollectorVisitor();
 		for (String fileName : fileList) {
 			CompilationUnit unit = JavaFile.genAST(fileName);
@@ -380,7 +381,7 @@ public class NewExprFilter {
 				default :
 					break;
 				}
-				AST ast = AST.newAST(AST.JLS8);
+				AST ast = AST.newAST(Constant.AST_LEVEL);
 				NumberLiteral numberLiteral = ast.newNumberLiteral(value);
 				node.setRightOperand((Expression) ASTNode.copySubtree(node.getAST(), numberLiteral));
 			} else if(rightType != null && rightType.equals("int") && leftExp instanceof NumberLiteral){
@@ -399,7 +400,7 @@ public class NewExprFilter {
 				default :
 					break;
 				}
-				AST ast = AST.newAST(AST.JLS8);
+				AST ast = AST.newAST(Constant.AST_LEVEL);
 				NumberLiteral numberLiteral = ast.newNumberLiteral(value);
 				node.setLeftOperand((Expression) ASTNode.copySubtree(node.getAST(), numberLiteral));
 			}

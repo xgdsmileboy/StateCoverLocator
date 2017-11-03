@@ -18,14 +18,12 @@ import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 
+import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import soot.coffi.constant_element_value;
 
 /**
  * delete all print statement instrumented into the source code
@@ -72,7 +70,7 @@ class RemoveStatementVisitor extends ASTVisitor {
 		List<ASTNode> statements = new ArrayList<>();
 
 		for (Object statement : node.statements()) {
-			statements.add((ASTNode) ASTNode.copySubtree(AST.newAST(AST.JLS8), (ASTNode) statement));
+			statements.add((ASTNode) ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), (ASTNode) statement));
 		}
 
 		node.statements().clear();
@@ -103,7 +101,7 @@ class RemoveStatementVisitor extends ASTVisitor {
 			} else if (astNode instanceof SwitchStatement) {
 				SwitchStatement switchStatement = (SwitchStatement) astNode;
 				List<ASTNode> swStatements = new ArrayList<>();
-				AST ast = AST.newAST(AST.JLS8);
+				AST ast = AST.newAST(Constant.AST_LEVEL);
 				for (Object object : switchStatement.statements()) {
 					swStatements.add(ASTNode.copySubtree(ast, (ASTNode) object));
 				}

@@ -117,7 +117,7 @@ public class CfgInstrument extends TraversalVisitor {
 				if (thenBody instanceof Block) {
 					thenBlock = (Block) thenBody;
 				} else {
-					AST ast = AST.newAST(AST.JLS8);
+					AST ast = AST.newAST(Constant.AST_LEVEL);
 					thenBlock = ast.newBlock();
 					thenBlock.statements().add(ASTNode.copySubtree(thenBlock.getAST(), thenBody));
 				}
@@ -132,7 +132,7 @@ public class CfgInstrument extends TraversalVisitor {
 				if (elseBody instanceof Block) {
 					elseBlock = (Block) elseBody;
 				} else {
-					AST ast = AST.newAST(AST.JLS8);
+					AST ast = AST.newAST(Constant.AST_LEVEL);
 					elseBlock = ast.newBlock();
 					elseBlock.statements().add(ASTNode.copySubtree(elseBlock.getAST(), elseBody));
 				}
@@ -149,7 +149,7 @@ public class CfgInstrument extends TraversalVisitor {
 				if (whilebody instanceof Block) {
 					whileBlock = (Block) whilebody;
 				} else {
-					AST ast = AST.newAST(AST.JLS8);
+					AST ast = AST.newAST(Constant.AST_LEVEL);
 					whileBlock = ast.newBlock();
 					whileBlock.statements().add(ASTNode.copySubtree(whileBlock.getAST(), whilebody));
 				}
@@ -170,7 +170,7 @@ public class CfgInstrument extends TraversalVisitor {
 				if (forBody instanceof Block) {
 					forBlock = (Block) forBody;
 				} else {
-					AST ast = AST.newAST(AST.JLS8);
+					AST ast = AST.newAST(Constant.AST_LEVEL);
 					forBlock = ast.newBlock();
 					forBlock.statements().add(ASTNode.copySubtree(forBlock.getAST(), forBody));
 				}
@@ -199,7 +199,7 @@ public class CfgInstrument extends TraversalVisitor {
 				if (doBody instanceof Block) {
 					doBlock = (Block) doBody;
 				} else {
-					AST ast = AST.newAST(AST.JLS8);
+					AST ast = AST.newAST(Constant.AST_LEVEL);
 					doBlock = ast.newBlock();
 					doBlock.statements().add(ASTNode.copySubtree(doBlock.getAST(), doBody));
 				}
@@ -229,7 +229,7 @@ public class CfgInstrument extends TraversalVisitor {
 				if (enhancedBody instanceof Block) {
 					enhancedBlock = (Block) enhancedBody;
 				} else {
-					AST ast = AST.newAST(AST.JLS8);
+					AST ast = AST.newAST(Constant.AST_LEVEL);
 					enhancedBlock = ast.newBlock();
 					enhancedBlock.statements().add(ASTNode.copySubtree(enhancedBlock.getAST(), enhancedBody));
 				}
@@ -246,7 +246,7 @@ public class CfgInstrument extends TraversalVisitor {
 
 			SwitchStatement switchStatement = (SwitchStatement) statement;
 			List<ASTNode> statements = new ArrayList<>();
-			AST ast = AST.newAST(AST.JLS8);
+			AST ast = AST.newAST(Constant.AST_LEVEL);
 			for (Object object : switchStatement.statements()) {
 				ASTNode astNode = (ASTNode) object;
 				statements.add(ASTNode.copySubtree(ast, astNode));
@@ -301,7 +301,7 @@ public class CfgInstrument extends TraversalVisitor {
 			result.add(tryStatement);
 		} else {
 			int lineNumber = _cu.getLineNumber(statement.getStartPosition());
-			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(AST.JLS8), statement);
+			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), statement);
 			Statement insert = GenStatement.genASTNode(message, lineNumber);
 
 			if (statement instanceof ConstructorInvocation) {
@@ -327,7 +327,7 @@ public class CfgInstrument extends TraversalVisitor {
 	}
 
 	private Block processBlock(Block block, Statement insert, String message) {
-		Block newBlock = AST.newAST(AST.JLS8).newBlock();
+		Block newBlock = AST.newAST(Constant.AST_LEVEL).newBlock();
 		if (block == null) {
 			return newBlock;
 		}

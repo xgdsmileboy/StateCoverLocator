@@ -85,7 +85,7 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 		if (node.getBody() != null) {
 			Block body = node.getBody();
 			List<ASTNode> backupStatement = new ArrayList<>();
-			AST ast = AST.newAST(AST.JLS8);
+			AST ast = AST.newAST(Constant.AST_LEVEL);
 
 			ASTNode thisOrSuperStatement = null;
 			if (body.statements().size() > 0) {
