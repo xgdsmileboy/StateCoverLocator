@@ -169,8 +169,8 @@ public class ExecuteCommand {
 			
 			processReader.start();
 			try {
-				process.waitFor();
 				processReader.join();
+				process.waitFor();
 			} catch (InterruptedException e) {
 				LevelLogger.error(__name__ + "#execute Process interrupted !");
 				return "";
@@ -270,8 +270,8 @@ public class ExecuteCommand {
 			
 			processReader.start();
 			try {
-				process.waitFor();
 				processReader.join();
+				process.waitFor();
 			} catch (InterruptedException e) {
 				LevelLogger.error(__name__ + "#execute Process interrupted !");
 				return results;
@@ -326,8 +326,8 @@ public class ExecuteCommand {
 			
 			processReader.start();
 			try {
-				process.waitFor();
 				processReader.join();
+				process.waitFor();
 			} catch (InterruptedException e) {
 				LevelLogger.error(__name__ + "#execute Process interrupted !");
 			}
@@ -386,8 +386,8 @@ public class ExecuteCommand {
 			
 			processReader.start();
 			try {
-				process.waitFor();
 				processReader.join();
+				process.waitFor();
 			} catch (InterruptedException e) {
 				LevelLogger.error(__name__ + "#execute Process interrupted !");
 				return "";
