@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
@@ -172,7 +173,7 @@ public abstract class TraversalVisitor extends ASTVisitor {
 	private String getFullClazzName(MethodDeclaration node) {
 		// filter those methods that defined in anonymous classes
 		ASTNode parent = node.getParent();
-		while (parent != null && !(parent instanceof TypeDeclaration)) {
+		while (parent != null && !(parent instanceof TypeDeclaration) && !(parent instanceof EnumDeclaration)) {
 			if (parent instanceof ClassInstanceCreation) {
 				return null;
 			}
@@ -184,6 +185,12 @@ public abstract class TraversalVisitor extends ASTVisitor {
 			String parentName = typeDeclaration.getName().getFullyQualifiedName();
 			if (!_clazzName.endsWith(parentName)) {
 				currentClassName = _clazzName + "$" + parentName;
+			}
+		} else if(parent != null && parent instanceof EnumDeclaration) {
+			EnumDeclaration enumDeclaration = (EnumDeclaration) parent;
+			String enumName = enumDeclaration.getName().getFullyQualifiedName();
+			if(!_clazzName.endsWith(enumName)) {
+				currentClassName = _clazzName + "$" + enumName;
 			}
 		}
 		return currentClassName;
