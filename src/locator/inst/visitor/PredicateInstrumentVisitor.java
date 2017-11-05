@@ -10,8 +10,6 @@ package locator.inst.visitor;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.FlavorException;
-
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AssertStatement;
@@ -36,7 +34,6 @@ import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import javafx.scene.shape.Line;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.inst.gen.GenStatement;

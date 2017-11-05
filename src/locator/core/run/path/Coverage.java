@@ -82,7 +82,7 @@ public class Coverage {
 //		Instrument.execute(src, new DeInstrumentVisitor());
 //		Instrument.execute(test, new DeInstrumentVisitor());
 		
-		return ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE, new HashSet<>());
+		return ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE, new HashSet<Integer>());
 	}
 	
 	/**

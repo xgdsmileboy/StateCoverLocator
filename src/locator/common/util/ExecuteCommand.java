@@ -20,11 +20,13 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
+import sun.awt.geom.Crossings.EvenOdd;
 
 /**
  * This class is an interface to run script command background
@@ -143,7 +145,7 @@ public class ExecuteCommand {
 		Process process = null;
 		final List<String> results = new ArrayList<String>();
 		try {
-			ProcessBuilder builder = new ProcessBuilder(command);
+			ProcessBuilder builder = getProcessBuilder(command);
 			builder.redirectErrorStream(true);
 			process = builder.start();
 			final InputStream inputStream = process.getInputStream();
@@ -244,7 +246,7 @@ public class ExecuteCommand {
 		Process process = null;
 		final List<String> results = new ArrayList<String>();
 		try {
-			ProcessBuilder builder = new ProcessBuilder(command);
+			ProcessBuilder builder = getProcessBuilder(command);
 			builder.redirectErrorStream(true);
 			process = builder.start();
 			final InputStream inputStream = process.getInputStream();
@@ -300,7 +302,7 @@ public class ExecuteCommand {
 	private static void executeAndOutputConsole(String[] command) throws IOException, InterruptedException {
 		Process process = null;
 		try {
-			ProcessBuilder builder = new ProcessBuilder(command);
+			ProcessBuilder builder = getProcessBuilder(command);
 			builder.redirectErrorStream(true);
 			process = builder.start();
 			final InputStream inputStream = process.getInputStream();
@@ -354,11 +356,11 @@ public class ExecuteCommand {
 	 */
 	private static String executeAndOutputFile(String[] command, String outputFile)
 			throws IOException, InterruptedException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+		final BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
 		Process process = null;
 		final List<String> results = new ArrayList<String>();
 		try {
-			ProcessBuilder builder = new ProcessBuilder(command);
+			ProcessBuilder builder = getProcessBuilder(command);
 			builder.redirectErrorStream(true);
 			process = builder.start();
 			final InputStream inputStream = process.getInputStream();
@@ -406,5 +408,13 @@ public class ExecuteCommand {
 			result += s;
 		}
 		return result;
+	}
+	
+	private static ProcessBuilder getProcessBuilder(String[] command) { 
+		ProcessBuilder builder = new ProcessBuilder(command);
+		Map<String, String> evn = builder.environment();
+		evn.put("JAVA_HOME", Constant.COMMAND_JAVA_HOME);
+		evn.put("PATH", Constant.COMMAND_JAVA_HOME + "/bin:" + evn.get("PATH"));
+		return builder;
 	}
 }

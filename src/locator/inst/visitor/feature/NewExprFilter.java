@@ -70,7 +70,7 @@ public class NewExprFilter {
 
 	public static void init(Subject subject) {
 		String path = subject.getHome() + subject.getSsrc();
-		List<String> fileList = JavaFile.ergodic(path, new ArrayList<>());
+		List<String> fileList = JavaFile.ergodic(path, new ArrayList<String>());
 		MethodAndFieldCollectorVisitor visitor = new MethodAndFieldCollectorVisitor();
 		for (String fileName : fileList) {
 			CompilationUnit unit = JavaFile.genAST(fileName);

@@ -1,6 +1,7 @@
 package locator.common.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -126,7 +127,8 @@ public class ProjectSelector {
 			result.add(select(whichProject, whichBug));
 		}
 		
-		result.sort(new Comparator<Subject>(){
+		// change to java 1.7
+		Collections.sort(result, new Comparator<Subject>(){
 
 			@Override
 			public int compare(Subject o1, Subject o2) {
@@ -137,6 +139,17 @@ public class ProjectSelector {
 			}
 			
 		});
+//		result.sort(new Comparator<Subject>(){
+//
+//			@Override
+//			public int compare(Subject o1, Subject o2) {
+//				if (!o1.getName().equals(o2.getName())) {
+//					return o1.getName().compareTo(o2.getName());
+//				}
+//				return Integer.compare(o1.getId(), o2.getId());
+//			}
+//			
+//		});
 		return result;
 	}
 	

@@ -24,7 +24,7 @@ public class ExecutionPathBuilderTest {
 	
 	@Test
 	public void test_buildCoverage(){
-		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE, new HashSet<>());
+		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE, new HashSet<Integer>());
 		for(Entry<String, CoverInfo> entry : coverage.entrySet()){
 			System.out.println(entry.getKey() + " " + entry.getValue().getFailedCount() + " " + entry.getValue().getPassedCount());
 		}
