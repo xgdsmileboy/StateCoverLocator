@@ -65,6 +65,9 @@ public class Constant {
 	public final static int FEATURE_FILE_NAME_INDEX = 3;
 	public final static int FEATURE_LINE_INDEX = 1;
 	
+	// update predicate
+	public final static boolean RECOVER_PREDICATE_FROM_FILE = true;
+	
 	// training model
 	// xgboost, dnn or randomforest
 	public final static String TRAINING_MODEL = "dnn";

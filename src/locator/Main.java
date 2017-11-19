@@ -282,7 +282,7 @@ public class Main {
 
 				Constant.PROJECT_HOME = "/home/lillian/work/df";
 
-				proceed(subject, true, true);
+				proceed(subject, false, true);
 
 				String end = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);

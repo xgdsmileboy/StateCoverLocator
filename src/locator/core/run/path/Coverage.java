@@ -260,9 +260,14 @@ public class Coverage {
 		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests, useSober);
 		Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 		
-		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = useStatisticalDebugging ?
-				getStatisticalDebuggingPredicates(subject, allStatements) : getAllPredicates(subject, allStatements, useSober);
-		
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = null;
+		if (Constant.RECOVER_PREDICATE_FROM_FILE) {
+			file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
+		}
+		if (file2Line2Predicates == null) {
+			file2Line2Predicates = useStatisticalDebugging ?
+					getStatisticalDebuggingPredicates(subject, allStatements) : getAllPredicates(subject, allStatements, useSober);
+		}
 		System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
 		printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
 		
@@ -589,6 +594,39 @@ public class Coverage {
 		JavaFile.writeStringToFile(outputFile, contents.toString());
 	}
 	
+	public static Map<String, Map<Integer, List<Pair<String, String>>>> recoverPredicates(Subject subject, boolean useStatisticalDebugging) {
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
+		String inputFile = subject.getCoverageInfoPath() + "/predicates_backup";
+		if (useStatisticalDebugging) {
+			inputFile += "_sd.txt";
+		} else {
+			inputFile += ".txt";
+		}
+		File file = new File(inputFile);
+		if (!file.exists() || !file.isFile()) {
+			return null;
+		}
+		LevelLogger.info("Recover predicates from file.");
+		List<String> contents = JavaFile.readFileToStringList(file);
+		for(String content : contents) {
+			if (contents.isEmpty()) {
+				continue;
+			}
+			String parts[] = content.split("\t");
+			Map<Integer, List<Pair<String, String>>> line2Predicates = file2Line2Predicates.get(parts[0]);
+			if (line2Predicates == null) {
+				line2Predicates = new HashMap<>();
+				file2Line2Predicates.put(parts[0], line2Predicates);
+			}
+			List<Pair<String, String>> predicates = line2Predicates.get(Integer.valueOf(parts[1]));
+			if (predicates == null) {
+				predicates = new ArrayList<>();
+				line2Predicates.put(Integer.valueOf(parts[1]), predicates);
+			}
+			predicates.add(new Pair<String, String>(parts[2], parts[3]));
+		}
+		return file2Line2Predicates;
+	}
 
 	/**
 	 * test result should have the same failed test cases with the given failed
