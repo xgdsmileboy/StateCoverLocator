@@ -11,13 +11,13 @@ package locator.core;
  * @author Jiajun
  * @date Jun 13, 2017
  */
-public class Ochiai extends Algorithm {
+public class Ochiai extends PredicateCoverageAlgorithm {
 
 	@Override
 	public String getName() {
 		return "Ochiai";
 	}
-	
+
 	/**
 	 * (failed(s) / sqrt(totalFailed * (failed(s) + passed(s)))
 	 */

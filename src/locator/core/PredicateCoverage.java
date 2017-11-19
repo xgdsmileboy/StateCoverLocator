@@ -1,5 +1,8 @@
 package locator.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Information of a predicate, including coverage and predicted probability.
  * @author lillian
@@ -18,6 +21,10 @@ public class PredicateCoverage {
 	private double prob;
 	
 	private double score;
+	
+	private List<Double> passEvaluationBias = new ArrayList<Double>();
+	
+	private List<Double> failEvaluationBias = new ArrayList<Double>();
 
 	public double getScore() {
 		return score;
@@ -54,5 +61,17 @@ public class PredicateCoverage {
 	}
 	public void setProb(double prob) {
 		this.prob = prob;
+	}
+	public void addPassEvaluationBias(double prob) {
+		this.passEvaluationBias.add(prob);
+	}
+	public void addFailEvaluationBias(double prob) {
+		this.failEvaluationBias.add(prob);
+	}
+	public List<Double> getPassEvaluationBias() {
+		return this.passEvaluationBias;
+	}
+	public List<Double> getFailEvaluationBias() {
+		return this.failEvaluationBias;
 	}
 }

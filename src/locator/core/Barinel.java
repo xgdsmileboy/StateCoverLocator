@@ -11,13 +11,13 @@ package locator.core;
  * @author Jiajun
  * @date Jun 13, 2017
  */
-public class Barinel extends Algorithm {
+public class Barinel extends PredicateCoverageAlgorithm {
 
 	@Override
 	public String getName() {
 		return "Barinel";
 	}
-	
+
 	/**
 	 * 1 - (passed(s) / (passed(s) + failed(s)))
 	 */

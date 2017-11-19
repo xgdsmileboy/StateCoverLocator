@@ -52,13 +52,17 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 	private final static String __name__ = "@MultiLinePredicateInstrumentVisitor ";
 	
 	private Map<Integer, List<Pair<String, String>>> _condition = null;
+	
+	private boolean _useSober = false;
 
-	public MultiLinePredicateInstrumentVisitor() {
+	public MultiLinePredicateInstrumentVisitor(boolean useSober) {
 		_condition = new HashMap<>();
+		_useSober = useSober;
 	}
 	
-	public MultiLinePredicateInstrumentVisitor(Map<Integer, List<Pair<String, String>>> condition) {
+	public MultiLinePredicateInstrumentVisitor(Map<Integer, List<Pair<String, String>>> condition, boolean useSober) {
 		_condition = condition;
+		_useSober = useSober;
 	}
 
 	public void setCondition(Map<Integer, List<Pair<String, String>>> condition) {
@@ -329,7 +333,8 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 			for(int count = 0; count < preds.size(); count ++){
 				String condition = preds.get(count).getFirst();
 				String prob = preds.get(count).getSecond();
-				ASTNode inserted = GenStatement.newGenPredicateStatement(condition, methodID + "#" + line + "#" + condition + "#" + prob);
+				ASTNode inserted = _useSober ? GenStatement.newGenPredicateStatementForEvaluationBias(condition, methodID + "#" + line + "#" + condition + "#" + prob) :
+					GenStatement.newGenPredicateStatement(condition, methodID + "#" + line + "#" + condition + "#" + prob);
 				if(inserted != null){
 					result.add(inserted);
 				}

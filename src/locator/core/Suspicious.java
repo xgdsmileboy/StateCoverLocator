@@ -30,7 +30,8 @@ public class Suspicious {
 	
 	private static String seperator = "\t";
 	
-	public static void compute(Subject subject, List<Algorithm> algorithms, int totalFailed, int totalPassed, boolean useStatisticalDebugging){
+	public static void compute(Subject subject, List<Algorithm> algorithms, int totalFailed, int totalPassed, boolean useStatisticalDebugging,
+			boolean useSober){
 		Map<String, CList> suspicious = new HashMap<>();
 		int listLen = algorithms.size();
 		StringBuffer header = new StringBuffer();
@@ -52,8 +53,10 @@ public class Suspicious {
 				}
 			}
 		}
-		
-		// write into file
+		if (useSober) {
+			return;
+		}
+//		 write into file
 		String outputFile = useStatisticalDebugging ? "result_sd.csv" : "result.csv";
 		File file = new File(subject.getCoverageInfoPath() + "/" + outputFile);
 		if(!file.exists()){

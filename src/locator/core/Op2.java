@@ -11,13 +11,13 @@ package locator.core;
  * @author Jiajun
  * @date Jun 13, 2017
  */
-public class Op2 extends Algorithm {
+public class Op2 extends PredicateCoverageAlgorithm {
 
 	@Override
 	public String getName() {
 		return "Op2";
 	}
-	
+
 	/**
 	 * failed(s) − (passed(s) / (totalPassed + 1))
 	 */

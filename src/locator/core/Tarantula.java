@@ -11,13 +11,13 @@ package locator.core;
  * @author Jiajun
  * @date Jun 13, 2017
  */
-public class Tarantula extends Algorithm {
+public class Tarantula extends PredicateCoverageAlgorithm {
 
 	@Override
 	public String getName() {
 		return "Tarantula";
 	}
-	
+
 	/**
 	 * (failed(s) / totalFailed) / (failed(s) / totalFailed + passed(s) / totalPassed)
 	 */

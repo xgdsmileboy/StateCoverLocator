@@ -26,7 +26,7 @@ import org.apache.commons.io.FileUtils;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
-import sun.awt.geom.Crossings.EvenOdd;
+//import sun.awt.geom.Crossings.EvenOdd;
 
 /**
  * This class is an interface to run script command background

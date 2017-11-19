@@ -122,6 +122,26 @@ public class GenStatement {
 		return block;
 	}
 	
+	public static Block genInstrumentStatementForTestWithResetTrueOrFalse(boolean succTest) {
+		Block block = genInstrumentStatementForTestWithReset(succTest);
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation.setName(ast.newSimpleName("resetTrueOrFalse"));
+		ExpressionStatement resetStatement = ast.newExpressionStatement(methodInvocation);
+		block.statements().add(resetStatement);
+		return block;
+	}
+	
+	public static Block genInstrumentStatementForResultDump() {
+		Block block = ast.newBlock();
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation.setName(ast.newSimpleName("dump"));
+		ExpressionStatement dumpStatement = ast.newExpressionStatement(methodInvocation);
+		block.statements().add(dumpStatement);
+		return block;
+	}
+	
 	
 	public static TryStatement newGenPredicateStatement(String condition, String message) {
 		Expression conditionExp = null;
@@ -181,4 +201,83 @@ public class GenStatement {
 		return tryStatement;
 	}
 
+	public static TryStatement newGenPredicateStatementForEvaluationBias(String condition, String message) {
+		Expression conditionExp = null;
+		// condition
+		try{
+			conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
+		} catch (Exception e){
+			return null;
+		}
+		
+		// if(condition)
+		IfStatement ifStatement = ast.newIfStatement();
+		ifStatement.setExpression((Expression) ASTNode.copySubtree(ast, conditionExp));
+		
+		// auxiliary.Dumper.writeTrue(message);
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation.setName(ast.newSimpleName("writeTrue"));
+		
+		StringLiteral stringLiteral = ast.newStringLiteral();
+		stringLiteral.setLiteralValue(message);
+		methodInvocation.arguments().add(stringLiteral);
+		ExpressionStatement invokeStatement = ast.newExpressionStatement(methodInvocation);
+		
+		// if(condition){
+		//     auxiliary.Dumper.writeTrue(message);
+		// }
+		Block thenBlock = ast.newBlock();
+		thenBlock.statements().add(invokeStatement);
+		ifStatement.setThenStatement(thenBlock);
+		
+		// auxiliary.Dumper.writeFalse(message);
+		MethodInvocation methodInvocation2 = ast.newMethodInvocation();
+		methodInvocation2.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation2.setName(ast.newSimpleName("writeFalse"));
+		StringLiteral stringLiteral2 = ast.newStringLiteral();
+		stringLiteral2.setLiteralValue(message);
+		methodInvocation2.arguments().add(stringLiteral2);
+		ExpressionStatement invokeStatement2 = ast.newExpressionStatement(methodInvocation2);
+		
+		// if(condition){
+		//     auxiliary.Dumper.writeTrue(message);
+		// } else {
+		//     auxiliary.Dumper.writeFalse(message);
+		// }
+		Block elseBlock = ast.newBlock();
+		elseBlock.statements().add(invokeStatement2);
+		ifStatement.setElseStatement(elseBlock);
+		
+		// try{
+		//     if(condition){
+		//         auxiliary.Dumper.writeTrue(message);
+		//     } else {
+		//         auxiliary.Dumper.writeFalse(message);
+		//     }
+		// }
+		Block tryBody = ast.newBlock();
+		tryBody.statements().add(ifStatement);
+		TryStatement tryStatement = ast.newTryStatement();
+		tryStatement.setBody(tryBody);
+		
+		// catch (Exception e){}
+		CatchClause catchClause = ast.newCatchClause();
+		SingleVariableDeclaration singleVariableDeclaration = ast.newSingleVariableDeclaration();
+		singleVariableDeclaration.setName(ast.newSimpleName("fakeException"));
+		singleVariableDeclaration.setType(ast.newSimpleType(ast.newSimpleName("Exception")));
+		catchClause.setException(singleVariableDeclaration);
+		catchClause.setBody(ast.newBlock());
+		
+		// try{
+		//     if(condition){
+		//         auxiliary.Dumper.writeTrue(message);
+		//     } else {
+		//         auxiliary.Dumper.writeFalse(message);
+		//     }
+		// }catch (Exception e){}
+		tryStatement.catchClauses().add(catchClause);
+		
+		return tryStatement;
+	}
 }

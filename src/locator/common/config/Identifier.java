@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.sun.org.apache.bcel.internal.generic.LNEG;
+//import com.sun.org.apache.bcel.internal.generic.LNEG;
 
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;

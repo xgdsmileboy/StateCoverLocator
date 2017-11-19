@@ -20,9 +20,9 @@ import java.util.Set;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import com.sun.corba.se.impl.orbutil.DenseIntMapImpl;
-import com.sun.org.apache.bcel.internal.generic.LNEG;
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath.Step;
+//import com.sun.corba.se.impl.orbutil.DenseIntMapImpl;
+//import com.sun.org.apache.bcel.internal.generic.LNEG;
+//import com.sun.org.apache.xerces.internal.impl.xpath.XPath.Step;
 
 import java_cup.terminal;
 import locator.common.config.Constant;
@@ -66,7 +66,7 @@ public class Coverage {
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
 		Instrument.execute(src, statementInstrumentVisitor);
 		
-		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTestAndCoveredMethods.getFirst());
+		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTestAndCoveredMethods.getFirst(), false);
 		Instrument.execute(test, newTestMethodInstrumentVisitor);
 		// delete all bin file to make it re-compiled
 		ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getSbin());
@@ -254,19 +254,19 @@ public class Coverage {
 	 *         statementString:"MethodID#line"
 	 */
 	public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, Set<String> allStatements,
-			Set<Integer> failedTests, boolean useStatisticalDebugging) {
+			Set<Integer> failedTests, boolean useStatisticalDebugging, boolean useSober) {
 		String srcPath = subject.getHome() + subject.getSsrc();
 		String testPath = subject.getHome() + subject.getTsrc();
-		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests);
+		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests, useSober);
 		Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 		
 		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = useStatisticalDebugging ?
-				getStatisticalDebuggingPredicates(subject, allStatements) : getAllPredicates(subject, allStatements);
+				getStatisticalDebuggingPredicates(subject, allStatements) : getAllPredicates(subject, allStatements, useSober);
 		
 		System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
-		printInfo(file2Line2Predicates);
+		printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
 		
-		MultiLinePredicateInstrumentVisitor instrumentVisitor = new MultiLinePredicateInstrumentVisitor();
+		MultiLinePredicateInstrumentVisitor instrumentVisitor = new MultiLinePredicateInstrumentVisitor(useSober);
 		for(Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()){
 			String fileName = entry.getKey();
 			Map<Integer, List<Pair<String, String>>> allPreds = entry.getValue();
@@ -302,7 +302,10 @@ public class Coverage {
 			JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Success!\n", true);
 		}
 		
-		Map<String, CoverInfo> coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+		Map<String, CoverInfo> coverage = null;
+		if (!useSober) {
+			coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+		}
 		
 		ExecuteCommand.copyFolder(srcPath + "_ori", srcPath);
 		ExecuteCommand.copyFolder(testPath + "_ori", testPath);
@@ -416,7 +419,7 @@ public class Coverage {
 		}
 	}
 	
-	private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject, Set<String> allStatements){
+	private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject, Set<String> allStatements, boolean useSober){
 
 		//parse all object type
 		ExprFilter.init(subject);
@@ -516,12 +519,14 @@ public class Coverage {
 						
 						if(Runner.compileSubject(subject)){
 							legalConditions.add(condition);
-							// add opposite conditions as well
-							Pair<String, String> otherSide = new Pair<>();
-							otherSide.setFirst("!(" + condition.getFirst() + ")");
-							otherSide.setSecond(condition.getSecond());
-							legalConditions.add(otherSide);
-							LevelLogger.info("Passed build : " + condition.toString() + "\t ADD \t" + otherSide.toString());
+							if (!useSober) {
+								// add opposite conditions as well
+								Pair<String, String> otherSide = new Pair<>();
+								otherSide.setFirst("!(" + condition.getFirst() + ")");
+								otherSide.setSecond(condition.getSecond());
+								legalConditions.add(otherSide);
+							}
+							LevelLogger.info("Passed build : " + condition.toString() + "\t ADD \t");
 							count ++;
 							// only keep partial predicates "top K"
 							if(count > Constant.TOP_K_PREDICATES_FOR_EACH_VAR){
@@ -556,9 +561,11 @@ public class Coverage {
 		return file2Line2Predicates;
 	}
 	
-	private static void printInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates){
+	private static void printInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
+			Subject subject, boolean useStatisticalDebugging){
 		System.out.println("\n------------------------begin predicate info------------------------\n");
 		
+		StringBuffer contents = new StringBuffer();
 		for(Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()){
 			System.out.println("FILE NAME : " + entry.getKey());
 			for(Entry<Integer, List<Pair<String, String>>> line2Preds : entry.getValue().entrySet()){
@@ -566,11 +573,20 @@ public class Coverage {
 				System.out.print("PREDICATES : ");
 				for(Pair<String, String> pair : line2Preds.getValue()){
 					System.out.print(pair.getFirst() + ",");
+					contents.append(entry.getKey() + "\t" + line2Preds.getKey() + "\t" + pair.getFirst() + "\t" + pair.getSecond());
+					contents.append("\n");
 				}
 				System.out.println("\n");
 			}
 		}
 		System.out.println("\n------------------------end predicate info------------------------\n");
+		String outputFile = subject.getCoverageInfoPath() + "/predicates_backup";
+		if (useStatisticalDebugging) {
+			outputFile += "_sd.txt";
+		} else {
+			outputFile += ".txt";
+		}
+		JavaFile.writeStringToFile(outputFile, contents.toString());
 	}
 	
 

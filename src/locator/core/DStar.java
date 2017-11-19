@@ -11,7 +11,7 @@ package locator.core;
  * @author Jiajun
  * @date Jun 13, 2017
  */
-public class DStar extends Algorithm {
+public class DStar extends PredicateCoverageAlgorithm {
 
 	@Override
 	public String getName() {

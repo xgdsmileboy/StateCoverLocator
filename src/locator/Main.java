@@ -38,6 +38,7 @@ import locator.core.Barinel;
 import locator.core.DStar;
 import locator.core.Ochiai;
 import locator.core.Op2;
+import locator.core.Sober;
 import locator.core.Suspicious;
 import locator.core.Tarantula;
 import locator.core.run.Runner;
@@ -46,7 +47,7 @@ import locator.core.run.path.Coverage;
 import locator.core.run.path.ExecutionPathBuilder;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
-import sun.security.x509.AlgorithmId;
+//import sun.security.x509.AlgorithmId;
 
 public class Main {
 
@@ -114,7 +115,7 @@ public class Main {
 		}
 	}
 
-	private static void proceed(Subject subject, boolean useStatisticalDebugging) {
+	private static void proceed(Subject subject, boolean useStatisticalDebugging, boolean useSober) {
 		
 		LevelLogger.info("------------------ Begin : " + subject.getName() + "_" + subject.getId() + " ----------------");
 		
@@ -173,25 +174,31 @@ public class Main {
 		
 		LevelLogger.info("step 4: compute predicate coverage information");
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
-				failedTestsAndCoveredMethods.getFirst(), useStatisticalDebugging);
+				failedTestsAndCoveredMethods.getFirst(), useStatisticalDebugging, useSober);
 
-		if(predicateCoverage == null){
+		if(predicateCoverage == null && !useSober){
 			return;
 		}
 		
-		String predCoverageFile = useStatisticalDebugging ? "pred_coverage_sd.csv" : "pred_coverage.csv";
-		LevelLogger.info("output predicate coverage information to file : " + predCoverageFile);
-		printCoverage(predicateCoverage, subject.getCoverageInfoPath() + "/" + predCoverageFile);
+		if (!useSober) {
+			String predCoverageFile = useStatisticalDebugging ? "pred_coverage_sd.csv" : "pred_coverage.csv";
+			LevelLogger.info("output predicate coverage information to file : " + predCoverageFile);
+			printCoverage(predicateCoverage, subject.getCoverageInfoPath() + "/" + predCoverageFile);
+		}
 
 		LevelLogger.info("Compute suspicious for each statement and out put to file.");
 		List<Algorithm> algorithms = new ArrayList<>();
-		// add different computation algorithms
-		algorithms.add(new Ochiai());
-		algorithms.add(new Tarantula());
-		algorithms.add(new DStar());
-		algorithms.add(new Barinel());
-		algorithms.add(new Op2());
-		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed, useStatisticalDebugging);
+		if (useSober) {
+			algorithms.add(new Sober());
+		} else {
+			// add different computation algorithms
+			algorithms.add(new Ochiai());
+			algorithms.add(new Tarantula());
+			algorithms.add(new DStar());
+			algorithms.add(new Barinel());
+			algorithms.add(new Op2());
+		}
+		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed, useStatisticalDebugging, useSober);
 		
 //		LevelLogger.info("step 5: combine all coverage informaiton");
 //		for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {
@@ -267,7 +274,6 @@ public class Main {
 		List<Subject> allSubjects = ProjectSelector.select("math");
 		for(Subject subject : allSubjects) {
 			try {
-				if (subject.getId() > 80) break;
 //				File file = new File(subject.getCoverageInfoPath() + "/Barinel_coverage.csv");
 //				if (file.exists()) continue;
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
@@ -276,7 +282,7 @@ public class Main {
 
 				Constant.PROJECT_HOME = "/home/lillian/work/df";
 
-				proceed(subject, true);
+				proceed(subject, true, true);
 
 				String end = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);
