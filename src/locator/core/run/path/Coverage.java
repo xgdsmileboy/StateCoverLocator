@@ -41,6 +41,7 @@ import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
 import locator.inst.visitor.NewTestMethodInstrumentVisitor;
+import locator.inst.visitor.NoSideEffectPredicateInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.StatisticalDebuggingPredicatesVisitor;
 import locator.inst.visitor.feature.ExprFilter;
@@ -271,15 +272,29 @@ public class Coverage {
 		System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
 		printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
 		
-		MultiLinePredicateInstrumentVisitor instrumentVisitor = new MultiLinePredicateInstrumentVisitor(useSober);
-		for(Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()){
-			String fileName = entry.getKey();
-			Map<Integer, List<Pair<String, String>>> allPreds = entry.getValue();
-			CompilationUnit unit = JavaFile.genAST(fileName);
-			instrumentVisitor.setCondition(allPreds);
-			unit.accept(instrumentVisitor);
-			
-			JavaFile.writeStringToFile(fileName, unit.toString());
+		if (useStatisticalDebugging) {
+			NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(useSober);
+			for(Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()){
+				String fileName = entry.getKey();
+				Map<Integer, List<Pair<String, String>>> allPreds = entry.getValue();
+				CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSourceWithType(
+						JavaFile.readFileToString(fileName), ASTParser.K_COMPILATION_UNIT, fileName, subject);
+				instrumentVisitor.setCondition(allPreds);
+				unit.accept(instrumentVisitor);
+				
+				JavaFile.writeStringToFile(fileName, unit.toString());
+			}
+		} else {
+			MultiLinePredicateInstrumentVisitor instrumentVisitor = new MultiLinePredicateInstrumentVisitor(useSober);
+			for(Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()){
+				String fileName = entry.getKey();
+				Map<Integer, List<Pair<String, String>>> allPreds = entry.getValue();
+				CompilationUnit unit = JavaFile.genAST(fileName);
+				instrumentVisitor.setCondition(allPreds);
+				unit.accept(instrumentVisitor);
+				
+				JavaFile.writeStringToFile(fileName, unit.toString());
+			}
 		}
 		// delete all bin file to make it re-compiled
 		ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getSbin());

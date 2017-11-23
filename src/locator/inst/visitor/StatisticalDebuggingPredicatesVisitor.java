@@ -14,6 +14,8 @@ import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
 import edu.pku.sei.conditon.simple.FeatureGenerator;
@@ -124,6 +126,18 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		return true;
 	}
 	
+	public boolean visit(SwitchStatement node) {
+		int start = _cu.getLineNumber(node.getStartPosition());
+		if (start == _line) {
+			Expression expr = node.getExpression();
+			String condition = expr.toString();
+			if (!SideEffectAnalysis.hasSideEffect(condition)) {
+				_predicates.addAll(getPredicateForConditions(condition));
+			}
+		}
+		return true;
+	}
+	
 	public boolean visit(Assignment node) {
 		int start = _cu.getLineNumber(node.getStartPosition());
 		if (start == _line) {
@@ -138,7 +152,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		}
 		return true;
 	}
-
+	
 	private List<String> getPredicateForReturns(final String expr) {
 		List<String> predicates = new ArrayList<String>();
 		final String operators[] = { "< 0", "<= 0", "> 0", ">= 0", "== 0",
