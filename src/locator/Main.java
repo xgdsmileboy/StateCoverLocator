@@ -38,6 +38,7 @@ import locator.core.Barinel;
 import locator.core.DStar;
 import locator.core.Ochiai;
 import locator.core.Op2;
+import locator.core.Simple;
 import locator.core.Sober;
 import locator.core.Suspicious;
 import locator.core.Tarantula;
@@ -197,6 +198,7 @@ public class Main {
 			algorithms.add(new DStar());
 			algorithms.add(new Barinel());
 			algorithms.add(new Op2());
+			algorithms.add(new Simple());
 		}
 		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed, useStatisticalDebugging, useSober);
 		
@@ -272,8 +274,10 @@ public class Main {
 //		for(int i = 53; i < allSubjects.size(); i++) {
 //			try {
 		List<Subject> allSubjects = ProjectSelector.select("math");
+//		Subject subject = ProjectSelector.select("math", 4);
 		for(Subject subject : allSubjects) {
 			try {
+//				if (subject.getId() < 5) continue;
 //				File file = new File(subject.getCoverageInfoPath() + "/Barinel_coverage.csv");
 //				if (file.exists()) continue;
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
@@ -282,7 +286,7 @@ public class Main {
 
 				Constant.PROJECT_HOME = "/home/lillian/work/df";
 
-				proceed(subject, false, true);
+				proceed(subject, true, false);
 
 				String end = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);
