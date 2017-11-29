@@ -38,6 +38,7 @@ import locator.common.java.Pair;
 import locator.common.util.LevelLogger;
 import locator.inst.gen.GenName;
 import locator.inst.gen.GenStatement;
+import polyglot.ast.For;
 
 public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	
@@ -109,12 +110,6 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		return true;
 	}
 	
-	@Override
-	public boolean visit(VariableDeclarationStatement node) {
-		System.out.println(node.toString());
-		return true;
-	}
-
 	private List<ASTNode> process(ASTNode statement, String methodID) {
 
 		List<ASTNode> result = new ArrayList<>();
@@ -239,7 +234,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 
 			EnhancedForStatement enhancedForStatement = (EnhancedForStatement) statement;
 
-			int lineNumber = _cu.getLineNumber(enhancedForStatement.getExpression().getStartPosition());
+//			int lineNumber = _cu.getLineNumber(enhancedForStatement.getExpression().getStartPosition());
 //			result.addAll(genInstrument(methodID, lineNumber));
 
 			Statement enhancedBody = enhancedForStatement.getBody();
@@ -319,16 +314,18 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			result.add(tryStatement);
 		} else if (statement instanceof ReturnStatement) {
 			ReturnStatement returnStatement = (ReturnStatement) statement;
-			Block block = genReturnStatementInstrument(returnStatement, methodID, startLine);
-			block.statements().add(ASTNode.copySubtree(block.getAST(), returnStatement));
-			result.add(block);
+			if (returnStatement.getExpression() == null) {
+				result.add(returnStatement);
+			} else {
+				result.add(genReturnStatementInstrument(returnStatement, methodID, startLine));
+			}
 		} else if (statement instanceof ExpressionStatement) {
 			ExpressionStatement exprStatement = (ExpressionStatement) statement;
 			Expression expr = exprStatement.getExpression();
 			if (expr instanceof Assignment) {
 				Block block = ast.newBlock();
 				block.statements().add(ASTNode.copySubtree(block.getAST(), exprStatement));
-				addPredicates(block, "", methodID, startLine, PredicateStatement.ASSIGN);
+				addPredicates(block, "", methodID, startLine, PredicateStatement.ASSIGN, "");
 				result.add(block);
 			} else {
 				result.add(exprStatement);
@@ -340,8 +337,8 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		return result;
 	}
 	
-	private void addPredicates(Block block, String tempVarName, String methodID, int line, PredicateStatement psType) {
-		List<ASTNode> predicates = genPredicateInstrument(methodID, tempVarName, line, psType);
+	private void addPredicates(Block block, String tempVarName, String methodID, int line, PredicateStatement psType, String originalExpr) {
+		List<ASTNode> predicates = genPredicateInstrument(methodID, tempVarName, line, psType, originalExpr);
 		for(ASTNode predicate : predicates) {
 			block.statements().add(ASTNode.copySubtree(block.getAST(), predicate));
 		}
@@ -350,32 +347,35 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Block genIfStatementInstrument(IfStatement node, String methodID, int line) {
 		Block  block = ast.newBlock();
 		String tempVarName = GenName.genVariableName(line);
+		String originalExpr = node.getExpression().toString();
 		ASTNode assign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.IF);
 		if (assign == null) {
-			block.statements().add(node);
+			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
 		node.setExpression((Expression) node.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 		block.statements().add(assign);
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.IF);
+		addPredicates(block, tempVarName, methodID, line, PredicateStatement.IF, originalExpr);
 		return block;
 	}
 	
 	private Block genForStatementInstrument(ForStatement node, Block body, String methodID, int line) {
 		Block block = ast.newBlock();
 		String tempVarName = GenName.genVariableName(line);
+		String originalExpr = node.getExpression().toString();
 		ASTNode dclAssign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.FOR);
 		if (dclAssign == null) {
-			block.statements().add(node);
+			node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
+			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
-		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.FOR);
-		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
+		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
+		addPredicates(block, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
+		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 						
 		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
-		addPredicates(body, tempVarName, methodID, line, PredicateStatement.FOR);
+		addPredicates(body, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
 		node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
 		block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 		return block;
@@ -384,18 +384,20 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Block genWhileStatementInstrument(WhileStatement node, Block body, String methodID, int line) {
 		Block block = ast.newBlock();
 		String tempVarName = GenName.genVariableName(line);
+		String originalExpr = node.getExpression().toString();
 		ASTNode dclAssign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.WHILE);
 		if (dclAssign == null) {
-			block.statements().add(node);
+			node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
+			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
-		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.WHILE);
-		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
+		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
+		addPredicates(block, tempVarName, methodID, line, PredicateStatement.WHILE, originalExpr);
+		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 						
 		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
-		addPredicates(body, tempVarName, methodID, line, PredicateStatement.WHILE);
+		addPredicates(body, tempVarName, methodID, line, PredicateStatement.WHILE, originalExpr);
 		node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
 		block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 		return block;
@@ -404,18 +406,19 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Block genDoStatementInstrument(DoStatement node, Block body, String methodID, int line) {
 		Block block = ast.newBlock();
 		String tempVarName = GenName.genVariableName(line);
-		ASTNode dclAssign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.DO);
-		if (dclAssign == null) {
-			block.statements().add(node);
+		String originalExpr = node.getExpression().toString();
+		ASTNode dcl = genDeclaration(node.getExpression(), tempVarName, PredicateStatement.DO);
+		if (dcl == null) {
+			node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
+			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
-		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.DO);
-		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
+		block.statements().add(ASTNode.copySubtree(block.getAST(), dcl));
+		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 						
 		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
-		addPredicates(body, tempVarName, methodID, line, PredicateStatement.DO);
+		addPredicates(body, tempVarName, methodID, line, PredicateStatement.DO, originalExpr);
 		node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
 		block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 		return block;
@@ -424,34 +427,31 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Block genSwitchStatementInstrument(SwitchStatement node, String methodID, int line) {
 		Block  block = ast.newBlock();
 		String tempVarName = GenName.genVariableName(line);
+		String originalExpr = node.getExpression().toString();
 		ASTNode assign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.SWITCH);
 		if (assign == null) {
-			block.statements().add(node);
+			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
 		node.setExpression((Expression) node.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 		block.statements().add(assign);
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.SWITCH);
+		addPredicates(block, tempVarName, methodID, line, PredicateStatement.SWITCH, originalExpr);
 		return block;
 	}
 	
 	private Block genReturnStatementInstrument(ReturnStatement node, String methodID, int line) {
 		Block  block = ast.newBlock();
 		String tempVarName = GenName.genVariableName(line);
+		String originalExpr = node.getExpression().toString();
 		ASTNode assign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.RETURN);
 		if (assign == null) {
-			block.statements().add(node);
+			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
 		node.setExpression((Expression) node.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 		block.statements().add(ASTNode.copySubtree(block.getAST(), assign));
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.RETURN);
-		return block;
-	}
-	
-	private Block genAssignmentInstrument(Assignment node, String methodID, int line) {
-		Block  block = ast.newBlock();
-		
+		addPredicates(block, tempVarName, methodID, line, PredicateStatement.RETURN, originalExpr);
+		block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 		return block;
 	}
 	
@@ -551,32 +551,32 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		return null;
 	}
 	
-	private List<ASTNode> genPredicateInstrument(String methodID, String tempVarName, int line, PredicateStatement psType){
+	private List<ASTNode> genPredicateInstrument(String methodID, String tempVarName, int line, PredicateStatement psType, String originalExpr){
 		List<ASTNode> result = new ArrayList<>();
 		if (_condition.get(line) != null) {
-			List<String> predicates = null;
+			List<Pair<String, String>> predicates = null;
 			switch (psType) {
 				case IF:
 				case WHILE:
 				case DO:
 				case FOR:
 				case SWITCH:
-					predicates = getPredicateForConditions(tempVarName);
+					predicates = getPredicateForConditions(tempVarName, originalExpr);
 					break;
 				case RETURN:
-					predicates = getPredicateForReturns(tempVarName);
+					predicates = getPredicateForReturns(tempVarName, originalExpr);
 					break;
 				case ASSIGN:
 					List<Pair<String, String>> preds = _condition.get(line);
-					predicates = new ArrayList<String>();
+					predicates = new ArrayList<Pair<String, String>>();
 					for(Pair<String, String> p : preds) {
-						predicates.add(p.getFirst());
+						predicates.add(new Pair<String, String>(p.getFirst(), p.getFirst()));
 					}
 					break;
 			}
-			for(String predicate : predicates) {
-				ASTNode inserted = _useSober ? GenStatement.newGenPredicateStatementForEvaluationBias(predicate, methodID + "#" + line + "#" + predicate + "#1") :
-					GenStatement.newGenPredicateStatement(predicate, methodID + "#" + line + "#" + predicate + "#1");
+			for(Pair<String, String> predicate : predicates) {
+				ASTNode inserted = _useSober ? GenStatement.newGenPredicateStatementForEvaluationBias(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1") :
+					GenStatement.newGenPredicateStatement(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1");
 				if(inserted != null){
 					result.add(inserted);
 				}
@@ -623,20 +623,20 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		return false;
 	}
 
-	private List<String> getPredicateForReturns(final String expr) {
-		List<String> predicates = new ArrayList<String>();
+	private List<Pair<String, String>> getPredicateForReturns(final String expr, final String originalExpr) {
+		List<Pair<String, String>> predicates = new ArrayList<Pair<String, String>>();
 		final String operators[] = { " < 0", " <= 0", " > 0", " >= 0", " == 0",
 				" != 0" };
 		for (final String op : operators) {
-			predicates.add(expr + op);
+			predicates.add(new Pair<String, String>(expr + op, "(" + originalExpr + ")" + op));
 		}
 		return predicates;
 	}
 	
-	private List<String> getPredicateForConditions(final String expr) {
-		List<String> predicates = new ArrayList<String>();
-		predicates.add(expr);
-		predicates.add("!" + expr);
+	private List<Pair<String, String>> getPredicateForConditions(final String expr, final String originalExpr) {
+		List<Pair<String, String>> predicates = new ArrayList<Pair<String, String>>();
+		predicates.add(new Pair<String, String>(expr, originalExpr));
+		predicates.add(new Pair<String, String>("!" + expr, "!(" + originalExpr + ")"));
 		return predicates;
 	}
 }

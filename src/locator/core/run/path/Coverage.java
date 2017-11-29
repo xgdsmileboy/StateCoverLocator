@@ -392,7 +392,7 @@ public class Coverage {
 			String binFile = subject.getHome() + subject.getSbin() + "/" + clazz + ".class";
 			String source = JavaFile.readFileToString(fileName);
 			List<String> ifAndReturnPredicates = sdPredicatesVisitor.getPredicates();
-			List<String> assignmentPredicates = sdPredicatesVisitor.getAssignmentPredicates();
+			List<List<String>> assignmentPredicates = sdPredicatesVisitor.getAssignmentPredicates();
 			if (!ifAndReturnPredicates.isEmpty()) {
 				if (validatePredicate(ifAndReturnPredicates.get(0), source, fileName, binFile, line, subject)) {
 					for(String p : ifAndReturnPredicates) {
@@ -401,9 +401,11 @@ public class Coverage {
 				}
 			}
 			if (!assignmentPredicates.isEmpty()) {
-				if (validatePredicate(assignmentPredicates.get(0), source, fileName, binFile, line, subject)) {
-					for(String p : assignmentPredicates) {
-						predicates.add(new Pair<String, String>(p, "1"));
+				for(List<String> similarPredicates : assignmentPredicates) {
+					if (validatePredicate(similarPredicates.get(0), source, fileName, binFile, line, subject)) {
+						for(String p : similarPredicates) {
+							predicates.add(new Pair<String, String>(p, "1"));
+						}
 					}
 				}
 			}
