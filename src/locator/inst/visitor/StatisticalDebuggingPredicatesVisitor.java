@@ -209,13 +209,13 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		final String operators[] = {"<", "<=", ">", ">=", "==", "!="};
 		List<List<String>> predicates = new ArrayList<List<String>>();
 		for(final Map.Entry<String, Set<String>> variable : variables.entrySet()) {
-			List<String> similarPredicates = new ArrayList<String>();
 			for(final String v : variable.getValue()) {
+				List<String> similarPredicates = new ArrayList<String>();
 				for (final String op : operators) {
 					similarPredicates.add(variable.getKey() + op + v);
 				}
+				predicates.add(similarPredicates);
 			}
-			predicates.add(similarPredicates);
 		}
 		return predicates;
 	}

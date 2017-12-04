@@ -171,7 +171,12 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			} else {
 				bodyBlock = ast.newBlock();
 			}
-			result.add(genWhileStatementInstrument(whileStatement, bodyBlock, methodID, lineNumber));
+			if (whileStatement.getExpression().toString().equals("true")) {
+				whileStatement.setBody((Statement) ASTNode.copySubtree(whileStatement.getAST(), bodyBlock));
+				result.add(whileStatement);
+			} else {
+				result.add(genWhileStatementInstrument(whileStatement, bodyBlock, methodID, lineNumber));
+			}
 		} else if (statement instanceof ForStatement) {
 
 			ForStatement forStatement = (ForStatement) statement;
@@ -314,7 +319,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			result.add(tryStatement);
 		} else if (statement instanceof ReturnStatement) {
 			ReturnStatement returnStatement = (ReturnStatement) statement;
-			if (returnStatement.getExpression() == null) {
+			if (returnStatement.getExpression() == null || _condition.get(startLine) == null) {
 				result.add(returnStatement);
 			} else {
 				result.add(genReturnStatementInstrument(returnStatement, methodID, startLine));
@@ -369,14 +374,23 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
-		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
-		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
-		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
+		
+		Block bodyBlock = ast.newBlock();
+		bodyBlock.statements().add(ASTNode.copySubtree(bodyBlock.getAST(), dclAssign));
+		addPredicates(bodyBlock, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
+		IfStatement ifStatement = ast.newIfStatement();
+		ifStatement.setExpression((Expression) ASTNode.copySubtree(ifStatement.getAST(), ast.newSimpleName(tempVarName)));
+		ifStatement.setThenStatement((Statement) ASTNode.copySubtree(ifStatement.getAST(), body));
+		ifStatement.setElseStatement((Statement) ASTNode.copySubtree(ifStatement.getAST(), ast.newBreakStatement()));
+		bodyBlock.statements().add(ASTNode.copySubtree(bodyBlock.getAST(), ifStatement));
+//		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
+//		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
+//		addPredicates(block, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
+//		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 						
-		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
-		addPredicates(body, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
-		node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
+//		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
+//		addPredicates(body, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
+		node.setBody((Statement) ASTNode.copySubtree(node.getAST(), bodyBlock));
 		block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 		return block;
 	}
@@ -407,14 +421,14 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		Block block = ast.newBlock();
 		String tempVarName = GenName.genVariableName(line);
 		String originalExpr = node.getExpression().toString();
-		ASTNode dcl = genDeclaration(node.getExpression(), tempVarName, PredicateStatement.DO);
-		if (dcl == null) {
+		ASTNode dclAssign = genDeclarationAssignmentForDoStatement(tempVarName);
+		if (dclAssign == null) {
 			node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
 			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
 		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
-		block.statements().add(ASTNode.copySubtree(block.getAST(), dcl));
+		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
 		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
 						
 		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
@@ -430,7 +444,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		String originalExpr = node.getExpression().toString();
 		ASTNode assign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.SWITCH);
 		if (assign == null) {
-			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
+//			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
 			return block;
 		}
 		node.setExpression((Expression) node.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
@@ -465,17 +479,30 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		return exprStatement;
 	}
 	
-	private VariableDeclarationStatement genDeclaration(Expression expr, String tempVarName, PredicateStatement psType) {
-		ITypeBinding type = expr.resolveTypeBinding();
+//	private VariableDeclarationStatement genDeclaration(Expression expr, String tempVarName, PredicateStatement psType) {
+//		ITypeBinding type = expr.resolveTypeBinding();
+//		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
+//		vdf.setName(ast.newSimpleName(tempVarName));
+//		VariableDeclarationStatement vds = ast.newVariableDeclarationStatement(vdf);
+//		Type varType = getDeclarationType(type, psType);
+//		if (varType == null) {
+//			return null;
+//		}r
+//		vds.setType((Type) ASTNode.copySubtree(vds.getAST(), varType));
+//		return vds;
+//	}
+	
+	private ExpressionStatement genDeclarationAssignmentForDoStatement(String tempVarName) {
+		Assignment assign = ast.newAssignment();
+		assign.setOperator(Assignment.Operator.ASSIGN);
 		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
 		vdf.setName(ast.newSimpleName(tempVarName));
-		VariableDeclarationStatement vds = ast.newVariableDeclarationStatement(vdf);
-		Type varType = getDeclarationType(type, psType);
-		if (varType == null) {
-			return null;
-		}
-		vds.setType((Type) ASTNode.copySubtree(vds.getAST(), varType));
-		return vds;
+		VariableDeclarationExpression vde = ast.newVariableDeclarationExpression(vdf);
+		vde.setType((Type) ASTNode.copySubtree(vde.getAST(), ast.newPrimitiveType(PrimitiveType.BOOLEAN)));
+		assign.setLeftHandSide(vde);
+		assign.setRightHandSide((Expression) assign.copySubtree(assign.getAST(), ast.newBooleanLiteral(true)));
+		ExpressionStatement exprStatement = ast.newExpressionStatement(assign);
+		return exprStatement;
 	}
 	
 	private ExpressionStatement genDeclarationAssignment(Expression expr, String tempVarName, PredicateStatement psType) {
