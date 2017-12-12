@@ -271,6 +271,8 @@ public class Coverage {
 		}
 		System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
 		printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
+		// Delete empty file and line.
+		file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
 		
 		if (useStatisticalDebugging) {
 			NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(useSober);
