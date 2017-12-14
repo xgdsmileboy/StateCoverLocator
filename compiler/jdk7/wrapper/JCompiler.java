@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import jdk7.com.sun.tools.javac.util.JCDiagnostic.DiagnosticType;
 import jdk7.javax.tools.Diagnostic;
 import jdk7.javax.tools.DiagnosticListener;
 import jdk7.javax.tools.JavaCompiler;
@@ -39,11 +40,13 @@ public class JCompiler {
 	
 	public static class MDiagnosticListener implements DiagnosticListener<JavaFileObject> {
 		public void report(Diagnostic<? extends JavaFileObject> diagnostic) {
-			System.out.println("Line Number->" + diagnostic.getLineNumber());
-			System.out.println("code       ->" + diagnostic.getCode());
-			System.out.println("Message    ->" + diagnostic.getMessage(Locale.ENGLISH));
-			System.out.println("Source     ->" + diagnostic.getSource());
-			System.out.println("");
+			if(diagnostic.getKind() == Diagnostic.Kind.ERROR) {
+				System.out.println("Line Number->" + diagnostic.getLineNumber());
+				System.out.println("code       ->" + diagnostic.getCode());
+				System.out.println("Message    ->" + diagnostic.getMessage(Locale.ENGLISH));
+				System.out.println("Source     ->" + diagnostic.getSource());
+				System.out.println("");
+			}
 		}
 	}
 
