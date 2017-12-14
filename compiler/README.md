@@ -1,0 +1,1 @@
+## When compile closure project, need to compile the whole project first from command line, since it needs to compile the .proto files first

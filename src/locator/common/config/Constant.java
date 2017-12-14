@@ -12,6 +12,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -169,13 +171,54 @@ public class Constant {
 			String filePath = Constant.HOME + "/res/conf/project.properties";
 			InputStream in = new BufferedInputStream(new FileInputStream(filePath));
 			prop.load(in);
-			
+			String base = HOME + PATH_SEPARATOR + "res" + PATH_SEPARATOR + "d4jlibs";
 			for(String name : Constant.PROJECT_NAME) {
 				String ssrc = prop.getProperty(name.toUpperCase() + ".SSRC").replace("/", Constant.PATH_SEPARATOR);
 				String tsrc = prop.getProperty(name.toUpperCase() + ".TSRC").replace("/", Constant.PATH_SEPARATOR);
 				String sbin = prop.getProperty(name.toUpperCase() + ".SBIN").replace("/", Constant.PATH_SEPARATOR);
 				String tbin = prop.getProperty(name.toUpperCase() + ".TBIN").replace("/", Constant.PATH_SEPARATOR);
-				Constant.PROJECT_PROP.put(name, new ProjectProperties(ssrc, tsrc, sbin, tbin));
+				List<String> classpath = new LinkedList<>();
+				switch(name) {
+				case "math":
+					classpath.add(base + "/hamcrest-core-1.3.jar");
+					classpath.add(base + "/junit-4.11.jar");
+					break;
+				case "chart":
+					classpath.add(base + "/junit-4.11.jar");
+					classpath.add(base + "/iText-2.1.4.jar");
+					classpath.add(base + "/servlet.jar");
+					break;
+				case "lang":
+					classpath.add(base + "/cglib-nodep-2.2.2.jar");
+					classpath.add(base + "/commons-io-2.4.jar");
+					classpath.add(base + "/easymock-3.1.jar");
+					classpath.add(base + "/hamcrest-core-1.3.jar");
+					classpath.add(base + "/junit-4.11.jar");
+					classpath.add(base + "/objenesis-1.2.jar");
+					break;
+				case "closure":
+					classpath.add(base + "/caja-r4314.jar");
+					classpath.add(base + "/jarjar.jar");
+					classpath.add(base + "/ant.jar");
+					classpath.add(base + "/ant-launcher.jar");
+					classpath.add(base + "/args4j.jar");
+					classpath.add(base + "/jsr305.jar");
+					classpath.add(base + "/guava.jar");
+					classpath.add(base + "/json.jar");
+					classpath.add(base + "/protobuf-java.jar");
+					classpath.add(base + "/junit-4.11.jar");
+					classpath.add(base + "/rhino.jar");
+					break;
+				case "time":
+					classpath.add(base + "/junit-4.11.jar");
+					classpath.add(base + "/joda-convert-1.2.jar");
+					break;
+				case "mockito":
+					break;
+				default :
+					System.err.println("UNKNOWN project name : " + name);
+				}
+				Constant.PROJECT_PROP.put(name, new ProjectProperties(ssrc, tsrc, sbin, tbin, classpath));
 			}
 			in.close();
 		} catch (IOException e) {

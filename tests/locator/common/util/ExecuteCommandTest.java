@@ -21,7 +21,7 @@ public class ExecuteCommandTest {
 	@Test
 	public void test_testSuite() {
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests", null);
 		String[] cmd = CmdFactory.createTestSuiteCmd(subject);
 		try {
 			ExecuteCommand.executeDefects4JTest(cmd);

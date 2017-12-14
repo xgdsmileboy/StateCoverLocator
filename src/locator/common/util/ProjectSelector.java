@@ -29,7 +29,7 @@ public class ProjectSelector {
 	 */
 	public static Subject select(String whichProject, int whichBug) {
 		ProjectProperties prop = Constant.PROJECT_PROP.get(whichProject);
-		return new Subject(whichProject, whichBug, prop.getSsrc(), prop.getTsrc(), prop.getSbin(), prop.getTbin());
+		return new Subject(whichProject, whichBug, prop.getSsrc(), prop.getTsrc(), prop.getSbin(), prop.getTbin(), prop.getClasspath());
 	}
 	
 	/**
