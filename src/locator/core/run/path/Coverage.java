@@ -14,17 +14,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.locks.Condition;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
-//import com.sun.corba.se.impl.orbutil.DenseIntMapImpl;
-//import com.sun.org.apache.bcel.internal.generic.LNEG;
-//import com.sun.org.apache.xerces.internal.impl.xpath.XPath.Step;
-
-import java_cup.terminal;
+import jdk7.wrapper.JCompiler;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.CoverInfo;
@@ -419,6 +414,26 @@ public class Coverage {
 		return file2Line2Predicates;
 	}
 	
+	private static boolean validatePredicateByInMemCompile(String predicate, String source, String fileName, String fullClassName, int line, Subject subject) {
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
+				ASTParser.K_COMPILATION_UNIT);
+		
+		List<Pair<String, String>> onePredicate = new ArrayList<>();
+		onePredicate.add(new Pair<String, String>(predicate, "1"));
+		NewPredicateInstrumentVisitor newPredicateInstrumentVisitor = new NewPredicateInstrumentVisitor(null, line);
+		newPredicateInstrumentVisitor.setCondition(onePredicate);
+		
+		compilationUnit.accept(newPredicateInstrumentVisitor);
+//		JavaFile.writeStringToFile(fileName, compilationUnit.toString());
+		JCompiler compiler = JCompiler.getInstance();
+		if(compiler.compile(subject, fullClassName, compilationUnit.toString())){
+			LevelLogger.info("Passed build : " + predicate);
+			return true;
+		} else {
+			LevelLogger.info("Build failed : " + predicate + " line: " + Integer.toString(line));
+			return false;
+		}
+	}
 	
 	private static boolean validatePredicate(String predicate, String source, String fileName, String binFile, int line, Subject subject) {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
