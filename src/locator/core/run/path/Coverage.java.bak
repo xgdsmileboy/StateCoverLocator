@@ -386,13 +386,12 @@ public class Coverage {
 			if(predicates == null){
 				predicates = new ArrayList<>();
 			}
-//			String binFile = subject.getHome() + subject.getSbin() + "/" + clazz + ".class";
+			String binFile = subject.getHome() + subject.getSbin() + "/" + clazz + ".class";
 			String source = JavaFile.readFileToString(fileName);
 			List<String> ifAndReturnPredicates = sdPredicatesVisitor.getPredicates();
 			List<List<String>> assignmentPredicates = sdPredicatesVisitor.getAssignmentPredicates();
 			if (!ifAndReturnPredicates.isEmpty()) {
-				if(validatePredicateByInMemCompile(ifAndReturnPredicates.get(0), source, fileName, relJavaPath, line, subject)) {
-//				if (validatePredicate(ifAndReturnPredicates.get(0), source, fileName, binFile, line, subject)) {
+				if (validatePredicate(ifAndReturnPredicates.get(0), source, fileName, binFile, line, subject)) {
 					for(String p : ifAndReturnPredicates) {
 						predicates.add(new Pair<String, String>(p, "1"));
 					}
@@ -400,8 +399,7 @@ public class Coverage {
 			}
 			if (!assignmentPredicates.isEmpty()) {
 				for(List<String> similarPredicates : assignmentPredicates) {
-					if(validatePredicateByInMemCompile(similarPredicates.get(0), source, fileName, relJavaPath, line, subject)) {
-//					if (validatePredicate(similarPredicates.get(0), source, fileName, binFile, line, subject)) {
+					if (validatePredicate(similarPredicates.get(0), source, fileName, binFile, line, subject)) {
 						for(String p : similarPredicates) {
 							predicates.add(new Pair<String, String>(p, "1"));
 						}
@@ -437,7 +435,6 @@ public class Coverage {
 		}
 	}
 	
-	@Deprecated //change to in-memory compile
 	private static boolean validatePredicate(String predicate, String source, String fileName, String binFile, int line, Subject subject) {
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
 				ASTParser.K_COMPILATION_UNIT);
@@ -524,7 +521,6 @@ public class Coverage {
 		// instrument each condition one by one and compute coverage
 		// information for each predicate
 		System.out.println(conditionsForRightVars.size());
-		JCompiler compiler = JCompiler.getInstance();
 		for(Map.Entry<String, Map<String, List<Pair<String, String>>>> entry : conditionsForRightVars.entrySet()) {
 			int line = lineInfoMapping.get(entry.getKey()).getLine();
 			final LineInfo info = lineInfoMapping.get(entry.getKey());
@@ -532,11 +528,12 @@ public class Coverage {
 				String javaFile = srcPath + Constant.PATH_SEPARATOR + info.getRelJavaPath();
 				// the source file will instrumented iteratively, before which
 				// the original source file should be saved
-//				ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
+				ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
 				NewPredicateInstrumentVisitor newPredicateInstrumentVisitor = new NewPredicateInstrumentVisitor(null, line);
 				List<Pair<String, String>> legalConditions = new ArrayList<>();
 				// read original file once
 				String source = JavaFile.readFileToString(javaFile);
+				String binFile = subject.getHome() + subject.getSbin() + "/" + info.getClazz() + ".class";
 				
 				for(Entry<String, List<Pair<String, String>>> innerEntry : entry.getValue().entrySet()){
 					int count = 0;
@@ -556,7 +553,10 @@ public class Coverage {
 						
 						compilationUnit.accept(newPredicateInstrumentVisitor);
 						
-						if(compiler.compile(subject, info.getRelJavaPath(), compilationUnit.toString())){
+						JavaFile.writeStringToFile(javaFile, compilationUnit.toString());
+						ExecuteCommand.deleteGivenFile(binFile);
+						
+						if(Runner.compileSubject(subject)){
 							legalConditions.add(condition);
 							if (!useSober) {
 								// add opposite conditions as well
@@ -591,9 +591,9 @@ public class Coverage {
 					file2Line2Predicates.put(javaFile, line2Predicate);
 				}
 				// delete corresponding class file to enable re-compile for next loop.
-//				ExecuteCommand.deleteGivenFile(binFile);
+				ExecuteCommand.deleteGivenFile(binFile);
 				// restore original source file
-//				ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
+				ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
 			} // end of "conditionsForRightVars != null"
 		} // end of "for(String stmt : allStatements)"
 		
