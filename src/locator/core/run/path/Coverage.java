@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.math3.random.StableRandomGenerator;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
@@ -277,10 +277,15 @@ public class Coverage {
         if (Constant.RECOVER_PREDICATE_FROM_FILE) {
             file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
         }
-        if (file2Line2Predicates == null) {
-            file2Line2Predicates = useStatisticalDebugging ? getStatisticalDebuggingPredicates(subject, allStatements)
-                    : getAllPredicates(subject, allStatements, useSober);
-        }
+		if (file2Line2Predicates == null) {
+			long start = System.currentTimeMillis();
+			file2Line2Predicates = useStatisticalDebugging ? getStatisticalDebuggingPredicates(subject, allStatements)
+					: getAllPredicates(subject, allStatements, useSober);
+			long duration = System.currentTimeMillis() - start;
+			LevelLogger
+					.info(String.format("Predicate validation time : %s:%s:%s", TimeUnit.MILLISECONDS.toHours(duration),
+							TimeUnit.MILLISECONDS.toMillis(duration), TimeUnit.MILLISECONDS.toSeconds(duration)));
+		}
         System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
         printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
         // Delete empty file and line.
