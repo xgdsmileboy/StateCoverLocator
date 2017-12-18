@@ -209,7 +209,9 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		final String operators[] = {"<", "<=", ">", ">=", "==", "!="};
 		List<List<String>> predicates = new ArrayList<List<String>>();
 		for(final Map.Entry<String, Set<String>> variable : variables.entrySet()) {
+			String v0 = variable.getKey();
 			for(final String v : variable.getValue()) {
+				if(v0.equals(v)) continue;
 				List<String> similarPredicates = new ArrayList<String>();
 				for (final String op : operators) {
 					similarPredicates.add(variable.getKey() + op + v);
