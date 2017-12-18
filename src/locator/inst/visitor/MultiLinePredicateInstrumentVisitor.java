@@ -198,9 +198,6 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 
 			DoStatement doStatement = (DoStatement) statement;
 
-			int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
-			result.addAll(genInstrument(methodID, lineNumber));
-
 			Statement doBody = doStatement.getBody();
 			if (doBody != null) {
 				startLine = _cu.getLineNumber(doBody.getStartPosition());
@@ -212,6 +209,8 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 			}
 
 			result.add(doStatement);
+			int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
+			result.addAll(genInstrument(methodID, lineNumber));
 		} else if (statement instanceof Block) {
 			Block block = (Block) statement;
 			Block newBlock = processBlock(block, methodID);
