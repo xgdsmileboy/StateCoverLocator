@@ -43,6 +43,7 @@ import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.StatisticalDebuggingPredicatesVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
+import sun.util.logging.resources.logging_es;
 
 /**
  * @author Jiajun
@@ -282,9 +283,7 @@ public class Coverage {
 			file2Line2Predicates = useStatisticalDebugging ? getStatisticalDebuggingPredicates(subject, allStatements)
 					: getAllPredicates(subject, allStatements, useSober);
 			long duration = System.currentTimeMillis() - start;
-			LevelLogger
-					.info(String.format("Predicate validation time : %s:%s:%s", TimeUnit.MILLISECONDS.toHours(duration),
-							TimeUnit.MILLISECONDS.toMinutes(duration), TimeUnit.MILLISECONDS.toSeconds(duration)));
+			LevelLogger.info("Predicate validation time : " + transformMilli2Time(duration));
 		}
         System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
         printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
@@ -357,6 +356,15 @@ public class Coverage {
         // Instrument.execute(subject.getHome() + subject.getSsrc(), new
         // DeInstrumentVisitor());
         return coverage;
+    }
+    
+    private static String transformMilli2Time(long milliSecond) {
+    	long milli = milliSecond % 1000;
+    	milliSecond /= 1000;
+    	long second = milliSecond % 60;
+    	milliSecond /= 60;
+    	long minutes = milliSecond;
+    	return minutes + ":" + second + ":" + milli;
     }
 
     private static Map<String, Map<Integer, List<Pair<String, String>>>> getStatisticalDebuggingPredicates(
