@@ -284,7 +284,7 @@ public class Coverage {
 			long duration = System.currentTimeMillis() - start;
 			LevelLogger
 					.info(String.format("Predicate validation time : %s:%s:%s", TimeUnit.MILLISECONDS.toHours(duration),
-							TimeUnit.MILLISECONDS.toMillis(duration), TimeUnit.MILLISECONDS.toSeconds(duration)));
+							TimeUnit.MILLISECONDS.toMinutes(duration), TimeUnit.MILLISECONDS.toSeconds(duration)));
 		}
         System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
         printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
