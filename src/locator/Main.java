@@ -284,8 +284,6 @@ public class Main {
 				String begin = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin);
 
-				Constant.PROJECT_HOME = "/home/lillian/work/df";
-
 				proceed(subject, true, false);
 
 				String end = simpleDateFormat.format(new Date());

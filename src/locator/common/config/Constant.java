@@ -53,7 +53,7 @@ public class Constant {
 	public static String JAVA_VERSION = JavaCore.VERSION_1_7;
 
 	// instrument top K predicates for each variable
-	public final static int TOP_K_PREDICATES_FOR_EACH_VAR = 5;
+	public static int TOP_K_PREDICATES_FOR_EACH_VAR = 5;
 
 	// build flags
 	public final static String ANT_BUILD_FAILED = "BUILD FAILED";
@@ -68,11 +68,11 @@ public class Constant {
 	public final static int FEATURE_LINE_INDEX = 1;
 	
 	// update predicate
-	public final static boolean RECOVER_PREDICATE_FROM_FILE = true;
+	public static boolean RECOVER_PREDICATE_FROM_FILE = true;
 	
 	// training model
 	// xgboost, dnn or randomforest
-	public final static String TRAINING_MODEL = "dnn";
+	public static String TRAINING_MODEL = "dnn";
 	
 	// system command
 	public static String COMMAND_CD = null;
@@ -137,7 +137,7 @@ public class Constant {
 	public final static String STR_ML_VAR_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
-	public final static String TENSORFLOW_ACTIVATE_PATH = "/home/lillian/tensorflow/bin/activate";
+	public static String TENSORFLOW_ACTIVATE_PATH = "";
 
 	static {
 		Properties prop = new Properties();
@@ -157,11 +157,9 @@ public class Constant {
 			Constant.COMMAND_RM = prop.getProperty("COMMAND.RM").replace("/", Constant.PATH_SEPARATOR) + " -rf ";
 			// for backup file
 			Constant.COMMAND_MV = prop.getProperty("COMMAND.MV").replace("/", Constant.PATH_SEPARATOR) + " ";
-
 			Constant.COMMAND_D4J = prop.getProperty("COMMAND.D4J").replace("/", Constant.PATH_SEPARATOR) + " ";
-
 			Constant.COMMAND_PYTHON = prop.getProperty("COMMAND.PYTHON").replace("/", Constant.PATH_SEPARATOR) + " ";
-
+			Constant.TENSORFLOW_ACTIVATE_PATH = prop.getProperty("TENSORFLOW.ACTIVATE").replace("/", Constant.PATH_SEPARATOR);
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_system get properties failed!" + e.getMessage());
@@ -223,6 +221,21 @@ public class Constant {
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_project get properties failed!" + e.getMessage());
+		}
+		
+		try {
+			String filePath = Constant.HOME + "/res/conf/runtime.properties";
+			InputStream in = new BufferedInputStream(new FileInputStream(filePath));
+			prop.load(in);
+			
+			Constant.PROJECT_HOME = prop.getProperty("PROJECT.HOME").replace("/", Constant.PATH_SEPARATOR);
+			Constant.RECOVER_PREDICATE_FROM_FILE = Boolean.parseBoolean(prop.getProperty("PREDICATE.RECOVER"));
+			Constant.TOP_K_PREDICATES_FOR_EACH_VAR = Integer.parseInt(prop.getProperty("PREDICATE.TOPK"));
+			Constant.TRAINING_MODEL = prop.getProperty("TRAINING.MODEL").trim();
+			
+			in.close();
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#config_runtime get properties failed!" + e.getMessage());
 		}
 		
 		BUG_NUMBER.put("chart", 26);
