@@ -69,6 +69,8 @@ public class Constant {
 	
 	// update predicate
 	public static boolean RECOVER_PREDICATE_FROM_FILE = true;
+	public static boolean USE_STATISTICAL_DEBUGGING = true;
+	public static boolean USE_SOBER = false;
 	
 	// training model
 	// xgboost, dnn or randomforest
@@ -232,6 +234,8 @@ public class Constant {
 			Constant.RECOVER_PREDICATE_FROM_FILE = Boolean.parseBoolean(prop.getProperty("PREDICATE.RECOVER"));
 			Constant.TOP_K_PREDICATES_FOR_EACH_VAR = Integer.parseInt(prop.getProperty("PREDICATE.TOPK"));
 			Constant.TRAINING_MODEL = prop.getProperty("TRAINING.MODEL").trim();
+			Constant.USE_SOBER =  Boolean.parseBoolean(prop.getProperty("USE.SOBER"));
+			Constant.USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
 			
 			in.close();
 		} catch (IOException e) {
