@@ -5,7 +5,7 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.inst.predict;
+package locator.core.model;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,41 +26,42 @@ import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
 import locator.core.run.path.LineInfo;
-import locator.inst.visitor.feature.ExprFilter;
-import locator.inst.visitor.feature.FeatureEntry;
 import locator.inst.visitor.feature.NewExprFilter;
 
 /**
  * @author Jiajun
- * @date May 10, 2017
+ * @date Dec 19, 2017
  */
-public class Predictor {
+public abstract class Model {
 
-	private final static String __name__ = "@Predictor ";
-	
-	private static Set<String> _uniqueFeatures = new HashSet<>();
+	protected String _modelPath = Constant.STR_ML_HOME + "/model/";
+	protected String _outPath = Constant.STR_ML_VAR_OUT_FILE_PATH;
+	protected String _inPath = Constant.STR_ML_PREDICT_EXP_PATH;
+	protected static Set<String> _uniqueFeatures = new HashSet<>();
+	protected String __name__ = "@Model ";
 
-	public static List<String> predict(FeatureEntry featureEntry) {
-		List<String> insertedStatement = new ArrayList<>();
-
-		return insertedStatement;
+	protected Model(String modelPath, String outPath, String inPath) {
+		_modelPath = modelPath;
+		_outPath = outPath;
+		_inPath = inPath;
 	}
 
+	public abstract void trainModel(Subject subject);
+
 	/**
-	 * predict expressions based on the given features,
 	 * 
 	 * @param subject
 	 *            : current predict subject
-	 * @param varFeatures
-	 *            : features for variable predict
-	 * @param expFeatures
+	 * @param varFeatures:
+	 *            features for variable predict
+	 * @param exprFeatures
 	 *            : features for expression predict
-	 * @return a pair of conditions, the first set contains all conditions for
-	 *         left variable [currently, not use] the second set contains all
-	 *         conditions for right variables
+	 * @param lineInfoMapping
+	 *            : record the info for each line of source code, formatted as
+	 *            <xx.java#145, {line, relJavaPath, clazz}>
+	 * @return <fileName, <variable, [<predicate, probability>]>>
 	 */
-	@Deprecated
-	public static Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
+	public Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
 			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
 		String currentClassName = null;
 		// TODO : return conditions for left variable and right variables
@@ -68,13 +69,13 @@ public class Predictor {
 		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
 		for (String string : varFeatures) {
 			// filter duplicated features
-			if(_uniqueFeatures.contains(string)){
+			if (_uniqueFeatures.contains(string)) {
 				continue;
 			}
 			_uniqueFeatures.add(string);
 			// TODO : for debug
 			LevelLogger.info(string);
-			if(currentClassName == null){
+			if (currentClassName == null) {
 				String[] features = string.split("\t");
 				int index = features[Constant.FEATURE_FILE_NAME_INDEX].length();
 				// name.java -> name
@@ -87,7 +88,7 @@ public class Predictor {
 		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
 		for (String string : exprFeatures) {
 			// filter duplicated features
-			if(_uniqueFeatures.contains(string)){
+			if (_uniqueFeatures.contains(string)) {
 				continue;
 			}
 			_uniqueFeatures.add(string);
@@ -113,7 +114,7 @@ public class Predictor {
 			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
 			return rightConditions;
 		}
-		
+
 		String line = null;
 		try {
 			// filter title
@@ -130,25 +131,27 @@ public class Predictor {
 					String condition = columns[2].replace("$", varName);
 					String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
 					String prob = columns[3];
-					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), currentClassName);
-					if(newCond != null){
+					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key),
+							currentClassName);
+					if (newCond != null) {
 						Map<String, List<Pair<String, String>>> linePreds = rightConditions.get(key);
 						if (linePreds == null) {
 							linePreds = new HashMap<>();
 						}
 						List<Pair<String, String>> preds = linePreds.get(varName);
-						if(preds == null){
+						if (preds == null) {
 							preds = new ArrayList<>();
 						}
 						Pair<String, String> pair = new Pair<String, String>(newCond, prob);
 						preds.add(pair);
 						linePreds.put(varName, preds);
 						rightConditions.put(key, linePreds);
-						
+
 					} else {
-						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
+						LevelLogger.info(
+								"Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
 					}
-					
+
 				}
 			}
 			bReader.close();
@@ -158,7 +161,7 @@ public class Predictor {
 		ExecuteCommand.deleteGivenFile(varFile.getAbsolutePath());
 		ExecuteCommand.deleteGivenFile(expFile.getAbsolutePath());
 		ExecuteCommand.deleteGivenFile(rslFile.getAbsolutePath());
-		
+
 		return rightConditions;
 	}
 

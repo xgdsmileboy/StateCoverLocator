@@ -30,6 +30,7 @@ import locator.common.java.Subject;
 import locator.common.util.CmdFactory;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.core.model.Model;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.predict.Predictor;
@@ -264,7 +265,7 @@ public class Coverage {
      * @return <statementString, coverageInformation>,
      *         statementString:"MethodID#line"
      */
-    public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, Set<String> allStatements,
+    public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, Set<String> allStatements, Model model,
             Set<Integer> failedTests, boolean useStatisticalDebugging, boolean useSober) {
         String srcPath = subject.getHome() + subject.getSsrc();
         String testPath = subject.getHome() + subject.getTsrc();
@@ -279,7 +280,7 @@ public class Coverage {
 		if (file2Line2Predicates == null) {
 			long start = System.currentTimeMillis();
 			file2Line2Predicates = useStatisticalDebugging ? getStatisticalDebuggingPredicates(subject, allStatements)
-					: getAllPredicates(subject, allStatements, useSober);
+					: getAllPredicates(subject, allStatements, model, useSober);
 			long duration = System.currentTimeMillis() - start;
 			LevelLogger.info("Predicate validation time : " + transformMilli2Time(duration));
 		}
@@ -526,7 +527,7 @@ public class Coverage {
     }
 
     private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject,
-            Set<String> allStatements, boolean useSober) {
+            Set<String> allStatements, Model model, boolean useSober) {
 
         // parse all object type
         ExprFilter.init(subject);
@@ -585,7 +586,9 @@ public class Coverage {
                 lineInfoMapping.put(key, info);
             }
         }
-        Map<String, Map<String, List<Pair<String, String>>>> conditionsForRightVars = Predictor.predict(subject,
+//        Map<String, Map<String, List<Pair<String, String>>>> conditionsForRightVars = Predictor.predict(subject,
+//                varFeatures, exprFeatures, lineInfoMapping);
+        Map<String, Map<String, List<Pair<String, String>>>> conditionsForRightVars = model.predict(subject,
                 varFeatures, exprFeatures, lineInfoMapping);
         // TODO : currently, only instrument predicates for right variables
         // if predicted conditions are not empty for right variables,
