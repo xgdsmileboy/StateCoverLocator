@@ -78,7 +78,7 @@ public class CoverageTest {
 	@Test
 	public void test_getAllCoveredStatement() {
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 2, "/source", "/tests", "/build", "/build-tests");
+		Subject subject = new Subject("chart", 2, "/source", "/tests", "/build", "/build-tests", null);
 		// preprocess : remove all instrument
 		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
 		Instrument.execute(subject.getHome() + subject.getSsrc(), deInstrumentVisitor);

@@ -22,14 +22,14 @@ public class RunnerTest {
 	@Test
 	public void test_testSuite() {
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests", null);
 		Assert.assertTrue("Should success !", Runner.testSuite(subject));
 	}
 
 	@Test
 	public void test_testSingleCase() {
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests", null);
 		String testCase = "org.jfree.chart.renderer.category.junit.AbstractCategoryItemRendererTests::test2947660";
 		Assert.assertTrue("Should success !", Runner.testSingleCase(subject, testCase));
 	}
@@ -37,7 +37,7 @@ public class RunnerTest {
 	@Test
 	public void test_compileSubject() {
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests", null);
 		Assert.assertTrue("Should success !", Runner.compileSubject(subject));
 	}
 

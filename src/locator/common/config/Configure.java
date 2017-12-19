@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.dom4j.Document;
@@ -33,6 +34,7 @@ import locator.common.java.JavaFile;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
 import soot.coffi.constant_element_value;
+import soot.util.Cons;
 
 public class Configure {
 
@@ -70,7 +72,15 @@ public class Configure {
 				String tsrc = element.elementText("tsrc");
 				String sbin = element.elementText("sbin");
 				String tbin = element.elementText("tbin");
-				Subject subject = new Subject(name, id, ssrc, tsrc, sbin, tbin);
+				List<String> classpath = new LinkedList<>();
+				String clpath = element.elementText("classpath");
+				if(classpath != null && !classpath.isEmpty()) {
+					for (String elm : clpath.split(",")) {
+						classpath.add(Constant.HOME + Constant.PATH_SEPARATOR + "res" + Constant.PATH_SEPARATOR
+								+ "d4jlibs" + Constant.PATH_SEPARATOR + elm);
+					}
+				}
+				Subject subject = new Subject(name, id, ssrc, tsrc, sbin, tbin, classpath);
 				list.add(subject);
 			}
 		} catch (DocumentException e) {

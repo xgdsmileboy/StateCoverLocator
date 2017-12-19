@@ -23,7 +23,7 @@ public class CmdFactoryTest {
 	public void test_createTestSuiteCmd() {
 		Constant.COMMAND_D4J = "defects4j ";
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests", null);
 		String[] actuals = CmdFactory.createTestSuiteCmd(subject);
 		String[] expecteds = new String[] { "/bin/bash", "-c", "cd " + subject.getHome() + " && " + "defects4j test" };
 		Assert.assertArrayEquals(expecteds, actuals);
@@ -33,7 +33,7 @@ public class CmdFactoryTest {
 	public void test_createTestSingleCmd() {
 		Constant.COMMAND_D4J = "defects4j ";
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests", null);
 		String[] actuals = CmdFactory.createTestSingleCmd(subject, "classA::testMethod");
 		String[] expecteds = new String[] { "/bin/bash", "-c",
 				"cd " + subject.getHome() + " && " + "defects4j test -t classA::testMethod" };
@@ -44,7 +44,7 @@ public class CmdFactoryTest {
 	public void test_createBuildSubjectCmd() {
 		Constant.COMMAND_D4J = "defects4j ";
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests", null);
 		String[] actuals = CmdFactory.createBuildSubjectCmd(subject);
 		String[] expecteds = new String[] { "/bin/bash", "-c",
 				"cd " + subject.getHome() + " && " + "defects4j compile" };

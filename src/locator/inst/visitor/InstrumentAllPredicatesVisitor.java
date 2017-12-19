@@ -223,9 +223,6 @@ public class InstrumentAllPredicatesVisitor extends TraversalVisitor {
 
 			DoStatement doStatement = (DoStatement) statement;
 
-			int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
-			result.addAll(genListConditions(message, lineNumber));
-
 			Statement doBody = doStatement.getBody();
 			if (doBody != null) {
 				Block doBlock = null;
@@ -242,6 +239,8 @@ public class InstrumentAllPredicatesVisitor extends TraversalVisitor {
 			}
 
 			result.add(doStatement);
+			int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
+			result.addAll(genListConditions(message, lineNumber));
 		} else if (statement instanceof Block) {
 			Block block = (Block) statement;
 			Block newBlock = processBlock(block, message);

@@ -12,6 +12,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -51,7 +53,7 @@ public class Constant {
 	public static String JAVA_VERSION = JavaCore.VERSION_1_7;
 
 	// instrument top K predicates for each variable
-	public final static int TOP_K_PREDICATES_FOR_EACH_VAR = 5;
+	public static int TOP_K_PREDICATES_FOR_EACH_VAR = 5;
 
 	// build flags
 	public final static String ANT_BUILD_FAILED = "BUILD FAILED";
@@ -66,11 +68,13 @@ public class Constant {
 	public final static int FEATURE_LINE_INDEX = 1;
 	
 	// update predicate
-	public final static boolean RECOVER_PREDICATE_FROM_FILE = true;
+	public static boolean RECOVER_PREDICATE_FROM_FILE = true;
+	public static boolean USE_STATISTICAL_DEBUGGING = true;
+	public static boolean USE_SOBER = false;
 	
 	// training model
 	// xgboost, dnn or randomforest
-	public final static String TRAINING_MODEL = "dnn";
+	public static String TRAINING_MODEL = "dnn";
 	
 	// system command
 	public static String COMMAND_CD = null;
@@ -135,7 +139,7 @@ public class Constant {
 	public final static String STR_ML_VAR_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
-	public final static String TENSORFLOW_ACTIVATE_PATH = "/home/lillian/tensorflow/bin/activate";
+	public static String TENSORFLOW_ACTIVATE_PATH = "";
 
 	static {
 		Properties prop = new Properties();
@@ -155,11 +159,9 @@ public class Constant {
 			Constant.COMMAND_RM = prop.getProperty("COMMAND.RM").replace("/", Constant.PATH_SEPARATOR) + " -rf ";
 			// for backup file
 			Constant.COMMAND_MV = prop.getProperty("COMMAND.MV").replace("/", Constant.PATH_SEPARATOR) + " ";
-
 			Constant.COMMAND_D4J = prop.getProperty("COMMAND.D4J").replace("/", Constant.PATH_SEPARATOR) + " ";
-
 			Constant.COMMAND_PYTHON = prop.getProperty("COMMAND.PYTHON").replace("/", Constant.PATH_SEPARATOR) + " ";
-
+			Constant.TENSORFLOW_ACTIVATE_PATH = prop.getProperty("TENSORFLOW.ACTIVATE").replace("/", Constant.PATH_SEPARATOR);
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_system get properties failed!" + e.getMessage());
@@ -169,17 +171,75 @@ public class Constant {
 			String filePath = Constant.HOME + "/res/conf/project.properties";
 			InputStream in = new BufferedInputStream(new FileInputStream(filePath));
 			prop.load(in);
-			
+			String base = HOME + PATH_SEPARATOR + "res" + PATH_SEPARATOR + "d4jlibs";
 			for(String name : Constant.PROJECT_NAME) {
 				String ssrc = prop.getProperty(name.toUpperCase() + ".SSRC").replace("/", Constant.PATH_SEPARATOR);
 				String tsrc = prop.getProperty(name.toUpperCase() + ".TSRC").replace("/", Constant.PATH_SEPARATOR);
 				String sbin = prop.getProperty(name.toUpperCase() + ".SBIN").replace("/", Constant.PATH_SEPARATOR);
 				String tbin = prop.getProperty(name.toUpperCase() + ".TBIN").replace("/", Constant.PATH_SEPARATOR);
-				Constant.PROJECT_PROP.put(name, new ProjectProperties(ssrc, tsrc, sbin, tbin));
+				List<String> classpath = new LinkedList<>();
+				switch(name) {
+				case "math":
+					classpath.add(base + "/hamcrest-core-1.3.jar");
+					classpath.add(base + "/junit-4.11.jar");
+					break;
+				case "chart":
+					classpath.add(base + "/junit-4.11.jar");
+					classpath.add(base + "/iText-2.1.4.jar");
+					classpath.add(base + "/servlet.jar");
+					break;
+				case "lang":
+					classpath.add(base + "/cglib-nodep-2.2.2.jar");
+					classpath.add(base + "/commons-io-2.4.jar");
+					classpath.add(base + "/easymock-3.1.jar");
+					classpath.add(base + "/hamcrest-core-1.3.jar");
+					classpath.add(base + "/junit-4.11.jar");
+					classpath.add(base + "/objenesis-1.2.jar");
+					break;
+				case "closure":
+					classpath.add(base + "/caja-r4314.jar");
+					classpath.add(base + "/jarjar.jar");
+					classpath.add(base + "/ant.jar");
+					classpath.add(base + "/ant-launcher.jar");
+					classpath.add(base + "/args4j.jar");
+					classpath.add(base + "/jsr305.jar");
+					classpath.add(base + "/guava.jar");
+					classpath.add(base + "/json.jar");
+					classpath.add(base + "/protobuf-java.jar");
+					classpath.add(base + "/junit-4.11.jar");
+					classpath.add(base + "/rhino.jar");
+					break;
+				case "time":
+					classpath.add(base + "/junit-4.11.jar");
+					classpath.add(base + "/joda-convert-1.2.jar");
+					break;
+				case "mockito":
+					break;
+				default :
+					System.err.println("UNKNOWN project name : " + name);
+				}
+				Constant.PROJECT_PROP.put(name, new ProjectProperties(ssrc, tsrc, sbin, tbin, classpath));
 			}
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_project get properties failed!" + e.getMessage());
+		}
+		
+		try {
+			String filePath = Constant.HOME + "/res/conf/runtime.properties";
+			InputStream in = new BufferedInputStream(new FileInputStream(filePath));
+			prop.load(in);
+			
+			Constant.PROJECT_HOME = prop.getProperty("PROJECT.HOME").replace("/", Constant.PATH_SEPARATOR);
+			Constant.RECOVER_PREDICATE_FROM_FILE = Boolean.parseBoolean(prop.getProperty("PREDICATE.RECOVER"));
+			Constant.TOP_K_PREDICATES_FOR_EACH_VAR = Integer.parseInt(prop.getProperty("PREDICATE.TOPK"));
+			Constant.TRAINING_MODEL = prop.getProperty("TRAINING.MODEL").trim();
+			Constant.USE_SOBER =  Boolean.parseBoolean(prop.getProperty("USE.SOBER"));
+			Constant.USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
+			
+			in.close();
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#config_runtime get properties failed!" + e.getMessage());
 		}
 		
 		BUG_NUMBER.put("chart", 26);

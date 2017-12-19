@@ -289,9 +289,7 @@ public class Main {
 				String begin = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin);
 
-				Constant.PROJECT_HOME = "/home/lillian/work/df";
-
-				proceed(subject, false, false);
+				proceed(subject, Constant.USE_STATISTICAL_DEBUGGING, Constant.USE_SOBER);
 
 				String end = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);

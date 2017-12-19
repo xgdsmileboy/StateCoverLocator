@@ -8,13 +8,11 @@
 package locator.inst.visitor.feature;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import locator.common.java.Pair;
 import locator.core.run.path.LineInfo;
 
 /**
