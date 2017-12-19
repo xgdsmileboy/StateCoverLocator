@@ -23,8 +23,10 @@ import locator.common.util.Utils;
 public class DNN extends Model {
 
 	public DNN() {
-		super(Constant.STR_ML_HOME + "/model/dnn", Constant.STR_ML_EXP_OUT_FILE_PATH + "/dnn",
-				Constant.STR_ML_PREDICT_EXP_PATH + "/dnn");
+//		super(Constant.STR_ML_HOME + "/model/dnn", Constant.STR_ML_EXP_OUT_FILE_PATH + "/dnn",
+//				Constant.STR_ML_PREDICT_EXP_PATH + "/dnn");
+		super(Constant.STR_ML_HOME + "/model", Constant.STR_ML_EXP_OUT_FILE_PATH,
+				Constant.STR_ML_PREDICT_EXP_PATH);
 		__name__ = "@DNN ";
 	}
 

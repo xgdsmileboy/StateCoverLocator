@@ -22,8 +22,10 @@ import locator.core.run.path.LineInfo;
 public class L2S extends Model {
 
 	public L2S() {
-		super(Constant.STR_ML_HOME + "/model/l2s", Constant.STR_ML_EXP_OUT_FILE_PATH + "/l2s",
-				Constant.STR_ML_PREDICT_EXP_PATH + "/l2s");
+		super(Constant.STR_ML_HOME + "/model", Constant.STR_ML_EXP_OUT_FILE_PATH,
+				Constant.STR_ML_PREDICT_EXP_PATH);
+//		super(Constant.STR_ML_HOME + "/model/l2s", Constant.STR_ML_EXP_OUT_FILE_PATH + "/l2s",
+//				Constant.STR_ML_PREDICT_EXP_PATH + "/l2s");
 		__name__ = "@L2S ";
 	}
 

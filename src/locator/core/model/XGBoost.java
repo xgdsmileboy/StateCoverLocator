@@ -23,8 +23,10 @@ import locator.common.util.Utils;
 public class XGBoost extends Model {
 
 	public XGBoost() {
-		super(Constant.STR_ML_HOME + "/model/xgboost", Constant.STR_ML_EXP_OUT_FILE_PATH + "/xgboost",
-				Constant.STR_ML_PREDICT_EXP_PATH + "/xgboost");
+		super(Constant.STR_ML_HOME + "/model", Constant.STR_ML_EXP_OUT_FILE_PATH,
+				Constant.STR_ML_PREDICT_EXP_PATH);
+//		super(Constant.STR_ML_HOME + "/model/xgboost", Constant.STR_ML_EXP_OUT_FILE_PATH + "/xgboost",
+//				Constant.STR_ML_PREDICT_EXP_PATH + "/xgboost");
 		__name__ = "@XGBoost ";
 	}
 
