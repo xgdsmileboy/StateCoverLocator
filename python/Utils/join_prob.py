@@ -1,7 +1,7 @@
 import math
 import os
 
-### join the probs for var and expr by multiplying
+### join the probs for var and expr by multiplying or adding
 def readFile(filePath):
     file = 0
     try:
@@ -85,13 +85,20 @@ def join_prob(config):
                 mulProb = varProbMap[key] * predicate[1]
                 if mulProb <= 0:
                     continue
-
-                #prob = math.log(varProbMap[key] * predicate[1])
-                prob = varProbMap[key] * predicate[1]
-                #prob = math.log(varProbMap[key]) + math.log(predicate[1])
-                # prob = varProbMap[key] + predicate[1]
-                newkey = (key[0], key[1], predicate[0])
-                varPredicateProbMap[newkey] = prob
+                if config.get_model_type == 'l2s':
+                    # prob = math.log(varProbMap[key] * predicate[1])
+                    prob = varProbMap[key] * predicate[1]
+                    # prob = math.log(varProbMap[key]) + math.log(predicate[1])
+                    # prob = varProbMap[key] + predicate[1]
+                    newkey = (key[0], key[1], predicate[0])
+                    varPredicateProbMap[newkey] = prob
+                else:
+                    #prob = math.log(varProbMap[key] * predicate[1])
+                    #prob = varProbMap[key] * predicate[1]
+                    #prob = math.log(varProbMap[key]) + math.log(predicate[1])
+                    prob = varProbMap[key] + predicate[1]
+                    newkey = (key[0], key[1], predicate[0])
+                    varPredicateProbMap[newkey] = prob
 
     varPredicateProbTuple = sorted(varPredicateProbMap.items(), lambda x, y: cmp(x[1], y[1]), reverse=True)
     idConsMap = {}
@@ -108,11 +115,8 @@ def join_prob(config):
     for key in idConsMap:
         valueTupleList = idConsMap[key]
         for valueTuple in valueTupleList:
-            if (valueTuple[2] > 0.0):
+            if (valueTuple[2] > 0.005):
                 fOut.write(key + "\t" + valueTuple[0] + "\t" + valueTuple[1] + "\t" + str(valueTuple[2]) + "\n")
     fOut.close()
-
-
-
 
 
