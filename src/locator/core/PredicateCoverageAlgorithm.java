@@ -5,13 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
 
 public abstract class PredicateCoverageAlgorithm extends Algorithm {
-	public abstract double getScore(int fcover, int pcover, int totalFailed, int totalPassed);
+	public abstract double getScore(int fcover, int pcover, int totalFailed, int totalPassed, int fcoverObserved, int pcoverObserved);
 	public List<Pair<String, Double>> compute(Subject subject, int totalFailed, int totalPassed, boolean useStatisticalDebugging) {
 //		Map<String, ArrayList<PredicateCoverage>> predCoverage = new HashMap<String , ArrayList<PredicateCoverage>>();
 		List<Pair<String, Double>> result = new ArrayList<Pair<String, Double>>();
@@ -24,25 +25,27 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 		}
 
 		List<String> oriContent = JavaFile.readFileToStringList(oriCoveragePath);
-		for(String line : oriContent) {
-			String parts[] = line.split("\t");
-			if (parts.length != 3) {
-				LevelLogger.error("Format error in " + oriCoveragePath + 
-						", each line should have three parts : " + line);
-				return result;
+		if (!getName().equals("StatisticalDebugging")) {			
+			for(String line : oriContent) {
+				String parts[] = line.split("\t");
+				if (parts.length != 5) {
+					LevelLogger.error("Format error in " + oriCoveragePath + 
+							", each line should have three parts : " + line);
+					return result;
+				}
+				String statementInfo = parts[0];
+				if (statementInfo.equals("line")) continue;
+				int fcover = Integer.valueOf(parts[1]);
+				int pcover = Integer.valueOf(parts[2]);
+				result.add(new Pair<String, Double>(statementInfo, getScore(fcover, pcover, totalFailed, totalPassed, 0, 0)));
 			}
-			String statementInfo = parts[0];
-			if (statementInfo.equals("line")) continue;
-			int fcover = Integer.valueOf(parts[1]);
-			int pcover = Integer.valueOf(parts[2]);
-			result.add(new Pair<String, Double>(statementInfo, getScore(fcover, pcover, totalFailed, totalPassed)));
 		}
 		
 		List<String> predContent = JavaFile.readFileToStringList(predCoveragePath);
 		Map<String, PredicateCoverage> statementScore = new HashMap<String, PredicateCoverage>();
 		for(String line : predContent) {
 			String parts[] = line.split("\t");
-			if (parts.length != 3) {
+			if (parts.length != 5) {
 				LevelLogger.error("Format error in " + predCoveragePath + 
 						", each line should have three parts : " + line);
 				return result;
@@ -51,6 +54,8 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 			if (statementInfo.equals("line")) continue;
 			int fcover = Integer.valueOf(parts[1]);
 			int pcover = Integer.valueOf(parts[2]);
+			int fcoverObserved = Integer.valueOf(parts[3]);
+			int pcoverObserved = Integer.valueOf(parts[4]);
 
 			int probPos = statementInfo.lastIndexOf('#');
 			PredicateCoverage predCov = new PredicateCoverage();
@@ -60,7 +65,7 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 			predCov.setFcover(fcover);
 			predCov.setPcover(pcover);
 			predCov.setStatementInfo(statementInfo.substring(0, predPos));
-			predCov.setScore(getScore(fcover, pcover, totalFailed, totalPassed));
+			predCov.setScore(getScore(fcover, pcover, totalFailed, totalPassed, fcoverObserved, pcoverObserved));
 
 			PredicateCoverage previousPredCov = statementScore.get(predCov.getStatementInfo());
 			if (previousPredCov == null || predCov.getScore() > previousPredCov.getScore()) { // only use the maximum pred score
@@ -70,15 +75,25 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 		}
 		
 		List<Pair<Double, String>> contents = new ArrayList<Pair<Double, String>>();
-		for(Pair<String, Double> p : result) {
-			PredicateCoverage predCov = statementScore.get(p.getFirst());
-			double s = predCov == null ? 0 : predCov.getScore();
-			String predStr = predCov == null ? "" : predCov.getPredicate();
-			contents.add(new Pair<>(p.getSecond() + s,
-					p.getFirst() + "\t" + Double.toString(p.getSecond()) + 
-					"\t" + Double.toString(s) + "\t" + Double.toString(p.getSecond() + s) +
-					"\t" + predStr));
-			p.setSecond(p.getSecond() + s); // add original and pred together
+		if (getName().equals("StatisticalDebugging")) {
+			for(Map.Entry<String, PredicateCoverage> p : statementScore.entrySet()) {
+				PredicateCoverage predCov = p.getValue();
+				contents.add(new Pair<>(predCov.getScore(),
+						predCov.getStatementInfo() +
+						"\t0\t" + Double.toString(predCov.getScore()) +
+						"\t" + Double.toString(predCov.getScore()) + "\t" + predCov.getPredicate()));
+			}
+		} else {
+			for(Pair<String, Double> p : result) {
+				PredicateCoverage predCov = statementScore.get(p.getFirst());
+				double s = predCov == null ? 0 : predCov.getScore();
+				String predStr = predCov == null ? "" : predCov.getPredicate();
+				contents.add(new Pair<>(p.getSecond() + s,
+						p.getFirst() + "\t" + Double.toString(p.getSecond()) + 
+						"\t" + Double.toString(s) + "\t" + Double.toString(p.getSecond() + s) +
+						"\t" + predStr));
+				p.setSecond(p.getSecond() + s); // add original and pred together
+			}
 		}
 		writeToFile(contents, subject, useStatisticalDebugging);
 		

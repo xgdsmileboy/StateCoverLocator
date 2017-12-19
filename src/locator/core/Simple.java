@@ -7,7 +7,8 @@ public class Simple extends PredicateCoverageAlgorithm {
 	 */
 	@Override
 	public double getScore(int fcover, int pcover, int totalFailed,
-			int totalPassed) {
+			int totalPassed, int fcoverObserved, int pcoverObserved) {
+		if (pcover + fcover == 0) return 0;
 		if (fcover > 0) {
 			return 1 - pcover;
 		} else {

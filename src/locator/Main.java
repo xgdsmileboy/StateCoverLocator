@@ -40,6 +40,7 @@ import locator.core.Ochiai;
 import locator.core.Op2;
 import locator.core.Simple;
 import locator.core.Sober;
+import locator.core.StatisticalDebugging;
 import locator.core.Suspicious;
 import locator.core.Tarantula;
 import locator.core.run.Runner;
@@ -199,6 +200,7 @@ public class Main {
 			algorithms.add(new Barinel());
 			algorithms.add(new Op2());
 			algorithms.add(new Simple());
+			algorithms.add(new StatisticalDebugging());
 		}
 		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed, useStatisticalDebugging, useSober);
 		
@@ -236,7 +238,7 @@ public class Main {
 	
 	private static void printCoverage(Map<String, CoverInfo> coverage, String filePath) {
 		File file = new File(filePath);
-		String header = "line" + "\t" + "fcover" + "\t" + "pcover" + "\n";
+		String header = "line\tfcover\tpcover\tf_observed_cover\tp_observed_cover\n";
 		JavaFile.writeStringToFile(file, header, false);
 		for (Entry<String, CoverInfo> entry : coverage.entrySet()) {
 			StringBuffer stringBuffer = new StringBuffer();
@@ -252,6 +254,10 @@ public class Main {
 			stringBuffer.append(entry.getValue().getFailedCount());
 			stringBuffer.append("\t");
 			stringBuffer.append(entry.getValue().getPassedCount());
+			stringBuffer.append("\t");
+			stringBuffer.append(entry.getValue().getFailedObservedCount());
+			stringBuffer.append("\t");
+			stringBuffer.append(entry.getValue().getPassedObservedCount());
 			stringBuffer.append("\n");
 			// view coverage.csv file
 			JavaFile.writeStringToFile(file, stringBuffer.toString(), true);
@@ -277,16 +283,15 @@ public class Main {
 //		Subject subject = ProjectSelector.select("math", 4);
 		for(Subject subject : allSubjects) {
 			try {
-//				if (subject.getId() < 5) continue;
-//				File file = new File(subject.getCoverageInfoPath() + "/Barinel_coverage.csv");
-//				if (file.exists()) continue;
+//				File file = new File(subject.getCoverageInfoPath() + "/predicates_backup.txt");
+//				if (!file.exists()) continue;
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
 				String begin = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin);
 
 				Constant.PROJECT_HOME = "/home/lillian/work/df";
 
-				proceed(subject, true, false);
+				proceed(subject, false, false);
 
 				String end = simpleDateFormat.format(new Date());
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);

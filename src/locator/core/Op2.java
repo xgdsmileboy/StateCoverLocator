@@ -23,7 +23,8 @@ public class Op2 extends PredicateCoverageAlgorithm {
 	 */
 	@Override
 	public double getScore(int fcover, int pcover, int totalFailed,
-			int totalPassed) {
+			int totalPassed, int fcoverObserved, int pcoverObserved) {
+		if (pcover + fcover == 0) return 0;
 		return fcover - (pcover * 1.0 / (totalPassed + 1));
 	}
 

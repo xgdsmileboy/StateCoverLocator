@@ -173,12 +173,24 @@ public class GenStatement {
 		thenBlock.statements().add(invokeStatement);
 		ifStatement.setThenStatement(thenBlock);
 		
+		// auxiliary.Dumper.observe(message);
+		MethodInvocation methodInvocation2 = ast.newMethodInvocation();
+		methodInvocation2.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation2.setName(ast.newSimpleName("observe"));
+				
+		StringLiteral stringLiteral2 = ast.newStringLiteral();
+		stringLiteral2.setLiteralValue(message);
+		methodInvocation2.arguments().add(stringLiteral2);
+		ExpressionStatement invokeStatement2 = ast.newExpressionStatement(methodInvocation2);
+		
 		// try{
+		//    auxiliary.Dumper.observe(message);
 		//    if(condition){
 		//        auxiliary.Dumper.write(message);
 		//    }
 		// }
 		Block tryBody = ast.newBlock();
+		tryBody.statements().add(invokeStatement2);
 		tryBody.statements().add(ifStatement);
 		TryStatement tryStatement = ast.newTryStatement();
 		tryStatement.setBody(tryBody);

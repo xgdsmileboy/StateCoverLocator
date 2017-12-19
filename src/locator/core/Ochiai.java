@@ -23,7 +23,8 @@ public class Ochiai extends PredicateCoverageAlgorithm {
 	 */
 	@Override
 	public double getScore(int fcover, int pcover, int totalFailed,
-			int totalPassed) {
+			int totalPassed, int fcoverObserved, int pcoverObserved) {
+		if (pcover + fcover == 0) return 0;
 		return fcover * 1.0 / Math.sqrt(totalFailed * (fcover + pcover));
 	}
 

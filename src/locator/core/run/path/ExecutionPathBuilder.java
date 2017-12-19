@@ -56,24 +56,25 @@ public class ExecutionPathBuilder {
 		try {
 			while ((line = bReader.readLine()) != null) {
 				String[] lineInfo = line.split("\t");
-				if (lineInfo.length < 3) {
+				if (lineInfo.length < 5) {
 					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
 					System.exit(0);
 				}
 				String lineNum = lineInfo[0];
 				int failNum = Integer.parseInt(lineInfo[1]);
 				int succNum = Integer.parseInt(lineInfo[2]);
+				int failObservedNum = Integer.parseInt(lineInfo[3]);
+				int succObservedNum = Integer.parseInt(lineInfo[4]);
 	
 				CoverInfo coverInfo = coverage.get(lineNum);
-				if(coverInfo != null){
-					coverInfo.passedAdd(succNum);
-					coverInfo.failedAdd(failNum);
-				} else {
+				if(coverInfo == null){
 					coverInfo = new CoverInfo();
-					coverInfo.passedAdd(succNum);
-					coverInfo.failedAdd(failNum);
 					coverage.put(lineNum, coverInfo);
 				}
+				coverInfo.passedAdd(succNum);
+				coverInfo.failedAdd(failNum);
+				coverInfo.failedObservedAdd(failObservedNum);
+				coverInfo.passedObservedAdd(succObservedNum);
 			}
 			bReader.close();
 		} catch (IOException e) {
