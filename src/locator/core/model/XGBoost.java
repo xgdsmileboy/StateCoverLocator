@@ -32,9 +32,9 @@ public class XGBoost extends Model {
 
 	@Override
 	public void trainModel(Subject subject) {
-		File varModel = new File(_modelPath + subject.getName() + "_" + subject.getId() + "_" + Constant.TRAINING_MODEL
+		File varModel = new File(_modelPath + "/" + subject.getName() + "_" + subject.getId() + "_" + Constant.TRAINING_MODEL
 				+ ".var_model.pkl");
-		File exprModel = new File(_modelPath + subject.getName() + "_" + subject.getId() + "_" + Constant.TRAINING_MODEL
+		File exprModel = new File(_modelPath + "/" + subject.getName() + "_" + subject.getId() + "_" + Constant.TRAINING_MODEL
 				+ ".expr_model.pkl");
 		// check existing models
 		if (varModel.exists() && exprModel.exists()) {

@@ -32,8 +32,8 @@ public class DNN extends Model {
 
 	@Override
 	public void trainModel(Subject subject) {
-		File varModel = new File(_modelPath + subject.getName() + "_" + subject.getId() + "/var");
-		File exprModel = new File(_modelPath + subject.getName() + "_" + subject.getId() + "/expr");
+		File varModel = new File(_modelPath + "/" + subject.getName() + "_" + subject.getId() + "/var");
+		File exprModel = new File(_modelPath + "/" + subject.getName() + "_" + subject.getId() + "/expr");
 		if (varModel.exists() && exprModel.exists()) {
 			LevelLogger.info("Models are already exist and will be used directly !");
 			return;
