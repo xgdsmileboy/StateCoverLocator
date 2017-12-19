@@ -1,32 +1,38 @@
-from XGBoost_expr.main import *
-from XGBoost_var.main import *
-from clustering.cluster import *
-from Utils.config import *
-
-import os
 import sys
 
+from XGBoost_expr.ExprWithPCA import *
+from XGBoost_var.VarWithPCA import *
+import time
+
+
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 3:
         print("Wrong argument number!")
         sys.exit(1)
+
     config = Configure(
         sys.argv[1],
         sys.argv[2],
-        1,
+        0,
         'model/',
         'input/',
         'output/',
-        10,
-        sys.argv[3]
+        10
     )
-    cluster = Cluster(config)
-    str_encoder, var_column, expr_column  = cluster.cluster_string()
 
-    xgvar = XGVar(config)
-    var_feature_num = var_column - 4
-    xgvar.train_var(str_encoder, var_feature_num)
+    logging.info('######################## BEGIN TRAINING FOR ' + config.prognm_and_id +' ########################')
+    all_time_start = time.time()
 
-    xgexpr = XGExpr(config)
-    expr_feature_num = expr_column - 4
-    xgexpr.train_expr(str_encoder, expr_feature_num)
+    #train position 0 var
+    var_trainer = VarWithPCA(config)
+    var_trainer.train(is_v0=True)
+
+    # train all position var
+    var_trainer.train(is_v0=False)
+
+    # train expr
+    expr_trainer = ExprWithPCA(config)
+    expr_trainer.train()
+    
+    time_end = time.time()
+    logging.info('######################## TOTAL TRAINING TIME ' + str(float(time_end - all_time_start)/60) + ' m ########################\n')

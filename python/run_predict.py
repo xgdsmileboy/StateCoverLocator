@@ -1,15 +1,11 @@
-from Utils.join_prob import *
-from XGBoost_expr.main import *
-from XGBoost_var.main import *
-from clustering.cluster import *
-from Utils.config import *
-import os
 import sys
 
+from XGBoost_expr.ExprWithPCA import *
+from XGBoost_var.VarWithPCA import *
+
+
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
-        print("Wrong argument number!")
-        sys.exit(1)
+
     config = Configure(
         sys.argv[1],
         sys.argv[2],
@@ -17,17 +13,29 @@ if __name__ == '__main__':
         'model/',
         'input/',
         'output/',
-        200,     #TOP: 10, 100, sys.maxint
-        sys.argv[3]
+        sys.maxint     #TOP: 10, 100, sys.maxint
     )
 
-    cluster = Cluster(config)
-    str_encoder, kmeans_model = cluster.get_cluster()
+    misson_type = sys.argv[3]
+    assert misson_type == 'expr' or misson_type == 'var' or misson_type == 'v0'
 
-    xgvar = XGVar(config)
-    xgvar.run_predict_vars(str_encoder, kmeans_model)
+    start = time.time()
+    if misson_type == 'expr':
+        if len(sys.argv) == 5:
+            config.__gen_expr_top__ = int(sys.argv[4])
 
-    xgexpr = XGExpr(config)
-    xgexpr.run_gen_exprs(str_encoder, kmeans_model)
+        expr_predictor = ExprWithPCA(config)
+        expr_predictor.predict()
+        end = time.time()
+        print 'EXPR PRED TIME: ', (end - start)
 
-    join_prob(config)
+    elif misson_type == 'v0':
+        var_predictor = VarWithPCA(config)
+        var_predictor.predict(True)
+        end = time.time()
+        print 'V0 PRED TIME: ', (end - start)
+    else:
+        var_predictor = VarWithPCA(config)
+        var_predictor.predict(False)
+        end = time.time()
+        print 'ALL VAR PRED TIME: ', (end - start)
