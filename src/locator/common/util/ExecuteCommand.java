@@ -237,6 +237,11 @@ public class ExecuteCommand {
 //		executeAndOutputConsole(cmd);
 		executeAndOutputFile(cmd, Constant.STR_TMP_ML_LOG_FILE);
 	}
+	
+	public static void executeL2SPredict(Subject subject, String... predictFlags) throws IOException, InterruptedException {
+		String[] cmd = CmdFactory.createL2SCommand(subject, predictFlags);
+		executeAndOutputConsole(cmd);
+	}
 
 	public static List<String> executeCompile(String[] command) throws IOException, InterruptedException {
 		Process process = null;

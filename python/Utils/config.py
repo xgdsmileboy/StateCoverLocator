@@ -92,13 +92,19 @@ class Configure(object):
         # python/model/math_1.var_model.pkl
         if not os.path.exists(self.__model_path__):
             os.makedirs(self.__model_path__)
-        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '_' + self.__model_type__ + '.var_model.pkl'
+        if self.__model_type__ == 'l2s':
+            return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.var_model.pkl'
+        else:
+            return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '_' + self.__model_type__ + '.var_model.pkl'
 
     def get_expr_model_file(self):
         # python/model/math_1.expr_model.pkl
         if not os.path.exists(self.__model_path__):
             os.makedirs(self.__model_path__)
-        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '_' + self.__model_type__ + '.expr_model.pkl'
+        if self.__model_type__ == 'l2s':
+            return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.expr_model.pkl'
+        else:
+            return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '_' + self.__model_type__ + '.expr_model.pkl'
 
     def get_var_cluster_model_file(self):
         # python/model/math_1.var_cluster_model.pkl

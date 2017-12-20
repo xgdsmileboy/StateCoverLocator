@@ -32,7 +32,7 @@ if __name__ == '__main__':
         start = time.time()
         if misson_type == 'expr':
             if len(sys.argv) == 6:
-                config.__gen_expr_top__ = int(sys.argv[6])
+                config.__gen_expr_top__ = int(sys.argv[5])
 
             expr_predictor = ExprWithPCA(config)
             expr_predictor.predict()
