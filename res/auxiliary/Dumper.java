@@ -36,6 +36,9 @@ public class Dumper {
 	public static void reset() {
 		alreadyRun = new HashSet();
 		alreadyObserved = new HashSet();
+		statements = new ArrayList();
+		coverage = new ArrayList();
+		read();
 	}
 
 	public static void resetTrueOrFalse() {
@@ -44,12 +47,9 @@ public class Dumper {
 		readTrueOrFalse();
 	}
 	
-	
 	public static boolean observe(String stmt) {
 		if (!alreadyObserved.contains(stmt)) {
 			alreadyObserved.add(stmt);
-
-			read();
 
 			int index = statements.indexOf(stmt);
 			if (index >= 0) {
@@ -61,44 +61,6 @@ public class Dumper {
 				record.incObserved(SUCC_TEST);
 				coverage.add(record);
 			}
-
-			File file = new File(OUT_FILE_NAME);
-			if (!file.exists()) {
-				try {
-					file.getParentFile().mkdirs();
-					file.createNewFile();
-				} catch (IOException e) {
-					return false;
-				}
-			}
-			BufferedWriter bufferedWriter = null;
-			try {
-				bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), "UTF-8"));
-			} catch (IOException e) {
-				return false;
-			}
-			try {
-
-				for (int i = 0; i < statements.size(); i++) {
-					Record record = (Record) coverage.get(i);
-					String content = (String) statements.get(i) + "\t" + record.getValue();
-					bufferedWriter.write(content);
-					bufferedWriter.write("\n");
-				}
-				bufferedWriter.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				return false;
-			} finally {
-				if (bufferedWriter != null) {
-					try {
-						bufferedWriter.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
 		}
 		return true;
 	}
@@ -107,8 +69,6 @@ public class Dumper {
 		if (!alreadyRun.contains(stmt)) {
 			alreadyRun.add(stmt);
 
-			read();
-
 			int index = statements.indexOf(stmt);
 			if (index >= 0) {
 				Record record = (Record) coverage.get(index);
@@ -119,44 +79,29 @@ public class Dumper {
 				record.inc(SUCC_TEST);
 				coverage.add(record);
 			}
+		}
+		return true;
+	}
+	
+	public static boolean slowWrite(String stmt) {
+		if (!alreadyRun.contains(stmt)) {
+			alreadyRun.add(stmt);
 
-			File file = new File(OUT_FILE_NAME);
-			if (!file.exists()) {
-				try {
-					file.getParentFile().mkdirs();
-					file.createNewFile();
-				} catch (IOException e) {
-					return false;
-				}
+			statements = new ArrayList();
+			coverage = new ArrayList();
+			read();
+			
+			int index = statements.indexOf(stmt);
+			if (index >= 0) {
+				Record record = (Record) coverage.get(index);
+				record.inc(SUCC_TEST);
+			} else {
+				statements.add(stmt);
+				Record record = new Record(0, 0, 0, 0);
+				record.inc(SUCC_TEST);
+				coverage.add(record);
 			}
-			BufferedWriter bufferedWriter = null;
-			try {
-				bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), "UTF-8"));
-			} catch (IOException e) {
-				return false;
-			}
-			try {
-
-				for (int i = 0; i < statements.size(); i++) {
-					Record record = (Record) coverage.get(i);
-					String content = (String) statements.get(i) + "\t" + record.getValue();
-					bufferedWriter.write(content);
-					bufferedWriter.write("\n");
-				}
-				bufferedWriter.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				return false;
-			} finally {
-				if (bufferedWriter != null) {
-					try {
-						bufferedWriter.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-
+			dump();
 		}
 		return true;
 	}
@@ -195,7 +140,7 @@ public class Dumper {
 		return true;
 	}
 	
-	public static boolean dump() {
+	public static boolean dumpTrueOrFalse() {
 		File file = new File(OUT_FILE_NAME);
 		if (!file.exists()) {
 			try {
@@ -221,6 +166,46 @@ public class Dumper {
 					bufferedWriter.write(r.getValue());
 					bufferedWriter.write("\n");
 				}
+			}
+			bufferedWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (bufferedWriter != null) {
+				try {
+					bufferedWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return true;
+	}
+	
+	public static boolean dump() {
+		File file = new File(OUT_FILE_NAME);
+		if (!file.exists()) {
+			try {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			} catch (IOException e) {
+				return false;
+			}
+		}
+		BufferedWriter bufferedWriter = null;
+		try {
+			bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), "UTF-8"));
+		} catch (IOException e) {
+			return false;
+		}
+		try {
+
+			for (int i = 0; i < statements.size(); i++) {
+				Record record = (Record) coverage.get(i);
+				String content = (String) statements.get(i) + "\t" + record.getValue();
+				bufferedWriter.write(content);
+				bufferedWriter.write("\n");
 			}
 			bufferedWriter.close();
 		} catch (IOException e) {
@@ -287,8 +272,6 @@ public class Dumper {
 	}
 
 	private static boolean read() {
-		statements = new ArrayList();
-		coverage = new ArrayList();
 		File file = new File(OUT_FILE_NAME);
 		if (!file.exists()) {
 			try {

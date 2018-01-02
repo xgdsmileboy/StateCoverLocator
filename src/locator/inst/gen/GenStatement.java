@@ -52,7 +52,7 @@ public class GenStatement {
 		// auxiliary.Dumper.write(expression);
 		MethodInvocation methodInvocation = ast.newMethodInvocation();
 		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
-		methodInvocation.setName(ast.newSimpleName("write"));
+		methodInvocation.setName(ast.newSimpleName("slowWrite"));
 		methodInvocation.arguments().add(expression);
 		ExpressionStatement expressionStatement = ast.newExpressionStatement(methodInvocation);
 		return expressionStatement;
@@ -142,6 +142,15 @@ public class GenStatement {
 		return block;
 	}
 	
+	public static Block genInstrumentStatementForResultDumpTrueOrFalse() {
+		Block block = ast.newBlock();
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation.setName(ast.newSimpleName("dumpTrueOrFalse"));
+		ExpressionStatement dumpStatement = ast.newExpressionStatement(methodInvocation);
+		block.statements().add(dumpStatement);
+		return block;
+	}
 	
 	public static TryStatement newGenPredicateStatement(String condition, String message) {
 		Expression conditionExp = null;

@@ -555,9 +555,6 @@ public class Coverage {
             }
             Integer methodID = Integer.valueOf(stmtInfo[0]);
             int line = Integer.parseInt(stmtInfo[1]);
-            if (line == 2317) {
-                System.out.print("exist");
-            }
             String methodString = Identifier.getMessage(methodID);
             LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
             String[] methodInfo = methodString.split("#");
@@ -593,7 +590,6 @@ public class Coverage {
         // if predicted conditions are not empty for right variables,
         // instrument each condition one by one and compute coverage
         // information for each predicate
-        System.out.println(conditionsForRightVars.size());
         JCompiler compiler = JCompiler.getInstance();
         for (Map.Entry<String, Map<String, List<Pair<String, String>>>> entry : conditionsForRightVars.entrySet()) {
             final LineInfo info = lineInfoMapping.get(entry.getKey());
