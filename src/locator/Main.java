@@ -279,7 +279,12 @@ public class Main {
 //		recordSubjects(allSubjects);
 //		for(int i = 53; i < allSubjects.size(); i++) {
 //			try {
-		List<Subject> allSubjects = ProjectSelector.select("math");
+		List<Subject> allSubjects = null;
+		if(args.length > 0) {
+			allSubjects = ProjectSelector.select(args[0]);
+		} else {
+			allSubjects = ProjectSelector.select("math");
+		}
 //		Subject subject = ProjectSelector.select("math", 4);
 		for(Subject subject : allSubjects) {
 			try {
