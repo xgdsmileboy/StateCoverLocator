@@ -25,7 +25,6 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.Pair;
-import locator.inst.visitor.feature.SideEffectAnalysis;
 
 public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 	private int _line = -1;
@@ -81,9 +80,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 			Expression expr = node.getExpression();
 			if (expr != null) {
 				String condition = expr.toString();
-				if (!SideEffectAnalysis.hasSideEffect(condition)) {
-					_predicates.addAll(getPredicateForReturns(condition));
-				}
+				_predicates.addAll(getPredicateForReturns(condition));
 			}
 		}
 		return true;
@@ -94,9 +91,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			if (!SideEffectAnalysis.hasSideEffect(condition)) {
-				_predicates.addAll(getPredicateForConditions(condition));
-			}
+			_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -114,9 +109,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			if (!SideEffectAnalysis.hasSideEffect(condition)) {
-				_predicates.addAll(getPredicateForConditions(condition));
-			}
+			_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -126,9 +119,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			if (!SideEffectAnalysis.hasSideEffect(condition)) {
-				_predicates.addAll(getPredicateForConditions(condition));
-			}
+			_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -138,9 +129,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			if (!SideEffectAnalysis.hasSideEffect(condition)) {
-				_predicates.addAll(getPredicateForConditions(condition));
-			}
+			_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -150,9 +139,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			if (!SideEffectAnalysis.hasSideEffect(condition)) {
-				_predicates.addAll(getPredicateForConditions(condition));
-			}
+			_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
