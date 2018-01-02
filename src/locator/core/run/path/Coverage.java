@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -43,7 +42,6 @@ import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.StatisticalDebuggingPredicatesVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
-import sun.util.logging.resources.logging_es;
 
 /**
  * @author Jiajun

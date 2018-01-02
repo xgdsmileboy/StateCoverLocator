@@ -26,7 +26,7 @@ public class Dumper {
 	private static List coverage = new ArrayList();
 	private static Set alreadyRun = new HashSet();
 	private static Set alreadyObserved = new HashSet();
-	private static List<ArrayList> coverages = new ArrayList<ArrayList>();
+	private static List coverages = new ArrayList();
 
 	private static final long MAX_OUTPUT_FILE_SIZE = 5; // max file size in GB
 //	private static final String OUT_AND_LIB_PATH = "/home/jiajun/code/space/StateCoverLocator";
@@ -43,7 +43,7 @@ public class Dumper {
 
 	public static void resetTrueOrFalse() {
 		statements = new ArrayList();
-		coverages = new ArrayList<ArrayList>();
+		coverages = new ArrayList();
 		readTrueOrFalse();
 	}
 	
@@ -120,7 +120,7 @@ public class Dumper {
 			int index = statements.indexOf(stmt);
 			ArrayList records = null;
 			if (index >= 0) {
-				records = coverages.get(index);
+				records = (ArrayList)coverages.get(index);
 			} else {
 				statements.add(stmt);
 				records = new ArrayList();
@@ -133,7 +133,7 @@ public class Dumper {
 			}
 		} else {
 			int index = statements.indexOf(stmt);
-			ArrayList records = coverages.get(index);
+			ArrayList records = (ArrayList) coverages.get(index);
 			PredicateRecord record = (PredicateRecord) records.get(records.size() - 1);
 			record.inc(isTrue);
 		}
@@ -161,8 +161,9 @@ public class Dumper {
 			for (int i = 0; i < statements.size(); i++) {
 				bufferedWriter.write((String) statements.get(i));
 				bufferedWriter.write("\n");
-				List<PredicateRecord> others = (List<PredicateRecord>) coverages.get(i);
-				for(PredicateRecord r : others) {
+				List others = (List) coverages.get(i);
+				for(int j = 0; j < others.size(); j++) {
+					PredicateRecord r = (PredicateRecord) others.get(j);
 					bufferedWriter.write(r.getValue());
 					bufferedWriter.write("\n");
 				}
