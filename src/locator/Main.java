@@ -281,10 +281,27 @@ public class Main {
 //			try {
 		List<Subject> allSubjects = null;
 		if(args.length > 0) {
-			allSubjects = ProjectSelector.select(args[0]);
+			if(args.length == 1) {
+				allSubjects = ProjectSelector.select(args[0]);
+			} else {
+				String[] idStrings = args[1].split(",");
+				List<Integer> ids = new ArrayList<>();
+				for(String string : idStrings) {
+					ids.add(Integer.parseInt(string));
+				}
+				allSubjects = ProjectSelector.select(args[0], ids);
+			}
 		} else {
 			allSubjects = ProjectSelector.select("math");
 		}
+		//for debug
+		System.out.println("---------------------------------\n");
+		System.out.print(allSubjects.get(0).getName() + " : ");
+		for(Subject subject : allSubjects) {
+			System.out.print(subject.getId() + ", ");
+		}
+		System.out.println("\n---------------------------------\n");
+		
 //		Subject subject = ProjectSelector.select("math", 4);
 		for(Subject subject : allSubjects) {
 			try {

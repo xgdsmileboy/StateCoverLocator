@@ -30,16 +30,25 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
+import jdk7.wrapper.JCompiler;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
-import soot.coffi.constant_element_value;
-import soot.util.Cons;
 
 public class Configure {
 
 	private final static String __name__ = "@Configure ";
+	private static String auxiliaryString;
 
+	public static boolean compileAuxiliaryJava(Subject subject) {
+		JCompiler compiler = JCompiler.getInstance();
+		File file = new File(subject.getHome() + subject.getSbin());
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		return compiler.compile(subject, "auxiliary/Dumper.java", auxiliaryString);
+	}
+	
 	/**
 	 * read subject configure information from configure file
 	 * 
@@ -135,8 +144,10 @@ public class Configure {
 				e.printStackTrace();
 			}
 		}
-
+		auxiliaryString = formatSource;
 		JavaFile.writeStringToFile(targetFile, formatSource);
+		// fix bug for not compiling
+		compileAuxiliaryJava(subject);
 	}
 }
 
