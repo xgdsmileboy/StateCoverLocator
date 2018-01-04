@@ -221,6 +221,21 @@ public class NewExprFilter {
 				if (Character.isUpperCase(expr.charAt(0))) {
 					name = expr + "." + name;
 				}
+				//avoid compilation error
+			} else if (node.getName().getFullyQualifiedName().equals("equals") && isPrimitiveType(_type)) {
+				for (Object object : node.arguments()) {
+					if (_varName.equals(object.toString())) {
+						_legal = false;
+						return false;
+					}
+				}
+				// avoid compilation error
+			} else if (node.getExpression() != null && node.getExpression().toString().equals("Double")
+					&& node.getName().getFullyQualifiedName().equals("isNaN")) {
+				if (!_type.equals("double")) {
+					_legal = false;
+					return false;
+				}
 			}
 			if (!_legalMethods.contains(name)) {
 				_legal = false;
