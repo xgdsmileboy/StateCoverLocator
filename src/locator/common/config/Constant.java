@@ -131,6 +131,12 @@ public class Constant {
 	 * out/data
 	 */
 	public final static String STR_ALL_DATA_COLLECT_PATH = STR_OUT_PATH + "/data";
+	/**
+	 * out/error
+	 */
+	public final static String STR_ERROR_BACK_UP = STR_OUT_PATH + "/error";
+	
+	public final static String TIME_LOG = STR_OUT_PATH + "/time.log";
 
 	/**
 	 * Machine learning home path TODO : need to refactor

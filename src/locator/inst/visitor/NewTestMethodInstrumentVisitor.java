@@ -117,33 +117,32 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 			
 
 			body.statements().clear();
+			Statement insert = null;
 			if (_useSober) {
-				Statement insert = GenStatement.genInstrumentStatementForTestWithResetTrueOrFalse(succTest);
-				Block tryBody = ast.newBlock();
-				if (thisOrSuperStatement != null) {
-					tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), thisOrSuperStatement));
-				}
-				tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), insert));
-				for (ASTNode statement : backupStatement) {
-					tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), statement));
-				}
-				TryStatement tryStatement = ast.newTryStatement();
-				tryStatement.setBody(tryBody);
-				Statement dumpStatement= GenStatement.genInstrumentStatementForResultDump();
-				Block dumpBlock = ast.newBlock();
-				dumpBlock.statements().add(ASTNode.copySubtree(dumpBlock.getAST(), dumpStatement));
-				tryStatement.setFinally(dumpBlock);
-				body.statements().add(ASTNode.copySubtree(body.getAST(), tryStatement));
+				insert = GenStatement.genInstrumentStatementForTestWithResetTrueOrFalse(succTest);
 			} else {
-				Statement insert = GenStatement.genInstrumentStatementForTestWithReset(succTest);
-				if (thisOrSuperStatement != null) {
-					body.statements().add(ASTNode.copySubtree(body.getAST(), thisOrSuperStatement));
-				}
-				body.statements().add(ASTNode.copySubtree(body.getAST(), insert));
-				for (ASTNode statement : backupStatement) {
-					body.statements().add(ASTNode.copySubtree(body.getAST(), statement));
-				}
+				insert = GenStatement.genInstrumentStatementForTestWithReset(succTest);
 			}
+			Block tryBody = ast.newBlock();
+			if (thisOrSuperStatement != null) {
+				tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), thisOrSuperStatement));
+			}
+			tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), insert));
+			for (ASTNode statement : backupStatement) {
+				tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), statement));
+			}
+			TryStatement tryStatement = ast.newTryStatement();
+			tryStatement.setBody(tryBody);
+			Statement dumpStatement = null;
+			if (_useSober) {
+				dumpStatement = GenStatement.genInstrumentStatementForResultDumpTrueOrFalse();
+			} else {
+				dumpStatement = GenStatement.genInstrumentStatementForResultDump();
+			}
+			Block dumpBlock = ast.newBlock();
+			dumpBlock.statements().add(ASTNode.copySubtree(dumpBlock.getAST(), dumpStatement));
+			tryStatement.setFinally(dumpBlock);
+			body.statements().add(ASTNode.copySubtree(body.getAST(), tryStatement));
 		}
 
 		return true;

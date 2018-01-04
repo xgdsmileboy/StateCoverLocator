@@ -117,7 +117,7 @@ public class Main {
 		}
 	}
 
-	private static void proceed(Subject subject, boolean useStatisticalDebugging, boolean useSober) {
+	private static boolean proceed(Subject subject, boolean useStatisticalDebugging, boolean useSober) {
 		
 		LevelLogger.info("------------------ Begin : " + subject.getName() + "_" + subject.getId() + " ----------------");
 		
@@ -179,7 +179,7 @@ public class Main {
 				failedTestsAndCoveredMethods.getFirst(), useStatisticalDebugging, useSober);
 
 		if(predicateCoverage == null && !useSober){
-			return;
+			return false;
 		}
 		
 		if (!useSober) {
@@ -217,6 +217,7 @@ public class Main {
 //		LevelLogger.info("step 6: output coverage information to file : coverage.csv");
 //		printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_"
 //				+ subject.getId() + "/coverage.csv");
+		return true;
 	}
 
 	private static void backupSource(Subject subject){
@@ -308,13 +309,21 @@ public class Main {
 //				File file = new File(subject.getCoverageInfoPath() + "/predicates_backup.txt");
 //				if (!file.exists()) continue;
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
-				String begin = simpleDateFormat.format(new Date());
+				Date startTime = new Date();
+				String begin = simpleDateFormat.format(startTime);
 				LevelLogger.info("BEGIN : " + begin);
 
-				proceed(subject, Constant.USE_STATISTICAL_DEBUGGING, Constant.USE_SOBER);
+				String subjectInfo = subject.getName() + "_" + subject.getId();
+				if (!proceed(subject, Constant.USE_STATISTICAL_DEBUGGING, Constant.USE_SOBER)) {
+					String d4jOutput = JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE);
+					JavaFile.writeStringToFile(Constant.STR_ERROR_BACK_UP + "/" + subjectInfo + ".d4j.out", d4jOutput);
+				}
 
-				String end = simpleDateFormat.format(new Date());
+				Date endTime = new Date();
+				String end = simpleDateFormat.format(endTime);
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);
+				JavaFile.writeStringToFile(Constant.TIME_LOG, subjectInfo + "\t"
+						+ Long.toString(endTime.getTime() - startTime.getTime()) + "\t" + startTime + "\n", true);
 			} catch (Exception e) {
 				e.printStackTrace();
 //				JavaFile.writeStringToFile(Constant.HOME + "/logs/" +
