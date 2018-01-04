@@ -21,6 +21,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import jdk7.wrapper.JCompiler;
+import locator.common.config.Configure;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.CoverInfo;
@@ -318,6 +319,7 @@ public class Coverage {
         ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getSbin());
         ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getTbin());
         ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+        Configure.compileAuxiliaryJava(subject);
         // if the instrumented project builds success, and the test
         // result is the same with original project
         if (!Runner.testSuite(subject)) {
