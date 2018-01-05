@@ -67,6 +67,9 @@ public class Constant {
 	public final static int FEATURE_FILE_NAME_INDEX = 3;
 	public final static int FEATURE_LINE_INDEX = 1;
 	
+	// variables collecting flag
+	public static boolean PREDICT_LEFT_HAND_SIDE_VARIABLE = true;
+	
 	// update predicate
 	public static boolean RECOVER_PREDICATE_FROM_FILE = true;
 	public static boolean USE_STATISTICAL_DEBUGGING = true;
@@ -242,6 +245,7 @@ public class Constant {
 			Constant.TRAINING_MODEL = prop.getProperty("TRAINING.MODEL").trim();
 			Constant.USE_SOBER =  Boolean.parseBoolean(prop.getProperty("USE.SOBER"));
 			Constant.USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
+			Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE = Boolean.parseBoolean(prop.getProperty("PREDICT.LEFT.VAR"));
 			
 			in.close();
 		} catch (IOException e) {

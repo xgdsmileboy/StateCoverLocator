@@ -7,12 +7,10 @@
 
 package locator.inst.visitor.feature;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
 
@@ -22,7 +20,9 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.BreakStatement;
+import org.eclipse.jdt.core.dom.CharacterLiteral;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
 import org.eclipse.jdt.core.dom.ContinueStatement;
@@ -38,11 +38,14 @@ import org.eclipse.jdt.core.dom.LabeledStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.SwitchStatement;
@@ -50,19 +53,17 @@ import org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.TypeDeclarationStatement;
+import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.core.run.path.LineInfo;
-import soot.coffi.constant_element_value;
-import soot.coffi.field_info;
 
 /**
  * @author Jiajun
@@ -80,7 +81,7 @@ public class FeatureExtraction {
 	public static Set<String> extractAllFeatures(String srcPath, String relJavaPath, int line, LineInfo info,
 			List<String> varFeatures, List<String> exprFeatures) {
 		Set<String> keys = new HashSet<String>();
-		if(srcPath == null || relJavaPath == null){
+		if (srcPath == null || relJavaPath == null) {
 			return keys;
 		}
 		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
@@ -89,7 +90,15 @@ public class FeatureExtraction {
 		CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSource(
 				JavaFile.readFileToString(srcPath + Constant.PATH_SEPARATOR + relJavaPath),
 				ASTParser.K_COMPILATION_UNIT);
-		VariableCollector variableCollector = new VariableCollector(line);
+		  
+		VarFilterVisitor variableCollector = null;
+		if(Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE) {
+			variableCollector = new NewVariableCollector(line);
+		} else {
+			variableCollector = new VariableCollector(line);
+		}
+		// change variable collector to left hand side 2018-1-5
+		
 		cu.accept(variableCollector);
 		Set<String> rightVars = variableCollector.getObservedVariables();
 
@@ -118,20 +127,83 @@ public class FeatureExtraction {
 		return keys;
 	}
 
-	private static class VariableCollector extends ASTVisitor {
+	private abstract static class VarFilterVisitor extends ASTVisitor {
+		public abstract Set<String> getObservedVariables();
+	}
+	
+	/**
+	 * collect all left hand side variables for assignment
+	 * 
+	 * @author Jiajun
+	 * @date Jan 5, 2018
+	 */
+	private static class NewVariableCollector extends VarFilterVisitor {
+
+		private int _line = -1;
+		private CompilationUnit _cu = null;
+		private Set<String> _leftVar = null;
+
+		public NewVariableCollector(int line) {
+			_line = line;
+			_leftVar = new HashSet<>();
+		}
+
+		public boolean visit(CompilationUnit unit) {
+			_cu = unit;
+			return true;
+		}
+
+		public Set<String> getObservedVariables() {
+			return _leftVar;
+		}
+
+		public boolean visit(Assignment assignment) {
+			int start = _cu.getLineNumber(assignment.getStartPosition());
+			int end = _cu.getLineNumber(assignment.getStartPosition() + assignment.getLength());
+			if(start <= _line && _line <= end) {
+				_leftVar.add(assignment.getLeftHandSide().toString());
+			}
+			return true;
+		}
+
+		public boolean visit(VariableDeclarationStatement statement) {
+			int start = _cu.getLineNumber(statement.getStartPosition());
+			int end = _cu.getLineNumber(statement.getStartPosition() + statement.getLength());
+			if(start <= _line && _line <= end) {
+				for(Object object : statement.fragments()) {
+					VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
+					Expression initializer = vdf.getInitializer();
+					if(initializer != null) {
+						if (initializer instanceof NumberLiteral || initializer instanceof NullLiteral
+								|| initializer instanceof CharacterLiteral || initializer instanceof TypeLiteral
+								|| initializer instanceof StringLiteral || initializer instanceof BooleanLiteral) {
+							continue;
+						} else {
+							_leftVar.add(vdf.getName().getFullyQualifiedName());
+						}
+					}
+				}
+			}
+			return true;
+		}
+	}
+
+	private static class VariableCollector extends VarFilterVisitor {
 
 		private int _line = -1;
 		private int _blockID = -1;
 		private CompilationUnit _cu = null;
 		private String _leftVar = null;
 		private Set<String> _rightVars = null;
-		// <varName, {<blockID, lineNum>}> 
+		// <varName, {<blockID, lineNum>}>
 		private Map<String, Set<Pair<Integer, Integer>>> _varAssign = null;
-		// <varName, {<blockID, lineNum>}> same variable can be defined in different lines of different blocks
+		// <varName, {<blockID, lineNum>}> same variable can be defined in
+		// different lines of different blocks
 		private Map<String, Set<Pair<Integer, Integer>>> _varDef = null;
 		// <blockID, parentBlockID>
 		private Map<Integer, Integer> _blockParent = null;
-		// <varName, {<blockID, lineNum>}> same variable can be first used in different lines of different blocks
+		// <varName, {<blockID, lineNum>}> same variable can be first used in
+		// different lines of different blocks
 		private Map<String, Set<Pair<Integer, Integer>>> _varUse = null;
 		private Stack<Integer> _blockStack = new Stack<>();
 
@@ -150,112 +222,124 @@ public class FeatureExtraction {
 			return true;
 		}
 
-		public Set<String> getObservedVariables(){
-//			for(Entry<String, Set<Pair<Integer, Integer>>> entry : _varDef.entrySet()){
-//				System.out.println("name : " + entry.getKey());
-//				for(Pair<Integer, Integer> entry_inner : entry.getValue()){
-//					System.out.println("def : " + entry_inner.getFirst() + " " + entry_inner.getSecond());
-//				}
-//			}
-//			
-//			for(Entry<String, Set<Pair<Integer, Integer>>> entry : _varAssign.entrySet()){
-//				System.out.println("name : " + entry.getKey());
-//				for(Pair<Integer, Integer> entry_inner : entry.getValue()){
-//					System.out.println("assign : " + entry_inner.getFirst() + " " + entry_inner.getSecond());
-//				}
-//			}
-//			
-//			for(Entry<String, Set<Pair<Integer, Integer>>> entry : _varUse.entrySet()){
-//				System.out.println("name : " + entry.getKey());
-//				for(Pair<Integer, Integer> entry_inner : entry.getValue()){
-//					System.out.println("use : " + entry_inner.getFirst() + " " + entry_inner.getSecond());
-//				}
-//			}
-			
+		public Set<String> getObservedVariables() {
+			// for(Entry<String, Set<Pair<Integer, Integer>>> entry :
+			// _varDef.entrySet()){
+			// System.out.println("name : " + entry.getKey());
+			// for(Pair<Integer, Integer> entry_inner : entry.getValue()){
+			// System.out.println("def : " + entry_inner.getFirst() + " " +
+			// entry_inner.getSecond());
+			// }
+			// }
+			//
+			// for(Entry<String, Set<Pair<Integer, Integer>>> entry :
+			// _varAssign.entrySet()){
+			// System.out.println("name : " + entry.getKey());
+			// for(Pair<Integer, Integer> entry_inner : entry.getValue()){
+			// System.out.println("assign : " + entry_inner.getFirst() + " " +
+			// entry_inner.getSecond());
+			// }
+			// }
+			//
+			// for(Entry<String, Set<Pair<Integer, Integer>>> entry :
+			// _varUse.entrySet()){
+			// System.out.println("name : " + entry.getKey());
+			// for(Pair<Integer, Integer> entry_inner : entry.getValue()){
+			// System.out.println("use : " + entry_inner.getFirst() + " " +
+			// entry_inner.getSecond());
+			// }
+			// }
+
 			Set<String> retVars = new HashSet<>();
-			for(String varName : _rightVars){
+			for (String varName : _rightVars) {
 				// find define place
 				Integer defBlock = 0;
 				Integer defLine = 0;
 				Set<Pair<Integer, Integer>> defs = _varDef.get(varName);
-				if(defs != null){
-					for(Pair<Integer, Integer> place : defs){
-						// scope of variable define place should contain variable use place
+				if (defs != null) {
+					for (Pair<Integer, Integer> place : defs) {
+						// scope of variable define place should contain
+						// variable use place
 						// to filter situations as follows:
-						// (1) if(){ int a; }  (2) for(){ int a; use(a);}, 
+						// (1) if(){ int a; } (2) for(){ int a; use(a);},
 						// define place should be second "a" but not first one;
-						if(isChildBlock(_blockID, place.getFirst())){
+						if (isChildBlock(_blockID, place.getFirst())) {
 							defBlock = place.getFirst();
 							defLine = place.getSecond();
 							break;
 						}
 					}
 				}
-				if(defLine == _line){
+				if (defLine == _line) {
 					continue;
 				}
-				// find last use place between define place and observe place in the same scope
+				// find last use place between define place and observe place in
+				// the same scope
 				Integer useLine = 0;
 				Set<Pair<Integer, Integer>> uses = _varUse.get(varName);
-				if(uses != null){
-					for(Pair<Integer, Integer> use : uses){
+				if (uses != null) {
+					for (Pair<Integer, Integer> use : uses) {
 						// only consider usages in parent scope,
-						// int a = 3; if(~) { c = a;}  use(a); 
-						// even though "a" is used in if block, we skip it since we cannot make sure it can be executed
-						if(isChildBlock(use.getFirst(), defBlock) && isChildBlock(_blockID, use.getFirst())){
-							if(use.getSecond() > useLine && use.getSecond() < _line){
+						// int a = 3; if(~) { c = a;} use(a);
+						// even though "a" is used in if block, we skip it since
+						// we cannot make sure it can be executed
+						if (isChildBlock(use.getFirst(), defBlock) && isChildBlock(_blockID, use.getFirst())) {
+							if (use.getSecond() > useLine && use.getSecond() < _line) {
 								useLine = use.getSecond();
 							}
 						}
 					}
 				}
 				// no use before current location
-				if(useLine == 0){
+				if (useLine == 0) {
 					retVars.add(varName);
 					continue;
 				}
-				// find if assignment exists between the last use and current location
+				// find if assignment exists between the last use and current
+				// location
 				Set<Pair<Integer, Integer>> assign = _varAssign.get(varName);
-				if(assign != null){
-					for(Pair<Integer, Integer> as : assign){
-						// all assignment between define and observe places are considered, 
-						// even it is in a inner block, since we do not know if it will be executed
+				if (assign != null) {
+					for (Pair<Integer, Integer> as : assign) {
+						// all assignment between define and observe places are
+						// considered,
+						// even it is in a inner block, since we do not know if
+						// it will be executed
 						Integer assignLine = as.getSecond();
-						if(useLine < assignLine && assignLine < _line){
+						if (useLine < assignLine && assignLine < _line) {
 							retVars.add(varName);
 							break;
 						}
 					}
 				} else {
-					if(useLine == 0){
+					if (useLine == 0) {
 						retVars.add(varName);
 					}
 				}
 			}
-			
+
 			return retVars;
 		}
-		
-		public boolean visit(MethodDeclaration node){
+
+		public boolean visit(MethodDeclaration node) {
 			int start = _cu.getLineNumber(node.getStartPosition());
 			int end = _cu.getLineNumber(node.getStartPosition() + node.getLength());
-			if(_line < start || end <= _line){
+			if (_line < start || end <= _line) {
 				return true;
 			}
 			process(node.getBody());
 			return false;
 		}
-		
+
 		public boolean process(ASTNode statement) {
-			if(statement == null){
+			if (statement == null) {
 				return true;
 			}
 			int start = _cu.getLineNumber(statement.getStartPosition());
 			Integer currentBlockID = 0;
-			if(!_blockStack.isEmpty()){
+			if (!_blockStack.isEmpty()) {
 				currentBlockID = _blockStack.peek();
 			}
-			if(statement instanceof Block){
+			if (statement instanceof Block) {
 				Block block = (Block) statement;
 				_blockParent.put(start, currentBlockID);
 				_blockStack.push(start);
@@ -283,31 +367,31 @@ public class FeatureExtraction {
 				int line = _cu.getLineNumber(enhancedForStatement.getExpression().getStartPosition());
 				parseName(enhancedForStatement.getExpression(), currentBlockID, line);
 				process(enhancedForStatement.getBody());
-			} else if (statement instanceof ExpressionStatement){
+			} else if (statement instanceof ExpressionStatement) {
 				parseName(statement, currentBlockID, start);
 			} else if (statement instanceof ForStatement) {
 				ForStatement forStatement = (ForStatement) statement;
-				if(forStatement.initializers() != null){
-					for(Object object : forStatement.initializers()){
+				if (forStatement.initializers() != null) {
+					for (Object object : forStatement.initializers()) {
 						ASTNode node = (ASTNode) object;
 						int line = _cu.getLineNumber(node.getStartPosition());
 						parseName(node, currentBlockID, line);
 					}
 				}
-				
-				if(forStatement.getExpression() != null){
+
+				if (forStatement.getExpression() != null) {
 					int line = _cu.getLineNumber(forStatement.getExpression().getStartPosition());
 					parseName(forStatement.getExpression(), currentBlockID, line);
 				}
-				
-				if(forStatement.updaters() != null){
-					for(Object object : forStatement.updaters()){
+
+				if (forStatement.updaters() != null) {
+					for (Object object : forStatement.updaters()) {
 						ASTNode node = (ASTNode) object;
 						int line = _cu.getLineNumber(node.getStartPosition());
 						parseName(node, currentBlockID, line);
 					}
 				}
-				
+
 				process(forStatement.getBody());
 			} else if (statement instanceof IfStatement) {
 				IfStatement ifStatement = (IfStatement) statement;
@@ -346,24 +430,24 @@ public class FeatureExtraction {
 			}
 			return true;
 		}
-	
-		private boolean isChildBlock(Integer child, Integer parent){
-			if(child.equals(parent) || parent == 0){
+
+		private boolean isChildBlock(Integer child, Integer parent) {
+			if (child.equals(parent) || parent == 0) {
 				return true;
 			}
 			Integer realParent = _blockParent.get(child);
-			while(realParent != 0){
-				if(realParent == parent){
+			while (realParent != 0) {
+				if (realParent == parent) {
 					return true;
 				}
 				realParent = _blockParent.get(realParent);
 			}
 			return false;
 		}
-		
-		private void addUse(String varName, int blockID, int line){
+
+		private void addUse(String varName, int blockID, int line) {
 			Set<Pair<Integer, Integer>> vars = _varUse.get(varName);
-			if(vars != null){
+			if (vars != null) {
 				Pair<Integer, Integer> use = new Pair<Integer, Integer>(blockID, line);
 				vars.add(use);
 			} else {
@@ -373,10 +457,10 @@ public class FeatureExtraction {
 				_varUse.put(varName, vars);
 			}
 		}
-		
-		private void addDef(String varName, int blockID, int line){
+
+		private void addDef(String varName, int blockID, int line) {
 			Set<Pair<Integer, Integer>> vars = _varDef.get(varName);
-			if(vars != null){
+			if (vars != null) {
 				Pair<Integer, Integer> def = new Pair<Integer, Integer>(blockID, line);
 				vars.add(def);
 			} else {
@@ -386,10 +470,10 @@ public class FeatureExtraction {
 				_varDef.put(varName, vars);
 			}
 		}
-		
-		private void addAssign(String varName, int blockID, int line){
+
+		private void addAssign(String varName, int blockID, int line) {
 			Set<Pair<Integer, Integer>> vars = _varAssign.get(varName);
-			if(vars != null){
+			if (vars != null) {
 				Pair<Integer, Integer> def = new Pair<Integer, Integer>(blockID, line);
 				vars.add(def);
 			} else {
@@ -399,28 +483,28 @@ public class FeatureExtraction {
 				_varAssign.put(varName, vars);
 			}
 		}
-		
+
 		private void parseName(ASTNode node, int blockID, int line) {
-			if(node == null){
+			if (node == null) {
 				return;
 			}
 			// System.out.println(node);
 			CollectSimpleName collectSimpleName = new CollectSimpleName();
 			node.accept(collectSimpleName);
 			Pair<Set<String>, Pair<String, Set<String>>> vars = collectSimpleName.getVariables();
-			String leftName = vars.getSecond().getFirst(); 
-			if(line == _line){
+			String leftName = vars.getSecond().getFirst();
+			if (line == _line) {
 				_blockID = blockID;
 				_leftVar = leftName;
 				_rightVars.addAll(vars.getSecond().getSecond());
 			}
-			if(leftName != null){
+			if (leftName != null) {
 				addAssign(leftName, blockID, line);
 			}
-			for(String varName : vars.getFirst()){
+			for (String varName : vars.getFirst()) {
 				addDef(varName, blockID, line);
 			}
-			for(String varName : vars.getSecond().getSecond()){
+			for (String varName : vars.getSecond().getSecond()) {
 				addUse(varName, blockID, line);
 			}
 		}
@@ -449,12 +533,12 @@ public class FeatureExtraction {
 
 			public boolean visit(SimpleName node) {
 				ASTNode parent = node.getParent();
-				if(parent instanceof SimpleType){
+				if (parent instanceof SimpleType) {
 					return true;
 				}
-				if(parent instanceof MethodInvocation){
+				if (parent instanceof MethodInvocation) {
 					MethodInvocation methodInvocation = (MethodInvocation) parent;
-					if(methodInvocation.getName().equals(node)){
+					if (methodInvocation.getName().equals(node)) {
 						return true;
 					}
 				}
@@ -462,68 +546,74 @@ public class FeatureExtraction {
 				if (Character.isUpperCase(name.charAt(0)) || isAllCaptialCharacters(name)) {
 					return true;
 				}
-				if(name.equals(leftVariable)){
-//					while(parent != null && !(parent instanceof MethodDeclaration)){
-//						if(parent instanceof Assignment){
-//							CollectSimpleName collectSimpleName = new CollectSimpleName();
-//							((Assignment)parent).getRightHandSide().accept(collectSimpleName);
-//							if(collectSimpleName.getVariables().getSecond().getSecond().contains(name)){
-//								rightVariables.add(name);
-//							}
-//						}
-//						parent = parent.getParent();
-//					}
-					
+				if (name.equals(leftVariable)) {
+					// while(parent != null && !(parent instanceof
+					// MethodDeclaration)){
+					// if(parent instanceof Assignment){
+					// CollectSimpleName collectSimpleName = new
+					// CollectSimpleName();
+					// ((Assignment)parent).getRightHandSide().accept(collectSimpleName);
+					// if(collectSimpleName.getVariables().getSecond().getSecond().contains(name)){
+					// rightVariables.add(name);
+					// }
+					// }
+					// parent = parent.getParent();
+					// }
+
 				} else if (!defVariables.contains(name)) {
 					rightVariables.add(name);
 				}
 				return true;
 			}
-			
-			public boolean visit(VariableDeclarationFragment vdf){
+
+			public boolean visit(VariableDeclarationFragment vdf) {
 				String name = vdf.getName().getFullyQualifiedName();
 				defVariables.add(name);
 				rightVariables.remove(name);
 				return true;
 			}
-			
-			public boolean visit(SingleVariableDeclaration svd){
+
+			public boolean visit(SingleVariableDeclaration svd) {
 				String name = svd.getName().getFullyQualifiedName();
 				defVariables.add(name);
 				return true;
 			}
-			
-//			public boolean visit(VariableDeclarationExpression node){
-//				for (Object object : node.fragments()) {
-//					if (object instanceof VariableDeclarationFragment) {
-//						VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
-//						String name = vdf.getName().getFullyQualifiedName();
-//						defVariables.add(name);
-//						rightVariables.remove(name);
-//					} else if(object instanceof SingleVariableDeclaration){
-//						SingleVariableDeclaration svd = (SingleVariableDeclaration) object;
-//						String name = svd.getName().getFullyQualifiedName();
-//						defVariables.add(name);
-//					}
-//				}
-//				return true;
-//			}
-//
-//			public boolean visit(VariableDeclarationStatement node) {
-//				for (Object object : node.fragments()) {
-//					if (object instanceof VariableDeclarationFragment) {
-//						VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
-//						String name = vdf.getName().getFullyQualifiedName();
-//						defVariables.add(name);
-//						rightVariables.remove(name);
-//					} else if(object instanceof SingleVariableDeclaration){
-//						SingleVariableDeclaration svd = (SingleVariableDeclaration) object;
-//						String name = svd.getName().getFullyQualifiedName();
-//						defVariables.add(name);
-//					}
-//				}
-//				return true;
-//			}
+
+			// public boolean visit(VariableDeclarationExpression node){
+			// for (Object object : node.fragments()) {
+			// if (object instanceof VariableDeclarationFragment) {
+			// VariableDeclarationFragment vdf = (VariableDeclarationFragment)
+			// object;
+			// String name = vdf.getName().getFullyQualifiedName();
+			// defVariables.add(name);
+			// rightVariables.remove(name);
+			// } else if(object instanceof SingleVariableDeclaration){
+			// SingleVariableDeclaration svd = (SingleVariableDeclaration)
+			// object;
+			// String name = svd.getName().getFullyQualifiedName();
+			// defVariables.add(name);
+			// }
+			// }
+			// return true;
+			// }
+			//
+			// public boolean visit(VariableDeclarationStatement node) {
+			// for (Object object : node.fragments()) {
+			// if (object instanceof VariableDeclarationFragment) {
+			// VariableDeclarationFragment vdf = (VariableDeclarationFragment)
+			// object;
+			// String name = vdf.getName().getFullyQualifiedName();
+			// defVariables.add(name);
+			// rightVariables.remove(name);
+			// } else if(object instanceof SingleVariableDeclaration){
+			// SingleVariableDeclaration svd = (SingleVariableDeclaration)
+			// object;
+			// String name = svd.getName().getFullyQualifiedName();
+			// defVariables.add(name);
+			// }
+			// }
+			// return true;
+			// }
 
 			public boolean visit(Assignment node) {
 				Expression expression = node.getLeftHandSide();
@@ -536,20 +626,20 @@ public class FeatureExtraction {
 					if (!defVariables.contains(name)) {
 						leftVariable = name;
 					}
-				} else if(expression instanceof ArrayAccess){
+				} else if (expression instanceof ArrayAccess) {
 					ArrayAccess access = (ArrayAccess) expression;
 					String name = access.getArray().toString();
 					int index = name.lastIndexOf(".");
-					if(index > 0){
+					if (index > 0) {
 						name = name.substring(index + 1, name.length());
 					}
-					if(!defVariables.contains(name)){
+					if (!defVariables.contains(name)) {
 						leftVariable = name;
 					}
-				} else if(expression instanceof FieldAccess){
+				} else if (expression instanceof FieldAccess) {
 					FieldAccess fieldAccess = (FieldAccess) expression;
 					String name = fieldAccess.getName().getFullyQualifiedName();
-					if(!defVariables.contains(name)){
+					if (!defVariables.contains(name)) {
 						leftVariable = name;
 					}
 				}
