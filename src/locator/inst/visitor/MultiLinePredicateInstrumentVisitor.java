@@ -15,6 +15,7 @@ import java.util.Map;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AssertStatement;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BreakStatement;
 import org.eclipse.jdt.core.dom.CatchClause;
@@ -22,6 +23,7 @@ import org.eclipse.jdt.core.dom.ConstructorInvocation;
 import org.eclipse.jdt.core.dom.ContinueStatement;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
@@ -300,13 +302,17 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 			Statement copy = (Statement) ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), statement);
 			List<ASTNode> tmpInserted = genInstrument(methodID, startLine);
 			
-			if (statement instanceof ConstructorInvocation || statement instanceof SuperConstructorInvocation) {
+			// fix, 2018-1-5, insert statement for left hand side variable in
+			// assignment
+			if ((statement instanceof ExpressionStatement
+					&& ((ExpressionStatement) statement).getExpression() instanceof Assignment)
+					|| statement instanceof VariableDeclarationStatement || statement instanceof ConstructorInvocation
+					|| statement instanceof SuperConstructorInvocation) {
 				result.add(copy);
 				result.addAll(tmpInserted);
 			} else if (statement instanceof ContinueStatement || statement instanceof BreakStatement
 					|| statement instanceof ReturnStatement || statement instanceof ThrowStatement
-					|| statement instanceof AssertStatement || statement instanceof ExpressionStatement
-					|| statement instanceof VariableDeclarationStatement) {
+					|| statement instanceof AssertStatement || statement instanceof ExpressionStatement) {
 				result.addAll(tmpInserted);
 				result.add(copy);
 

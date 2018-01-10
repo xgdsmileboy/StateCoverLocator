@@ -21,6 +21,12 @@ import locator.core.run.path.LineInfo;
  */
 public class FeatureExtractionTest {
 
+	//****************
+	// 2018-1-15
+	// the feature extraction process has been changed, some test cases may be not right
+	// collect right variables -> collect left hand side variables 
+	//****************
+	
 	@Test
 	public void test2(){
 		String path = "/Users/Jiajun/Code/Defects4J/projects/math/math_65_buggy/src/main/java";

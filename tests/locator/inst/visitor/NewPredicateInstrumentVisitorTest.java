@@ -40,4 +40,28 @@ public class NewPredicateInstrumentVisitorTest {
 		System.out.println(compilationUnit);
 	}
 	
+	@Test
+	public void test_predicateInstrumentForClazz_assignment() {
+		String filePath = "res/junitRes/BigFraction.java";
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
+		List<Pair<String, String>> conditions = new ArrayList<>();
+		conditions.add(new Pair<String, String>("a > b", "0.5"));
+		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 36);
+		compilationUnit.accept(predicateInstrumentVisitor);
+		System.out.println(compilationUnit);
+	}
+	
+	@Test
+	public void test_predicateInstrumentForClazz_vds() {
+		String filePath = "res/junitRes/BigFraction.java";
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
+		List<Pair<String, String>> conditions = new ArrayList<>();
+		conditions.add(new Pair<String, String>("a > b", "0.5"));
+		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 64);
+		compilationUnit.accept(predicateInstrumentVisitor);
+		System.out.println(compilationUnit);
+	}
+	
 }

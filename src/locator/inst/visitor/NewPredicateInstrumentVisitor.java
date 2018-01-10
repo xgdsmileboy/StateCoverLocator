@@ -9,11 +9,11 @@ package locator.inst.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.AssertStatement;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BreakStatement;
 import org.eclipse.jdt.core.dom.CatchClause;
@@ -442,15 +442,19 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				}
 			}
 //			Statement insert = GenStatement.newGenPredicateStatement(_condition, message);
-
-			if (statement instanceof ConstructorInvocation || statement instanceof SuperConstructorInvocation) {
+			
+			// fix, 2018-1-5, insert statement for left hand side variable in
+			// assignment
+			if ((statement instanceof ExpressionStatement
+					&& ((ExpressionStatement) statement).getExpression() instanceof Assignment)
+					|| statement instanceof VariableDeclarationStatement || statement instanceof ConstructorInvocation
+					|| statement instanceof SuperConstructorInvocation) {
 				result.add(copy);
-//				result.add(insert);
+				// result.add(insert);
 				result.addAll(tmpInserted);
 			} else if (statement instanceof ContinueStatement || statement instanceof BreakStatement
 					|| statement instanceof ReturnStatement || statement instanceof ThrowStatement
-					|| statement instanceof AssertStatement || statement instanceof ExpressionStatement
-					|| statement instanceof VariableDeclarationStatement) {
+					|| statement instanceof AssertStatement || statement instanceof ExpressionStatement) {
 //				result.add(insert);
 				result.addAll(tmpInserted);
 				result.add(copy);
