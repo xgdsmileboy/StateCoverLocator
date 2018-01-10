@@ -15,13 +15,13 @@ class XGExpr(object):
         """
         self.__configure__ = configure
 
-    def train_expr(self, str_encoder, feature_num):
+    def train_expr(self, str_encoder, feature_num, evaluate):
         print('Training expr model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
         ## construct the path strings with params
         trainExpr = TrainExpr(self.__configure__)
         # train the model
-        trainExpr.train(feature_num, 'multi:softprob', str_encoder)
+        trainExpr.train(feature_num, 'multi:softprob', str_encoder, evaluate)
 
 
     def run_gen_exprs(self, str_encoder, kmeans_model):

@@ -55,7 +55,7 @@ public class Main {
 
 	private final static String __name__ = "@Main ";
 
-	private static void trainModel(Subject subject) {
+	private static void trainModel(Subject subject, boolean evaluate) {
 		String modelPath = Constant.STR_ML_HOME + "/model/";
 		if (Constant.TRAINING_MODEL.equals("dnn")){
 			File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/var");
@@ -107,13 +107,24 @@ public class Main {
 			file.mkdirs();
 		}
 
-		// train model
-		try {
-			LevelLogger.info(">>>>>> Begin Trainning ...");
-			ExecuteCommand.executeTrain(subject);
-			LevelLogger.info(">>>>>> End Trainning !");
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (evaluate) {
+			// evaluate model
+			try {
+				LevelLogger.info(">>>>>> Begin Evaluating ...");
+				ExecuteCommand.executeEvaluate(subject);
+				LevelLogger.info(">>>>>> End Evaluating !");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			// train model
+			try {
+				LevelLogger.info(">>>>>> Begin Trainning ...");
+				ExecuteCommand.executeTrain(subject);
+				LevelLogger.info(">>>>>> End Trainning !");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -137,7 +148,12 @@ public class Main {
 
 		// train predicate prediction model
 		if (!useStatisticalDebugging) {
-			trainModel(subject);
+			trainModel(subject, Constant.TRAINING_EVALUATION);
+		}
+		if (Constant.TRAINING_EVALUATION) {
+			String mlOutput = JavaFile.readFileToString(Constant.STR_TMP_ML_LOG_FILE);
+			JavaFile.writeStringToFile(Constant.STR_ML_EVALUATION + "/" + subject.getName() + "_" + subject.getId() + ".ml.out", mlOutput);
+			return true;
 		}
 
 		// copy auxiliary file to subject path

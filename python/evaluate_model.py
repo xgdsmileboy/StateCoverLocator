@@ -25,8 +25,8 @@ if __name__ == '__main__':
 
     xgvar = XGVar(config)
     var_feature_num = var_column - 4
-    xgvar.train_var(str_encoder, var_feature_num, False)
+    xgvar.train_var(str_encoder, var_feature_num, True)
 
     xgexpr = XGExpr(config)
     expr_feature_num = expr_column - 4
-    xgexpr.train_expr(str_encoder, expr_feature_num, False)
+    xgexpr.train_expr(str_encoder, expr_feature_num, True)

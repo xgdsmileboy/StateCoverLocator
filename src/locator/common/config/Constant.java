@@ -75,6 +75,7 @@ public class Constant {
 	// training model
 	// xgboost, dnn or randomforest
 	public static String TRAINING_MODEL = "dnn";
+	public static boolean TRAINING_EVALUATION = false;
 	
 	// system command
 	public static String COMMAND_CD = null;
@@ -135,6 +136,10 @@ public class Constant {
 	 * out/error
 	 */
 	public final static String STR_ERROR_BACK_UP = STR_OUT_PATH + "/error";
+	/**
+	 * out/evaluation
+	 */
+	public final static String STR_ML_EVALUATION = STR_OUT_PATH + "/evaluation";
 	
 	public final static String TIME_LOG = STR_OUT_PATH + "/time.log";
 
@@ -242,6 +247,7 @@ public class Constant {
 			Constant.TRAINING_MODEL = prop.getProperty("TRAINING.MODEL").trim();
 			Constant.USE_SOBER =  Boolean.parseBoolean(prop.getProperty("USE.SOBER"));
 			Constant.USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
+			Constant.TRAINING_EVALUATION =  Boolean.parseBoolean(prop.getProperty("TRAINING.EVALUATION"));
 			
 			in.close();
 		} catch (IOException e) {
