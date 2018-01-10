@@ -51,7 +51,7 @@ public class Configure {
 	 * @return a subject instance contains basic information
 	 */
 	public static Subject getSubject(String name, int id){
-		String fileName = Constant.HOME + "d4j-info/src_path/" + name + "/" + id + ".txt";
+		String fileName = Constant.HOME + "/res/d4j-info/src_path/" + name + "/" + id + ".txt";
 		File file = new File(fileName);
 		if(!file.exists()){
 			System.out.println("File : " + fileName + " does not exist!");
