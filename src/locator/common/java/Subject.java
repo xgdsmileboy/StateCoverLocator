@@ -43,9 +43,9 @@ public class Subject {
 	 * @param tbin
 	 *            : relative path for test byte code, e.g., "/test-classes"
 	 */
-//	public Subject(String name, int id, String ssrc, String tsrc, String sbin, String tbin) {
-//		this(name, id, ssrc, tsrc, sbin, tbin, new ArrayList<String>(0));
-//	}
+	public Subject(String name, int id, String ssrc, String tsrc, String sbin, String tbin) {
+		this(name, id, ssrc, tsrc, sbin, tbin, new ArrayList<String>(0));
+	}
 	
 	public Subject(String name, int id, String ssrc, String tsrc, String sbin, String tbin, List<String> classpath) {
 		_name = name;
