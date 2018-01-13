@@ -25,6 +25,7 @@ import locator.common.util.LevelLogger;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.visitor.MethodInstrumentVisitor;
+import locator.inst.visitor.NewTestMethodInstrumentVisitor;
 
 /**
  * @author Jiajun
@@ -242,6 +243,9 @@ public class Collector {
 		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor();
 		String subjectSourcePath = subject.getHome() + subject.getSsrc();
 		Instrument.execute(subjectSourcePath, methodInstrumentVisitor);
+		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(testcases, false);
+		String subjectTestPath = subject.getHome() + subject.getTsrc();
+		Instrument.execute(subjectTestPath, newTestMethodInstrumentVisitor);
 		Set<Integer> allMethods = new HashSet<>();
 		for (Integer methodID : testcases) {
 			String methodString = Identifier.getMessage(methodID);
@@ -261,13 +265,14 @@ public class Collector {
 			}
 			Set<Integer> coveredMethodes = ExecutionPathBuilder
 					.collectAllExecutedMethods(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-
+			
 			if (coveredMethodes != null) {
 				allMethods.addAll(coveredMethodes);
 			}
 		}
 
 		ExecuteCommand.copyFolder(subjectSourcePath + "_ori", subjectSourcePath);
+		ExecuteCommand.copyFolder(subjectTestPath + "_ori", subjectTestPath);
 //		Instrument.execute(subjectSourcePath, new DeInstrumentVisitor());
 		return allMethods;
 	}
