@@ -227,6 +227,19 @@ public class ExecuteCommand {
 		String[] cmd = CmdFactory.createTrainCmd(subject);
 		executeAndOutputConsole(cmd);
 	}
+	
+	/**
+	 * execute evaluate command
+	 * 
+	 * @param subject
+	 *            : subject for evaluating
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public static void executeEvaluate(Subject subject) throws IOException, InterruptedException {
+		String[] cmd = CmdFactory.createEvaluateCmd(subject);
+		executeAndOutputFile(cmd, Constant.STR_TMP_ML_LOG_FILE);
+	}
 
 	/**
 	 * execute predicate predicting

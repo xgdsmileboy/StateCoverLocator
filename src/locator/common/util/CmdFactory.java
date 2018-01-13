@@ -93,6 +93,32 @@ public class CmdFactory {
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
 	}
+	
+	/**
+	 * create model training command
+	 * 
+	 * @param subject
+	 * @return
+	 */
+	public static String[] createEvaluateCmd(Subject subject) {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("source ");
+		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(" && ");
+		stringBuffer.append(Constant.COMMAND_CD);
+		stringBuffer.append(Constant.STR_ML_HOME);
+		stringBuffer.append(" && ");
+		stringBuffer.append(Constant.COMMAND_PYTHON);
+		stringBuffer.append(Constant.STR_ML_HOME + "/evaluate_model.py ");
+		stringBuffer.append(subject.getName());
+		stringBuffer.append(" ");
+		stringBuffer.append(subject.getId());
+		stringBuffer.append(" ");
+		stringBuffer.append(Constant.TRAINING_MODEL);
+		stringBuffer.append(" && deactivate");
+		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
+		return cmd;
+	}
 
 	/**
 	 * create predicate predicting command

@@ -14,13 +14,13 @@ class XGVar(object):
         """
         self.__configure__ = configure;
 
-    def train_var(self, str_encoder, feature_num):
+    def train_var(self, str_encoder, feature_num, evaluate):
         print('Training var model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
 
         # feature_num = # cols - 1(only one target)
         train = Train(self.__configure__)
-        train.train(feature_num, 'binary:logistic', str_encoder)
+        train.train(feature_num, 'binary:logistic', str_encoder, evaluate)
 
     def predict_vars(self, encoded_var, feature_num):
         # encoded_oracle_var =  oracle[0:-4]+ '.var_encoded.csv'
