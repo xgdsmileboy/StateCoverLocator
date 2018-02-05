@@ -30,6 +30,7 @@ import locator.common.java.Subject;
 import locator.common.util.CmdFactory;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.core.model.L2S;
 import locator.core.model.Model;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
@@ -43,6 +44,8 @@ import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.StatisticalDebuggingPredicatesVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
+import locator.inst.visitor.feature.NewExprFilter;
+import soot.coffi.class_element_value;
 
 /**
  * @author Jiajun
@@ -525,8 +528,127 @@ public class Coverage {
             return false;
         }
     }
+    
+	private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicatesForL2S(Subject subject,
+			Set<String> allStatements, L2S model, boolean useSober) {
+
+		// parse all object type
+		ExprFilter.init(subject);
+
+		String srcPath = subject.getHome() + subject.getSsrc();
+
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
+
+		int allStmtCount = allStatements.size();
+		int currentStmtCount = 1;
+
+		JCompiler compiler = JCompiler.getInstance();
+		NewExprFilter.init(subject);
+		for (String stmt : allStatements) {
+			LevelLogger.info("======================== [" + currentStmtCount + "/" + allStmtCount
+					+ "] statements =================.");
+			currentStmtCount++;
+
+			String[] stmtInfo = stmt.split("#");
+			if (stmtInfo.length != 2) {
+				LevelLogger.error(__name__ + "#getAllPredicates statement parse error : " + stmt);
+				System.exit(0);
+			}
+			Integer methodID = Integer.valueOf(stmtInfo[0]);
+			int line = Integer.parseInt(stmtInfo[1]);
+			if (line == 2317) {
+				System.out.print("exist");
+			}
+			String methodString = Identifier.getMessage(methodID);
+			LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
+			String[] methodInfo = methodString.split("#");
+			if (methodInfo.length < 4) {
+				LevelLogger.error(__name__ + "#getAllPredicates method info parse error : " + methodString);
+				System.exit(0);
+			}
+			String clazz = methodInfo[0].replace(".", Constant.PATH_SEPARATOR);
+			int index = clazz.indexOf("$");
+			if (index > 0) {
+				clazz = clazz.substring(0, index);
+			}
+			String relJavaPath = clazz + ".java";
+
+			String fileName = srcPath + "/" + relJavaPath;
+			File file = new File(fileName);
+			if (!file.exists()) {
+				LevelLogger.error("Cannot find file : " + fileName);
+				continue;
+			}
+
+			LineInfo info = new LineInfo(line, relJavaPath, clazz);
+			List<Pair<String, String>> predicates = model.predict(subject, relJavaPath, line);
+			String javaFile = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
+			NewPredicateInstrumentVisitor newPredicateInstrumentVisitor = new NewPredicateInstrumentVisitor(null, line);
+			List<Pair<String, String>> legalConditions = new ArrayList<>();
+			// read original file once
+			String source = JavaFile.readFileToString(javaFile);
+
+			int count = 0;
+			for (Pair<String, String> condition : predicates) {
+
+				String filter = NewExprFilter.filter("null", "null", condition.getFirst(), info,
+						clazz.substring(clazz.lastIndexOf(Constant.PATH_SEPARATOR)));
+				if (filter == null) {
+					continue;
+				}
+				// instrument one condition statement into source file
+				CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
+						ASTParser.K_COMPILATION_UNIT);
+
+				List<Pair<String, String>> onePredicate = new ArrayList<>();
+				onePredicate.add(condition);
+				newPredicateInstrumentVisitor.setCondition(onePredicate);
+
+				compilationUnit.accept(newPredicateInstrumentVisitor);
+
+				if (compiler.compile(subject, relJavaPath, compilationUnit.toString())) {
+					legalConditions.add(condition);
+					if (!useSober) {
+						// add opposite conditions as well
+						Pair<String, String> otherSide = new Pair<>();
+						otherSide.setFirst("!(" + condition.getFirst() + ")");
+						otherSide.setSecond(condition.getSecond());
+						legalConditions.add(otherSide);
+					}
+					LevelLogger.info("Passed build : " + condition.toString() + "\t ADD \t");
+					count++;
+					// only keep partial predicates "top K"
+					if (count >= Constant.TOP_K_PREDICATES_FOR_EACH_VAR) {
+						break;
+					}
+				} else {
+					LevelLogger.info("Build failed : " + condition.toString());
+				}
+			}
+			if (legalConditions.size() > 0) {
+				Map<Integer, List<Pair<String, String>>> line2Predicates = file2Line2Predicates.get(javaFile);
+				if (line2Predicates == null) {
+					line2Predicates = new HashMap<>();
+				}
+				line2Predicates.put(line, legalConditions);
+				file2Line2Predicates.put(javaFile, line2Predicates);
+			}
+
+		}
+
+		return file2Line2Predicates;
+	}
 
     private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject,
+            Set<String> allStatements, Model model, boolean useSober) {
+    	if(Constant.TRAINING_MODEL.equals("l2s")) {
+    		return getAllPredicatesForL2S(subject, allStatements, (L2S)model, useSober);
+    	} else {
+    		return getAllPredicatesOrigin(subject, allStatements, model, useSober);
+    	}
+    }
+
+    private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicatesOrigin(Subject subject,
             Set<String> allStatements, Model model, boolean useSober) {
 
         // parse all object type

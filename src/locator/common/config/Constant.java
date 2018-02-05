@@ -131,7 +131,13 @@ public class Constant {
 	 * out/data
 	 */
 	public final static String STR_ALL_DATA_COLLECT_PATH = STR_OUT_PATH + "/data";
-
+	/**
+	 * out/error
+	 */
+	public final static String STR_ERROR_BACK_UP = STR_OUT_PATH + "/error";
+	
+	public final static String TIME_LOG = STR_OUT_PATH + "/time.log";
+	
 	/**
 	 * Machine learning home path TODO : need to refactor
 	 */
@@ -140,6 +146,7 @@ public class Constant {
 	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
 	public static String TENSORFLOW_ACTIVATE_PATH = "";
+	public final static String STR_ML_HOME_TMP_RES = STR_ML_HOME + "/tmp/res";
 
 	static {
 		Properties prop = new Properties();

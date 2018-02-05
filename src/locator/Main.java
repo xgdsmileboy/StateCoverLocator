@@ -49,7 +49,7 @@ public class Main {
 
 	private final static String __name__ = "@Main ";
 
-	private static void proceed(Subject subject, boolean useStatisticalDebugging, boolean useSober) {
+	private static boolean proceed(Subject subject, boolean useStatisticalDebugging, boolean useSober) {
 
 		LevelLogger
 				.info("------------------ Begin : " + subject.getName() + "_" + subject.getId() + " ----------------");
@@ -115,7 +115,7 @@ public class Main {
 				model, failedTestsAndCoveredMethods.getFirst(), useStatisticalDebugging, useSober);
 
 		if (predicateCoverage == null && !useSober) {
-			return;
+			return false;
 		}
 
 		if (!useSober) {
@@ -156,44 +156,67 @@ public class Main {
 		// printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" +
 		// subject.getName() + "/" + subject.getName() + "_"
 		// + subject.getId() + "/coverage.csv");
+		return true;
 	}
 
 	public static void main(String[] args) {
-		//
-		// double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math
-		// project
-		// List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 80);
-		// recordSubjects(allSubjects);
-		// for(int i = 53; i < allSubjects.size(); i++) {
-		// try {
-		List<Subject> allSubjects = ProjectSelector.select("math");
+//
+//		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
+//		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 80);
+//		recordSubjects(allSubjects);
+//		for(int i = 53; i < allSubjects.size(); i++) {
+//			try {
+		List<Subject> allSubjects = null;
 		if(args.length > 0) {
-			allSubjects = ProjectSelector.select(args[0]);
+			if(args.length == 1) {
+				allSubjects = ProjectSelector.select(args[0]);
+			} else {
+				String[] idStrings = args[1].split(",");
+				List<Integer> ids = new ArrayList<>();
+				for(String string : idStrings) {
+					ids.add(Integer.parseInt(string));
+				}
+				allSubjects = ProjectSelector.select(args[0], ids);
+			}
 		} else {
 			allSubjects = ProjectSelector.select("math");
 		}
+		//for debug
+		System.out.println("---------------------------------\n");
+		System.out.print(allSubjects.get(0).getName() + " : ");
+		for(Subject subject : allSubjects) {
+			System.out.print(subject.getId() + ", ");
+		}
+		System.out.println("\n---------------------------------\n");
 		
-		// Subject subject = ProjectSelector.select("math", 4);
-		for (Subject subject : allSubjects) {
+//		Subject subject = ProjectSelector.select("math", 4);
+		for(Subject subject : allSubjects) {
 			try {
-				// File file = new File(subject.getCoverageInfoPath() +
-				// "/predicates_backup.txt");
-				// if (!file.exists()) continue;
+//				File file = new File(subject.getCoverageInfoPath() + "/predicates_backup.txt");
+//				if (!file.exists()) continue;
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
-				String begin = simpleDateFormat.format(new Date());
+				Date startTime = new Date();
+				String begin = simpleDateFormat.format(startTime);
 				LevelLogger.info("BEGIN : " + begin);
 
-				proceed(subject, Constant.USE_STATISTICAL_DEBUGGING, Constant.USE_SOBER);
+				String subjectInfo = subject.getName() + "_" + subject.getId();
+				if (!proceed(subject, Constant.USE_STATISTICAL_DEBUGGING, Constant.USE_SOBER)) {
+					String d4jOutput = JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE);
+					JavaFile.writeStringToFile(Constant.STR_ERROR_BACK_UP + "/" + subjectInfo + ".d4j.out", d4jOutput);
+				}
 
-				String end = simpleDateFormat.format(new Date());
+				Date endTime = new Date();
+				String end = simpleDateFormat.format(endTime);
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);
+				JavaFile.writeStringToFile(Constant.TIME_LOG, subjectInfo + "\t"
+						+ Long.toString(endTime.getTime() - startTime.getTime()) + "\t" + startTime + "\n", true);
 			} catch (Exception e) {
 				e.printStackTrace();
-				// JavaFile.writeStringToFile(Constant.HOME + "/logs/" +
-				// subject.getName() + "_" + Integer.toString(subject.getId())
-				// + "_error.log");
+//				JavaFile.writeStringToFile(Constant.HOME + "/logs/" +
+//						subject.getName() + "_" + Integer.toString(subject.getId())
+//						+ "_error.log");
 			}
 		}
-	}
+}
 
 }

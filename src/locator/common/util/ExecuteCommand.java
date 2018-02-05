@@ -129,6 +129,10 @@ public class ExecuteCommand {
 				Constant.COMMAND_RM + Constant.STR_OUT_PATH + Constant.PATH_SEPARATOR + "*" };
 		return execute(cmd);
 	}
+	
+	public static String executeCopyTrainFileForL2S(Subject subject) {
+		return execute(CmdFactory.createCopyTrainDataForL2S(subject));
+	}
 
 	/**
 	 * execute given commands

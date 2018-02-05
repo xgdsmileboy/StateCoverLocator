@@ -16,6 +16,22 @@ import locator.common.java.Subject;
  */
 public class CmdFactory {
 
+	public static String[] createCopyTrainDataForL2S(Subject subject) {
+		// python set_evn.py train math 12 0 0
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(Constant.COMMAND_CD);
+		stringBuffer.append(Constant.STR_ML_HOME);
+		stringBuffer.append(" && ");
+		stringBuffer.append(Constant.COMMAND_PYTHON);
+		stringBuffer.append(Constant.STR_ML_HOME + "/set_evn.py ");
+		stringBuffer.append(subject.getName());
+		stringBuffer.append(" ");
+		stringBuffer.append(subject.getId());
+		stringBuffer.append(" 0 0");
+		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
+		return cmd;
+	}
+	
 	/**
 	 * build execution command for running the whole test suite
 	 * 
