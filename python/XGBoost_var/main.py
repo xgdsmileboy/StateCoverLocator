@@ -83,12 +83,15 @@ class XGVar(object):
                         f.write('%.4f' % y_prob[i][one_pos])
                         f.write('\n')
         else:
-            feature_columns = [tf.contrib.layers.real_valued_column('', dimension = feature_num)]
-            classifier = tf.contrib.learn.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [10, 20, 10],
+            feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
+            classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
+                                              hidden_units = [32, 32, 32, 32, 32, 32],
                                               n_classes = 2,
                                               model_dir = self.__configure__.get_var_nn_model_dir())
-            y_prob = list(classifier.predict_proba(x = X_pred))
+            predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_pred}, y=None, num_epochs=1, shuffle=False)
+            predictions = list(classifier.predict(input_fn = predict_input_fn))
+            y_prob = [p['probabilities'] for p in predictions]
+            print(y_prob)
             with open(var_predicted, 'w') as f:
                 for i in range(0, X_pred.shape[0]):
                     f.write('%s\t' % line_ids[i])

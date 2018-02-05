@@ -51,7 +51,7 @@ class Train(object):
                                               n_classes = class_num,
                                               model_dir = self.__configure__.get_var_nn_model_dir())
 
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=100, shuffle=True)
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
         classifier.train(input_fn=train_input_fn)
 
     def train(self, feature_num, training_objective, str_encoder, evaluate):

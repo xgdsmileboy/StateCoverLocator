@@ -603,7 +603,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			}
 			for(Pair<String, String> predicate : predicates) {
 				ASTNode inserted = _useSober ? GenStatement.newGenPredicateStatementForEvaluationBias(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1") :
-					GenStatement.newGenPredicateStatement(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1");
+					GenStatement.newGenPredicateStatementWithoutTry(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1");
 				if(inserted != null){
 					result.add(inserted);
 				}

@@ -221,6 +221,58 @@ public class GenStatement {
 		
 		return tryStatement;
 	}
+	
+	public static Block newGenPredicateStatementWithoutTry(String condition, String message) {
+		Expression conditionExp = null;
+		// condition
+		try{
+			conditionExp = (Expression) JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
+		} catch (Exception e){
+			return null;
+		}
+		
+		// if(condition)
+		IfStatement ifStatement = ast.newIfStatement();
+		ifStatement.setExpression((Expression) ASTNode.copySubtree(ast, conditionExp));
+		
+		// auxiliary.Dumper.write(message);
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation.setName(ast.newSimpleName("write"));
+		
+		StringLiteral stringLiteral = ast.newStringLiteral();
+		stringLiteral.setLiteralValue(message);
+		methodInvocation.arguments().add(stringLiteral);
+		ExpressionStatement invokeStatement = ast.newExpressionStatement(methodInvocation);
+		
+		// if(condition){
+		//     auxiliary.Dumper.write(message);
+		// }
+		Block thenBlock = ast.newBlock();
+		thenBlock.statements().add(invokeStatement);
+		ifStatement.setThenStatement(thenBlock);
+		
+		// auxiliary.Dumper.observe(message);
+		MethodInvocation methodInvocation2 = ast.newMethodInvocation();
+		methodInvocation2.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation2.setName(ast.newSimpleName("observe"));
+				
+		StringLiteral stringLiteral2 = ast.newStringLiteral();
+		stringLiteral2.setLiteralValue(message);
+		methodInvocation2.arguments().add(stringLiteral2);
+		ExpressionStatement invokeStatement2 = ast.newExpressionStatement(methodInvocation2);
+		
+		// try{
+		//    auxiliary.Dumper.observe(message);
+		//    if(condition){
+		//        auxiliary.Dumper.write(message);
+		//    }
+		// }
+		Block body = ast.newBlock();
+		body.statements().add(invokeStatement2);
+		body.statements().add(ifStatement);
+		return body;
+	}
 
 	public static TryStatement newGenPredicateStatementForEvaluationBias(String condition, String message) {
 		Expression conditionExp = null;

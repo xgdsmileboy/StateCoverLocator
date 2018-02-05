@@ -55,12 +55,14 @@ class XGExpr(object):
             elif (self.__configure__.get_model_type() == 'randomforest'):
                 y_prob = model.predict_proba(X_pred)
         else:
-            feature_columns = [tf.contrib.layers.real_valued_column('', dimension = feature_num)]
-            classifier = tf.contrib.learn.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [10, 20, 10],
-                                              n_classes = y_encoder.classes_.shape[0],
+            feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
+            classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
+                                              hidden_units = [32, 32, 32, 32, 32, 32],
+                                              n_classes = class_num,
                                               model_dir = self.__configure__.get_expr_nn_model_dir())
-            y_prob = list(classifier.predict_proba(x = X_pred))
+            test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_pred}, y=None, num_epochs=1, shuffle=False)
+            predictions = list(classifier.predict(input_fn = test_input_fn))
+            y_prob = [p['probabilities'] for p in predictions]
 
         ## save the result
         with open(expr_predicted, 'w') as f:
