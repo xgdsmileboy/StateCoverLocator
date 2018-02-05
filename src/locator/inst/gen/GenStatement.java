@@ -52,7 +52,9 @@ public class GenStatement {
 		// auxiliary.Dumper.write(expression);
 		MethodInvocation methodInvocation = ast.newMethodInvocation();
 		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
-		methodInvocation.setName(ast.newSimpleName("slowWrite"));
+		// change slowWriter to writer Jun@2018-1-13 
+//		methodInvocation.setName(ast.newSimpleName("slowWrite"));
+		methodInvocation.setName(ast.newSimpleName("write"));
 		methodInvocation.arguments().add(expression);
 		ExpressionStatement expressionStatement = ast.newExpressionStatement(methodInvocation);
 		return expressionStatement;
