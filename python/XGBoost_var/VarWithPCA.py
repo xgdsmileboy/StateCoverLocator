@@ -13,6 +13,9 @@ from pca.PCAForXgb import PCAForXgb
 from pca.PCAColumn import PCAColumn
 from Utils.config import Configure
 from Utils.string_utils import preprocess_numbers
+import tensorflow as tf
+import shutil as su
+import numpy as np
 
 class VarWithPCA(PCAForXgb):
 
@@ -93,7 +96,7 @@ class VarWithPCA(PCAForXgb):
         return result
 
 
-    def train(self, is_v0):
+    def train(self, is_v0, use_dnn, evaluate):
         pca_start_time =  time.time()
 
         if is_v0:
@@ -140,52 +143,140 @@ class VarWithPCA(PCAForXgb):
             logging.info('ALLVAR TRAINING SET SIZE: {}'.format(X_train.shape))
             logging.info('ALLVAR VALIDATION SET SIZE: {}'.format(X_valid.shape))
 
+        if evaluate:
+            evaluate_model(X, Y, use_dnn)
+            return
+
         # BINARY-CLASSIFICATION PROBLEM FOR VAR
+        if not use_dnn:
+            M_train = xgb.DMatrix(X_train, label=y_train)
+            M_valid = xgb.DMatrix(X_valid, label=y_valid)
 
-        M_train = xgb.DMatrix(X_train, label=y_train)
-        M_valid = xgb.DMatrix(X_valid, label=y_valid)
+            params = {
+                'booster': 'gbtree',
+                'objective': 'binary:logistic',
+                'max_depth': 6,
+                'eta': 0.1,
+                'gamma': 0.2,
+                'subsample': 0.7,
+                'col_sample_bytree': 0.2,
+                'min_child_weight': 1,
+                'save_period': 0,
+                'eval_metric': 'error',
+                'silent': 1,
+                'lambda': 2
+            }
+            num_round = 1000
+            early_stop = 50
+            learning_rates = [(num_round - i) / (num_round * 5.0) for i in range(num_round)]
 
-        params = {
-            'booster': 'gbtree',
-            'objective': 'binary:logistic',
-            'max_depth': 6,
-            'eta': 0.1,
-            'gamma': 0.2,
-            'subsample': 0.7,
-            'col_sample_bytree': 0.2,
-            'min_child_weight': 1,
-            'save_period': 0,
-            'eval_metric': 'error',
-            'silent': 1,
-            'lambda': 2
-        }
-        num_round = 1000
-        early_stop = 50
-        learning_rates = [(num_round - i) / (num_round * 5.0) for i in range(num_round)]
-
-        watchlist = [(M_train, 'train'), (M_valid, 'eval')]
-        model = xgb.train(params, M_train, num_boost_round=num_round, evals=watchlist,
+            watchlist = [(M_train, 'train'), (M_valid, 'eval')]
+            model = xgb.train(params, M_train, num_boost_round=num_round, evals=watchlist,
                           early_stopping_rounds=early_stop, learning_rates=learning_rates)
 
-        with open(model_file, 'wb') as f:
-            pickle.dump(model, f, protocol=2)
-            print('VAR MODEL SAVED AS {}'.format(model_file))
+            with open(model_file, 'wb') as f:
+                pickle.dump(model, f, protocol=2)
+                print('VAR MODEL SAVED AS {}'.format(model_file))
 
-        train_end_time = time.time()
-        logging.info("Var best score: {}".format(model.best_score))
-        logging.info("VAR XGB Training Time {} s".format(train_end_time - pca_end_time))
+            train_end_time = time.time()
+            logging.info("Var best score: {}".format(model.best_score))
+            logging.info("VAR XGB Training Time {} s".format(train_end_time - pca_end_time))
 
-        y_pred = model.predict(M_valid)
-        y_pred_label = self.get_predicated_label(y_pred)
-        self.get_matrics(y_valid, y_pred_label)
+            y_pred = model.predict(M_valid)
+            y_pred_label = self.get_predicated_label(y_pred)
+            self.get_matrics(y_valid, y_pred_label)
+        else:
+            classes = np.unique(Y)
+            class_num = len(classes)
+            feature_num = X.shape[1]
+            print('Feature num: %d' % feature_num)
+            train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
+    
+    def train_dnn(self, X, Y, feature_num, class_num):
+        su.rmtree(self.__configure__.get_var_l2snn_model_dir())
+        feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
+        classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
+                                              hidden_units = [32, 32, 32, 32, 32, 32],
+                                              n_classes = class_num,
+                                              model_dir = self.__configure__.get_var_l2snn_model_dir())
+
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
+        classifier.train(input_fn=train_input_fn)        
+
+    def evaluate_model(X, Y, use_dnn):
+        X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size=0.1, random_state=7)
+        X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.1, random_state=7)
+
+        if not use_dnn:
+            M_train = xgb.DMatrix(X_train, label=y_train)
+            M_valid = xgb.DMatrix(X_valid, label=y_valid)
+            M_test = xgb.DMatrix(X_test, label=y_test)
+
+            params = {
+                'booster': 'gbtree',
+                'objective': 'binary:logistic',
+                'max_depth': 6,
+                'eta': 0.1,
+                'gamma': 0.2,
+                'subsample': 0.7,
+                'col_sample_bytree': 0.2,
+                'min_child_weight': 1,
+                'save_period': 0,
+                'eval_metric': 'error',
+                'silent': 1,
+                'lambda': 2
+            }
+            num_round = 1000
+            early_stop = 50
+            learning_rates = [(num_round - i) / (num_round * 5.0) for i in range(num_round)]
+
+            watchlist = [(M_train, 'train'), (M_test, 'eval')]
+            model = xgb.train(params, M_train, num_boost_round=num_round, evals=watchlist,
+                          early_stopping_rounds=early_stop, learning_rates=learning_rates)
+
+            #with open(model_file, 'wb') as f:
+            #    pickle.dump(model, f, protocol=2)
+            #    print('VAR MODEL SAVED AS {}'.format(model_file))
+
+            #train_end_time = time.time()
+            logging.info("Var best score: {}".format(model.best_score))
+            #logging.info("VAR XGB Training Time {} s".format(train_end_time - pca_end_time))
+
+            y_pred = model.predict(M_valid)
+            y_pred_label = self.get_predicated_label(y_pred)
+            self.get_matrics(y_valid, y_pred_label)
+            def to_classes(x):
+                if x >= 0.5:
+                    return 1
+                else:
+                    return 0
+
+            y_classes = map(to_classes, y_prob)
+            print("\nTest Accuracy: {0:f}\n".format(metrics.accuracy_score(y_valid, y_classes)))
+        else:
+            feature_num = X.shape[1]
+            print('Feature num: %d' % feature_num)
+            evaluate_dnn(np.array(X.values), np.array(Y.values), feature_num, 2)
+    
+    def evaluate_dnn(self, X, Y, feature_num, class_num):
+        X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size=0.1, random_state=7)
+        feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
+        classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
+                                              hidden_units = [32, 32, 32, 32, 32, 32],
+                                              n_classes = class_num)
+
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=1000, shuffle=True)
+        test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_valid}, y=y_valid, num_epochs=1, shuffle=True)
+        classifier.train(input_fn=train_input_fn)
+        accuracy_score = classifier.evaluate(input_fn=test_input_fn)["accuracy"]
+        print("\nTest Accuracy: {0:f}\n".format(accuracy_score))
 
     def get_matrics(self, y_true, y_pred):
         classify_report = metrics.classification_report(y_true, y_pred)
         logging.info(classify_report)
 
 
-    def predict(self, is_v0):
-
+    def predict(self, is_v0, use_dnn):
         if is_v0:
             misson_tp = 'v0'
             data_file_path = self.__configure__.get_raw_v0_pred_in_file()
@@ -211,10 +302,17 @@ class VarWithPCA(PCAForXgb):
                                              is_training=False)
 
         X, nop_Y = self.prepreocess(data, pca_df, misson_tp, False)
-        xgb_var_model = pickle.load(open(model_file, 'r'))
 
-        M_pred = xgb.DMatrix(X)
-        y_prob = xgb_var_model.predict(M_pred)
+        if not use_dnn:
+            xgb_var_model = pickle.load(open(model_file, 'r'))
+
+            M_pred = xgb.DMatrix(X)
+            y_prob = xgb_var_model.predict(M_pred)
+        else:
+            classifier = tf.estimator.DNNClassifier(model_dir = self.__configure__.get_var_l2snn_model_dir())
+            predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X.values)}, y=None, num_epochs=1, shuffle=False)
+            predictions = list(classifier.predict(input_fn = predict_input_fn))
+            y_prob = [p['probabilities'] for p in predictions]
 
         if os.path.exists(var_predicted):
             os.remove(var_predicted)

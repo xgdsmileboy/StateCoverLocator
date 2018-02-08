@@ -16,6 +16,9 @@ from sklearn.model_selection import GridSearchCV
 from pca.PCAColumn import PCAColumn
 from Utils.config import Configure
 from pca.PCAForXgb import PCAForXgb
+import tensorflow as tf
+import shutil as su
+import numpy as np
 
 class ExprWithPCA(PCAForXgb):
 
@@ -140,7 +143,7 @@ class ExprWithPCA(PCAForXgb):
         return ori_file_data
 
 
-    def train(self):
+    def train(self, use_dnn, evaluate):
         '''
         entrance of expr training
         :return: 
@@ -174,29 +177,78 @@ class ExprWithPCA(PCAForXgb):
 
         gc.collect()
 
+        if evaluate:
+            evaluate_model(X, Y, use_dnn, class_num)
+            return
+
         logging.info('EXPR TRAINING SET SIZE: {}'.format(X_train.shape))
         logging.info('VALIDATION SET SIZE: {}'.format(X_valid.shape))
 
-        M_train = xgb.DMatrix(X_train, label=y_train)
-        M_valid = xgb.DMatrix(X_valid, label=y_valid)
+        if not use_dnn:
+            M_train = xgb.DMatrix(X_train, label=y_train)
+            M_valid = xgb.DMatrix(X_valid, label=y_valid)
 
-        # cv_model = self.xgb_cla ssifier_cv(X_train, y_train, X_valid, y_valid)
-        model = self.xbg_inner(M_train, M_valid, class_num)
+            # cv_model = self.xgb_cla ssifier_cv(X_train, y_train, X_valid, y_valid)
+            model = self.xbg_inner(M_train, M_valid, class_num)
 
-        model_file = self.__configure__.get_expr_model_file()
-        with open(model_file, 'wb') as f:
-            pickle.dump(model, f, protocol=2)
-            print('EXPR MODEL SAVED AS {}'.format(model_file))
+            model_file = self.__configure__.get_expr_model_file()
+            with open(model_file, 'wb') as f:
+                pickle.dump(model, f, protocol=2)
+                print('EXPR MODEL SAVED AS {}'.format(model_file))
 
-        train_end_time = time.time()
+            train_end_time = time.time()
 
-        logging.info("EXPR best score: {}".format(model.best_score))
-        logging.info("EXPR XGB Training Time: {} s".format(train_end_time - pca_end_time))
+            logging.info("EXPR best score: {}".format(model.best_score))
+            logging.info("EXPR XGB Training Time: {} s".format(train_end_time - pca_end_time))
 
-        y_pred = model.predict(M_valid)
-        y_pred_label = self.get_predicated_label(y_pred)
-        self.get_matrics(y_valid, y_pred_label)
+            y_pred = model.predict(M_valid)
+            y_pred_label = self.get_predicated_label(y_pred)
+            self.get_matrics(y_valid, y_pred_label)
+        else:
+            feature_num = X.shape[1]
+            print('Feature num: %d' % feature_num)
+            train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
 
+    def train_dnn(self, X, Y, feature_num, class_num):
+        su.rmtree(self.__configure__.get_expr_l2snn_model_dir())
+        feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
+        classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
+                                              hidden_units = [32, 32, 32, 32, 32, 32],
+                                              n_classes = class_num,
+                                              model_dir = self.__configure__.get_expr_l2snn_model_dir())
+
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
+        classifier.train(input_fn=train_input_fn)
+
+    def evaluate_model(X, Y, use_dnn, class_num):
+        if not use_dnn:
+            X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size=0.1, random_state=7)
+            X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1, random_state=7)
+
+            M_train = xgb.DMatrix(X_train, label=y_train)
+            M_valid = xgb.DMatrix(X_valid, label=y_valid)
+            M_test = xgb.DMatrix(X_test, label=y_test)
+
+            # cv_model = self.xgb_cla ssifier_cv(X_train, y_train, X_valid, y_valid)
+            model = self.xbg_inner(M_train, M_test, class_num)
+
+            #model_file = self.__configure__.get_expr_model_file()
+            #with open(model_file, 'wb') as f:
+            #    pickle.dump(model, f, protocol=2)
+            #    print('EXPR MODEL SAVED AS {}'.format(model_file))
+
+            #train_end_time = time.time()
+
+            logging.info("EXPR best score: {}".format(model.best_score))
+            #logging.info("EXPR XGB Training Time: {} s".format(train_end_time - pca_end_time))
+
+            y_pred = model.predict(M_valid)
+            y_pred_label = self.get_predicated_label(y_pred)
+            self.get_matrics(y_valid, y_pred_label)
+        else:
+            feature_num = X.shape[1]
+            print('Feature num: %d' % feature_num)
+            evaluate_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
 
     def xbg_inner(self, M_train, M_valid, class_num, early_stop=50):
 
@@ -270,7 +322,7 @@ class ExprWithPCA(PCAForXgb):
         logging.info(classify_report)
 
 
-    def predict(self):
+    def predict(self, use_dnn):
         data_file_path = self.__configure__.get_raw_expr_pred_in_file()
         data = pd.read_csv(data_file_path, sep='\t', header=0, encoding='utf-8')
 
@@ -285,10 +337,16 @@ class ExprWithPCA(PCAForXgb):
         X, nop_Y = self.prepreocess(data, pca_df, False)
 
         model_file = self.__configure__.get_expr_model_file()
-        xgb_expr_model = pickle.load(open(model_file, 'r'))
+        if not use_dnn:
+            xgb_expr_model = pickle.load(open(model_file, 'r'))
 
-        M_pred = xgb.DMatrix(X)
-        y_prob = xgb_expr_model.predict(M_pred)
+            M_pred = xgb.DMatrix(X)
+            y_prob = xgb_expr_model.predict(M_pred)
+        else:
+            classifier = tf.estimator.DNNClassifier(model_dir = self.__configure__.get_var_l2snn_model_dir())
+            predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X.values)}, y=None, num_epochs=1, shuffle=False)
+            predictions = list(classifier.predict(input_fn = predict_input_fn))
+            y_prob = [p['probabilities'] for p in predictions]
 
         line = y_prob[0] # only has one line
 

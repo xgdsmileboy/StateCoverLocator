@@ -12,7 +12,7 @@ import os
 import sys
 
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 4 or len(sys.argv) != 5:
         print("Wrong argument number!")
         sys.exit(1)
     config = Configure(
@@ -25,7 +25,13 @@ if __name__ == '__main__':
         10,
         sys.argv[3]
     )
-    if sys.argv[3] == "l2s":
+    if sys.argv[3] == "l2s" or sys.argv[3] == "l2sdnn":
+        use_dnn = False
+        if sys.argv[3] == 'l2sdnn':
+            use_dnn = True
+        evaluate = False
+        if len(sys.argv) == 5 and sys.argv[4] == "evaluate":
+            evaluate = True
         config.set_expr_freq(freq=0)
         logging.info(
             '######################## BEGIN TRAINING FOR ' + config.prognm_and_id + ' ########################')
@@ -33,14 +39,14 @@ if __name__ == '__main__':
 
         # train position 0 var
         var_trainer = VarWithPCA(config)
-        var_trainer.train(is_v0=True)
+        var_trainer.train(is_v0=True, use_dnn, evaluate)
 
         # train all position var
-        var_trainer.train(is_v0=False)
+        var_trainer.train(is_v0=False, use_dnn, evaluate)
 
         # train expr
         expr_trainer = ExprWithPCA(config)
-        expr_trainer.train()
+        expr_trainer.train(use_dnn, evaluate)
 
         time_end = time.time()
         logging.info('######################## TOTAL TRAINING TIME ' + str(

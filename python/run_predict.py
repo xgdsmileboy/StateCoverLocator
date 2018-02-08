@@ -25,7 +25,10 @@ if __name__ == '__main__':
         sys.argv[3]
     )
 
-    if config.get_model_type() == 'l2s':
+    if config.get_model_type() == 'l2s' || config.get_model_type() == 'l2sdnn':
+        use_dnn = False
+        if sys.argv[3] == 'l2sdnn':
+            use_dnn = True
         misson_type = sys.argv[4]
         assert misson_type == 'expr' or misson_type == 'var' or misson_type == 'v0'
 
@@ -35,18 +38,18 @@ if __name__ == '__main__':
                 config.__gen_expr_top__ = int(sys.argv[5])
 
             expr_predictor = ExprWithPCA(config)
-            expr_predictor.predict()
+            expr_predictor.predict(use_dnn)
             end = time.time()
             print 'EXPR PRED TIME: ', (end - start)
 
         elif misson_type == 'v0':
             var_predictor = VarWithPCA(config)
-            var_predictor.predict(True)
+            var_predictor.predict(True, use_dnn)
             end = time.time()
             print 'V0 PRED TIME: ', (end - start)
         else:
             var_predictor = VarWithPCA(config)
-            var_predictor.predict(False)
+            var_predictor.predict(False, use_dnn)
             end = time.time()
             print 'ALL VAR PRED TIME: ', (end - start)
     else:

@@ -131,9 +131,23 @@ class Configure(object):
             os.makedirs(m_path)
         return m_path
 
+    def get_var_l2snn_model_dir(self):
+        # python/model/math_1/var_l2s
+        m_path = self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '/var_l2s/'
+        if not os.path.exists(m_path):
+            os.makedirs(m_path)
+        return m_path
+
     def get_expr_nn_model_dir(self):
         # python/model/math_1/expr/
         m_path = self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '/expr/'
+        if not os.path.exists(m_path):
+            os.makedirs(m_path)
+        return m_path
+
+    def get_expr_l2snn_model_dir(self):
+        # python/model/math_1/expr_l2s
+        m_path = self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '/expr_l2s/'
         if not os.path.exists(m_path):
             os.makedirs(m_path)
         return m_path
