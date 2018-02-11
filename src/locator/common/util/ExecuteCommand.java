@@ -130,8 +130,8 @@ public class ExecuteCommand {
 		return execute(cmd);
 	}
 	
-	public static String executeCopyTrainFileForL2S(Subject subject) {
-		return execute(CmdFactory.createCopyTrainDataForL2S(subject));
+	public static void executeCopyTrainFileForL2S(Subject subject) throws IOException, InterruptedException {
+		executeAndOutputConsole(CmdFactory.createCopyTrainDataForL2S(subject));
 	}
 
 	/**

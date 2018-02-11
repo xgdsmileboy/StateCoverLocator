@@ -12,7 +12,7 @@ import os
 import sys
 
 if __name__ == '__main__':
-    if len(sys.argv) != 4 or len(sys.argv) != 5:
+    if len(sys.argv) < 4 or len(sys.argv) > 5:
         print("Wrong argument number!")
         sys.exit(1)
     config = Configure(
@@ -39,10 +39,10 @@ if __name__ == '__main__':
 
         # train position 0 var
         var_trainer = VarWithPCA(config)
-        var_trainer.train(is_v0=True, use_dnn, evaluate)
+        var_trainer.train(True, use_dnn, evaluate)
 
         # train all position var
-        var_trainer.train(is_v0=False, use_dnn, evaluate)
+        var_trainer.train(False, use_dnn, evaluate)
 
         # train expr
         expr_trainer = ExprWithPCA(config)

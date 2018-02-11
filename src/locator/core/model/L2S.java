@@ -67,9 +67,9 @@ public class L2S extends Model {
 	@Override
 	public void trainModel(Subject subject) {
 		processDefects4J(subject);
-		ExecuteCommand.executeCopyTrainFileForL2S(subject);
 		// train model
 		try {
+			ExecuteCommand.executeCopyTrainFileForL2S(subject);
 			LevelLogger.info(">>>>>> Begin Trainning ...");
 			ExecuteCommand.executeTrain(subject);
 			LevelLogger.info(">>>>>> End Trainning !");

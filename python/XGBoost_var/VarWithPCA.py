@@ -104,6 +104,7 @@ class VarWithPCA(PCAForXgb):
             var_file = self.__configure__.get_raw_v0_train_in_file()
             misson_tp = 'v0'
             model_file = self.__configure__.get_v0_model_file()
+            model_dir = self.__configure__.get_var_l2snn_model_dir()
             transformed_tags = Configure.get_v0_tags_for_pca()
 
         else:
@@ -111,6 +112,7 @@ class VarWithPCA(PCAForXgb):
             misson_tp = 'var'
             var_file = self.__configure__.get_raw_var_train_in_file()
             model_file = self.__configure__.get_var_model_file()
+            model_dir = self.__configure__.get_var_v0_l2snn_model_dir()
             transformed_tags = Configure.get_var_tags_for_pca()
 
         ori_file_data = pd.read_csv(var_file, sep='\t', header=0, encoding='utf-8')
@@ -190,15 +192,15 @@ class VarWithPCA(PCAForXgb):
             class_num = len(classes)
             feature_num = X.shape[1]
             print('Feature num: %d' % feature_num)
-            train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
+            train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num, model_dir)
     
-    def train_dnn(self, X, Y, feature_num, class_num):
+    def train_dnn(self, X, Y, feature_num, class_num, model_dir_):
         su.rmtree(self.__configure__.get_var_l2snn_model_dir())
         feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
         classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
                                               hidden_units = [32, 32, 32, 32, 32, 32],
                                               n_classes = class_num,
-                                              model_dir = self.__configure__.get_var_l2snn_model_dir())
+                                              model_dir = model_dir_)
 
         train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
         classifier.train(input_fn=train_input_fn)        

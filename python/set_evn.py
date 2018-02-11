@@ -40,8 +40,10 @@ def copy_csv(pro_name, id):
         #copy from tmp/res/ to var/ and expr/
         cp_cmd = 'cp '
         if mission == '/var/':
-            cp_cmd += all_csv_path + '/' + pro_name + '_' + str(id) + '.var.csv ' + pro_dir
-            execute_cmd(cp_cmd)
+            cp_cmd_0 = cp_cmd + all_csv_path + '/' + pro_name + '_' + str(id) + '.var.csv ' + pro_dir
+            execute_cmd(cp_cmd_0)
+            cp_cmd_1 = cp_cmd + all_csv_path + '/' + pro_name + '_' + str(id) + '.v0.csv ' + pro_dir
+            execute_cmd(cp_cmd_1)
         elif mission == '/expr/':
             cp_cmd_0 = cp_cmd + all_csv_path + '/' + pro_name + '_' + str(id) + '.expr.csv ' + pro_dir
             execute_cmd(cp_cmd_0)

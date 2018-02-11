@@ -66,7 +66,7 @@ public class Main {
 		Model model = null;
 		if (Constant.TRAINING_MODEL.equals("dnn")) {
 			model = new DNN();
-		} else if (Constant.TRAINING_MODEL.equals("l2s")) {
+		} else if (Constant.TRAINING_MODEL.equals("l2s") || Constant.TRAINING_MODEL.equals("l2sdnn")) {
 			model = new L2S();
 		} else {
 			model = new XGBoost();
@@ -75,6 +75,8 @@ public class Main {
 		if (!useStatisticalDebugging) {
 			model.trainModel(subject);
 		}
+		
+		System.exit(0);
 
 		// copy auxiliary file to subject path
 		LevelLogger.info(__name__ + "copying auxiliary file to subject path.");
@@ -189,8 +191,8 @@ public class Main {
 		}
 		System.out.println("\n---------------------------------\n");
 		
-//		Subject subject = ProjectSelector.select("math", 4);
-		for(Subject subject : allSubjects) {
+		Subject subject = ProjectSelector.select("math", 4);
+//		for(Subject subject : allSubjects) {
 			try {
 //				File file = new File(subject.getCoverageInfoPath() + "/predicates_backup.txt");
 //				if (!file.exists()) continue;
@@ -216,7 +218,7 @@ public class Main {
 //						subject.getName() + "_" + Integer.toString(subject.getId())
 //						+ "_error.log");
 			}
-		}
+//		}
 }
 
 }

@@ -23,7 +23,7 @@ public class CmdFactory {
 		stringBuffer.append(Constant.STR_ML_HOME);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_PYTHON);
-		stringBuffer.append(Constant.STR_ML_HOME + "/set_evn.py ");
+		stringBuffer.append(Constant.STR_ML_HOME + "/set_evn.py train ");
 		stringBuffer.append(subject.getName());
 		stringBuffer.append(" ");
 		stringBuffer.append(subject.getId());
