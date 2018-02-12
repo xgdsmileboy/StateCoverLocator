@@ -75,8 +75,6 @@ public class Main {
 		if (!useStatisticalDebugging) {
 			model.trainModel(subject);
 		}
-		
-		System.exit(0);
 
 		// copy auxiliary file to subject path
 		LevelLogger.info(__name__ + "copying auxiliary file to subject path.");
