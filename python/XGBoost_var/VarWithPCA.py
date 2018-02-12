@@ -16,6 +16,7 @@ from Utils.string_utils import preprocess_numbers
 import tensorflow as tf
 import shutil as su
 import numpy as np
+from XGBoost_var.var_model import *
 
 class VarWithPCA(PCAForXgb):
 
@@ -146,7 +147,7 @@ class VarWithPCA(PCAForXgb):
             logging.info('ALLVAR VALIDATION SET SIZE: {}'.format(X_valid.shape))
 
         if evaluate:
-            evaluate_model(X, Y, use_dnn)
+            self.evaluate_model(X, Y, use_dnn)
             return
 
         # BINARY-CLASSIFICATION PROBLEM FOR VAR
@@ -191,16 +192,11 @@ class VarWithPCA(PCAForXgb):
             classes = np.unique(Y)
             class_num = len(classes)
             feature_num = X.shape[1]
-            print('Feature num: %d' % feature_num)
-            train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num, model_dir)
+            self.train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num, model_dir)
     
     def train_dnn(self, X, Y, feature_num, class_num, model_dir_):
         su.rmtree(self.__configure__.get_var_l2snn_model_dir())
-        feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
-        classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [32, 32, 32, 32, 32, 32],
-                                              n_classes = class_num,
-                                              model_dir = model_dir_)
+        classifier = var_model.get_dnn_classifier(feature_num, class_num, model_dir_)
 
         train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
         classifier.train(input_fn=train_input_fn)        
@@ -258,7 +254,7 @@ class VarWithPCA(PCAForXgb):
         else:
             feature_num = X.shape[1]
             print('Feature num: %d' % feature_num)
-            evaluate_dnn(np.array(X.values), np.array(Y.values), feature_num, 2)
+            self.evaluate_dnn(np.array(X.values), np.array(Y.values), feature_num, 2)
     
     def evaluate_dnn(self, X, Y, feature_num, class_num):
         X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size=0.1, random_state=7)
@@ -311,7 +307,7 @@ class VarWithPCA(PCAForXgb):
             M_pred = xgb.DMatrix(X)
             y_prob = xgb_var_model.predict(M_pred)
         else:
-            classifier = tf.estimator.DNNClassifier(model_dir = self.__configure__.get_var_l2snn_model_dir())
+            classifier = var_model.get_dnn_classifier(X.shape[1], 2, self.__configure__.get_var_l2snn_model_dir())
             predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X.values)}, y=None, num_epochs=1, shuffle=False)
             predictions = list(classifier.predict(input_fn = predict_input_fn))
             y_prob = [p['probabilities'] for p in predictions]

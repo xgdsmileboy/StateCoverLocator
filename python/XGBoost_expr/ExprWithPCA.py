@@ -19,6 +19,7 @@ from pca.PCAForXgb import PCAForXgb
 import tensorflow as tf
 import shutil as su
 import numpy as np
+from XGBoost_expr.expr_model import *
 
 class ExprWithPCA(PCAForXgb):
 
@@ -178,7 +179,7 @@ class ExprWithPCA(PCAForXgb):
         gc.collect()
 
         if evaluate:
-            evaluate_model(X, Y, use_dnn, class_num)
+            self.evaluate_model(X, Y, use_dnn, class_num)
             return
 
         logging.info('EXPR TRAINING SET SIZE: {}'.format(X_train.shape))
@@ -207,15 +208,11 @@ class ExprWithPCA(PCAForXgb):
         else:
             feature_num = X.shape[1]
             print('Feature num: %d' % feature_num)
-            train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
+            self.train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
 
     def train_dnn(self, X, Y, feature_num, class_num):
         su.rmtree(self.__configure__.get_expr_l2snn_model_dir())
-        feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
-        classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [32, 32, 32, 32, 32, 32],
-                                              n_classes = class_num,
-                                              model_dir = self.__configure__.get_expr_l2snn_model_dir())
+        classifier = expr_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_expr_l2snn_model_dir())
 
         train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
         classifier.train(input_fn=train_input_fn)
@@ -248,7 +245,7 @@ class ExprWithPCA(PCAForXgb):
         else:
             feature_num = X.shape[1]
             print('Feature num: %d' % feature_num)
-            evaluate_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
+            self.evaluate_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
 
     def xbg_inner(self, M_train, M_valid, class_num, early_stop=50):
 
@@ -343,10 +340,13 @@ class ExprWithPCA(PCAForXgb):
             M_pred = xgb.DMatrix(X)
             y_prob = xgb_expr_model.predict(M_pred)
         else:
-            classifier = tf.estimator.DNNClassifier(model_dir = self.__configure__.get_var_l2snn_model_dir())
-            predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X.values)}, y=None, num_epochs=1, shuffle=False)
-            predictions = list(classifier.predict(input_fn = predict_input_fn))
-            y_prob = [p['probabilities'] for p in predictions]
+            with open(self.__configure__.get_all_label_encoders('expr'), 'r') as model:
+                all_encoders = pickle.load(model)
+                Y_encoder = all_encoders['pred']
+                classifier = expr_model.get_dnn_classifier(X.shape[1], len(Y_encoder), self.__configure__.get_expr_l2snn_model_dir())
+                predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X.values)}, y=None, num_epochs=1, shuffle=False)
+                predictions = list(classifier.predict(input_fn = predict_input_fn))
+                y_prob = [p['probabilities'] for p in predictions]
 
         line = y_prob[0] # only has one line
 
