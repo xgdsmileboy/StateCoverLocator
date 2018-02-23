@@ -25,6 +25,7 @@ import org.eclipse.ui.internal.e4.migration.InfoReader;
 import java.util.Set;
 
 import edu.pku.sei.conditon.simple.FeatureGenerator;
+import jdk7.wrapper.JCompiler;
 import locator.common.config.Configure;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
@@ -341,6 +342,9 @@ public class Main {
 				LevelLogger.info("BEGIN : " + begin);
 
 				String subjectInfo = subject.getName() + "_" + subject.getId();
+				// set compile level : to refactor
+				JCompiler.setSourceLevel(Constant.PROJECT_PROP.get(subject.getName()).getSourceLevel());
+				JCompiler.setTargetLevel(Constant.PROJECT_PROP.get(subject.getName()).getTargetLevel());
 				if (!proceed(subject, Constant.USE_STATISTICAL_DEBUGGING, Constant.USE_SOBER)) {
 					String d4jOutput = JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE);
 					JavaFile.writeStringToFile(Constant.STR_ERROR_BACK_UP + "/" + subjectInfo + ".d4j.out", d4jOutput);

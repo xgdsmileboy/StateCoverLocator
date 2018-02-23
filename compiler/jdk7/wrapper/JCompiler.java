@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import jdk7.com.sun.tools.javac.util.JCDiagnostic.DiagnosticType;
 import jdk7.javax.tools.Diagnostic;
 import jdk7.javax.tools.DiagnosticListener;
 import jdk7.javax.tools.JavaCompiler;
@@ -17,13 +16,36 @@ import jdk7.javax.tools.JavaFileObject;
 import jdk7.javax.tools.SimpleJavaFileObject;
 import jdk7.javax.tools.StandardJavaFileManager;
 import jdk7.javax.tools.ToolProvider;
-import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
+import polyglot.ast.Case;
 
 
 public class JCompiler {
 
+	public static enum SOURCE_LEVEL {
+		L_1_4("1.4"),
+		L_1_5("1.5"),
+		L_1_6("1.6");
+		public static SOURCE_LEVEL toSourceLevel(String string) {
+			switch(string) {
+			case "1.4":
+			case "1_4": return SOURCE_LEVEL.L_1_4;
+			case "1.5":
+			case "1_5": return SOURCE_LEVEL.L_1_5;
+			case "1.6":
+			case "1_6": return SOURCE_LEVEL.L_1_6;
+			default : return SOURCE_LEVEL.L_1_4;
+			}
+		}
+		private String value;
+		private SOURCE_LEVEL(String val) {value = val; }
+		@Override
+		public String toString() {
+			return value;
+		}
+	}
+	
 	private final char separator = File.pathSeparatorChar; 
 	private static JCompiler instance = null;
 	public static JCompiler getInstance() {
@@ -31,6 +53,17 @@ public class JCompiler {
 			instance = new JCompiler();
 		}
 		return instance;
+	}
+	
+	private static SOURCE_LEVEL source_level = SOURCE_LEVEL.L_1_6;
+	private static SOURCE_LEVEL target_level = source_level.L_1_6;
+	
+	public static void setSourceLevel(SOURCE_LEVEL level) {
+		source_level = level;
+	}
+	
+	public static void setTargetLevel(SOURCE_LEVEL level) {
+		target_level = level;
 	}
 
 	private JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -106,12 +139,12 @@ public class JCompiler {
 			libs.append(System.getenv("classpath"));
 		}
 		Iterable<? extends JavaFileObject> files = getAllJavaFileObjects(subject.getHome() + subject.getSsrc());
-		Iterable<String> options = Arrays.asList("-d", subject.getHome() + subject.getSbin(), "-classpath", libs.toString());
+		Iterable<String> options = Arrays.asList("-d", subject.getHome() + subject.getSbin(), "-classpath", libs.toString(), "-source", source_level.toString(), "-target", target_level.toString());
 		if(!compile(files, options)) {
 			return false;
 		}
 		files = getAllJavaFileObjects(subject.getHome() + subject.getTsrc());
-		options = Arrays.asList("-d", subject.getHome() + subject.getTbin(), "-classpath", libs.toString());
+		options = Arrays.asList("-d", subject.getHome() + subject.getTbin(), "-classpath", libs.toString(), "-source", source_level.toString(), "-target", target_level.toString());
 		if(!compile(files, options)){
 			return false;
 		}
@@ -139,7 +172,7 @@ public class JCompiler {
 			e.printStackTrace();
 		}
 		Iterable<? extends JavaFileObject> files = new ArrayList<>(Arrays.asList(simpleJavaFileObject));
-		Iterable<String> options = Arrays.asList("-d", subject.getHome() + subject.getSbin(), "-classpath", libs.toString());
+		Iterable<String> options = Arrays.asList("-d", subject.getHome() + subject.getSbin(), "-classpath", libs.toString(), "-source", source_level.toString(), "-target", target_level.toString());
 		if(!compile(files, options)) {
 			return false;
 		}

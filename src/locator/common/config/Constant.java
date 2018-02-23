@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.dom.AST;
 
 import edu.pku.sei.conditon.simple.SplIfAndVariablePairVisitor;
 import edu.pku.sei.conditon.simple.SplIfStmtVisitor;
+import jdk7.wrapper.JCompiler.SOURCE_LEVEL;
 import locator.common.util.LevelLogger;
 
 /**
@@ -191,6 +192,14 @@ public class Constant {
 				String tsrc = prop.getProperty(name.toUpperCase() + ".TSRC").replace("/", Constant.PATH_SEPARATOR);
 				String sbin = prop.getProperty(name.toUpperCase() + ".SBIN").replace("/", Constant.PATH_SEPARATOR);
 				String tbin = prop.getProperty(name.toUpperCase() + ".TBIN").replace("/", Constant.PATH_SEPARATOR);
+				String sourceLevel = prop.getProperty(name.toUpperCase() + ".SRCLEVEL");
+				if (sourceLevel == null || sourceLevel.length() == 0) {
+					sourceLevel = "1.6";
+				}
+				String targetLevel = prop.getProperty(name.toUpperCase() + ".TARLEVEL");
+				if(targetLevel == null || targetLevel.length() == 0) {
+					targetLevel = "1.6";
+				}
 				List<String> classpath = new LinkedList<>();
 				switch(name) {
 				case "math":
@@ -232,7 +241,7 @@ public class Constant {
 				default :
 					System.err.println("UNKNOWN project name : " + name);
 				}
-				Constant.PROJECT_PROP.put(name, new ProjectProperties(ssrc, tsrc, sbin, tbin, classpath));
+				Constant.PROJECT_PROP.put(name, new ProjectProperties(ssrc, tsrc, sbin, tbin, classpath, SOURCE_LEVEL.toSourceLevel(sourceLevel), SOURCE_LEVEL.toSourceLevel(targetLevel)));
 			}
 			in.close();
 		} catch (IOException e) {
