@@ -19,7 +19,7 @@ from pca.PCAForXgb import PCAForXgb
 import tensorflow as tf
 import shutil as su
 import numpy as np
-from XGBoost_expr.expr_model import *
+from XGBoost_expr import expr_model
 
 class ExprWithPCA(PCAForXgb):
 

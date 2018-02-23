@@ -16,7 +16,7 @@ from Utils.string_utils import preprocess_numbers
 import tensorflow as tf
 import shutil as su
 import numpy as np
-from XGBoost_var.var_model import *
+from XGBoost_var import var_model
 
 class VarWithPCA(PCAForXgb):
 
