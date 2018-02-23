@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Untainted;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.ui.internal.e4.migration.InfoReader;
@@ -23,6 +25,7 @@ import org.eclipse.ui.internal.e4.migration.InfoReader;
 import java.util.Set;
 
 import edu.pku.sei.conditon.simple.FeatureGenerator;
+import jdk7.wrapper.JCompiler;
 import locator.common.config.Configure;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
@@ -304,7 +307,16 @@ public class Main {
 				String[] idStrings = args[1].split(",");
 				List<Integer> ids = new ArrayList<>();
 				for(String string : idStrings) {
-					ids.add(Integer.parseInt(string));
+					if(string.contains("-")) {
+						String[] range = string.split("-");
+						int start = Integer.parseInt(range[0]);
+						int end = Integer.parseInt(range[1]);
+						for(; start <= end; start ++) {
+							ids.add(start);
+						}
+					} else {
+						ids.add(Integer.parseInt(string));
+					}
 				}
 				allSubjects = ProjectSelector.select(args[0], ids);
 			}
@@ -330,6 +342,9 @@ public class Main {
 				LevelLogger.info("BEGIN : " + begin);
 
 				String subjectInfo = subject.getName() + "_" + subject.getId();
+				// set compile level : to refactor
+				JCompiler.setSourceLevel(Constant.PROJECT_PROP.get(subject.getName()).getSourceLevel());
+				JCompiler.setTargetLevel(Constant.PROJECT_PROP.get(subject.getName()).getTargetLevel());
 				if (!proceed(subject, Constant.USE_STATISTICAL_DEBUGGING, Constant.USE_SOBER)) {
 					String d4jOutput = JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE);
 					JavaFile.writeStringToFile(Constant.STR_ERROR_BACK_UP + "/" + subjectInfo + ".d4j.out", d4jOutput);

@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import jdk7.wrapper.JCompiler.SOURCE_LEVEL;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
@@ -67,6 +68,8 @@ public class JCompilerTest {
 		Subject subject = new Subject("chart", 1, "/source", "/tests", "/build", "/build-tests", libs);
 
 		JCompiler compiler = JCompiler.getInstance();
+		JCompiler.setSourceLevel(SOURCE_LEVEL.L_1_4);
+		JCompiler.setTargetLevel(SOURCE_LEVEL.L_1_4);
 		System.out.println("compile pass : " + compiler.compile(subject));
 	}
 
