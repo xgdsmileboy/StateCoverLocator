@@ -189,8 +189,8 @@ public class Main {
 		}
 		System.out.println("\n---------------------------------\n");
 		
-		Subject subject = ProjectSelector.select("math", 4);
-//		for(Subject subject : allSubjects) {
+//		Subject subject = ProjectSelector.select("math", 4);
+		for(Subject subject : allSubjects) {
 			try {
 //				File file = new File(subject.getCoverageInfoPath() + "/predicates_backup.txt");
 //				if (!file.exists()) continue;
@@ -216,7 +216,7 @@ public class Main {
 //						subject.getName() + "_" + Integer.toString(subject.getId())
 //						+ "_error.log");
 			}
-//		}
+		}
 }
 
 }
