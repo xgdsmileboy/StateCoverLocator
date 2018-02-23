@@ -166,8 +166,15 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 				Expression expr = fragment.getInitializer();
 				if (expr != null) {
 					ITypeBinding type = expr.resolveTypeBinding();
-					if (type.isPrimitive()) {
-						_leftVars.add(new Pair<String, String>(fragment.getName().getFullyQualifiedName(), type.getName()));
+					if(type != null) {
+						if (type.isPrimitive()) {
+							_leftVars.add(new Pair<String, String>(fragment.getName().getFullyQualifiedName(), type.getName()));
+						}
+					} else if(fragment.resolveBinding() != null) {
+						type = fragment.resolveBinding().getType();
+						if(type != null && type.isPrimitive()) {
+							_leftVars.add(new Pair<String, String>(fragment.getName().getFullyQualifiedName(), type.getName()));
+						}
 					}
 				}
 			}
