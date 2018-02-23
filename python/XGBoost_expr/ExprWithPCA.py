@@ -214,7 +214,7 @@ class ExprWithPCA(PCAForXgb):
         su.rmtree(self.__configure__.get_expr_l2snn_model_dir())
         classifier = expr_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_expr_l2snn_model_dir())
 
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=100, shuffle=True)
         classifier.train(input_fn=train_input_fn)
 
     def evaluate_model(X, Y, use_dnn, class_num):
