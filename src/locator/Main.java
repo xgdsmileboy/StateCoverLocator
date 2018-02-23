@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Untainted;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.ui.internal.e4.migration.InfoReader;
@@ -304,7 +306,16 @@ public class Main {
 				String[] idStrings = args[1].split(",");
 				List<Integer> ids = new ArrayList<>();
 				for(String string : idStrings) {
-					ids.add(Integer.parseInt(string));
+					if(string.contains("-")) {
+						String[] range = string.split("-");
+						int start = Integer.parseInt(range[0]);
+						int end = Integer.parseInt(range[1]);
+						for(; start <= end; start ++) {
+							ids.add(start);
+						}
+					} else {
+						ids.add(Integer.parseInt(string));
+					}
 				}
 				allSubjects = ProjectSelector.select(args[0], ids);
 			}
