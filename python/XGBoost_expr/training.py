@@ -17,6 +17,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
+from XGBoost_expr.expr_model import *
 
 import tensorflow as tf
 import shutil as su
@@ -45,11 +46,7 @@ class TrainExpr(object):
 
     def train_dnn(self, X, Y, feature_num, class_num):
         su.rmtree(self.__configure__.get_expr_nn_model_dir())
-        feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
-        classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [32, 32, 32, 32, 32, 32],
-                                              n_classes = class_num,
-                                              model_dir = self.__configure__.get_expr_nn_model_dir())
+        classifier = expr_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_expr_nn_model_dir())
 
         train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
         classifier.train(input_fn=train_input_fn)

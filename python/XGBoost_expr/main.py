@@ -3,6 +3,7 @@ import datetime
 from Utils.config import *
 import heapq as hq
 from clustering.cluster import *
+import expr_model
 
 import tensorflow as tf
 
@@ -55,12 +56,8 @@ class XGExpr(object):
             elif (self.__configure__.get_model_type() == 'randomforest'):
                 y_prob = model.predict_proba(X_pred)
         else:
-            feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
-            classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [32, 32, 32, 32, 32, 32],
-                                              n_classes = class_num,
-                                              model_dir = self.__configure__.get_expr_nn_model_dir())
-            test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_pred}, y=None, num_epochs=1, shuffle=False)
+            classifier = expr_model.get_dnn_classifier(feature_num, y_encoder.classes_.shape[0], self.__configure__.get_expr_nn_model_dir())
+            test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X_pred.values)}, y=None, num_epochs=1, shuffle=False)
             predictions = list(classifier.predict(input_fn = test_input_fn))
             y_prob = [p['probabilities'] for p in predictions]
 
