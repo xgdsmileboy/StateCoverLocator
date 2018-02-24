@@ -726,6 +726,8 @@ public class Coverage {
                 continue;
             }
             String parts[] = content.split("\t");
+            // fix bug: predicates may contain anonymous class  
+            if(parts.length != 4) continue;
             Map<Integer, List<Pair<String, String>>> line2Predicates = file2Line2Predicates.get(parts[0]);
             if (line2Predicates == null) {
                 line2Predicates = new HashMap<>();

@@ -8,13 +8,17 @@
 package locator.core.run.path;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.validator.PublicClassValidator;
 
 import locator.common.config.Configure;
 import locator.common.config.Constant;
@@ -23,6 +27,7 @@ import locator.common.java.CoverInfo;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
+import locator.common.util.LevelLogger;
 import locator.inst.Instrument;
 import locator.inst.visitor.DeInstrumentVisitor;
 
@@ -109,5 +114,4 @@ public class CoverageTest {
 
 		Assert.assertTrue(containErrorLocation);
 	}
-
 }
