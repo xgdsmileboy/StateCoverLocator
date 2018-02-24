@@ -17,7 +17,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
-from XGBoost_var.var_model import *
+from XGBoost_var import var_model
+from sklearn.preprocessing import OneHotEncoder
 
 import tensorflow as tf
 import shutil as su
@@ -48,7 +49,7 @@ class Train(object):
         su.rmtree(self.__configure__.get_var_nn_model_dir())
         classifier = var_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_var_nn_model_dir())
 
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=100, shuffle=True)
         classifier.train(input_fn=train_input_fn)
 
     def train(self, feature_num, training_objective, str_encoder, evaluate):
@@ -74,25 +75,32 @@ class Train(object):
         encoded_X = None
         x_encoders = [None] * feature_num
         for i in range(0, X.shape[1]):
-            x_encoders[i] = LabelEncoder()
-            feature = x_encoders[i].fit_transform(X[:, i])
-            feature = feature.reshape(X.shape[0], 1)
-            if i == 0:
-                # file name
+            feature = np.zeros((X.shape[0], 1))
+            if i <= 4 or i == 10 or i == 11:
+                x_encoders[i] = LabelEncoder()
+                feature = x_encoders[i].fit_transform(X[:, i])
+                feature = feature.reshape(X.shape[0], 1)
+                if i == 0:
+                    # file name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['file'][str(X[j, i])]
+                elif i == 1:
+                    # function name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['func'][str(X[j, i])]
+                elif i == 2:
+                    # variable name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['var'][str(X[j, i]).lower()]
+                #elif i == 5:
+                    # dist0
+                    #for j in range(0, X.shape[0]):
+                        #feature[j] = int(X[j, i])
+                one_hot_encoder = OneHotEncoder(sparse=False)
+                feature = one_hot_encoder.fit_transform(feature)
+            else:
                 for j in range(0, X.shape[0]):
-                    feature[j] = str_encoder['file'][str(X[j, i])]
-            elif i == 1:
-                # function name
-                for j in range(0, X.shape[0]):
-                    feature[j] = str_encoder['func'][str(X[j, i])]
-            elif i == 2:
-                # variable name
-                for j in range(0, X.shape[0]):
-                    feature[j] = str_encoder['var'][str(X[j, i]).lower()]
-            elif i == 5:
-                # dist0
-                for j in range(0, X.shape[0]):
-                    feature[j] = int(X[j, i])
+                    feature[j] = X[j, i]
             if encoded_X is None:
                 encoded_X = feature
             else:
@@ -210,7 +218,7 @@ class Train(object):
                 print('Model saved in {}'.format(model_file))
         elif (self.__configure__.get_model_type() == 'dnn'):
             if evaluate:
-                self.evaluate_dnn(encoded_X, encoded_Y, feature_num, y_encoder.classes_.shape[0])
+                self.evaluate_dnn(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0])
             else:
                 # encoded_input = pd.DataFrame(np.concatenate((encoded_X, encoded_Y.reshape(encoded_Y.shape[0], 1)), axis=1))
                 # encoded_input.to_csv(self.__configure__.get_var_nn_training_file(), index = False, header = False)
@@ -225,8 +233,8 @@ class Train(object):
             #     f.write('%d,' % feature_num)
             #     f.write('0,1\n')
             #     f.write('%s' % csv_format_data)
-
-                self.train_dnn(encoded_X, encoded_Y, feature_num, y_encoder.classes_.shape[0])
+                print(encoded_X.shape[1])
+                self.train_dnn(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0])
 
         end_time = datetime.datetime.now()
         run_time = end_time-start_time

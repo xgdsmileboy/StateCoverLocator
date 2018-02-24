@@ -121,41 +121,65 @@ class XGVar(object):
 
         # encoding string as integers
         x_encoders = [None] * feature_num
+        one_hot_encoder = [None] * feature_num
         for i in range(0, X.shape[1]):
-            x_encoders[i] = LabelEncoder()
-            x_encoders[i].fit(X[:, i])
+            if i <= 4 or i == 10 or i == 11:
+                x_encoders[i] = LabelEncoder()
+                feature = x_encoders[i].fit_transform(X[:, i])
+                feature = feature.reshape(X.shape[0], 1)
+                if i == 0:
+                    # file name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['file'][str(X[j, i])]
+                elif i == 1:
+                    # function name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['func'][str(X[j, i])]
+                elif i == 2:
+                    # variable name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['var'][str(X[j, i]).lower()]
+                one_hot_encoder[i] = OneHotEncoder(sparse=False)
+                one_hot_encoder[i].fit(feature)
 
         data = pd.read_csv(data_file_path, sep='\t', header=0, encoding='utf-8')
         dataset = data.values
 
         encoded_feature = list()
+        new_feature_num = feature_num
         for i in range(0, dataset.shape[0]):
             feature = list()
             for j in range(0, feature_num):
                 # TODO : if the key does not exit in the encoder, how to transform
                 try:
                     if j == 0:
-                        feature.append(str_encoder['file'][str(dataset[i, 3 + j])])
+                        tmp = str_encoder['file'][str(dataset[i, 3 + j])]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 1:
-                        feature.append(str_encoder['func'][str(dataset[i, 3 + j])])
+                        tmp = str_encoder['func'][str(dataset[i, 3 + j])]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 2:
-                        feature.append(str_encoder['var'][str(dataset[i, 3 + j]).lower()])
-                    elif j == 5:
-                        feature.append(int(dataset[i, 3 + j]))
+                        tmp = str_encoder['var'][str(dataset[i, 3 + j]).lower()]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
+                    #elif j == 5:
+                        #feature = np.append(feature, int(dataset[i, 3 + j]))
+                    elif j == 3 or j == 4 or j == 10 or j == 11:
+                        tmp = x_encoders[j].transform([str(dataset[i, 3 + j])])[0]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     else:
-                        feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
+                        feature = np.append(feature, int(dataset[i, 3 + j]))
                 except Exception as e:
-                    print(e)
-                    if j == 2:
+                    if j == 2 or j == 0 or j == 1:
                         # feature.append(len(var_encoder))
                         X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
                         X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
                         pred = kmeans_model['var'].predict(X_0)
-                        feature.append(pred[0])
+                        feature = np.concatenate((feature, one_hot_encoder[i].transform([[pred[0]]])[0]), axis = 0)
                     else:
-                        feature.append(x_encoders[j].classes_.shape[0])
+                        feature = np.concatenate((feature, np.zeros(one_hot_encoder[j].n_values_)), axis = 0)
 
-            feature.append(0)
+            new_feature_num = len(feature)
+            feature = np.append(feature, 0)
             encoded_feature.append(feature)
 
-        return (pd.DataFrame(encoded_feature), feature_num)
+        return (pd.DataFrame(encoded_feature), new_feature_num)
