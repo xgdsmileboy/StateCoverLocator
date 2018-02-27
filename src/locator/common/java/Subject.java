@@ -124,7 +124,7 @@ public class Subject {
 
 	public String getPredicResultPath() {
 		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id + "/" + _name + "_" + _id
-				+ ".joint.csv";
+				+ ".join.csv";
 		return file;
 	}
 	
