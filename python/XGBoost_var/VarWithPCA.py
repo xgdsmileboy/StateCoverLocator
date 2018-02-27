@@ -192,7 +192,7 @@ class VarWithPCA(PCAForXgb):
             classes = np.unique(Y)
             class_num = len(classes)
             feature_num = X.shape[1]
-            self.train_dnn(np.array(X.values).astype('int32'), np.array(Y.values).astype('int32'), feature_num, class_num, model_dir)
+            self.train_dnn(np.array(X.values).astype('float64'), np.array(Y.values).astype('float64'), feature_num, class_num, model_dir)
     
     def train_dnn(self, X, Y, feature_num, class_num, model_dir_):
         su.rmtree(self.__configure__.get_var_l2snn_model_dir())
