@@ -208,7 +208,7 @@ class ExprWithPCA(PCAForXgb):
         else:
             feature_num = X.shape[1]
             print('Feature num: %d' % feature_num)
-            self.train_dnn(np.array(X.values), np.array(Y.values), feature_num, class_num)
+            self.train_dnn(np.array(X.values).astype('int32'), np.array(Y.values).astype('int32'), feature_num, class_num)
 
     def train_dnn(self, X, Y, feature_num, class_num):
         su.rmtree(self.__configure__.get_expr_l2snn_model_dir())
