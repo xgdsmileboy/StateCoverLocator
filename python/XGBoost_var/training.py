@@ -100,7 +100,7 @@ class Train(object):
                 feature = one_hot_encoder.fit_transform(feature)
             else:
                 for j in range(0, X.shape[0]):
-                    feature[j] = X[j, i]
+                    feature[j] = int(X[j, i])
             if encoded_X is None:
                 encoded_X = feature
             else:
