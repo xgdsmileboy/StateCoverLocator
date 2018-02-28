@@ -39,7 +39,7 @@ class TrainExpr(object):
                                               hidden_units = [32, 32, 32, 32, 32, 32],
                                               n_classes = class_num)
 
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=1000, shuffle=True)
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=100, shuffle=True)
         test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_valid}, y=y_valid, num_epochs=1, shuffle=True)
         classifier.train(input_fn=train_input_fn)
         accuracy_score = classifier.evaluate(input_fn=test_input_fn)["accuracy"]
