@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import locator.common.config.Constant;
 import locator.core.run.path.LineInfo;
 
 /**
@@ -21,6 +22,36 @@ import locator.core.run.path.LineInfo;
  */
 public class FeatureExtractionTest {
 
+	@Test
+	public void test_newFeatureExpression_for_return() {
+		// test return statement "return createPieDatasetForRow(dataset,row);"
+		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
+		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
+		List<String> varFeature = new ArrayList<String>();
+		List<String> expFeature = new ArrayList<String>();
+		FeatureExtraction.extractAllFeatures(path, relJavaPath, 74, new LineInfo(), varFeature, expFeature);
+		for(String string : varFeature) {
+			System.out.println(string);
+		}
+		Assert.assertTrue(varFeature.size() == expFeature.size());
+	}
+	
+	@Test
+	public void test_newFeatureExpression_for_if() {
+		// test if statement "if (value / total < minimumPercent) {"
+		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
+		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
+		List<String> varFeature = new ArrayList<String>();
+		List<String> expFeature = new ArrayList<String>();
+		FeatureExtraction.extractAllFeatures(path, relJavaPath, 145, new LineInfo(), varFeature, expFeature);
+		for(String string : varFeature) {
+			System.out.println(string);
+		}
+		Assert.assertTrue(varFeature.size() == expFeature.size());
+//		Assert.assertTrue(varFeature.size() == 3);
+	}
+	
+	
 	//****************
 	// 2018-1-15
 	// the feature extraction process has been changed, some test cases may be not right
@@ -131,6 +162,7 @@ public class FeatureExtractionTest {
 
 	@Test
 	public void test_extractAllFeatures_minvoke() {
+		Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE = false;
 		// test method invocation statement
 		// "result.setValue(columnKey,dataset.getValue(row,current));"
 		String path = System.getProperty("user.dir") + "/res/junitRes/chart/chart_1_buggy/source";
