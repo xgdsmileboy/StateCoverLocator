@@ -641,7 +641,7 @@ public class Coverage {
 
     private static Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject,
             Set<String> allStatements, Model model, boolean useSober) {
-    	if(Constant.TRAINING_MODEL.equals("l2s")) {
+    	if(Constant.TRAINING_MODEL.equals("l2s") || Constant.TRAINING_MODEL.equals("l2sdnn")) {
     		return getAllPredicatesForL2S(subject, allStatements, (L2S)model, useSober);
     	} else {
     		return getAllPredicatesOrigin(subject, allStatements, model, useSober);
