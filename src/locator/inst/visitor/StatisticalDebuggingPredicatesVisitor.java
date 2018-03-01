@@ -108,8 +108,10 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		int start = _cu.getLineNumber(position);
 		if (start == _line) {
 			Expression expr = node.getExpression();
-			String condition = expr.toString();
-			_predicates.addAll(getPredicateForConditions(condition));
+			if(expr != null) {
+				String condition = expr.toString();
+				_predicates.addAll(getPredicateForConditions(condition));
+			}
 		}
 		return true;
 	}

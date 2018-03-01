@@ -181,10 +181,7 @@ public class FeatureExtraction {
 			int start = _cu.getLineNumber(expression.getStartPosition());
 			int end = _cu.getLineNumber(expression.getStartPosition() + expression.getLength());
 			if(start <= _line && _line <= end) {
-				CollectSimpleName collectSimpleName = new CollectSimpleName();
-				expression.accept(collectSimpleName);
-				Pair<Set<String>, Pair<String, Set<String>>> vars = collectSimpleName.getVariables();
-				_leftVar.addAll(vars.getSecond().getSecond());
+				_leftVar.addAll(getVariables(expression));
 				return false;
 			}
 			return true;
@@ -196,12 +193,59 @@ public class FeatureExtraction {
 				int start = _cu.getLineNumber(expression.getStartPosition());
 				int end = _cu.getLineNumber(expression.getStartPosition() + expression.getLength());
 				if(start <= _line && _line <= end) {
-					CollectSimpleName collectSimpleName = new CollectSimpleName();
-					expression.accept(collectSimpleName);
-					Pair<Set<String>, Pair<String, Set<String>>> vars = collectSimpleName.getVariables();
-					_leftVar.addAll(vars.getSecond().getSecond());
+					_leftVar.addAll(getVariables(expression));
 					return false;
 				}
+			}
+			return true;
+		}
+		
+		public boolean visit(ForStatement node) {
+			Expression expr = node.getExpression();
+			if(expr != null) {
+				int position = node.getStartPosition();
+				if (node.getExpression() != null) {
+					position = node.getExpression().getStartPosition();
+				} else if (node.initializers() != null && node.initializers().size() > 0) {
+					position = ((ASTNode) node.initializers().get(0)).getStartPosition();
+				} else if (node.updaters() != null && node.updaters().size() > 0) {
+					position = ((ASTNode) node.updaters().get(0)).getStartPosition();
+				}
+				int start = _cu.getLineNumber(position);
+				if (start == _line) {
+					_leftVar.addAll(getVariables(expr));
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		public boolean visit(WhileStatement node) {
+			int start = _cu.getLineNumber(node.getExpression().getStartPosition());
+			if (start == _line) {
+				Expression expr = node.getExpression();
+				_leftVar.addAll(getVariables(expr));
+				return false;
+			}
+			return true;
+		}
+		
+		public boolean visit(DoStatement node) {
+			int start = _cu.getLineNumber(node.getExpression().getStartPosition());
+			if (start == _line) {
+				Expression expr = node.getExpression();
+				_leftVar.addAll(getVariables(expr));
+				return false;
+			}
+			return true;
+		}
+		
+		public boolean visit(SwitchStatement node) {
+			int start = _cu.getLineNumber(node.getExpression().getStartPosition());
+			if (start == _line) {
+				Expression expr = node.getExpression();
+				_leftVar.addAll(getVariables(expr));
+				return false;
 			}
 			return true;
 		}
@@ -225,6 +269,13 @@ public class FeatureExtraction {
 				}
 			}
 			return true;
+		}
+		
+		private Set<String> getVariables(ASTNode node) {
+			CollectSimpleName collectSimpleName = new CollectSimpleName();
+			node.accept(collectSimpleName);
+			Pair<Set<String>, Pair<String, Set<String>>> vars = collectSimpleName.getVariables();
+			return vars.getSecond().getSecond();
 		}
 	}
 
