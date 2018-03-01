@@ -36,10 +36,10 @@ class TrainExpr(object):
         X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size=0.3, random_state=7)
         feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
         classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [32, 32, 32, 32, 32, 32],
+                                              hidden_units = [64, 64, 64, 64, 64, 64],
                                               n_classes = class_num)
 
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=100, shuffle=True)
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=1000, shuffle=True)
         test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_valid}, y=y_valid, num_epochs=1, shuffle=True)
         classifier.train(input_fn=train_input_fn)
         accuracy_score = classifier.evaluate(input_fn=test_input_fn)["accuracy"]
@@ -49,7 +49,7 @@ class TrainExpr(object):
         su.rmtree(self.__configure__.get_expr_nn_model_dir())
         classifier = expr_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_expr_nn_model_dir())
 
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=100, shuffle=True)
+        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
         classifier.train(input_fn=train_input_fn)
 
     def train(self, feature_num, training_objective, str_encoder, evaluate):

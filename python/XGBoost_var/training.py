@@ -36,7 +36,7 @@ class Train(object):
         X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size=0.3, random_state=7)
         feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
         classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [32, 32, 32, 32, 32, 32],
+                                              hidden_units = [64, 64, 64, 64, 64, 64],
                                               n_classes = class_num)
 
         train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=100, shuffle=True)
