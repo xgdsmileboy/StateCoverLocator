@@ -69,7 +69,8 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 			}
 		}
 		
-		if (!name.startsWith("test") && !hasAnnotation) {
+		// bug fix: does not instrument test cases with parameters 2018-3-1
+		if (!name.startsWith("test") && !hasAnnotation || node.parameters().size() > 0) {
 			return true;
 		}
 
