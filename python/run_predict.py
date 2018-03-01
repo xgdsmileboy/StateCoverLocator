@@ -7,7 +7,7 @@ import os
 import sys
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("Wrong argument number!")
         sys.exit(1)
     config = Configure(
@@ -17,7 +17,8 @@ if __name__ == '__main__':
         'model/',
         'input/',
         'output/',
-        sys.maxint     #TOP: 10, 100, sys.maxint
+        200,     #TOP: 10, 100, sys.maxint
+        sys.argv[3]
     )
 
     cluster = Cluster(config)

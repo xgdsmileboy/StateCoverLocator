@@ -3,6 +3,9 @@ import datetime
 from Utils.config import *
 import heapq as hq
 from clustering.cluster import *
+import expr_model
+
+import tensorflow as tf
 
 class XGExpr(object):
 
@@ -13,13 +16,13 @@ class XGExpr(object):
         """
         self.__configure__ = configure
 
-    def train_expr(self, str_encoder, feature_num):
+    def train_expr(self, str_encoder, feature_num, evaluate):
         print('Training expr model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
         ## construct the path strings with params
         trainExpr = TrainExpr(self.__configure__)
         # train the model
-        trainExpr.train(feature_num, 'multi:softprob', str_encoder)
+        trainExpr.train(feature_num, 'multi:softprob', str_encoder, evaluate)
 
 
     def run_gen_exprs(self, str_encoder, kmeans_model):
@@ -27,34 +30,42 @@ class XGExpr(object):
 
         expr_predicted = self.__configure__.get_expr_pred_out_file()
         expr_model_path = self.__configure__.get_expr_model_file()
+        if os.path.exists(expr_predicted):
+            os.remove(expr_predicted)
 
         top = self.__configure__.get_gen_expr_top()
 
-        dataset, encoded_x, encoded_y, x_encoders, y_encoder = self.encode_expr(str_encoder, kmeans_model)
-
-        ## load the model
-        if not os.path.exists(expr_model_path):
-            print('Model file does not exist!')
-            os._exit(0)
-        with open(expr_model_path, 'r') as f:
-            model = pk.load(f)
-            print('Model loaded from {}'.format(expr_model_path))
-            print(model)
-
+        dataset, encoded_x, encoded_y, x_encoders, y_encoder, feature_num = self.encode_expr(str_encoder, kmeans_model)
         X_pred = encoded_x
-        print(X_pred)
+        y_prob = list()
+        if (self.__configure__.get_model_type() != 'dnn'):
+            ## load the model
+            if not os.path.exists(expr_model_path):
+                print('Model file does not exist!')
+                os._exit(0)
+            with open(expr_model_path, 'r') as f:
+                model = pk.load(f)
+                print('Model loaded from {}'.format(expr_model_path))
+                print(model)
 
-        M_pred = xgb.DMatrix(X_pred)
-        y_prob = model.predict(M_pred)
+            if (self.__configure__.get_model_type() == 'xgboost'):
+                M_pred = xgb.DMatrix(X_pred)
+                y_prob = model.predict(M_pred)
+            # elif (self.__configure__.get_model_type() == 'svm'):
+                # y_prob = model.predict_log_proba(X_pred)
+            elif (self.__configure__.get_model_type() == 'randomforest'):
+                y_prob = model.predict_proba(X_pred)
+        else:
+            classifier = expr_model.get_dnn_classifier(feature_num, y_encoder.classes_.shape[0], self.__configure__.get_expr_nn_model_dir())
+            test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X_pred.values)}, y=None, num_epochs=1, shuffle=False)
+            predictions = list(classifier.predict(input_fn = test_input_fn))
+            y_prob = [p['probabilities'] for p in predictions]
 
-        print(y_prob.shape)
-
-        ## save the results
-        if os.path.exists(expr_predicted):
-            os.remove(expr_predicted)
+        ## save the result
         with open(expr_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
-                f.write('%s\t' % dataset[i, 0])
+                key = dataset[i, 3] + "::" + str(dataset[i, 1]) + "::" + dataset[i, 5] 
+                f.write('%s\t' % key)
                 f.write('%s\t' % dataset[i, 5])
                 # f.write('%s' % y_prob[i])
                 line = y_prob[i]
@@ -77,7 +88,6 @@ class XGExpr(object):
                     f.write('\t%f' % line[alts[j]])
                     f.write('\n')
 
-
     def encode_expr(self, str_encoder, kmeans_model):
 
         data_file_path = self.__configure__.get_raw_expr_pred_in_file()
@@ -98,41 +108,66 @@ class XGExpr(object):
         feature_num = original_data.shape[1] - 4
         # encoding string as integers
         x_encoders = [None] * feature_num
+        one_hot_encoder = [None] * feature_num
         for i in range(0, X.shape[1]):
             x_encoders[i] = LabelEncoder()
-            x_encoders[i].fit_transform(X[:, i])
+            feature = x_encoders[i].fit_transform(X[:, i])
+            feature = feature.reshape(X.shape[0], 1)
+            if i <= 4 or i == 9 or i == 10 or i == 11:
+                if i == 0:
+                    # file name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['file'][str(X[j, i])]
+                elif i == 1:
+                    # function name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['func'][str(X[j, i])]
+                elif i == 2:
+                    # variable name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['var'][str(X[j, i]).lower()]
+                one_hot_encoder[i] = OneHotEncoder(sparse=False)
+                one_hot_encoder[i].fit(feature)
 
         data = pd.read_csv(data_file_path, sep='\t', header=0, encoding='utf-8')
         dataset = data.values
 
 
         encoded_x = list()
+        new_feature_num = feature_num
         for i in range(0, dataset.shape[0]):
             feature = list()
             for j in range(0, feature_num):
                 try:
                     if j == 0:
-                        feature.append(str_encoder['file'][str(dataset[i, 3 + j])])
+                        tmp = str_encoder['file'][str(dataset[i, 3 + j])]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 1:
-                        feature.append(str_encoder['func'][str(dataset[i, 3 + j])])
+                        tmp = str_encoder['func'][str(dataset[i, 3 + j])]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 2:
-                        feature.append(str_encoder['var'][str(dataset[i, 3 + j]).lower()])
-                    elif j == 5 or j == 6: #dis0 AND presasnum
-                        feature.append(int(dataset[i, 3 + j]))
+                        tmp = str_encoder['var'][str(dataset[i, 3 + j]).lower()]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
+                    #elif j == 5:
+                        #feature = np.append(feature, int(dataset[i, 3 + j]))
+                    elif j == 3 or j == 4 or j == 9 or j == 10 or j == 11:
+                        tmp = x_encoders[j].transform([str(dataset[i, 3 + j])])[0]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     else:
-                        feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
+                        feature = np.append(feature, int(dataset[i, 3 + j]))
                 except Exception as e:
                     print(e)
-                    if j == 2:
+                    if j == 2 or j == 0 or j == 1:
                         # feature.append(len(var_encoder))
                         X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
                         X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
                         pred = kmeans_model['var'].predict(X_0)
-                        feature.append(pred[0])
+                        feature = np.concatenate((feature, one_hot_encoder[i].transform([[pred[0]]])[0]), axis = 0)
                     else:
-                        feature.append(x_encoders[j].classes_.shape[0])
+                        feature = np.concatenate((feature, np.zeros(one_hot_encoder[j].n_values_)), axis = 0)
+            new_feature_num = len(feature)
             encoded_x.append(feature)
 
         encoded_x = pd.DataFrame(encoded_x)
         encoded_y = pd.DataFrame(encoded_y)
-        return (dataset, encoded_x, encoded_y, x_encoders, y_encoder)
+        return (dataset, encoded_x, encoded_y, x_encoders, y_encoder, new_feature_num)

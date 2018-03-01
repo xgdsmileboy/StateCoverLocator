@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.ArrayAccess;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -25,11 +26,14 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.junit.validator.PublicClassValidator;
 
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
@@ -43,10 +47,19 @@ import locator.common.util.LevelLogger;
 public class ExprFilter {
 
 	private static Map<String, Pair<Set<String>, String>> _typeInfo = new HashMap<>();
+	
+	private static Set<String> _legalMethods = new HashSet<>();
 
+	static{
+		_legalMethods.add("size");
+		_legalMethods.add("length");
+		_legalMethods.add("toString");
+		// TODO : need to complete
+	}
+	
 	public static void init(Subject subject) {
 		String path = subject.getHome() + subject.getSsrc();
-		List<String> fileList = JavaFile.ergodic(path, new ArrayList<>());
+		List<String> fileList = JavaFile.ergodic(path, new ArrayList<String>());
 		MethodAndFieldCollectorVisitor visitor = new MethodAndFieldCollectorVisitor();
 		for (String fileName : fileList) {
 			CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(fileName),
@@ -91,6 +104,9 @@ public class ExprFilter {
 		
 		ExprAnalysisVisitor visitor = new ExprAnalysisVisitor(varName, type);
 		node.accept(visitor);
+		if(visitor.hasSideEffect()){
+			return false;
+		}
 		// user-defined class
 		if (_typeInfo.containsKey(type) && !visitor.isLegal()) {
 			return false;
@@ -98,6 +114,12 @@ public class ExprFilter {
 		Set<String> singleVars = visitor.getSingleVariables();
 		for (String var : singleVars) {
 			if (!locaLegalVarNames.contains(var) && !isField(var, currentClassName)) {
+				return false;
+			}
+		}
+		
+		for(String methodName : visitor.getMethods()){
+			if(!_legalMethods.contains(methodName)){
 				return false;
 			}
 		}
@@ -197,9 +219,11 @@ public class ExprFilter {
 
 	static class ExprAnalysisVisitor extends ASTVisitor {
 		private boolean _legal = true;
+		private boolean _hasSideEffect = false;
 		private String _varName = null;
 		private String _type = null;
 		private Set<String> _singleVariableNames = new HashSet<>();
+		private Set<String> _methodInvacations = new HashSet<>();
 
 		public ExprAnalysisVisitor(String varName, String type) {
 			_varName = varName;
@@ -208,6 +232,14 @@ public class ExprFilter {
 
 		public boolean isLegal() {
 			return _legal;
+		}
+		
+		public boolean hasSideEffect(){
+			return _hasSideEffect;
+		}
+		
+		public Set<String> getMethods(){
+			return _methodInvacations;
 		}
 		
 		public Set<String> getSingleVariables(){
@@ -249,8 +281,8 @@ public class ExprFilter {
 			return true;
 		}
 		
-		
 		public boolean visit(MethodInvocation node){
+			_methodInvacations.add(node.getName().getFullyQualifiedName());
 			if(node.getExpression() != null){
 				String var = node.getExpression().toString();
 				String name = node.getName().toString();
@@ -276,6 +308,25 @@ public class ExprFilter {
 			return true;
 		}
 		
+		public boolean visit(PrefixExpression node) {
+			if (node.getOperator().equals(PrefixExpression.Operator.DECREMENT)
+					|| node.getOperator().equals(PrefixExpression.Operator.INCREMENT)) {
+				_hasSideEffect = true;
+				return false;
+			}
+			return true;
+		}
+		
+		public boolean visit(PostfixExpression node){
+			_hasSideEffect = true;
+			return false;
+		}
+		
+		public boolean visit(Assignment node){
+			_hasSideEffect = true;
+			return false;
+		}
+		
 		public boolean visit(InfixExpression node){
 			String left = node.getLeftOperand().toString();
 			if(left.equals("this")){
@@ -295,5 +346,4 @@ public class ExprFilter {
 		}
 
 	}
-	
 }

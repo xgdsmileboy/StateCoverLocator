@@ -56,7 +56,7 @@ public class ConfigureTest {
 	@Test
 	public void test_config_dumper() {
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "/tests", "build", "build-tests", null);
 		Configure.config_dumper(subject);
 		File file = new File("res/junitRes/chart/chart_1_buggy/source/auxiliary/Dumper.java");
 		Assert.assertTrue("Auxiliary file is not copied right.", file.exists());

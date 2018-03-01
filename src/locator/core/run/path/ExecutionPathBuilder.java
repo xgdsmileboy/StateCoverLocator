@@ -34,6 +34,64 @@ public class ExecutionPathBuilder {
 
 	private final static String __name__ = "@ExecutionPathBuilder ";
 
+	
+	public static Map<String, CoverInfo> buildCoverage(String outputFile){
+		Map<String, CoverInfo> coverage = new HashMap<>();
+		File file = new File(outputFile);
+		if (!file.exists()) {
+			LevelLogger.warn(__name__ + "#collectAllExecutedMethods file : " + outputFile + " does not exist.");
+			return coverage;
+		}
+
+		BufferedReader bReader = null;
+
+		try {
+			bReader = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			LevelLogger.fatal(__name__ + "#collectAllExecutedMethods open file failed !", e);
+			return coverage;
+		}
+
+		String line = null;
+		try {
+			while ((line = bReader.readLine()) != null) {
+				String[] lineInfo = line.split("\t");
+				if (lineInfo.length < 5) {
+					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
+					System.exit(0);
+				}
+				String lineNum = lineInfo[0];
+				int failNum = Integer.parseInt(lineInfo[1]);
+				int succNum = Integer.parseInt(lineInfo[2]);
+				int failObservedNum = Integer.parseInt(lineInfo[3]);
+				int succObservedNum = Integer.parseInt(lineInfo[4]);
+	
+				CoverInfo coverInfo = coverage.get(lineNum);
+				if(coverInfo == null){
+					coverInfo = new CoverInfo();
+					coverage.put(lineNum, coverInfo);
+				}
+				coverInfo.passedAdd(succNum);
+				coverInfo.failedAdd(failNum);
+				coverInfo.failedObservedAdd(failObservedNum);
+				coverInfo.passedObservedAdd(succObservedNum);
+			}
+			bReader.close();
+		} catch (IOException e) {
+			LevelLogger.fatal(__name__ + "#collectAllExecutedMethods read file failed !", e);
+			return null;
+		} finally {
+			if (bReader != null) {
+				try {
+					bReader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+
+		return coverage;
+	}
+	
 	public static Map<String, CoverInfo> buildCoverage(String outputFile, Set<Integer> onlyCoveredByFailedTest){
 		Map<String, CoverInfo> coverage = new HashMap<>();
 		File file = new File(outputFile);
@@ -64,11 +122,24 @@ public class ExecutionPathBuilder {
 				int succNum = Integer.parseInt(lineInfo[2]);
 				
 				String[] str = lineNum.split("#");
+				// when collecting the original coverage information, the length
+				// of str should exactly be 2 formatted as methodID#lineNumber
+				// otherwise, it exactly should be 5 items formatted as
+				// methodID#line#condition#prob#conditionCountFlag
+				// for predicted predicates
 				if(str.length > 2){
-					if(succNum == 0){
-						onlyCoveredByFailedTest.add(Integer.parseInt(str[2]));
+					int index = lineNum.lastIndexOf("#");
+					if(index > 0){
+						if(succNum == 0){
+							Integer conditionFlag = Integer.parseInt(lineNum.substring(index + 1, lineNum.length()));
+							onlyCoveredByFailedTest.add(conditionFlag);
+						}
+						lineNum = lineNum.substring(0, index);
+					} else {
+						LevelLogger.error(__name__ + "#collectAllExecutedMethods line format error : " + lineNum);
+						System.exit(0);
 					}
-					lineNum = str[0] + "#" + str[1];
+//					lineNum = str[0] + "#" + str[1];
 				}
 				
 				CoverInfo coverInfo = coverage.get(lineNum);

@@ -42,7 +42,7 @@ public class InstrumentTest {
 	@Test
 	public void test_instrumentMultiFiles() {
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "tests", "build", "build-tests", null);
 		String filePath = subject.getHome() + subject.getSsrc();
 		StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor();
 		statementInstrumentVisitor.setFlag(Constant.INSTRUMENT_K_SOURCE);
@@ -54,7 +54,7 @@ public class InstrumentTest {
 	@Test
 	public void test_deInstrumentMultiFiles() {
 		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 1, "/source", "tests", "build", "build-tests");
+		Subject subject = new Subject("chart", 1, "/source", "tests", "build", "build-tests", null);
 		String filePath = subject.getHome() + subject.getSsrc();
 		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
 		// after executed, all instrumented statements in java files in

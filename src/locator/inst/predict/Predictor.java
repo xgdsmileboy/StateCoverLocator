@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,10 @@ import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.core.run.path.LineInfo;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureEntry;
+import locator.inst.visitor.feature.NewExprFilter;
 
 /**
  * @author Jiajun
@@ -56,9 +59,8 @@ public class Predictor {
 	 *         left variable [currently, not use] the second set contains all
 	 *         conditions for right variables
 	 */
-	public static Pair<Set<String>, Set<String>> predict(Subject subject, List<String> varFeatures,
-			List<String> expFeatures, Map<String, String> allLegalVariablesMap) {
-		Pair<Set<String>, Set<String>> conditions = new Pair<>();
+	public static Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
+			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
 		String currentClassName = null;
 		// TODO : return conditions for left variable and right variables
 		File varFile = new File(subject.getVarFeatureOutputPath());
@@ -82,7 +84,7 @@ public class Predictor {
 
 		File expFile = new File(subject.getExprFeatureOutputPath());
 		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
-		for (String string : expFeatures) {
+		for (String string : exprFeatures) {
 			// filter duplicated features
 			if(_uniqueFeatures.contains(string)){
 				continue;
@@ -101,15 +103,16 @@ public class Predictor {
 			e.printStackTrace();
 		}
 
+		Map<String, Map<String, List<Pair<String, String>>>> rightConditions = new HashMap<>();
 		File rslFile = new File(subject.getPredicResultPath());
 		BufferedReader bReader = null;
 		try {
 			bReader = new BufferedReader(new FileReader(rslFile));
 		} catch (FileNotFoundException e) {
 			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
-			return conditions;
+			return rightConditions;
 		}
-		Set<String> rightConditions = new HashSet<>();
+		
 		String line = null;
 		try {
 			// filter title
@@ -121,11 +124,26 @@ public class Predictor {
 						LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
 						continue;
 					}
+					String key = columns[0];
 					String varName = columns[1];
 					String condition = columns[2].replace("$", varName);
-					String varType = allLegalVariablesMap.get(varName);
-					if(ExprFilter.isLegalExpr(varType, varName, condition, allLegalVariablesMap.keySet(), currentClassName)){
-						rightConditions.add(condition);
+					String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
+					String prob = columns[3];
+					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), currentClassName);
+					if(newCond != null){
+						Map<String, List<Pair<String, String>>> linePreds = rightConditions.get(key);
+						if (linePreds == null) {
+							linePreds = new HashMap<>();
+						}
+						List<Pair<String, String>> preds = linePreds.get(varName);
+						if(preds == null){
+							preds = new ArrayList<>();
+						}
+						Pair<String, String> pair = new Pair<String, String>(newCond, prob);
+						preds.add(pair);
+						linePreds.put(varName, preds);
+						rightConditions.put(key, linePreds);
+						
 					} else {
 						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
 					}
@@ -140,8 +158,7 @@ public class Predictor {
 		ExecuteCommand.deleteGivenFile(expFile.getAbsolutePath());
 		ExecuteCommand.deleteGivenFile(rslFile.getAbsolutePath());
 		
-		conditions.setSecond(rightConditions);
-		return conditions;
+		return rightConditions;
 	}
 
 }

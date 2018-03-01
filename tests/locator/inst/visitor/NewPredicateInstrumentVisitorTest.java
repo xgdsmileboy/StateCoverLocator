@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.junit.Test;
 
 import locator.common.java.JavaFile;
+import locator.common.java.Pair;
 
 /**
  * @author Jiajun
@@ -29,13 +30,37 @@ public class NewPredicateInstrumentVisitorTest {
 		String filePath = "res/junitRes/BigFraction.java";
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
-		List<String> conditions = new ArrayList<>();
-		conditions.add("a > b");
-		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 23);
+		List<Pair<String, String>> conditions = new ArrayList<>();
+		conditions.add(new Pair<String, String>("a > b", "0.5"));
+		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 27);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 //		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);
 		compilationUnit.accept(new DeInstrumentVisitor());
+		System.out.println(compilationUnit);
+	}
+	
+	@Test
+	public void test_predicateInstrumentForClazz_assignment() {
+		String filePath = "res/junitRes/BigFraction.java";
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
+		List<Pair<String, String>> conditions = new ArrayList<>();
+		conditions.add(new Pair<String, String>("a > b", "0.5"));
+		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 36);
+		compilationUnit.accept(predicateInstrumentVisitor);
+		System.out.println(compilationUnit);
+	}
+	
+	@Test
+	public void test_predicateInstrumentForClazz_vds() {
+		String filePath = "res/junitRes/BigFraction.java";
+		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
+				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
+		List<Pair<String, String>> conditions = new ArrayList<>();
+		conditions.add(new Pair<String, String>("a > b", "0.5"));
+		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 64);
+		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 	}
 	

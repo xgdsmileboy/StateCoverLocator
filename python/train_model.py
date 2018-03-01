@@ -7,7 +7,7 @@ import os
 import sys
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("Wrong argument number!")
         sys.exit(1)
     config = Configure(
@@ -17,15 +17,16 @@ if __name__ == '__main__':
         'model/',
         'input/',
         'output/',
-        10
+        10,
+        sys.argv[3]
     )
     cluster = Cluster(config)
     str_encoder, var_column, expr_column  = cluster.cluster_string()
 
     xgvar = XGVar(config)
     var_feature_num = var_column - 4
-    xgvar.train_var(str_encoder, var_feature_num)
+    xgvar.train_var(str_encoder, var_feature_num, False)
 
     xgexpr = XGExpr(config)
     expr_feature_num = expr_column - 4
-    xgexpr.train_expr(str_encoder, expr_feature_num)
+    xgexpr.train_expr(str_encoder, expr_feature_num, False)

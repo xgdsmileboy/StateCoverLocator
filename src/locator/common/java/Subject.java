@@ -7,6 +7,10 @@
 
 package locator.common.java;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import locator.common.config.Constant;
 
 /**
@@ -21,6 +25,7 @@ public class Subject {
 	private String _tsrc = null;
 	private String _sbin = null;
 	private String _tbin = null;
+	private List<String> _classpath;
 
 	/**
 	 * subject
@@ -39,12 +44,17 @@ public class Subject {
 	 *            : relative path for test byte code, e.g., "/test-classes"
 	 */
 	public Subject(String name, int id, String ssrc, String tsrc, String sbin, String tbin) {
+		this(name, id, ssrc, tsrc, sbin, tbin, new ArrayList<String>(0));
+	}
+	
+	public Subject(String name, int id, String ssrc, String tsrc, String sbin, String tbin, List<String> classpath) {
 		_name = name;
 		_id = id;
 		_ssrc = ssrc;
 		_tsrc = tsrc;
 		_sbin = sbin;
 		_tbin = tbin;
+		_classpath = classpath;
 	}
 
 	public String getName() {
@@ -69,6 +79,26 @@ public class Subject {
 
 	public String getTbin() {
 		return _tbin;
+	}
+	
+	public void setClasspath(List<String> classpath) {
+		_classpath = classpath;
+	}
+	
+	public List<String> getClasspath() {
+		return _classpath;
+	}
+	
+	public boolean checkAndInitDir() {
+		File file = new File(getHome() + getSbin());
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		file = new File(getHome() + getTbin());
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		return true;
 	}
 
 	/**
@@ -96,6 +126,15 @@ public class Subject {
 		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id + "/" + _name + "_" + _id
 				+ ".joint.csv";
 		return file;
+	}
+	
+	public String getPredictResultDir() {
+		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id;
+		return file;
+	}
+	
+	public String getCoverageInfoPath() {
+		return Constant.STR_INFO_OUT_PATH + "/" + _name + "/" + _name + "_" + _id;
 	}
 
 	@Override

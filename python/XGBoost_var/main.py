@@ -2,6 +2,9 @@ from training import *
 from Utils.config import *
 import pandas as pd
 from clustering.cluster import *
+import var_model
+
+import tensorflow as tf
 
 class XGVar(object):
 
@@ -12,38 +15,29 @@ class XGVar(object):
         """
         self.__configure__ = configure;
 
-    def train_var(self, str_encoder, feature_num):
+    def train_var(self, str_encoder, feature_num, evaluate):
         print('Training var model for {}_{}...'.\
               format(self.__configure__.get_project_name(), self.__configure__.get_bug_id()))
 
         # feature_num = # cols - 1(only one target)
         train = Train(self.__configure__)
-        train.train(feature_num, 'binary:logistic', str_encoder)
+        train.train(feature_num, 'binary:logistic', str_encoder, evaluate)
 
-
-    def predict_vars(self, encoded_var):
+    def predict_vars(self, encoded_var, feature_num):
         # encoded_oracle_var =  oracle[0:-4]+ '.var_encoded.csv'
         var_predicted = self.__configure__.get_var_pred_out_file()
+        if os.path.exists(var_predicted):
+            os.remove(var_predicted)
 
         raw_var_path = self.__configure__.get_raw_var_pred_in_file()
         raw_var = pd.read_csv(raw_var_path, sep='\t', header=0)
         raw_var_values = raw_var.values
 
         varnames = list()
-        if_ids = list()
+        line_ids = list()
         for r in range(0, encoded_var.shape[0]):
-            if_ids.append(raw_var_values[r, 0])
+            line_ids.append(raw_var_values[r, 3] + "::" + str(raw_var_values[r, 1]) + "::" + raw_var_values[r, 5])
             varnames.append(raw_var_values[r, 5])
-
-        # load the model from file
-        var_model_path = self.__configure__.get_var_model_file()
-        if not os.path.exists(var_model_path):
-            print('Model file does not exist!')
-            os._exit(0)
-        with open(var_model_path, 'r') as f:
-            model = pk.load(f)
-            print('Model loaded from {}'.format(var_model_path))
-            print(model)
 
         encoded_rows_array = np.array(encoded_var)
         # print(encoded_rows_array.shape)
@@ -54,28 +48,61 @@ class XGVar(object):
 
         y_pred = y_pred.astype(float)
 
-        M_pred = xgb.DMatrix(X_pred, label=y_pred)
-        y_prob = model.predict(M_pred)
+        # load the model from file
+        if (self.__configure__.get_model_type() != 'dnn'):
+            var_model_path = self.__configure__.get_var_model_file()
+            if not os.path.exists(var_model_path):
+                print('Model file does not exist!')
+                os._exit(0)
+            with open(var_model_path, 'r') as f:
+                model = pk.load(f)
+                print('Model loaded from {}'.format(var_model_path))
+                print(model)
 
+            if (self.__configure__.get_model_type() == 'xgboost'):
+                M_pred = xgb.DMatrix(X_pred, label=y_pred)
+                y_prob = model.predict(M_pred)
 
-        if os.path.exists(var_predicted):
-            os.remove(var_predicted)
+                with open(var_predicted, 'w') as f:
+                    for i in range(0, X_pred.shape[0]):
+                        f.write('%s\t' % line_ids[i])
+                        f.write('%s\t' % varnames[i])
+                        f.write('%.4f' % y_prob[i])
+                        f.write('\n')
+            # elif (self.__configure__.get_model_type() == 'svm'):
+                # y_prob = model.predict_proba(X_pred)
+            elif (self.__configure__.get_model_type() == 'randomforest'):
+                y_prob = model.predict_proba(X_pred)
+                print(y_prob)
+                print(model.classes_)
+                one_pos = 1 - model.classes_[0]
 
-        with open(var_predicted, 'w') as f:
-            for i in range(0, X_pred.shape[0]):
-                f.write('%s\t' % if_ids[i])
-                f.write('%s\t' % varnames[i])
-                f.write('%.4f' % y_prob[i])
-                f.write('\n')
-
+                with open(var_predicted, 'w') as f:
+                    for i in range(0, X_pred.shape[0]):
+                        f.write('%s\t' % line_ids[i])
+                        f.write('%s\t' % varnames[i])
+                        f.write('%.4f' % y_prob[i][one_pos])
+                        f.write('\n')
+        else:
+            classifier = var_model.get_dnn_classifier(feature_num, 2, self.__configure__.get_var_nn_model_dir())
+            predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_pred}, y=None, num_epochs=1, shuffle=False)
+            predictions = list(classifier.predict(input_fn = predict_input_fn))
+            y_prob = [p['probabilities'] for p in predictions]
+            print(y_prob)
+            with open(var_predicted, 'w') as f:
+                for i in range(0, X_pred.shape[0]):
+                    f.write('%s\t' % line_ids[i])
+                    f.write('%s\t' % varnames[i])
+                    f.write('%.4f' % y_prob[i][1])
+                    f.write('\n')
 
     def run_predict_vars(self, str_encoder, kmeans_model):
 
         print('Predicting var for {}...'.format(self.__configure__.get_bug_id()))
 
-        encoded_var = self.encode_var(str_encoder, kmeans_model)
+        encoded_var, feature_num = self.encode_var(str_encoder, kmeans_model)
         # get the predicted varnames
-        self.predict_vars(encoded_var)
+        self.predict_vars(encoded_var, feature_num)
 
 
     def encode_var(self, str_encoder, kmeans_model):
@@ -94,41 +121,65 @@ class XGVar(object):
 
         # encoding string as integers
         x_encoders = [None] * feature_num
+        one_hot_encoder = [None] * feature_num
         for i in range(0, X.shape[1]):
-            x_encoders[i] = LabelEncoder()
-            x_encoders[i].fit(X[:, i])
+            if i <= 4 or i == 10 or i == 11:
+                x_encoders[i] = LabelEncoder()
+                feature = x_encoders[i].fit_transform(X[:, i])
+                feature = feature.reshape(X.shape[0], 1)
+                if i == 0:
+                    # file name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['file'][str(X[j, i])]
+                elif i == 1:
+                    # function name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['func'][str(X[j, i])]
+                elif i == 2:
+                    # variable name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['var'][str(X[j, i]).lower()]
+                one_hot_encoder[i] = OneHotEncoder(sparse=False)
+                one_hot_encoder[i].fit(feature)
 
         data = pd.read_csv(data_file_path, sep='\t', header=0, encoding='utf-8')
         dataset = data.values
 
         encoded_feature = list()
+        new_feature_num = feature_num
         for i in range(0, dataset.shape[0]):
             feature = list()
             for j in range(0, feature_num):
                 # TODO : if the key does not exit in the encoder, how to transform
                 try:
                     if j == 0:
-                        feature.append(str_encoder['file'][str(dataset[i, 3 + j])])
+                        tmp = str_encoder['file'][str(dataset[i, 3 + j])]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 1:
-                        feature.append(str_encoder['func'][str(dataset[i, 3 + j])])
+                        tmp = str_encoder['func'][str(dataset[i, 3 + j])]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 2:
-                        feature.append(str_encoder['var'][str(dataset[i, 3 + j]).lower()])
-                    elif j == 5 or j == 6 or j == 9 or j == 10 or j == 11: # dis0, preassnum, incondnum, filecondnum, totcondnum
-                        feature.append(int(dataset[i, 3 + j]))
+                        tmp = str_encoder['var'][str(dataset[i, 3 + j]).lower()]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
+                    #elif j == 5:
+                        #feature = np.append(feature, int(dataset[i, 3 + j]))
+                    elif j == 3 or j == 4 or j == 10 or j == 11:
+                        tmp = x_encoders[j].transform([str(dataset[i, 3 + j])])[0]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     else:
-                        feature.append(x_encoders[j].transform([str(dataset[i, 3 + j])])[0])
+                        feature = np.append(feature, int(dataset[i, 3 + j]))
                 except Exception as e:
-                    print(e)
-                    if j == 2:
+                    if j == 2 or j == 0 or j == 1:
                         # feature.append(len(var_encoder))
                         X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
                         X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
                         pred = kmeans_model['var'].predict(X_0)
-                        feature.append(pred[0])
+                        feature = np.concatenate((feature, one_hot_encoder[i].transform([[pred[0]]])[0]), axis = 0)
                     else:
-                        feature.append(x_encoders[j].classes_.shape[0])
+                        feature = np.concatenate((feature, np.zeros(one_hot_encoder[j].n_values_)), axis = 0)
 
-            feature.append(0)
+            new_feature_num = len(feature)
+            feature = np.append(feature, 0)
             encoded_feature.append(feature)
 
-        return pd.DataFrame(encoded_feature)
+        return (pd.DataFrame(encoded_feature), new_feature_num)

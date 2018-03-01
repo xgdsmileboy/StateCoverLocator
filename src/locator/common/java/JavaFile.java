@@ -7,14 +7,18 @@
 
 package locator.common.java;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +43,10 @@ public class JavaFile {
 
 	private final static String __name__ = "@JavaFile ";
 
+	
+	public static CompilationUnit genAST(String fileName){
+		return (CompilationUnit)genASTFromSource(readFileToString(fileName), ASTParser.K_COMPILATION_UNIT);
+	}
 	/**
 	 * generate {@code CompilationUnit} from {@code ICompilationUnit}
 	 * 
@@ -46,9 +54,9 @@ public class JavaFile {
 	 * @return
 	 */
 	public static CompilationUnit genASTFromICU(ICompilationUnit icu) {
-		ASTParser astParser = ASTParser.newParser(AST.JLS8);
+		ASTParser astParser = ASTParser.newParser(Constant.AST_LEVEL);
 		Map<?, ?> options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		JavaCore.setComplianceOptions(Constant.JAVA_VERSION, options);
 		astParser.setCompilerOptions(options);
 		astParser.setSource(icu);
 		astParser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -65,14 +73,33 @@ public class JavaFile {
 	 * @return
 	 */
 	public static ASTNode genASTFromSource(String icu, int type) {
-		ASTParser astParser = ASTParser.newParser(AST.JLS8);
+		ASTParser astParser = ASTParser.newParser(Constant.AST_LEVEL);
 		Map<?, ?> options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		JavaCore.setComplianceOptions(Constant.JAVA_VERSION, options);
 		astParser.setCompilerOptions(options);
 		astParser.setSource(icu.toCharArray());
 		astParser.setKind(type);
 		astParser.setResolveBindings(true);
 		return astParser.createAST(null);
+	}
+	
+	public static ASTNode genASTFromSourceWithType(String icu, int type, String filePath, Subject subject) {
+		ASTParser astParser = ASTParser.newParser(Constant.AST_LEVEL);
+		Map<?, ?> options = JavaCore.getOptions();
+		JavaCore.setComplianceOptions(Constant.JAVA_VERSION, options);
+		astParser.setCompilerOptions(options);
+		astParser.setSource(icu.toCharArray());
+		astParser.setKind(type);
+		astParser.setResolveBindings(true);
+		astParser.setEnvironment(getClassPath(), new String[] {subject.getHome() + Constant.PATH_SEPARATOR + subject.getSsrc()}, null, true);
+		astParser.setUnitName(filePath);
+		astParser.setBindingsRecovery(true);
+		return astParser.createAST(null);
+	}
+	
+	private static String[] getClassPath() {
+		String property = System.getProperty("java.class.path", ".");
+		return property.split(File.pathSeparator);
 	}
 
 	/**
@@ -133,8 +160,12 @@ public class JavaFile {
 	 * @return
 	 */
 	public static boolean writeStringToFile(File file, String string, boolean append) {
-		if (file == null || string == null) {
-			LevelLogger.error(__name__ + "#writeStringToFile Illegal arguments : null.");
+		if (file == null) {
+			LevelLogger.error(__name__ + "#writeStringToFile Illegal arguments (File) : null.");
+			return false;
+		}
+		if (string == null) {
+			LevelLogger.error(__name__ + "#writeStringToFile Illegal arguments (string) : null.");
 			return false;
 		}
 		if (!file.exists()) {
@@ -233,6 +264,50 @@ public class JavaFile {
 			}
 		}
 		return stringBuffer.toString();
+	}
+	
+	/**
+	 * read string from file
+	 * 
+	 * @param filePath
+	 *            : file path
+	 * @return : list of string in the file
+	 */
+	public static List<String> readFileToStringList(String filePath) {
+		if (filePath == null) {
+			LevelLogger.error(__name__ + "#readFileToStringList Illegal input file path : null.");
+			return new ArrayList<String>();
+		}
+		File file = new File(filePath);
+		if (!file.exists() || !file.isFile()) {
+			LevelLogger.error(__name__ + "#readFileToString Illegal input file path : " + filePath);
+			return new ArrayList<String>();
+		}
+		return readFileToStringList(file);
+	}
+	
+	/**
+	 * read string from file
+	 * 
+	 * @param file
+	 *            : file of type {@code File}
+	 * @return : list of string in the file
+	 */
+	public static List<String> readFileToStringList(File file) {
+		List<String> results = new ArrayList<String>();
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String line;
+			while((line = reader.readLine()) != null) {
+				results.add(line);
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			LevelLogger.error(__name__ + "#readFileToStringList file not found : " + file.getAbsolutePath());
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#readFileToStringList IO exception : " + file.getAbsolutePath(), e);
+		}
+		return results;
 	}
 
 	/**

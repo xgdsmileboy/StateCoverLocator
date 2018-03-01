@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.MarkerAnnotation;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
+import org.eclipse.jdt.core.dom.TryStatement;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
@@ -34,10 +35,13 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 	private final static String __name__ = "@NewTestMethodInstrumentVisitor ";
 	
 	private Set<Integer> _failedTest = new HashSet<>();
+	
+	private boolean _useSober = false;
 
-	public NewTestMethodInstrumentVisitor(Set<Integer> failedMethods) {
+	public NewTestMethodInstrumentVisitor(Set<Integer> failedMethods, boolean useSober) {
 		_failedTest = failedMethods;
 		_methodFlag = Constant.INSTRUMENT_K_TEST;
+		_useSober = useSober;
 	}
 
 	@Override
@@ -65,7 +69,8 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 			}
 		}
 		
-		if (!name.startsWith("test") && !hasAnnotation) {
+		// bug fix: does not instrument test cases with parameters 2018-3-1
+		if ((!name.startsWith("test") && !hasAnnotation) || node.parameters().size() > 0) {
 			return true;
 		}
 
@@ -85,7 +90,7 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 		if (node.getBody() != null) {
 			Block body = node.getBody();
 			List<ASTNode> backupStatement = new ArrayList<>();
-			AST ast = AST.newAST(AST.JLS8);
+			AST ast = AST.newAST(Constant.AST_LEVEL);
 
 			ASTNode thisOrSuperStatement = null;
 			if (body.statements().size() > 0) {
@@ -110,16 +115,35 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 			// _cu.getLineNumber(node.getBody().getStartPosition());
 
 			// Statement insert = GenStatement.genASTNode(message, lineNumber);
-			Statement insert = GenStatement.genInstrumentStatementForTestWithReset(succTest);
+			
 
 			body.statements().clear();
+			Statement insert = null;
+			if (_useSober) {
+				insert = GenStatement.genInstrumentStatementForTestWithResetTrueOrFalse(succTest);
+			} else {
+				insert = GenStatement.genInstrumentStatementForTestWithReset(succTest);
+			}
+			Block tryBody = ast.newBlock();
 			if (thisOrSuperStatement != null) {
-				body.statements().add(ASTNode.copySubtree(body.getAST(), thisOrSuperStatement));
+				tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), thisOrSuperStatement));
 			}
-			body.statements().add(ASTNode.copySubtree(body.getAST(), insert));
+			tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), insert));
 			for (ASTNode statement : backupStatement) {
-				body.statements().add(ASTNode.copySubtree(body.getAST(), statement));
+				tryBody.statements().add(ASTNode.copySubtree(tryBody.getAST(), statement));
 			}
+			TryStatement tryStatement = ast.newTryStatement();
+			tryStatement.setBody(tryBody);
+			Statement dumpStatement = null;
+			if (_useSober) {
+				dumpStatement = GenStatement.genInstrumentStatementForResultDumpTrueOrFalse();
+			} else {
+				dumpStatement = GenStatement.genInstrumentStatementForResultDump();
+			}
+			Block dumpBlock = ast.newBlock();
+			dumpBlock.statements().add(ASTNode.copySubtree(dumpBlock.getAST(), dumpStatement));
+			tryStatement.setFinally(dumpBlock);
+			body.statements().add(ASTNode.copySubtree(body.getAST(), tryStatement));
 		}
 
 		return true;

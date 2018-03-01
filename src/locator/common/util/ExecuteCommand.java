@@ -8,17 +8,25 @@
 package locator.common.util;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
+//import sun.awt.geom.Crossings.EvenOdd;
 
 /**
  * This class is an interface to run script command background
@@ -80,6 +88,15 @@ public class ExecuteCommand {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_CP + source + " " + target };
 		return execute(cmd);
 	}
+	
+	public static String copyFolder(String srcFolder, String tarFolder) {
+		try {
+			FileUtils.copyDirectory(new File(srcFolder), new File(tarFolder));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 
 	/**
 	 * delete all collected data
@@ -88,6 +105,11 @@ public class ExecuteCommand {
 	 */
 	public static String deleteGivenFile(String file) {
 		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_RM + file };
+		return execute(cmd);
+	}
+	
+	public static String deleteGivenFolder(String folder) {
+		String[] cmd = new String[] { "/bin/bash", "-c", Constant.COMMAND_RM + "-rf " + folder };
 		return execute(cmd);
 	}
 
@@ -121,31 +143,39 @@ public class ExecuteCommand {
 	 */
 	private static String execute(String... command) {
 		Process process = null;
-		String result = null;
+		final List<String> results = new ArrayList<String>();
 		try {
-			process = Runtime.getRuntime().exec(command);
-			ByteArrayOutputStream resultOutStream = new ByteArrayOutputStream();
-			InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
-			InputStream processInStream = new BufferedInputStream(process.getInputStream());
-			int num = 0;
-			byte[] bs = new byte[1024];
-			while ((num = errorInStream.read(bs)) != -1) {
-				resultOutStream.write(bs, 0, num);
-			}
-			while ((num = processInStream.read(bs)) != -1) {
-				resultOutStream.write(bs, 0, num);
-			}
-			result = new String(resultOutStream.toByteArray());
-			errorInStream.close();
-			errorInStream = null;
-			processInStream.close();
-			processInStream = null;
-			resultOutStream.close();
-			resultOutStream = null;
+			ProcessBuilder builder = getProcessBuilder(command);
+			builder.redirectErrorStream(true);
+			process = builder.start();
+			final InputStream inputStream = process.getInputStream();
+			
+			Thread processReader = new Thread(){
+				public void run() {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+					String line;
+					try {
+						while((line = reader.readLine()) != null) {
+							results.add(line + "\n");
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			
+			processReader.start();
 			try {
+				processReader.join();
 				process.waitFor();
 			} catch (InterruptedException e) {
 				LevelLogger.error(__name__ + "#execute Process interrupted !");
+				return "";
 			}
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
@@ -154,6 +184,11 @@ public class ExecuteCommand {
 				process.destroy();
 			}
 			process = null;
+		}
+		
+		String result = "";
+		for(String s: results) {
+			result += s;
 		}
 		return result;
 	}
@@ -192,6 +227,19 @@ public class ExecuteCommand {
 		String[] cmd = CmdFactory.createTrainCmd(subject);
 		executeAndOutputConsole(cmd);
 	}
+	
+	/**
+	 * execute evaluate command
+	 * 
+	 * @param subject
+	 *            : subject for evaluating
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public static void executeEvaluate(Subject subject) throws IOException, InterruptedException {
+		String[] cmd = CmdFactory.createEvaluateCmd(subject);
+		executeAndOutputFile(cmd, Constant.STR_TMP_ML_LOG_FILE);
+	}
 
 	/**
 	 * execute predicate predicting
@@ -208,54 +256,51 @@ public class ExecuteCommand {
 	}
 
 	public static List<String> executeCompile(String[] command) throws IOException, InterruptedException {
-		final Process process = Runtime.getRuntime().exec(command);
-
-		List<String> message = new ArrayList<>();
+		Process process = null;
+		final List<String> results = new ArrayList<String>();
+		try {
+			ProcessBuilder builder = getProcessBuilder(command);
+			builder.redirectErrorStream(true);
+			process = builder.start();
+			final InputStream inputStream = process.getInputStream();
+			
+			Thread processReader = new Thread(){
+				public void run() {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+					String line;
+					try {
+						while((line = reader.readLine()) != null) {
+							results.add(line + "\n");
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			};
+			
+			processReader.start();
+			try {
+				processReader.join();
+				process.waitFor();
+			} catch (InterruptedException e) {
+				LevelLogger.error(__name__ + "#execute Process interrupted !");
+				return results;
+			}
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
+		} finally {
+			if (process != null) {
+				process.destroy();
+			}
+			process = null;
+		}
 		
-		new Thread() {
-			public void run() {
-				InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = errorInStream.read(bs)) != -1) {
-						String string = new String(bs, 0, num, "UTF-8");
-						message.add(string);
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						errorInStream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}.start();
-
-		new Thread() {
-			public void run() {
-				InputStream processInStream = new BufferedInputStream(process.getInputStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = processInStream.read(bs)) != -1) {
-						String string = new String(bs, 0, num, "UTF-8");
-						message.add(string);
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						processInStream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}.start();
-
-		process.waitFor();
-		return message;
+		return results;
 	}
 	
 	/**
@@ -268,51 +313,47 @@ public class ExecuteCommand {
 	 * @throws InterruptedException
 	 */
 	private static void executeAndOutputConsole(String[] command) throws IOException, InterruptedException {
-		final Process process = Runtime.getRuntime().exec(command);
-
-		new Thread() {
-			public void run() {
-				InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = errorInStream.read(bs)) != -1) {
-						String string = new String(bs, 0, num, "UTF-8");
-						LevelLogger.info(string);
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
+		Process process = null;
+		try {
+			ProcessBuilder builder = getProcessBuilder(command);
+			builder.redirectErrorStream(true);
+			process = builder.start();
+			final InputStream inputStream = process.getInputStream();
+			
+			Thread processReader = new Thread(){
+				public void run() {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+					String line;
 					try {
-						errorInStream.close();
+						while((line = reader.readLine()) != null) {
+							LevelLogger.info(line);
+						}
 					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
+			};
+			
+			processReader.start();
+			try {
+				processReader.join();
+				process.waitFor();
+			} catch (InterruptedException e) {
+				LevelLogger.error(__name__ + "#execute Process interrupted !");
 			}
-		}.start();
-
-		new Thread() {
-			public void run() {
-				InputStream processInStream = new BufferedInputStream(process.getInputStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = processInStream.read(bs)) != -1) {
-						String string = new String(bs, 0, num, "UTF-8");
-						LevelLogger.info(string);
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						processInStream.close();
-					} catch (IOException e) {
-					}
-				}
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
+		} finally {
+			if (process != null) {
+				process.destroy();
 			}
-		}.start();
-
-		process.waitFor();
+			process = null;
+		}
 	}
 
 	/**
@@ -328,53 +369,65 @@ public class ExecuteCommand {
 	 */
 	private static String executeAndOutputFile(String[] command, String outputFile)
 			throws IOException, InterruptedException {
-		final Process process = Runtime.getRuntime().exec(command);
-		final FileOutputStream resultOutStream = new FileOutputStream(outputFile);
-
-		new Thread() {
-			public void run() {
-				InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = errorInStream.read(bs)) != -1) {
-						resultOutStream.write(bs, 0, num);
-						resultOutStream.flush();
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
+		final BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+		Process process = null;
+		final List<String> results = new ArrayList<String>();
+		try {
+			ProcessBuilder builder = getProcessBuilder(command);
+			builder.redirectErrorStream(true);
+			process = builder.start();
+			final InputStream inputStream = process.getInputStream();
+			
+			Thread processReader = new Thread(){
+				public void run() {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+					String line;
 					try {
-						errorInStream.close();
+						while((line = reader.readLine()) != null) {
+							writer.write(line + "\n");
+							writer.flush();
+							results.add(line + "\n");
+						}
 					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						reader.close();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
+			};
+			
+			processReader.start();
+			try {
+				processReader.join();
+				process.waitFor();
+			} catch (InterruptedException e) {
+				LevelLogger.error(__name__ + "#execute Process interrupted !");
+				return "";
 			}
-		}.start();
-
-		new Thread() {
-			public void run() {
-				InputStream processInStream = new BufferedInputStream(process.getInputStream());
-				int num = 0;
-				byte[] bs = new byte[1024];
-				try {
-					while ((num = processInStream.read(bs)) != -1) {
-						resultOutStream.write(bs, 0, num);
-						resultOutStream.flush();
-					}
-				} catch (IOException e) {
-					LevelLogger.fatal(__name__ + "#executeDefects4JTest Procss output redirect exception !", e);
-				} finally {
-					try {
-						processInStream.close();
-					} catch (IOException e) {
-					}
-				}
+			writer.close();
+		} catch (IOException e) {
+			LevelLogger.error(__name__ + "#execute Process output redirect exception !");
+		} finally {
+			if (process != null) {
+				process.destroy();
 			}
-		}.start();
-
-		process.waitFor();
-
-		return resultOutStream.toString();
+			process = null;
+		}
+		String result = "";
+		for(String s : results) {
+			result += s;
+		}
+		return result;
+	}
+	
+	private static ProcessBuilder getProcessBuilder(String[] command) { 
+		ProcessBuilder builder = new ProcessBuilder(command);
+		Map<String, String> evn = builder.environment();
+		evn.put("JAVA_HOME", Constant.COMMAND_JAVA_HOME);
+		evn.put("PATH", Constant.COMMAND_JAVA_HOME + "/bin:" + evn.get("PATH"));
+		return builder;
 	}
 }

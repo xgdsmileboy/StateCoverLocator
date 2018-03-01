@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+//import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
@@ -55,6 +55,7 @@ public class Runner {
 
 	public static boolean testSingleCase(Subject subject, String testcase) {
 		try {
+			LevelLogger.info("TESTING : " + testcase);
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject, testcase));
 		} catch (Exception e) {
 			LevelLogger.fatal(__name__ + "#testSingle run test suite failed !", e);
@@ -93,10 +94,10 @@ public class Runner {
 			LevelLogger.fatal(__name__ + "#buildSubject run build subject failed !", e);
 		}
 		
-		boolean success = false;
+		boolean success = true;
 		for(int i = message.size() - 1; i >= 0; i--){
-			if (message.get(i).contains(Constant.ANT_BUILD_SUCCESS)) {
-				success = true;
+			if (message.get(i).contains(Constant.ANT_BUILD_FAILED)) {
+				success = false;
 				break;
 			}
 		}
@@ -123,7 +124,7 @@ public class Runner {
 		}
 
 		String line = null;
-		boolean buildSuccess = false;
+		boolean buildSuccess = true;
 		try {
 			while ((line = bReader.readLine()) != null) {
 				if (line.startsWith(Constant.ANT_BUILD_SUCCESS)) {

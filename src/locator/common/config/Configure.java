@@ -7,16 +7,22 @@
 
 package locator.common.config;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -27,6 +33,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
+import jdk7.wrapper.JCompiler;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
@@ -34,7 +41,62 @@ import locator.common.util.LevelLogger;
 public class Configure {
 
 	private final static String __name__ = "@Configure ";
+	private static String auxiliaryString;
 
+	/**
+	 * configure d4j buggy project information from file.
+	 * fix bug for inconsistent directories for same project
+	 * @param name : project name, lower case
+	 * @param id : bug id
+	 * @return a subject instance contains basic information
+	 */
+	public static Subject getSubject(String name, int id){
+		String fileName = Constant.HOME + "/res/d4j-info/src_path/" + name + "/" + id + ".txt";
+		File file = new File(fileName);
+		if(!file.exists()){
+			System.out.println("File : " + fileName + " does not exist!");
+			return null;
+		}
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		String line = null;
+		List<String> source = new ArrayList<>();
+		try {
+			while((line = br.readLine()) != null){
+				source.add(line);
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(source.size() < 4){
+			System.err.println("PROJEC INFO CONFIGURE ERROR !");
+			System.exit(0);
+		}
+		
+		String ssrc = source.get(0);
+		String sbin = source.get(1);
+		String tsrc = source.get(2);
+		String tbin = source.get(3);
+		
+		Subject subject = new Subject(name, id, ssrc, tsrc, sbin, tbin);
+		return subject;
+	}
+	
+	public static boolean compileAuxiliaryJava(Subject subject) {
+		JCompiler compiler = JCompiler.getInstance();
+		File file = new File(subject.getHome() + subject.getSbin());
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		return compiler.compile(subject, "auxiliary/Dumper.java", auxiliaryString);
+	}
+	
 	/**
 	 * read subject configure information from configure file
 	 * 
@@ -67,13 +129,31 @@ public class Configure {
 				String tsrc = element.elementText("tsrc");
 				String sbin = element.elementText("sbin");
 				String tbin = element.elementText("tbin");
-				Subject subject = new Subject(name, id, ssrc, tsrc, sbin, tbin);
+				List<String> classpath = new LinkedList<>();
+				String clpath = element.elementText("classpath");
+				if(classpath != null && !classpath.isEmpty()) {
+					for (String elm : clpath.split(",")) {
+						classpath.add(Constant.HOME + Constant.PATH_SEPARATOR + "res" + Constant.PATH_SEPARATOR
+								+ "d4jlibs" + Constant.PATH_SEPARATOR + elm);
+					}
+				}
+				Subject subject = new Subject(name, id, ssrc, tsrc, sbin, tbin, classpath);
 				list.add(subject);
 			}
 		} catch (DocumentException e) {
 			LevelLogger.fatal(__name__ + "#getSubjectFromXML parse xml file failed !", e);
 		}
 		return list;
+	}
+	
+	public static void config_astlevel(Subject subject) {
+		if(subject.getName().equals("lang") && subject.getId() >= 42) {
+			Constant.AST_LEVEL = AST.JLS3;
+			Constant.JAVA_VERSION = JavaCore.VERSION_1_4;
+		} else {
+			Constant.AST_LEVEL = AST.JLS8;
+			Constant.JAVA_VERSION = JavaCore.VERSION_1_7;
+		}
 	}
 
 	/**
@@ -112,8 +192,10 @@ public class Configure {
 				e.printStackTrace();
 			}
 		}
-
+		auxiliaryString = formatSource;
 		JavaFile.writeStringToFile(targetFile, formatSource);
+		// fix bug for not compiling
+		compileAuxiliaryJava(subject);
 	}
 }
 
