@@ -187,14 +187,16 @@ public class FeatureExtraction {
 		
 		public boolean visit(ReturnStatement returnStatement) {
 			Expression expression = returnStatement.getExpression();
-			int start = _cu.getLineNumber(expression.getStartPosition());
-			int end = _cu.getLineNumber(expression.getStartPosition() + expression.getLength());
-			if(start <= _line && _line <= end) {
-				CollectSimpleName collectSimpleName = new CollectSimpleName();
-				expression.accept(collectSimpleName);
-				Pair<Set<String>, Pair<String, Set<String>>> vars = collectSimpleName.getVariables();
-				_leftVar.addAll(vars.getSecond().getSecond());
-				return false;
+			if(expression != null) {
+				int start = _cu.getLineNumber(expression.getStartPosition());
+				int end = _cu.getLineNumber(expression.getStartPosition() + expression.getLength());
+				if(start <= _line && _line <= end) {
+					CollectSimpleName collectSimpleName = new CollectSimpleName();
+					expression.accept(collectSimpleName);
+					Pair<Set<String>, Pair<String, Set<String>>> vars = collectSimpleName.getVariables();
+					_leftVar.addAll(vars.getSecond().getSecond());
+					return false;
+				}
 			}
 			return true;
 		}
