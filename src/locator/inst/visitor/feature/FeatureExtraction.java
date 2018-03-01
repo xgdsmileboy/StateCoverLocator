@@ -40,6 +40,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.NullLiteral;
 import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
@@ -54,7 +55,6 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.TypeDeclarationStatement;
 import org.eclipse.jdt.core.dom.TypeLiteral;
-import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
@@ -161,7 +161,45 @@ public class FeatureExtraction {
 			int start = _cu.getLineNumber(assignment.getStartPosition());
 			int end = _cu.getLineNumber(assignment.getStartPosition() + assignment.getLength());
 			if(start <= _line && _line <= end) {
-				_leftVar.add(assignment.getLeftHandSide().toString());
+				Expression expression = assignment.getLeftHandSide();
+				if(expression instanceof QualifiedName) {
+					while(expression instanceof QualifiedName) {
+						expression = ((QualifiedName) expression).getQualifier();
+					}
+					_leftVar.add(expression.toString());
+				} else if(expression instanceof FieldAccess) {
+					_leftVar.add("THIS");
+				} else {
+					_leftVar.add(expression.toString());
+				}
+			}
+			return true;
+		}
+		
+		public boolean visit(IfStatement ifStatement) {
+			Expression expression = ifStatement.getExpression();
+			int start = _cu.getLineNumber(expression.getStartPosition());
+			int end = _cu.getLineNumber(expression.getStartPosition() + expression.getLength());
+			if(start <= _line && _line <= end) {
+				CollectSimpleName collectSimpleName = new CollectSimpleName();
+				expression.accept(collectSimpleName);
+				Pair<Set<String>, Pair<String, Set<String>>> vars = collectSimpleName.getVariables();
+				_leftVar.addAll(vars.getSecond().getSecond());
+				return false;
+			}
+			return true;
+		}
+		
+		public boolean visit(ReturnStatement returnStatement) {
+			Expression expression = returnStatement.getExpression();
+			int start = _cu.getLineNumber(expression.getStartPosition());
+			int end = _cu.getLineNumber(expression.getStartPosition() + expression.getLength());
+			if(start <= _line && _line <= end) {
+				CollectSimpleName collectSimpleName = new CollectSimpleName();
+				expression.accept(collectSimpleName);
+				Pair<Set<String>, Pair<String, Set<String>>> vars = collectSimpleName.getVariables();
+				_leftVar.addAll(vars.getSecond().getSecond());
+				return false;
 			}
 			return true;
 		}
@@ -509,147 +547,148 @@ public class FeatureExtraction {
 			}
 		}
 
-		private class CollectSimpleName extends ASTVisitor {
-			private String leftVariable;
-			private Set<String> rightVariables;
-			private Set<String> defVariables;
+	}
+	
+	private static class CollectSimpleName extends ASTVisitor {
+		private String leftVariable;
+		private Set<String> rightVariables;
+		private Set<String> defVariables;
 
-			public CollectSimpleName() {
-				leftVariable = null;
-				rightVariables = new HashSet<>();
-				defVariables = new HashSet<>();
+		public CollectSimpleName() {
+			leftVariable = null;
+			rightVariables = new HashSet<>();
+			defVariables = new HashSet<>();
+		}
+
+		public Pair<Set<String>, Pair<String, Set<String>>> getVariables() {
+			// System.out.println("left : " + leftVariable);
+			// System.out.print("right : ");
+			// for (String string : rightVariables) {
+			// System.out.print(string + ",");
+			// }
+			// System.out.println();
+			Pair<String, Set<String>> pair = new Pair<String, Set<String>>(leftVariable, rightVariables);
+			return new Pair<Set<String>, Pair<String, Set<String>>>(defVariables, pair);
+		}
+
+		public boolean visit(SimpleName node) {
+			ASTNode parent = node.getParent();
+			if (parent instanceof SimpleType) {
+				return true;
 			}
-
-			public Pair<Set<String>, Pair<String, Set<String>>> getVariables() {
-				// System.out.println("left : " + leftVariable);
-				// System.out.print("right : ");
-				// for (String string : rightVariables) {
-				// System.out.print(string + ",");
+			if (parent instanceof MethodInvocation) {
+				MethodInvocation methodInvocation = (MethodInvocation) parent;
+				if (methodInvocation.getName().equals(node)) {
+					return true;
+				}
+			}
+			String name = node.getFullyQualifiedName();
+			if (Character.isUpperCase(name.charAt(0)) || isAllCaptialCharacters(name)) {
+				return true;
+			}
+			if (name.equals(leftVariable)) {
+				// while(parent != null && !(parent instanceof
+				// MethodDeclaration)){
+				// if(parent instanceof Assignment){
+				// CollectSimpleName collectSimpleName = new
+				// CollectSimpleName();
+				// ((Assignment)parent).getRightHandSide().accept(collectSimpleName);
+				// if(collectSimpleName.getVariables().getSecond().getSecond().contains(name)){
+				// rightVariables.add(name);
 				// }
-				// System.out.println();
-				Pair<String, Set<String>> pair = new Pair<String, Set<String>>(leftVariable, rightVariables);
-				return new Pair<Set<String>, Pair<String, Set<String>>>(defVariables, pair);
-			}
+				// }
+				// parent = parent.getParent();
+				// }
 
-			public boolean visit(SimpleName node) {
-				ASTNode parent = node.getParent();
-				if (parent instanceof SimpleType) {
-					return true;
+			} else if (!defVariables.contains(name)) {
+				rightVariables.add(name);
+			}
+			return true;
+		}
+
+		public boolean visit(VariableDeclarationFragment vdf) {
+			String name = vdf.getName().getFullyQualifiedName();
+			defVariables.add(name);
+			rightVariables.remove(name);
+			return true;
+		}
+
+		public boolean visit(SingleVariableDeclaration svd) {
+			String name = svd.getName().getFullyQualifiedName();
+			defVariables.add(name);
+			return true;
+		}
+
+		// public boolean visit(VariableDeclarationExpression node){
+		// for (Object object : node.fragments()) {
+		// if (object instanceof VariableDeclarationFragment) {
+		// VariableDeclarationFragment vdf = (VariableDeclarationFragment)
+		// object;
+		// String name = vdf.getName().getFullyQualifiedName();
+		// defVariables.add(name);
+		// rightVariables.remove(name);
+		// } else if(object instanceof SingleVariableDeclaration){
+		// SingleVariableDeclaration svd = (SingleVariableDeclaration)
+		// object;
+		// String name = svd.getName().getFullyQualifiedName();
+		// defVariables.add(name);
+		// }
+		// }
+		// return true;
+		// }
+		//
+		// public boolean visit(VariableDeclarationStatement node) {
+		// for (Object object : node.fragments()) {
+		// if (object instanceof VariableDeclarationFragment) {
+		// VariableDeclarationFragment vdf = (VariableDeclarationFragment)
+		// object;
+		// String name = vdf.getName().getFullyQualifiedName();
+		// defVariables.add(name);
+		// rightVariables.remove(name);
+		// } else if(object instanceof SingleVariableDeclaration){
+		// SingleVariableDeclaration svd = (SingleVariableDeclaration)
+		// object;
+		// String name = svd.getName().getFullyQualifiedName();
+		// defVariables.add(name);
+		// }
+		// }
+		// return true;
+		// }
+
+		public boolean visit(Assignment node) {
+			Expression expression = node.getLeftHandSide();
+			if (expression instanceof Name) {
+				String name = ((Name) expression).getFullyQualifiedName();
+				int index = name.indexOf(".");
+				if (index > 0) {
+					name = name.substring(0, index);
 				}
-				if (parent instanceof MethodInvocation) {
-					MethodInvocation methodInvocation = (MethodInvocation) parent;
-					if (methodInvocation.getName().equals(node)) {
-						return true;
-					}
+				if (!defVariables.contains(name)) {
+					leftVariable = name;
 				}
-				String name = node.getFullyQualifiedName();
-				if (Character.isUpperCase(name.charAt(0)) || isAllCaptialCharacters(name)) {
-					return true;
+			} else if (expression instanceof ArrayAccess) {
+				ArrayAccess access = (ArrayAccess) expression;
+				String name = access.getArray().toString();
+				int index = name.lastIndexOf(".");
+				if (index > 0) {
+					name = name.substring(index + 1, name.length());
 				}
-				if (name.equals(leftVariable)) {
-					// while(parent != null && !(parent instanceof
-					// MethodDeclaration)){
-					// if(parent instanceof Assignment){
-					// CollectSimpleName collectSimpleName = new
-					// CollectSimpleName();
-					// ((Assignment)parent).getRightHandSide().accept(collectSimpleName);
-					// if(collectSimpleName.getVariables().getSecond().getSecond().contains(name)){
-					// rightVariables.add(name);
-					// }
-					// }
-					// parent = parent.getParent();
-					// }
-
-				} else if (!defVariables.contains(name)) {
-					rightVariables.add(name);
+				if (!defVariables.contains(name)) {
+					leftVariable = name;
 				}
-				return true;
-			}
-
-			public boolean visit(VariableDeclarationFragment vdf) {
-				String name = vdf.getName().getFullyQualifiedName();
-				defVariables.add(name);
-				rightVariables.remove(name);
-				return true;
-			}
-
-			public boolean visit(SingleVariableDeclaration svd) {
-				String name = svd.getName().getFullyQualifiedName();
-				defVariables.add(name);
-				return true;
-			}
-
-			// public boolean visit(VariableDeclarationExpression node){
-			// for (Object object : node.fragments()) {
-			// if (object instanceof VariableDeclarationFragment) {
-			// VariableDeclarationFragment vdf = (VariableDeclarationFragment)
-			// object;
-			// String name = vdf.getName().getFullyQualifiedName();
-			// defVariables.add(name);
-			// rightVariables.remove(name);
-			// } else if(object instanceof SingleVariableDeclaration){
-			// SingleVariableDeclaration svd = (SingleVariableDeclaration)
-			// object;
-			// String name = svd.getName().getFullyQualifiedName();
-			// defVariables.add(name);
-			// }
-			// }
-			// return true;
-			// }
-			//
-			// public boolean visit(VariableDeclarationStatement node) {
-			// for (Object object : node.fragments()) {
-			// if (object instanceof VariableDeclarationFragment) {
-			// VariableDeclarationFragment vdf = (VariableDeclarationFragment)
-			// object;
-			// String name = vdf.getName().getFullyQualifiedName();
-			// defVariables.add(name);
-			// rightVariables.remove(name);
-			// } else if(object instanceof SingleVariableDeclaration){
-			// SingleVariableDeclaration svd = (SingleVariableDeclaration)
-			// object;
-			// String name = svd.getName().getFullyQualifiedName();
-			// defVariables.add(name);
-			// }
-			// }
-			// return true;
-			// }
-
-			public boolean visit(Assignment node) {
-				Expression expression = node.getLeftHandSide();
-				if (expression instanceof Name) {
-					String name = ((Name) expression).getFullyQualifiedName();
-					int index = name.indexOf(".");
-					if (index > 0) {
-						name = name.substring(0, index);
-					}
-					if (!defVariables.contains(name)) {
-						leftVariable = name;
-					}
-				} else if (expression instanceof ArrayAccess) {
-					ArrayAccess access = (ArrayAccess) expression;
-					String name = access.getArray().toString();
-					int index = name.lastIndexOf(".");
-					if (index > 0) {
-						name = name.substring(index + 1, name.length());
-					}
-					if (!defVariables.contains(name)) {
-						leftVariable = name;
-					}
-				} else if (expression instanceof FieldAccess) {
-					FieldAccess fieldAccess = (FieldAccess) expression;
-					String name = fieldAccess.getName().getFullyQualifiedName();
-					if (!defVariables.contains(name)) {
-						leftVariable = name;
-					}
+			} else if (expression instanceof FieldAccess) {
+				FieldAccess fieldAccess = (FieldAccess) expression;
+				String name = fieldAccess.getName().getFullyQualifiedName();
+				if (!defVariables.contains(name)) {
+					leftVariable = name;
 				}
-				return true;
 			}
+			return true;
+		}
 
-			private boolean isAllCaptialCharacters(String name) {
-				name = name.replace("_", "");
-				return name.toUpperCase().equals(name);
-			}
+		private boolean isAllCaptialCharacters(String name) {
+			name = name.replace("_", "");
+			return name.toUpperCase().equals(name);
 		}
 	}
 
