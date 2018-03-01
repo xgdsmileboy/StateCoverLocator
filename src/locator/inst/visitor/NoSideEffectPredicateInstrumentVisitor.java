@@ -552,7 +552,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	}
 	
 	private PrimitiveType.Code ITypeBinding2PrimitiveTypeCode(ITypeBinding type) {
-		if (!type.isPrimitive()) {
+		if (type == null || !type.isPrimitive()) {
 			return null;
 		}
 		switch(type.toString()) {
