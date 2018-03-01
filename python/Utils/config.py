@@ -93,11 +93,23 @@ class Configure(object):
             os.makedirs(self.__model_path__)
         return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.func_cluster_model.pkl'
 
+    def get_func_cluster_info_file(self):
+        # python/model/math_1.func_cluster_model.info
+        if not os.path.exists(self.__model_path__):
+            os.makedirs(self.__model_path__)
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.func_cluster_model.info'
+
     def get_file_cluster_model_file(self):
         # python/model/math_1.file_cluster_model.pkl
         if not os.path.exists(self.__model_path__):
             os.makedirs(self.__model_path__)
         return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.file_cluster_model.pkl'
+
+    def get_file_cluster_info_file(self):
+        # python/model/math_1.file_cluster_model.info
+        if not os.path.exists(self.__model_path__):
+            os.makedirs(self.__model_path__)
+        return self.__model_path__ + self.__project_name__ + '_' + self.__bug_id__ + '.file_cluster_model.info'
 
     def get_var_nn_model_dir(self):
         # python/model/math_1/var/
