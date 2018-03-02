@@ -33,6 +33,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
 import locator.common.config.Constant;
+import locator.common.config.Constant.PredicateStatement;
 import locator.common.config.Identifier;
 import locator.common.java.Pair;
 import locator.common.util.LevelLogger;
@@ -51,10 +52,6 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Type _retType;
 	
 	private static AST ast = AST.newAST(Constant.AST_LEVEL);
-	
-	private enum PredicateStatement {
-		IF, WHILE, DO, RETURN, FOR, ASSIGN, SWITCH
-	};
 	
 	public NoSideEffectPredicateInstrumentVisitor(boolean useSober) {
 		_condition = new HashMap<>();
@@ -538,6 +535,9 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			}
 		case SWITCH:
 		case ASSIGN:
+			if (type == null) {
+				return null;
+			}
 			code = ITypeBinding2PrimitiveTypeCode(type);
 		}
 		if (code == null && type != null) {
@@ -552,7 +552,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	}
 	
 	private PrimitiveType.Code ITypeBinding2PrimitiveTypeCode(ITypeBinding type) {
-		if (type == null || !type.isPrimitive()) {
+		if (!type.isPrimitive()) {
 			return null;
 		}
 		switch(type.toString()) {
@@ -582,25 +582,39 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		List<ASTNode> result = new ArrayList<>();
 		if (_condition.get(line) != null) {
 			List<Pair<String, String>> predicates = null;
+			List<Pair<String, String>> preds = _condition.get(line);
 			switch (psType) {
 				case IF:
 				case WHILE:
 				case DO:
 				case FOR:
 				case SWITCH:
-					predicates = getPredicateForConditions(tempVarName, originalExpr);
+					for(Pair<String, String> p : preds) {
+						if (p.getFirst().endsWith("#CONDITION")) {
+							predicates = getPredicateForConditions(tempVarName, originalExpr);
+							break;
+						}
+					}
 					break;
 				case RETURN:
-					predicates = getPredicateForReturns(tempVarName, originalExpr);
+					for(Pair<String, String> p : preds) {
+						if (p.getFirst().endsWith("#RETURN")) {
+							predicates = getPredicateForReturns(tempVarName, originalExpr);
+							break;
+						}
+					}
 					break;
 				case ASSIGN:
-					List<Pair<String, String>> preds = _condition.get(line);
 					predicates = new ArrayList<Pair<String, String>>();
 					for(Pair<String, String> p : preds) {
-						predicates.add(new Pair<String, String>(p.getFirst(), p.getFirst()));
+						if (p.getFirst().endsWith("#ASSIGN")) {
+							String newP = p.getFirst().substring(0, p.getFirst().length() - 7);
+							predicates.add(new Pair<String, String>(newP, newP));	
+						}
 					}
 					break;
 			}
+			if (predicates == null) return result;
 			for(Pair<String, String> predicate : predicates) {
 				ASTNode inserted = _useSober ? GenStatement.newGenPredicateStatementForEvaluationBias(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1") :
 					GenStatement.newGenPredicateStatementWithoutTry(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1");
@@ -652,8 +666,8 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 
 	private List<Pair<String, String>> getPredicateForReturns(final String expr, final String originalExpr) {
 		List<Pair<String, String>> predicates = new ArrayList<Pair<String, String>>();
-		final String operators[] = { " < 0", " <= 0", " > 0", " >= 0", " == 0",
-				" != 0" };
+		final String operators[] = { "< 0", "<= 0", "> 0", ">= 0", "== 0",
+				"!= 0" };
 		for (final String op : operators) {
 			predicates.add(new Pair<String, String>(expr + op, "(" + originalExpr + ")" + op));
 		}

@@ -155,7 +155,11 @@ public class Constant {
 	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
 	public static String TENSORFLOW_ACTIVATE_PATH = "";
-
+	
+	public enum PredicateStatement {
+		IF, WHILE, DO, RETURN, FOR, ASSIGN, SWITCH
+	};
+	
 	static {
 		Properties prop = new Properties();
 		try {
