@@ -224,6 +224,26 @@ public class Dumper {
 		return true;
 	}
 	
+	public static boolean logConditionCoverage(boolean condition, String trueLogInfo, String falseLogInfo) {
+		observe(trueLogInfo);
+		observe(falseLogInfo);
+		if (condition) {
+			write(trueLogInfo);
+		} else {
+			write(falseLogInfo);
+		}
+		return condition;
+	}
+	
+	public static boolean logConditionCoverageWithEvaluationBias(boolean condition, String message) {
+		if(condition){
+			writeTrue(message);
+		} else {
+			writeFalse(message);
+		}
+		return condition;
+	}
+	
 	private static boolean readTrueOrFalse() {
 		File file = new File(OUT_FILE_NAME);
 		if (!file.exists()) {
