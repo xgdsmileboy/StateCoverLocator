@@ -410,19 +410,23 @@ public class Coverage {
                     predicates = new ArrayList<>();
                 }
 
-                List<String> ifAndReturnPredicates = sdPredicatesVisitor.getPredicates();
+                List<List<String>> ifAndReturnPredicates = sdPredicatesVisitor.getPredicates();
                 List<List<String>> assignmentPredicates = sdPredicatesVisitor.getAssignmentPredicates();
                 if (!ifAndReturnPredicates.isEmpty()) {
-                    if (validatePredicateByInMemCompile(ifAndReturnPredicates.get(0), source, fileName, relJavaPath,
-                            line, subject)) {
-                        for (String p : ifAndReturnPredicates) {
-                            predicates.add(new Pair<String, String>(p, "1"));
+                	for(List<String> ifOrReturnPredicates : ifAndReturnPredicates) {
+                		int pos = ifOrReturnPredicates.get(0).indexOf("#");
+                        if (validatePredicateByInMemCompile(ifOrReturnPredicates.get(0).substring(0, pos), source, fileName, relJavaPath,
+                                line, subject)) {
+                            for (String p : ifOrReturnPredicates) {
+                                predicates.add(new Pair<String, String>(p, "1"));
+                            }
                         }
-                    }
+                	}
                 }
                 if (!assignmentPredicates.isEmpty()) {
                     for (List<String> similarPredicates : assignmentPredicates) {
-                        if (validatePredicateByInMemCompile(similarPredicates.get(0), source, fileName, relJavaPath,
+                    	int pos = similarPredicates.get(0).indexOf("#");
+                        if (validatePredicateByInMemCompile(similarPredicates.get(0).substring(0,  pos), source, fileName, relJavaPath,
                                 line, subject)) {
                             for (String p : similarPredicates) {
                                 predicates.add(new Pair<String, String>(p, "1"));
