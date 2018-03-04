@@ -1,5 +1,7 @@
 package code;
 
+import polyglot.ast.Case;
+
 public class SideEffect {
 	
 	public void method_if_1() {
@@ -71,6 +73,21 @@ public class SideEffect {
 			b[i] = a[i];
 			i ++;
 		}
+	}
+	
+	public int method_switch(String name) {
+		int a = 0;
+		switch(name) {
+		case "name1":
+			a = 1;
+			break;
+		case "name2":
+			a = 2;
+			break;
+		default:
+			break;
+		}
+		return a;
 	}
 	
 }

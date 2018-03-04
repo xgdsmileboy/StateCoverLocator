@@ -36,8 +36,60 @@ public class NoSideEffectPredicateInstrumentVisitorTest {
 		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
 		List<Pair<String, String>> pairs = new ArrayList<>();
-		pairs.add(new Pair<String, String>("a[i] > 5", "1.0"));
+		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
 		condition.put(33, pairs);
+		instrumentVisitor.setCondition(condition);
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_for() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
+		List<Pair<String, String>> pairs = new ArrayList<>();
+		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
+		condition.put(32, pairs);
+		instrumentVisitor.setCondition(condition);
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_while() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
+		List<Pair<String, String>> pairs = new ArrayList<>();
+		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
+		condition.put(62, pairs);
+		instrumentVisitor.setCondition(condition);
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_do() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
+		List<Pair<String, String>> pairs = new ArrayList<>();
+		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
+		condition.put(46, pairs);
+		instrumentVisitor.setCondition(condition);
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_switch() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
+		List<Pair<String, String>> pairs = new ArrayList<>();
+		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
+		condition.put(80, pairs);
 		instrumentVisitor.setCondition(condition);
 		CompilationUnit unit = getTestCompilationUnit();
 		unit.accept(instrumentVisitor);
