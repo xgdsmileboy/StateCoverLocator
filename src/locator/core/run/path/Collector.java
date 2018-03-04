@@ -45,8 +45,9 @@ public class Collector {
 			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
 			return null;
 		}
-
 		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
+		ExecuteCommand.copyFile(Constant.STR_TMP_D4J_OUTPUT_FILE, Constant.STR_INFO_OUT_PATH + "/" + subject.getName()
+				+ "/" + subject.getName() + "_" + subject.getId() + "_original_test.log");
 		Set<Integer> coveredMethods = collectCoveredMethod(subject, failedTest);
 		return new Pair<Set<Integer>, Set<Integer>>(failedTest, coveredMethods);
 	}
