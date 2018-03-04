@@ -410,14 +410,18 @@ public class Coverage {
                     predicates = new ArrayList<>();
                 }
 
-                List<List<String>> ifAndReturnPredicates = sdPredicatesVisitor.getPredicates();
+                List<List<String>> otherPredicates = sdPredicatesVisitor.getPredicates();
+                List<String> conditionPredicates = sdPredicatesVisitor.getConditionPredicates();
                 List<List<String>> assignmentPredicates = sdPredicatesVisitor.getAssignmentPredicates();
-                if (!ifAndReturnPredicates.isEmpty()) {
-                	for(List<String> ifOrReturnPredicates : ifAndReturnPredicates) {
-                		int pos = ifOrReturnPredicates.get(0).indexOf("#");
-                        if (validatePredicateByInMemCompile(ifOrReturnPredicates.get(0).substring(0, pos), source, fileName, relJavaPath,
+                for(String p : conditionPredicates) {
+                	predicates.add(new Pair<String, String>(p, "1"));
+                }
+                if (!otherPredicates.isEmpty()) {
+                	for(List<String> otherPredicate : otherPredicates) {
+                		int pos = otherPredicate.get(0).indexOf("#");
+                        if (validatePredicateByInMemCompile(otherPredicate.get(0).substring(0, pos), source, fileName, relJavaPath,
                                 line, subject)) {
-                            for (String p : ifOrReturnPredicates) {
+                            for (String p : otherPredicate) {
                                 predicates.add(new Pair<String, String>(p, "1"));
                             }
                         }

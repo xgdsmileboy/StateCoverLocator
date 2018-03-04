@@ -30,7 +30,8 @@ import locator.common.java.Pair;
 public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 	private int _line = -1;
 	private CompilationUnit _cu = null;
-	private List<List<String>> _predicates = new ArrayList<List<String>>();
+	private List<String> _condition_predicates = new ArrayList<String>();
+	private List<List<String>>_predicates = new ArrayList<List<String>>();
 	private List<Pair<String, String>> _leftVars = new ArrayList<Pair<String, String>>();
 	private String _srcPath = "";
 	private String _relJavaPath = "";
@@ -43,6 +44,10 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 
 	public List<List<String>> getPredicates() {
 		return _predicates;
+	}
+	
+	public List<String> getConditionPredicates() {
+		return _condition_predicates;
 	}
 	
 	public List<List<String>> getAssignmentPredicates() {
@@ -92,7 +97,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			_predicates.add(getPredicateForConditions(condition));
+			_condition_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -111,7 +116,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 			Expression expr = node.getExpression();
 			if(expr != null) {
 				String condition = expr.toString();
-				_predicates.add(getPredicateForConditions(condition));
+				_condition_predicates.addAll(getPredicateForConditions(condition));
 			}
 		}
 		return true;
@@ -122,7 +127,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			_predicates.add(getPredicateForConditions(condition));
+			_condition_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -132,7 +137,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			_predicates.add(getPredicateForConditions(condition));
+			_condition_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
