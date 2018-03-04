@@ -37,7 +37,7 @@ public class NoSideEffectPredicateInstrumentVisitorTest {
 		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
 		List<Pair<String, String>> pairs = new ArrayList<>();
 		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-		condition.put(33, pairs);
+		condition.put(23, pairs);
 		instrumentVisitor.setCondition(condition);
 		CompilationUnit unit = getTestCompilationUnit();
 		unit.accept(instrumentVisitor);
@@ -50,7 +50,7 @@ public class NoSideEffectPredicateInstrumentVisitorTest {
 		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
 		List<Pair<String, String>> pairs = new ArrayList<>();
 		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-		condition.put(32, pairs);
+		condition.put(34, pairs);
 		instrumentVisitor.setCondition(condition);
 		CompilationUnit unit = getTestCompilationUnit();
 		unit.accept(instrumentVisitor);
@@ -63,7 +63,7 @@ public class NoSideEffectPredicateInstrumentVisitorTest {
 		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
 		List<Pair<String, String>> pairs = new ArrayList<>();
 		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-		condition.put(62, pairs);
+		condition.put(64, pairs);
 		instrumentVisitor.setCondition(condition);
 		CompilationUnit unit = getTestCompilationUnit();
 		unit.accept(instrumentVisitor);
@@ -76,7 +76,7 @@ public class NoSideEffectPredicateInstrumentVisitorTest {
 		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
 		List<Pair<String, String>> pairs = new ArrayList<>();
 		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-		condition.put(46, pairs);
+		condition.put(57, pairs);
 		instrumentVisitor.setCondition(condition);
 		CompilationUnit unit = getTestCompilationUnit();
 		unit.accept(instrumentVisitor);

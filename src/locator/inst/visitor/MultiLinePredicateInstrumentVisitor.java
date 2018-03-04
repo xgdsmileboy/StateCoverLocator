@@ -167,6 +167,10 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 					whileStatement.setBody((Statement) ASTNode.copySubtree(whileStatement.getAST(), newWhileBlock));
 				}
 			}
+			Block block = whileStatement.getAST().newBlock();
+			block.statements().addAll(ASTNode.copySubtrees(block.getAST(), result));
+			block = extractNodeIntoBlock(block, whileStatement.getBody());
+			whileStatement.setBody(block);
 			result.add(whileStatement);
 		} else if (statement instanceof ForStatement) {
 
@@ -194,7 +198,10 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 					forStatement.setBody((Statement) ASTNode.copySubtree(forStatement.getAST(), newForBlock));
 				}
 			}
-
+			Block block = forStatement.getAST().newBlock();
+			block.statements().addAll(ASTNode.copySubtrees(block.getAST(), result));
+			block = extractNodeIntoBlock(block, forStatement.getBody());
+			forStatement.setBody(block);
 			result.add(forStatement);
 		} else if (statement instanceof DoStatement) {
 
@@ -209,10 +216,14 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 					doStatement.setBody((Statement) ASTNode.copySubtree(doStatement.getAST(), newDoBlock));
 				}
 			}
-
-			result.add(doStatement);
+			
 			int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
-			result.addAll(genInstrument(methodID, lineNumber));
+			Block block = doStatement.getAST().newBlock();
+			block = extractNodeIntoBlock(block, doStatement.getBody());
+			block.statements().addAll(ASTNode.copySubtrees(block.getAST(), genInstrument(methodID, lineNumber)));
+			doStatement.setBody(block);
+			result.add(doStatement);
+			
 		} else if (statement instanceof Block) {
 			Block block = (Block) statement;
 			Block newBlock = processBlock(block, methodID);
@@ -235,7 +246,11 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 							.setBody((Statement) ASTNode.copySubtree(enhancedForStatement.getAST(), newEnhancedBlock));
 				}
 			}
-
+			
+			Block block = enhancedBody.getAST().newBlock();
+			block.statements().addAll(ASTNode.copySubtrees(block.getAST(), result));
+			block = extractNodeIntoBlock(block, enhancedForStatement.getBody());
+			enhancedForStatement.setBody(block);
 			result.add(enhancedForStatement);
 		} else if (statement instanceof SwitchStatement) {
 
@@ -329,6 +344,17 @@ public class MultiLinePredicateInstrumentVisitor extends TraversalVisitor{
 		}
 
 		return result;
+	}
+	
+	private Block extractNodeIntoBlock(Block block, ASTNode node) {
+		if(node != null) {
+			if(node instanceof Block) {
+				block.statements().addAll(ASTNode.copySubtrees(block.getAST(), ((Block) node).statements()));
+			} else {
+				block.statements().add(ASTNode.copySubtree(block.getAST(), node));
+			}
+		}
+		return block;
 	}
 	
 	private List<ASTNode> genInstrument(String methodID, int line){
