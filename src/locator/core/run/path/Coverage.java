@@ -339,6 +339,20 @@ public class Coverage {
             String file = Constant.HOME + "/rlst.log";
             JavaFile.writeStringToFile(file,
                     "Project : " + subject.getName() + "_" + subject.getId() + " Different test result!\n", true);
+            String diff_result_error = Constant.HOME + "/info/" + subject.getName() + "_" + subject.getId() + "_diff.log";
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("Project : " + subject.getName() + "_" + subject.getId() + "\n");
+            stringBuffer.append("---Original failed test cases : \n");
+            for(Integer integer : failedTests) {
+            		stringBuffer.append(Identifier.getMessage(integer) + "\n");
+            }
+            stringBuffer.append("---Failed test cases after instrument: \n");
+            for(Integer integer : Collector.findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE)) {
+        			stringBuffer.append(Identifier.getMessage(integer) + "\n");
+            }
+            JavaFile.writeStringToFile(diff_result_error, stringBuffer.toString());
+            String content = JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE);
+            JavaFile.writeStringToFile(diff_result_error, "---test out:\n" + content, true);
         } else {
             String file = Constant.HOME + "/rlst.log";
             JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Success!\n",
