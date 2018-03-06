@@ -600,7 +600,11 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			return null;
 		}
 		if (type == null && psType == PredicateStatement.RETURN) {
-			return _retType;
+			// fix: use the return type may cause a super type and cause compilation error
+			if(_retType.isPrimitiveType()) {
+				return _retType;
+			}
+			return null;
 		} else {
 			return ast.newPrimitiveType(code);
 		}
@@ -610,6 +614,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		if (!type.isPrimitive()) {
 			return null;
 		}
+		
 		switch(type.toString()) {
 		case "int":
 			return PrimitiveType.INT;
