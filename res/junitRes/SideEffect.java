@@ -91,8 +91,8 @@ public class SideEffect {
 	}
 	
 	public void withoutInitializer(String string) {
-		int i;
-		float f;
+		int i,m = 5;
+		float f1,f2;
 		byte b;
 		short s;
 		long l;
