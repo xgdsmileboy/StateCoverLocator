@@ -111,4 +111,12 @@ public class SideEffect {
 		
 	}
 	
+	public Long method_insert_return() {
+		return 0;
+	}
+	
+	public Number method_not_insert_return() {
+		return 0;
+	}
+	
 }

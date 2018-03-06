@@ -97,6 +97,32 @@ public class NoSideEffectPredicateInstrumentVisitorTest {
 	}
 	
 	@Test
+	public void test_return() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
+		List<Pair<String, String>> pairs = new ArrayList<>();
+		pairs.add(new Pair<String, String>("#RETURN", "1.0"));
+		condition.put(115, pairs);
+		instrumentVisitor.setCondition(condition);
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_return_not_instrument() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
+		List<Pair<String, String>> pairs = new ArrayList<>();
+		pairs.add(new Pair<String, String>("#RETURN", "1.0"));
+		condition.put(119, pairs);
+		instrumentVisitor.setCondition(condition);
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
 	public void test_addInitializer() {
 		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
