@@ -601,13 +601,32 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		}
 		if (type == null && psType == PredicateStatement.RETURN) {
 			// fix: use the return type may cause a super type and cause compilation error
-			if(_retType.isPrimitiveType()) {
+			if(_retType.isPrimitiveType() || isPrimitiveWrapper(_retType)) {
 				return _retType;
 			}
 			return null;
 		} else {
 			return ast.newPrimitiveType(code);
 		}
+	}
+	
+	private boolean isPrimitiveWrapper(Type type) {
+		if(type == null) {
+			return false;
+		}
+		switch(type.toString()) {
+		case "Integer":
+		case "Short":
+		case "Character":
+		case "Boolean":
+		case "Long":
+		case "Float":
+		case "Double":
+		case "Byte":
+			return true;
+		default:
+		}
+		return false;
 	}
 	
 	private PrimitiveType.Code ITypeBinding2PrimitiveTypeCode(ITypeBinding type) {
