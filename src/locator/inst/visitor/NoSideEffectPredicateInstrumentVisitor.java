@@ -25,6 +25,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SwitchStatement;
@@ -34,6 +35,8 @@ import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
+import org.eclipse.jdt.internal.ui.preferences.formatter.BracesTabPage;
+import org.w3c.dom.css.CSSCharsetRule;
 
 import locator.common.config.Constant;
 import locator.common.config.Constant.PredicateStatement;
@@ -43,6 +46,7 @@ import locator.common.java.Pair;
 import locator.common.util.LevelLogger;
 import locator.inst.gen.GenName;
 import locator.inst.gen.GenStatement;
+import polyglot.ast.Case;
 import polyglot.ast.For;
 
 public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
@@ -119,7 +123,9 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int endLine = _cu.getLineNumber(statement.getStartPosition() + statement.getLength());
 		
 		if(!containLine(startLine, endLine)){
-			result.add(statement);
+			// fix: add initializer for variable declaration
+			result.add(addInitializer(statement));
+//			result.add(statement);
 			return result;
 		}
 
@@ -347,10 +353,50 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 				result.add(exprStatement);
 			}
 		} else {
-			result.add(statement);
+			// fix 2018-3-6: add initializer for variable declaration
+			result.add(addInitializer(statement));
+//			result.add(statement);
 		}
 
 		return result;
+	}
+	
+	private ASTNode addInitializer(ASTNode stmt) {
+		if(stmt instanceof VariableDeclarationStatement) {
+			VariableDeclarationStatement vds = (VariableDeclarationStatement) stmt;
+			Expression expression = genDefaultValue(vds.getType());
+			if (expression != null) {
+				for(Object object : vds.fragments()) {
+					if (object instanceof VariableDeclarationFragment) {
+						VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
+						if(vdf.getInitializer() == null) {
+							vdf.setInitializer((Expression) ASTNode.copySubtree(vdf.getAST(), expression));
+						}
+					}
+				}
+			}
+		}
+		return stmt;
+	}
+	
+	private Expression genDefaultValue(Type type) {
+		Expression expression = null;
+		if(type.isPrimitiveType()) {
+			switch(type.toString()) {
+			case "byte":
+			case "short":
+			case "int":
+			case "long": expression = ast.newNumberLiteral("0"); break;
+			case "char": expression = ast.newCharacterLiteral(); break;
+			case "float": expression = ast.newNumberLiteral("0.0f"); break;
+			case "double": expression = ast.newNumberLiteral("0.0"); break;
+			case "boolean": expression = ast.newBooleanLiteral(false); break;
+			case "void":
+			}
+		} else {
+			expression = ast.newNullLiteral();
+		}
+		return expression;
 	}
 	
 	private void addPredicates(Block block, String tempVarName, String methodID, int line, PredicateStatement psType, String originalExpr) {

@@ -96,4 +96,18 @@ public class NoSideEffectPredicateInstrumentVisitorTest {
 		System.out.println(unit.toString());
 	}
 	
+	@Test
+	public void test_addInitializer() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
+		List<Pair<String, String>> pairs = new ArrayList<>();
+		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
+		condition.put(105, pairs);
+		condition.put(108, pairs);
+		instrumentVisitor.setCondition(condition);
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
 }

@@ -90,4 +90,25 @@ public class SideEffect {
 		return a;
 	}
 	
+	public void withoutInitializer(String string) {
+		int i;
+		float f;
+		byte b;
+		short s;
+		long l;
+		char c;
+		double d;
+		boolean bl;
+		Integer integer;
+		String other;
+		
+		if(string ==null || (i=string.length()) <= 0) {
+			return;
+		}
+		for(int j = 0; i > j; j++) {
+			
+		}
+		
+	}
+	
 }
