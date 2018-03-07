@@ -21,12 +21,12 @@ if __name__ == '__main__':
         sys.argv[3]
     )
     cluster = Cluster(config)
-    str_encoder, unique_words, var_column, expr_column  = cluster.cluster_string()
+    str_encoder, var_column, expr_column  = cluster.cluster_string()
 
     xgvar = XGVar(config)
     var_feature_num = var_column - 4
-    xgvar.train_var(str_encoder, unique_words, var_feature_num, True)
+    xgvar.train_var(str_encoder, var_feature_num, True)
 
     xgexpr = XGExpr(config)
     expr_feature_num = expr_column - 4
-    xgexpr.train_expr(str_encoder, unique_words, expr_feature_num, True)
+    xgexpr.train_expr(str_encoder, expr_feature_num, True)
