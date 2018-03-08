@@ -89,7 +89,7 @@ def join_prob(config):
                 #prob = math.log(varProbMap[key] * predicate[1])
                 #prob = varProbMap[key] * predicate[1]
                 #prob = math.log(varProbMap[key]) + math.log(predicate[1])
-                prob = varProbMap[key] + predicate[1]
+                prob = varProbMap[key] * predicate[1]
                 newkey = (key[0], key[1], predicate[0])
                 varPredicateProbMap[newkey] = prob
 
