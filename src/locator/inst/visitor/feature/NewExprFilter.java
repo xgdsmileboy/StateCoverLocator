@@ -80,7 +80,7 @@ public class NewExprFilter {
 
 	public static String filter(String type, String varName, String condition, LineInfo info,
 			String currentClassName) {
-		if (varName.equals("THIS")) {
+		if (condition.isEmpty() || varName.equals("THIS")) {
 			return null;
 		}
 

@@ -400,6 +400,14 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	}
 	
 	private void addPredicates(Block block, String tempVarName, String methodID, int line, PredicateStatement psType, String originalExpr) {
+		// fix a bug: should not instrument predicates for constant boolean values
+		// it may cause compilation error
+		// public type func(){ for(;true;) { if(...) return;  } }
+		// => public type func(){ for(;log(true);) { if(...) return;  } }
+		// cause compilation error for missing "return" statement.
+		if(originalExpr.isEmpty() || "true".equals(originalExpr) || "false".equals(originalExpr)) {
+			return;
+		}
 		List<ASTNode> predicates = genPredicateInstrument(methodID, tempVarName, line, psType, originalExpr);
 		for(ASTNode predicate : predicates) {
 			block.statements().add(ASTNode.copySubtree(block.getAST(), predicate));
