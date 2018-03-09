@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
@@ -364,13 +365,16 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private ASTNode addInitializer(ASTNode stmt) {
 		if(stmt instanceof VariableDeclarationStatement) {
 			VariableDeclarationStatement vds = (VariableDeclarationStatement) stmt;
-			Expression expression = genDefaultValue(vds.getType());
-			if (expression != null) {
-				for(Object object : vds.fragments()) {
-					if (object instanceof VariableDeclarationFragment) {
-						VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
-						if(vdf.getInitializer() == null) {
-							vdf.setInitializer((Expression) ASTNode.copySubtree(vdf.getAST(), expression));
+			// fix bug : skip variables with "final" modifier
+			if(!Modifier.isFinal(vds.getModifiers())) {
+				Expression expression = genDefaultValue(vds.getType());
+				if (expression != null) {
+					for(Object object : vds.fragments()) {
+						if (object instanceof VariableDeclarationFragment) {
+							VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
+							if(vdf.getInitializer() == null) {
+								vdf.setInitializer((Expression) ASTNode.copySubtree(vdf.getAST(), expression));
+							}
 						}
 					}
 				}
