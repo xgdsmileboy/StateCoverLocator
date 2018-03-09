@@ -584,38 +584,45 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	}
 	
 	private Type getDeclarationType(ITypeBinding type, PredicateStatement psType) {
-		PrimitiveType.Code code = null;
 		switch (psType) {
 		case IF:
 		case WHILE:
 		case DO:
 		case FOR:
-			code = PrimitiveType.BOOLEAN;
-			break;
+			return ast.newPrimitiveType(PrimitiveType.BOOLEAN);
 		case RETURN:
 			if (type == null) {
-				break;
+				if(_retType.isPrimitiveType() || isPrimitiveWrapper(_retType)) {
+					return _retType;
+				} else {
+					return null;
+				}
 			}
 		case SWITCH:
+			if (type == null) {
+				return null;
+			} else {
+				if (type.isPrimitive()) {
+					return ast.newPrimitiveType(ITypeBinding2PrimitiveTypeCode(type));
+				}
+			}
+			break;
 		case ASSIGN:
 			if (type == null) {
 				return null;
 			}
-			code = ITypeBinding2PrimitiveTypeCode(type);
-		}
-		if (code == null && type != null) {
-			LevelLogger.error(__name__ + "Unhandled type: " + type.getName());
-			return null;
-		}
-		if (type == null && psType == PredicateStatement.RETURN) {
-			// fix: use the return type may cause a super type and cause compilation error
-			if(_retType.isPrimitiveType() || isPrimitiveWrapper(_retType)) {
-				return _retType;
+			if (type.isPrimitive()) {
+				return ast.newPrimitiveType(ITypeBinding2PrimitiveTypeCode(type));
+			} else {
+				int pos = type.getQualifiedName().lastIndexOf(".");
+				if (pos == -1) {
+					return ast.newSimpleType(ast.newSimpleName(type.getName()));
+				}
+				String qualifier = type.getQualifiedName().substring(0, pos);
+				return ast.newSimpleType(ast.newQualifiedName(ast.newSimpleName(qualifier), ast.newSimpleName(type.getName())));
 			}
-			return null;
-		} else {
-			return ast.newPrimitiveType(code);
 		}
+		return null; // should not reach here
 	}
 	
 	private boolean isPrimitiveWrapper(Type type) {
