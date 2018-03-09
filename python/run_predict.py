@@ -24,8 +24,8 @@ if __name__ == '__main__':
     cluster = Cluster(config)
     str_encoder, kmeans_model, unique_words = cluster.get_cluster()
 
-    xgvar = XGVar(config)
-    xgvar.run_predict_vars(str_encoder, kmeans_model, unique_words)
+    #xgvar = XGVar(config)
+    #xgvar.run_predict_vars(str_encoder, kmeans_model, unique_words)
 
     xgexpr = XGExpr(config)
     xgexpr.run_gen_exprs(str_encoder, kmeans_model, unique_words)
