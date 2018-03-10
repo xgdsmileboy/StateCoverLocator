@@ -68,31 +68,30 @@ def join_prob(config):
     @param config:Configure 
     :return: 
     """
-    #var_predicted = config.get_var_pred_out_file()
+    var_predicted = config.get_var_pred_out_file()
     expr_predicted = config.get_expr_pred_out_file()
     joint_file = config.get_joint_predict_file()
 
-    #print(var_predicted)
-    #varProbMap = getVarProb(var_predicted)
+    print(var_predicted)
+    varProbMap = getVarProb(var_predicted)
     predicateProbMap = getPredicateProb(expr_predicted)
 
     varPredicateProbMap = {}
 
-    #for key in varProbMap.keys():
-    for key in predicateProbMap.keys():
-        predicateList = predicateProbMap[key]
-        for predicate in predicateList:
-            #mulProb = varProbMap[key] * predicate[1]
-            #if mulProb <= 0:
-            #    continue
+    for key in varProbMap.keys():
+        if key in predicateProbMap.keys():
+            predicateList = predicateProbMap[key]
+            for predicate in predicateList:
+                mulProb = varProbMap[key] * predicate[1]
+                if mulProb <= 0:
+                    continue
 
-            #prob = math.log(varProbMap[key] * predicate[1])
-            #prob = varProbMap[key] * predicate[1]
-            #prob = math.log(varProbMap[key]) + math.log(predicate[1])
-            #prob = varProbMap[key] * predicate[1]
-            prob = predicate[1]
-            newkey = (key[0], key[1], predicate[0])
-            varPredicateProbMap[newkey] = prob
+                #prob = math.log(varProbMap[key] * predicate[1])
+                #prob = varProbMap[key] * predicate[1]
+                #prob = math.log(varProbMap[key]) + math.log(predicate[1])
+                prob = varProbMap[key] * predicate[1]
+                newkey = (key[0], key[1], predicate[0])
+                varPredicateProbMap[newkey] = prob
 
     varPredicateProbTuple = sorted(varPredicateProbMap.items(), lambda x, y: cmp(x[1], y[1]), reverse=True)
     idConsMap = {}

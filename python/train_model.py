@@ -23,9 +23,9 @@ if __name__ == '__main__':
     cluster = Cluster(config)
     str_encoder, var_column, expr_column  = cluster.cluster_string()
 
-    #xgvar = XGVar(config)
-    #var_feature_num = var_column - 4
-    #xgvar.train_var(str_encoder, var_feature_num, False)
+    xgvar = XGVar(config)
+    var_feature_num = var_column - 4
+    xgvar.train_var(str_encoder, var_feature_num, False)
 
     xgexpr = XGExpr(config)
     expr_feature_num = expr_column - 4
