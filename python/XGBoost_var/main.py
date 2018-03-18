@@ -71,10 +71,8 @@ class XGVar(object):
                         f.write('\n')
             # elif (self.__configure__.get_model_type() == 'svm'):
                 # y_prob = model.predict_proba(X_pred)
-            elif (self.__configure__.get_model_type() == 'randomforest'):
+            elif (self.__configure__.get_model_type() == 'randomforest' or self.__configure__.get_model_type() == 'tree'):
                 y_prob = model.predict_proba(X_pred)
-                print(y_prob)
-                print(model.classes_)
                 one_pos = 1 - model.classes_[0]
 
                 with open(var_predicted, 'w') as f:
@@ -83,6 +81,7 @@ class XGVar(object):
                         f.write('%s\t' % varnames[i])
                         f.write('%.4f' % y_prob[i][one_pos])
                         f.write('\n')
+
         else:
             print(feature_num)
             classifier = var_model.get_dnn_classifier(feature_num, 2, self.__configure__.get_var_nn_model_dir())
