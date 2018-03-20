@@ -1,5 +1,7 @@
 package locator.inst.gen;
 
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -58,6 +60,18 @@ public class GenStatement {
 		methodInvocation.arguments().add(expression);
 		ExpressionStatement expressionStatement = ast.newExpressionStatement(methodInvocation);
 		return expressionStatement;
+	}
+	
+	/**
+	 * generate write file statement "auxiliary.Dumper.write(message)"
+	 * 
+	 * @param message
+	 * @return
+	 */
+	public static Statement genWriter(String message) {
+		StringLiteral literal = ast.newStringLiteral();
+		literal.setLiteralValue(message);
+		return genWriter(literal);
 	}
 
 	/**
