@@ -15,13 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.annotation.Untainted;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.ui.internal.e4.migration.InfoReader;
-
 import java.util.Set;
 
 import edu.pku.sei.conditon.simple.FeatureGenerator;
@@ -46,13 +39,10 @@ import locator.core.Sober;
 import locator.core.StatisticalDebugging;
 import locator.core.Suspicious;
 import locator.core.Tarantula;
-import locator.core.run.Runner;
 import locator.core.run.path.Collector;
 import locator.core.run.path.Coverage;
-import locator.core.run.path.ExecutionPathBuilder;
-import locator.inst.Instrument;
-import locator.inst.visitor.DeInstrumentVisitor;
-//import sun.security.x509.AlgorithmId;
+import locator.inst.visitor.BranchInstrumentVisitor;
+import locator.inst.visitor.StatementInstrumentVisitor;
 
 public class Main {
 
@@ -169,10 +159,24 @@ public class Main {
 		Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
 		int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
 		
+		// output branch coverage information
+		if(Constant.OUT_BRANCH_COVERAGE) {
+			LevelLogger.info("step 2.1: compute branch coverage information.");
+			String testsPath = subject.getHome() + "/all-tests.txt";
+			ExecuteCommand.deleteGivenFile(testsPath);
+			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
+			LevelLogger.info("output branch coverage information to file : ori_coverage.csv");
+			File covInfoPath = new File(subject.getCoverageInfoPath());
+			if (!covInfoPath.exists()) {
+				covInfoPath.mkdirs();
+			}
+			printCoverage(coverage, subject.getCoverageInfoPath() + "/branch_coverage.csv");
+		}
+		
 		LevelLogger.info("step 2: compute original coverage information.");
 		String testsPath = subject.getHome() + "/all-tests.txt";
 		ExecuteCommand.deleteGivenFile(testsPath);
-		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods);
+		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, StatementInstrumentVisitor.class);
 		int totalTestNum = JavaFile.readFileToStringList(testsPath).size();
 		
 		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
@@ -181,7 +185,6 @@ public class Main {
 			covInfoPath.mkdirs();
 		}
 		printCoverage(coverage, subject.getCoverageInfoPath() + "/ori_coverage.csv");
-
 
 		LevelLogger.info("step 3: compute statements covered by failed tests");
 		Set<String> allCoveredStatement = new HashSet<>();
