@@ -165,7 +165,7 @@ public class Main {
 			String testsPath = subject.getHome() + "/all-tests.txt";
 			ExecuteCommand.deleteGivenFile(testsPath);
 			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
-			LevelLogger.info("output branch coverage information to file : ori_coverage.csv");
+			LevelLogger.info("output branch coverage information to file : branch_coverage.csv");
 			File covInfoPath = new File(subject.getCoverageInfoPath());
 			if (!covInfoPath.exists()) {
 				covInfoPath.mkdirs();
