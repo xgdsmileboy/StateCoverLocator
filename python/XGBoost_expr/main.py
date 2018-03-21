@@ -62,13 +62,11 @@ class XGExpr(object):
             test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X_pred.values)}, y=None, num_epochs=1, shuffle=False)
             predictions = list(classifier.predict(input_fn = test_input_fn))
             y_prob = [p['probabilities'] for p in predictions]
-            classes = [p['classes'] for p in predictions]
 
         ## save the result
         with open(expr_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
                 key = dataset[i, 3] + "::" + str(dataset[i, 1]) + "::" + dataset[i, 5] 
-                print(key)
                 f.write('%s\t' % key)
                 f.write('%s\t' % dataset[i, 5])
                 # f.write('%s' % y_prob[i])
