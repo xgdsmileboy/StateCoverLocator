@@ -63,7 +63,7 @@ public class Main {
 		if (Constant.TRAINING_MODEL.equals("dnn")){
 			File varModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/var");
 			File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() + "/expr");
-			if (varModel.exists() && exprModel.exists()) {
+			if (varModel.exists() && exprModel.exists() && !evaluate) {
 				LevelLogger.info("Models are already exist and will be used directly !");
 				return;
 			}
@@ -72,7 +72,7 @@ public class Main {
 					"_" + Constant.TRAINING_MODEL + ".var_model.pkl");
 			File exprModel = new File(modelPath + subject.getName() + "_" + subject.getId() +
 					"_" + Constant.TRAINING_MODEL + ".expr_model.pkl");
-			if (varModel.exists() && exprModel.exists()) {
+			if (varModel.exists() && exprModel.exists() && !evaluate) {
 				LevelLogger.info("Models are already exist and will be used directly !");
 				return;
 			}
