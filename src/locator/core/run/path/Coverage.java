@@ -34,6 +34,7 @@ import locator.common.util.LevelLogger;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.predict.Predictor;
+import locator.inst.visitor.BranchInstrumentVisitor;
 import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
@@ -41,6 +42,7 @@ import locator.inst.visitor.NewTestMethodInstrumentVisitor;
 import locator.inst.visitor.NoSideEffectPredicateInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.StatisticalDebuggingPredicatesVisitor;
+import locator.inst.visitor.TraversalVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
 
@@ -53,17 +55,23 @@ public class Coverage {
     private final static String __name__ = "@Coverage ";
 
     public static Map<String, CoverInfo> computeOriginalCoverage(Subject subject,
-            Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods) {
+            Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods, Class visitor) {
         // initialize coverage information
         Map<String, CoverInfo> coverage = new HashMap<>();
 
         String src = subject.getHome() + subject.getSsrc();
         String test = subject.getHome() + subject.getTsrc();
 
+        TraversalVisitor traversalVisitor = null;
+        if(visitor == BranchInstrumentVisitor.class) {
+        		traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        } else {
+        		traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        }
         // instrument those methods ran by failed tests
-        StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(
-                failedTestAndCoveredMethods.getSecond());
-        Instrument.execute(src, statementInstrumentVisitor);
+//        StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(
+//                failedTestAndCoveredMethods.getSecond());
+        Instrument.execute(src, traversalVisitor);
 
         NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(
                 failedTestAndCoveredMethods.getFirst(), false);
