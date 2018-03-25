@@ -11,7 +11,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,7 +34,6 @@ import locator.core.DStar;
 import locator.core.Ochiai;
 import locator.core.Op2;
 import locator.core.Simple;
-import locator.core.Sober;
 import locator.core.StatisticalDebugging;
 import locator.core.Suspicious;
 import locator.core.Tarantula;
@@ -134,21 +132,6 @@ public class Main {
 		backupSource(subject);
 		Identifier.resetAll();
 		
-//		// preprocess : remove all instrument
-//		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
-//		Instrument.execute(subject.getHome() + subject.getSsrc(), deInstrumentVisitor);
-//		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
-
-		// train predicate prediction model
-		if (!useStatisticalDebugging) {
-			trainModel(subject, Constant.TRAINING_EVALUATION);
-		}
-		if (Constant.TRAINING_EVALUATION) {
-			String mlOutput = JavaFile.readFileToString(Constant.STR_TMP_ML_LOG_FILE);
-			JavaFile.writeStringToFile(Constant.STR_ML_EVALUATION + "/" + subject.getName() + "_" + subject.getId() + ".ml.out", mlOutput);
-			return true;
-		}
-
 		// copy auxiliary file to subject path
 		LevelLogger.info("copying auxiliary file to subject path.");
 		Configure.config_dumper(subject);
@@ -160,85 +143,40 @@ public class Main {
 		int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
 		
 		// output branch coverage information
-		if(Constant.OUT_BRANCH_COVERAGE) {
-			LevelLogger.info("step 2.1: compute branch coverage information.");
-			String testsPath = subject.getHome() + "/all-tests.txt";
-			ExecuteCommand.deleteGivenFile(testsPath);
-			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
-			LevelLogger.info("output branch coverage information to file : branch_coverage.csv");
-			File covInfoPath = new File(subject.getCoverageInfoPath());
-			if (!covInfoPath.exists()) {
-				covInfoPath.mkdirs();
-			}
-			printCoverage(coverage, subject.getCoverageInfoPath() + "/branch_coverage.csv");
-		}
-		
-		LevelLogger.info("step 2: compute original coverage information.");
+		LevelLogger.info("step 2: compute branch coverage information.");
 		String testsPath = subject.getHome() + "/all-tests.txt";
 		ExecuteCommand.deleteGivenFile(testsPath);
-		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, StatementInstrumentVisitor.class);
+		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
+		LevelLogger.info("output branch coverage information to file : branch_coverage.csv");
+		File covInfoPath = new File(subject.getCoverageInfoPath());
+		if (!covInfoPath.exists()) {
+			covInfoPath.mkdirs();
+		}
+		printCoverage(coverage, subject.getCoverageInfoPath() + "/branch_coverage.csv");
+		
+		LevelLogger.info("step 3: compute original coverage information.");
+		ExecuteCommand.deleteGivenFile(testsPath);
+		coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, StatementInstrumentVisitor.class);
 		int totalTestNum = JavaFile.readFileToStringList(testsPath).size();
 		
 		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
-		File covInfoPath = new File(subject.getCoverageInfoPath());
+		covInfoPath = new File(subject.getCoverageInfoPath());
 		if (!covInfoPath.exists()) {
 			covInfoPath.mkdirs();
 		}
 		printCoverage(coverage, subject.getCoverageInfoPath() + "/ori_coverage.csv");
 
-		LevelLogger.info("step 3: compute statements covered by failed tests");
-		Set<String> allCoveredStatement = new HashSet<>();
-		for(Entry<String, CoverInfo> entry : coverage.entrySet()){
-			if(entry.getValue().getFailedCount() > 0){
-				allCoveredStatement.add(entry.getKey());
-			}
-		}
-		
-		Identifier.backup(subject);
-		
-		LevelLogger.info("step 4: compute predicate coverage information");
-		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
-				failedTestsAndCoveredMethods.getFirst(), useStatisticalDebugging, useSober);
-
-		if(predicateCoverage == null && !useSober){
-			return false;
-		}
-		
-		if (!useSober) {
-			String predCoverageFile = useStatisticalDebugging ? "pred_coverage_sd.csv" : "pred_coverage.csv";
-			LevelLogger.info("output predicate coverage information to file : " + predCoverageFile);
-			printCoverage(predicateCoverage, subject.getCoverageInfoPath() + "/" + predCoverageFile);
-		}
-
 		LevelLogger.info("Compute suspicious for each statement and out put to file.");
 		List<Algorithm> algorithms = new ArrayList<>();
-		if (useSober) {
-			algorithms.add(new Sober());
-		} else {
-			// add different computation algorithms
-			algorithms.add(new Ochiai());
-			algorithms.add(new Tarantula());
-			algorithms.add(new DStar());
-			algorithms.add(new Barinel());
-			algorithms.add(new Op2());
-			algorithms.add(new Simple());
-			algorithms.add(new StatisticalDebugging());
-		}
-		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed, useStatisticalDebugging, useSober);
-		
-//		LevelLogger.info("step 5: combine all coverage informaiton");
-//		for (Entry<String, CoverInfo> entry : predicateCoverage.entrySet()) {
-//			CoverInfo coverInfo = coverage.get(entry.getKey());
-//			if (coverInfo != null) {
-//				coverInfo.combine(entry.getValue());
-//			} else {
-//				coverage.put(entry.getKey(), entry.getValue());
-//			}
-//		}
-//
-//		LevelLogger.info("step 6: output coverage information to file : coverage.csv");
-//		printCoverage(coverage, Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_"
-//				+ subject.getId() + "/coverage.csv");
+		// add different computation algorithms
+		algorithms.add(new Ochiai());
+		algorithms.add(new Tarantula());
+		algorithms.add(new DStar());
+		algorithms.add(new Barinel());
+		algorithms.add(new Op2());
+		algorithms.add(new Simple());
+		algorithms.add(new StatisticalDebugging());
+		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed, false, false);
 		return true;
 	}
 
@@ -296,12 +234,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-//
-//		double [] prob = {1.0, 1.0, 1.0, 5.0, 1.0, 1.0}; // select more math project
-//		List<Subject> allSubjects = ProjectSelector.randomSelect(prob, 80);
-//		recordSubjects(allSubjects);
-//		for(int i = 53; i < allSubjects.size(); i++) {
-//			try {
 		List<Subject> allSubjects = null;
 		if(args.length > 0) {
 			if(args.length == 1) {
@@ -334,11 +266,8 @@ public class Main {
 		}
 		System.out.println("\n---------------------------------\n");
 		
-//		Subject subject = ProjectSelector.select("math", 4);
 		for(Subject subject : allSubjects) {
 			try {
-//				File file = new File(subject.getCoverageInfoPath() + "/predicates_backup.txt");
-//				if (!file.exists()) continue;
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
 				Date startTime = new Date();
 				String begin = simpleDateFormat.format(startTime);
@@ -360,9 +289,6 @@ public class Main {
 						+ Long.toString(endTime.getTime() - startTime.getTime()) + "\t" + startTime + "\n", true);
 			} catch (Exception e) {
 				e.printStackTrace();
-//				JavaFile.writeStringToFile(Constant.HOME + "/logs/" +
-//						subject.getName() + "_" + Integer.toString(subject.getId())
-//						+ "_error.log");
 			}
 		}
 	}

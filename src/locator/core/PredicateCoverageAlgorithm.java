@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
@@ -17,12 +16,7 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 //		Map<String, ArrayList<PredicateCoverage>> predCoverage = new HashMap<String , ArrayList<PredicateCoverage>>();
 		List<Pair<String, Double>> result = new ArrayList<Pair<String, Double>>();
 		String oriCoveragePath = subject.getCoverageInfoPath() + "/ori_coverage.csv";
-		String predCoveragePath = subject.getCoverageInfoPath() + "/pred_coverage";
-		if (useStatisticalDebugging) {
-			predCoveragePath += "_sd.csv";
-		} else {
-			predCoveragePath += ".csv";
-		}
+		String predCoveragePath = subject.getCoverageInfoPath() + "/branch_coverage.csv";
 
 		List<String> oriContent = JavaFile.readFileToStringList(oriCoveragePath);
 		if (!getName().equals("StatisticalDebugging")) {			
@@ -95,7 +89,7 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 				p.setSecond(p.getSecond() + s); // add original and pred together
 			}
 		}
-		writeToFile(contents, subject, useStatisticalDebugging);
+		writeToFile(contents, subject, false);
 		
 		return result;
 	}
