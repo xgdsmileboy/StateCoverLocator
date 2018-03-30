@@ -472,9 +472,11 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		StringLiteral trueStr = ast.newStringLiteral();
 		trueStr.setLiteralValue(trueLogInfo);
 		methodInvocation.arguments().add(trueStr);
-		StringLiteral falseStr = ast.newStringLiteral();
-		falseStr.setLiteralValue(falseLogInfo);
-		methodInvocation.arguments().add(falseStr);
+		if (!_useSober) {			
+			StringLiteral falseStr = ast.newStringLiteral();
+			falseStr.setLiteralValue(falseLogInfo);
+			methodInvocation.arguments().add(falseStr);
+		}
 		return methodInvocation;
 	}
 
