@@ -198,7 +198,7 @@ public class Main {
 		
 		LevelLogger.info("step 4: compute predicate coverage information");
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
-				failedTestsAndCoveredMethods.getFirst(), useStatisticalDebugging, useSober);
+				failedTestsAndCoveredMethods);
 
 		if(predicateCoverage == null && !useSober){
 			return false;

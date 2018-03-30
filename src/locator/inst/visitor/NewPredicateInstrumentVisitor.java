@@ -98,6 +98,13 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 		}
 
 		methodBody.statements().clear();
+		
+		if (_line == startLine) {
+			ASTNode inserted = GenStatement.newGenPredicateStatement(_condition.get(0).getFirst(),
+					message + "#" + _condition.get(0).getFirst() + "#1#0");
+			methodBody.statements().add(ASTNode.copySubtree(methodBody.getAST(), inserted));
+		}
+		
 		for (ASTNode statement : blockStatement) {
 			methodBody.statements().add(ASTNode.copySubtree(methodBody.getAST(), statement));
 		}
