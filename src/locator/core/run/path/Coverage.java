@@ -35,7 +35,9 @@ import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.predict.Predictor;
 import locator.inst.visitor.BranchInstrumentVisitor;
+import locator.inst.visitor.ClassFieldVisitor;
 import locator.inst.visitor.DeInstrumentVisitor;
+import locator.inst.visitor.MethodPredicateVisitor;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
 import locator.inst.visitor.NewTestMethodInstrumentVisitor;
@@ -274,30 +276,29 @@ public class Coverage {
      *         statementString:"MethodID#line"
      */
     public static Map<String, CoverInfo> computePredicateCoverage(Subject subject, Set<String> allStatements,
-            Set<Integer> failedTests, boolean useStatisticalDebugging, boolean useSober) {
+            Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods) {
         String srcPath = subject.getHome() + subject.getSsrc();
         String testPath = subject.getHome() + subject.getTsrc();
-        NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests,
-                useSober);
+        NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTestsAndCoveredMethods.getFirst(),
+                false);
         Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 
         Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = null;
         if (Constant.RECOVER_PREDICATE_FROM_FILE) {
-            file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
+            file2Line2Predicates = recoverPredicates(subject);
         }
 		if (file2Line2Predicates == null) {
 			long start = System.currentTimeMillis();
-			file2Line2Predicates = useStatisticalDebugging ? getStatisticalDebuggingPredicates(subject, allStatements)
-					: getAllPredicates(subject, allStatements, useSober);
+			file2Line2Predicates = getMethodPredicates(subject, allStatements, failedTestsAndCoveredMethods.getSecond());
 			long duration = System.currentTimeMillis() - start;
 			LevelLogger.info("Predicate validation time : " + transformMilli2Time(duration));
 		}
         System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
-        printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
+        printInfo(file2Line2Predicates, subject);
         // Delete empty file and line.
         // Please DO NOT comment out the following line! 2018/01/01
-        file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
-
+        file2Line2Predicates = recoverPredicates(subject);
+        
         if (useStatisticalDebugging) {
             NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(
                     useSober);
@@ -389,25 +390,30 @@ public class Coverage {
     	return minutes + ":" + second + ":" + milli;
     }
 
-    private static Map<String, Map<Integer, List<Pair<String, String>>>> getStatisticalDebuggingPredicates(
-            Subject subject, Set<String> allStatements) {
+    private static Map<String, Map<Integer, List<Pair<String, String>>>> getMethodPredicates(
+            Subject subject, Set<String> allStatements, Set<Integer> coveredMethods) {
         String srcPath = subject.getHome() + subject.getSsrc();
 
         Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
 
-        Map<String, List<Integer>> file2LocationList = mapLocations2File(allStatements, srcPath);
+        Map<String, List<String>> file2MethodList = mapLocations2File(coveredMethods, srcPath);
 
-        for (Entry<String, List<Integer>> entry : file2LocationList.entrySet()) {
+        for (Entry<String, List<String>> entry : file2MethodList.entrySet()) {
             String relJavaPath = entry.getKey();
             String fileName = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
             String source = JavaFile.readFileToString(fileName);
+            CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSourceWithType(source,
+                    ASTParser.K_COMPILATION_UNIT, fileName, subject);
+            ClassFieldVisitor fieldVisitor = new ClassFieldVisitor();
+            cu.accept(fieldVisitor);
+            List<Pair<String, String>> classFields = fieldVisitor.getFields();
             Map<Integer, List<Pair<String, String>>> line2Predicate = null;
             List<Pair<String, String>> predicates = null;
-            for (Integer line : entry.getValue()) {
-                CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSourceWithType(source,
+            for (String methodString : entry.getValue()) {
+                cu = (CompilationUnit) JavaFile.genASTFromSourceWithType(source,
                         ASTParser.K_COMPILATION_UNIT, fileName, subject);
-                StatisticalDebuggingPredicatesVisitor sdPredicatesVisitor = new StatisticalDebuggingPredicatesVisitor(
-                        line, srcPath, relJavaPath);
+                MethodPredicateVisitor sdPredicatesVisitor = new MethodPredicateVisitor(
+                        methodString, srcPath, relJavaPath, classFields);
                 cu.accept(sdPredicatesVisitor);
                 line2Predicate = file2Line2Predicates.get(fileName);
                 if (line2Predicate == null) {
@@ -461,26 +467,16 @@ public class Coverage {
         return file2Line2Predicates;
     }
 
-    private static Map<String, List<Integer>> mapLocations2File(Set<String> allStatements, String srcPath) {
-        Map<String, List<Integer>> file2LocationList = new HashMap<>();
-        int allStmtCount = allStatements.size();
-        int currentStmtCount = 1;
-        for (String stmt : allStatements) {
-            LevelLogger.info("======================== [" + currentStmtCount + "/" + allStmtCount
-                    + "] statements (statistical debugging) =================.");
-            currentStmtCount++;
-            String[] stmtInfo = stmt.split("#");
-            if (stmtInfo.length != 2) {
-                LevelLogger.error(__name__ + "#mapLocations2File statement parse error : " + stmt);
-                System.exit(0);
-            }
-            Integer methodID = Integer.valueOf(stmtInfo[0]);
-            int line = Integer.parseInt(stmtInfo[1]);
-            if (line == 2317) {
-                System.out.print("exist");
-            }
-            String methodString = Identifier.getMessage(methodID);
-            LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
+    private static Map<String, List<String>> mapLocations2File(Set<Integer> coveredMethods, String srcPath) {
+        Map<String, List<String>> file2MethodList = new HashMap<>();
+        int allMethodCount = coveredMethods.size();
+        int currentMethodCount = 1;
+        for (Integer cMethod : coveredMethods) {
+            LevelLogger.info("======================== [" + currentMethodCount + "/" + allMethodCount
+                    + "] methods (statistical debugging) =================.");
+            currentMethodCount++;
+            String methodString = Identifier.getMessage(cMethod);
+            LevelLogger.info("Current method  : **" + methodString + "**");
             String[] methodInfo = methodString.split("#");
             if (methodInfo.length < 4) {
                 LevelLogger.error(__name__ + "#mapLocations2File method info parse error : " + methodString);
@@ -495,7 +491,7 @@ public class Coverage {
 
             String fileName = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
 
-            List<Integer> list = file2LocationList.get(relJavaPath);
+            List<String> list = file2MethodList.get(relJavaPath);
             if (list == null) {
                 File file = new File(fileName);
                 if (!file.exists()) {
@@ -504,10 +500,10 @@ public class Coverage {
                 }
                 list = new LinkedList<>();
             }
-            list.add(line);
-            file2LocationList.put(relJavaPath, list);
+            list.add(methodString);
+            file2MethodList.put(relJavaPath, list);
         }
-        return file2LocationList;
+        return file2MethodList;
     }
 
     private static boolean validatePredicateByInMemCompile(String predicate, String source, String fileName,
@@ -708,7 +704,7 @@ public class Coverage {
     }
 
     private static void printInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
-            Subject subject, boolean useStatisticalDebugging) {
+            Subject subject) {
         System.out.println("\n------------------------begin predicate info------------------------\n");
 
         StringBuffer contents = new StringBuffer();
@@ -727,24 +723,13 @@ public class Coverage {
             }
         }
         System.out.println("\n------------------------end predicate info------------------------\n");
-        String outputFile = subject.getCoverageInfoPath() + "/predicates_backup";
-        if (useStatisticalDebugging) {
-            outputFile += "_sd.txt";
-        } else {
-            outputFile += ".txt";
-        }
+        String outputFile = subject.getCoverageInfoPath() + "/predicates_backup_md.txt";
         JavaFile.writeStringToFile(outputFile, contents.toString());
     }
 
-    public static Map<String, Map<Integer, List<Pair<String, String>>>> recoverPredicates(Subject subject,
-            boolean useStatisticalDebugging) {
+    public static Map<String, Map<Integer, List<Pair<String, String>>>> recoverPredicates(Subject subject) {
         Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
-        String inputFile = subject.getCoverageInfoPath() + "/predicates_backup";
-        if (useStatisticalDebugging) {
-            inputFile += "_sd.txt";
-        } else {
-            inputFile += ".txt";
-        }
+        String inputFile = subject.getCoverageInfoPath() + "/predicates_backup_md.txt";
         File file = new File(inputFile);
         if (!file.exists() || !file.isFile()) {
             return null;
