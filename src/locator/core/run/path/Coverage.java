@@ -38,6 +38,7 @@ import locator.inst.visitor.BranchInstrumentVisitor;
 import locator.inst.visitor.ClassFieldVisitor;
 import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MethodEnterExitPredicateVisitor;
+import locator.inst.visitor.MethodInstrumentVisitor;
 import locator.inst.visitor.MethodPredicateVisitor;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
@@ -68,6 +69,8 @@ public class Coverage {
         TraversalVisitor traversalVisitor = null;
         if(visitor == BranchInstrumentVisitor.class) {
         		traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        } if(visitor == MethodInstrumentVisitor.class) {
+        		traversalVisitor = new MethodInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
         } else {
         		traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
         }
