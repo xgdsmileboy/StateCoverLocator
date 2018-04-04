@@ -397,7 +397,7 @@ public class Coverage {
             for (String methodString : entry.getValue()) {
                 cu = (CompilationUnit) JavaFile.genASTFromSourceWithType(source,
                         ASTParser.K_COMPILATION_UNIT, fileName, subject);
-                MethodPredicateVisitor sdPredicatesVisitor = new MethodPredicateVisitor(methodString, classFields);
+                MethodPredicateVisitor sdPredicatesVisitor = new MethodPredicateVisitor(methodString, classFields, srcPath, relJavaPath);
                 cu.accept(sdPredicatesVisitor);
                 line2Predicate = file2Line2Predicates.get(fileName);
                 if (line2Predicate == null) {
@@ -406,6 +406,7 @@ public class Coverage {
 
                 Map<Integer, List<String>> returnPredicates = sdPredicatesVisitor.getReturnPredicates();
                 List<List<String>> variablePredicates = sdPredicatesVisitor.getVariablePredicates();
+                Map<Integer, List<List<String>>> returnInScopePredicates = sdPredicatesVisitor.getReturnInScopePredicates();
                 
                 if (!variablePredicates.isEmpty()) {
                 	int line = sdPredicatesVisitor.getStartLine();
@@ -414,7 +415,8 @@ public class Coverage {
                         predicates = new ArrayList<>();
                     }
                 	for (List<String> similarPredicates : variablePredicates) {
-                        if (validatePredicateByInMemCompile(similarPredicates.get(0), source, fileName, relJavaPath,
+                		int pos = similarPredicates.get(0).indexOf("#");
+                        if (validatePredicateByInMemCompile(similarPredicates.get(0).substring(0, pos), source, fileName, relJavaPath,
                                 line, subject)) {
                             for (String p : similarPredicates) {
                                 predicates.add(new Pair<String, String>(p, "1"));
@@ -431,13 +433,33 @@ public class Coverage {
                         if (predicates == null) {
                             predicates = new ArrayList<>();
                         }
-                		if (validatePredicateByInMemCompile(rp.getValue().get(0), source, fileName, relJavaPath,
+                        int pos = rp.getValue().get(0).indexOf("#");
+                		if (validatePredicateByInMemCompile(rp.getValue().get(0).substring(0, pos), source, fileName, relJavaPath,
                 				line, subject)) {
                             for (String p : rp.getValue()) {
                                 predicates.add(new Pair<String, String>(p, "1"));
                             }
                             line2Predicate.put(line, predicates);
                         }
+                	}
+                }
+                if (!returnInScopePredicates.isEmpty()) {
+                	for(Entry<Integer, List<List<String>>> risp : returnInScopePredicates.entrySet()) {
+                		int line = risp.getKey();
+                		List<Pair<String, String>> predicates = line2Predicate.get(line);
+                        if (predicates == null) {
+                            predicates = new ArrayList<>();
+                        }
+                        for(List<String> tuple : risp.getValue()) {
+                        	int pos = tuple.get(0).indexOf("#");
+                        	if (validatePredicateByInMemCompile(tuple.get(0).substring(0, pos), source, fileName, relJavaPath,
+                        			line, subject)) {
+                        		for (String p : tuple) {
+                        			predicates.add(new Pair<String, String>(p, "1"));
+                        		}
+                        	}
+                        }
+                        line2Predicate.put(line, predicates);
                 	}
                 }
                 file2Line2Predicates.put(fileName, line2Predicate);

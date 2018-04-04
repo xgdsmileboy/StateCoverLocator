@@ -85,7 +85,7 @@ public class MethodEnterExitPredicateVisitor extends TraversalVisitor{
 			_retType = node.getReturnType2();
 		}
 		
-		List<ASTNode> variablePredicates = genVariablePredicateInstrument(methodID, startLine);
+		List<ASTNode> variablePredicatesEnter = genVariablePredicateInstrument(methodID, startLine, endLine, true);
 		
 		List<ASTNode> blockStatement = new ArrayList<>();
 
@@ -95,7 +95,7 @@ public class MethodEnterExitPredicateVisitor extends TraversalVisitor{
 		}
 
 		methodBody.statements().clear();
-		for(ASTNode statement : variablePredicates) {
+		for(ASTNode statement : variablePredicatesEnter) {
 			methodBody.statements().add(ASTNode.copySubtree(methodBody.getAST(), statement));
 		}
 		
@@ -106,7 +106,8 @@ public class MethodEnterExitPredicateVisitor extends TraversalVisitor{
 		}
 		tryStatement.setBody((Block) ASTNode.copySubtree(tryStatement.getAST(), tryBody));
 		Block finallyBlock = ast.newBlock();
-		for(ASTNode statement : variablePredicates) {
+		List<ASTNode> variablePredicatesExit = genVariablePredicateInstrument(methodID, startLine, endLine, false);
+		for(ASTNode statement : variablePredicatesExit) {
 			finallyBlock.statements().add(ASTNode.copySubtree(finallyBlock.getAST(), statement));
 		}
 		tryStatement.setFinally((Block) ASTNode.copySubtree(tryStatement.getAST(), finallyBlock));
@@ -370,14 +371,17 @@ public class MethodEnterExitPredicateVisitor extends TraversalVisitor{
 		return expression;
 	}
 	
-	private List<ASTNode> genVariablePredicateInstrument(String methodID, int line) {
-		List<Pair<String, String>> preds = _condition.get(line);
+	private List<ASTNode> genVariablePredicateInstrument(String methodID, int startLine, int endLine, boolean isEnter) {
+		List<Pair<String, String>> preds = _condition.get(startLine);
 		List<ASTNode> result = new ArrayList<ASTNode>();
 		if (preds == null) {
 			return result;
 		}
+		int logLine = isEnter ? startLine : endLine;
 		for(Pair<String, String> predicate : preds) {
-			ASTNode inserted = GenStatement.newGenPredicateStatementWithoutTry(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getFirst() + "#1");
+			int pos = predicate.getFirst().indexOf("#");
+			String p = predicate.getFirst().substring(0, pos);
+			ASTNode inserted = GenStatement.newGenPredicateStatementWithoutTry(p, methodID + "#" + logLine + "#" + p + "#1");
 			if(inserted != null){
 				result.add(inserted);
 			}
@@ -499,14 +503,25 @@ public class MethodEnterExitPredicateVisitor extends TraversalVisitor{
 	private List<ASTNode> genPredicateInstrument(String methodID, String tempVarName, int line, String originalExpr){
 		List<ASTNode> result = new ArrayList<>();
 		if (_condition.get(line) != null) {
-			List<Pair<String, String>> predicates = null;
-			predicates = getPredicateForReturns(tempVarName, originalExpr);
+			List<Pair<String, String>> preds = _condition.get(line);
+			for(Pair<String, String> pred: preds) {
+				if (pred.getFirst().endsWith("#VAR")) {
+					String p = pred.getFirst().substring(0, pred.getFirst().length() - 4);
+					ASTNode inserted = GenStatement.newGenPredicateStatementWithoutTry(p, methodID + "#" + line + "#" + p + "#1");
+					if(inserted != null){
+						result.add(inserted);
+					}
+				}
+			}
+			
+			List<Pair<String, String>> predicates = getPredicateForReturns(tempVarName, originalExpr);
 			for(Pair<String, String> predicate : predicates) {
 				ASTNode inserted = GenStatement.newGenPredicateStatementWithoutTry(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1");
 				if(inserted != null){
 					result.add(inserted);
 				}
 			}
+			
 //			_condition.remove(line);
 		}
 		return result;
