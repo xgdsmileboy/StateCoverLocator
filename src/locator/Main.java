@@ -42,6 +42,7 @@ import locator.core.Tarantula;
 import locator.core.run.path.Collector;
 import locator.core.run.path.Coverage;
 import locator.inst.visitor.BranchInstrumentVisitor;
+import locator.inst.visitor.MethodInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
 
 public class Main {
@@ -159,24 +160,24 @@ public class Main {
 		Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
 		int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
 		
-		// output branch coverage information
-		if(Constant.OUT_BRANCH_COVERAGE) {
-			LevelLogger.info("step 2.1: compute branch coverage information.");
-			String testsPath = subject.getHome() + "/all-tests.txt";
-			ExecuteCommand.deleteGivenFile(testsPath);
-			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
-			LevelLogger.info("output branch coverage information to file : branch_coverage.csv");
-			File covInfoPath = new File(subject.getCoverageInfoPath());
-			if (!covInfoPath.exists()) {
-				covInfoPath.mkdirs();
-			}
-			printCoverage(coverage, subject.getCoverageInfoPath() + "/branch_coverage.csv");
-		}
+//		// output branch coverage information
+//		if(Constant.OUT_BRANCH_COVERAGE) {
+//			LevelLogger.info("step 2.1: compute branch coverage information.");
+//			String testsPath = subject.getHome() + "/all-tests.txt";
+//			ExecuteCommand.deleteGivenFile(testsPath);
+//			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
+//			LevelLogger.info("output branch coverage information to file : branch_coverage.csv");
+//			File covInfoPath = new File(subject.getCoverageInfoPath());
+//			if (!covInfoPath.exists()) {
+//				covInfoPath.mkdirs();
+//			}
+//			printCoverage(coverage, subject.getCoverageInfoPath() + "/branch_coverage.csv");
+//		}
 		
 		LevelLogger.info("step 2: compute original coverage information.");
 		String testsPath = subject.getHome() + "/all-tests.txt";
 		ExecuteCommand.deleteGivenFile(testsPath);
-		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, StatementInstrumentVisitor.class);
+		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, MethodInstrumentVisitor.class);
 		int totalTestNum = JavaFile.readFileToStringList(testsPath).size();
 		
 		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
