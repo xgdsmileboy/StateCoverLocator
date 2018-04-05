@@ -520,11 +520,16 @@ public class MethodEnterExitPredicateVisitor extends TraversalVisitor{
 				}
 			}
 			
-			List<Pair<String, String>> predicates = getPredicateForReturns(tempVarName, originalExpr);
-			for(Pair<String, String> predicate : predicates) {
-				ASTNode inserted = GenStatement.newGenPredicateStatementWithoutTry(predicate.getFirst(), methodID + "#" + tagline + "#" + predicate.getSecond() + "#1");
-				if(inserted != null){
-					result.add(inserted);
+			for(Pair<String, String> pred: preds) {
+				if (pred.getFirst().endsWith("#RETURN")) {
+					List<Pair<String, String>> predicates = getPredicateForReturns(tempVarName, originalExpr);
+					for(Pair<String, String> predicate : predicates) {
+						ASTNode inserted = GenStatement.newGenPredicateStatementWithoutTry(predicate.getFirst(), methodID + "#" + tagline + "#" + predicate.getSecond() + "#1");
+						if(inserted != null){
+							result.add(inserted);
+						}
+					}
+					break;
 				}
 			}
 			
