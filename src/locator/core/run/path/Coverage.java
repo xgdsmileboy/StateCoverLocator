@@ -393,14 +393,14 @@ public class Coverage {
             String source = JavaFile.readFileToString(fileName);
             CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSourceWithType(source,
                     ASTParser.K_COMPILATION_UNIT, fileName, subject);
-            ClassFieldVisitor fieldVisitor = new ClassFieldVisitor();
-            cu.accept(fieldVisitor);
-            List<Pair<String, String>> classFields = fieldVisitor.getFields();
+//            ClassFieldVisitor fieldVisitor = new ClassFieldVisitor();
+//            cu.accept(fieldVisitor);
+//            List<Pair<String, String>> classFields = fieldVisitor.getFields();
             Map<Integer, List<Pair<String, String>>> line2Predicate = null;
             for (String methodString : entry.getValue()) {
                 cu = (CompilationUnit) JavaFile.genASTFromSourceWithType(source,
                         ASTParser.K_COMPILATION_UNIT, fileName, subject);
-                MethodPredicateVisitor sdPredicatesVisitor = new MethodPredicateVisitor(methodString, classFields, srcPath, relJavaPath);
+                MethodPredicateVisitor sdPredicatesVisitor = new MethodPredicateVisitor(methodString, srcPath, relJavaPath);
                 cu.accept(sdPredicatesVisitor);
                 line2Predicate = file2Line2Predicates.get(fileName);
                 if (line2Predicate == null) {

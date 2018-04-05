@@ -27,9 +27,9 @@ public class MethodPredicateVisitor extends TraversalVisitor {
 	private String _srcPath = "";
 	private String _relJavaPath = "";
 
-	public MethodPredicateVisitor(String methodString, List<Pair<String, String>> fields, String srcPath, String relJavaPath) {
+	public MethodPredicateVisitor(String methodString, String srcPath, String relJavaPath) {
 		_methodString = methodString;
-		_variables.addAll(fields);
+//		_variables.addAll(fields);
 		_srcPath = srcPath;
 		_relJavaPath = relJavaPath;
 	}
