@@ -34,12 +34,15 @@ import locator.inst.gen.GenStatement;
 public class BranchInstrumentVisitor extends TraversalVisitor {
 
 	private final static String __name__ = "@BranchInstrumentVisitor ";
+	private boolean genEmptyElse;
 
-	public BranchInstrumentVisitor() {
+	public BranchInstrumentVisitor(boolean genEmptyElse) {
+		this.genEmptyElse = genEmptyElse;
 	}
 
-	public BranchInstrumentVisitor(Set<Integer> methods) {
+	public BranchInstrumentVisitor(Set<Integer> methods, boolean genEmptyElse) {
 		_methods = methods;
+		this.genEmptyElse = genEmptyElse;
 	}
 
 	@Override
@@ -64,7 +67,7 @@ public class BranchInstrumentVisitor extends TraversalVisitor {
 			return true;
 		}
 
-		methodBody.accept(new BranchInstrumenter(message, _cu));
+		methodBody.accept(new BranchInstrumenter(message, _cu, genEmptyElse));
 
 		return true;
 	}
@@ -72,9 +75,11 @@ public class BranchInstrumentVisitor extends TraversalVisitor {
 	static class BranchInstrumenter extends ASTVisitor {
 		private String message = null;
 		private CompilationUnit unit = null;
-		public BranchInstrumenter(String message, CompilationUnit unit) {
+		private boolean genEmptyElse = true;
+		public BranchInstrumenter(String message, CompilationUnit unit, boolean genEmptyElse) {
 			this.message = message;
 			this.unit = unit;
+			this.genEmptyElse = genEmptyElse;
 		}
 		
 		@Override
@@ -87,7 +92,9 @@ public class BranchInstrumentVisitor extends TraversalVisitor {
 			node.setThenStatement((Statement) ASTNode.copySubtree(node.getAST(), wrapAndInstert(node.getThenStatement(), inserted)));
 			condition = "!(" + condition + ")";
 			inserted = GenStatement.genWriter(message + "#" + line + "#" + condition + "#1#2");
-			node.setElseStatement((Statement) ASTNode.copySubtree(node.getAST(), wrapAndInstert(node.getElseStatement(), inserted)));
+			if(genEmptyElse || node.getElseStatement() != null) {
+				node.setElseStatement((Statement) ASTNode.copySubtree(node.getAST(), wrapAndInstert(node.getElseStatement(), inserted)));
+			}
 			return true;
 		}
 		

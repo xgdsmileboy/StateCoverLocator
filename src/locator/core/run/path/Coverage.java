@@ -64,7 +64,7 @@ public class Coverage {
 
         TraversalVisitor traversalVisitor = null;
         if(visitor == BranchInstrumentVisitor.class) {
-        		traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        		traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond(), Constant.GEN_EMPTY_ELSE_BRANCH);
         } else {
         		traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
         }

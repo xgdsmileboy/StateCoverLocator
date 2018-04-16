@@ -24,7 +24,7 @@ public class BranchInstrumentVisitorTest {
 		String filePath = "res/junitRes/BigFraction.java";
 		CompilationUnit compilationUnit = (CompilationUnit) JavaFile
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
-		BranchInstrumentVisitor branchInstrumentVisitor = new BranchInstrumentVisitor();
+		BranchInstrumentVisitor branchInstrumentVisitor = new BranchInstrumentVisitor(false);
 		compilationUnit.accept(branchInstrumentVisitor);
 		System.out.println(compilationUnit.toString());
 	}

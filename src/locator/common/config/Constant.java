@@ -19,6 +19,7 @@ import java.util.Properties;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.internal.codeassist.complete.CompletionOnBranchStatementLabel;
 
 import edu.pku.sei.conditon.simple.SplIfAndVariablePairVisitor;
 import edu.pku.sei.conditon.simple.SplIfStmtVisitor;
@@ -77,6 +78,7 @@ public class Constant {
 	public static boolean USE_SOBER = false;
 	
 	public static boolean OUT_BRANCH_COVERAGE = false; 
+	public static boolean GEN_EMPTY_ELSE_BRANCH = false; 
 	
 	// training model
 	// xgboost, dnn or randomforest
@@ -268,6 +270,7 @@ public class Constant {
 			Constant.TRAINING_EVALUATION =  Boolean.parseBoolean(prop.getProperty("TRAINING.EVALUATION"));
 			Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE = Boolean.parseBoolean(prop.getProperty("PREDICT.LEFT.VAR"));
 			Constant.OUT_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
+			Constant.GEN_EMPTY_ELSE_BRANCH = Boolean.parseBoolean(prop.getProperty("GEN.ELSE"));
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_runtime get properties failed!" + e.getMessage());
