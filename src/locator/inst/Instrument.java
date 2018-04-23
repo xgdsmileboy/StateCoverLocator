@@ -54,6 +54,7 @@ public class Instrument {
 			if (unit == null || unit.toString().trim().length() < 1) {
 				continue;
 			}
+			traversalVisitor.setFileName(f.getAbsolutePath());
 			traversalVisitor.traverse(unit);
 			String formatSource = null;
 			// Formatter formatter = new Formatter();

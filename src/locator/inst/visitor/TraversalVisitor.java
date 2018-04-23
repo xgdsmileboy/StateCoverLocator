@@ -36,11 +36,16 @@ public abstract class TraversalVisitor extends ASTVisitor {
 
 	private final String __name__ = "@TraversalVisitor ";
 
+	protected String _fileName = "";
 	protected CompilationUnit _cu;
 	protected Set<Integer> _methods;
 	protected String _clazzName;
 	protected String _methodFlag = Constant.INSTRUMENT_K_SOURCE;
 
+	public void setFileName(String fileName) {
+		_fileName = fileName;
+	}
+	
 	public void setFlag(String methodFlag) {
 		_methodFlag = methodFlag;
 	}

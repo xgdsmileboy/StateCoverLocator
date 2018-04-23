@@ -73,6 +73,12 @@ public class Coverage {
 //                failedTestAndCoveredMethods.getSecond());
         Instrument.execute(src, traversalVisitor);
 
+		if (visitor == BranchInstrumentVisitor.class) {
+			((BranchInstrumentVisitor) traversalVisitor)
+					.dumpPredicate(Constant.STR_INFO_OUT_PATH + Constant.PATH_SEPARATOR + subject.getName()
+							+ Constant.PATH_SEPARATOR + subject.getName() + "_" + subject.getId());
+		}
+        
         NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(
                 failedTestAndCoveredMethods.getFirst(), false);
         Instrument.execute(test, newTestMethodInstrumentVisitor);

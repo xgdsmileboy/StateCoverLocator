@@ -7,6 +7,9 @@
 
 package locator.inst.visitor;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -18,7 +21,9 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.internal.ui.wizards.buildpaths.AccessRulesLabelProvider;
 
+import edu.pku.sei.conditon.util.JavaFile;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.inst.gen.GenStatement;
@@ -35,14 +40,17 @@ public class BranchInstrumentVisitor extends TraversalVisitor {
 
 	private final static String __name__ = "@BranchInstrumentVisitor ";
 	private boolean genEmptyElse;
-
+	private List<String> allPredicate = null;
+	
 	public BranchInstrumentVisitor(boolean genEmptyElse) {
 		this.genEmptyElse = genEmptyElse;
+		allPredicate = new LinkedList<>();
 	}
 
 	public BranchInstrumentVisitor(Set<Integer> methods, boolean genEmptyElse) {
 		_methods = methods;
 		this.genEmptyElse = genEmptyElse;
+		allPredicate = new LinkedList<>();
 	}
 
 	@Override
@@ -72,7 +80,16 @@ public class BranchInstrumentVisitor extends TraversalVisitor {
 		return true;
 	}
 	
-	static class BranchInstrumenter extends ASTVisitor {
+	public void dumpPredicate(String base) {
+		String fileName = base + "/predicates_backup_br.txt";
+		StringBuffer stringBuffer = new StringBuffer();
+		for(String string : allPredicate) {
+			stringBuffer.append(string + "\n");
+		}
+		JavaFile.writeStringToFile(fileName, stringBuffer.toString());
+	}
+	
+	class BranchInstrumenter extends ASTVisitor {
 		private String message = null;
 		private CompilationUnit unit = null;
 		private boolean genEmptyElse = true;
@@ -88,9 +105,14 @@ public class BranchInstrumentVisitor extends TraversalVisitor {
 			int line = unit.getLineNumber(expression.getStartPosition());
 			String condition = expression.toString();
 			
+			allPredicate.add(_fileName + "\t" + line + "\t" + condition + "\t1");
+			
 			ASTNode inserted = GenStatement.genWriter(message + "#" + line + "#" + condition + "#1#1");
 			node.setThenStatement((Statement) ASTNode.copySubtree(node.getAST(), wrapAndInstert(node.getThenStatement(), inserted)));
 			condition = "!(" + condition + ")";
+			
+			allPredicate.add(_fileName + "\t" + line + "\t" + condition + "\t1");
+			
 			inserted = GenStatement.genWriter(message + "#" + line + "#" + condition + "#1#2");
 			if(genEmptyElse || node.getElseStatement() != null) {
 				node.setElseStatement((Statement) ASTNode.copySubtree(node.getAST(), wrapAndInstert(node.getElseStatement(), inserted)));
