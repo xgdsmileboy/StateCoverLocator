@@ -9,9 +9,6 @@ public class StatisticalDebugging extends PredicateCoverageAlgorithm {
 		double contextP = fcoverObserved * 1.0 / (fcoverObserved + pcoverObserved);
 		double increaseP = failureP - contextP;
 		double result = 2 / (1 / increaseP + 1 / (Math.log(fcover) / Math.log(totalFailed)));
-		if (Double.isNaN(result)) {
-			return 0;
-		}
 		return increaseP < 0 ? Double.NEGATIVE_INFINITY : result;
 	}
 

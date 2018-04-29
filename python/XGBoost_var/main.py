@@ -5,6 +5,7 @@ from clustering.cluster import *
 import var_model
 
 import tensorflow as tf
+from DNN.dnn import *
 
 class XGVar(object):
 
@@ -84,10 +85,8 @@ class XGVar(object):
 
         else:
             print(feature_num)
-            classifier = var_model.get_dnn_classifier(feature_num, 2, self.__configure__.get_var_nn_model_dir())
-            predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_pred}, y=None, num_epochs=1, shuffle=False)
-            predictions = list(classifier.predict(input_fn = predict_input_fn))
-            y_prob = [p['probabilities'] for p in predictions]
+            dnn_model = DNN(self.__configure__)
+            y_prob = dnn_model.predict(X_pred, feature_num, 2, True)
             print(y_prob)
             with open(var_predicted, 'w') as f:
                 for i in range(0, X_pred.shape[0]):
