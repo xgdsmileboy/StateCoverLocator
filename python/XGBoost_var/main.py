@@ -2,7 +2,6 @@ from training import *
 from Utils.config import *
 import pandas as pd
 from clustering.cluster import *
-import var_model
 
 import tensorflow as tf
 from DNN.dnn import *
