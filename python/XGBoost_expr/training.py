@@ -265,7 +265,7 @@ class TrainExpr(object):
                 #     f.write('0,1\n')
                 #     f.write('%s' % csv_format_data)
                 print(frequent_X.shape[1])
-                dnn_model.train(np.array(X_input), np.array(Y_input), frequent_X.shape[1], y_encoder.classes_.shape[0], False)
+                dnn_model.train(np.array(X_input), np.array(Y_input), frequent_X.shape[1], y_encoder.classes_.shape[0], self.__configure__.get_expr_nn_model_dir(), False)
 
         end_time = datetime.datetime.now()
         run_time = end_time-start_time

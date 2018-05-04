@@ -239,7 +239,7 @@ class Train(object):
             #     f.write('0,1\n')
             #     f.write('%s' % csv_format_data)
                 print(encoded_X.shape[1])
-                dnn_model.train(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0], True)
+                dnn_model.train(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0], self.__configure__.get_var_nn_model_dir(), True)
 
         end_time = datetime.datetime.now()
         run_time = end_time-start_time
