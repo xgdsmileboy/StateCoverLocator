@@ -24,7 +24,15 @@ class DNN(object):
         """
         self.__configure__ = configure
 
-    def print_precision_recall_f1(self, y_true, y_pred, average_type, label):
+    @staticmethod
+    def print_all_accuracy_precision_recall_f1(y_true, y_pred, label):
+    	print("\n{0} Accuracy: {1:f}\n".format(label, metrics.accuracy_score(y_true, y_pred)))
+    	DNN.print_precision_recall_f1(y_true, y_pred, 'micro', label)
+        DNN.print_precision_recall_f1(y_true, y_pred, 'macro', label)
+        DNN.print_precision_recall_f1(y_true, y_pred, 'weighted', label)
+
+    @staticmethod
+    def print_precision_recall_f1(y_true, y_pred, average_type, label):
         metric = metrics.precision_recall_fscore_support(y_true, y_pred, average=average_type)
         print("{0} Precision {2}: {1:f}\n".format(label, metric[0], average_type))
         print("{0} Recall {2}: {1:f}\n".format(label, metric[1], average_type))
@@ -136,20 +144,13 @@ class DNN(object):
         test_predictions = list(classifier.predict(input_fn = test_input_fn))
         y_classes = [int(p['classes'][0]) for p in test_predictions]
 
-        print("\nTest Accuracy: {0:f}\n".format(metrics.accuracy_score(y_test, y_classes)))
-        
-        self.print_precision_recall_f1(y_test, y_classes, 'micro', 'Test')
-        self.print_precision_recall_f1(y_test, y_classes, 'macro', 'Test')
-        self.print_precision_recall_f1(y_test, y_classes, 'weighted', 'Test')
+        self.print_all_accuracy_precision_recall_f1(y_test, y_classes, 'Test')
 
         train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=None, num_epochs=1, shuffle=False)
         train_predictions = list(classifier.predict(input_fn = train_input_fn))
         y_classes = [int(p['classes'][0]) for p in train_predictions]
-        print("\nTrain Accuracy: {0:f}\n".format(metrics.accuracy_score(y_train, y_classes)))
-        
-        self.print_precision_recall_f1(y_train, y_classes, 'micro', 'Train')
-        self.print_precision_recall_f1(y_train, y_classes, 'macro', 'Train')
-        self.print_precision_recall_f1(y_train, y_classes, 'weighted', 'Train')
+
+        self.print_all_accuracy_precision_recall_f1(y_train, y_classes, 'Train')
 
         if os.path.exists(default_eval_model):
             su.rmtree(default_eval_model)

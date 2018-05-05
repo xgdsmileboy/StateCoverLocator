@@ -211,10 +211,11 @@ class Train(object):
             if evaluate:
                 X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.3, random_state=7)
                 model.fit(X_train, y_train)
-                score1 = model.score(X_valid, y_valid)
-                score2 = model.score(X_train, y_train)
-                print("\nTest Accuracy: {0:f}\n".format(score1))
-                print("\nTrain Accuracy: {0:f}\n".format(score2))
+                y_classes = model.predict(X_valid)
+                DNN.print_all_accuracy_precision_recall_f1(y_valid, y_classes, 'Test')
+
+                y_classes = model.predict(X_train)
+                DNN.print_all_accuracy_precision_recall_f1(y_train, y_classes, 'Train')
             else:
                 model.fit(encoded_X, encoded_Y)
                 with open(model_file, 'w') as f:
