@@ -192,22 +192,25 @@ class Train(object):
             #     with open(model_file, 'w') as f:
             #         pk.dump(best_model, f)
             #         print('Model saved in {}'.format(model_file))
-        elif (self.__configure__.get_model_type() == 'randomforest'):
-            model = RandomForestClassifier(random_state = 0)
-            if evaluate:
-                X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.3, random_state=7)
-                model.fit(X_train, y_train)
-                score1 = model.score(X_valid, y_valid)
-                score2 = model.score(X_train, y_train)
-                print("\nTest Accuracy: {0:f}\n".format(score1))
-                print("\nTrain Accuracy: {0:f}\n".format(score2))
+        #elif (self.__configure__.get_model_type() == 'randomforest'):
+        #    model = RandomForestClassifier(random_state = 0)
+        #    if evaluate:
+        #        X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.3, random_state=7)
+        #        model.fit(X_train, y_train)
+        #        score1 = model.score(X_valid, y_valid)
+        #        score2 = model.score(X_train, y_train)
+        #        print("\nTest Accuracy: {0:f}\n".format(score1))
+        #        print("\nTrain Accuracy: {0:f}\n".format(score2))
+        #    else:
+        #        model.fit(encoded_X, encoded_Y)
+        #        with open(model_file, 'w') as f:
+        #            pk.dump(model, f)
+        #            print('Model saved in {}'.format(model_file))
+        elif (self.__configure__.get_model_type() == 'tree' or self.__configure__.get_model_type() == 'randomforest'):
+            if self.__configure__.get_model_type() == 'tree':
+                model = DecisionTreeClassifier(random_state = 0)
             else:
-                model.fit(encoded_X, encoded_Y)
-                with open(model_file, 'w') as f:
-                    pk.dump(model, f)
-                    print('Model saved in {}'.format(model_file))
-        elif (self.__configure__.get_model_type() == 'tree'):
-            model = DecisionTreeClassifier(random_state = 0)
+                model = RandomForestClassifier(random_state = 0)
             if evaluate:
                 X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.3, random_state=7)
                 model.fit(X_train, y_train)
