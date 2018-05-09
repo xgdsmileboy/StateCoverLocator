@@ -31,3 +31,9 @@ if __name__ == '__main__':
     xgexpr.run_gen_exprs(str_encoder, kmeans_model, unique_words)
 
     join_prob(config)
+
+    if config.get_model_type() == 'randomforest':
+        if os.path.exists(config.get_expr_model_file()):
+            os.remove(config.get_expr_model_file())
+        if os.path.exists(config.get_var_model_file()):
+            os.remove(config.get_var_model_file())
