@@ -235,6 +235,7 @@ class TrainExpr(object):
                 model = DecisionTreeClassifier(random_state = 0)
             else:
                 model = RandomForestClassifier(random_state = 0)
+                frequent_y = np.ravel(frequent_y)
             if evaluate:
                 X_train, X_valid, y_train, y_valid = train_test_split(frequent_X, frequent_y, test_size=0.3, random_state=7)
                 model.fit(X_train, y_train)
