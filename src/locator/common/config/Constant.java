@@ -76,6 +76,8 @@ public class Constant {
 	public static boolean USE_STATISTICAL_DEBUGGING = true;
 	public static boolean USE_SOBER = false;
 	
+	public static boolean OUT_BRANCH_COVERAGE = false; 
+	
 	// training model
 	// xgboost, dnn or randomforest
 	public static String TRAINING_MODEL = "dnn";
@@ -155,7 +157,11 @@ public class Constant {
 	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
 	public static String TENSORFLOW_ACTIVATE_PATH = "";
-
+	
+	public enum PredicateStatement {
+		IF, WHILE, DO, RETURN, FOR, ASSIGN, SWITCH
+	};
+	
 	static {
 		Properties prop = new Properties();
 		try {
@@ -261,7 +267,7 @@ public class Constant {
 			Constant.USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
 			Constant.TRAINING_EVALUATION =  Boolean.parseBoolean(prop.getProperty("TRAINING.EVALUATION"));
 			Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE = Boolean.parseBoolean(prop.getProperty("PREDICT.LEFT.VAR"));
-			
+			Constant.OUT_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_runtime get properties failed!" + e.getMessage());

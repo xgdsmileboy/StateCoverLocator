@@ -25,7 +25,7 @@ class XGExpr(object):
         trainExpr.train(feature_num, 'multi:softprob', str_encoder, evaluate)
 
 
-    def run_gen_exprs(self, str_encoder, kmeans_model):
+    def run_gen_exprs(self, str_encoder, kmeans_model, unique_words):
         print('Predicting expr for {}...'.format(self.__configure__.get_bug_id()))
 
         expr_predicted = self.__configure__.get_expr_pred_out_file()
@@ -35,9 +35,10 @@ class XGExpr(object):
 
         top = self.__configure__.get_gen_expr_top()
 
-        dataset, encoded_x, encoded_y, x_encoders, y_encoder, feature_num = self.encode_expr(str_encoder, kmeans_model)
+        dataset, encoded_x, encoded_y, x_encoders, y_encoder, feature_num = self.encode_expr(str_encoder, kmeans_model, unique_words)
         X_pred = encoded_x
         y_prob = list()
+        classes = list()
         if (self.__configure__.get_model_type() != 'dnn'):
             ## load the model
             if not os.path.exists(expr_model_path):
@@ -53,8 +54,9 @@ class XGExpr(object):
                 y_prob = model.predict(M_pred)
             # elif (self.__configure__.get_model_type() == 'svm'):
                 # y_prob = model.predict_log_proba(X_pred)
-            elif (self.__configure__.get_model_type() == 'randomforest'):
+            elif (self.__configure__.get_model_type() == 'randomforest' or self.__configure__.get_model_type() == 'tree'):
                 y_prob = model.predict_proba(X_pred)
+                classes = model.classes_
         else:
             classifier = expr_model.get_dnn_classifier(feature_num, y_encoder.classes_.shape[0], self.__configure__.get_expr_nn_model_dir())
             test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X_pred.values)}, y=None, num_epochs=1, shuffle=False)
@@ -77,18 +79,22 @@ class XGExpr(object):
                     top = line.shape[0]
 
                 alts = hq.nlargest(top, range(len(line)), line.__getitem__)
-                # print(alts)
                 for j in range(top):
+                    #if line[alts[j]] == 0:
+                    #    break
                     if j != 0:
                         f.write('\t\t')
                     # tag_pred = classes[alts[j]]
-                    tag_pred = alts[j]
+                    if len(classes) > 0:
+                        tag_pred = classes[alts[j]]
+                    else:
+                        tag_pred = alts[j]
                     original = y_encoder.inverse_transform(tag_pred)
                     f.write('{}'.format(original))  # predicate
                     f.write('\t%f' % line[alts[j]])
                     f.write('\n')
 
-    def encode_expr(self, str_encoder, kmeans_model):
+    def encode_expr(self, str_encoder, kmeans_model, unique_words):
 
         data_file_path = self.__configure__.get_raw_expr_pred_in_file()
         original_data_file_path = self.__configure__.get_raw_expr_train_in_file()
@@ -157,12 +163,22 @@ class XGExpr(object):
                         feature = np.append(feature, int(dataset[i, 3 + j]))
                 except Exception as e:
                     print(e)
-                    if j == 2 or j == 0 or j == 1:
+                    if j == 2:
                         # feature.append(len(var_encoder))
                         X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
                         X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
                         pred = kmeans_model['var'].predict(X_0)
-                        feature = np.concatenate((feature, one_hot_encoder[i].transform([[pred[0]]])[0]), axis = 0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
+                    elif j == 0:
+                        X_0 = np.mat(np.zeros((1, len(unique_words['file']))))
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, 3 + j]), unique_words['file'])
+                        pred = kmeans_model['file'].predict(X_0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
+                    elif j == 1:
+                        X_0 = np.mat(np.zeros((1, len(unique_words['func']))))
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, 3 + j]), unique_words['func'])
+                        pred = kmeans_model['func'].predict(X_0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
                     else:
                         feature = np.concatenate((feature, np.zeros(one_hot_encoder[j].n_values_)), axis = 0)
             new_feature_num = len(feature)

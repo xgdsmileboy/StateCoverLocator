@@ -19,11 +19,16 @@ import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.Type;
@@ -31,13 +36,18 @@ import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
+import org.eclipse.jdt.internal.ui.preferences.formatter.BracesTabPage;
+import org.w3c.dom.css.CSSCharsetRule;
 
 import locator.common.config.Constant;
+import locator.common.config.Constant.PredicateStatement;
 import locator.common.config.Identifier;
+import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.util.LevelLogger;
 import locator.inst.gen.GenName;
 import locator.inst.gen.GenStatement;
+import polyglot.ast.Case;
 import polyglot.ast.For;
 
 public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
@@ -51,10 +61,6 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Type _retType;
 	
 	private static AST ast = AST.newAST(Constant.AST_LEVEL);
-	
-	private enum PredicateStatement {
-		IF, WHILE, DO, RETURN, FOR, ASSIGN, SWITCH
-	};
 	
 	public NoSideEffectPredicateInstrumentVisitor(boolean useSober) {
 		_condition = new HashMap<>();
@@ -118,7 +124,9 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int endLine = _cu.getLineNumber(statement.getStartPosition() + statement.getLength());
 		
 		if(!containLine(startLine, endLine)){
-			result.add(statement);
+			// fix: add initializer for variable declaration
+			result.add(addInitializer(statement));
+//			result.add(statement);
 			return result;
 		}
 
@@ -127,7 +135,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			IfStatement ifStatement = (IfStatement) statement;
 			startLine = _cu.getLineNumber(ifStatement.getExpression().getStartPosition());
 			
-			Block block = genIfStatementInstrument(ifStatement, methodID, startLine);
+			genIfStatementInstrument(ifStatement, methodID, startLine);
 
 			Statement thenBody = ifStatement.getThenStatement();
 
@@ -150,8 +158,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 				}
 			}
 			
-			block.statements().add(ASTNode.copySubtree(block.getAST(), ifStatement));
-			result.add(block);
+			result.add(ifStatement);
 		} else if (statement instanceof WhileStatement) {
 			
 			WhileStatement whileStatement = (WhileStatement) statement;
@@ -171,11 +178,12 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			} else {
 				bodyBlock = ast.newBlock();
 			}
+			whileStatement.setBody((Statement) ASTNode.copySubtree(whileStatement.getAST(), bodyBlock));
 			if (whileStatement.getExpression().toString().equals("true")) {
-				whileStatement.setBody((Statement) ASTNode.copySubtree(whileStatement.getAST(), bodyBlock));
 				result.add(whileStatement);
 			} else {
-				result.add(genWhileStatementInstrument(whileStatement, bodyBlock, methodID, lineNumber));
+				genWhileStatementInstrument(whileStatement, methodID, lineNumber);
+				result.add(whileStatement);
 			}
 		} else if (statement instanceof ForStatement) {
 
@@ -205,10 +213,11 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 				bodyBlock = ast.newBlock();
 			}
 			
+			forStatement.setBody((Statement) ASTNode.copySubtree(forStatement.getAST(), bodyBlock));
 			if(lineNumber != -1){
-				result.add(genForStatementInstrument(forStatement, bodyBlock, methodID, lineNumber));
+				genForStatementInstrument(forStatement, methodID, lineNumber);
+				result.add(forStatement);
 			} else {
-				forStatement.setBody((Statement) ASTNode.copySubtree(forStatement.getAST(), bodyBlock));
 				result.add(forStatement);
 			}
 		} else if (statement instanceof DoStatement) {
@@ -230,7 +239,13 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			} else {
 				bodyBlock = ast.newBlock();
 			}
-			result.add(genDoStatementInstrument(doStatement, bodyBlock, methodID, lineNumber));
+			doStatement.setBody((Statement) ASTNode.copySubtree(doStatement.getAST(), bodyBlock));
+			if (doStatement.getExpression().toString().equals("true")) {
+				result.add(doStatement);
+			} else {
+				genDoStatementInstrument(doStatement, methodID, lineNumber);
+				result.add(doStatement);
+			}
 		} else if (statement instanceof Block) {
 			Block block = (Block) statement;
 			Block newBlock = processBlock(block, methodID);
@@ -328,114 +343,165 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			ExpressionStatement exprStatement = (ExpressionStatement) statement;
 			Expression expr = exprStatement.getExpression();
 			if (expr instanceof Assignment) {
-				Block block = ast.newBlock();
-				block.statements().add(ASTNode.copySubtree(block.getAST(), exprStatement));
-				addPredicates(block, "", methodID, startLine, PredicateStatement.ASSIGN, "");
-				result.add(block);
+				Assignment assign = (Assignment) expr;
+				Expression leftSide = assign.getLeftHandSide();
+				if (leftSide instanceof VariableDeclarationExpression) {
+					result.addAll(genAssignmentInstrumentWithoutBlock(assign, exprStatement, methodID, startLine));
+				} else {					
+					result.add(genAssignmentInstrument(assign, exprStatement, methodID, startLine));
+				}
 			} else {
 				result.add(exprStatement);
 			}
 		} else {
-			result.add(statement);
+			// fix 2018-3-6: add initializer for variable declaration
+			result.add(addInitializer(statement));
+//			result.add(statement);
 		}
 
 		return result;
 	}
 	
+	private ASTNode addInitializer(ASTNode stmt) {
+		if(stmt instanceof VariableDeclarationStatement) {
+			VariableDeclarationStatement vds = (VariableDeclarationStatement) stmt;
+			// fix bug : skip variables with "final" modifier
+			if(!Modifier.isFinal(vds.getModifiers())) {
+				Expression expression = genDefaultValue(vds.getType());
+				if (expression != null) {
+					for(Object object : vds.fragments()) {
+						if (object instanceof VariableDeclarationFragment) {
+							VariableDeclarationFragment vdf = (VariableDeclarationFragment) object;
+							if(vdf.getInitializer() == null) {
+								vdf.setInitializer((Expression) ASTNode.copySubtree(vdf.getAST(), expression));
+							}
+						}
+					}
+				}
+			}
+		}
+		return stmt;
+	}
+	
+	private Expression genDefaultValue(Type type) {
+		Expression expression = null;
+		if(type.isPrimitiveType()) {
+			switch(type.toString()) {
+			case "byte":
+			case "short":
+			case "int":
+			case "long": expression = ast.newNumberLiteral("0"); break;
+			case "char": expression = ast.newCharacterLiteral(); break;
+			case "float": expression = ast.newNumberLiteral("0.0f"); break;
+			case "double": expression = ast.newNumberLiteral("0.0"); break;
+			case "boolean": expression = ast.newBooleanLiteral(false); break;
+			case "void":
+			}
+		} else {
+			expression = ast.newNullLiteral();
+		}
+		return expression;
+	}
+	
 	private void addPredicates(Block block, String tempVarName, String methodID, int line, PredicateStatement psType, String originalExpr) {
+		// fix a bug: should not instrument predicates for constant boolean values
+		// it may cause compilation error
+		// public type func(){ for(;true;) { if(...) return;  } }
+		// => public type func(){ for(;log(true);) { if(...) return;  } }
+		// cause compilation error for missing "return" statement.
+		if(originalExpr.isEmpty() || "true".equals(originalExpr) || "false".equals(originalExpr)) {
+			return;
+		}
 		List<ASTNode> predicates = genPredicateInstrument(methodID, tempVarName, line, psType, originalExpr);
 		for(ASTNode predicate : predicates) {
 			block.statements().add(ASTNode.copySubtree(block.getAST(), predicate));
 		}
 	}
 	
-	private Block genIfStatementInstrument(IfStatement node, String methodID, int line) {
-		Block  block = ast.newBlock();
+	private List<ASTNode> genAssignmentInstrumentWithoutBlock(Assignment node, ExpressionStatement exprStatement, String methodID, int line) {
+		List<ASTNode> results = new ArrayList<ASTNode>();
 		String tempVarName = GenName.genVariableName(line);
-		String originalExpr = node.getExpression().toString();
-		ASTNode assign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.IF);
+		ASTNode assign = genDeclarationAssignment(node.getRightHandSide(), tempVarName, PredicateStatement.ASSIGN);
+		Assignment newNode = ast.newAssignment();
 		if (assign == null) {
-			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
+			exprStatement.setExpression((Expression) ASTNode.copySubtree(exprStatement.getAST(), node));
+			results.add(exprStatement);
+			return results;
+		}
+		node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
+		results.add(assign);
+		exprStatement.setExpression((Expression) ASTNode.copySubtree(exprStatement.getAST(), node));
+		results.add(exprStatement);
+		Block block = ast.newBlock();
+		addPredicates(block, tempVarName, methodID, line, PredicateStatement.ASSIGN, node.toString());
+		results.addAll(block.statements());
+		return results;
+	}
+	
+	private Block genAssignmentInstrument(Assignment node, ExpressionStatement exprStatement, String methodID, int line) {
+		Block block = ast.newBlock();
+		String tempVarName = GenName.genVariableName(line);
+		ASTNode assign = genDeclarationAssignment(node.getRightHandSide(), tempVarName, PredicateStatement.ASSIGN);
+		if (assign == null) {
+			exprStatement.setExpression((Expression) ASTNode.copySubtree(exprStatement.getAST(), node));
+			block.statements().add(ASTNode.copySubtree(block.getAST(), exprStatement));
 			return block;
 		}
-		node.setExpression((Expression) node.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
-		block.statements().add(assign);
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.IF, originalExpr);
+		node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
+		block.statements().add(ASTNode.copySubtree(block.getAST(), assign));
+		exprStatement.setExpression((Expression) ASTNode.copySubtree(exprStatement.getAST(), node));
+		block.statements().add(ASTNode.copySubtree(block.getAST(), exprStatement));
+		addPredicates(block, tempVarName, methodID, line, PredicateStatement.ASSIGN, node.toString());
 		return block;
 	}
 	
-	private Block genForStatementInstrument(ForStatement node, Block body, String methodID, int line) {
-		Block block = ast.newBlock();
-		String tempVarName = GenName.genVariableName(line);
-		String originalExpr = node.getExpression().toString();
-		ASTNode dclAssign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.FOR);
-		if (dclAssign == null) {
-			node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
-			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
-			return block;
+	private Expression genConditionWithLog(Expression condition, String methodID, int line) {
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		if (_useSober) {			
+			methodInvocation.setName(ast.newSimpleName("logConditionCoverageWithEvaluationBias"));
+		} else {
+			methodInvocation.setName(ast.newSimpleName("logConditionCoverage"));
 		}
 		
-		Block bodyBlock = ast.newBlock();
-		bodyBlock.statements().add(ASTNode.copySubtree(bodyBlock.getAST(), dclAssign));
-		addPredicates(bodyBlock, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
-		IfStatement ifStatement = ast.newIfStatement();
-		ifStatement.setExpression((Expression) ASTNode.copySubtree(ifStatement.getAST(), ast.newSimpleName(tempVarName)));
-		ifStatement.setThenStatement((Statement) ASTNode.copySubtree(ifStatement.getAST(), body));
-		ifStatement.setElseStatement((Statement) ASTNode.copySubtree(ifStatement.getAST(), ast.newBreakStatement()));
-		bodyBlock.statements().add(ASTNode.copySubtree(bodyBlock.getAST(), ifStatement));
-//		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
-//		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
-//		addPredicates(block, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
-//		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
-						
-//		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
-//		addPredicates(body, tempVarName, methodID, line, PredicateStatement.FOR, originalExpr);
-		node.setBody((Statement) ASTNode.copySubtree(node.getAST(), bodyBlock));
-		block.statements().add(ASTNode.copySubtree(block.getAST(), node));
-		return block;
+		methodInvocation.arguments().add(ASTNode.copySubtree(methodInvocation.getAST(), condition));
+
+		String trueLogInfo = methodID + "#" + line + "#" + condition.toString() + "#1";
+		String falseLogInfo = methodID + "#" + line + "#!(" + condition.toString() + ")#1";
+
+		StringLiteral trueStr = ast.newStringLiteral();
+		trueStr.setLiteralValue(trueLogInfo);
+		methodInvocation.arguments().add(trueStr);
+		if (!_useSober) {			
+			StringLiteral falseStr = ast.newStringLiteral();
+			falseStr.setLiteralValue(falseLogInfo);
+			methodInvocation.arguments().add(falseStr);
+		}
+		return methodInvocation;
+	}
+
+	private void genIfStatementInstrument(IfStatement node, String methodID, int line) {
+		if (_condition.get(line) != null && node.getExpression() != null) {		
+			node.setExpression((Expression) node.copySubtree(node.getAST(), genConditionWithLog(node.getExpression(), methodID, line)));
+		}
 	}
 	
-	private Block genWhileStatementInstrument(WhileStatement node, Block body, String methodID, int line) {
-		Block block = ast.newBlock();
-		String tempVarName = GenName.genVariableName(line);
-		String originalExpr = node.getExpression().toString();
-		ASTNode dclAssign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.WHILE);
-		if (dclAssign == null) {
-			node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
-			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
-			return block;
+	private void genForStatementInstrument(ForStatement node, String methodID, int line) {
+		if (_condition.get(line) != null && node.getExpression() != null) {		
+			node.setExpression((Expression) node.copySubtree(node.getAST(), genConditionWithLog(node.getExpression(), methodID, line)));
 		}
-		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
-		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.WHILE, originalExpr);
-		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
-						
-		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
-		addPredicates(body, tempVarName, methodID, line, PredicateStatement.WHILE, originalExpr);
-		node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
-		block.statements().add(ASTNode.copySubtree(block.getAST(), node));
-		return block;
 	}
 	
-	private Block genDoStatementInstrument(DoStatement node, Block body, String methodID, int line) {
-		Block block = ast.newBlock();
-		String tempVarName = GenName.genVariableName(line);
-		String originalExpr = node.getExpression().toString();
-		ASTNode dclAssign = genDeclarationAssignmentForDoStatement(tempVarName);
-		if (dclAssign == null) {
-			node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
-			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
-			return block;
+	private void genWhileStatementInstrument(WhileStatement node, String methodID, int line) {
+		if (_condition.get(line) != null && node.getExpression() != null) {		
+			node.setExpression((Expression) node.copySubtree(node.getAST(), genConditionWithLog(node.getExpression(), methodID, line)));
 		}
-		ASTNode assign = genAssignment(node.getExpression(), tempVarName);
-		block.statements().add(ASTNode.copySubtree(block.getAST(), dclAssign));
-		node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
-						
-		body.statements().add(ASTNode.copySubtree(body.getAST(), assign));
-		addPredicates(body, tempVarName, methodID, line, PredicateStatement.DO, originalExpr);
-		node.setBody((Statement) ASTNode.copySubtree(node.getAST(), body));
-		block.statements().add(ASTNode.copySubtree(block.getAST(), node));
-		return block;
+	}
+	
+	private void genDoStatementInstrument(DoStatement node, String methodID, int line) {
+		if (_condition.get(line) != null && node.getExpression() != null) {		
+			node.setExpression((Expression) node.copySubtree(node.getAST(), genConditionWithLog(node.getExpression(), methodID, line)));
+		}
 	}
 	
 	private Block genSwitchStatementInstrument(SwitchStatement node, String methodID, int line) {
@@ -524,37 +590,71 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	}
 	
 	private Type getDeclarationType(ITypeBinding type, PredicateStatement psType) {
-		PrimitiveType.Code code = null;
 		switch (psType) {
 		case IF:
 		case WHILE:
 		case DO:
 		case FOR:
-			code = PrimitiveType.BOOLEAN;
-			break;
+			return ast.newPrimitiveType(PrimitiveType.BOOLEAN);
 		case RETURN:
 			if (type == null) {
-				break;
+				if(_retType.isPrimitiveType() || isPrimitiveWrapper(_retType)) {
+					return _retType;
+				} else {
+					return null;
+				}
 			}
 		case SWITCH:
+			if (type == null) {
+				return null;
+			} else {
+				if (type.isPrimitive()) {
+					return ast.newPrimitiveType(ITypeBinding2PrimitiveTypeCode(type));
+				}
+			}
+			break;
 		case ASSIGN:
-			code = ITypeBinding2PrimitiveTypeCode(type);
+			if (type == null) {
+				return null;
+			}
+			if (type.isPrimitive()) {
+				return ast.newPrimitiveType(ITypeBinding2PrimitiveTypeCode(type));
+			} else {
+				int pos = type.getQualifiedName().lastIndexOf(".");
+				if (pos == -1) {
+					return ast.newSimpleType(ast.newSimpleName(type.getName()));
+				}
+				String qualifier = type.getQualifiedName().substring(0, pos);
+				return ast.newSimpleType(ast.newQualifiedName(ast.newSimpleName(qualifier), ast.newSimpleName(type.getName())));
+			}
 		}
-		if (code == null && type != null) {
-			LevelLogger.error(__name__ + "Unhandled type: " + type.getName());
-			return null;
+		return null; // should not reach here
+	}
+	
+	private boolean isPrimitiveWrapper(Type type) {
+		if(type == null) {
+			return false;
 		}
-		if (type == null && psType == PredicateStatement.RETURN) {
-			return _retType;
-		} else {
-			return ast.newPrimitiveType(code);
+		switch(type.toString()) {
+		case "Integer":
+		case "Short":
+		case "Character":
+		case "Boolean":
+		case "Long":
+		case "Float":
+		case "Double":
+		case "Byte":
+			return true;
+		default:
 		}
+		return false;
 	}
 	
 	private PrimitiveType.Code ITypeBinding2PrimitiveTypeCode(ITypeBinding type) {
 		if (!type.isPrimitive()) {
 			return null;
 		}
+		
 		switch(type.toString()) {
 		case "int":
 			return PrimitiveType.INT;
@@ -582,25 +682,51 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		List<ASTNode> result = new ArrayList<>();
 		if (_condition.get(line) != null) {
 			List<Pair<String, String>> predicates = null;
+			List<Pair<String, String>> preds = _condition.get(line);
 			switch (psType) {
 				case IF:
 				case WHILE:
 				case DO:
 				case FOR:
+					LevelLogger.error("Should not generate predicates for conditions.");
+					return result;
 				case SWITCH:
-					predicates = getPredicateForConditions(tempVarName, originalExpr);
+					for(Pair<String, String> p : preds) {
+						if (p.getFirst().endsWith("#CONDITION")) {
+							predicates = getPredicateForConditions(tempVarName, originalExpr);
+							break;
+						}
+					}
 					break;
 				case RETURN:
-					predicates = getPredicateForReturns(tempVarName, originalExpr);
+					for(Pair<String, String> p : preds) {
+						if (p.getFirst().endsWith("#RETURN")) {
+							predicates = getPredicateForReturns(tempVarName, originalExpr);
+							break;
+						}
+					}
 					break;
 				case ASSIGN:
-					List<Pair<String, String>> preds = _condition.get(line);
 					predicates = new ArrayList<Pair<String, String>>();
 					for(Pair<String, String> p : preds) {
-						predicates.add(new Pair<String, String>(p.getFirst(), p.getFirst()));
+						if (p.getFirst().endsWith("#ASSIGN")) {
+							String originalPredicate = p.getFirst().substring(0, p.getFirst().length() - 7);
+							final String operators[] = {"<=", ">=", "==", "!=", "<", ">"};
+							for (String op : operators) {
+								int pos = originalPredicate.indexOf(op);
+								if (pos == -1) {
+									continue;
+								}
+								String rightVar = originalPredicate.substring(pos + op.length());
+								String newPredicate = tempVarName + op + rightVar;
+								predicates.add(new Pair<String, String>(newPredicate, originalPredicate));
+								break;
+							}
+						}
 					}
 					break;
 			}
+			if (predicates == null) return result;
 			for(Pair<String, String> predicate : predicates) {
 				ASTNode inserted = _useSober ? GenStatement.newGenPredicateStatementForEvaluationBias(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1") :
 					GenStatement.newGenPredicateStatementWithoutTry(predicate.getFirst(), methodID + "#" + line + "#" + predicate.getSecond() + "#1");
@@ -652,8 +778,8 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 
 	private List<Pair<String, String>> getPredicateForReturns(final String expr, final String originalExpr) {
 		List<Pair<String, String>> predicates = new ArrayList<Pair<String, String>>();
-		final String operators[] = { " < 0", " <= 0", " > 0", " >= 0", " == 0",
-				" != 0" };
+		final String operators[] = { "< 0", "<= 0", "> 0", ">= 0", "== 0",
+				"!= 0" };
 		for (final String op : operators) {
 			predicates.add(new Pair<String, String>(expr + op, "(" + originalExpr + ")" + op));
 		}

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
@@ -43,6 +44,7 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 		
 		List<String> predContent = JavaFile.readFileToStringList(predCoveragePath);
 		Map<String, PredicateCoverage> statementScore = new HashMap<String, PredicateCoverage>();
+		// Map<String, List<PredicateCoverage>> allStatementsScore = new HashMap<String, List<PredicateCoverage>>();
 		for(String line : predContent) {
 			String parts[] = line.split("\t");
 			if (parts.length != 5) {
@@ -68,6 +70,12 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 			predCov.setScore(getScore(fcover, pcover, totalFailed, totalPassed, fcoverObserved, pcoverObserved));
 
 			PredicateCoverage previousPredCov = statementScore.get(predCov.getStatementInfo());
+			// List<PredicateCoverage> preds = allStatementsScore.get(predCov.getStatementInfo());
+			// if (preds == null) {
+			// 	preds = new ArrayList<PredicateCoverage>();
+			// 	allStatementsScore.put(predCov.getStatementInfo(), preds);
+			// }
+			// preds.add(predCov);
 			if (previousPredCov == null || predCov.getScore() > previousPredCov.getScore()) { // only use the maximum pred score
 				statementScore.put(predCov.getStatementInfo(), predCov);
 				predicate = predCov;
@@ -84,6 +92,24 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 						"\t" + Double.toString(predCov.getScore()) + "\t" + predCov.getPredicate()));
 			}
 		} else {
+			// if (Constant.USE_STATISTICAL_DEBUGGING) {
+			// 	String allResult = "line\toriginal_score\tmax_predicate_score\ttotal\tpredicate\n";
+			// 	for(Pair<String, Double> p : result) {
+			// 		List<PredicateCoverage> predCovs = allStatementsScore.get(p.getFirst());
+			// 		if (predCovs == null) {
+			// 			continue;
+			// 		}
+			// 		for(PredicateCoverage predCov : predCovs) {					
+			// 			double s = predCov.getScore();
+			// 			String predStr = predCov == null ? "" : predCov.getPredicate();
+			// 			allResult += p.getFirst() + "\t" + Double.toString(p.getSecond()) + 
+			// 					"\t" + Double.toString(s) + "\t" + Double.toString(p.getSecond() + s) +
+			// 					"\t" + predStr + "\n";
+			// 		}
+			// 	}
+			// 	String allPredicatesOutputFile = subject.getCoverageInfoPath() + "/" + getName() + "_coverage_sd_all.csv";
+			// 	JavaFile.writeStringToFile(allPredicatesOutputFile, allResult);
+			// }
 			for(Pair<String, Double> p : result) {
 				PredicateCoverage predCov = statementScore.get(p.getFirst());
 				double s = predCov == null ? 0 : predCov.getScore();

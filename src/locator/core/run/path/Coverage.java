@@ -34,6 +34,7 @@ import locator.common.util.LevelLogger;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.predict.Predictor;
+import locator.inst.visitor.BranchInstrumentVisitor;
 import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
@@ -41,6 +42,7 @@ import locator.inst.visitor.NewTestMethodInstrumentVisitor;
 import locator.inst.visitor.NoSideEffectPredicateInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.StatisticalDebuggingPredicatesVisitor;
+import locator.inst.visitor.TraversalVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
 
@@ -53,17 +55,23 @@ public class Coverage {
     private final static String __name__ = "@Coverage ";
 
     public static Map<String, CoverInfo> computeOriginalCoverage(Subject subject,
-            Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods) {
+            Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods, Class visitor) {
         // initialize coverage information
         Map<String, CoverInfo> coverage = new HashMap<>();
 
         String src = subject.getHome() + subject.getSsrc();
         String test = subject.getHome() + subject.getTsrc();
 
+        TraversalVisitor traversalVisitor = null;
+        if(visitor == BranchInstrumentVisitor.class) {
+        		traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        } else {
+        		traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        }
         // instrument those methods ran by failed tests
-        StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(
-                failedTestAndCoveredMethods.getSecond());
-        Instrument.execute(src, statementInstrumentVisitor);
+//        StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(
+//                failedTestAndCoveredMethods.getSecond());
+        Instrument.execute(src, traversalVisitor);
 
         NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(
                 failedTestAndCoveredMethods.getFirst(), false);
@@ -339,6 +347,20 @@ public class Coverage {
             String file = Constant.HOME + "/rlst.log";
             JavaFile.writeStringToFile(file,
                     "Project : " + subject.getName() + "_" + subject.getId() + " Different test result!\n", true);
+            String diff_result_error = Constant.HOME + "/info/" + subject.getName() + "_" + subject.getId() + "_diff.log";
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("Project : " + subject.getName() + "_" + subject.getId() + "\n");
+            stringBuffer.append("---Original failed test cases : \n");
+            for(Integer integer : failedTests) {
+            		stringBuffer.append(Identifier.getMessage(integer) + "\n");
+            }
+            stringBuffer.append("---Failed test cases after instrument: \n");
+            for(Integer integer : Collector.findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE)) {
+        			stringBuffer.append(Identifier.getMessage(integer) + "\n");
+            }
+            JavaFile.writeStringToFile(diff_result_error, stringBuffer.toString());
+            String content = JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE);
+            JavaFile.writeStringToFile(diff_result_error, "---test out:\n" + content, true);
         } else {
             String file = Constant.HOME + "/rlst.log";
             JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Success!\n",
@@ -396,19 +418,27 @@ public class Coverage {
                     predicates = new ArrayList<>();
                 }
 
-                List<String> ifAndReturnPredicates = sdPredicatesVisitor.getPredicates();
+                List<List<String>> otherPredicates = sdPredicatesVisitor.getPredicates();
+                List<String> conditionPredicates = sdPredicatesVisitor.getConditionPredicates();
                 List<List<String>> assignmentPredicates = sdPredicatesVisitor.getAssignmentPredicates();
-                if (!ifAndReturnPredicates.isEmpty()) {
-                    if (validatePredicateByInMemCompile(ifAndReturnPredicates.get(0), source, fileName, relJavaPath,
-                            line, subject)) {
-                        for (String p : ifAndReturnPredicates) {
-                            predicates.add(new Pair<String, String>(p, "1"));
+                for(String p : conditionPredicates) {
+                	predicates.add(new Pair<String, String>(p, "1"));
+                }
+                if (!otherPredicates.isEmpty()) {
+                	for(List<String> otherPredicate : otherPredicates) {
+                		int pos = otherPredicate.get(0).indexOf("#");
+                        if (validatePredicateByInMemCompile(otherPredicate.get(0).substring(0, pos), source, fileName, relJavaPath,
+                                line, subject)) {
+                            for (String p : otherPredicate) {
+                                predicates.add(new Pair<String, String>(p, "1"));
+                            }
                         }
-                    }
+                	}
                 }
                 if (!assignmentPredicates.isEmpty()) {
                     for (List<String> similarPredicates : assignmentPredicates) {
-                        if (validatePredicateByInMemCompile(similarPredicates.get(0), source, fileName, relJavaPath,
+                    	int pos = similarPredicates.get(0).indexOf("#");
+                        if (validatePredicateByInMemCompile(similarPredicates.get(0).substring(0,  pos), source, fileName, relJavaPath,
                                 line, subject)) {
                             for (String p : similarPredicates) {
                                 predicates.add(new Pair<String, String>(p, "1"));

@@ -183,15 +183,19 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
+				Block block = whileStatement.getAST().newBlock();
 				for(int count = 0; count < _condition.size(); count ++){
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					if(inserted != null){
 						result.add(inserted);
+						block.statements().add(ASTNode.copySubtree(block.getAST(), inserted));
 					}
 				}
-				result.add(ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), statement));
+				block = extractNodeIntoBlock(block, whileStatement.getBody());
+				whileStatement.setBody(block);
+				result.add(ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), whileStatement));
 				return result;
 			}
 
@@ -232,15 +236,20 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
+				Block block = forStatement.getAST().newBlock();
 				for(int count = 0; count < _condition.size(); count ++){
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					if(inserted != null){
+						block.statements().add(ASTNode.copySubtree(block.getAST(), inserted));
 						result.add(inserted);
 					}
 				}
-				result.add(ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), statement));
+				
+				block = extractNodeIntoBlock(block, forStatement.getBody());
+				forStatement.setBody(block);
+				result.add(ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), forStatement));
 				return result;
 			}
 
@@ -271,18 +280,23 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 
 			int lineNumber = _cu.getLineNumber(doStatement.getExpression().getStartPosition());
 			if (lineNumber == _line) {
-				result.add(ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), statement));
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
+				Block block = doStatement.getAST().newBlock();
+				block = extractNodeIntoBlock(block, doStatement.getBody());
+				
 				for(int count = 0; count < _condition.size(); count ++){
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					if(inserted != null){
-						result.add(inserted);
+						block.statements().add(ASTNode.copySubtree(block.getAST(), inserted));
 					}
 				}
+				
+				doStatement.setBody(block);
+				result.add(ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), doStatement));
 				return result;
 			}
 
@@ -319,15 +333,19 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 				// ASTNode inserted =
 				// GenStatement.genPredicateStatement(_condition, message,
 				// _line);
+				Block block = enhancedForStatement.getAST().newBlock();
 				for(int count = 0; count < _condition.size(); count ++){
 					String condition = _condition.get(count).getFirst();
 					String prob = _condition.get(count).getSecond();
 					ASTNode inserted = GenStatement.newGenPredicateStatement(condition, message + "#" + condition + "#" + prob + "#" + count);
 					if(inserted != null){
 						result.add(inserted);
+						block.statements().add(ASTNode.copySubtree(block.getAST(), inserted));
 					}
 				}
-				result.add(ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), statement));
+				block = extractNodeIntoBlock(block, enhancedForStatement.getBody());
+				enhancedForStatement.setBody(block);
+				result.add(ASTNode.copySubtree(AST.newAST(Constant.AST_LEVEL), enhancedForStatement));
 				return result;
 			}
 
@@ -475,6 +493,17 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 		}
 
 		return result;
+	}
+	
+	private Block extractNodeIntoBlock(Block block, ASTNode node) {
+		if(node != null) {
+			if(node instanceof Block) {
+				block.statements().addAll(ASTNode.copySubtrees(block.getAST(), ((Block) node).statements()));
+			} else {
+				block.statements().add(ASTNode.copySubtree(block.getAST(), node));
+			}
+		}
+		return block;
 	}
 
 	private Block processBlock(Block block, String message) {

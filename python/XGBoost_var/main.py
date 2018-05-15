@@ -71,10 +71,8 @@ class XGVar(object):
                         f.write('\n')
             # elif (self.__configure__.get_model_type() == 'svm'):
                 # y_prob = model.predict_proba(X_pred)
-            elif (self.__configure__.get_model_type() == 'randomforest'):
+            elif (self.__configure__.get_model_type() == 'randomforest' or self.__configure__.get_model_type() == 'tree'):
                 y_prob = model.predict_proba(X_pred)
-                print(y_prob)
-                print(model.classes_)
                 one_pos = 1 - model.classes_[0]
 
                 with open(var_predicted, 'w') as f:
@@ -83,7 +81,9 @@ class XGVar(object):
                         f.write('%s\t' % varnames[i])
                         f.write('%.4f' % y_prob[i][one_pos])
                         f.write('\n')
+
         else:
+            print(feature_num)
             classifier = var_model.get_dnn_classifier(feature_num, 2, self.__configure__.get_var_nn_model_dir())
             predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_pred}, y=None, num_epochs=1, shuffle=False)
             predictions = list(classifier.predict(input_fn = predict_input_fn))
@@ -96,16 +96,16 @@ class XGVar(object):
                     f.write('%.4f' % y_prob[i][1])
                     f.write('\n')
 
-    def run_predict_vars(self, str_encoder, kmeans_model):
+    def run_predict_vars(self, str_encoder, kmeans_model, unique_words):
 
         print('Predicting var for {}...'.format(self.__configure__.get_bug_id()))
 
-        encoded_var, feature_num = self.encode_var(str_encoder, kmeans_model)
+        encoded_var, feature_num = self.encode_var(str_encoder, kmeans_model, unique_words)
         # get the predicted varnames
         self.predict_vars(encoded_var, feature_num)
 
 
-    def encode_var(self, str_encoder, kmeans_model):
+    def encode_var(self, str_encoder, kmeans_model, unique_words):
         data_file_path = self.__configure__.get_raw_var_pred_in_file()
 
         original_data_file_path = self.__configure__.get_raw_var_train_in_file()
@@ -169,12 +169,22 @@ class XGVar(object):
                     else:
                         feature = np.append(feature, int(dataset[i, 3 + j]))
                 except Exception as e:
-                    if j == 2 or j == 0 or j == 1:
+                    if j == 2:
                         # feature.append(len(var_encoder))
                         X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
                         X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
                         pred = kmeans_model['var'].predict(X_0)
-                        feature = np.concatenate((feature, one_hot_encoder[i].transform([[pred[0]]])[0]), axis = 0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
+                    elif j == 0:
+                        X_0 = np.mat(np.zeros((1, len(unique_words['file']))))
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, 3 + j]), unique_words['file'])
+                        pred = kmeans_model['file'].predict(X_0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
+                    elif j == 1:
+                        X_0 = np.mat(np.zeros((1, len(unique_words['func']))))
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, 3 + j]), unique_words['func'])
+                        pred = kmeans_model['func'].predict(X_0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
                     else:
                         feature = np.concatenate((feature, np.zeros(one_hot_encoder[j].n_values_)), axis = 0)
 

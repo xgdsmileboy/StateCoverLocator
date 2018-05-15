@@ -34,7 +34,8 @@ class Cluster(object):
 				result[pos] = 1
 		return result
 
-	def split_and_lower(self, s):
+	@staticmethod
+	def split_and_lower(s):
 		result = list()
 		current = ''
 		for cur in s:
@@ -49,12 +50,14 @@ class Cluster(object):
 			result.append(current.lower())
 		return result
 
-	def name_to_vec(self, name, mapping):
+	@staticmethod
+	def name_to_vec(name, mapping):
 		result = np.array(np.zeros(len(mapping)))
-		words = self.split_and_lower(name.split('.', 1)[0])
+		words = Cluster.split_and_lower(name.split('.', 1)[0])
 		for w in words:
-			i = mapping[w]
-			result[i] = 1
+			if w in mapping.keys():
+				i = mapping[w]
+				result[i] = 1
 		return result
 
 	def cluster_string(self):
@@ -117,23 +120,24 @@ class Cluster(object):
 				result[varnames[i]] = kmeans.labels_[i]
 				f.write('%s\t' % varnames[i])
 				f.write('%d\n' % kmeans.labels_[i])
+			f.close()
 		return result
 
 	def cluster_func(self, var_dataset, expr_dataset):
 		all_function = np.row_stack((var_dataset[:, 4:5], expr_dataset[:, 4:5]))
 
 		return self.cluster_func_or_file(all_function, self.__configure__.get_func_cluster_model_file(),
-			self.__configure__.get_func_cluster_file())
+			self.__configure__.get_func_cluster_file(), self.__configure__.get_func_cluster_info_file())
 
 
 	def cluster_file(self, var_dataset, expr_dataset):
 		all_file = np.row_stack((var_dataset[:, 3:4], expr_dataset[:, 3:4]))
 
 		return self.cluster_func_or_file(all_file, self.__configure__.get_file_cluster_model_file(),
-			self.__configure__.get_file_cluster_file())
+			self.__configure__.get_file_cluster_file(), self.__configure__.get_file_cluster_info_file())
 
 
-	def cluster_func_or_file(self, all_raw_data, model_file, output_file_path):
+	def cluster_func_or_file(self, all_raw_data, model_file, output_file_path, info_file_path):
 		# all_raw_data = np.array([["getWord.java"],["setWord.java"],["crossOutput.java"],["produceOutput.java"],["InCode.java"]])
 		all_data = all_raw_data.astype(str)
 		unique_words = {}
@@ -168,6 +172,11 @@ class Cluster(object):
 				result[fnames[i]] = kmeans.labels_[i]
 				f.write('%s\t' % fnames[i])
 				f.write('%d\n' % kmeans.labels_[i])
+			f.close()
+
+		with open(info_file_path, 'w') as f:
+			f.write(str(unique_words))
+			f.close()
 
 		return result
 
@@ -177,7 +186,15 @@ class Cluster(object):
 		encoder['var'], model['var'] = self.get_var_cluster()
 		encoder['func'], model['func'] = self.get_func_cluster()
 		encoder['file'], model['file'] = self.get_file_cluster()
-		return encoder, model
+
+		unique_words = {}
+		with open(self.__configure__.get_func_cluster_info_file(), 'r') as f:
+			unique_words['func'] = eval(f.read())
+
+		with open(self.__configure__.get_file_cluster_info_file(), 'r') as f:
+			unique_words['file'] = eval(f.read())
+
+		return encoder, model, unique_words
 
 	def get_cluster_routine(self, model_file, cluster_file_path):
 		result = {}

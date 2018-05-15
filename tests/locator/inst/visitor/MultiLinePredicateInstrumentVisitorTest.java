@@ -40,6 +40,18 @@ public class MultiLinePredicateInstrumentVisitorTest {
 		List<Pair<String, String>> condsForVds = new ArrayList<>();
 		condsForVds.add(new Pair<String, String>("bits > 0", "1.0"));
 		predicates.put(64, condsForVds);
+		List<Pair<String, String>> condsForWhile = new ArrayList<>();
+		condsForWhile.add(new Pair<String, String>("m>0", "0.7"));
+		predicates.put(75, condsForWhile);
+		List<Pair<String, String>> condsForDo = new ArrayList<>();
+		condsForDo.add(new Pair<String, String>("count==0", "0.66"));
+		predicates.put(128, condsForDo);
+		List<Pair<String, String>> condsForFor = new ArrayList<>();
+		condsForFor.add(new Pair<String, String>("a<0", "0.88"));
+		predicates.put(121, condsForFor);
+		List<Pair<String, String>> condsForExpStmt = new ArrayList<>();
+		condsForExpStmt.add(new Pair<String, String>("count!=0", "0.77"));
+		predicates.put(131, condsForExpStmt);
 		MultiLinePredicateInstrumentVisitor predicateInstrumentVisitor = new MultiLinePredicateInstrumentVisitor(predicates, false);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);

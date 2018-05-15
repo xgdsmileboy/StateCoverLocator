@@ -24,12 +24,14 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 
 import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
+import locator.common.config.Constant.PredicateStatement;
 import locator.common.java.Pair;
 
 public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 	private int _line = -1;
 	private CompilationUnit _cu = null;
-	private List<String> _predicates = new ArrayList<String>();
+	private List<String> _condition_predicates = new ArrayList<String>();
+	private List<List<String>>_predicates = new ArrayList<List<String>>();
 	private List<Pair<String, String>> _leftVars = new ArrayList<Pair<String, String>>();
 	private String _srcPath = "";
 	private String _relJavaPath = "";
@@ -40,8 +42,12 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		_relJavaPath = relJavaPath;
 	}
 
-	public List<String> getPredicates() {
+	public List<List<String>> getPredicates() {
 		return _predicates;
+	}
+	
+	public List<String> getConditionPredicates() {
+		return _condition_predicates;
 	}
 	
 	public List<List<String>> getAssignmentPredicates() {
@@ -80,7 +86,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 			Expression expr = node.getExpression();
 			if (expr != null) {
 				String condition = expr.toString();
-				_predicates.addAll(getPredicateForReturns(condition));
+				_predicates.add(getPredicateForReturns(condition));
 			}
 		}
 		return true;
@@ -91,7 +97,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			_predicates.addAll(getPredicateForConditions(condition));
+			_condition_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -110,7 +116,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 			Expression expr = node.getExpression();
 			if(expr != null) {
 				String condition = expr.toString();
-				_predicates.addAll(getPredicateForConditions(condition));
+				_condition_predicates.addAll(getPredicateForConditions(condition));
 			}
 		}
 		return true;
@@ -121,7 +127,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			_predicates.addAll(getPredicateForConditions(condition));
+			_condition_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -131,7 +137,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			_predicates.addAll(getPredicateForConditions(condition));
+			_condition_predicates.addAll(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -141,7 +147,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		if (start == _line) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			_predicates.addAll(getPredicateForConditions(condition));
+			_predicates.add(getPredicateForConditions(condition));
 		}
 		return true;
 	}
@@ -189,20 +195,20 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		final String operators[] = { "< 0", "<= 0", "> 0", ">= 0", "== 0",
 				"!= 0" };
 		for (final String op : operators) {
-			predicates.add("(" + expr + ")" + op);
+			predicates.add("(" + expr + ")" + op + "#RETURN");
 		}
 		return predicates;
 	}
 	
 	private List<String> getPredicateForConditions(final String expr) {
 		List<String> predicates = new ArrayList<String>();
-		predicates.add(expr);
-		predicates.add("!(" + expr + ")");
+		predicates.add(expr + "#CONDITION");
+		predicates.add("!(" + expr + ")#CONDITION");
 		return predicates;
 	}
 	
 	private List<List<String>> getPredicatesForAssignment(final Map<String, Set<String>> variables) {
-		final String operators[] = {"<", "<=", ">", ">=", "==", "!="};
+		final String operators[] = {" < ", " <= ", " > ", " >= ", " == ", " != "};
 		List<List<String>> predicates = new ArrayList<List<String>>();
 		for(final Map.Entry<String, Set<String>> variable : variables.entrySet()) {
 			String v0 = variable.getKey();
@@ -210,7 +216,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 				if(v0.equals(v)) continue;
 				List<String> similarPredicates = new ArrayList<String>();
 				for (final String op : operators) {
-					similarPredicates.add(variable.getKey() + op + v);
+					similarPredicates.add(variable.getKey() + op + v + "#ASSIGN");
 				}
 				predicates.add(similarPredicates);
 			}

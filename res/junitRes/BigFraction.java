@@ -116,4 +116,19 @@ class AnotherTroubleClazz {
 	public boolean method2() {
 		return true;
 	}
+	
+	public void dummy() {
+		for(int i = 0; i < 5; i ++) {
+			i ++;
+		}
+		
+		int count = 0;
+		do {
+			count ++;
+		} while(count < 10);
+		
+		while(count > 0) {
+			count --;
+		}
+	}
 }

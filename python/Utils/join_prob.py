@@ -47,7 +47,9 @@ def getPredicateProb(filePath):
         if len(words) == 4:
             keyTuple = (words[0], words[1])
             value.append((words[2], float(words[3])))
-        j = 0
+        if i == lines_len - 1 :
+            predicateProbMap[keyTuple] = value
+            break
         for j in  range(i + 1, lines_len):
             words = lines[j].split("\t")
             if len(words) == 2:
@@ -87,9 +89,10 @@ def join_prob(config):
                     continue
 
                 #prob = math.log(varProbMap[key] * predicate[1])
-                prob = varProbMap[key] * predicate[1]
+                # prob = varProbMap[key] * predicate[1]
                 #prob = math.log(varProbMap[key]) + math.log(predicate[1])
                 # prob = varProbMap[key] + predicate[1]
+                prob = varProbMap[key] * predicate[1]
                 newkey = (key[0], key[1], predicate[0])
                 varPredicateProbMap[newkey] = prob
 
