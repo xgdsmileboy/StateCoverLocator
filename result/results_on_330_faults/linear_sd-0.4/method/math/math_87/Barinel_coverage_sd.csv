@@ -1,0 +1,69 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.apache.commons.math.optimization.linear.SimplexSolver#void#solvePhase1#?,SimplexTableau#168	0.5	0.5	0.3		_
+org.apache.commons.math.optimization.linear.SimplexTableau#void#discardArtificialVariables#?#291	0.5	0.5	0.3		_
+org.apache.commons.math.optimization.linear.LinearObjectiveFunction#double#getValue#?,double[]#92	0.09999999999999998	0.5	0.26	(coefficients.dotProduct(point) + constantTerm)== 0	_
+org.apache.commons.math.linear.RealVectorImpl#double#dotProduct#?,double[]#889	0.0714285714285714	0.5	0.24285714285714285	(dot)== 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#RealPointValuePair#getSolution#?#338	0.09999999999999998	0.33333333333333337	0.19333333333333336	coefficients[i] < mostNegative	_
+org.apache.commons.math.optimization.linear.SimplexTableau#double[][]#createTableau#?,boolean#133	0.08333333333333337	0.33333333333333337	0.17083333333333336	!(getNumObjectiveFunctions() == 2)	_
+org.apache.commons.math.optimization.linear.SimplexSolver#RealPointValuePair#doOptimize#?#189	0.1428571428571429	0.1428571428571429	0.1428571428571429	!isOptimal(tableau)	_
+org.apache.commons.math.optimization.linear.SimplexSolver#boolean#isOptimal#?,SimplexTableau#150	0.1428571428571429	0.1428571428571429	0.11168831168831173	MathUtils.compareTo(tableau.getEntry(0,i),0,epsilon) < 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getOriginalNumDecisionVariables#?#458	0.09999999999999998	0.09999999999999998	0.09999999999999998	(restrictToNonNegative ? numDecisionVariables : numDecisionVariables - 1)> 0	_
+org.apache.commons.math.optimization.linear.SimplexSolver#Integer#getPivotRow#?,int,SimplexTableau#84	0.08333333333333337	0.09090909090909094	0.08636363636363639	minRatio == rhs	_
+org.apache.commons.math.optimization.linear.SimplexTableau#double#getInvertedCoeffiecientSum#?,RealVector#264	0.08333333333333337	0.09090909090909094	0.08636363636363639	(sum)> 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getNumArtificialVariables#?#474	0.08333333333333337	0.09090909090909094	0.08636363636363639	(numArtificialVariables)== 0	_
+org.apache.commons.math.optimization.linear.AbstractLinearOptimizer#void#setMaxIterations#?,int#67	0.08333333333333337	0.08333333333333337	0.08333333333333337	this.maxIterations >= maxIterations	_
+org.apache.commons.math.optimization.linear.SimplexSolver#Integer#getPivotColumn#?,SimplexTableau#62	0.08333333333333337	0.08333333333333337	0.08333333333333337	!(MathUtils.compareTo(tableau.getEntry(0,i),minValue,epsilon) < 0)	_
+org.apache.commons.math.optimization.linear.SimplexSolver#void#doIteration#?,SimplexTableau#106	0.08333333333333337	0.08333333333333337	0.08333333333333337	!(pivotRow == null)	_
+org.apache.commons.math.optimization.linear.SimplexSolver#?#SimplexSolver#?,double#50	0.08333333333333337	0.08333333333333337	0.08333333333333337	this.epsilon == epsilon	_
+org.apache.commons.math.optimization.linear.AbstractLinearOptimizer#void#incrementIterationsCounter#?#86	0.08333333333333337	0.08333333333333337	0.08333333333333337	!(++iterations > maxIterations)	_
+org.apache.commons.math.optimization.linear.SimplexTableau#void#divideRow#?,int,double#356	0.08333333333333337	0.08333333333333337	0.08333333333333337	!(j < getWidth())	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getRhsOffset#?#435	0.07692307692307687	0.07692307692307687	0.07692307692307687	(getWidth() - 1)> 0	_
+org.apache.commons.math.util.MathUtils#int#compareTo#?,double,double,double#368	0.07692307692307687	0.07692307692307687	0.07692307692307687	(0)<= 0	_
+org.apache.commons.math.linear.RealVectorImpl#RealVector#mapMultiply#?,double#340	0.06666666666666665	0.09090909090909094	0.07636363636363636	out[i] < d	_
+org.apache.commons.math.optimization.linear.SimplexTableau#double#getEntry#?,int,int#401	0.06666666666666665	0.07692307692307687	0.07076923076923074	(tableau.getEntry(row,column))< 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#void#subtractRow#?,int,int,double#373	0.06666666666666665	0.06666666666666665	0.06666666666666665	!(j < getWidth())	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getSlackVariableOffset#?#419	0.06666666666666665	0.06666666666666665	0.06666666666666665	(getNumObjectiveFunctions() + numDecisionVariables)>= 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#Integer#getBasicRow#?,int#274	0.06666666666666665	0.06666666666666665	0.06666666666666665	i < getHeight()	GT
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getWidth#?#384	0.06666666666666665	0.06666666666666665	0.06666666666666665	(tableau.getColumnDimension())> 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getHeight#?#392	0.06666666666666665	0.06666666666666665	0.06666666666666665	(tableau.getRowDimension())> 0	_
+org.apache.commons.math.optimization.linear.LinearObjectiveFunction#double#getConstantTerm#?#83	0.0625	0.0714285714285714	0.06607142857142856	(constantTerm)== 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getConstraintTypeCounts#?,Relationship#240	0.0625	0.06666666666666665	0.06416666666666666	(count)<= 0	_
+org.apache.commons.math.optimization.linear.LinearConstraint#double#getValue#?#184	0.0625	0.06666666666666665	0.06416666666666666	(value)!= 0	_
+org.apache.commons.math.optimization.linear.LinearConstraint#?#LinearConstraint#?,RealVector,Relationship,double#102	0.0625	0.0625	0.0625	this.value <= value	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getNumVariables#?#190	0.0625	0.0625	0.0625	(f.getCoefficients().getDimension())> 0	_
+org.apache.commons.math.optimization.linear.LinearObjectiveFunction#?#LinearObjectiveFunction#?,RealVector,double#67	0.0625	0.0625	0.0625	this.constantTerm >= constantTerm	_
+org.apache.commons.math.optimization.linear.SimplexTableau#?#SimplexTableau#?,LinearObjectiveFunction,Collection<LinearConstraint>,GoalType,boolean,double#108	0.0625	0.0625	0.0625	this.epsilon >= epsilon	_
+org.apache.commons.math.optimization.linear.SimplexTableau#LinearConstraint#normalize#?,LinearConstraint#211	0.0625	0.0625	0.0625	!(constraint.getValue() < 0)	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getNumObjectiveFunctions#?#225	0.0625	0.0625	0.0625	(this.numArtificialVariables > 0 ? 2 : 1)> 0	_
+org.apache.commons.math.optimization.linear.SimplexSolver#?#SimplexSolver#?#42	0.08333333333333337	0.0	0.050000000000000024		_
+org.apache.commons.math.optimization.linear.AbstractLinearOptimizer#?#AbstractLinearOptimizer#?#62	0.08333333333333337	0.0	0.050000000000000024		_
+org.apache.commons.math.optimization.linear.AbstractLinearOptimizer#RealPointValuePair#optimize#?,LinearObjectiveFunction,Collection<LinearConstraint>,GoalType,boolean#105	0.08333333333333337	0.0	0.050000000000000024		_
+org.apache.commons.math.optimization.linear.LinearConstraint#?#LinearConstraint#?,double[],Relationship,double#81	0.06666666666666665	0.0	0.03999999999999999		_
+org.apache.commons.math.optimization.linear.SimplexTableau#void#copyArray#?,double[],double[],int#314	0.0625	0.0	0.0375		_
+org.apache.commons.math.optimization.linear.SimplexTableau#List<LinearConstraint>#getNormalizedConstraints#?#202	0.0625	0.0	0.0375		_
+org.apache.commons.math.optimization.linear.LinearObjectiveFunction#?#LinearObjectiveFunction#?,double[],double#58	0.0625	0.0	0.0375		_
+org.apache.commons.math.optimization.linear.LinearObjectiveFunction#RealVector#getCoefficients#?#75	0.0625	0.0	0.0375		_
+org.apache.commons.math.optimization.linear.LinearConstraint#Relationship#getRelationship#?#176	0.0625	0.0	0.0375		_
+org.apache.commons.math.optimization.linear.LinearConstraint#RealVector#getCoefficients#?#168	0.0625	0.0	0.0375		_
+org.apache.commons.math.optimization.RealPointValuePair#?#RealPointValuePair#?,double[],double#50	0.03125	0.045454545454545414	0.03693181818181816	this.value <= value	_
+org.apache.commons.math.util.MathUtils#boolean#equals#?,double,double,double#411	0.05882352941176472	0.0	0.03529411764705883		_
+org.apache.commons.math.optimization.RealPointValuePair#double[]#getPoint#?#70	0.05555555555555558	0.0	0.03333333333333335		_
+org.apache.commons.math.linear.RealMatrixImpl#double#getEntry#?,int,int#354	0.021276595744680882	0.04761904761904767	0.0318135764944276	(data[row][column])< 0	_
+org.apache.commons.math.linear.RealVectorImpl#void#checkVectorDimensions#?,int#1287	0.02564102564102566	0.02631578947368418	0.025910931174089068	!(data.length != n)	_
+org.apache.commons.math.linear.RealMatrixImpl#void#setEntry#?,int,int,double#367	0.022727272727272707	0.022727272727272707	0.022727272727272707	data[row][column] >= value	_
+org.apache.commons.math.linear.RealVectorImpl#double[]#getData#?#854	0.030303030303030276	0.0	0.018181818181818164		_
+org.apache.commons.math.linear.RealMatrixImpl#void#setSubMatrix#?,double[][],int,int#315	0.016949152542372836	0.016949152542372836	0.016949152542372836	!(row > 0)	_
+org.apache.commons.math.linear.RealVectorImpl#int#getDimension#?#1157	0.0117647058823529	0.0117647058823529	0.0117647058823529	(data.length)> 0	_
+org.apache.commons.math.linear.RealMatrixImpl#int#getColumnDimension#?#410	0.01098901098901095	0.01098901098901095	0.01098901098901095	(((data == null) || (data[0] == null)) ? 0 : data[0].length)!= 0	_
+org.apache.commons.math.linear.RealMatrixImpl#int#getRowDimension#?#404	0.01098901098901095	0.01098901098901095	0.01098901098901095	((data == null) ? 0 : data.length)>= 0	_
+org.apache.commons.math.linear.RealMatrixImpl#void#copyIn#?,double[][]#622	0.016949152542372836	0.0	0.010169491525423702		_
+org.apache.commons.math.linear.RealMatrixImpl#?#RealMatrixImpl#?,double[][]#95	0.016949152542372836	0.0	0.010169491525423702		_
+org.apache.commons.math.util.MathUtils#boolean#equals#?,double,double#395	0.01041666666666663	0.0	0.006249999999999978		_
+org.apache.commons.math.linear.AbstractRealMatrix#?#AbstractRealMatrix#?#44	0.010101010101010055	0.0	0.006060606060606033		_
+org.apache.commons.math.linear.RealVectorImpl#?#RealVectorImpl#?,double[]#78	0.00917431192660545	0.0	0.005504587155963269		_
+org.apache.commons.math.linear.RealVectorFormat#?#RealVectorFormat#?,String,String,String,NumberFormat#119	0.0	0.0	0.0		_
+org.apache.commons.math.linear.RealVectorFormat#?#RealVectorFormat#?,NumberFormat#94	0.0	0.0	0.0		_
+org.apache.commons.math.linear.RealVectorFormat#RealVectorFormat#getInstance#?,Locale#182	0.0	0.0	0.0		_
+org.apache.commons.math.optimization.linear.SimplexTableau#void#initialize#?#249	0.0	0.0	0.0		_
+org.apache.commons.math.linear.RealVectorFormat#RealVectorFormat#getInstance#?#173	0.0	0.0	0.0		_
+org.apache.commons.math.util.CompositeFormat#NumberFormat#getDefaultNumberFormat#?,Locale#56	0.0	0.0	0.0		_

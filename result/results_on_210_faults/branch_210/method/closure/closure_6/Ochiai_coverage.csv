@@ -1,0 +1,962 @@
+line	original_score	max_predicate_score	total	predicate	label
+com.google.javascript.jscomp.TypeValidator#boolean#expectCanAssignToPropertyOf#?,NodeTraversal,Node,JSType,JSType,Node,String#366	0.8164965809277261	0.8164965809277261	0.9707999308898181	(leftType.isConstructor() || leftType.isEnumType()) && (rightType.isConstructor() || rightType.isEnumType())	GT
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionType#getOrCreateConstructor#?#677	0.03934447376823169	0.8164965809277261	0.8558410546959578	!(isInstanceObject || fnName.equals("Function"))	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#boolean#declareType#?,String,JSType#838	0.5773502691896258	0.5773502691896258	0.6130342242948613	namesToTypes.containsKey(name)	_
+com.google.javascript.jscomp.TypeValidator#boolean#expectCanAssignTo#?,NodeTraversal,Node,JSType,JSType,String#405	0.5773502691896258	0.5773502691896258	0.6064367555477833	(leftType.isConstructor() || leftType.isEnumType()) && (rightType.isConstructor() || rightType.isEnumType())	GT
+com.google.javascript.jscomp.TypeValidator#void#registerIfMismatch#?,JSType,JSType,JSError#693	0.16666666666666666	0.2581988897471611	0.4248655564138277	!(found != null && required != null && !found.canAssignTo(required))	_
+com.google.javascript.jscomp.TypeValidator#Var#expectUndeclaredVariable#?,String,CompilerInput,Node,Node,Var,String,JSType#533	0.20739033894608505	0.20739033894608505	0.37234755871454955	info == null	_
+com.google.javascript.jscomp.Scope$Var#String#getInputName#?#282	0.1849000654084097	0.1849000654084097	0.3698001308168194	!(input == null)	_
+com.google.javascript.jscomp.FunctionTypeBuilder#Scope#getScopeDeclaredIn#?#737	0.08989331499509895	0.2182178902359924	0.30811120523109137	!(rootVar != null)	_
+com.google.javascript.jscomp.TypeValidator#void#registerMismatch#?,JSType,JSType,JSError#675	0.16666666666666666	0.16666666666666666	0.24079159833277677	found.isFunctionType() && required.isFunctionType()	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseFunctionType#?,JsDocToken#1851	0.16666666666666666	0.16666666666666666	0.2292890957751816	!(match(JsDocToken.COMMA))	_
+com.google.javascript.rhino.jstype.EnumType#String#toStringHelper#?,boolean#145	0.21442250696755896	0.0	0.21442250696755896		_
+com.google.javascript.rhino.jstype.EnumElementType#boolean#isSubtype#?,JSType#168	0.10675210253672476	0.10675210253672476	0.2104472720097673	JSType.isSubtypeHelper(this,that)	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#EnumType#createEnumTypeFromNodes#?,Node,String,JSDocInfo,Node#1032	0.1049727762162956	0.1049727762162956	0.20825233211516003	!(!codingConvention.isValidEnumKey(keyName))	_
+com.google.javascript.jscomp.TypeCheck#void#checkEnumAlias#?,NodeTraversal,JSDocInfo,Node#1865	0.10411584125907071	0.10411584125907071	0.2065789451747827	!(!valueType.isEnumType())	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#JSType#getDeclaredType#?,String,JSDocInfo,Node,Node#1292	0.10127393670836667	0.10127393670836667	0.2002886910060341	rValue != null && rValue.isObjectLit()	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#defineSlot#?,Node,Node,String,JSType,boolean#1154	0.09901475429766744	0.10127393670836667	0.2002886910060341	!(!isValidValue)	_
+com.google.javascript.rhino.jstype.FunctionType#String#toStringHelper#?,boolean#927	0.10629880069054679	0.10629880069054679	0.1885678076695195	isConstructor()	_
+com.google.javascript.jscomp.TypeCheck#void#visitObjLitKey#?,NodeTraversal,Node,Node#1065	0.1076763804116331	0.1076763804116331	0.18624380054347173	allowedValueType.isEnumElementType()	_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#recordEnumParameterType#?,JSTypeExpression#534	0.08935341032175406	0.08935341032175406	0.17817652865861958	type != null && !hasAnyTypeRelatedTags()	_
+com.google.javascript.jscomp.ProcessClosurePrimitives#void#visit#?,NodeTraversal,Node,Node#240	0.07079923254047886	0.09016696346674323	0.1609661960072221	!(t.inGlobalScope() && !NodeUtil.isFunctionExpression(n))	_
+com.google.javascript.jscomp.NodeUtil#JSDocInfo#getFunctionJSDocInfo#?,Node#2827	0.08466675133346034	0.08466675133346034	0.15212507706894882	parent.isAssign()	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#String#getReferenceName#?#433	0.1203858530857692	0.1203858530857692	0.143768471763017	!(ownerFunction != null)	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#createFromTypeNodesInternal#?,Node,String,StaticScope<JSType>#1631	0.07106690545187015	0.09901475429766744	0.14369145945854447	!(current.getType() == Token.PARAM_LIST)	_
+com.google.javascript.jscomp.SuppressDocWarningsGuard#CheckLevel#level#?,JSError#71	0.0842151921066519	0.0842151921066519	0.14306418074030186	rhs.isFunction()	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#defineObjectLiteral#?,Node#645	0.10012523486435178	0.10012523486435178	0.1427750723821084	info != null && info.hasEnumParameterType()	_
+com.google.javascript.jscomp.TypeInference#FlowScope#traverseObjectLiteral#?,Node,FlowScope#740	0.098652724733398	0.098652724733398	0.14130256225115465	objectType.hasReferenceName() && !hasLendsName	_
+com.google.javascript.jscomp.ProcessClosurePrimitives#void#handleCandidateProvideDefinition#?,NodeTraversal,Node,Node#371	0.07838618016696206	0.07838618016696206	0.14111461432647915	!(pn != null)	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#processObjectLitProperties#?,Node,ObjectType,boolean#693	0.06988565578146122	0.07120188545089044	0.1378685521175571	!(keyType != null && objLitType != null && declareOnOwner)	_
+com.google.javascript.jscomp.NodeUtil#String#getBestLValueName#?,Node#3109	0.06851887098275317	0.06851887098275317	0.13679774518264504	ownerName != null	_
+com.google.javascript.jscomp.NodeUtil#JSType#getObjectLitKeyTypeFromValueType#?,Node,JSType#2081	0.06792356108113244	0.06792356108113244	0.1357299114432135	valueType != null	_
+com.google.javascript.rhino.jstype.EnumType#FunctionType#getConstructor#?#160	0.13514747567989718	0.0	0.13514747567989718		_
+com.google.javascript.jscomp.TypedScopeCreator$DiscoverEnumsAndTypedefs#void#identifyNameNode#?,Node,Node,JSDocInfo#394	0.098652724733398	0.098652724733398	0.13460472490366668	info.hasEnumParameterType()	_
+com.google.javascript.jscomp.TypeCheck#void#process#?,Node,Node#365	0.035143650394204265	0.098652724733398	0.13379637512760229	!(externsRoot != null)	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#FunctionType#createFunctionTypeFromNodes#?,Node,String,JSDocInfo,Node#906	0.036596252735569997	0.08804509063256238	0.12462501668753592	!(ownerVar != null)	_
+com.google.javascript.jscomp.ProcessClosurePrimitives#void#handleTypedefDefinition#?,NodeTraversal,Node,Node#341	0.06128514130358956	0.06128514130358956	0.12257028260717912	!(t.inGlobalScope() && info != null && info.hasTypedefType())	_
+com.google.javascript.jscomp.TypeCheck#void#visitAssign#?,NodeTraversal,Node#876	0.05237828008789241	0.08606629658238704	0.12239592111947412	!(lvalue.isGetProp())	_
+com.google.javascript.jscomp.ProcessClosurePrimitives#void#process#?,Node,Node#148	0.05702659485122011	0.05709626695399184	0.11412286180521194	requiresLevel.isOn()	_
+com.google.javascript.jscomp.ProcessClosurePrimitives$ProvidedName#void#replace#?#856	0.05702659485122011	0.05702659485122011	0.11405318970244022	firstNode == null	_
+com.google.javascript.jscomp.ProcessClosurePrimitives$ProvidedName#void#updateMinimumModule#?,JSModule#835	0.05702659485122011	0.05702659485122011	0.11405318970244022	minimumModule == null	_
+com.google.javascript.jscomp.ProcessClosurePrimitives$ProvidedName#void#addProvide#?,Node,JSModule,boolean#804	0.05702659485122011	0.05702659485122011	0.11405318970244022	!(explicit)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseResultType#?,JsDocToken#1981	0.07001400420140048	0.07001400420140048	0.11365758224859895	!match(JsDocToken.COLON)	_
+com.google.javascript.jscomp.TypeInference#FlowScope#traverseName#?,Node,FlowScope#668	0.034020690871988585	0.07968190728895957	0.11357858947459801	!(var != null)	_
+com.google.javascript.jscomp.TypedScopeCreator$CollectProperties#void#visit#?,NodeTraversal,Node,Node#1728	0.05337605126836238	0.05337605126836238	0.10675210253672476	!(n.isExprResult())	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#ObjectType#getObjectSlot#?,String#1671	0.07040333438087629	0.07040333438087629	0.10647207476583431	!(ownerVar != null)	_
+com.google.javascript.rhino.jstype.EnumType#boolean#defineElement#?,String,Node#117	0.1049727762162956	0.0	0.1049727762162956		_
+com.google.javascript.jscomp.Compiler#int#getWarningCount#?#2117	0.1049727762162956	0.0	0.1049727762162956		_
+com.google.javascript.jscomp.GoogleCodingConvention#boolean#isValidEnumKey#?,String#114	0.10454167469786334	0.0	0.10454167469786334		_
+com.google.javascript.rhino.jstype.EnumElementType#EnumElementType#toMaybeEnumElementType#?#87	0.10454167469786334	0.0	0.10454167469786334		_
+com.google.javascript.jscomp.TypeInference#void#ensurePropertyDefined#?,Node,JSType#584	0.0670025210172808	0.0670025210172808	0.10281591797224185	ensurePropertyDeclaredHelper(getprop,objectType)	_
+com.google.javascript.rhino.jstype.EnumElementType#JSType#getPrimitiveType#?#251	0.10206207261596577	0.0	0.10206207261596577		_
+com.google.javascript.rhino.jstype.EnumElementType#ObjectType#getImplicitPrototype#?#201	0.10127393670836667	0.0	0.10127393670836667		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#visit#?,NodeTraversal,Node,Node#536	0.03695265087809703	0.06590224063189368	0.10108211786840827	!(firstChild.isGetProp() && firstChild.isQualifiedName())	_
+com.google.javascript.rhino.jstype.ObjectType#Iterable<ObjectType>#getCtorExtendedInterfaces#?#583	0.10088665446106365	0.0	0.10088665446106365		_
+com.google.javascript.jscomp.TypeInference#boolean#ensurePropertyDeclaredHelper#?,Node,ObjectType#644	0.06424925662032356	0.06424925662032356	0.10053102652693019	propName.equals("prototype") || (!objectType.hasOwnProperty(propName) && (!objectType.isInstanceType() || (var.isExtern() && !objectType.isNativeObjectType())))	_
+com.google.javascript.rhino.jstype.EnumType#EnumType#toMaybeEnumType#?#92	0.0982946374365981	0.0	0.0982946374365981		_
+com.google.javascript.rhino.jstype.EnumType#boolean#isSubtype#?,JSType#138	0.09794042137487835	0.0	0.09794042137487835		_
+com.google.javascript.rhino.jstype.EnumType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#180	0.09759000729485333	0.0	0.09759000729485333		_
+com.google.javascript.rhino.jstype.EnumElementType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#282	0.09656090991705352	0.0	0.09656090991705352		_
+com.google.javascript.jscomp.TypeInference#void#updateScopeForTypeChange#?,FlowScope,Node,JSType,JSType#544	0.04267895997763199	0.053426813097493656	0.09610577307512565	!(var != null && var.isTypeInferred())	_
+com.google.javascript.rhino.jstype.EnumType#ObjectType#getImplicitPrototype#?#97	0.09556369651349932	0.0	0.09556369651349932		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#EnumType#createEnumType#?,String,Node,JSType#1040	0.09523809523809523	0.0	0.09523809523809523		_
+com.google.javascript.rhino.jstype.EnumType#EnumElementType#getElementsType#?#124	0.09459675396808043	0.0	0.09459675396808043		_
+com.google.javascript.rhino.jstype.EnumType#?#EnumType#?,JSTypeRegistry,String,Node,JSType#78	0.09428090415820634	0.0	0.09428090415820634		_
+com.google.javascript.rhino.jstype.EnumElementType#?#EnumElementType#?,JSTypeRegistry,JSType,String#73	0.09428090415820634	0.0	0.09428090415820634		_
+com.google.javascript.rhino.Node#void#addChildToFront#?,Node#594	0.04835565820497615	0.04835565820497615	0.09289919852371355	last == null	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#maybeDeclareQualifiedName#?,NodeTraversal,JSDocInfo,Node,Node,Node#1559	0.036297700432031385	0.05574946733380605	0.09204716776583743	!(ownerType != null)	_
+com.google.javascript.rhino.JSDocInfo#JSTypeExpression#getEnumParameterType#?#1118	0.09157370929912602	0.0	0.09157370929912602		_
+com.google.javascript.rhino.jstype.FunctionType#boolean#checkFunctionEquivalenceHelper#?,FunctionType,EquivalenceMethod#878	0.046984098573493956	0.047298376984040214	0.09069468064431482	that.isConstructor()	_
+com.google.javascript.jscomp.TypedScopeCreator#Scope#createScope#?,Node,Scope#241	0.05337605126836238	0.05337605126836238	0.09032870214645941	!fnThisType.isUnknownType()	_
+com.google.javascript.rhino.JSDocInfo#void#setEnumParameterType#?,JSTypeExpression#1037	0.08830215713766959	0.0	0.08830215713766959		_
+com.google.javascript.jscomp.TypeValidator#JSError#report#?,JSError#792	0.043093041358857165	0.043093041358857165	0.0860368164522459	shouldReport	_
+com.google.javascript.jscomp.TypeCheck#void#visit#?,NodeTraversal,Node,Node#812	0.07288405170790035	0.04525628222014204	0.08595412859796603	n.isObjectLit()	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#attachLiteralTypes#?,NodeTraversal,Node#599	0.04288450139351179	0.04288450139351179	0.08553433891126842	!(info != null && info.getLendsName() != null)	_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processObjectLiteral#?,ObjectLiteral#912	0.0418578618148061	0.04270814217589821	0.08442068835274352	!(el.isSetter())	_
+com.google.javascript.jscomp.PrepareAst$PrepareAnnotations#void#normalizeObjectLiteralKeyAnnotations#?,Node,Node,Node#208	0.04180296623470751	0.04250511420422255	0.08430808043893007	!(key.getJSDocInfo() != null && value.isFunction())	_
+com.google.javascript.jscomp.Compiler#Node#parseTestCode#?,String#1589	0.04210759605332595	0.04210759605332595	0.08388319536776163	inputsById == null	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#void#addReferenceTypeIndexedByProperty#?,String,JSType#649	0.041666666666666664	0.041666666666666664	0.08333333333333333	!(type instanceof NamedType)	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#void#identifyNonNullableName#?,String#1481	0.08006407690254357	0.0	0.08006407690254357		_
+com.google.javascript.jscomp.TypeCheck#void#checkPropertyInheritanceOnGetpropAssign#?,NodeTraversal,Node,Node,String,JSDocInfo,JSType#1012	0.03640980478146622	0.04224828336829853	0.07865808814976474	!(object.isGetProp())	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionType#buildAndRegister#?#594	0.04154662416233763	0.04154662416233763	0.07561334672370976	!contents.mayHaveNonEmptyReturns() && !contents.mayHaveSingleThrow() && !contents.mayBeFromExterns()	_
+com.google.javascript.jscomp.InferJSDocInfo#void#attachJSDocInfoToNominalTypeOrShape#?,ObjectType,JSDocInfo,String#207	0.03626586033780544	0.03896432500995984	0.07523018534776528	!(objType.hasReferenceName() && objType.getReferenceName().equals(qName))	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#void#setPropertyJSDocInfo#?,String,JSDocInfo#283	0.03745029431365691	0.03745905154382774	0.07490059476627658	!(!properties.containsKey(propertyName))	_
+com.google.javascript.jscomp.InferJSDocInfo#void#visit#?,NodeTraversal,Node,Node#173	0.03745905154382774	0.03745905154382774	0.07489184980686209	lhsType.hasOwnProperty(propName)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseBasicTypeExpression#?,JsDocToken#1755	0.04210759605332595	0.04210759605332595	0.07463759848494372	"function".equals(string)	_
+com.google.javascript.jscomp.LinkedFlowScope#StaticSlot<JSType>#getSlot#?,String#147	0.03736523194714872	0.03736523194714872	0.07451711278550557	slot.getName().equals(name)	_
+com.google.javascript.jscomp.TypeValidator$TypeMismatch#?#TypeMismatch#?,JSType,JSType,JSError#818	0.07412493166611012	0.0	0.07412493166611012		_
+com.google.javascript.jscomp.TypeCheck#boolean#propertyIsImplicitCast#?,ObjectType,String#1108	0.036893922595746136	0.036860489038724284	0.07372097807744857	!(docInfo != null && docInfo.isImplicitCast())	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#boolean#shouldUseFunctionLiteralType#?,FunctionType,JSDocInfo,Node#820	0.03727642942703992	0.03727642942703992	0.07371039199383445	info != null	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#JSDocInfo#getOwnPropertyJSDocInfo#?,String#274	0.0367690133467927	0.0367690133467927	0.07350493126532495	!(p != null)	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#void#register#?,JSType,String#602	0.07317617332646023	0.0	0.07317617332646023		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#boolean#isQualifiedNameInferred#?,String,Node,JSDocInfo,Node,JSType#1627	0.0370879470776142	0.0370879470776142	0.07290900219516785	info != null	_
+com.google.javascript.jscomp.TypeCheck#void#checkPropCreation#?,NodeTraversal,Node#989	0.03639372626234195	0.03640980478146622	0.07280353104380817	!(objType.isStruct() && !objType.hasProperty(pname))	_
+com.google.javascript.jscomp.TypeCheck#void#visitFunction#?,NodeTraversal,Node#1580	0.03636163302306444	0.03640176285872176	0.0727633958817862	!(baseConstructor != getNativeType(OBJECT_FUNCTION_TYPE))	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#isPropertyTypeInferred#?,String#207	0.03619452538882463	0.03619452538882463	0.07238905077764926	!(slot == null)	_
+com.google.javascript.jscomp.TypeCheck#void#checkPropertyAccess#?,JSType,String,NodeTraversal,Node#1386	0.03614720195339099	0.03621034121889507	0.07235754317228606	!(propType.isEquivalentTo(typeRegistry.getNativeType(UNKNOWN_TYPE)))	_
+com.google.javascript.jscomp.TypeCheck#void#visitGetProp#?,NodeTraversal,Node,Node#1363	0.03614720195339099	0.03614720195339099	0.07229440390678198	!(childType.isDict())	_
+com.google.javascript.jscomp.TypeValidator#boolean#expectNotNullOrUndefined#?,NodeTraversal,Node,JSType,String,JSType#257	0.03614720195339099	0.03614720195339099	0.07229440390678198	!(!type.isNoType() && !type.isUnknownType() && type.isSubtype(nullOrUndefined)&& !containsForwardDeclaredUnresolvedName(type))	_
+com.google.javascript.rhino.jstype.FunctionType#boolean#makesDicts#?#233	0.03612360973813756	0.03612360973813756	0.07224721947627512	!(propAccess == PropAccess.DICT)	_
+com.google.javascript.rhino.jstype.JSType#boolean#isDict#?#331	0.03617084045310765	0.03617084045310765	0.07221614181876918	!(ctor == null)	_
+com.google.javascript.rhino.jstype.FunctionType#boolean#isSubtype#?,JSType#1000	0.03616295580114409	0.03616295580114409	0.0721304558644244	!(that.isFunctionType())	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#finishConstructorDefinition#?,Node,String,FunctionType,Scope,CompilerInput,Var#1228	0.035990787537434725	0.0360922251885651	0.07208301272599982	!(prototypeVar != null && prototypeVar.scope == scopeToDeclareIn)	_
+com.google.javascript.rhino.jstype.FunctionType#Iterable<ObjectType>#getImplementedInterfaces#?#512	0.03608439182435161	0.03608439182435161	0.07207517936178634	!(superCtor == null)	_
+com.google.javascript.jscomp.TypeInference#JSType#getPropertyType#?,JSType,String,Node,FlowScope#1301	0.036155076303109365	0.036155076303109365	0.07193788965133502	isDeclared || isLocallyInferred	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#isPropertyTypeDeclared#?,String#187	0.03605310929413297	0.03605310929413297	0.07176739500841868	!(slot == null)	_
+com.google.javascript.rhino.jstype.FunctionType#Property#getSlot#?,String#335	0.03592106040535498	0.03592106040535498	0.07173445736031603	"prototype".equals(name)	_
+com.google.javascript.jscomp.LinkedFlowScope#void#inferQualifiedSlot#?,Node,String,JSType,JSType#115	0.035676384519575825	0.03595200017026867	0.0716283846898445	!(functionScope.isLocal())	_
+com.google.javascript.rhino.jstype.JSType#boolean#isStruct#?#306	0.035813396954961045	0.035813396954961045	0.07148978147453687	!(ctor == null)	_
+com.google.javascript.rhino.jstype.FunctionType#boolean#makesStructs#?#210	0.03571428571428571	0.03571428571428571	0.07142857142857142	!(!isConstructor())	_
+com.google.javascript.jscomp.NodeUtil#Node#getBestLValueOwner#?,Node#3093	0.036711154910717615	0.036711154910717615	0.07133140513986652	isGet(lValue)	_
+com.google.javascript.jscomp.TypeCheck#boolean#visitName#?,NodeTraversal,Node,Node#1332	0.03551104121142175	0.03556340085828523	0.07107444206970698	!(type == null)	_
+com.google.javascript.jscomp.NodeUtil#Node#getBestLValue#?,Node#3058	0.03604530136566152	0.03604530136566152	0.07103087279272749	parent.isAssign()	_
+com.google.javascript.jscomp.TypeCheck#boolean#shouldTraverse#?,NodeTraversal,Node,Node#442	0.03545891215144588	0.03545891215144588	0.07091782430289176	!(functionPrivateName != null && functionPrivateName.length() > 0 && outerScope.isDeclared(functionPrivateName,false) && !(outerScope.getVar(functionPrivateName).getType() instanceof FunctionType))	_
+com.google.javascript.jscomp.TypeCheck#JSType#getJSType#?,Node#1883	0.03543664129476244	0.03543664129476244	0.07087328258952488	!(jsType == null)	_
+com.google.javascript.jscomp.TypeCheck#void#doPercentTypedAccounting#?,NodeTraversal,Node#849	0.03536270705754414	0.03536270705754414	0.07072541411508829	!(type == null)	_
+com.google.javascript.jscomp.TypeCheck#void#ensureTyped#?,NodeTraversal,Node,JSType#1952	0.035311227577322434	0.03532591305417994	0.07063714063150237	!(n.getJSType() == null)	_
+com.google.javascript.jscomp.TypedScopeCreator$DiscoverEnumsAndTypedefs#void#visit#?,NodeTraversal,Node,Node#378	0.0361000636565017	0.0361000636565017	0.07055552000955313	firstChild.isAssign()	_
+com.google.javascript.rhino.JSDocInfo#Set<String>#getParameterNames#?#1012	0.03556340085828523	0.03556340085828523	0.07052045918246698	info == null || info.parameters == null	_
+com.google.javascript.jscomp.TypeInference#FlowScope#dereferencePointer#?,Node,FlowScope#1275	0.03520166719043814	0.03528191148461629	0.07048357867505443	!(type != narrowed)	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#JSType#getPropertyType#?,String#216	0.03525266828731281	0.03525266828731281	0.07044706766159206	!(slot == null)	_
+com.google.javascript.jscomp.TypeCheck#void#checkNoTypeCheckSection#?,Node,boolean#414	0.0352162163405491	0.0352162163405491	0.0704324326810982	!(info != null && info.isNoTypeCheck())	_
+com.google.javascript.jscomp.TypeCheck#void#check#?,Node,boolean#398	0.035143650394204265	0.035143650394204265	0.07028730078840853	!(externs)	_
+com.google.javascript.jscomp.TypedScopeCreator$FirstOrderFunctionAnalyzer#void#visit#?,NodeTraversal,Node,Node#2051	0.03476640129702598	0.03548867204938381	0.07025507334640979	!(var != null)	_
+com.google.javascript.jscomp.InferJSDocInfo#void#process#?,Node,Node#74	0.03506434366591383	0.035143650394204265	0.0702079940601181	!(externs != null)	_
+com.google.javascript.rhino.jstype.JSType#boolean#isSubtypeHelper#?,JSType,JSType#1348	0.03504998186163908	0.035150886809475895	0.07020086867111497	!(thisType.isSubtype(element))	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionTypeBuilder#inferInheritance#?,JSDocInfo#357	0.03495705832418175	0.03504280757400654	0.0699998658981883	!(isInterface)	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#defineSlot#?,Node,Node,JSType,boolean#1079	0.036060922298730945	0.036060922298730945	0.06996409747977146	!(n.isName())	_
+com.google.javascript.rhino.JSDocInfo#ImmutableList<String>#getTemplateTypeNames#?#1456	0.03500700210070025	0.03500700210070025	0.069964060424882	info == null || info.templateTypeNames == null	_
+com.google.javascript.rhino.JSDocInfo#int#getImplementedInterfaceCount#?#1285	0.03495705832418175	0.03495705832418175	0.0699141166483635	info == null || info.implementedInterfaces == null	_
+com.google.javascript.jscomp.type.ChainableReverseAbstractInterpreter#ChainableReverseAbstractInterpreter#getFirst#?#92	0.06988565578146122	0.0	0.06988565578146122		_
+com.google.javascript.jscomp.type.ChainableReverseAbstractInterpreter#ChainableReverseAbstractInterpreter#append#?,ChainableReverseAbstractInterpreter#83	0.06988565578146122	0.0	0.06988565578146122		_
+com.google.javascript.jscomp.TypedScopeCreator$GlobalScopeBuilder#void#checkForTypedef#?,NodeTraversal,Node,JSDocInfo#1833	0.03492151478847891	0.03492151478847891	0.06983593387134998	info == null || !info.hasTypedefType()	_
+com.google.javascript.jscomp.TypeInference#void#redeclareSimpleVar#?,FlowScope,Node,JSType#1525	0.03489492817268092	0.03489492817268092	0.06977393349343872	!(isUnflowable(syntacticScope.getVar(varName)))	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#Property#getSlot#?,String#131	0.035121967934313526	0.035121967934313526	0.06972839494461266	properties.containsKey(name)	_
+com.google.javascript.rhino.jstype.ObjectType#JSDocInfo#getJSDocInfo#?#145	0.03494994093464973	0.03494994093464973	0.06972334805568578	getImplicitPrototype() != null	_
+com.google.javascript.jscomp.TypedScopeCreator$LocalScopeBuilder#void#handleFunctionInputs#?,Node#1924	0.033948730864564534	0.03548867204938381	0.06943740291394834	!(!fnName.isEmpty())	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#defineFunctionLiteral#?,Node,Node#785	0.033948730864564534	0.03548867204938381	0.06943740291394834	!(NodeUtil.isFunctionDeclaration(n))	_
+com.google.javascript.rhino.jstype.JSType#boolean#checkEquivalenceHelper#?,JSType,EquivalenceMethod#668	0.03457883017416337	0.03459952160725517	0.06917835178141854	!(thisUnknown && thatUnknown && (isNominalType() ^ that.isNominalType()))	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#getType#?,StaticScope<JSType>,String,String,int,int#917	0.034394262598354146	0.034731435582359395	0.06912569818071354	!(type == null)	_
+com.google.javascript.rhino.jstype.UnionType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#556	0.03453755843058285	0.03453755843058285	0.0690751168611657	!(changed)	_
+com.google.javascript.jscomp.TypeInference#FlowScope#traverse#?,Node,FlowScope#426	0.04264983751775663	0.03461333654955343	0.06900081994953713	!(n.getFirstChild().isGetProp())	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionTypeBuilder#inferTemplateTypeName#?,JSDocInfo#530	0.03495705832418175	0.03495705832418175	0.06884725124352437	info != null	_
+com.google.javascript.jscomp.MemoizedScopeCreator#Scope#createScope#?,Node,Scope#81	0.03446909937728556	0.03446909937728556	0.06862844866154331	!(scope == null)	_
+com.google.javascript.jscomp.NodeUtil#boolean#isLValue#?,Node#2031	0.034299717028501764	0.034299717028501764	0.06859943405700353	!(parent == null)	_
+com.google.javascript.jscomp.Compiler#TypeValidator#getTypeValidator#?#1263	0.033463724070512735	0.03509312031717982	0.06855684438769255	!(typeValidator == null)	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#createFromTypeNodes#?,Node,String,StaticScope<JSType>#1493	0.03421261925702362	0.034219295541457743	0.06843191479848136	!(resolveMode == ResolveMode.LAZY_EXPRESSIONS)	_
+com.google.javascript.rhino.jstype.UnionType#boolean#isUnknownType#?#262	0.03411294160732452	0.0341063273674936	0.06819943778918282	!(t.isUnknownType())	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionTypeBuilder#inferReturnType#?,JSDocInfo#297	0.033890192919342615	0.03406672256137213	0.06795691548071475	!(info != null && info.hasReturnType())	_
+com.google.javascript.jscomp.FunctionTypeBuilder#void#maybeSetBaseType#?,FunctionType#647	0.03394221166510653	0.033955253821847255	0.06789746548695379	!(!fnType.isInterface() && baseType != null)	_
+com.google.javascript.jscomp.TypeInference#void#inferArguments#?,Scope#134	0.033948730864564534	0.03417264344677087	0.06789746172912907	parameterTypes != null	_
+com.google.javascript.jscomp.TypedScopeCreator$LocalScopeBuilder#void#declareArguments#?,Node#1948	0.033948730864564534	0.033948730864564534	0.06789746172912907	!(NodeUtil.isCallOrNewTarget(functionNode))	_
+com.google.javascript.jscomp.TypedScopeCreator$LocalScopeBuilder#void#visit#?,NodeTraversal,Node,Node#1909	0.033948730864564534	0.033948730864564534	0.06789746172912907	n == scope.getRootNode()	_
+com.google.javascript.jscomp.TypedScopeCreator$LocalScopeBuilder#void#build#?#1882	0.033948730864564534	0.033948730864564534	0.06789746172912907	contents != null	_
+com.google.javascript.jscomp.TypeInference#JSType#getJSType#?,Node#1543	0.03394221166510653	0.03394221166510653	0.06787790788497305	!(jsType == null)	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionTypeBuilder#setContents#?,FunctionContents#218	0.03396178054056622	0.03396178054056622	0.06785197345990884	contents != null	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionTypeBuilder#inferParameterTypes#?,Node,JSDocInfo#482	0.033890192919342615	0.033948730864564534	0.06783892378390716	!isVarArgs	_
+com.google.javascript.rhino.JSDocInfo#int#getExtendedInterfacesCount#?#1325	0.03392918452524266	0.03392918452524266	0.06783885643436448	info == null || info.extendedInterfaces == null	_
+com.google.javascript.jscomp.TypedScopeCreator#AstFunctionContents#getFunctionAnalysisResults#?,Node#2078	0.033948730864564534	0.033948730864564534	0.06782595642436631	!(n == null)	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionTypeBuilder#inferThisType#?,JSDocInfo#396	0.033890192919342615	0.03391617237346009	0.0678063652928027	!(info != null && info.hasThisType())	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionTypeBuilder#inferFromOverriddenFunction#?,FunctionType,Node#235	0.033890192919342615	0.033890192919342615	0.06778038583868523	oldType == null	_
+com.google.javascript.jscomp.LinkedFlowScope$FlatFlowScopeCache#StaticSlot<JSType>#getSlot#?,String#488	0.03385133543331478	0.03385133543331478	0.06767039152732178	!(symbols.containsKey(name))	_
+com.google.javascript.jscomp.type.ClosureReverseAbstractInterpreter#?#ClosureReverseAbstractInterpreter#?,CodingConvention,JSTypeRegistry#120	0.06757373783994859	0.0	0.06757373783994859		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#boolean#shouldTraverse#?,NodeTraversal,Node,Node#494	0.03353892354527688	0.033948730864564534	0.06742495305841517	!(descend)	_
+com.google.javascript.jscomp.TypedScopeCreator$FirstOrderFunctionAnalyzer#void#enterScope#?,NodeTraversal#2017	0.033948730864564534	0.033948730864564534	0.06742495305841517	!t.inGlobalScope()	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#void#resolveTypesInScope#?,StaticScope<JSType>#948	0.033463724070512735	0.033948730864564534	0.06741245493507728	!(scope != null && scope.getParentScope() == null)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseTypeExpressionAnnotation#?,JsDocToken#1558	0.03363363969981562	0.03363363969981562	0.06722929673398542	!(!match(JsDocToken.RC))	_
+com.google.javascript.jscomp.JSError#String#toString#?#203	0.06711560552140243	0.0	0.06711560552140243		_
+com.google.javascript.jscomp.Scope$Var#void#resolveType#?,ErrorReporter#267	0.03347622219385064	0.03347622219385064	0.06695244438770127	type != null	_
+com.google.javascript.jscomp.TypeInference#FlowScope#flowThrough#?,Node,FlowScope#180	0.03347622219385064	0.03347622219385064	0.06695244438770127	!(input == bottomScope)	_
+com.google.javascript.jscomp.TypedScopeCreator$FirstOrderFunctionAnalyzer#void#process#?,Node,Node#2008	0.03347622219385064	0.03347622219385064	0.06695244438770127	!(externs == null)	_
+com.google.javascript.jscomp.DataFlowAnalysis$BranchedForwardDataFlowAnalysis#void#initialize#?#403	0.033469971382071036	0.033469971382071036	0.06693994276414207	!(node != getCfg().getImplicitReturn())	_
+com.google.javascript.jscomp.DataFlowAnalysis$BranchedForwardDataFlowAnalysis#void#joinInputs#?,DiGraphNode<N,Branch>#474	0.033469971382071036	0.033469971382071036	0.06693994276414207	!values.isEmpty()	_
+com.google.javascript.jscomp.DataFlowAnalysis$BranchedForwardDataFlowAnalysis#boolean#flow#?,DiGraphNode<N,Branch>#450	0.033469971382071036	0.033469971382071036	0.06693994276414207	!outBefore.get(i).equals(state.out.get(i))	_
+com.google.javascript.jscomp.LinkedFlowScope#boolean#equals#?,Object#274	0.03347622219385064	0.03347622219385064	0.06690253571709442	this.getFunctionScope() != that.getFunctionScope()	_
+com.google.javascript.rhino.jstype.FunctionType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#1184	0.033469971382071036	0.033469971382071036	0.06688384257712524	subTypes != null	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#546	0.03406672256137213	0.03345123993500254	0.06683406599542004	!(implicitPrototype != null)	_
+com.google.javascript.rhino.jstype.ArrowType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#272	0.0334138711950542	0.0334138711950542	0.0668277423901084	parameters != null	_
+com.google.javascript.jscomp.JoinOp$BinaryJoinOp#L#apply#?,List<L>#40	0.033463724070512735	0.033463724070512735	0.0667232293323997	size == 1	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#JSType#getDeclaredTypeInAnnotation#?,String,Node,JSDocInfo#714	0.03478743148422813	0.03185456550449977	0.0666419969887279	!(info != null)	_
+com.google.javascript.rhino.jstype.JSType#JSType#resolve#?,ErrorReporter,StaticScope<JSType>#1399	0.03331483023263848	0.03331483023263848	0.06661733875264914	!(resolveResult == null)	_
+com.google.javascript.rhino.JSDocInfo#void#setType#?,JSTypeExpression,int#1045	0.033277916281986085	0.033277916281986085	0.06655583256397217	!((bitset & MASK_TYPEFIELD) != 0)	_
+com.google.javascript.jscomp.NodeTraversal#void#pushScope#?,Scope#577	0.03407990882954985	0.03407990882954985	0.0664335030551706	scopeCallback != null	_
+com.google.javascript.jscomp.LinkedFlowScope#?#LinkedFlowScope#?,FlatFlowScopeCache,LinkedFlowScope#67	0.03313147809612858	0.03313147809612858	0.06623873727228369	directParent == null	_
+com.google.javascript.jscomp.LinkedFlowScope#FlowScope#createChildFlowScope#?#164	0.033107259176155104	0.033107259176155104	0.06621451835231021	!(depth > MAX_DEPTH)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseAndRecordTypeNode#?,JsDocToken,int,int,boolean,boolean#1162	0.03319835517290921	0.03319835517290921	0.06589602423916464	!(onlyParseSimpleNames)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseTopLevelTypeExpression#?,JsDocToken#1649	0.032785416792861115	0.032891652445217655	0.06558349668394559	!(match(JsDocToken.PIPE))	_
+com.google.javascript.rhino.JSDocInfo#int#getParameterCount#?#1022	0.0328443092721431	0.0328443092721431	0.06548386976383644	info == null || info.parameters == null	_
+com.google.javascript.jscomp.NodeUtil#String#getObjectLitKeyName#?,Node#2067	0.06547706044716511	0.0	0.06547706044716511		_
+com.google.javascript.jscomp.ControlFlowAnalysis#boolean#shouldTraverse#?,NodeTraversal,Node,Node#224	0.032691844238727924	0.032691844238727924	0.06537204815512183	shouldTraverseFunctions || n == cfg.getEntry().getValue()	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#isSubtype#?,JSType#447	0.04239039033992974	0.04239039033992974	0.065311865980345	JSType.isSubtypeHelper(this,that)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseTypeExpression#?,JsDocToken#1727	0.03261640365267211	0.032622188241465074	0.0652385918941372	!(match(JsDocToken.BANG))	_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#handleStmtList#?,Node#510	0.03270932806789758	0.033909671909121815	0.0651953367124462	!(parent != null)	_
+com.google.javascript.rhino.JSDocInfoBuilder#void#markTypeNode#?,Node,int,int,int,int,boolean#183	0.03209703693831847	0.03285612589755587	0.06495316283587434	!(currentMarker != null)	_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#recordConstructor#?#702	0.03222454963485546	0.03222454963485546	0.064432380954897	!hasAnySingletonTypeTags() && !currentInfo.isConstructor() && !currentInfo.isInterface()	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#getType#?,String#884	0.03217447260438935	0.03217447260438935	0.0643489452087787	!(templateType != null)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseTypeName#?,JsDocToken#1793	0.03216892288936671	0.03217447260438935	0.06434339549375606	!(match(JsDocToken.LT))	_
+com.google.javascript.jscomp.DataFlowAnalysis#void#analyze#?,int#219	0.03240451361500634	0.032427221756276076	0.06428987115013438	!(nextNode != cfg.getImplicitReturn())	_
+com.google.javascript.jscomp.BasicErrorManager#void#report#?,CheckLevel,JSError#49	0.032112203390605866	0.032112203390605866	0.06422440678121173	level == CheckLevel.WARNING	_
+com.google.javascript.jscomp.ControlFlowAnalysis$AstControlFlowGraph#Comparator<DiGraphNode<Node,Branch>>#getOptionalNodeComparator#?,boolean#1029	0.03239884402986715	0.03239884402986715	0.06421308217865604	isForward	_
+com.google.javascript.jscomp.ControlFlowAnalysis#boolean#mayThrowException#?,Node#926	0.032495633692564134	0.032495633692564134	0.06416595145354095	!ControlFlowGraph.isEnteringNewCfgNode(c) && mayThrowException(c)	_
+com.google.javascript.rhino.Node$StringNode#?#StringNode#?,int,String,int,int#197	0.03197647396955397	0.03197647396955397	0.06395294793910794	!(null == str)	_
+com.google.javascript.jscomp.CompilerInput#boolean#isExtern#?#337	0.03185187224171715	0.03185187224171715	0.0637037444834343	!(ast == null || ast.getSourceFile() == null)	_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#List<DiGraphNode<N,E>>#getDirectedPredNodes#?,DiGraphNode<N,E>#230	0.03182497713243611	0.03182497713243611	0.06364995426487222	!(dNode == null)	_
+com.google.javascript.jscomp.DataFlowAnalysis#?#DataFlowAnalysis#?,ControlFlowGraph<N>,JoinOp<L>#125	0.031830350703961514	0.031830350703961514	0.0636445888527504	nodeComparator != null	_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#JsDocToken#getJsDocToken#?#179	0.03201468743906423	0.03164916190172819	0.06326666935789482	isJSDocString(c2)	_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#connectToPossibleExceptionHandler#?,Node,Node#831	0.03139855423452492	0.0317127570667979	0.06311131130132283	!(mayThrowException(target) && !exceptionHandler.isEmpty())	_
+com.google.javascript.jscomp.ControlFlowAnalysis#Node#computeFollowNode#?,Node,Node,ControlFlowAnalysis#783	0.03178743817928744	0.03178743817928744	0.06299176215000227	nextSibling != null	_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#process#?,Node,Node#165	0.03128566480332439	0.03149183286488868	0.06277749766821307	!(shouldTraverseFunctions)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#JsDocToken#eatTokensUntilEOL#?,JsDocToken#2248	0.03423265984407288	0.03423265984407288	0.06271124843463158	!(token == JsDocToken.EOL || token == JsDocToken.EOC || token == JsDocToken.EOF)	_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#prioritizeFromEntryNode#?,DiGraphNode<Node,Branch>#203	0.03128566480332439	0.03128566480332439	0.06257132960664878	!(nodePriorities.containsKey(current))	_
+com.google.javascript.jscomp.graph.Graph#void#connectIfNotFound#?,N,E,N#120	0.03128056235449272	0.03128056235449272	0.06256112470898544	!isConnected(n1,edge,n2)	_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#List<DiGraphNode<N,E>>#getDirectedSuccNodes#?,DiGraphNode<N,E>#243	0.031260177495791734	0.031260177495791734	0.06252035499158347	!(dNode == null)	_
+com.google.javascript.rhino.JSDocInfo#JSTypeExpression#getType#?,int#1129	0.03365267940680323	0.03365267940680323	0.06252019286628452	(MASK_TYPEFIELD & bitset) == typefield	_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processStringLiteral#?,StringLiteral#993	0.031128640318234518	0.031139957766460915	0.06226859808469543	!(value.indexOf('\u000B') != -1)	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#isPrettyPrint#?#405	0.062257280636469035	0.0	0.062257280636469035		_
+com.google.javascript.jscomp.NodeUtil#JSDocInfo#getBestJSDocInfo#?,Node#3032	0.034836650714580884	0.034836650714580884	0.061262471843665386	parent.isAssign()	_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#boolean#isConnectedInDirection#?,N,Predicate<E>,N#208	0.030330895164368973	0.0304384269989714	0.06076932216334037	!(outEdge.getDestination() == dNode2 && edgeMatcher.apply(outEdge.getValue()))	_
+com.google.javascript.rhino.Node#Iterable<Node>#children#?#1223	0.03128566480332439	0.03128566480332439	0.06047522925886623	first == null	_
+com.google.javascript.rhino.Node$SiblingNodeIterable#Iterator<Node>#iterator#?#1260	0.03018774787072866	0.03018774787072866	0.06037549574145732	!used	_
+com.google.javascript.rhino.Node$SiblingNodeIterable#Node#next#?#1281	0.03018774787072866	0.03018774787072866	0.06037549574145732	!(current == null)	_
+com.google.javascript.rhino.JSDocInfo#void#setFlag#?,boolean,int#433	0.03002854067691021	0.03002854067691021	0.06005708135382042	value	_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#DiGraphNode<N,E>#createDirectedGraphNode#?,N#136	0.029168861165856118	0.030178582014172842	0.059347443180028964	!(node == null)	_
+com.google.javascript.jscomp.parsing.IRFactory#void#validateTypeAnnotations#?,JSDocInfo,AstNode,Node#291	0.029437240470473188	0.029809823756893658	0.05924706422736685	!(info.getType() != null)	_
+com.google.javascript.jscomp.Scope#boolean#isDeclared#?,String,boolean#554	0.034703538842450664	0.034703538842450664	0.058995235901873055	scope.vars.containsKey(name)	_
+com.google.javascript.jscomp.graph.Graph#T#getNodeOrFail#?,N#221	0.029479847585651336	0.029479847585651336	0.05895969517130267	!(node == null)	_
+com.google.javascript.jscomp.parsing.IRFactory#JSDocInfo#handleJsDoc#?,AstNode,Node#280	0.029437240470473188	0.029437240470473188	0.05885748974734002	info != null	_
+com.google.javascript.jscomp.parsing.IRFactory#boolean#handlePossibleFileOverviewJsDoc#?,JsDocInfoParser#260	0.02942024927686683	0.02942024927686683	0.05883201398274918	!(jsDocParser.getFileOverviewJSDocInfo() != fileOverviewInfo)	_
+com.google.javascript.jscomp.parsing.IRFactory#Node#transformTree#?,AstRoot,StaticSourceFile,String,Config,ErrorReporter#193	0.029373674772302332	0.02939481756261077	0.0587684923349131	!(comment.getCommentType() == CommentType.BLOCK_COMMENT)	_
+com.google.javascript.jscomp.BasicErrorManager$LeveledJSErrorComparator#int#compare#?,ErrorWithLevel,ErrorWithLevel#149	0.029338888688881883	0.02934836354418746	0.058687252233069344	!(sourceCompare != 0)	_
+com.google.javascript.jscomp.Compiler#void#report#?,JSError#2076	0.029216544754801246	0.029974532466509034	0.05843308950960249	!(getOptions().errorHandler != null)	_
+com.google.javascript.rhino.jstype.ObjectType#boolean#isUnknownType#?#507	0.03510032555702932	0.03510032555702932	0.05787273300671393	!(implicitProto == null || implicitProto.isNativeObjectType())	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#boolean#parse#?#204	0.02859478078502978	0.028736106756903905	0.05733088754193369	!(token != JsDocToken.ANNOTATION && token != JsDocToken.EOC)	_
+com.google.javascript.jscomp.ProcessClosurePrimitives#?#ProcessClosurePrimitives#?,AbstractCompiler,PreprocessorSymbolTable,CheckLevel#126	0.05702659485122011	0.0	0.05702659485122011		_
+com.google.javascript.jscomp.ProcessClosurePrimitives$ProvidedName#?#ProvidedName#?,String,Node,JSModule,boolean#794	0.05702659485122011	0.0	0.05702659485122011		_
+com.google.javascript.rhino.Node#String#getQualifiedName#?#1554	0.028405728687538323	0.028405728687538323	0.05679618958107521	!(left == null)	_
+com.google.javascript.rhino.JSDocInfo#Marker#addMarker#?#675	0.028606478384531155	0.028606478384531155	0.05655368938039404	!lazyInitDocumentation()	_
+com.google.javascript.rhino.JSDocInfoBuilder#void#markAnnotation#?,String,int,int#151	0.027947210995862885	0.028606478384531155	0.05655368938039404	!(marker != null)	_
+com.google.javascript.rhino.JSDocInfoBuilder#void#recordOriginalCommentString#?,String#79	0.02790003654907182	0.02859478078502978	0.056494817334101596	!(parseDocumentation)	_
+com.google.javascript.rhino.JSDocInfo#boolean#lazyInitDocumentation#?#659	0.02859478078502978	0.02859478078502978	0.05649119841761332	!includeDocumentation	_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#int#getCharIgnoreLineEnd#?#404	0.028130907011794902	0.028130907011794902	0.056261814023589804	!(sourceCursor == sourceEnd)	_
+com.google.javascript.jscomp.Scope#Var#getVar#?,String#532	0.029235267310234306	0.029235267310234306	0.056252428658149264	parent != null	_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processFunctionNode#?,FunctionNode#703	0.028012926279006495	0.028012926279006495	0.05602585255801299	!(functionType != FunctionNode.FUNCTION_EXPRESSION)	_
+com.google.javascript.rhino.JSDocInfoBuilder#void#populateDefaults#?,JSDocInfo#139	0.02794357369370707	0.02794357369370707	0.05583637381766714	info.getVisibility() == null	_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#boolean#isAlpha#?,int#272	0.02790003654907182	0.02790003654907182	0.05579645418165535	!(c <= 'Z')	_
+com.google.javascript.jscomp.Compiler#JSTypeRegistry#getTypeRegistry#?#1183	0.0231331130728742	0.032645357412170936	0.05577847048504514	!(typeRegistry == null)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#?#JsDocInfoParser#?,JsDocTokenStream,Comment,Node,Config,ErrorReporter#139	0.02790003654907182	0.02790003654907182	0.05577838069894665	commentNode != null	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#JsDocToken#next#?#2295	0.02788195603615673	0.02788195603615673	0.055760300186031564	!(unreadToken == NO_UNREAD_TOKEN)	_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#boolean#matchChar#?,int#261	0.02783870581978418	0.02783870581978418	0.05566663049704059	c == test	_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#void#addToString#?,int#243	0.027820744203732862	0.027820744203732862	0.055641488407465724	!(N == stringBuffer.length)	_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#int#getChar#?#340	0.027817156050728483	0.027817156050728483	0.055634312101456966	charno == -1	_
+com.google.javascript.rhino.JSDocInfoBuilder#JSDocInfo#build#?,Node#125	0.02789280012396007	0.02789280012396007	0.055620701128283975	populated	_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#boolean#isJSSpace#?,int#310	0.02780639991600243	0.02780639991600243	0.05561279983200486	c <= 127	_
+com.google.javascript.jscomp.NodeUtil#Node#getRValueOfLValue#?,Node#3077	0.05395561278850259	0.0	0.05395561278850259		_
+com.google.javascript.jscomp.TypedScopeCreator$CollectProperties#?#CollectProperties#?,JSType#1723	0.05337605126836238	0.0	0.05337605126836238		_
+com.google.javascript.jscomp.ComposeWarningsGuard#CheckLevel#level#?,JSError#114	0.027392120557151473	0.026617027834458663	0.05317766359744519	!(newLevel != null)	_
+com.google.javascript.jscomp.SyntacticScopeCreator#void#scanRoot#?,Node,Scope#100	0.025976216673306553	0.02604955866994471	0.052025775343251264	!(!fnName.isEmpty() && NodeUtil.isFunctionExpression(n))	_
+com.google.javascript.jscomp.NodeTraversal#void#traverseRoots#?,List<Node>#289	0.02576555232585438	0.025759852612848935	0.05151970522569787	!(roots.isEmpty())	_
+com.google.javascript.jscomp.NodeTraversal#Node#getScopeRoot#?#625	0.02593541478192153	0.02593541478192153	0.05150648605665992	!(scopeRoots.isEmpty())	_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processAssignment#?,Assignment#513	0.025751310131230238	0.02575415668074772	0.05150546681197796	!(!validAssignmentTarget(target))	_
+com.google.javascript.jscomp.NodeTraversal#void#traverseFunction#?,Node,Node#520	0.02774212408861619	0.02774212408861619	0.05130580556992984	!(!isFunctionExpression)	_
+com.google.javascript.jscomp.NodeTraversal#void#traverseBranch#?,Node,Node#486	0.02356368148131365	0.029700058954675538	0.051142309651431433	!callback.shouldTraverse(this,n,parent)	_
+com.google.javascript.jscomp.parsing.IRFactory#Node#transformNameAsString#?,Name#366	0.025479602188377897	0.02551274999361942	0.05099235218199732	!(jsDocInfo != null)	_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#transformAsString#?,AstNode#482	0.025479602188377897	0.025479602188377897	0.050885091722156744	n instanceof Name	_
+com.google.javascript.jscomp.parsing.IRFactory#Node#transform#?,AstNode#356	0.02952692976787463	0.02952692976787463	0.05077628786987715	jsDocInfo != null	_
+com.google.javascript.rhino.jstype.JSType#boolean#isEnumElementType#?#384	0.05068572808464703	0.0	0.05068572808464703		_
+com.google.javascript.jscomp.SyntacticScopeCreator#Scope#createScope#?,Node,Scope#70	0.02607020600497475	0.02607020600497475	0.050269263389384755	!(parent == null)	_
+com.google.javascript.jscomp.SyntacticScopeCreator#void#scanVars#?,Node,Node#170	0.024330012062822974	0.024680702093691814	0.04887975947810182	!(NodeUtil.isControlStructure(n) || NodeUtil.isStatementBlock(n))	_
+com.google.javascript.jscomp.PrepareAst$PrepareAnnotations#boolean#shouldTraverse#?,NodeTraversal,Node,Node#126	0.027262027336984358	0.027262027336984358	0.048753741192193306	n.isObjectLit()	_
+com.google.javascript.rhino.Node#int#mergeLineCharNo#?,int,int#1177	0.027910901754863996	0.027910901754863996	0.04873519872545024	lineno < 0 || charno < 0	_
+com.google.javascript.jscomp.NodeTraversal#Scope#getScope#?#598	0.024573659359149524	0.024573659359149524	0.04852160520243197	scopeRoots.isEmpty()	_
+com.google.javascript.rhino.jstype.ObjectType#boolean#isImplicitPrototype#?,ObjectType#485	0.02385464328112669	0.023816275411477045	0.04763255082295409	!(current.isEquivalentTo(prototype))	_
+com.google.javascript.jscomp.NodeUtil#boolean#isObjectLitKey#?,Node,Node#2056	0.047619047619047616	0.0	0.047619047619047616		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#defineProperty#?,String,JSType,boolean,Node#238	0.023565862394963687	0.023565862394963687	0.04713172478992737	!(hasOwnDeclaredProperty(name))	_
+com.google.javascript.jscomp.PrepareAst$PrepareAnnotations#void#annotateDispatchers#?,Node,Node#181	0.02356368148131365	0.023565862394963687	0.04712954387627734	!(parent.getJSDocInfo() != null && parent.getJSDocInfo().isJavaDispatch())	_
+com.google.javascript.rhino.JSDocInfo#Set<String>#getSuppressions#?#1342	0.04690650298201946	0.0	0.04690650298201946		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processName#?,Name,boolean#845	0.025479602188377897	0.025479602188377897	0.046822322058786815	asString	_
+com.google.javascript.jscomp.parsing.TypeSafeDispatcher#T#process#?,AstNode#173	0.031128640318234518	0.023410367469959822	0.0465744914773603	node instanceof Block	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#void#registerPropertyOnType#?,String,JSType#626	0.023278907071657532	0.023278907071657532	0.04653891466217458	typeSet == null	_
+com.google.javascript.rhino.jstype.FunctionType#?#FunctionType#?,JSTypeRegistry,String,Node,ArrowType,JSType,ImmutableList<String>,boolean,boolean#147	0.02350935466610062	0.02350935466610062	0.04651559787386779	isConstructor	_
+com.google.javascript.rhino.jstype.FunctionType#FunctionType#getSuperClassConstructor#?#823	0.023410367469959822	0.023410367469959822	0.046394318783015386	maybeSuperInstanceType == null	_
+com.google.javascript.jscomp.NodeTraversal#void#popScope#?#584	0.02485031350939112	0.02485031350939112	0.04629256420614702	scopeCallback != null	_
+com.google.javascript.jscomp.NodeTraversal#void#pushScope#?,Node#567	0.02485031350939112	0.02485031350939112	0.04629256420614702	scopeCallback != null	_
+com.google.javascript.jscomp.NodeTraversal#?#NodeTraversal#?,AbstractCompiler,Callback,ScopeCreator#232	0.02485031350939112	0.02485031350939112	0.04629092131063859	cb instanceof ScopedCallback	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#?#PrototypeObjectType#?,JSTypeRegistry,String,ObjectType,boolean,ImmutableList<String>,ImmutableList<JSType>#121	0.023241154066609027	0.023241154066609027	0.04601159354260896	!(nativeType || implicitPrototype != null)	_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#implicitPrototypeChainIsUnknown#?#497	0.022992049957180422	0.022992049957180422	0.045984099914360844	!(p.isUnknownType())	_
+com.google.javascript.rhino.jstype.FunctionType#boolean#setPrototypeNoCheck#?,ObjectType,Node#461	0.022987999565189654	0.022996102490913696	0.04598005380396926	!(isInterface())	_
+com.google.javascript.rhino.jstype.FunctionType#ObjectType#getPrototype#?#367	0.022990024493585143	0.022990024493585143	0.045980048987170286	!(refName == null)	_
+com.google.javascript.rhino.jstype.FunctionType#void#addSubType#?,FunctionType#1102	0.022987999565189654	0.022987999565189654	0.04597599913037931	!(subTypes == null)	_
+com.google.javascript.rhino.jstype.FunctionType#boolean#setPrototype#?,ObjectType,Node#433	0.022983951313055563	0.022983951313055563	0.045967902626111126	!(isConstructor() && prototype == getInstanceType())	_
+com.google.javascript.rhino.jstype.UnionTypeBuilder#UnionTypeBuilder#addAlternate#?,JSType#186	0.022637802585730102	0.02266298045496683	0.04530078304069693	!(current.isSubtype(alternate))	_
+com.google.javascript.rhino.jstype.UnionTypeBuilder#JSType#reduceAlternatesWithoutUnion#?#234	0.022653286720636115	0.022653286720636115	0.04526406830294284	size > 1	_
+com.google.javascript.rhino.jstype.JSType#boolean#hasAnyTemplateTypes#?#460	0.022632004215709083	0.022632004215709083	0.045264008431418166	!this.inTemplatedCheckVisit	_
+com.google.javascript.rhino.jstype.JSType#boolean#hasAnyTemplateTypesInternal#?#472	0.022632004215709083	0.022632004215709083	0.045264008431418166	!(isTemplatized())	_
+com.google.javascript.rhino.jstype.UnionTypeBuilder#JSType#build#?#252	0.022653286720636115	0.022653286720636115	0.04523330532055776	result == null	_
+com.google.javascript.rhino.Node#int#getIntProp#?,int#818	0.022996102490913696	0.022996102490913696	0.04487701512488533	item == null	_
+com.google.javascript.rhino.jstype.JSType#?#JSType#?,JSTypeRegistry,ImmutableList<String>,ImmutableList<JSType>#119	0.02243559013482789	0.02243559013482789	0.04487118026965578	!(typesLength > keysLength)	_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#setIsConstructor#?,boolean#137	0.04467670516087703	0.0	0.04467670516087703		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#boolean#isDirective#?,Node#559	0.0212653675656628	0.023255813953488372	0.0445051720554909	n == null	_
+com.google.javascript.rhino.Node#int#extractCharno#?,int#1203	0.022196660541663454	0.022196660541663454	0.0431869757454482	!(lineCharNo == -1)	_
+com.google.javascript.jscomp.CompilerInput#Node#getAstRoot#?,AbstractCompiler#118	0.021538189657704543	0.021538189657704543	0.043076379315409086	root != null	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#ObjectType#createAnonymousObjectType#?,JSDocInfo#1376	0.04306306358732729	0.0	0.04306306358732729		_
+com.google.javascript.jscomp.CompilerInput#?#CompilerInput#?,SourceAst,InputId,boolean#78	0.02152986829215124	0.02152986829215124	0.043058073468291186	ast != null && ast.getSourceFile() != null	_
+com.google.javascript.jscomp.PrepareAst#void#process#?,Node,Node#67	0.021491713855208948	0.021491713855208948	0.042983427710417896	root != null	_
+com.google.javascript.jscomp.JsAst#void#parse#?,AbstractCompiler#95	0.021491713855208948	0.021491713855208948	0.042963601401903306	!(root == null || compiler.hasHaltingErrors())	_
+com.google.javascript.jscomp.JsAst#Node#getAstRoot#?,AbstractCompiler#51	0.02147188754669436	0.02147188754669436	0.04294377509338872	root == null	_
+com.google.javascript.jscomp.Compiler#Config#getParserConfig#?#2022	0.022867474444825515	0.02147188754669436	0.04294377509338872	parserConfig == null	_
+com.google.javascript.jscomp.parsing.IRFactory#void#maybeSetLengthFrom#?,Node,AstNode#442	0.021249358102002524	0.021691344566650526	0.04294070266865305	!(config.isIdeMode)	_
+com.google.javascript.jscomp.parsing.IRFactory#void#setSourceInfo#?,Node,AstNode#395	0.021249358102002524	0.02151159518587591	0.042760953287878434	!(irNode.getLineno() == -1)	_
+com.google.javascript.jscomp.SourceFile#?#SourceFile#?,String#82	0.02136869215853441	0.02136869215853441	0.04273738431706882	!(fileName == null || fileName.isEmpty())	_
+com.google.javascript.jscomp.parsing.ParserRunner#Node#parse#?,StaticSourceFile,String,Config,ErrorReporter,Logger#141	0.021336241582243162	0.021336241582243162	0.04263695772435841	astRoot != null	_
+com.google.javascript.jscomp.parsing.IRFactory#int#position2charno#?,int#449	0.0212653675656628	0.0212653675656628	0.04251472566766533	lineIndex == -1	_
+com.google.javascript.jscomp.parsing.IRFactory#void#setFileOverviewJsDoc#?,Node#214	0.021249358102002524	0.02125415714405611	0.04250351524605864	!(fileOverviewInfo != null)	_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#void#parseDirectives#?,Node#553	0.021249358102002524	0.021249358102002524	0.04249871620400505	!(directives != null)	_
+com.google.javascript.rhino.Node#void#setLineno#?,int#1147	0.02124775914356676	0.02124775914356676	0.04249551828713352	charno == -1	_
+com.google.javascript.jscomp.parsing.ParserRunner#void#initResourceConfig#?#77	0.021268573802781007	0.021268573802781007	0.042482837978105356	annotationNames != null	_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#withParams#?,FunctionParamBuilder#84	0.04244763599780089	0.0	0.04244763599780089		_
+com.google.javascript.jscomp.parsing.ParserRunner#Config#createConfig#?,boolean,LanguageMode,boolean,Set<String>#66	0.021215855583313934	0.021215855583313934	0.04243011975863828	extraAnnotationNames == null	_
+com.google.javascript.rhino.Node#int#extractLineno#?,int#1191	0.02120631250362729	0.02120631250362729	0.04217508181033018	lineCharNo == -1	_
+com.google.javascript.rhino.Node#PropListItem#removeProp#?,PropListItem,int#792	0.021490059564796982	0.021490059564796982	0.04213313016091624	result != item.getNext()	_
+com.google.javascript.rhino.Node#void#addChildToBack#?,Node#604	0.02115878952052867	0.02115878952052867	0.04206179468289572	!(last == null)	_
+com.google.javascript.rhino.Node$StringNode#?#StringNode#?,int,String#189	0.021001113088491313	0.021001113088491313	0.04200222617698263	!(null == str)	_
+com.google.javascript.rhino.Node#void#removeProp#?,int#774	0.021478490218297744	0.021478490218297744	0.04198367270369971	result != propListHead	_
+com.google.javascript.jscomp.PrepareAst$PrepareAnnotations#void#normalizeObjectLiteralAnnotations#?,Node#150	0.04180296623470751	0.0	0.04180296623470751		_
+com.google.javascript.rhino.Node#Object#getProp#?,int#802	0.02117301285601735	0.02117301285601735	0.04179558823480447	item == null	_
+com.google.javascript.rhino.Node#void#putIntProp#?,int,int#845	0.020739033894608506	0.020739033894608506	0.041476581279958416	value != 0	_
+com.google.javascript.rhino.Node#void#putProp#?,int,Object#834	0.02065774750561372	0.02065774750561372	0.04125843132232781	value != null	_
+com.google.javascript.jscomp.parsing.Config#Map<String,Annotation>#buildAnnotationNames#?,Set<String>#94	0.020625499529865806	0.020625499529865806	0.04125099905973161	!Annotation.recognizedAnnotations.containsKey(unrecognizedAnnotation)	_
+com.google.javascript.jscomp.TypeCheck#?#TypeCheck#?,AbstractCompiler,ReverseAbstractInterpreter,JSTypeRegistry#338	0.03988846821550254	0.0	0.03988846821550254		_
+com.google.javascript.jscomp.Compiler#JSModuleGraph#getModuleGraph#?#1170	0.039374961547907886	0.0	0.039374961547907886		_
+com.google.javascript.rhino.jstype.SimpleSlot#boolean#isTypeInferred#?#76	0.03872741307439177	0.0	0.03872741307439177		_
+com.google.javascript.rhino.jstype.JSType#boolean#isConstructor#?#561	0.037697843807827466	0.0	0.037697843807827466		_
+com.google.javascript.rhino.jstype.ObjectType$Property#void#setJSDocInfo#?,JSDocInfo#670	0.037328334436299224	0.0	0.037328334436299224		_
+com.google.javascript.rhino.Node#void#setType#?,int#524	0.0372097048123965	0.0	0.0372097048123965		_
+com.google.javascript.jscomp.FunctionTypeBuilder#boolean#isFunctionTypeDeclaration#?,JSDocInfo#720	0.037104963801187996	0.0	0.037104963801187996		_
+com.google.javascript.jscomp.NodeUtil#String#getStringValue#?,Node#181	0.03679389370151536	0.0	0.03679389370151536		_
+com.google.javascript.rhino.jstype.ObjectType$Property#JSDocInfo#getJSDocInfo#?#666	0.03669467403226157	0.0	0.03669467403226157		_
+com.google.javascript.rhino.jstype.JSType#boolean#isInstanceType#?#601	0.0366699942800925	0.0	0.0366699942800925		_
+com.google.javascript.rhino.jstype.FunctionType#JSType#getTypeOfThis#?#1071	0.03652295428107533	0.0	0.03652295428107533		_
+com.google.javascript.jscomp.TypeValidator#void#expectAllInterfaceProperties#?,NodeTraversal,Node,FunctionType#594	0.03636163302306444	0.0	0.03636163302306444		_
+com.google.javascript.rhino.jstype.FunctionType#Iterable<ObjectType>#getAllImplementedInterfaces#?#485	0.03628176990660662	0.0	0.03628176990660662		_
+com.google.javascript.rhino.jstype.ObjectType$Property#void#setNode#?,Node#674	0.035990787537434725	0.0	0.035990787537434725		_
+com.google.javascript.jscomp.TypeCheck#void#ensureTyped#?,NodeTraversal,Node#1905	0.03596750006328032	0.0	0.03596750006328032		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#FunctionType#createConstructorType#?,String,Node,Node,JSType,ImmutableList<String>#1424	0.03595974761140381	0.0	0.03595974761140381		_
+com.google.javascript.jscomp.TypeCheck#Scope#processForTesting#?,Node,Node#373	0.03592878785739777	0.0	0.03592878785739777		_
+com.google.javascript.rhino.jstype.InstanceObjectType#String#toStringHelper#?,boolean#105	0.017924428597928834	0.017928749299111976	0.03585317789704081	!(!templatizedTypes.isEmpty())	_
+com.google.javascript.jscomp.TypedScopeCreator$GlobalScopeBuilder#void#maybeDeclareQualifiedName#?,NodeTraversal,JSDocInfo,Node,Node,Node#1821	0.03583638619256224	0.0	0.03583638619256224		_
+com.google.javascript.jscomp.Compiler#void#initCompilerOptionsIfTesting#?#1571	0.017533743832304643	0.018187079668410995	0.035720823500715634	!(options == null)	_
+com.google.javascript.rhino.JSDocInfo#boolean#isNoTypeCheck#?#502	0.035676384519575825	0.0	0.035676384519575825		_
+com.google.javascript.jscomp.TypeCheck#void#ensureTyped#?,NodeTraversal,Node,JSTypeNative#1909	0.035638603735368264	0.0	0.035638603735368264		_
+com.google.javascript.rhino.jstype.JSType#boolean#canAssignTo#?,JSType#846	0.03561599279702235	0.0	0.03561599279702235		_
+com.google.javascript.jscomp.InferJSDocInfo#ObjectType#dereferenceToObject#?,JSType#195	0.035593424840718715	0.0	0.035593424840718715		_
+com.google.javascript.rhino.jstype.JSType#boolean#isEnumType#?#395	0.03558591171665808	0.0	0.03558591171665808		_
+com.google.javascript.rhino.jstype.JSType#ObjectType#dereference#?#896	0.03551104121142175	0.0	0.03551104121142175		_
+com.google.javascript.rhino.jstype.JSType#JSType#autobox#?#886	0.03545891215144588	0.0	0.03545891215144588		_
+com.google.javascript.rhino.jstype.JSType#JSType#autoboxesTo#?#855	0.03540701199084039	0.0	0.03540701199084039		_
+com.google.javascript.rhino.jstype.ObjectType$Property#boolean#isTypeInferred#?#654	0.03539961627023943	0.0	0.03539961627023943		_
+com.google.javascript.jscomp.CodingConventions$Proxy#Collection<AssertionFunctionSpec>#getAssertionFunctions#?#210	0.03539222518209744	0.0	0.03539222518209744		_
+com.google.javascript.jscomp.TypeCheck#JSType#getNativeType#?,JSTypeNative#1967	0.03537745688386125	0.0	0.03537745688386125		_
+com.google.javascript.jscomp.TypeValidator#void#setShouldReport#?,boolean#156	0.0352162163405491	0.0	0.0352162163405491		_
+com.google.javascript.jscomp.TypeInference#FlowScope#traverseGetProp#?,Node,FlowScope#1235	0.03520893951097651	0.0	0.03520893951097651		_
+com.google.javascript.jscomp.TypeInference#FlowScope#traverseAssign#?,Node,FlowScope#511	0.0351798772365146	0.0	0.0351798772365146		_
+com.google.javascript.jscomp.TypeCheck#?#TypeCheck#?,AbstractCompiler,ReverseAbstractInterpreter,JSTypeRegistry,Scope,MemoizedScopeCreator,CheckLevel,CheckLevel#316	0.035143650394204265	0.0	0.035143650394204265		_
+com.google.javascript.jscomp.Compiler#CompilerOptions#getOptions#?#2217	0.035121967934313526	0.0	0.035121967934313526		_
+com.google.javascript.rhino.jstype.ObjectType#boolean#isObject#?#525	0.03511474936103118	0.0	0.03511474936103118		_
+com.google.javascript.jscomp.InferJSDocInfo#?#InferJSDocInfo#?,AbstractCompiler#69	0.03506434366591383	0.0	0.03506434366591383		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#void#setTemplateTypeNames#?,List<String>#1739	0.03495705832418175	0.0	0.03495705832418175		_
+com.google.javascript.rhino.JSDocInfo#boolean#makesDicts#?#477	0.03479445003196105	0.0	0.03479445003196105		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#hasProperty#?,String#171	0.03478743148422813	0.0	0.03478743148422813		_
+com.google.javascript.rhino.JSDocInfo#boolean#makesStructs#?#469	0.03478743148422813	0.0	0.03478743148422813		_
+com.google.javascript.rhino.jstype.JSType#JSDocInfo#getJSDocInfo#?#157	0.03477340712103605	0.0	0.03477340712103605		_
+com.google.javascript.jscomp.NodeUtil#boolean#isBleedingFunctionName#?,Node#1935	0.03476640129702598	0.0	0.03476640129702598		_
+com.google.javascript.jscomp.TypeCheck#void#visitVar#?,NodeTraversal,Node#1495	0.01902433818451165	0.01902433818451165	0.03457171911841158	!(var.isTypeInferred())	_
+com.google.javascript.rhino.JSDocInfo#boolean#isJavaDispatch#?#606	0.034516977899349904	0.0	0.034516977899349904		_
+com.google.javascript.rhino.jstype.ObjectType#void#setJSDocInfo#?,JSDocInfo#157	0.03425273568971061	0.0	0.03425273568971061		_
+com.google.javascript.rhino.JSTypeExpression#JSType#evaluate#?,StaticScope<JSType>,JSTypeRegistry#101	0.03423265984407288	0.0	0.03423265984407288		_
+com.google.javascript.jscomp.FunctionTypeBuilder$AstFunctionContents#boolean#mayBeFromExterns#?#860	0.03421261925702362	0.0	0.03421261925702362		_
+com.google.javascript.jscomp.NodeTraversal#String#getSourceName#?#427	0.034205946878753044	0.0	0.034205946878753044		_
+com.google.javascript.jscomp.FunctionTypeBuilder$AstFunctionContents#boolean#mayHaveSingleThrow#?#874	0.034205946878753044	0.0	0.034205946878753044		_
+com.google.javascript.jscomp.TypeInferencePass#?#TypeInferencePass#?,AbstractCompiler,ReverseAbstractInterpreter,Scope,MemoizedScopeCreator#54	0.03417929635123316	0.0	0.03417929635123316		_
+com.google.javascript.jscomp.TypeInferencePass#void#inferAllScopes#?,Node#101	0.03417264344677087	0.0	0.03417264344677087		_
+com.google.javascript.jscomp.TypeInferencePass$FirstScopeBuildingCallback#void#enterScope#?,NodeTraversal#128	0.03417264344677087	0.0	0.03417264344677087		_
+com.google.javascript.jscomp.TypeInferencePass#void#inferScope#?,Node,Scope#110	0.03417264344677087	0.0	0.03417264344677087		_
+com.google.javascript.jscomp.TypeInferencePass#void#process#?,Node,Node#73	0.03417264344677087	0.0	0.03417264344677087		_
+com.google.javascript.jscomp.TypeInferencePass#ControlFlowGraph<Node>#computeCfg#?,Node#153	0.03417264344677087	0.0	0.03417264344677087		_
+com.google.javascript.jscomp.TypeInferencePass$SecondScopeBuildingCallback#void#enterScope#?,NodeTraversal#143	0.03417264344677087	0.0	0.03417264344677087		_
+com.google.javascript.jscomp.NodeTraversal#void#traverseWithScope#?,Node,Scope#342	0.03416599442570458	0.0	0.03416599442570458		_
+com.google.javascript.jscomp.MemoizedScopeCreator#?#MemoizedScopeCreator#?,ScopeCreator#56	0.034159349284257755	0.0	0.034159349284257755		_
+com.google.javascript.rhino.jstype.ObjectType#ObjectType#cast#?,JSType#554	0.034159349284257755	0.0	0.034159349284257755		_
+com.google.javascript.jscomp.FunctionTypeBuilder$AstFunctionContents#boolean#mayHaveNonEmptyReturns#?#865	0.03412618163949675	0.0	0.03412618163949675		_
+com.google.javascript.rhino.jstype.SimpleSlot#String#getName#?#66	0.03400593455341454	0.0	0.03400593455341454		_
+com.google.javascript.jscomp.ClosureCodingConvention$AssertInstanceofSpec#?#AssertInstanceofSpec#?,String#444	0.033981383301529236	0.0	0.033981383301529236		_
+com.google.javascript.jscomp.CodingConvention$AssertionFunctionSpec#String#getFunctionName#?#395	0.033981383301529236	0.0	0.033981383301529236		_
+com.google.javascript.jscomp.CodingConvention$AssertionFunctionSpec#?#AssertionFunctionSpec#?,String,JSTypeNative#390	0.033981383301529236	0.0	0.033981383301529236		_
+com.google.javascript.jscomp.ClosureCodingConvention#Collection<AssertionFunctionSpec>#getAssertionFunctions#?#369	0.033981383301529236	0.0	0.033981383301529236		_
+com.google.javascript.jscomp.CodingConvention$AssertionFunctionSpec#?#AssertionFunctionSpec#?,String#384	0.033981383301529236	0.0	0.033981383301529236		_
+com.google.javascript.jscomp.FunctionTypeBuilder$AstFunctionContents#Node#getSourceNode#?#855	0.03396178054056622	0.0	0.03396178054056622		_
+com.google.javascript.jscomp.FunctionTypeBuilder$AstFunctionContents#Iterable<String>#getEscapedVarNames#?#880	0.033948730864564534	0.0	0.033948730864564534		_
+com.google.javascript.jscomp.FunctionTypeBuilder$AstFunctionContents#?#AstFunctionContents#?,Node#850	0.033948730864564534	0.0	0.033948730864564534		_
+com.google.javascript.jscomp.TypedScopeCreator$LocalScopeBuilder#?#LocalScopeBuilder#?,Scope#1871	0.033948730864564534	0.0	0.033948730864564534		_
+com.google.javascript.jscomp.FunctionTypeBuilder$AstFunctionContents#Multiset<String>#getAssignedNameCounts#?#906	0.033948730864564534	0.0	0.033948730864564534		_
+com.google.javascript.rhino.jstype.SimpleSlot#JSType#getType#?#71	0.03394710071254494	0.0	0.03394710071254494		_
+com.google.javascript.rhino.JSDocInfo#String#getLendsName#?#1211	0.03392918452524266	0.0	0.03392918452524266		_
+com.google.javascript.rhino.jstype.FunctionType#Node#getParametersNode#?#285	0.033909671909121815	0.0	0.033909671909121815		_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#hasAnyTypeRelatedTags#?#996	0.033909671909121815	0.0	0.033909671909121815		_
+com.google.javascript.jscomp.TypedScopeCreator#JSType#getNativeType#?,JSTypeNative#405	0.03389668218563844	0.0	0.03389668218563844		_
+com.google.javascript.jscomp.FunctionTypeBuilder#?#FunctionTypeBuilder#?,String,AbstractCompiler,Node,String,Scope#205	0.033890192919342615	0.0	0.033890192919342615		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#void#clearTemplateTypeNames#?#1749	0.033890192919342615	0.0	0.033890192919342615		_
+com.google.javascript.jscomp.FunctionTypeBuilder$UnknownFunctionContents#FunctionContents#get#?#803	0.033890192919342615	0.0	0.033890192919342615		_
+com.google.javascript.jscomp.Scope$Var#Node#getInitialValue#?#227	0.03383195674528453	0.0	0.03383195674528453		_
+com.google.javascript.jscomp.Scope#Var#getSlot#?,String#517	0.033819056094007	0.0	0.033819056094007		_
+com.google.javascript.rhino.Node#boolean#isQualifiedName#?#1576	0.03369085602646046	0.0	0.03369085602646046		_
+com.google.javascript.jscomp.TypeInference#FlowScope#traverseChildren#?,Node,FlowScope#1215	0.03367811605397754	0.0	0.03367811605397754		_
+com.google.javascript.jscomp.TypedScopeCreator$DeferredSetType#?#DeferredSetType#?,Node,JSType#163	0.03365267940680323	0.0	0.03365267940680323		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#setDeferredType#?,Node,JSType#460	0.03365267940680323	0.0	0.03365267940680323		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#resolveTypes#?#465	0.03365267940680323	0.0	0.03365267940680323		_
+com.google.javascript.jscomp.TypedScopeCreator$DeferredSetType#void#resolve#?,Scope#174	0.03365267940680323	0.0	0.03365267940680323		_
+com.google.javascript.jscomp.Scope$Var#boolean#isTypeInferred#?#278	0.03363363969981562	0.0	0.03363363969981562		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#assertDefinitionNode#?,Node,int#732	0.03362730030861808	0.0	0.03362730030861808		_
+com.google.javascript.rhino.Node#boolean#isFromExterns#?#1109	0.033570406630727107	0.0	0.033570406630727107		_
+com.google.javascript.jscomp.Scope$Var#JSType#getType#?#236	0.033494995663235716	0.0	0.033494995663235716		_
+com.google.javascript.jscomp.CodingConventions$Proxy#void#defineDelegateProxyPrototypeProperties#?,JSTypeRegistry,StaticScope<JSType>,List<ObjectType>,Map<String,String>#199	0.033482476509121256	0.0	0.033482476509121256		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#?#AbstractScopeBuilder#?,Scope#456	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.TypeInference#List<FlowScope>#branchedFlowThrough#?,Node,FlowScope#197	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.TypedScopeCreator$GlobalScopeBuilder#void#visit#?,NodeTraversal,Node,Node#1804	0.03347622219385064	0.011874508331318274	0.03347622219385064		_
+com.google.javascript.jscomp.TypeInference#FlowScope#createInitialEstimateLattice#?#168	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.TypedScopeCreator$FirstOrderFunctionAnalyzer#?#FirstOrderFunctionAnalyzer#?,AbstractCompiler,Map<Node,AstFunctionContents>#2003	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.NodeUtil#boolean#isCallOrNewTarget#?,Node#3006	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.NodeTraversal#InputId#getInputId#?#661	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.TypedScopeCreator$GlobalScopeBuilder#?#GlobalScopeBuilder#?,Scope#1792	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.TypeInference#FlowScope#createEntryLattice#?#173	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.Scope#Iterator<Var>#getDeclarativelyUnboundVarsWithoutTypes#?#617	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.Scope#Scope#createLatticeBottom#?,Node#414	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.type.SemanticReverseAbstractInterpreter#?#SemanticReverseAbstractInterpreter#?,CodingConvention,JSTypeRegistry#121	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.TypeInference#?#TypeInference#?,AbstractCompiler,ControlFlowGraph<Node>,ReverseAbstractInterpreter,Scope,Map<String,AssertionFunctionSpec>#114	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.TypedScopeCreator#?#TypedScopeCreator#?,AbstractCompiler#179	0.03347622219385064	0.0	0.03347622219385064		_
+com.google.javascript.jscomp.NodeTraversal$AbstractScopedCallback#boolean#shouldTraverse#?,NodeTraversal,Node,Node#145	0.033469971382071036	0.0	0.033469971382071036		_
+com.google.javascript.rhino.jstype.AllType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#110	0.033469971382071036	0.0	0.033469971382071036		_
+com.google.javascript.jscomp.DataFlowAnalysis$BranchedForwardDataFlowAnalysis#boolean#isForward#?#427	0.033469971382071036	0.0	0.033469971382071036		_
+com.google.javascript.jscomp.DataFlowAnalysis$BranchedForwardDataFlowAnalysis#?#BranchedForwardDataFlowAnalysis#?,ControlFlowGraph<N>,JoinOp<L>#411	0.033469971382071036	0.0	0.033469971382071036		_
+com.google.javascript.jscomp.DataFlowAnalysis$BranchedFlowState#void#setIn#?,L#508	0.033469971382071036	0.0	0.033469971382071036		_
+com.google.javascript.jscomp.Scope#StaticScope<JSType>#getParentScope#?#450	0.033469971382071036	0.0	0.033469971382071036		_
+com.google.javascript.jscomp.DataFlowAnalysis$BranchedFlowState#?#BranchedFlowState#?,L,List<L>#499	0.033469971382071036	0.0	0.033469971382071036		_
+com.google.javascript.jscomp.NodeUtil#boolean#isCallOrNew#?,Node#1872	0.033469971382071036	0.0	0.033469971382071036		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#createUnionType#?,JSTypeNative#1030	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.jscomp.TypedScopeCreator#Scope#createInitialScope#?,Node#329	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.jscomp.TypedScopeCreator#void#declareNativeFunctionType#?,Scope,JSTypeNative#343	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.jscomp.TypedScopeCreator$DiscoverEnumsAndTypedefs#?#DiscoverEnumsAndTypedefs#?,JSTypeRegistry#361	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.jscomp.TypeValidator#?#TypeValidator#?,AbstractCompiler#141	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.jscomp.TypedScopeCreator#void#declareNativeValueType#?,Scope,String,JSTypeNative#349	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.jscomp.TypedScopeCreator#void#declareNativeType#?,Scope,String,JSType#353	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#ErrorReporter#getErrorReporter#?#225	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.jscomp.TypedScopeCreator#?#TypedScopeCreator#?,AbstractCompiler,CodingConvention#185	0.033463724070512735	0.0	0.033463724070512735		_
+com.google.javascript.rhino.jstype.NoObjectType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#186	0.03345748025591029	0.0	0.03345748025591029		_
+com.google.javascript.jscomp.LinkedFlowScope#LinkedFlowScope#optimize#?#235	0.03345123993500254	0.0	0.03345123993500254		_
+com.google.javascript.rhino.jstype.UnknownType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#196	0.03343876976124768	0.0	0.03343876976124768		_
+com.google.javascript.rhino.jstype.ValueType#JSType#resolveInternal#?,ErrorReporter,StaticScope<JSType>#54	0.03343876976124768	0.0	0.03343876976124768		_
+com.google.javascript.jscomp.LinkedFlowScope#Scope#getFunctionScope#?#88	0.03342631352324378	0.0	0.03342631352324378		_
+com.google.javascript.rhino.jstype.UnionType#UnionType#toMaybeUnionType#?#373	0.03342631352324378	0.0	0.03342631352324378		_
+com.google.javascript.rhino.jstype.ObjectType$Property#void#setType#?,JSType#662	0.0334138711950542	0.0	0.0334138711950542		_
+com.google.javascript.rhino.jstype.JSType#JSType#safeResolve#?,JSType,ErrorReporter,StaticScope<JSType>#1437	0.03340765523905305	0.0	0.03340765523905305		_
+com.google.javascript.rhino.jstype.UnknownType#boolean#isUnknownType#?#70	0.033401442750809834	0.0	0.033401442750809834		_
+com.google.javascript.jscomp.NodeTraversal$AbstractShallowStatementCallback#boolean#shouldTraverse#?,NodeTraversal,Node,Node#179	0.03337662741101666	0.0	0.03337662741101666		_
+com.google.javascript.jscomp.type.ChainableReverseAbstractInterpreter#?#ChainableReverseAbstractInterpreter#?,CodingConvention,JSTypeRegistry#69	0.033358052160114414	0.0	0.033358052160114414		_
+com.google.javascript.jscomp.NodeUtil#String#getSourceName#?,Node#2843	0.033345685875292755	0.0	0.033345685875292755		_
+com.google.javascript.rhino.jstype.JSType#void#setResolvedTypeInternal#?,JSType#1416	0.03331483023263848	0.0	0.03331483023263848		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseAndRecordTypeNode#?,JsDocToken,boolean#1095	0.03319835517290921	0.0	0.03319835517290921		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseAndRecordTypeNode#?,JsDocToken#1083	0.03319835517290921	0.0	0.03319835517290921		_
+com.google.javascript.jscomp.LinkedFlowScope#LinkedFlowScope#createEntryLattice#?,Scope#100	0.033167906340332974	0.0	0.033167906340332974		_
+com.google.javascript.jscomp.LinkedFlowScope$FlatFlowScopeCache#?#FlatFlowScopeCache#?,Scope#403	0.033167906340332974	0.0	0.033167906340332974		_
+com.google.javascript.jscomp.LinkedFlowScope#?#LinkedFlowScope#?,FlatFlowScopeCache#79	0.03313147809612858	0.0	0.03313147809612858		_
+com.google.javascript.jscomp.LinkedFlowScope#?#LinkedFlowScope#?,LinkedFlowScope#83	0.033107259176155104	0.0	0.033107259176155104		_
+com.google.javascript.rhino.jstype.JSType#JSType#restrictByNotNullOrUndefined#?#1294	0.03304694347808188	0.0	0.03304694347808188		_
+com.google.javascript.jscomp.NodeTraversal#Node#getCurrentNode#?#447	0.03273853022358256	0.0	0.03273853022358256		_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#visit#?,NodeTraversal,Node,Node#323	0.032691844238727924	0.0	0.032691844238727924		_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#handleFunction#?,Node#530	0.032691844238727924	0.0	0.032691844238727924		_
+com.google.javascript.rhino.jstype.JSType#FunctionType#toMaybeFunctionType#?,JSType#380	0.032645357412170936	0.0	0.032645357412170936		_
+com.google.javascript.jscomp.TypeInference#boolean#isUnflowable#?,Var#1532	0.03263376665824188	0.0	0.03263376665824188		_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#handleExpr#?,Node#536	0.03256448045129181	0.0	0.03256448045129181		_
+com.google.javascript.rhino.JSDocInfo#void#setConstructor#?,boolean#352	0.032213401200121235	0.0	0.032213401200121235		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#newStringNode#?,String,int,int#2210	0.032009219983223994	0.0	0.032009219983223994		_
+com.google.javascript.rhino.Node#Node#newString#?,String,int,int#512	0.031998293469854534	0.0	0.031998293469854534		_
+com.google.javascript.rhino.JSTypeExpression#?#JSTypeExpression#?,Node,String#65	0.03190586765637327	0.0	0.03190586765637327		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#JSTypeExpression#createJSTypeExpression#?,Node#1248	0.03185187224171715	0.0	0.03185187224171715		_
+com.google.javascript.jscomp.DataFlowAnalysis#void#analyze#?#180	0.03181960628147685	0.0	0.03181960628147685		_
+com.google.javascript.jscomp.DataFlowAnalysis#ControlFlowGraph<N>#getCfg#?#139	0.03181960628147685	0.0	0.03181960628147685		_
+com.google.javascript.jscomp.ControlFlowAnalysis$AstControlFlowGraph#int#getPosition#?,DiGraphNode<Node,Branch>#1053	0.031814238148788886	0.0	0.031814238148788886		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#boolean#isJSDocString#?,int#298	0.031792792754947306	0.0	0.031792792754947306		_
+com.google.javascript.rhino.JSDocInfo#boolean#hasBaseType#?#1248	0.031782086308186415	0.0	0.031782086308186415		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#List<DiGraphEdge<N,E>>#getOutEdges#?,N#130	0.03174469874728052	0.0	0.03174469874728052		_
+com.google.javascript.rhino.JSDocInfo#boolean#hasReturnType#?#1093	0.0317233935779361	0.0	0.0317233935779361		_
+com.google.javascript.rhino.JSDocInfo#JSTypeExpression#getBaseType#?#1167	0.03171807398477756	0.0	0.03171807398477756		_
+com.google.javascript.jscomp.SourceFile#boolean#isExtern#?#181	0.03167561335799752	0.0	0.03167561335799752		_
+com.google.javascript.jscomp.ControlFlowGraph#boolean#isEnteringNewCfgNode#?,Node#161	0.031665024819056184	0.0	0.031665024819056184		_
+com.google.javascript.rhino.JSDocInfo#boolean#hasThisType#?#1155	0.031659734530017664	0.0	0.031659734530017664		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$LinkedDirectedGraphEdge#DiGraphNode<N,E>#getSource#?#480	0.03164387955805429	0.0	0.03164387955805429		_
+com.google.javascript.rhino.Node#?#Node#?,int,int,int#438	0.03163859985841663	0.0	0.03163859985841663		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#String#getSourceName#?#150	0.031512674583162724	0.0	0.031512674583162724		_
+com.google.javascript.rhino.JSDocInfo#boolean#isConstant#?#453	0.03148662889346343	0.0	0.03148662889346343		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$AnnotatedLinkedDirectedGraphNode#A#getAnnotation#?#444	0.031481427501027934	0.0	0.031481427501027934		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$AnnotatedLinkedDirectedGraphNode#void#setAnnotation#?,Annotation#449	0.031481427501027934	0.0	0.031481427501027934		_
+com.google.javascript.rhino.JSDocInfo#boolean#isDefine#?#486	0.03145027318612195	0.0	0.03145027318612195		_
+com.google.javascript.jscomp.NodeUtil#boolean#isForIn#?,Node#1593	0.03138824102871722	0.0	0.03138824102871722		_
+com.google.javascript.jscomp.ControlFlowAnalysis#Node#computeFollowNode#?,Node,ControlFlowAnalysis#675	0.03132145199594161	0.0	0.03132145199594161		_
+com.google.javascript.jscomp.ControlFlowAnalysis$AstControlFlowGraph#?#AstControlFlowGraph#?,Node,Map<DiGraphNode<Node,Branch>,Integer>,boolean#1018	0.03128566480332439	0.0	0.03128566480332439		_
+com.google.javascript.jscomp.ControlFlowAnalysis#ControlFlowGraph<Node>#getCfg#?#145	0.03128566480332439	0.0	0.03128566480332439		_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#createEdge#?,Node,ControlFlowGraph.Branch,Node#822	0.03128566480332439	0.0	0.03128566480332439		_
+com.google.javascript.jscomp.ControlFlowAnalysis#?#ControlFlowAnalysis#?,AbstractCompiler,boolean,boolean#139	0.03128566480332439	0.0	0.03128566480332439		_
+com.google.javascript.jscomp.graph.DiGraph#boolean#isConnected#?,N,E,N#99	0.03128056235449272	0.0	0.03128056235449272		_
+com.google.javascript.jscomp.ControlFlowGraph#?#ControlFlowGraph#?,N,boolean,boolean#49	0.03126526997403612	0.0	0.03126526997403612		_
+com.google.javascript.jscomp.ControlFlowGraph#DiGraphNode<N,ControlFlowGraph.Branch>#getImplicitReturn#?#60	0.03126526997403612	0.0	0.03126526997403612		_
+com.google.javascript.jscomp.ControlFlowGraph#DiGraphNode<N,ControlFlowGraph.Branch>#getEntry#?#70	0.03126526997403612	0.0	0.03126526997403612		_
+com.google.javascript.jscomp.ControlFlowAnalysis#Node#computeFallThrough#?,Node#808	0.031209389196617962	0.0	0.031209389196617962		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$AnnotatedLinkedDirectedGraphNode#?#AnnotatedLinkedDirectedGraphNode#?,N#438	0.031148768765419162	0.0	0.031148768765419162		_
+com.google.javascript.rhino.Node#void#setLength#?,int#1118	0.03105849682583473	0.0	0.03105849682583473		_
+com.google.javascript.rhino.Node#JSType#getJSType#?#1809	0.03098882537844033	0.0	0.03098882537844033		_
+com.google.javascript.rhino.Node#boolean#isSyntheticBlock#?#1911	0.03070992761627408	0.0	0.03070992761627408		_
+com.google.javascript.jscomp.Scope$Var#Node#getParentNode#?#170	0.030671383606587218	0.0	0.030671383606587218		_
+com.google.javascript.jscomp.parsing.IRFactory#Node#newStringNode#?,String#1427	0.03062101414497502	0.0	0.03062101414497502		_
+com.google.javascript.jscomp.LinkedFlowScope#void#inferSlotType#?,String,JSType#105	0.030588764516074902	0.0	0.030588764516074902		_
+com.google.javascript.jscomp.LinkedFlowScope$LinkedFlowSlot#?#LinkedFlowSlot#?,String,JSType,LinkedFlowSlot#371	0.030588764516074902	0.0	0.030588764516074902		_
+com.google.javascript.jscomp.JSError#JSError#make#?,String,Node,DiagnosticType,String#115	0.030323921743156138	0.0	0.030323921743156138		_
+com.google.javascript.rhino.jstype.SimpleSlot#?#SimpleSlot#?,String,JSType,boolean#61	0.030271773945766654	0.0	0.030271773945766654		_
+com.google.javascript.jscomp.JSError#?#JSError#?,String,Node,DiagnosticType,String#171	0.030250990027116165	0.0	0.030250990027116165		_
+com.google.javascript.rhino.Node$SiblingNodeIterable#boolean#hasNext#?#1276	0.03018774787072866	0.0	0.03018774787072866		_
+com.google.javascript.rhino.Node$SiblingNodeIterable#?#SiblingNodeIterable#?,Node#1254	0.03018774787072866	0.0	0.03018774787072866		_
+com.google.javascript.rhino.JSDocInfo#boolean#isConstructor#?#461	0.03005565448891441	0.0	0.03005565448891441		_
+com.google.javascript.rhino.JSDocInfo#boolean#isInterface#?#542	0.030037570459305534	0.0	0.030037570459305534		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#boolean#isConnectedInDirection#?,N,E,N#200	0.029979022024306475	0.0	0.029979022024306475		_
+com.google.javascript.rhino.Node#boolean#isFor#?#2230	0.029974532466509034	0.0	0.029974532466509034		_
+com.google.javascript.rhino.Node#boolean#isReturn#?#2318	0.029739434464430406	0.0	0.029739434464430406		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$LinkedDirectedGraphEdge#E#getValue#?#500	0.029730670817720475	0.0	0.029730670817720475		_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#hasAnySingletonTypeTags#?#1013	0.02971753986198934	0.0	0.02971753986198934		_
+com.google.javascript.rhino.IR#Node#string#?,String#443	0.029695693545824933	0.0	0.029695693545824933		_
+com.google.javascript.jscomp.BasicErrorManager#JSError[]#toArray#?,CheckLevel#107	0.02224970797449924	0.01496710850223124	0.029674581282079456	!(p.level == level)	_
+com.google.javascript.rhino.JSDocInfo#boolean#hasEnumParameterType#?#1077	0.029569928086515172	0.0	0.029569928086515172		_
+com.google.javascript.rhino.JSDocInfo#boolean#hasTypedefType#?#1085	0.02956561979945413	0.0	0.02956561979945413		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#GraphNode<N,E>#getNode#?,N#118	0.02954410657547511	0.0	0.02954410657547511		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#void#connect#?,N,E,N#86	0.02954410657547511	0.0	0.02954410657547511		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$LinkedDirectedGraphNode#List<DiGraphEdge<N,E>>#getInEdges#?#389	0.02954410657547511	0.0	0.02954410657547511		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$LinkedDirectedGraphEdge#?#LinkedDirectedGraphEdge#?,DiGraphNode<N,E>,E,DiGraphNode<N,E>#475	0.02954410657547511	0.0	0.02954410657547511		_
+com.google.javascript.rhino.Node#boolean#isTry#?#2354	0.02952692976787463	0.0	0.02952692976787463		_
+com.google.javascript.rhino.JSDocInfo#boolean#hasType#?#1069	0.029514066805047763	0.0	0.029514066805047763		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$LinkedDirectedGraphEdge#DiGraphNode<N,E>#getDestination#?#485	0.029514066805047763	0.0	0.029514066805047763		_
+com.google.javascript.rhino.JSDocInfo#boolean#hasType#?,int#1097	0.029475578546806908	0.0	0.029475578546806908		_
+com.google.javascript.rhino.Node#Node#newString#?,String#504	0.029462782549439483	0.0	0.029462782549439483		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#Iterable<DiGraphNode<N,E>>#getDirectedGraphNodes#?#107	0.029428741194860643	0.0	0.029428741194860643		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#void#setFileOverviewJSDocInfo#?,JSDocInfo#117	0.029411764705882353	0.0	0.029411764705882353		_
+com.google.javascript.jscomp.parsing.IRFactory#JsDocInfoParser#createJsDocInfoParser#?,Comment,Node#419	0.029411764705882353	0.0	0.029411764705882353		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#void#setFileLevelJsDocBuilder#?,Node.FileLevelJsDocBuilder#109	0.02939481756261077	0.0	0.02939481756261077		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#JSDocInfo#getFileOverviewJSDocInfo#?#2344	0.029377899680597796	0.0	0.029377899680597796		_
+com.google.javascript.jscomp.Scope#Iterator<Var>#getVars#?#567	0.02933994099743798	0.0	0.02933994099743798		_
+com.google.javascript.jscomp.Scope#Node#getRootNode#?#433	0.029302129072373097	0.0	0.029302129072373097		_
+com.google.javascript.rhino.Node#boolean#isNew#?#2286	0.029272820655593355	0.0	0.029272820655593355		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#GraphNode<N,E>#createNode#?,N#177	0.029214466690517898	0.0	0.029214466690517898		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$LinkedDirectedGraphNode#?#LinkedDirectedGraphNode#?,N#347	0.029168861165856118	0.0	0.029168861165856118		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$LinkedDirectedGraphNode#N#getValue#?#352	0.029156460317354384	0.0	0.029156460317354384		_
+com.google.javascript.jscomp.JSError#int#getCharno#?#214	0.029142012631462405	0.0	0.029142012631462405		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#DiGraphNode<N,E>#getDirectedGraphNode#?,N#113	0.029135827337403247	0.0	0.029135827337403247		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph$LinkedDirectedGraphNode#List<DiGraphEdge<N,E>>#getOutEdges#?#394	0.029135827337403247	0.0	0.029135827337403247		_
+com.google.javascript.jscomp.BasicErrorManager$ErrorWithLevel#?#ErrorWithLevel#?,JSError,CheckLevel#188	0.02913273616691687	0.0	0.02913273616691687		_
+com.google.javascript.rhino.Node#Node#setJSDocInfo#?,JSDocInfo#1859	0.029123468555367932	0.0	0.029123468555367932		_
+com.google.javascript.jscomp.graph.LinkedDirectedGraph#?#LinkedDirectedGraph#?,boolean,boolean#73	0.029074190231479016	0.0	0.029074190231479016		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#JsDocToken#eatTokensUntilEOL#?#2239	0.029025161208007102	0.0	0.029025161208007102		_
+com.google.javascript.rhino.JSDocInfo#JSTypeExpression#getType#?#1104	0.02896017335997797	0.0	0.02896017335997797		_
+com.google.javascript.rhino.Node#boolean#isThis#?#2342	0.028786664499990466	0.0	0.028786664499990466		_
+com.google.javascript.jscomp.JSError#CheckLevel#getDefaultLevel#?#242	0.028349550370837483	0.0	0.028349550370837483		_
+com.google.javascript.rhino.JSDocInfo#boolean#isNoCompile#?#614	0.028138330394167636	0.0	0.028138330394167636		_
+com.google.javascript.rhino.JSDocInfo#boolean#isExterns#?#598	0.0281271975231506	0.0	0.0281271975231506		_
+com.google.javascript.rhino.JSDocInfo#boolean#hasFileOverview#?#1417	0.028108672066669983	0.0	0.028108672066669983		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#int#getLineno#?#226	0.027918152281484514	0.0	0.027918152281484514		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#int#getCharno#?#229	0.027918152281484514	0.0	0.027918152281484514		_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#isPopulatedWithFileOverview#?#102	0.027903656874338347	0.0	0.027903656874338347		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#boolean#hasParsedFileOverviewDocInfo#?#2329	0.027903656874338347	0.0	0.027903656874338347		_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#isPopulated#?#93	0.027903656874338347	0.0	0.027903656874338347		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#JSDocInfo#retrieveAndResetParsedJSDocInfo#?#2337	0.027903656874338347	0.0	0.027903656874338347		_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#shouldParseDocumentation#?#85	0.02790003654907182	0.0	0.02790003654907182		_
+com.google.javascript.rhino.JSDocInfo#void#setAssociatedNode#?,Node#1439	0.02789280012396007	0.0	0.02789280012396007		_
+com.google.javascript.rhino.JSDocInfo#void#setVisibility#?,Visibility#645	0.027885569326658022	0.0	0.027885569326658022		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#JsDocToken#current#?#2307	0.02788195603615673	0.0	0.02788195603615673		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#boolean#match#?,JsDocToken#2277	0.02788195603615673	0.0	0.02788195603615673		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#createTemplateNode#?#2217	0.02787834414987483	0.0	0.02787834414987483		_
+com.google.javascript.rhino.JSDocInfo#Visibility#getVisibility#?#968	0.027867516907256664	0.0	0.027867516907256664		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#String#getString#?#232	0.02782792467725641	0.0	0.02782792467725641		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#String#getStringFromBuffer#?#238	0.027820744203732862	0.0	0.027820744203732862		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#void#ungetChar#?,int#256	0.027820744203732862	0.0	0.027820744203732862		_
+com.google.javascript.rhino.JSDocInfo#boolean#getFlag#?,int#640	0.027817156050728483	0.0	0.027817156050728483		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#int#getOffset#?#447	0.027802817309543443	0.0	0.027802817309543443		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#?#JsDocTokenStream#?,String,int,int#48	0.027802817309543443	0.0	0.027802817309543443		_
+com.google.javascript.rhino.JSDocInfoBuilder#?#JSDocInfoBuilder#?,boolean#71	0.027703063158526546	0.0	0.027703063158526546		_
+com.google.javascript.jscomp.NodeUtil#boolean#isHoistedFunctionDeclaration#?,Node#1898	0.02767475861661902	0.0	0.02767475861661902		_
+com.google.javascript.rhino.JSDocInfo#?#JSDocInfo#?,boolean#337	0.02765006318046655	0.0	0.02765006318046655		_
+com.google.javascript.rhino.IR#Node#script#?#127	0.02757986742573458	0.0	0.02757986742573458		_
+com.google.javascript.rhino.jstype.ArrowType#boolean#isSubtype#?,JSType#143	0.013444941418501123	0.013444941418501123	0.026889882837002246	!(!isTopFunction)	_
+com.google.javascript.jscomp.DiagnosticGroup#boolean#matches#?,JSError#103	0.02671658425726324	0.0	0.02671658425726324		_
+com.google.javascript.jscomp.DiagnosticGroupWarningsGuard#CheckLevel#level#?,JSError#40	0.02671658425726324	0.0	0.02671658425726324		_
+com.google.javascript.jscomp.JSError#DiagnosticType#getType#?#179	0.02671658425726324	0.0	0.02671658425726324		_
+com.google.javascript.jscomp.JSError#?#JSError#?,String,Node,int,int,DiagnosticType,CheckLevel,String#161	0.026428128154374075	0.0	0.026428128154374075		_
+com.google.javascript.jscomp.FunctionTypeBuilder#boolean#addParameter#?,FunctionParamBuilder,JSType,boolean,boolean,boolean#560	0.013200241830645526	0.013200241830645526	0.026400483661291052	!(!builder.addVarArgs(paramType) && !warnedAboutArgList)	_
+com.google.javascript.rhino.jstype.FunctionType#void#setSource#?,Node#1092	0.01312159702703695	0.01312159702703695	0.0262431940540739	source == null || prototypeSlot.getNode() == null	_
+com.google.javascript.rhino.jstype.ArrowType#boolean#hasEqualParameters#?,ArrowType,EquivalenceMethod#201	0.01312159702703695	0.01312159702703695	0.0262431940540739	!(thisParam.isVarArgs() != otherParam.isVarArgs())	_
+com.google.javascript.jscomp.NodeUtil#boolean#isStatementParent#?,Node#1748	0.02621912876331403	0.0	0.02621912876331403		_
+com.google.javascript.jscomp.TypeValidator#void#expectCanCast#?,NodeTraversal,Node,JSType,JSType#506	0.013047671948491468	0.013051005112921494	0.026098677061412962	!(!type.canAssignTo(castType) && !castType.canAssignTo(type))	_
+com.google.javascript.jscomp.NodeTraversal#void#traverseRoots#?,AbstractCompiler,List<Node>,Callback#465	0.026093863184075854	0.0	0.026093863184075854		_
+com.google.javascript.rhino.jstype.ArrowType#boolean#checkArrowEquivalenceHelper#?,ArrowType,EquivalenceMethod#216	0.013047671948491468	0.013047671948491468	0.025999779411640347	!(!returnType.checkEquivalenceHelper(that.returnType,eqMethod))	_
+com.google.javascript.rhino.InputId#boolean#equals#?,Object#68	0.012974982402692051	0.012974982402692051	0.025949964805384102	!(getClass() != obj.getClass())	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#FunctionType#findOverriddenFunction#?,ObjectType,String#970	0.013379797308309913	0.013379797308309913	0.025880773985265733	propType != null && propType.isFunctionType()	_
+com.google.javascript.rhino.jstype.ArrowType#boolean#hasTemplatedParameterType#?#310	0.01292287382909359	0.01292287382909359	0.02584574765818718	!(type != null && type.hasAnyTemplateTypes())	_
+com.google.javascript.jscomp.parsing.IRFactory#int#transformTokenType#?,int#1323	0.025834245322211114	0.0	0.025834245322211114		_
+com.google.javascript.jscomp.Scope#?#Scope#?,Scope,Node#387	0.025742776142551403	0.0	0.025742776142551403		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processPropertyGet#?,PropertyGet#948	0.025705893323163274	0.0	0.025705893323163274		_
+com.google.javascript.jscomp.FunctionTypeBuilder#boolean#isVarArgsParameter#?,Node,JSDocInfo#517	0.013290870380481665	0.013290870380481665	0.02558884457906371	codingConvention.isVarArgsParameter(param)	_
+com.google.javascript.jscomp.NodeTraversal#CompilerInput#getInput#?#434	0.025551586430138627	0.0	0.025551586430138627		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#boolean#validAssignmentTarget#?,Node#1135	0.025529372484248337	0.0	0.025529372484248337		_
+com.google.javascript.jscomp.FunctionTypeBuilder#boolean#isOptionalParameter#?,Node,JSDocInfo#502	0.013124987182635961	0.013124987182635961	0.025422961381218006	codingConvention.isOptionalParameter(param)	_
+com.google.javascript.jscomp.NodeUtil#boolean#isFunctionDeclaration#?,Node#1889	0.025372757517351848	0.0	0.025372757517351848		_
+com.google.javascript.rhino.jstype.ArrowType#int#hashCode#?#235	0.012601816556767174	0.012601816556767174	0.025203633113534348	paramType != null	_
+com.google.javascript.jscomp.TypeInference#void#ensurePropertyDeclared#?,Node#627	0.01259881576697424	0.01259881576697424	0.02519763153394848	ownerType != null	_
+com.google.javascript.jscomp.FunctionTypeBuilder#FunctionTypeBuilder#inferThisType#?,JSDocInfo,JSType#382	0.01254220498051134	0.01254220498051134	0.02508440996102268	objType != null && (info == null || !info.hasType())	_
+com.google.javascript.jscomp.TypeCheck#void#checkDeclaredPropertyInheritance#?,NodeTraversal,Node,FunctionType,String,JSDocInfo,JSType#1179	0.012530383861032359	0.012530383861032359	0.02504016094504572	!declaredOverride && !superClassHasProperty && !superInterfaceHasProperty	_
+com.google.javascript.jscomp.TypeCheck#boolean#hasUnknownOrEmptySupertype#?,FunctionType#1262	0.012512714685811282	0.012512714685811282	0.025025429371622564	!(ctor == null)	_
+com.google.javascript.rhino.JSDocInfo#JSTypeExpression#getParameterType#?,String#978	0.012468866701345411	0.012468866701345411	0.0249058695955296	!(info == null || info.parameters == null)	_
+com.google.javascript.rhino.Node#boolean#isParamList#?#2310	0.024860550508181416	0.0	0.024860550508181416		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processInfixExpression#?,InfixExpression#800	0.02481967822323091	0.0	0.02481967822323091		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseParamTypeExpressionAnnotation#?,JsDocToken#1601	0.012698988629324323	0.012698988629324323	0.024800879818611725	match(JsDocToken.EQUALS)	_
+com.google.javascript.rhino.JSDocInfo#boolean#declareParam#?,JSTypeExpression,String#918	0.012064841796274876	0.01264405403018136	0.024708895826456235	!(info.parameters == null)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#void#skipEOLs#?#2318	0.012359815830228407	0.012359815830228407	0.024697036000188494	match(JsDocToken.STAR)	_
+com.google.javascript.rhino.jstype.FunctionType#JSType#getPropertyType#?,String#592	0.012314747983416313	0.012317550292699011	0.024632298276115322	!("apply".equals(name))	_
+com.google.javascript.jscomp.CompilerOptions#CodingConvention#getCodingConvention#?#1351	0.024590990036384517	0.0	0.024590990036384517		_
+com.google.javascript.jscomp.Compiler#CodingConvention#getCodingConvention#?#1993	0.024590990036384517	0.0	0.024590990036384517		_
+com.google.javascript.rhino.Node#boolean#isExprResult#?#2222	0.02452680302389796	0.0	0.02452680302389796		_
+com.google.javascript.jscomp.NodeTraversal#boolean#inGlobalScope#?#636	0.024467997417549816	0.0	0.024467997417549816		_
+com.google.javascript.jscomp.NodeTraversal#int#getScopeDepth#?#640	0.02446555635430061	0.0	0.02446555635430061		_
+com.google.javascript.rhino.JSDocInfoBuilder#void#markName#?,String,StaticSourceFile,int,int#207	0.012062208413771333	0.01233159059167475	0.024393799005446082	!(currentMarker != null)	_
+com.google.javascript.jscomp.NodeUtil#boolean#isAssignmentOp#?,Node#1483	0.024330012062822974	0.0	0.024330012062822974		_
+com.google.javascript.jscomp.Scope#boolean#isLocal#?#610	0.02428930837786301	0.0	0.02428930837786301		_
+com.google.javascript.rhino.jstype.FunctionType#Iterable<Node>#getParameters#?#276	0.01212588967505907	0.01212588967505907	0.02425177935011814	n != null	_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#defineName#?,Node,Node,Node,JSDocInfo#804	0.011666618055859373	0.012536290240743358	0.02420290829660273	!(type == null)	_
+com.google.javascript.jscomp.Scope#boolean#isGlobal#?#603	0.024154307519818494	0.0	0.024154307519818494		_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#recordParameter#?,String,JSTypeExpression#267	0.012064841796274876	0.012064841796274876	0.024127050210046207	!hasAnySingletonTypeTags() && currentInfo.declareParam(type,parameterName)	_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#parseAndRecordParamTypeNode#?,JsDocToken#1133	0.012064841796274876	0.012064841796274876	0.02412441855114857	typeNode != null	_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#createDefaultObjectUnion#?,JSType#984	0.012072752304258166	0.012072752304258166	0.024121819622055164	!(type.isTemplateType())	_
+com.google.javascript.jscomp.Scope#Scope#getParent#?#437	0.024102800747485068	0.0	0.024102800747485068		_
+com.google.javascript.jscomp.NodeUtil#boolean#isGet#?,Node#1534	0.024035406196088644	0.0	0.024035406196088644		_
+com.google.javascript.jscomp.Scope$Var#?#Var#?,boolean,String,Node,JSType,Scope,int,CompilerInput#123	0.02402846656661064	0.0	0.02402846656661064		_
+com.google.javascript.jscomp.Scope#Var#declare#?,String,Node,JSType,CompilerInput,boolean#500	0.02402846656661064	0.0	0.02402846656661064		_
+com.google.javascript.jscomp.DiagnosticType#int#hashCode#?#121	0.02393193862059127	0.0	0.02393193862059127		_
+com.google.javascript.rhino.Node#boolean#isAssign#?#2162	0.023868229220499245	0.0	0.023868229220499245		_
+com.google.javascript.jscomp.Compiler#CompilerInput#getInput#?,InputId#1043	0.023863697995167382	0.0	0.023863697995167382		_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#recordReturnType#?,JSTypeExpression#482	0.011919975664202526	0.011919975664202526	0.023834873596262317	jsType != null && currentInfo.getReturnType() == null && !hasAnySingletonTypeTags()	_
+com.google.javascript.jscomp.Scope#Scope#createGlobalScope#?,Node#410	0.023809523809523808	0.0	0.023809523809523808		_
+com.google.javascript.jscomp.Scope#?#Scope#?,Node,boolean#403	0.023809523809523808	0.0	0.023809523809523808		_
+com.google.javascript.jscomp.NodeUtil#boolean#isControlStructure#?,Node#1663	0.02376689659489831	0.0	0.02376689659489831		_
+com.google.javascript.rhino.JSDocInfo#void#lazyInitInfo#?#649	0.01110905406932525	0.01253924656438798	0.023648300633713232	!(info == null)	_
+com.google.javascript.rhino.jstype.ObjectType#boolean#defineDeclaredProperty#?,String,JSType,Node#279	0.02358770488959146	0.0	0.02358770488959146		_
+com.google.javascript.jscomp.NodeTraversal$AbstractPostOrderCallback#boolean#shouldTraverse#?,NodeTraversal,Node,Node#133	0.02358770488959146	0.0	0.02358770488959146		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#FunctionType#getConstructor#?#410	0.0235745921090601	0.0	0.0235745921090601		_
+com.google.javascript.rhino.jstype.ObjectType#boolean#hasOwnDeclaredProperty#?,String#438	0.023565862394963687	0.0	0.023565862394963687		_
+com.google.javascript.jscomp.PrepareAst$PrepareAnnotations#void#visit#?,NodeTraversal,Node,Node#140	0.02356368148131365	0.0	0.02356368148131365		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#hasOwnProperty#?,String#176	0.023557142371577276	0.0	0.023557142371577276		_
+com.google.javascript.jscomp.NodeUtil#boolean#isStatementBlock#?,Node#1727	0.023533212128886986	0.0	0.023533212128886986		_
+com.google.javascript.jscomp.NodeUtil#boolean#isFunctionExpression#?,Node#1927	0.023526698345822997	0.0	0.023526698345822997		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#ArrowType#createArrowType#?,Node,JSType#1052	0.02351368698985731	0.0	0.02351368698985731		_
+com.google.javascript.rhino.jstype.ArrowType#?#ArrowType#?,JSTypeRegistry,Node,JSType#64	0.02348988880030412	0.0	0.02348988880030412		_
+com.google.javascript.rhino.jstype.InstanceObjectType#?#InstanceObjectType#?,JSTypeRegistry,FunctionType,boolean,ImmutableList<JSType>#63	0.023487728909830124	0.0	0.023487728909830124		_
+com.google.javascript.rhino.Node#boolean#isString#?#2330	0.02344895248052709	0.0	0.02344895248052709		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processBlock#?,Block#569	0.023410367469959822	0.0	0.023410367469959822		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#defineVar#?,Node,Node#750	0.01167138480500857	0.01167138480500857	0.023338002860867943	!(n.hasMoreThanOneChild())	_
+com.google.javascript.rhino.Node#boolean#isCall#?#2178	0.023318957740501977	0.0	0.023318957740501977		_
+com.google.javascript.jscomp.parsing.IRFactory#Node#newNode#?,int,Node,Node#1419	0.023314732143341167	0.0	0.023314732143341167		_
+com.google.javascript.jscomp.NodeUtil#boolean#isStatement#?,Node#1734	0.02330206912141852	0.0	0.02330206912141852		_
+com.google.javascript.rhino.Node#boolean#hasChildren#?#528	0.023285217143715144	0.0	0.023285217143715144		_
+com.google.javascript.rhino.jstype.JSType#ImmutableList<String>#getTemplateKeys#?#493	0.023266302301991407	0.0	0.023266302301991407		_
+com.google.javascript.rhino.Node#?#Node#?,int,Node,Node#388	0.02317863852057799	0.0	0.02317863852057799		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processGeneric#?,com.google.javascript.rhino.head.Node#464	0.023164124007400477	0.0	0.023164124007400477		_
+com.google.javascript.rhino.jstype.JSType#JSType#getNativeType#?,JSTypeNative#148	0.023081703806536465	0.0	0.023081703806536465		_
+com.google.javascript.rhino.jstype.InstanceObjectType#boolean#isNominalType#?#164	0.023010303252483814	0.0	0.023010303252483814		_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#Node#build#?#142	0.023010303252483814	0.0	0.023010303252483814		_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#?#FunctionParamBuilder#?,JSTypeRegistry#55	0.023010303252483814	0.0	0.023010303252483814		_
+com.google.javascript.rhino.jstype.FunctionType#boolean#hasCachedValues#?#1140	0.022992049957180422	0.0	0.022992049957180422		_
+com.google.javascript.rhino.jstype.ArrowType#?#ArrowType#?,JSTypeRegistry,Node,JSType,boolean#71	0.022992049957180422	0.0	0.022992049957180422		_
+com.google.javascript.rhino.jstype.JSType#boolean#isNoObjectType#?#195	0.0229859751717583	0.0	0.0229859751717583		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#void#setOwnerFunction#?,FunctionType#518	0.022983951313055563	0.0	0.022983951313055563		_
+com.google.javascript.rhino.jstype.JSType#boolean#isEmptyType#?#199	0.022981927988846084	0.0	0.022981927988846084		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#Iterable<ObjectType>#getCtorExtendedInterfaces#?#536	0.02296777966545052	0.0	0.02296777966545052		_
+com.google.javascript.rhino.jstype.ObjectType#boolean#isFunctionPrototypeType#?#559	0.02296777966545052	0.0	0.02296777966545052		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#FunctionType#getOwnerFunction#?#524	0.02296777966545052	0.0	0.02296777966545052		_
+com.google.javascript.rhino.JSDocInfoBuilder#boolean#recordType#?,JSTypeExpression#435	0.011471541425028297	0.011471541425028297	0.022931777494570448	type != null && !hasAnyTypeRelatedTags()	_
+com.google.javascript.rhino.jstype.FunctionType#boolean#hasInstanceType#?#1063	0.022929508398902763	0.0	0.022929508398902763		_
+com.google.javascript.rhino.jstype.FunctionType#ObjectType#getInstanceType#?#1047	0.022929508398902763	0.0	0.022929508398902763		_
+com.google.javascript.rhino.jstype.ObjectType$Property#?#Property#?,String,JSType,boolean,Node#619	0.02290143062071722	0.0	0.02290143062071722		_
+com.google.javascript.rhino.jstype.FunctionType#FunctionType#toMaybeFunctionType#?#254	0.02290143062071722	0.0	0.02290143062071722		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#FunctionType#getNativeFunctionType#?,JSTypeNative#899	0.022897427923732932	0.0	0.022897427923732932		_
+com.google.javascript.rhino.jstype.InstanceObjectType#boolean#hasReferenceName#?#76	0.022895427362117676	0.0	0.022895427362117676		_
+com.google.javascript.rhino.jstype.InstanceObjectType#Iterable<ObjectType>#getCtorExtendedInterfaces#?#187	0.02288543241365075	0.0	0.02288543241365075		_
+com.google.javascript.rhino.Node#boolean#hasOneChild#?#1373	0.022875450543583878	0.0	0.022875450543583878		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#void#setPrettyPrint#?,boolean#401	0.02284558311924769	0.0	0.02284558311924769		_
+com.google.javascript.jscomp.parsing.IRFactory#?#IRFactory#?,String,StaticSourceFile,Config,ErrorReporter#160	0.022843596114841304	0.0	0.022843596114841304		_
+com.google.javascript.rhino.jstype.FunctionType#boolean#isConstructor#?#191	0.022843596114841304	0.0	0.022843596114841304		_
+com.google.javascript.rhino.jstype.FunctionType#Iterable<ObjectType>#getExtendedInterfaces#?#567	0.022819792430590763	0.0	0.022819792430590763		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#hasReferenceName#?#442	0.022794088891558248	0.0	0.022794088891558248		_
+com.google.javascript.jscomp.CompilerInput#String#getName#?#100	0.02279014220485365	0.0	0.02279014220485365		_
+com.google.javascript.rhino.jstype.InstanceObjectType#String#getReferenceName#?#71	0.022788169630114603	0.0	0.022788169630114603		_
+com.google.javascript.rhino.jstype.ObjectType#boolean#hasCachedValues#?#534	0.022770439475999937	0.0	0.022770439475999937		_
+com.google.javascript.rhino.jstype.ObjectType#?#ObjectType#?,JSTypeRegistry,ImmutableList<String>,ImmutableList<JSType>#95	0.022770439475999937	0.0	0.022770439475999937		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#hasCachedValues#?#507	0.022770439475999937	0.0	0.022770439475999937		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#void#setImplicitPrototype#?,ObjectType#426	0.022770439475999937	0.0	0.022770439475999937		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#boolean#isNativeObjectType#?#513	0.022760607255032875	0.0	0.022760607255032875		_
+com.google.javascript.rhino.InputId#String#getIdName#?#56	0.022750787759664506	0.0	0.022750787759664506		_
+com.google.javascript.rhino.jstype.FunctionType#boolean#isInterface#?#196	0.022715542521212734	0.0	0.022715542521212734		_
+com.google.javascript.rhino.jstype.InstanceObjectType#ObjectType#getImplicitPrototype#?#81	0.022703830459324992	0.0	0.022703830459324992		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#ObjectType#getNativeObjectType#?,JSTypeNative#895	0.022701880209743647	0.0	0.022701880209743647		_
+com.google.javascript.rhino.jstype.ObjectType$Property#JSType#getType#?#649	0.022684350549724334	0.0	0.022684350549724334		_
+com.google.javascript.rhino.jstype.InstanceObjectType#FunctionType#getConstructor#?#86	0.02267462937912591	0.0	0.02267462937912591		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#ObjectType#getImplicitPrototype#?#415	0.022666861434609113	0.0	0.022666861434609113		_
+com.google.javascript.rhino.jstype.JSType#int#hashCode#?#755	0.02266492069558123	0.0	0.02266492069558123		_
+com.google.javascript.rhino.jstype.UnionTypeBuilder#Collection<JSType>#getAlternateListCopy#?#260	0.022653286720636115	0.0	0.022653286720636115		_
+com.google.javascript.rhino.jstype.UnionType#?#UnionType#?,JSTypeRegistry,Collection<JSType>#82	0.022653286720636115	0.0	0.022653286720636115		_
+com.google.javascript.rhino.jstype.JSType#ObjectType#toObjectType#?#874	0.022653286720636115	0.0	0.022653286720636115		_
+com.google.javascript.rhino.jstype.JSType#boolean#isSubtype#?,JSType#1324	0.022649412708342608	0.0	0.022649412708342608		_
+com.google.javascript.rhino.Node#boolean#isGetProp#?#2246	0.022633936510629633	0.0	0.022633936510629633		_
+com.google.javascript.rhino.jstype.JSType#boolean#isTemplatized#?#486	0.02262814111007102	0.0	0.02262814111007102		_
+com.google.javascript.rhino.jstype.UnionTypeBuilder#?#UnionTypeBuilder#?,JSTypeRegistry#101	0.022583857107148685	0.0	0.022583857107148685		_
+com.google.javascript.rhino.jstype.JSType#boolean#isUnknownType#?#280	0.022581937608857242	0.0	0.022581937608857242		_
+com.google.javascript.rhino.Node#void#setJSType#?,JSType#1813	0.022576182049286547	0.0	0.022576182049286547		_
+com.google.javascript.rhino.jstype.UnionTypeBuilder#?#UnionTypeBuilder#?,JSTypeRegistry,int#105	0.022543650131997894	0.0	0.022543650131997894		_
+com.google.javascript.rhino.jstype.JSType#boolean#isNoResolvedType#?#191	0.022539832086389683	0.0	0.022539832086389683		_
+com.google.javascript.rhino.jstype.JSType#boolean#isNominalType#?#569	0.022518867455552247	0.0	0.022518867455552247		_
+com.google.javascript.rhino.jstype.JSType#RecordType#toMaybeRecordType#?#418	0.022518867455552247	0.0	0.022518867455552247		_
+com.google.javascript.rhino.jstype.JSType#ParameterizedType#toMaybeParameterizedType#?#430	0.022518867455552247	0.0	0.022518867455552247		_
+com.google.javascript.rhino.jstype.JSType#?#JSType#?,JSTypeRegistry#109	0.02251696447946776	0.0	0.02251696447946776		_
+com.google.javascript.rhino.jstype.JSType#boolean#isRecordType#?#410	0.02251696447946776	0.0	0.02251696447946776		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processExpressionStatement#?,ExpressionStatement#650	0.022513159974164025	0.0	0.022513159974164025		_
+com.google.javascript.rhino.jstype.JSType#FunctionType#toMaybeFunctionType#?#373	0.022488477607083335	0.0	0.022488477607083335		_
+com.google.javascript.rhino.jstype.JSType#boolean#isAllType#?#276	0.022477113093122312	0.0	0.022477113093122312		_
+com.google.javascript.rhino.jstype.JSType#boolean#isNoType#?#187	0.022473328748774737	0.0	0.022473328748774737		_
+com.google.javascript.rhino.jstype.JSType#boolean#isFunctionType#?#357	0.022460098580583693	0.0	0.022460098580583693		_
+com.google.javascript.rhino.jstype.JSType#boolean#isUnionType#?#288	0.02245632282220103	0.0	0.02245632282220103		_
+com.google.javascript.rhino.jstype.JSType#UnionType#toMaybeUnionType#?#347	0.02245632282220103	0.0	0.02245632282220103		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#getNativeType#?,JSTypeNative#891	0.0224111617451764	0.0	0.0224111617451764		_
+com.google.javascript.rhino.jstype.JSType#boolean#isEquivalentTo#?,JSType#624	0.022345787545723583	0.0	0.022345787545723583		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#boolean#lookAheadForTypeAnnotation#?#2362	0.01122603868465918	0.01122603868465918	0.022343327784077015	c == '{'	_
+com.google.javascript.jscomp.Compiler#JSError[]#getErrors#?#981	0.02228098212574655	0.0	0.02228098212574655		_
+com.google.javascript.jscomp.BasicErrorManager#JSError[]#getErrors#?#86	0.022279138818018407	0.0	0.022279138818018407		_
+com.google.javascript.jscomp.NodeUtil#InputId#getInputId#?,Node#2869	0.022269929136827068	0.0	0.022269929136827068		_
+com.google.javascript.rhino.Node#boolean#isVar#?#2362	0.022131333406899524	0.0	0.022131333406899524		_
+com.google.javascript.rhino.Node#boolean#isBlock#?#2170	0.0220522670068782	0.0	0.0220522670068782		_
+com.google.javascript.rhino.Node#boolean#getBooleanProp#?,int#809	0.021979349113192898	0.0	0.021979349113192898		_
+com.google.javascript.rhino.Node#boolean#isName#?#2278	0.021879166839686815	0.0	0.021879166839686815		_
+com.google.javascript.jscomp.DiagnosticGroup#boolean#matches#?,DiagnosticType#110	0.021794131485205526	0.0	0.021794131485205526		_
+com.google.javascript.jscomp.DiagnosticType#boolean#equals#?,Object#115	0.021790681682020446	0.0	0.021790681682020446		_
+com.google.javascript.rhino.Node#boolean#isFunction#?#2234	0.021684543705982773	0.0	0.021684543705982773		_
+com.google.javascript.jscomp.Compiler#int#getErrorCount#?#2110	0.02166248500719623	0.0	0.02166248500719623		_
+com.google.javascript.rhino.Node#Node#getParent#?#1305	0.02163036612300163	0.0	0.02163036612300163		_
+com.google.javascript.rhino.Node#int#getChildCount#?#1388	0.021541520906608186	0.0	0.021541520906608186		_
+com.google.javascript.jscomp.Compiler#CompilerInput#putCompilerInput#?,InputId,CompilerInput#1079	0.021538189657704543	0.0	0.021538189657704543		_
+com.google.javascript.jscomp.CompilerInput#InputId#getInputId#?#94	0.021534859953787656	0.0	0.021534859953787656		_
+com.google.javascript.jscomp.CompilerInput#void#setCompiler#?,AbstractCompiler#147	0.02152986829215124	0.0	0.02152986829215124		_
+com.google.javascript.jscomp.JsAst#InputId#getInputId#?#69	0.02152986829215124	0.0	0.02152986829215124		_
+com.google.javascript.jscomp.SourceFile#void#setIsExtern#?,boolean#186	0.02152986829215124	0.0	0.02152986829215124		_
+com.google.javascript.jscomp.CompilerInput#?#CompilerInput#?,SourceFile,boolean#88	0.02152986829215124	0.0	0.02152986829215124		_
+com.google.javascript.jscomp.CompilerInput#?#CompilerInput#?,SourceAst,boolean#65	0.02152986829215124	0.0	0.02152986829215124		_
+com.google.javascript.jscomp.CompilerInput#?#CompilerInput#?,SourceFile#84	0.02152986829215124	0.0	0.02152986829215124		_
+com.google.javascript.rhino.InputId#int#hashCode#?#61	0.021521556564129584	0.0	0.021521556564129584		_
+com.google.javascript.jscomp.JsAst#SourceFile#getSourceFile#?#74	0.021521556564129584	0.0	0.021521556564129584		_
+com.google.javascript.jscomp.PrepareAst#?#PrepareAst#?,AbstractCompiler,boolean#45	0.021491713855208948	0.0	0.021491713855208948		_
+com.google.javascript.rhino.Node#boolean#isObjectLit#?#2302	0.021491713855208948	0.0	0.021491713855208948		_
+com.google.javascript.jscomp.PrepareAst#?#PrepareAst#?,AbstractCompiler#40	0.021491713855208948	0.0	0.021491713855208948		_
+com.google.javascript.jscomp.Compiler#void#prepareAst#?,Node#1943	0.021491713855208948	0.0	0.021491713855208948		_
+com.google.javascript.rhino.Node$IntPropListItem#PropListItem#chain#?,PropListItem#348	0.021490059564796982	0.0	0.021490059564796982		_
+com.google.javascript.jscomp.Compiler#boolean#acceptConstKeyword#?#2017	0.02147188754669436	0.0	0.02147188754669436		_
+com.google.javascript.jscomp.NodeTraversal#String#getSourceName#?,Node#657	0.02147188754669436	0.0	0.02147188754669436		_
+com.google.javascript.jscomp.Compiler#ErrorReporter#getDefaultErrorReporter#?#1598	0.02147188754669436	0.0	0.02147188754669436		_
+com.google.javascript.jscomp.Compiler#boolean#hasHaltingErrors#?#2122	0.02146199494651634	0.0	0.02146199494651634		_
+com.google.javascript.jscomp.JsAst#?#JsAst#?,SourceFile#44	0.02146199494651634	0.0	0.02146199494651634		_
+com.google.javascript.rhino.Node#String#getSourceFileName#?#1085	0.021457053771143726	0.0	0.021457053771143726		_
+com.google.javascript.jscomp.SourceFile#String#getCode#?#132	0.021455407470932525	0.0	0.021455407470932525		_
+com.google.javascript.jscomp.CompilerOptions#LanguageMode#getLanguageIn#?#1445	0.021450470843002563	0.0	0.021450470843002563		_
+com.google.javascript.jscomp.Compiler#boolean#isIdeMode#?#1998	0.021447181650183562	0.0	0.021447181650183562		_
+com.google.javascript.jscomp.NodeTraversal#void#traverse#?,AbstractCompiler,Node,Callback#455	0.0214422506967559	0.0	0.0214422506967559		_
+com.google.javascript.jscomp.NodeTraversal#void#traverse#?,Node#274	0.0214422506967559	0.0	0.0214422506967559		_
+com.google.javascript.rhino.Node#InputId#getInputId#?#1105	0.02144060780124747	0.0	0.02144060780124747		_
+com.google.javascript.jscomp.NodeTraversal#?#NodeTraversal#?,AbstractCompiler,Callback#222	0.02144060780124747	0.0	0.02144060780124747		_
+com.google.javascript.jscomp.SyntacticScopeCreator#?#SyntacticScopeCreator#?,AbstractCompiler#58	0.021437323142813606	0.0	0.021437323142813606		_
+com.google.javascript.jscomp.BasicErrorManager#int#getErrorCount#?#76	0.021422560838887206	0.0	0.021422560838887206		_
+com.google.javascript.rhino.Node#boolean#isScript#?#2322	0.021412736228951155	0.0	0.021412736228951155		_
+com.google.javascript.rhino.Node#Node#getLastChild#?#536	0.0213963918740553	0.0	0.0213963918740553		_
+com.google.javascript.jscomp.SourceFile#String#getName#?#175	0.02137194536585455	0.0	0.02137194536585455		_
+com.google.javascript.jscomp.SourceFile#void#setCode#?,String#148	0.021370318576480862	0.0	0.021370318576480862		_
+com.google.javascript.jscomp.SourceFile#void#setOriginalPath#?,String#156	0.021370318576480862	0.0	0.021370318576480862		_
+com.google.javascript.jscomp.SourceFile#Builder#builder#?#355	0.021370318576480862	0.0	0.021370318576480862		_
+com.google.javascript.jscomp.SourceFile$Preloaded#?#Preloaded#?,String,String,String#423	0.021370318576480862	0.0	0.021370318576480862		_
+com.google.javascript.jscomp.SourceFile$Builder#SourceFile#buildFromCode#?,String,String#391	0.021370318576480862	0.0	0.021370318576480862		_
+com.google.javascript.jscomp.SourceFile#SourceFile#fromCode#?,String,String#323	0.021370318576480862	0.0	0.021370318576480862		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#boolean#isReservedKeyword#?,String#862	0.0213508260349575	0.0	0.0213508260349575		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processName#?,Name#841	0.0213508260349575	0.0	0.0213508260349575		_
+com.google.javascript.jscomp.parsing.IRFactory#Node#newStringNode#?,int,String#1431	0.021341099745164967	0.0	0.021341099745164967		_
+com.google.javascript.rhino.Node#PropListItem#lookupProperty#?,int#753	0.021307162114767603	0.0	0.021307162114767603		_
+com.google.javascript.rhino.Node#void#setIsSyntheticBlock#?,boolean#1903	0.021299105562842438	0.0	0.021299105562842438		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processAstRoot#?,AstRoot#526	0.0212653675656628	0.0	0.0212653675656628		_
+com.google.javascript.jscomp.parsing.IRFactory#Node#createTemplateNode#?#176	0.021249358102002524	0.0	0.021249358102002524		_
+com.google.javascript.rhino.Node#void#setCharno#?,int#1154	0.021249358102002524	0.0	0.021249358102002524		_
+com.google.javascript.jscomp.parsing.IRFactory#Node#justTransform#?,AstNode#458	0.021249358102002524	0.0	0.021249358102002524		_
+com.google.javascript.jscomp.parsing.IRFactory#Node#newNode#?,int#1411	0.021249358102002524	0.0	0.021249358102002524		_
+com.google.javascript.rhino.Node#FileLevelJsDocBuilder#getJsDocBuilderForNode#?#1817	0.0212413669174463	0.0	0.0212413669174463		_
+com.google.javascript.rhino.Node$StringNode#String#getString#?#209	0.02121903947401743	0.0	0.02121903947401743		_
+com.google.javascript.rhino.Node#JSDocInfo#getJSDocInfo#?#1851	0.021198369766727967	0.0	0.021198369766727967		_
+com.google.javascript.rhino.Node#void#putBooleanProp#?,int,boolean#840	0.02118409530265741	0.0	0.02118409530265741		_
+com.google.javascript.jscomp.ComposeWarningsGuard#boolean#enables#?,DiagnosticGroup#153	0.010843334143872592	0.010586901941296991	0.021173803882593982	!(guard.disables(group))	_
+com.google.javascript.jscomp.Compiler#void#initOptions#?,CompilerOptions#275	0.011019660081788105	0.013821069695442011	0.021108894186219113	!(errorManager == null)	_
+com.google.javascript.rhino.Node#Node#getNext#?#540	0.021103747795625728	0.0	0.021103747795625728		_
+com.google.javascript.rhino.Node#Node#newString#?,int,String#508	0.021035158095583564	0.0	0.021035158095583564		_
+com.google.javascript.rhino.Node#int#getCharno#?#1126	0.020994940828816942	0.0	0.020994940828816942		_
+com.google.javascript.rhino.Node#int#getLineno#?#1122	0.020973380699048357	0.0	0.020973380699048357		_
+com.google.javascript.rhino.Node#void#setInputId#?,InputId#1098	0.02088931871468374	0.0	0.02088931871468374		_
+com.google.javascript.rhino.InputId#?#InputId#?,String#52	0.020869596778242055	0.0	0.020869596778242055		_
+com.google.javascript.rhino.Node#Node#clonePropsFrom#?,Node#769	0.02083182645594296	0.0	0.02083182645594296		_
+com.google.javascript.rhino.Node#StaticSourceFile#getStaticSourceFile#?#1091	0.02082580221450527	0.0	0.02082580221450527		_
+com.google.javascript.rhino.Node$ObjectPropListItem#Object#getObjectValue#?#306	0.020809262460669862	0.0	0.020809262460669862		_
+com.google.javascript.rhino.Node#Node#getFirstChild#?#532	0.020789766192327717	0.0	0.020789766192327717		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#createOptionalType#?,JSType#972	0.012968434341511606	0.012968434341511606	0.020778313056989378	!(type instanceof UnknownType || type.isAllType())	_
+com.google.javascript.rhino.Node#int#getType#?#520	0.0207703246198632	0.0	0.0207703246198632		_
+com.google.javascript.rhino.Node#PropListItem#createProp#?,int,int,PropListItem#855	0.020739033894608506	0.0	0.020739033894608506		_
+com.google.javascript.rhino.Node$IntPropListItem#?#IntPropListItem#?,int,int,PropListItem#328	0.020739033894608506	0.0	0.020739033894608506		_
+com.google.javascript.rhino.Node#PropListItem#createProp#?,int,Object,PropListItem#851	0.02065774750561372	0.0	0.02065774750561372		_
+com.google.javascript.rhino.Node$ObjectPropListItem#?#ObjectPropListItem#?,int,Object,PropListItem#296	0.02065774750561372	0.0	0.02065774750561372		_
+com.google.javascript.rhino.Node#void#setStaticSourceFile#?,StaticSourceFile#1076	0.020629888089693446	0.0	0.020629888089693446		_
+com.google.javascript.jscomp.parsing.Config#?#Config#?,Set<String>,Set<String>,boolean,LanguageMode,boolean#76	0.020616730805797765	0.0	0.020616730805797765		_
+com.google.javascript.rhino.Node$AbstractPropListItem#PropListItem#getNext#?#280	0.020568701929955257	0.0	0.020568701929955257		_
+com.google.javascript.rhino.Node$AbstractPropListItem#int#getType#?#275	0.020518127223644142	0.0	0.020518127223644142		_
+com.google.javascript.rhino.Node$AbstractPropListItem#?#AbstractPropListItem#?,int,PropListItem#269	0.020518127223644142	0.0	0.020518127223644142		_
+com.google.javascript.rhino.Node#?#Node#?,int#355	0.0203306912681312	0.0	0.0203306912681312		_
+com.google.javascript.rhino.Node#boolean#hasChild#?,Node#1397	0.009435641951204965	0.009435641951204965	0.01887128390240993	child == n	_
+com.google.javascript.rhino.jstype.VoidType#String#toStringHelper#?,boolean#96	0.018580749724221902	0.0	0.018580749724221902		_
+com.google.javascript.rhino.jstype.VoidType#String#getDisplayName#?#101	0.018580749724221902	0.0	0.018580749724221902		_
+com.google.javascript.jscomp.BasicErrorManager#int#getWarningCount#?#81	0.018164562537493264	0.0	0.018164562537493264		_
+com.google.javascript.rhino.jstype.ObjectType#?#ObjectType#?,JSTypeRegistry#90	0.01812424159423456	0.0	0.01812424159423456		_
+com.google.javascript.rhino.jstype.JSType#ImmutableList<JSType>#getTemplatizedTypes#?#497	0.017924428597928834	0.0	0.017924428597928834		_
+com.google.javascript.rhino.jstype.PrototypeObjectType#?#PrototypeObjectType#?,JSTypeRegistry,String,ObjectType#106	0.017265132641455686	0.0	0.017265132641455686		_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processVariableInitializer#?,VariableInitializer#1157	0.009118456791653153	0.009286768583319926	0.017100938048346996	!(initializerNode.getInitializer() != null)	_
+com.google.javascript.rhino.jstype.JSType#String#toString#?#1466	0.016517647694381472	0.0	0.016517647694381472		_
+com.google.javascript.jscomp.SyntacticScopeCreator#void#declareVar#?,Node#238	0.00819451937152662	0.00819451937152662	0.01638903874305324	!(scope.isDeclared(name,false) || (scope.isLocal() && name.equals(ARGUMENTS)))	_
+com.google.javascript.jscomp.DiagnosticGroupWarningsGuard#boolean#enables#?,DiagnosticGroup#52	0.010608325710812036	0.00792379096383327	0.015842363266259603	group.matches(type)	_
+com.google.javascript.rhino.jstype.InstanceObjectType#boolean#defineProperty#?,String,JSType,boolean,Node#93	0.007895584405313365	0.007895584405313365	0.01579116881062673	!(proto != null && proto.hasOwnDeclaredProperty(name))	_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#boolean#addVarArgs#?,JSType#104	0.007852380790525759	0.007852380790525759	0.015704761581051517	!type.isEmptyType()	_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#boolean#addOptionalParams#?,JSType#80	0.007848026822466853	0.007848026822466853	0.015696053644933705	!(hasVarArgs())	_
+com.google.javascript.jscomp.parsing.IRFactory$TransformDispatcher#Node#processVariableDeclaration#?,VariableDeclaration#1142	0.00781416946502707	0.007814885277740066	0.015629054742767136	!(!config.acceptConstKeyword && declarationNode.getType() == com.google.javascript.rhino.head.Token.CONST)	_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#boolean#addRequiredParams#?,JSType#63	0.007802030664724672	0.007802030664724672	0.015604061329449343	!(hasOptionalOrVarArgs())	_
+com.google.javascript.rhino.jstype.InstanceObjectType#int#hashCode#?#173	0.007730367090608538	0.007730367090608538	0.015460734181217076	hasReferenceName()	_
+com.google.javascript.jscomp.BasicErrorManager#JSError[]#getWarnings#?#91	0.015259619214687173	0.0	0.015259619214687173		_
+com.google.javascript.jscomp.Compiler#JSError[]#getWarnings#?#988	0.015259619214687173	0.0	0.015259619214687173		_
+com.google.javascript.jscomp.Compiler#void#initBasedOnOptions#?#417	0.007607257743127307	0.007641161012852422	0.01524841875597973	!(options.sourceMapOutputPath != null)	_
+com.google.javascript.jscomp.Compiler#void#initInputsByIdMap#?#522	0.007619835561151014	0.007619835561151014	0.015239671122302028	!(previous != null)	_
+com.google.javascript.jscomp.Compiler#void#initModules#?,List<T>,List<JSModule>,CompilerOptions#392	0.007613207886972574	0.007613207886972574	0.015220465630099881	!(modules.size() > 1)	_
+com.google.javascript.jscomp.Compiler#void#fillEmptyModules#?,List<JSModule>#468	0.007607257743127307	0.007608578791629603	0.01521583653475691	!(module.getInputs().isEmpty())	_
+com.google.javascript.jscomp.Compiler#void#checkFirstModule#?,List<JSModule>#445	0.007607257743127307	0.007607257743127307	0.015214515486254614	!(modules.isEmpty())	_
+com.google.javascript.jscomp.TypeCheck#?#TypeCheck#?,AbstractCompiler,ReverseAbstractInterpreter,JSTypeRegistry,CheckLevel,CheckLevel#331	0.014977177193919784	0.0	0.014977177193919784		_
+com.google.javascript.jscomp.ComposeWarningsGuard$GuardComparator#int#compare#?,WarningsGuard,WarningsGuard#64	0.007299464530922297	0.007299464530922297	0.014586128077926079	priorityDiff != 0	_
+com.google.javascript.jscomp.ComposeWarningsGuard#void#addGuard#?,WarningsGuard#90	0.007287824490777101	0.007288405170790036	0.014576229661567137	!(composeGuard.demoteErrors)	_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#Node#newParameterFromNode#?,Node#118	0.013452238537854362	0.0	0.013452238537854362		_
+com.google.javascript.rhino.jstype.FunctionType#boolean#isReturnTypeInferred#?#325	0.01336186912484746	0.0	0.01336186912484746		_
+com.google.javascript.rhino.jstype.UnknownType#boolean#isSubtype#?,JSType#115	0.013294393474083767	0.0	0.013294393474083767		_
+com.google.javascript.rhino.jstype.NumberType#JSType#autoboxesTo#?#117	0.01315561729939764	0.0	0.01315561729939764		_
+com.google.javascript.rhino.jstype.FunctionType#boolean#hasEqualCallType#?,FunctionType#903	0.01312159702703695	0.0	0.01312159702703695		_
+com.google.javascript.rhino.jstype.ObjectType$Property#String#getName#?#624	0.01312159702703695	0.0	0.01312159702703695		_
+com.google.javascript.rhino.jstype.ObjectType$Property#Node#getNode#?#629	0.013087839325038072	0.0	0.013087839325038072		_
+com.google.javascript.rhino.jstype.FunctionType#boolean#isInstanceType#?#186	0.013061019953975416	0.0	0.013061019953975416		_
+com.google.javascript.jscomp.Scope#void#undeclare#?,Var#511	0.012971707132564722	0.0	0.012971707132564722		_
+com.google.javascript.rhino.jstype.ArrowType#boolean#hasAnyTemplateTypesInternal#?#301	0.012861802823771822	0.0	0.012861802823771822		_
+com.google.javascript.rhino.jstype.FunctionType#boolean#hasAnyTemplateTypesInternal#?#1247	0.012861802823771822	0.0	0.012861802823771822		_
+com.google.javascript.rhino.jstype.UnknownType#FunctionType#getConstructor#?#161	0.012842696396550068	0.0	0.012842696396550068		_
+com.google.javascript.rhino.jstype.FunctionType#Node#getSource#?#1079	0.012804737604964377	0.0	0.012804737604964377		_
+com.google.javascript.rhino.JSDocInfo#boolean#isOverride#?#518	0.01280158954404281	0.0	0.01280158954404281		_
+com.google.javascript.rhino.jstype.NoObjectType#ObjectType#getImplicitPrototype#?#95	0.012736011998347835	0.0	0.012736011998347835		_
+com.google.javascript.rhino.jstype.InstanceObjectType#boolean#isInstanceType#?#123	0.012723634918652136	0.0	0.012723634918652136		_
+com.google.javascript.rhino.JSDocInfo#boolean#isImplicitCast#?#582	0.012698988629324323	0.0	0.012698988629324323		_
+com.google.javascript.jscomp.GoogleCodingConvention#boolean#isVarArgsParameter#?,Node#130	0.012656200098332853	0.0	0.012656200098332853		_
+com.google.javascript.jscomp.GoogleCodingConvention#boolean#isOptionalParameter#?,Node#125	0.012656200098332853	0.0	0.012656200098332853		_
+com.google.javascript.rhino.JSTypeExpression#boolean#isOptionalArg#?#86	0.012545165491583023	0.0	0.012545165491583023		_
+com.google.javascript.rhino.JSTypeExpression#boolean#isVarArgs#?#93	0.01253924656438798	0.0	0.01253924656438798		_
+com.google.javascript.rhino.jstype.JSType#boolean#isInterface#?#609	0.012530383861032359	0.0	0.012530383861032359		_
+com.google.javascript.rhino.JSDocInfo#boolean#hasParameterType#?,String#1001	0.012515654358043972	0.0	0.012515654358043972		_
+com.google.javascript.rhino.jstype.FunctionType#int#hashCode#?#899	0.012468866701345411	0.0	0.012468866701345411		_
+com.google.javascript.rhino.Node#boolean#isOptionalArg#?#1895	0.01235698458157593	0.0	0.01235698458157593		_
+com.google.javascript.rhino.jstype.FunctionType#JSType#getReturnType#?#321	0.012297974198582045	0.0	0.012297974198582045		_
+com.google.javascript.rhino.Node#boolean#isVarArgs#?#1877	0.012245305972844083	0.0	0.012245305972844083		_
+com.google.javascript.jscomp.Scope$Var#void#markAssignedExactlyOnce#?#336	0.012220592918446108	0.0	0.012220592918446108		_
+com.google.javascript.rhino.jstype.UnionType#JSType#restrictByNotNullOrUndefined#?#221	0.0121689084875177	0.0	0.0121689084875177		_
+com.google.javascript.rhino.jstype.NullType#JSType#restrictByNotNullOrUndefined#?#84	0.012133920952907253	0.0	0.012133920952907253		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#newNode#?,int#2199	0.01212588967505907	0.0	0.01212588967505907		_
+com.google.javascript.jscomp.FunctionTypeBuilder$AstFunctionContents#void#recordAssignedName#?,String#910	0.012101891189287403	0.0	0.012101891189287403		_
+com.google.javascript.jscomp.parsing.IRFactory#boolean#isExprStmt#?,AstNode#349	0.012088620112601813	0.0	0.012088620112601813		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#boolean#shouldTolerateUndefinedValues#?#229	0.012072752304258166	0.0	0.012072752304258166		_
+com.google.javascript.rhino.jstype.JSType#TemplateType#toMaybeTemplateType#?#449	0.012064841796274876	0.0	0.012064841796274876		_
+com.google.javascript.rhino.jstype.JSType#boolean#isTemplateType#?#441	0.012049067317796997	0.0	0.012049067317796997		_
+com.google.javascript.rhino.jstype.UnionType#Iterable<JSType>#getAlternates#?#93	0.012025521186108383	0.0	0.012025521186108383		_
+com.google.javascript.rhino.jstype.ObjectType#JSType#findPropertyType#?,String#397	0.011940351705851214	0.0	0.011940351705851214		_
+com.google.javascript.rhino.JSDocInfo#void#setReturnType#?,JSTypeExpression#1033	0.011907293486269472	0.0	0.011907293486269472		_
+com.google.javascript.rhino.jstype.JSType#EnumType#toMaybeEnumType#?#402	0.01188960625010703	0.0	0.01188960625010703		_
+com.google.javascript.rhino.JSDocInfo#JSTypeExpression#getReturnType#?#1111	0.011877020657238974	0.0	0.011877020657238974		_
+com.google.javascript.jscomp.Scope$Var#Node#getNameNode#?#243	0.01186197057221936	0.0	0.01186197057221936		_
+com.google.javascript.rhino.Node#?#Node#?,int,Node,int,int#444	0.011841992502339556	0.0	0.011841992502339556		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#Node#wrapNode#?,int,Node#2193	0.011839502334610976	0.0	0.011839502334610976		_
+com.google.javascript.jscomp.Scope$Var#Scope#getScope#?#185	0.011777754222292887	0.0	0.011777754222292887		_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#withTemplateKeys#?,ImmutableList<String>#125	0.011595810494742712	0.0	0.011595810494742712		_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#withReturnType#?,JSType,boolean#105	0.011595810494742712	0.0	0.011595810494742712		_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#withSourceNode#?,Node#78	0.011595810494742712	0.0	0.011595810494742712		_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#withName#?,String#72	0.011593472394004208	0.0	0.011593472394004208		_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#withTypeOfThis#?,JSType#117	0.011503375297914687	0.0	0.011503375297914687		_
+com.google.javascript.rhino.JSDocInfo#void#setType#?,JSTypeExpression#1029	0.01146023606954215	0.0	0.01146023606954215		_
+com.google.javascript.jscomp.parsing.JsDocTokenStream#void#ungetCharIgnoreLineEnd#?,int#440	0.011338043379006107	0.0	0.011338043379006107		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#defineSlot#?,Node,Node,JSType#1059	0.011309728175080887	0.0	0.011309728175080887		_
+com.google.javascript.rhino.Node#boolean#isInc#?#2262	0.01122603868465918	0.0	0.01122603868465918		_
+com.google.javascript.rhino.Node#boolean#isDec#?#2202	0.01122603868465918	0.0	0.01122603868465918		_
+com.google.javascript.jscomp.WarningsGuard#boolean#disables#?,DiagnosticGroup#95	0.011017653405984927	0.0	0.011017653405984927		_
+com.google.javascript.jscomp.WarningsGuard#boolean#enables#?,DiagnosticGroup#106	0.011017653405984927	0.0	0.011017653405984927		_
+com.google.javascript.jscomp.ControlFlowAnalysis#void#handleStmt#?,Node#670	0.010914793348626503	0.0	0.010914793348626503		_
+com.google.javascript.jscomp.DiagnosticGroupWarningsGuard#boolean#disables#?,DiagnosticGroup#45	0.010608325710812036	0.0	0.010608325710812036		_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#withReturnType#?,JSType#97	0.009316949906249124	0.0	0.009316949906249124		_
+com.google.javascript.rhino.Node#boolean#isGetElem#?#2242	0.008594224730725275	0.0	0.008594224730725275		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#createNullableType#?,JSType#1000	0.008438593214748146	0.0	0.008438593214748146		_
+com.google.javascript.jscomp.Scope#Var#declare#?,String,Node,JSType,CompilerInput#480	0.008152745848611406	0.0	0.008152745848611406		_
+com.google.javascript.rhino.Node#boolean#hasMoreThanOneChild#?#1383	0.007951547760375563	0.0	0.007951547760375563		_
+com.google.javascript.rhino.Node#void#setVarArgs#?,boolean#1868	0.007850928662766597	0.0	0.007850928662766597		_
+com.google.javascript.rhino.Node#void#setOptionalArg#?,boolean#1886	0.007846577108439065	0.0	0.007846577108439065		_
+com.google.javascript.rhino.jstype.AllType#boolean#isAllType#?#58	0.007835008245371141	0.0	0.007835008245371141		_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#boolean#hasVarArgs#?#153	0.007822054241065534	0.0	0.007822054241065534		_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#boolean#hasOptionalOrVarArgs#?#146	0.007802030664724672	0.0	0.007802030664724672		_
+com.google.javascript.rhino.jstype.FunctionParamBuilder#Node#newParameter#?,JSType#135	0.007780746554875357	0.0	0.007780746554875357		_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionBuilder#withParamsNode#?,Node#91	0.007717924392063624	0.0	0.007717924392063624		_
+com.google.javascript.rhino.jstype.NoType#boolean#isNoType#?#75	0.007713790158542053	0.0	0.007713790158542053		_
+com.google.javascript.rhino.jstype.FunctionBuilder#?#FunctionBuilder#?,JSTypeRegistry#66	0.007694584533468196	0.0	0.007694584533468196		_
+com.google.javascript.rhino.jstype.FunctionBuilder#FunctionType#build#?#161	0.007694584533468196	0.0	0.007694584533468196		_
+com.google.javascript.rhino.Node#?#Node#?,int,Node#359	0.007655253536243755	0.0	0.007655253536243755		_
+com.google.javascript.jscomp.Compiler#void#init#?,List<T1>,List<T2>,CompilerOptions#357	0.007629143452052899	0.0	0.007629143452052899		_
+com.google.javascript.jscomp.Compiler#List<CompilerInput>#makeCompilerInput#?,List<T>,boolean#426	0.007619835561151014	0.0	0.007619835561151014		_
+com.google.javascript.jscomp.Compiler#List<CompilerInput>#getAllInputsFromModules#?,List<JSModule>#504	0.007607257743127307	0.0	0.007607257743127307		_
+com.google.javascript.jscomp.JSModule#?#JSModule#?,String#64	0.007606597476863587	0.0	0.007606597476863587		_
+com.google.javascript.jscomp.JSModule#void#add#?,SourceFile#94	0.007604617709126885	0.0	0.007604617709126885		_
+com.google.javascript.jscomp.CompilerInput#void#setModule#?,JSModule#328	0.007603298722435994	0.0	0.007603298722435994		_
+com.google.javascript.jscomp.JSModule#void#add#?,CompilerInput#104	0.007603298722435994	0.0	0.007603298722435994		_
+com.google.javascript.jscomp.JSModule#List<CompilerInput>#getInputs#?#205	0.007601980421824016	0.0	0.007601980421824016		_
+com.google.javascript.rhino.Node$IntPropListItem#int#getIntValue#?#333	0.007597371763975862	0.0	0.007597371763975862		_
+com.google.javascript.rhino.jstype.JSTypeRegistry#JSType#createUnionType#?,JSType#1020	0.007584250214002659	0.0	0.007584250214002659		_
+com.google.javascript.jscomp.WarningsGuard#int#getPriority#?#84	0.00729829801640731	0.0	0.00729829801640731		_
+com.google.javascript.jscomp.DiagnosticGroup#Iterable<DiagnosticType>#getTypes#?#129	0.007287824490777101	0.0	0.007287824490777101		_
+com.google.javascript.jscomp.DiagnosticGroups#Map<String,DiagnosticGroup>#getRegisteredGroups#?#64	0.007287824490777101	0.0	0.007287824490777101		_
+com.google.javascript.jscomp.SuppressDocWarningsGuard#?#SuppressDocWarningsGuard#?,Map<String,DiagnosticGroup>#43	0.007287824490777101	0.0	0.007287824490777101		_
+com.google.javascript.jscomp.SuppressDocWarningsGuard#int#getPriority#?#99	0.007287824490777101	0.0	0.007287824490777101		_
+com.google.javascript.jscomp.CompilerOptions#WarningsGuard#getWarningsGuard#?#1111	0.007287824490777101	0.0	0.007287824490777101		_
+com.google.javascript.jscomp.ComposeWarningsGuard#void#addGuards#?,Iterable<WarningsGuard>#105	0.007287824490777101	0.0	0.007287824490777101		_
+com.google.javascript.jscomp.CompilerOptions#boolean#enables#?,DiagnosticGroup#1092	0.007287824490777101	0.0	0.007287824490777101		_
+com.google.javascript.jscomp.DiagnosticGroupWarningsGuard#?#DiagnosticGroupWarningsGuard#?,DiagnosticGroup,CheckLevel#34	0.007286663547003781	0.0	0.007286663547003781		_
+com.google.javascript.jscomp.Compiler#DiagnosticGroups#getDiagnosticGroups#?#2062	0.007286663547003781	0.0	0.007286663547003781		_
+com.google.javascript.jscomp.ComposeWarningsGuard#?#ComposeWarningsGuard#?,List<WarningsGuard>#80	0.007283184041729217	0.0	0.007283184041729217		_
+com.google.javascript.jscomp.ComposeWarningsGuard$GuardComparator#?#GuardComparator#?,Map<WarningsGuard,Integer>#58	0.007283184041729217	0.0	0.007283184041729217		_
+com.google.javascript.jscomp.DiagnosticType#DiagnosticType#warning#?,String,String#65	0.0	0.0	0.0		_
+com.google.javascript.jscomp.parsing.JsDocInfoParser#void#checkExtendedTypes#?,List<ExtendedTypeInfo>#966	0.0	0.0	0.0		_
+com.google.javascript.jscomp.parsing.ParserRunner#Set<String>#extractList#?,String#90	0.0	0.0	0.0		_
+com.google.javascript.jscomp.TypedScopeCreator$AbstractScopeBuilder#void#resolveStubDeclarations#?#1708	0.0	0.0	0.0		_
+com.google.javascript.jscomp.DiagnosticType#?#DiagnosticType#?,String,CheckLevel,MessageFormat#100	0.0	0.0	0.0		_
+com.google.javascript.jscomp.DiagnosticType#DiagnosticType#make#?,String,CheckLevel,String#90	0.0	0.0	0.0		_
+com.google.javascript.jscomp.DiagnosticType#DiagnosticType#error#?,String,String#54	0.0	0.0	0.0		_

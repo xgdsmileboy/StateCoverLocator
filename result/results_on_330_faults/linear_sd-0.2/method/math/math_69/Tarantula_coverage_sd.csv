@@ -1,0 +1,43 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.apache.commons.math.stat.correlation.PearsonsCorrelation#RealMatrix#getCorrelationPValues#?#164	0.9976099426386233	0.9976099426386233	0.9976099426386233	i < nVars	GT
+org.apache.commons.math.stat.correlation.PearsonsCorrelation#RealMatrix#computeCorrelationMatrix#?,RealMatrix#190	0.995706106870229	0.995706106870229	0.995706106870229	!(j < i)	_
+org.apache.commons.math.stat.correlation.PearsonsCorrelation#void#checkSufficientData#?,RealMatrix#275	0.9947569113441372	0.995706106870229	0.9949467504493557	!(nRows < 2 || nCols < 2)	_
+org.apache.commons.math.stat.correlation.PearsonsCorrelation#double#correlation#?,double[],double[]#230	0.9947569113441372	0.995706106870229	0.9949467504493557	(regression.getR())>= 0	_
+org.apache.commons.math.stat.regression.SimpleRegression#double#getR#?#437	0.9938095238095239	0.9952312827849308	0.9940938756046054	(result)>= 0	_
+org.apache.commons.math.stat.regression.SimpleRegression#double#getRSquare#?#456	0.9928639391056137	0.9938095238095239	0.9930530560463958	((ssto - getSumSquaredErrors()) / ssto)> 0	_
+org.apache.commons.math.stat.regression.SimpleRegression#double#getTotalSumSquares#?#354	0.9928639391056137	0.9928639391056137	0.9928639391056138	(sumYY)> 0	_
+org.apache.commons.math.linear.BlockRealMatrix#double[]#getColumn#?,int#1196	0.9923918212077983	0.9923918212077983	0.9923918212077985	!(i < iHeight)	_
+org.apache.commons.math.distribution.TDistributionImpl#double#cumulativeProbability#?,double#139	0.9919201520912547	0.9928639391056137	0.9921089094941266	ret < x	_
+org.apache.commons.math.stat.regression.SimpleRegression#double#getSlope#?#304	0.9909781576448244	0.9923918212077983	0.9912608903574194	(sumXY / sumXX)> 0	_
+org.apache.commons.math.stat.regression.SimpleRegression#void#addData#?,double,double#129	0.9890995260663508	0.9990426041168023	0.9907133052857007	sumYY == dx	_
+org.apache.commons.math.stat.regression.SimpleRegression#double#getSumSquaredErrors#?#337	0.9890995260663508	0.9914489311163897	0.9895694070763587	(Math.max(0d,sumYY - sumXY * sumXY / sumXX))> 0	_
+org.apache.commons.math.linear.BlockRealMatrix#void#setEntry#?,int,int,double#1259	0.9890995260663508	0.9890995260663508	0.9890995260663509	blocks[iBlock * blockColumns + jBlock][k] == value	_
+org.apache.commons.math.stat.regression.SimpleRegression#void#setDistribution#?,TDistribution#617	0.9867612293144208	0.9867612293144208	0.9867612293144208	!(n > 2)	_
+org.apache.commons.math.distribution.TDistributionImpl#?#TDistributionImpl#?,double,double#63	0.9853635505193579	0.9853635505193579	0.985363550519358	solverAbsoluteAccuracy <= degreesOfFreedom	_
+org.apache.commons.math.linear.BlockRealMatrix#double#getEntry#?,int,int#1242	0.9811941701927598	0.9914489311163897	0.9832451223774858	(blocks[iBlock * blockColumns + jBlock][k])== 0	_
+org.apache.commons.math.distribution.TDistributionImpl#void#setDegreesOfFreedomInternal#?,double#88	0.9770599250936329	0.9770599250936329	0.9770599250936329	!(newDegreesOfFreedom <= 0.0)	_
+org.apache.commons.math.special.Beta#double#logBeta#?,double,double,double,int#195	0.9729603729603729	0.9784341303328646	0.9740551244348713	ret <= epsilon	_
+org.apache.commons.math.special.Beta#double#regularizedBeta#?,double,double,double,double,int#125	0.9738684087727485	0.9761459307764266	0.9738684087727485	!(x > (a + 1.0) / (a + b + 2.0))	_
+org.apache.commons.math.linear.BlockRealMatrix#?#BlockRealMatrix#?,int,int#99	0.9702463970246397	0.9798122065727699	0.9721595589342658	this.rows == columns	_
+org.apache.commons.math.special.Beta#double#regularizedBeta#?,double,double,double#54	0.9702463970246397	0.9761459307764266	0.9714263037749971	(regularizedBeta(x,a,b,DEFAULT_EPSILON,Integer.MAX_VALUE))> 0	_
+org.apache.commons.math.linear.BlockRealMatrix#double[][]#createBlocksLayout#?,int,int#276	0.9702463970246397	0.9702463970246397	0.9702463970246398	jBlock < blockColumns	_
+org.apache.commons.math.linear.BlockRealMatrix#double[][]#toBlocksLayout#?,double[][]#241	0.9555860805860805	1.0	0.9644688644688644	index == iBlock	_
+org.apache.commons.math.linear.BlockRealMatrix#?#BlockRealMatrix#?,int,int,double[][],boolean#153	0.9542752629172383	1.0	0.9634202103337908	blockRows > columns	_
+org.apache.commons.math.util.ContinuedFraction#double#evaluate#?,double,double,int#194	0.9538391224862888	0.9784341303328646	0.958758124055604	p1 < c	_
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#109	0.9490677580718507	0.9909781576448244	0.9574498379864456	ret > tmp	_
+org.apache.commons.math.linear.BlockRealMatrix#int#blockHeight#?,int#1675	0.9507972665148063	0.9507972665148063	0.9507972665148063	((blockRow == blockRows - 1) ? rows - blockRow * BLOCK_SIZE : BLOCK_SIZE)>= 0	_
+org.apache.commons.math.linear.BlockRealMatrix#int#getColumnDimension#?#1351	0.9494995450409464	0.9494995450409464	0.9494995450409465	(columns)> 0	_
+org.apache.commons.math.linear.BlockRealMatrix#int#getRowDimension#?#1345	0.9490677580718507	0.9490677580718507	0.9490677580718508	(rows)> 0	_
+org.apache.commons.math.linear.BlockRealMatrix#int#blockWidth#?,int#1684	0.946485260770975	0.946485260770975	0.9464852607709751	((blockColumn == blockColumns - 1) ? columns - blockColumn * BLOCK_SIZE : BLOCK_SIZE)>= 0	_
+org.apache.commons.math.linear.MatrixUtils#void#checkColumnIndex#?,AnyMatrix,int#544	0.9456275487086543	0.9456275487086543	0.9456275487086543	!(column < 0 || column >= m.getColumnDimension())	_
+org.apache.commons.math.linear.AbstractRealMatrix#?#AbstractRealMatrix#?,int,int#61	0.8757868233319346	0.8757868233319346	0.8757868233319346	!(columnDimension <= 0)	_
+org.apache.commons.math.stat.correlation.PearsonsCorrelation#?#PearsonsCorrelation#?,double[][]#68	1.0	0.0	0.8		_
+org.apache.commons.math.stat.correlation.PearsonsCorrelation#?#PearsonsCorrelation#?,RealMatrix#80	0.995706106870229	0.0	0.7965648854961832		_
+org.apache.commons.math.stat.regression.SimpleRegression#?#SimpleRegression#?,TDistribution#104	0.9867612293144208	0.0	0.7894089834515366		_
+org.apache.commons.math.stat.regression.SimpleRegression#?#SimpleRegression#?#94	0.9867612293144208	0.0	0.7894089834515366		_
+org.apache.commons.math.distribution.TDistributionImpl#?#TDistributionImpl#?,double#71	0.9853635505193579	0.0	0.7882908404154864		_
+org.apache.commons.math.distribution.TDistributionImpl#void#setDegreesOfFreedom#?,double#81	0.9802724283701267	0.0	0.7842179426961015		_
+org.apache.commons.math.distribution.AbstractContinuousDistribution#?#AbstractContinuousDistribution#?#53	0.9738684087727485	0.0	0.7790947270181988		_
+org.apache.commons.math.distribution.AbstractDistribution#?#AbstractDistribution#?#39	0.9693450998606595	0.0	0.7754760798885276		_
+org.apache.commons.math.linear.BlockRealMatrix#?#BlockRealMatrix#?,double[][]#126	0.9555860805860805	0.0	0.7644688644688644		_
+org.apache.commons.math.util.ContinuedFraction#?#ContinuedFraction#?#46	0.9538391224862888	0.0	0.7630712979890311		_
