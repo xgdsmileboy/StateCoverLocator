@@ -97,7 +97,7 @@ public class Constant {
 	public static String PROJECT_HOME = null;
 	
 	// project properties
-	public static final String [] PROJECT_NAME = {"chart", "closure", "lang", "math", "time", "mockito"};
+	public static final String [] PROJECT_NAME = {"chart", "closure", "lang", "math", "time"};
 	public static Map<String, ProjectProperties> PROJECT_PROP = new HashMap<String, ProjectProperties>();
 	public static Map<String, Integer> BUG_NUMBER = new HashMap<String, Integer>();
 
