@@ -274,8 +274,8 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 
 			SwitchStatement switchStatement = (SwitchStatement) statement;
 
-			int lineNumber = _cu.getLineNumber(switchStatement.getExpression().getStartPosition());
-			Block block = genSwitchStatementInstrument(switchStatement, methodID, lineNumber);
+//			int lineNumber = _cu.getLineNumber(switchStatement.getExpression().getStartPosition());
+//			Block block = genSwitchStatementInstrument(switchStatement, methodID, lineNumber);
 
 			List<ASTNode> statements = new ArrayList<>();
 			AST ast = AST.newAST(Constant.AST_LEVEL);
@@ -292,8 +292,8 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 				}
 			}
 			
-			block.statements().add(ASTNode.copySubtree(block.getAST(), switchStatement));
-			result.add(block);
+//			block.statements().add(ASTNode.copySubtree(block.getAST(), switchStatement));
+			result.add(switchStatement);
 		} else if (statement instanceof TryStatement) {
 
 			TryStatement tryStatement = (TryStatement) statement;
@@ -504,20 +504,20 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		}
 	}
 	
-	private Block genSwitchStatementInstrument(SwitchStatement node, String methodID, int line) {
-		Block  block = ast.newBlock();
-		String tempVarName = GenName.genVariableName(line);
-		String originalExpr = node.getExpression().toString();
-		ASTNode assign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.SWITCH);
-		if (assign == null) {
-//			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
-			return block;
-		}
-		node.setExpression((Expression) node.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
-		block.statements().add(assign);
-		addPredicates(block, tempVarName, methodID, line, PredicateStatement.SWITCH, originalExpr);
-		return block;
-	}
+//	private Block genSwitchStatementInstrument(SwitchStatement node, String methodID, int line) {
+//		Block  block = ast.newBlock();
+//		String tempVarName = GenName.genVariableName(line);
+//		String originalExpr = node.getExpression().toString();
+//		ASTNode assign = genDeclarationAssignment(node.getExpression(), tempVarName, PredicateStatement.SWITCH);
+//		if (assign == null) {
+////			block.statements().add(ASTNode.copySubtree(block.getAST(), node));
+//			return block;
+//		}
+//		node.setExpression((Expression) node.copySubtree(node.getAST(), ast.newSimpleName(tempVarName)));
+//		block.statements().add(assign);
+//		addPredicates(block, tempVarName, methodID, line, PredicateStatement.SWITCH, originalExpr);
+//		return block;
+//	}
 	
 	private Block genReturnStatementInstrument(ReturnStatement node, String methodID, int line) {
 		Block  block = ast.newBlock();

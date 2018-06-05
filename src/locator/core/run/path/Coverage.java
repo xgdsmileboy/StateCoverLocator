@@ -424,28 +424,28 @@ public class Coverage {
                 for(String p : conditionPredicates) {
                 	predicates.add(new Pair<String, String>(p, "1"));
                 }
-                if (!otherPredicates.isEmpty()) {
+//                if (!otherPredicates.isEmpty()) {
                 	for(List<String> otherPredicate : otherPredicates) {
-                		int pos = otherPredicate.get(0).indexOf("#");
-                        if (validatePredicateByInMemCompile(otherPredicate.get(0).substring(0, pos), source, fileName, relJavaPath,
-                                line, subject)) {
+//                		int pos = otherPredicate.get(0).indexOf("#");
+//                        if (validatePredicateByInMemCompile(otherPredicate.get(0).substring(0, pos), source, fileName, relJavaPath,
+//                                line, subject)) {
                             for (String p : otherPredicate) {
                                 predicates.add(new Pair<String, String>(p, "1"));
                             }
-                        }
+//                        }
                 	}
-                }
-                if (!assignmentPredicates.isEmpty()) {
+//                }
+//                if (!assignmentPredicates.isEmpty()) {
                     for (List<String> similarPredicates : assignmentPredicates) {
-                    	int pos = similarPredicates.get(0).indexOf("#");
-                        if (validatePredicateByInMemCompile(similarPredicates.get(0).substring(0,  pos), source, fileName, relJavaPath,
-                                line, subject)) {
+//                    	int pos = similarPredicates.get(0).indexOf("#");
+//                        if (validatePredicateByInMemCompile(similarPredicates.get(0).substring(0,  pos), source, fileName, relJavaPath,
+//                                line, subject)) {
                             for (String p : similarPredicates) {
                                 predicates.add(new Pair<String, String>(p, "1"));
                             }
-                        }
+//                        }
                     }
-                }
+//                }
                 line2Predicate.put(line, predicates);
                 file2Line2Predicates.put(fileName, line2Predicate);
             }

@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.SwitchStatement;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
@@ -84,7 +85,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		int start = _cu.getLineNumber(node.getStartPosition());
 		if (start == _line) {
 			Expression expr = node.getExpression();
-			if (expr != null) {
+			if (expr != null && isComparableType(expr.resolveTypeBinding())) {
 				String condition = expr.toString();
 				_predicates.add(getPredicateForReturns(condition));
 			}
@@ -142,15 +143,15 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 		return true;
 	}
 	
-	public boolean visit(SwitchStatement node) {
-		int start = _cu.getLineNumber(node.getExpression().getStartPosition());
-		if (start == _line) {
-			Expression expr = node.getExpression();
-			String condition = expr.toString();
-			_predicates.add(getPredicateForConditions(condition));
-		}
-		return true;
-	}
+//	public boolean visit(SwitchStatement node) {
+//		int start = _cu.getLineNumber(node.getExpression().getStartPosition());
+//		if (start == _line) {
+//			Expression expr = node.getExpression();
+//			String condition = expr.toString();
+//			_predicates.add(getPredicateForConditions(condition));
+//		}
+//		return true;
+//	}
 	
 	public boolean visit(Assignment node) {
 		int start = _cu.getLineNumber(node.getStartPosition());
@@ -158,7 +159,7 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 			Expression expr = node.getLeftHandSide();
 			if (expr != null) {
 				ITypeBinding type = expr.resolveTypeBinding();
-				if (type.isPrimitive()) {
+				if (isComparableType(type)) {
 					_leftVars.add(new Pair<String, String>(expr.toString(), type.getName()));
 				}
 			}
@@ -175,12 +176,12 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 				if (expr != null) {
 					ITypeBinding type = expr.resolveTypeBinding();
 					if(type != null) {
-						if (type.isPrimitive()) {
+						if (isComparableType(type)) {
 							_leftVars.add(new Pair<String, String>(fragment.getName().getFullyQualifiedName(), type.getName()));
 						}
 					} else if(fragment.resolveBinding() != null) {
 						type = fragment.resolveBinding().getType();
-						if(type != null && type.isPrimitive()) {
+						if(type != null && isComparableType(type)) {
 							_leftVars.add(new Pair<String, String>(fragment.getName().getFullyQualifiedName(), type.getName()));
 						}
 					}
@@ -222,5 +223,29 @@ public class StatisticalDebuggingPredicatesVisitor extends ASTVisitor {
 			}
 		}
 		return predicates;
+	}
+	
+	private boolean isComparableType(ITypeBinding type) {
+		if (type == null) {
+			return false;
+		}
+		switch(type.getName()) {
+		case "byte":
+		case "char":
+		case "int":
+		case "short":
+		case "long":
+		case "float":
+		case "double":
+		case "Byte":
+		case "Char":
+		case "Short":
+		case "Integer":
+		case "Long":
+		case "Float":
+		case "Double":
+			return true;
+		}
+		return false;
 	}
 }
