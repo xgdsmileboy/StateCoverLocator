@@ -11,6 +11,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.bcel.internal.generic.ReturnInstruction;
+
 import locator.common.config.Constant;
 
 /**
@@ -65,6 +67,10 @@ public class Subject {
 		return _id;
 	}
 
+	public String getNameAndId() {
+		return _name + "_" + _id;
+	}
+	
 	public String getSsrc() {
 		return _ssrc;
 	}

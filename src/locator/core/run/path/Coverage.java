@@ -31,11 +31,11 @@ import locator.common.java.Subject;
 import locator.common.util.CmdFactory;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.common.util.Utils;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.predict.Predictor;
 import locator.inst.visitor.BranchInstrumentVisitor;
-import locator.inst.visitor.DeInstrumentVisitor;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.NewPredicateInstrumentVisitor;
 import locator.inst.visitor.NewTestMethodInstrumentVisitor;
@@ -54,32 +54,45 @@ public class Coverage {
 
     private final static String __name__ = "@Coverage ";
 
-    public static Map<String, CoverInfo> computeOriginalCoverage(Subject subject,
-            Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods, Class visitor) {
-        // initialize coverage information
-        Map<String, CoverInfo> coverage = new HashMap<>();
+	/**
+	 * compute the original coverage information of statements, it can compute the
+	 * traditional statement coverage and branch coverage based on the argument
+	 * {@code visitor}
+	 * 
+	 * @param subject:
+	 *            subject to be tested
+	 * @param failedTestAndCoveredMethods
+	 *            : a pair that contains the ids of failed test cases and covered
+	 *            methods by failed test cases.
+	 * @param visitor
+	 *            : class of {@code BranchInstrumentVisitor} or
+	 *            {@code StatementInstrumentVisitor}
+	 * @return
+	 */
+	public static Map<String, CoverInfo> computeOriginalCoverage(Subject subject,
+			Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods, Class visitor) {
 
         String src = subject.getHome() + subject.getSsrc();
         String test = subject.getHome() + subject.getTsrc();
 
         TraversalVisitor traversalVisitor = null;
         if(visitor == BranchInstrumentVisitor.class) {
-        		traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        	traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
         } else {
-        		traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        	traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
         }
         // instrument those methods ran by failed tests
-//        StatementInstrumentVisitor statementInstrumentVisitor = new StatementInstrumentVisitor(
-//                failedTestAndCoveredMethods.getSecond());
         Instrument.execute(src, traversalVisitor);
 
         NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(
                 failedTestAndCoveredMethods.getFirst(), false);
         Instrument.execute(test, newTestMethodInstrumentVisitor);
+        
         // delete all bin file to make it re-compiled
         ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getSbin());
         ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getTbin());
         ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
+        
         if (!Runner.testSuite(subject)) {
             System.err.println(__name__ + "Failed to compute original coverage information for build failed.");
             System.exit(0);
@@ -87,131 +100,10 @@ public class Coverage {
 
         ExecuteCommand.copyFolder(src + "_ori", src);
         ExecuteCommand.copyFolder(test + "_ori", test);
-        // Instrument.execute(src, new DeInstrumentVisitor());
-        // Instrument.execute(test, new DeInstrumentVisitor());
 
         return ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE, new HashSet<Integer>());
     }
 
-    /**
-     * compute coverage information for each statement
-     * 
-     * @param subject
-     *            : subject to be computed
-     * @param allTests
-     *            : contains all test cases, the first set should be failed test
-     *            cases and the second set should be the passed test cases
-     * @return a map for each statement with its coverage information
-     */
-    // public static Map<String, CoverInfo> computeCoverage(Subject subject,
-    // Pair<Set<Integer>, Set<Integer>> allTests) {
-    // // compute path for failed test cases
-    // Set<Method> failedPath = Collector.collectCoveredMethod(subject,
-    // allTests.getFirst());
-    //
-    // // //TODO : for debugging
-    // // for(Method method : failedPath){
-    // // System.out.println(method);
-    // // }
-    //
-    // // initialize coverage information
-    // Map<String, CoverInfo> coverage = new HashMap<>();
-    //
-    // // instrument those methods ran by failed tests
-    // StatementInstrumentVisitor statementInstrumentVisitor = new
-    // StatementInstrumentVisitor(failedPath);
-    // Instrument.execute(subject.getHome() + subject.getSsrc(),
-    // statementInstrumentVisitor);
-    //
-    // // run all failed test
-    // int allTestCount = allTests.getFirst().size();
-    // int currentCount = 1;
-    // for (Integer failedTestID : allTests.getFirst()) {
-    // String testString = Identifier.getMessage(failedTestID);
-    //
-    // System.out.println("Failed test [" + currentCount + " / " + allTestCount
-    // + "] : " + testString);
-    // currentCount ++;
-    //
-    // String[] testInfo = testString.split("#");
-    // if (testInfo.length < 4) {
-    // LevelLogger.error(__name__ + "#computeCoverage test format error : " +
-    // testString);
-    // System.exit(0);
-    // }
-    // String testcase = testInfo[0] + "::" + testInfo[2];
-    // // run each test case and collect all test statements covered
-    // try {
-    // ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject,
-    // testcase));
-    // } catch (Exception e) {
-    // LevelLogger.fatal(__name__ + "#computeCoverage run test suite failed !",
-    // e);
-    // }
-    //
-    // Map<String, Integer> tmpCover = ExecutionPathBuilder
-    // .collectAllExecutedStatements(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-    // for (Entry<String, Integer> entry : tmpCover.entrySet()) {
-    // String statement = entry.getKey();
-    // Integer coverCount = entry.getValue();
-    // CoverInfo coverInfo = coverage.get(statement);
-    // if (coverInfo == null) {
-    // coverInfo = new CoverInfo();
-    // coverInfo.failedAdd(coverCount);
-    // coverage.put(statement, coverInfo);
-    // } else {
-    // coverInfo.failedAdd(coverCount);
-    // }
-    // }
-    // }
-    //
-    // allTestCount = allTests.getSecond().size();
-    // currentCount = 1;
-    // // run all passed test
-    // for (Integer passTestID : allTests.getSecond()) {
-    // String testString = Identifier.getMessage(passTestID);
-    //
-    // System.out.println("Passed test [" + currentCount + " / " + allTestCount
-    // + "] : " + testString);
-    // currentCount ++;
-    //
-    // String[] testInfo = testString.split("#");
-    // if (testInfo.length < 4) {
-    // LevelLogger.error(__name__ + "#computeCoverage test format error : " +
-    // testString);
-    // System.exit(0);
-    // }
-    // String testcase = testInfo[0] + "::" + testInfo[2];
-    // // run each test case and collect all test statements covered
-    // try {
-    // ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSingleCmd(subject,
-    // testcase));
-    // } catch (Exception e) {
-    // LevelLogger.fatal(__name__ + "#computeCoverage run test suite failed !",
-    // e);
-    // }
-    //
-    // Map<String, Integer> tmpCover = ExecutionPathBuilder
-    // .collectAllExecutedStatements(Constant.STR_TMP_INSTR_OUTPUT_FILE);
-    // for (Entry<String, Integer> entry : tmpCover.entrySet()) {
-    // String statement = entry.getKey();
-    // Integer coverCount = entry.getValue();
-    // CoverInfo coverInfo = coverage.get(statement);
-    // if (coverInfo == null) {
-    // coverInfo = new CoverInfo();
-    // coverInfo.passedAdd(coverCount);
-    // coverage.put(statement, coverInfo);
-    // } else {
-    // coverInfo.passedAdd(coverCount);
-    // }
-    // }
-    // }
-    //
-    // Instrument.execute(subject.getHome() + subject.getSsrc(), new
-    // DeInstrumentVisitor());
-    //
-    // return coverage;
-    // }
 
     /**
      * get all statements covered by given test cases
@@ -224,8 +116,6 @@ public class Coverage {
      */
     public static Set<String> getAllCoveredStatement(Subject subject, Set<Integer> testcases) {
         Set<String> coveredStatement = new HashSet<>();
-        // Set<Method> coveredMethod = Collector.collectCoveredMethod(subject,
-        // testcases);
 
         // instrument those methods ran by failed tests
         // StatementInstrumentVisitor statementInstrumentVisitor = new
@@ -238,8 +128,7 @@ public class Coverage {
         for (Integer testID : testcases) {
             String testString = Identifier.getMessage(testID);
 
-            LevelLogger.info("Test [" + currentCount + " / " + allTestCount + "] : " + testString);
-            currentCount++;
+            LevelLogger.info("Test [" + (currentCount ++) + " / " + allTestCount + "] : " + testString);
 
             String[] testInfo = testString.split("#");
             if (testInfo.length < 4) {
@@ -261,7 +150,6 @@ public class Coverage {
                 coveredStatement.add(statement);
             }
         }
-        Instrument.execute(subject.getHome() + subject.getSsrc(), new DeInstrumentVisitor());
         return coveredStatement;
     }
 
@@ -277,8 +165,7 @@ public class Coverage {
             Set<Integer> failedTests, boolean useStatisticalDebugging, boolean useSober) {
         String srcPath = subject.getHome() + subject.getSsrc();
         String testPath = subject.getHome() + subject.getTsrc();
-        NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests,
-                useSober);
+        NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests, useSober);
         Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 
         Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = null;
@@ -290,10 +177,10 @@ public class Coverage {
 			file2Line2Predicates = useStatisticalDebugging ? getStatisticalDebuggingPredicates(subject, allStatements)
 					: getAllPredicates(subject, allStatements, useSober);
 			long duration = System.currentTimeMillis() - start;
-			LevelLogger.info("Predicate validation time : " + transformMilli2Time(duration));
+			LevelLogger.info("Predicate validation time : " + Utils.transformMilli2Time(duration));
 		}
         System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
-        printInfo(file2Line2Predicates, subject, useStatisticalDebugging);
+        printPredicateInfo(file2Line2Predicates, subject, useStatisticalDebugging);
         // Delete empty file and line.
         // Please DO NOT comment out the following line! 2018/01/01
         file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
@@ -332,9 +219,6 @@ public class Coverage {
         // result is the same with original project
         if (!Runner.testSuite(subject)) {
             System.out.println("Build failed by predicates : ");
-            // printInfo(file2Line2Predicates);
-            // should be failed
-            // System.exit(0);
             String file = Constant.HOME + "/rlst.log";
             JavaFile.writeStringToFile(file,
                     "Project : " + subject.getName() + "_" + subject.getId() + " Build failed by predicates!\n", true);
@@ -345,26 +229,11 @@ public class Coverage {
             // printInfo(file2Line2Predicates);
             // System.exit(0);
             String file = Constant.HOME + "/rlst.log";
-            JavaFile.writeStringToFile(file,
-                    "Project : " + subject.getName() + "_" + subject.getId() + " Different test result!\n", true);
-            String diff_result_error = Constant.HOME + "/info/" + subject.getName() + "_" + subject.getId() + "_diff.log";
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append("Project : " + subject.getName() + "_" + subject.getId() + "\n");
-            stringBuffer.append("---Original failed test cases : \n");
-            for(Integer integer : failedTests) {
-            		stringBuffer.append(Identifier.getMessage(integer) + "\n");
-            }
-            stringBuffer.append("---Failed test cases after instrument: \n");
-            for(Integer integer : Collector.findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE)) {
-        			stringBuffer.append(Identifier.getMessage(integer) + "\n");
-            }
-            JavaFile.writeStringToFile(diff_result_error, stringBuffer.toString());
-            String content = JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE);
-            JavaFile.writeStringToFile(diff_result_error, "---test out:\n" + content, true);
+            JavaFile.writeStringToFile(file, "Project : " + subject.getNameAndId() + " Different test result!\n", true);
+            logErrorInfo(subject, failedTests);
         } else {
             String file = Constant.HOME + "/rlst.log";
-            JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Success!\n",
-                    true);
+            JavaFile.writeStringToFile(file, "Project : " + subject.getNameAndId() + " Success!\n", true);
         }
 
         Map<String, CoverInfo> coverage = null;
@@ -374,21 +243,34 @@ public class Coverage {
 
         ExecuteCommand.copyFolder(srcPath + "_ori", srcPath);
         ExecuteCommand.copyFolder(testPath + "_ori", testPath);
-        // Instrument.execute(testPath, new DeInstrumentVisitor());
-        // Instrument.execute(subject.getHome() + subject.getSsrc(), new
-        // DeInstrumentVisitor());
         return coverage;
     }
     
-    private static String transformMilli2Time(long milliSecond) {
-    	long milli = milliSecond % 1000;
-    	milliSecond /= 1000;
-    	long second = milliSecond % 60;
-    	milliSecond /= 60;
-    	long minutes = milliSecond;
-    	return minutes + ":" + second + ":" + milli;
+	/**
+	 * log error information when the predicates cause different test results
+	 * 
+	 * @param subject
+	 *            : the subject to test
+	 * @param failedTests
+	 *            : the ids of failed test cases
+	 */
+	private static void logErrorInfo(Subject subject, Set<Integer> failedTests) {
+		String subjectNameAndId = subject.getNameAndId();
+         String diff_result_error = Constant.HOME + "/info/" + subjectNameAndId + "_diff.log";
+         StringBuffer stringBuffer = new StringBuffer();
+         stringBuffer.append("Project : " + subjectNameAndId + "\n");
+         stringBuffer.append("---Original failed test cases : \n");
+         for(Integer integer : failedTests) {
+         	stringBuffer.append(Identifier.getMessage(integer) + "\n");
+         }
+         stringBuffer.append("---Failed test cases after instrument: \n");
+         for(Integer integer : Collector.findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE)) {
+     		stringBuffer.append(Identifier.getMessage(integer) + "\n");
+         }
+         stringBuffer.append(JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE));
+         JavaFile.writeStringToFile(diff_result_error, stringBuffer.toString());
     }
-
+    
     private static Map<String, Map<Integer, List<Pair<String, String>>>> getStatisticalDebuggingPredicates(
             Subject subject, Set<String> allStatements) {
         String srcPath = subject.getHome() + subject.getSsrc();
@@ -707,7 +589,7 @@ public class Coverage {
         return file2Line2Predicates;
     }
 
-    private static void printInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
+    private static void printPredicateInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
             Subject subject, boolean useStatisticalDebugging) {
         System.out.println("\n------------------------begin predicate info------------------------\n");
 
