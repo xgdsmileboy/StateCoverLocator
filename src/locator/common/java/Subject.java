@@ -117,13 +117,13 @@ public class Subject {
 	}
 	
 	public String getVarFeatureOutputPath() {
-		String file = Constant.STR_ML_VAR_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
+		String file = Constant.STR_ML_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
 				+ _id + ".var.csv";
 		return file;
 	}
 
 	public String getExprFeatureOutputPath() {
-		String file = Constant.STR_ML_EXP_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
+		String file = Constant.STR_ML_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
 				+ _id + ".expr.csv";
 		return file;
 	}

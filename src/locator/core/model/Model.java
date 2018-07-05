@@ -37,7 +37,7 @@ import locator.inst.visitor.feature.NewExprFilter;
 public abstract class Model {
 
 	protected String _modelPath = Constant.STR_ML_HOME + "/model/";
-	protected String _outPath = Constant.STR_ML_VAR_OUT_FILE_PATH;
+	protected String _outPath = Constant.STR_ML_OUT_FILE_PATH;
 	protected String _inPath = Constant.STR_ML_PREDICT_EXP_PATH;
 	protected static Set<String> _uniqueFeatures = new HashSet<>();
 	protected String __name__ = "@Model ";
@@ -46,11 +46,19 @@ public abstract class Model {
 	protected Model(String modelName) {
 		_modelName = modelName;
 		_modelPath = Constant.STR_ML_HOME + "/" + modelName;
-		_outPath = Constant.STR_ML_EXP_OUT_FILE_PATH + "/" + modelName;
+		_outPath = Constant.STR_ML_OUT_FILE_PATH + "/" + modelName;
 		_inPath = Constant.STR_ML_PREDICT_EXP_PATH + "/" + modelName;
 	}
 	
-
+	public String getDataOutPath() {
+		return _outPath;
+	}
+	
+	public String getPredictRsltPath() {
+		return _inPath;
+	}
+	
+	
 	public abstract void trainModel(Subject subject);
 	public abstract void evaluate(Subject subject);
 	

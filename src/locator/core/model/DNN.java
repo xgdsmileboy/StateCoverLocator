@@ -68,14 +68,14 @@ public class DNN extends Model {
 		}
 		// get train features
 		String srcPath = subject.getHome() + subject.getSsrc();
-		String outPath = _outPath + "/" + subject.getName() + "/" + subject.getName() + "_" + subject.getId();
+		String outPath = _outPath + "/" + subject.getName() + "/" + subject.getNameAndId();
 
 		// create necessary directories
 		Utils.pathGuarantee(outPath + "/var", outPath + "/expr", outPath + "/cluster", outPath + "/pred",
 				subject.getPredictResultDir());
 
-		String targetVarPath = outPath + "/var/" + subject.getName() + "_" + subject.getId() + ".var.csv";
-		String targetExprPath = outPath + "/expr/" + subject.getName() + "_" + subject.getId() + ".expr.csv";
+		String targetVarPath = outPath + "/var/" + subject.getNameAndId() + ".var.csv";
+		String targetExprPath = outPath + "/expr/" + subject.getNameAndId() + ".expr.csv";
 
 		FeatureGenerator.generateTrainFeature(srcPath, targetVarPath, targetExprPath);
 		return true;
