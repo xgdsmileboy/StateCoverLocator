@@ -50,6 +50,10 @@ public abstract class Model {
 		_inPath = Constant.STR_ML_PREDICT_EXP_PATH + "/" + modelName;
 	}
 	
+	public String getModelName() {
+		return _modelName;
+	}
+	
 	public String getDataOutPath() {
 		return _outPath;
 	}
