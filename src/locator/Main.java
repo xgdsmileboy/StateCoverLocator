@@ -182,7 +182,7 @@ public class Main {
 	}
 
 	private static List<Subject> getTestSubject(String[] args) {
-		List<Subject> allSubjects = null;
+		List<Subject> allSubjects = new ArrayList<>();
 		if(args.length > 0) {
 			if(args.length == 1) {
 				allSubjects = ProjectSelector.select(args[0]);
