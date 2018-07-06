@@ -42,7 +42,6 @@ public class Collector {
 	 * the <p>ids of covered methods</p> 
 	 */
 	public static Pair<Set<Integer>, Set<Integer>> collectFailedTestAndCoveredMethod(Subject subject){
-		Pair<Set<Integer>, Set<Integer>> testsAndMethods = new Pair<>();
 		// run all test
 		try {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
