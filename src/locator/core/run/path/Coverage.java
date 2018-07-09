@@ -167,52 +167,53 @@ public class Coverage {
         NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests, useSober);
         Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 
-        Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = null;
-        if (Constant.RECOVER_PREDICATE_FROM_FILE) {
-            file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
-        }
-		if (file2Line2Predicates == null) {
-			long start = System.currentTimeMillis();
-			if(useStatisticalDebugging) {
-				file2Line2Predicates = new HashMap<>();
-				Map<String, List<Integer>> file2LocationList = mapLocations2File(allStatements, srcPath);
-				NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(useSober);
-	            for (Entry<String, List<Integer>> entry : file2LocationList.entrySet()) {
-	                String fileName = entry.getKey();
-	                String relJavaPath = fileName.substring(srcPath.length() + 1);
-	                Set<Integer> locations = new HashSet<>(entry.getValue());
-	                CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSourceWithType(
-	                        JavaFile.readFileToString(fileName), ASTParser.K_COMPILATION_UNIT, fileName, subject);
-	                instrumentVisitor.initOneRun(locations, srcPath, relJavaPath);
-	                unit.accept(instrumentVisitor);
-	                JavaFile.writeStringToFile(fileName, unit.toString());
-	                file2Line2Predicates.put(fileName, instrumentVisitor.getPredicates());
-	            }
-	            System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
-	            printPredicateInfo(file2Line2Predicates, subject, useStatisticalDebugging);
-			} else {
-				file2Line2Predicates = getAllPredictPredicates(subject, allStatements, useSober);
-				
-				System.out.println("-----------------------------------FOR DEBUG--------------------------------------------");
-		        printPredicateInfo(file2Line2Predicates, subject, useStatisticalDebugging);
-		        // Delete empty file and line.
-		        // Please DO NOT comment out the following line! 2018/01/01
-		        file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
-		        
-				MultiLinePredicateInstrumentVisitor instrumentVisitor = new MultiLinePredicateInstrumentVisitor(useSober);
-	            for (Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()) {
-	                String fileName = entry.getKey();
-	                Map<Integer, List<Pair<String, String>>> allPreds = entry.getValue();
-	                CompilationUnit unit = JavaFile.genAST(fileName);
-	                instrumentVisitor.setCondition(allPreds);
-	                unit.accept(instrumentVisitor);
-	                JavaFile.writeStringToFile(fileName, unit.toString());
-	            }
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = null;
+
+		long start = System.currentTimeMillis();
+		if (useStatisticalDebugging) {
+			file2Line2Predicates = new HashMap<>();
+			Map<String, List<Integer>> file2LocationList = mapLocations2File(allStatements, srcPath);
+			NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(
+					useSober);
+			for (Entry<String, List<Integer>> entry : file2LocationList.entrySet()) {
+				String relJavaPath = entry.getKey();
+				String fileName = srcPath + "/" + relJavaPath;
+				Set<Integer> locations = new HashSet<>(entry.getValue());
+				CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSourceWithType(
+						JavaFile.readFileToString(fileName), ASTParser.K_COMPILATION_UNIT, fileName, subject);
+				instrumentVisitor.initOneRun(locations, srcPath, relJavaPath);
+				unit.accept(instrumentVisitor);
+				JavaFile.writeStringToFile(fileName, unit.toString());
+				file2Line2Predicates.put(fileName, instrumentVisitor.getPredicates());
 			}
-			long duration = System.currentTimeMillis() - start;
-			LevelLogger.info("Predicate validation time : " + Utils.transformMilli2Time(duration));
+			LevelLogger.debug("-------------------FOR DEBUG----------------------");
+			printPredicateInfo(file2Line2Predicates, subject, useStatisticalDebugging);
+		} else {
+			if (Constant.RECOVER_PREDICATE_FROM_FILE) {
+				file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
+			}
+			if (file2Line2Predicates == null) {
+				file2Line2Predicates = getAllPredictPredicates(subject, allStatements, useSober);
+				// Delete empty file and line.
+				// Please DO NOT comment out the following line! 2018/01/01
+				file2Line2Predicates = recoverPredicates(subject, useStatisticalDebugging);
+			}
+			LevelLogger.debug("-------------------FOR DEBUG----------------------");
+			printPredicateInfo(file2Line2Predicates, subject, useStatisticalDebugging);
+
+			MultiLinePredicateInstrumentVisitor instrumentVisitor = new MultiLinePredicateInstrumentVisitor(useSober);
+			for (Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()) {
+				String fileName = entry.getKey();
+				Map<Integer, List<Pair<String, String>>> allPreds = entry.getValue();
+				CompilationUnit unit = JavaFile.genAST(fileName);
+				instrumentVisitor.setCondition(allPreds);
+				unit.accept(instrumentVisitor);
+				JavaFile.writeStringToFile(fileName, unit.toString());
+			}
 		}
-       
+		long duration = System.currentTimeMillis() - start;
+		LevelLogger.info("Predicate validation time : " + Utils.transformMilli2Time(duration));
+
         // delete all bin file to make it re-compiled
         ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getSbin());
         ExecuteCommand.deleteGivenFolder(subject.getHome() + subject.getTbin());
@@ -228,8 +229,6 @@ public class Coverage {
         }
         if (!isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)) {
             LevelLogger.info("Cause different test state by predicates :");
-            // printInfo(file2Line2Predicates);
-            // System.exit(0);
             String file = Constant.HOME + "/rlst.log";
             JavaFile.writeStringToFile(file, "Project : " + subject.getNameAndId() + " Different test result!\n", true);
             logErrorInfo(subject, failedTests);
@@ -475,31 +474,31 @@ public class Coverage {
 
     private static void printPredicateInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
             Subject subject, boolean useStatisticalDebugging) {
-        System.out.println("\n------------------------begin predicate info------------------------\n");
+        LevelLogger.debug("\n------------------------begin predicate info------------------------\n");
 
         StringBuffer contents = new StringBuffer();
         for (Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()) {
             System.out.println("FILE NAME : " + entry.getKey());
             for (Entry<Integer, List<Pair<String, String>>> line2Preds : entry.getValue().entrySet()) {
-                System.out.println("LINE : " + line2Preds.getKey());
-                System.out.print("PREDICATES : ");
+            	LevelLogger.debug("LINE : " + line2Preds.getKey());
+            	LevelLogger.debug("PREDICATES : ");
                 for (Pair<String, String> pair : line2Preds.getValue()) {
-                    System.out.print(pair.getFirst() + ",");
+                	LevelLogger.debug(pair.getFirst() + ",");
                     contents.append(entry.getKey() + "\t" + line2Preds.getKey() + "\t" + pair.getFirst() + "\t"
                             + pair.getSecond());
                     contents.append("\n");
                 }
-                System.out.println("\n");
+                LevelLogger.debug("\n");
             }
         }
-        System.out.println("\n------------------------end predicate info------------------------\n");
+        LevelLogger.debug("\n------------------------end predicate info------------------------\n");
         String outputFile = subject.getCoverageInfoPath() + "/predicates_backup";
         if (useStatisticalDebugging) {
             outputFile += "_sd.txt";
         } else {
             outputFile += ".txt";
         }
-        JavaFile.writeStringToFile(outputFile, contents.toString());
+        JavaFile.writeStringToFile(outputFile, contents.toString(), true);
     }
 
     public static Map<String, Map<Integer, List<Pair<String, String>>>> recoverPredicates(Subject subject,

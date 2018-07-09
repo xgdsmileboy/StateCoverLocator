@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
 public class Dumper {
 
 	public static boolean SUCC_TEST = false;
@@ -261,12 +262,40 @@ public class Dumper {
 		}
 	}
 	
+	public static Double lpc(final double a, double b, String message, String var1, String var2, boolean useSober) {
+		return (Double)lpccommon(Double.valueOf(a), Double.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Integer lpc(final int a, int b, String message, String var1, String var2, boolean useSober) {
+		return (Integer)lpccommon(Integer.valueOf(a), Integer.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Float lpc(final float a, float b, String message, String var1, String var2, boolean useSober) {
+		return (Float)lpccommon(Float.valueOf(a), Float.valueOf(b), message, var1, var2, useSober);
+	}
+	public static Byte lpc(final byte a, byte b, String message, String var1, String var2, boolean useSober) {
+		return (Byte)lpccommon(Byte.valueOf(a), Byte.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Character lpc(final char a, char b, String message, String var1, String var2, boolean useSober) {
+		return (Character)lpccommon(Character.valueOf(a), Character.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Long lpc(final long a, long b, String message, String var1, String var2, boolean useSober) {
+		return (Long)lpccommon(Long.valueOf(a), Long.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Short lpc(final short a, short b, String message, String var1, String var2, boolean useSober) {
+		return (Short)lpccommon(Short.valueOf(a), Short.valueOf(b), message, var1, var2, useSober);
+	}
+	
 	// logPairCoverage, lpc for short to shorten function
-	public static <T> T lpc(final T a, T b, String message, String var1, String var2, boolean useSober) {
+	public static Object lpccommon(final Object a, Object b, String message, String var1, String var2, boolean useSober) {
 		Comparable ac = (Comparable) a;
 		Comparable bc = (Comparable) b;
 		int cmp = ac.compareTo(bc);
-		for(String op : operators) {
+		for(int i = 0; i < operators.length; i++) {
+			String op = operators[i];
 			String finalMessage = message + "#" + var1 + op + var2 + "#1";
 			boolean condition = false;
 			if (op.equals("<")) {
@@ -287,35 +316,53 @@ public class Dumper {
 		return a;
 	}
 	
-//	public static <T> T lpc(final T a, String message, String var1, boolean useSober) {
-//		Comparable ac = (Comparable) a;
-//		int cmp = ac.compareTo(0);
-//		for(String op : operators) {
-//			String finalMessage = message + "#" + var1 + op + "0#1";
-//			boolean condition = false;
-//			if (op.equals("<")) {
-//				condition = cmp < 0;
-//			} else if (op.equals("<=")) {
-//				condition = cmp <= 0;
-//			} else if (op.equals(">")) {
-//				condition = cmp > 0;
-//			} else if (op.equals(">=")) {
-//				condition = cmp >= 0;
-//			} else if (op.equals("==")) {
-//				condition = cmp == 0;
-//			} else if (op.equals("!=")) {
-//				condition = cmp != 0;
-//			}
-//			logCoverage(condition, finalMessage, useSober);
-//		}
-//		return a;
-//	}
-	
-	public static <T> T lpcs(final T a, List<T> vars, String message, String name, List<String> names, boolean useSober) {
-		for(int i = 0; i < vars.size(); i++) {
-			Dumper.<T>lpc(a, vars.get(i), message, name, names.get(i), useSober);
+	public static Integer lpcs(final int a, int[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
 		}
-		return a;
+		return Integer.valueOf(a);
+	}
+	
+	public static Float lpcs(final float a, float[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Float.valueOf(a);
+	}
+	
+	public static Double lpcs(final double a, double[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Double.valueOf(a);
+	}
+	
+	public static Long lpcs(final long a, long[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Long.valueOf(a);
+	}
+	
+	public static Character lpcs(final char a, char[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Character.valueOf(a);
+	}
+	
+	public static Short lpcs(final short a, short[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Short.valueOf(a);
+	}
+	
+	public static Byte lpcs(final byte a, byte[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Byte.valueOf(a);
 	}
 	
 	private static boolean readTrueOrFalse() {

@@ -1,19 +1,25 @@
 package locator.inst.visitor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.print.attribute.standard.RequestingUserName;
+
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayInitializer;
+import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.Expression;
@@ -21,9 +27,12 @@ import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IfStatement;
+import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
 import org.eclipse.jdt.core.dom.StringLiteral;
@@ -36,6 +45,7 @@ import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.Pair;
+import polyglot.ast.Case;
 
 public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Set<Integer> _lines = null;
@@ -65,7 +75,7 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private void clear() {
 		_leftVars.clear();
 		_methodID = "";
-		_predicates.clear();
+		_predicates = new HashMap();
 	}
 	
 	@Override
@@ -366,14 +376,17 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		MethodInvocation methodInvocation = ast.newMethodInvocation();
 		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
 		methodInvocation.setName(ast.newSimpleName("lpc"));
+		
 		String typeLit = type.getName();
-		if (type.isPrimitive()) {			
+		if (type.isPrimitive()) {
 			typeLit = primitive2Wrapper(typeLit);
+			methodInvocation.arguments().add(ASTNode.copySubtree(methodInvocation.getAST(), var1));
+		} else {
+			methodInvocation.arguments().add(extractValue(var1, typeLit));
 		}
 		// auxiliary.Dumper.<XXXX>lpc;
-		methodInvocation.typeArguments().add(ast.newSimpleType(ast.newSimpleName(typeLit)));
+//		methodInvocation.typeArguments().add(ast.newSimpleType(ast.newSimpleName(typeLit)));
 				
-		methodInvocation.arguments().add(ASTNode.copySubtree(methodInvocation.getAST(), var1));
 		methodInvocation.arguments().add(zeroByType(typeLit));
 		
 		StringLiteral stringLiteral = ast.newStringLiteral();
@@ -392,7 +405,42 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		methodInvocation.arguments().add(var2Literal);
 		methodInvocation.arguments().add(useSoberLiteral);
 		
-		return methodInvocation;
+		if(type.isPrimitive()) {
+			return extractValue(methodInvocation, typeLit);
+		} else {
+			return methodInvocation;
+		}
+	}
+	
+	private Expression extractValue(Expression expr, String type) {
+		String methodName = null;
+		switch(type) {
+		case "Character":
+			methodName = "charValue"; break;
+		case "Integer":
+			methodName = "intValue"; break;
+		case "Byte":
+			methodName = "byteValue"; break;
+		case "Short":
+			methodName = "shortValue"; break;
+		case "Long":
+			methodName = "longValue"; break;
+		case "Float":
+			methodName = "floatValue"; break;
+		case "Double":
+			methodName = "doubleValue"; break;
+		default:
+			return null;
+		}
+		MethodInvocation mi = ast.newMethodInvocation();
+		CastExpression ce = ast.newCastExpression();
+		ce.setExpression((Expression)ASTNode.copySubtree(ce.getAST(), expr));
+		ce.setType(ast.newSimpleType(ast.newSimpleName(type)));
+		ParenthesizedExpression parenthesizedExpression = ast.newParenthesizedExpression();
+		parenthesizedExpression.setExpression(ce);
+		mi.setExpression(parenthesizedExpression);
+		mi.setName(ast.newSimpleName(methodName));
+		return mi;
 	}
 	
 	private Expression zeroByType(String type) {
@@ -411,13 +459,14 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		String typeLit = type.getName();
 		if (type.isPrimitive()) {			
 			typeLit = primitive2Wrapper(typeLit);
+			methodInvocation.arguments().add(ASTNode.copySubtree(methodInvocation.getAST(), var1));
+		} else {
+			methodInvocation.arguments().add(extractValue(var1, typeLit));
 		}
 		// auxiliary.Dumper.<XXXX>lpcs;
-		methodInvocation.typeArguments().add(ast.newSimpleType(ast.newSimpleName(typeLit)));
+//		methodInvocation.typeArguments().add(ast.newSimpleType(ast.newSimpleName(typeLit)));
 		
-		methodInvocation.arguments().add(ASTNode.copySubtree(methodInvocation.getAST(), var1));
-		
-		methodInvocation.arguments().add(arrayToListVars(var2));
+		methodInvocation.arguments().add(arrayToListVars(var2, typeLit, type.isPrimitive()));
 	
 		StringLiteral stringLiteral = ast.newStringLiteral();
 		stringLiteral.setLiteralValue(_methodID + "#" + Integer.toString(line));
@@ -432,29 +481,60 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		methodInvocation.arguments().add(arrayToListNames(var2));
 		methodInvocation.arguments().add(useSoberLiteral);
 		
-		return methodInvocation;
+		if(type.isPrimitive()) {
+			return extractValue(methodInvocation, typeLit);
+		} else {
+			return methodInvocation;
+		}
 	}
 	
-	private Expression arrayToListVars(Set<String> variables) {
-		MethodInvocation methodInvocation = ast.newMethodInvocation();
-		methodInvocation.setExpression(ast.newName("java.util.Arrays"));
-		methodInvocation.setName(ast.newSimpleName("asList"));
-		for(String v : variables) {
-			methodInvocation.arguments().add(ast.newSimpleName(v));
+	private Expression arrayToListVars(Set<String> variables, String type, boolean isPrimitive) {
+		String primType = wrapper2Primitive(type);
+		ArrayCreation arrayCreation = ast.newArrayCreation();
+		arrayCreation.setType(ast.newArrayType(ast.newPrimitiveType(typeName2PrimitiveTypeCode(primType))));
+		ArrayInitializer initializer = ast.newArrayInitializer();
+		if(isPrimitive) {
+			for(String v : variables) {
+				initializer.expressions().add(ast.newSimpleName(v));
+			}
+		} else {
+			for(String v : variables) {
+				initializer.expressions().add(extractValue(ast.newSimpleName(v), type));
+			}
 		}
-		return methodInvocation;
+		arrayCreation.setInitializer(initializer);
+		return arrayCreation;
+//		
+//		MethodInvocation methodInvocation = ast.newMethodInvocation();
+//		methodInvocation.setExpression(ast.newName("java.util.Arrays"));
+//		methodInvocation.setName(ast.newSimpleName("asList"));
+//		for(String v : variables) {
+//			methodInvocation.arguments().add(ast.newSimpleName(v));
+//		}
+//		return methodInvocation;
 	}
 	
 	private Expression arrayToListNames(Set<String> variables) {
-		MethodInvocation methodInvocation = ast.newMethodInvocation();
-		methodInvocation.setExpression(ast.newName("java.util.Arrays"));
-		methodInvocation.setName(ast.newSimpleName("asList"));
+		ArrayCreation arrayCreation = ast.newArrayCreation();
+		ArrayType type = ast.newArrayType(ast.newSimpleType(ast.newName("String")));
+		arrayCreation.setType(type);
+		ArrayInitializer initializer = ast.newArrayInitializer();
 		for(String v : variables) {
-			StringLiteral str = ast.newStringLiteral();
-			str.setLiteralValue(v);
-			methodInvocation.arguments().add(str);
+			StringLiteral literal = ast.newStringLiteral();
+			literal.setLiteralValue(v);
+			initializer.expressions().add(literal);
 		}
-		return methodInvocation;
+		arrayCreation.setInitializer(initializer);
+		return arrayCreation;
+//		MethodInvocation methodInvocation = ast.newMethodInvocation();
+//		methodInvocation.setExpression(ast.newName("java.util.Arrays"));
+//		methodInvocation.setName(ast.newSimpleName("asList"));
+//		for(String v : variables) {
+//			StringLiteral str = ast.newStringLiteral();
+//			str.setLiteralValue(v);
+//			methodInvocation.arguments().add(str);
+//		}
+//		return methodInvocation;
 	}
 	
 	private String primitive2Wrapper(String type) {
@@ -462,7 +542,7 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		case "byte":
 			return "Byte";
 		case "char":
-			return "Char";
+			return "Character";
 		case "int":
 			return "Integer";
 		case "short":
@@ -482,7 +562,7 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		switch(type) {
 		case "Byte":
 			return "byte";
-		case "Char":
+		case "Character":
 			return "char";
 		case "Integer":
 			return "int";
@@ -512,7 +592,7 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		case "float":
 		case "double":
 		case "Byte":
-		case "Char":
+		case "Character":
 		case "Short":
 		case "Integer":
 		case "Long":

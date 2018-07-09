@@ -74,7 +74,7 @@ public class Main {
 				JavaFile.writeStringToFile(Constant.STR_ML_EVALUATION + "/" + subject.getNameAndId() + ".ml.out", mlOutput);
 				return true;
 			} else {
-//				model.trainModel(subject);
+				model.trainModel(subject);
 			}
 		}
 
