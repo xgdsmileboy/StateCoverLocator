@@ -278,7 +278,7 @@ public class Coverage {
         int allStmtCount = allStatements.size();
         int currentStmtCount = 1;
         for (String stmt : allStatements) {
-            LevelLogger.info("======================== [" + currentStmtCount + "/" + allStmtCount
+            LevelLogger.debug("======================== [" + currentStmtCount + "/" + allStmtCount
                     + "] statements (statistical debugging) =================.");
             currentStmtCount++;
             String[] stmtInfo = stmt.split("#");
@@ -292,7 +292,7 @@ public class Coverage {
                 LevelLogger.debug(__name__ + "#mapLocations2File : exist");
             }
             String methodString = Identifier.getMessage(methodID);
-            LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
+            LevelLogger.debug("Current statement  : **" + methodString + "#" + line + "**");
             String[] methodInfo = methodString.split("#");
             if (methodInfo.length < 4) {
                 LevelLogger.error(__name__ + "#mapLocations2File method info parse error : " + methodString);
