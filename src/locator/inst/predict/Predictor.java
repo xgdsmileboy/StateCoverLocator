@@ -26,7 +26,6 @@ import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
 import locator.core.run.path.LineInfo;
-import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureEntry;
 import locator.inst.visitor.feature.NewExprFilter;
 
