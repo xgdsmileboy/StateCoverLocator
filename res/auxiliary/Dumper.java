@@ -27,6 +27,7 @@ public class Dumper {
 	private static Set alreadyRun = new HashSet();
 	private static Set alreadyObserved = new HashSet();
 	private static List coverages = new ArrayList();
+	private static String operators[] = {"<=", ">=", "==", "!=", "<", ">"};
 
 	private static final long MAX_OUTPUT_FILE_SIZE = 5; // max file size in GB
 //	private static final String OUT_AND_LIB_PATH = "/home/jiajun/code/space/StateCoverLocator";
@@ -224,7 +225,8 @@ public class Dumper {
 		return true;
 	}
 	
-	public static boolean logConditionCoverage(boolean condition, String trueLogInfo, String falseLogInfo) {
+	// logConditionCoverage, lcc for short
+	public static boolean lcc(boolean condition, String trueLogInfo, String falseLogInfo) {
 		observe(trueLogInfo);
 		observe(falseLogInfo);
 		if (condition) {
@@ -242,6 +244,78 @@ public class Dumper {
 			writeFalse(message);
 		}
 		return condition;
+	}
+	
+	private static void logCoverage(boolean condition, String message, boolean useSober) {
+		if (useSober) {
+			if (condition) {
+				writeTrue(message);
+			} else {
+				writeFalse(message);
+			}
+		} else {
+			observe(message);
+			if (condition) {
+				write(message);
+			}
+		}
+	}
+	
+	// logPairCoverage, lpc for short to shorten function
+	public static <T> T lpc(final T a, T b, String message, String var1, String var2, boolean useSober) {
+		Comparable ac = (Comparable) a;
+		Comparable bc = (Comparable) b;
+		int cmp = ac.compareTo(bc);
+		for(String op : operators) {
+			String finalMessage = message + "#" + var1 + op + var2 + "#1";
+			boolean condition = false;
+			if (op.equals("<")) {
+				condition = cmp < 0;
+			} else if (op.equals("<=")) {
+				condition = cmp <= 0;
+			} else if (op.equals(">")) {
+				condition = cmp > 0;
+			} else if (op.equals(">=")) {
+				condition = cmp >= 0;
+			} else if (op.equals("==")) {
+				condition = cmp == 0;
+			} else if (op.equals("!=")) {
+				condition = cmp != 0;
+			}
+			logCoverage(condition, finalMessage, useSober);
+		}
+		return a;
+	}
+	
+//	public static <T> T lpc(final T a, String message, String var1, boolean useSober) {
+//		Comparable ac = (Comparable) a;
+//		int cmp = ac.compareTo(0);
+//		for(String op : operators) {
+//			String finalMessage = message + "#" + var1 + op + "0#1";
+//			boolean condition = false;
+//			if (op.equals("<")) {
+//				condition = cmp < 0;
+//			} else if (op.equals("<=")) {
+//				condition = cmp <= 0;
+//			} else if (op.equals(">")) {
+//				condition = cmp > 0;
+//			} else if (op.equals(">=")) {
+//				condition = cmp >= 0;
+//			} else if (op.equals("==")) {
+//				condition = cmp == 0;
+//			} else if (op.equals("!=")) {
+//				condition = cmp != 0;
+//			}
+//			logCoverage(condition, finalMessage, useSober);
+//		}
+//		return a;
+//	}
+	
+	public static <T> T lpcs(final T a, List<T> vars, String message, String name, List<String> names, boolean useSober) {
+		for(int i = 0; i < vars.size(); i++) {
+			Dumper.<T>lpc(a, vars.get(i), message, name, names.get(i), useSober);
+		}
+		return a;
 	}
 	
 	private static boolean readTrueOrFalse() {
@@ -401,5 +475,26 @@ class PredicateRecord {
 	public String getValue() {
 		String passStr = pass ? "1" : "0";
 		return trueCnt + "\t" + falseCnt + "\t" + passStr;
+	}
+}
+
+class PredicateSignature {
+	private boolean condition = false;
+	private String signature = "";
+	
+	public boolean getCondition() {
+		return condition;
+	}
+	
+	public void setCondition(boolean cond) {
+		condition = cond;
+	}
+	
+	public String getSignature() {
+		return signature;
+	}
+	
+	public void setSignature(String sig) {
+		signature = sig;
 	}
 }
