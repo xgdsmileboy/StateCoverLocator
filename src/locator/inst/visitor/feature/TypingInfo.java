@@ -70,8 +70,6 @@ public class TypingInfo {
 
 	public static Class<?> convert2Class(Type type) {
 
-		System.out.println("type : " + type);
-
 		switch (type.toString()) {
 		case "void":
 			return void.class;

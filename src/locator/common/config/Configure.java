@@ -54,7 +54,7 @@ public class Configure {
 		String fileName = Constant.HOME + "/res/d4j-info/src_path/" + name + "/" + id + ".txt";
 		File file = new File(fileName);
 		if(!file.exists()){
-			System.out.println("File : " + fileName + " does not exist!");
+			LevelLogger.error("File : " + fileName + " does not exist!");
 			return null;
 		}
 		BufferedReader br = null;

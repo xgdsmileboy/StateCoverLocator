@@ -93,7 +93,7 @@ public class Coverage {
         ExecuteCommand.deleteGivenFile(Constant.STR_TMP_INSTR_OUTPUT_FILE);
         
         if (!Runner.testSuite(subject)) {
-            System.err.println(__name__ + "Failed to compute original coverage information for build failed.");
+            LevelLogger.error(__name__ + "Failed to compute original coverage information for build failed.");
             System.exit(0);
         }
 
@@ -222,7 +222,7 @@ public class Coverage {
         // if the instrumented project builds success, and the test
         // result is the same with original project
         if (!Runner.testSuite(subject)) {
-            System.out.println("Build failed by predicates : ");
+           LevelLogger.error("Build failed by predicates : ");
             String file = Constant.HOME + "/rlst.log";
             JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Build failed by predicates!\n", true);
             return null;
@@ -289,7 +289,7 @@ public class Coverage {
             Integer methodID = Integer.valueOf(stmtInfo[0]);
             int line = Integer.parseInt(stmtInfo[1]);
             if (line == 2317) {
-                System.out.print("exist");
+                LevelLogger.debug(__name__ + "#mapLocations2File : exist");
             }
             String methodString = Identifier.getMessage(methodID);
             LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
@@ -478,7 +478,7 @@ public class Coverage {
 
         StringBuffer contents = new StringBuffer();
         for (Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()) {
-            System.out.println("FILE NAME : " + entry.getKey());
+            LevelLogger.debug("FILE NAME : " + entry.getKey());
             for (Entry<Integer, List<Pair<String, String>>> line2Preds : entry.getValue().entrySet()) {
             	LevelLogger.debug("LINE : " + line2Preds.getKey());
             	LevelLogger.debug("PREDICATES : ");

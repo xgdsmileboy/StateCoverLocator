@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.logging.Level;
 
 import jdk7.wrapper.JCompiler;
 import locator.common.config.Configure;
@@ -205,14 +206,15 @@ public class Main {
 			}
 		}
 		//for debug
-		System.out.println("---------------------------------\n");
+		LevelLogger.debug("----------Current run bugs ------------");
 		if(allSubjects.size() > 0) {
-			System.out.print(allSubjects.get(0).getName() + " : ");
+			StringBuffer stringBuffer = new StringBuffer(allSubjects.get(0).getName() + " : ");
 			for(Subject subject : allSubjects) {
-				System.out.print(subject.getId() + ", ");
+				stringBuffer.append(subject.getId() + ", ");
 			}
+			LevelLogger.debug(stringBuffer.toString());
 		}
-		System.out.println("\n---------------------------------\n");
+		LevelLogger.debug("---------------------------------\n");
 		return allSubjects;
 	}
 	
