@@ -82,7 +82,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 		System.out.println(unit.toString());
 	}
 	
-	// No instrument? Jiajun 2018-7-9
+	// No instrument? May be the type of the variable does not resolved
 	@Test
 	public void test_return() {
 		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
