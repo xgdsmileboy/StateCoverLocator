@@ -277,7 +277,7 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 							addPredicates(getPredicatesForAssignment(rightExprStr, variables), start);
 						}
 					}
-				} else {
+				} else if(!Modifier.isFinal(node.getModifiers())) {
 					Expression expression = genDefaultValue(node.getType());
 					fragment.setInitializer((Expression) ASTNode.copySubtree(fragment.getAST(), expression));
 				}
