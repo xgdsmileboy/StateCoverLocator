@@ -7,19 +7,6 @@
 
 package locator.inst.visitor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.junit.Test;
-
-import edu.pku.sei.conditon.util.JavaFile;
-import locator.common.java.Pair;
-
-
 /**
  * @author Jiajun
  * @date Jan 4, 2018

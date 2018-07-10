@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.junit.Test;
 
-import edu.pku.sei.conditon.util.JavaFile;
+import locator.common.java.JavaFile;
 
 public class NewNoSideEffectPredicateInstrumentVisitorTest {
 
