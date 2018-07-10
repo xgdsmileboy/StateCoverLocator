@@ -51,7 +51,7 @@ public class Collector {
 		}
 		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
 		ExecuteCommand.copyFile(Constant.STR_TMP_D4J_OUTPUT_FILE, Constant.STR_INFO_OUT_PATH + "/" + subject.getName()
-				+ "/" + subject.getName() + "_" + subject.getId() + "_original_test.log");
+				+ "/" + subject.getNameAndId() + "_original_test.log");
 		Set<Integer> coveredMethods = collectCoveredMethod(subject, failedTest);
 		return new Pair<Set<Integer>, Set<Integer>>(failedTest, coveredMethods);
 	}
@@ -230,7 +230,6 @@ public class Collector {
 
 		ExecuteCommand.copyFolder(subjectSourcePath + "_ori", subjectSourcePath);
 		ExecuteCommand.copyFolder(subjectTestPath + "_ori", subjectTestPath);
-//		Instrument.execute(subjectSourcePath, new DeInstrumentVisitor());
 		return allMethods;
 	}
 

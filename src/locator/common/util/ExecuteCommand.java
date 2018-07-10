@@ -7,17 +7,13 @@
 
 package locator.common.util;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +22,7 @@ import org.apache.commons.io.FileUtils;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
+import locator.core.model.Model;
 //import sun.awt.geom.Crossings.EvenOdd;
 
 /**
@@ -223,8 +220,8 @@ public class ExecuteCommand {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static void executeTrain(Subject subject) throws IOException, InterruptedException {
-		String[] cmd = CmdFactory.createTrainCmd(subject);
+	public static void executeTrain(Subject subject, Model model) throws IOException, InterruptedException {
+		String[] cmd = CmdFactory.createTrainCmd(subject, model);
 		executeAndOutputConsole(cmd);
 	}
 	
@@ -236,8 +233,8 @@ public class ExecuteCommand {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static void executeEvaluate(Subject subject) throws IOException, InterruptedException {
-		String[] cmd = CmdFactory.createEvaluateCmd(subject);
+	public static void executeEvaluate(Subject subject, Model model) throws IOException, InterruptedException {
+		String[] cmd = CmdFactory.createEvaluateCmd(subject, model);
 		executeAndOutputFile(cmd, Constant.STR_TMP_ML_LOG_FILE);
 	}
 
@@ -249,8 +246,8 @@ public class ExecuteCommand {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static void executePredict(Subject subject) throws IOException, InterruptedException {
-		String[] cmd = CmdFactory.createPredictCmd(subject);
+	public static void executePredict(Subject subject, Model model) throws IOException, InterruptedException {
+		String[] cmd = CmdFactory.createPredictCmd(subject, model);
 //		executeAndOutputConsole(cmd);
 		executeAndOutputFile(cmd, Constant.STR_TMP_ML_LOG_FILE);
 	}

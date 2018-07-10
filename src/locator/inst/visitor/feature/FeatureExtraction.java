@@ -63,6 +63,7 @@ import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
+import locator.common.java.Subject;
 import locator.core.run.path.LineInfo;
 
 /**
@@ -71,14 +72,12 @@ import locator.core.run.path.LineInfo;
  */
 public class FeatureExtraction {
 
-	@Deprecated
-	public static Pair<FeatureEntry, Map<String, FeatureEntry>> extractFeature(ASTNode statement, int line) {
-		Pair<FeatureEntry, Map<String, FeatureEntry>> features = new Pair<>();
-
-		return features;
+	public static void generateTrainFeatures(Subject subject, String tarVarPath, String tarExprPath) {
+		String srcPath = subject.getHome() + subject.getSsrc();
+		FeatureGenerator.generateTrainFeature(srcPath, tarVarPath, tarExprPath);
 	}
 
-	public static Set<String> extractAllFeatures(String srcPath, String relJavaPath, int line, LineInfo info,
+	public static Set<String> generateFeatures(String srcPath, String relJavaPath, int line, LineInfo info,
 			List<String> varFeatures, List<String> exprFeatures) {
 		Set<String> keys = new HashSet<String>();
 		if (srcPath == null || relJavaPath == null) {

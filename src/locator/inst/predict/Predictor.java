@@ -45,119 +45,119 @@ public class Predictor {
 		return insertedStatement;
 	}
 
-	/**
-	 * predict expressions based on the given features,
-	 * 
-	 * @param subject
-	 *            : current predict subject
-	 * @param varFeatures
-	 *            : features for variable predict
-	 * @param expFeatures
-	 *            : features for expression predict
-	 * @return a pair of conditions, the first set contains all conditions for
-	 *         left variable [currently, not use] the second set contains all
-	 *         conditions for right variables
-	 */
-	public static Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
-			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
-		String currentClassName = null;
-		// TODO : return conditions for left variable and right variables
-		File varFile = new File(subject.getVarFeatureOutputPath());
-		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
-		for (String string : varFeatures) {
-			// filter duplicated features
-			if(_uniqueFeatures.contains(string)){
-				continue;
-			}
-			_uniqueFeatures.add(string);
-			// TODO : for debug
-			LevelLogger.info(string);
-			if(currentClassName == null){
-				String[] features = string.split("\t");
-				int index = features[Constant.FEATURE_FILE_NAME_INDEX].length();
-				// name.java -> name
-				currentClassName = features[Constant.FEATURE_FILE_NAME_INDEX].substring(0, index - 5);
-			}
-			JavaFile.writeStringToFile(varFile, string + "\n", true);
-		}
-
-		File expFile = new File(subject.getExprFeatureOutputPath());
-		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
-		for (String string : exprFeatures) {
-			// filter duplicated features
-			if(_uniqueFeatures.contains(string)){
-				continue;
-			}
-			_uniqueFeatures.add(string);
-			// TODO : for debug
-			LevelLogger.info(string);
-			JavaFile.writeStringToFile(expFile, string + "\n", true);
-		}
-
-		try {
-			ExecuteCommand.executePredict(subject);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		Map<String, Map<String, List<Pair<String, String>>>> rightConditions = new HashMap<>();
-		File rslFile = new File(subject.getPredicResultPath());
-		BufferedReader bReader = null;
-		try {
-			bReader = new BufferedReader(new FileReader(rslFile));
-		} catch (FileNotFoundException e) {
-			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
-			return rightConditions;
-		}
-		
-		String line = null;
-		try {
-			// filter title
-			if (bReader.readLine() != null) {
-				// parse predict result "8 u $ == null 0.8319194802"
-				while ((line = bReader.readLine()) != null) {
-					String[] columns = line.split("\t");
-					if (columns.length < 4) {
-						LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
-						continue;
-					}
-					String key = columns[0];
-					String varName = columns[1];
-					String condition = columns[2].replace("$", varName);
-					String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
-					String prob = columns[3];
-					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), currentClassName);
-					if(newCond != null){
-						Map<String, List<Pair<String, String>>> linePreds = rightConditions.get(key);
-						if (linePreds == null) {
-							linePreds = new HashMap<>();
-						}
-						List<Pair<String, String>> preds = linePreds.get(varName);
-						if(preds == null){
-							preds = new ArrayList<>();
-						}
-						Pair<String, String> pair = new Pair<String, String>(newCond, prob);
-						preds.add(pair);
-						linePreds.put(varName, preds);
-						rightConditions.put(key, linePreds);
-						
-					} else {
-						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
-					}
-					
-				}
-			}
-			bReader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		ExecuteCommand.deleteGivenFile(varFile.getAbsolutePath());
-		ExecuteCommand.deleteGivenFile(expFile.getAbsolutePath());
-		ExecuteCommand.deleteGivenFile(rslFile.getAbsolutePath());
-		
-		return rightConditions;
-	}
+//	/**
+//	 * predict expressions based on the given features,
+//	 * 
+//	 * @param subject
+//	 *            : current predict subject
+//	 * @param varFeatures
+//	 *            : features for variable predict
+//	 * @param expFeatures
+//	 *            : features for expression predict
+//	 * @return a pair of conditions, the first set contains all conditions for
+//	 *         left variable [currently, not use] the second set contains all
+//	 *         conditions for right variables
+//	 */
+//	public static Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
+//			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
+//		String currentClassName = null;
+//		// TODO : return conditions for left variable and right variables
+//		File varFile = new File(subject.getVarFeatureOutputPath());
+//		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
+//		for (String string : varFeatures) {
+//			// filter duplicated features
+//			if(_uniqueFeatures.contains(string)){
+//				continue;
+//			}
+//			_uniqueFeatures.add(string);
+//			// TODO : for debug
+//			LevelLogger.info(string);
+//			if(currentClassName == null){
+//				String[] features = string.split("\t");
+//				int index = features[Constant.FEATURE_FILE_NAME_INDEX].length();
+//				// name.java -> name
+//				currentClassName = features[Constant.FEATURE_FILE_NAME_INDEX].substring(0, index - 5);
+//			}
+//			JavaFile.writeStringToFile(varFile, string + "\n", true);
+//		}
+//
+//		File expFile = new File(subject.getExprFeatureOutputPath());
+//		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
+//		for (String string : exprFeatures) {
+//			// filter duplicated features
+//			if(_uniqueFeatures.contains(string)){
+//				continue;
+//			}
+//			_uniqueFeatures.add(string);
+//			// TODO : for debug
+//			LevelLogger.info(string);
+//			JavaFile.writeStringToFile(expFile, string + "\n", true);
+//		}
+//
+//		try {
+//			ExecuteCommand.executePredict(subject, model);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//
+//		Map<String, Map<String, List<Pair<String, String>>>> rightConditions = new HashMap<>();
+//		File rslFile = new File(subject.getPredicResultPath());
+//		BufferedReader bReader = null;
+//		try {
+//			bReader = new BufferedReader(new FileReader(rslFile));
+//		} catch (FileNotFoundException e) {
+//			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
+//			return rightConditions;
+//		}
+//		
+//		String line = null;
+//		try {
+//			// filter title
+//			if (bReader.readLine() != null) {
+//				// parse predict result "8 u $ == null 0.8319194802"
+//				while ((line = bReader.readLine()) != null) {
+//					String[] columns = line.split("\t");
+//					if (columns.length < 4) {
+//						LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
+//						continue;
+//					}
+//					String key = columns[0];
+//					String varName = columns[1];
+//					String condition = columns[2].replace("$", varName);
+//					String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
+//					String prob = columns[3];
+//					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), currentClassName);
+//					if(newCond != null){
+//						Map<String, List<Pair<String, String>>> linePreds = rightConditions.get(key);
+//						if (linePreds == null) {
+//							linePreds = new HashMap<>();
+//						}
+//						List<Pair<String, String>> preds = linePreds.get(varName);
+//						if(preds == null){
+//							preds = new ArrayList<>();
+//						}
+//						Pair<String, String> pair = new Pair<String, String>(newCond, prob);
+//						preds.add(pair);
+//						linePreds.put(varName, preds);
+//						rightConditions.put(key, linePreds);
+//						
+//					} else {
+//						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
+//					}
+//					
+//				}
+//			}
+//			bReader.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		ExecuteCommand.deleteGivenFile(varFile.getAbsolutePath());
+//		ExecuteCommand.deleteGivenFile(expFile.getAbsolutePath());
+//		ExecuteCommand.deleteGivenFile(rslFile.getAbsolutePath());
+//		
+//		return rightConditions;
+//	}
 
 }

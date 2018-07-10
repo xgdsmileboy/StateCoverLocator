@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.logging.Level;
 
 import jdk7.wrapper.JCompiler;
 import locator.common.config.Configure;
@@ -41,6 +40,7 @@ import locator.core.Suspicious;
 import locator.core.Tarantula;
 import locator.core.model.DNN;
 import locator.core.model.Model;
+import locator.core.model.SDModel;
 import locator.core.model.XGBoost;
 import locator.core.run.path.Collector;
 import locator.core.run.path.Coverage;
@@ -63,7 +63,9 @@ public class Main {
 
 		Model model = null;
 		// train predicate prediction model
-		if (!useStatisticalDebugging) {
+		if(useStatisticalDebugging) {
+			model = new SDModel();
+		} else {
 			if(DNN.NAME.equals(Constant.TRAINING_MODEL)) {
 				model = new DNN();
 			} else if(XGBoost.NAME.equals(Constant.TRAINING_MODEL)) {
@@ -91,11 +93,11 @@ public class Main {
 		
 		// output branch coverage information
 		if(Constant.OUT_BRANCH_COVERAGE) {
-			LevelLogger.info("compute branch coverage information.");
+			LevelLogger.info(">>> compute branch coverage information.");
 			String testsPath = subject.getHome() + "/all-tests.txt";
 			ExecuteCommand.deleteGivenFile(testsPath);
 			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
-			LevelLogger.info("output branch coverage information to file : branch_coverage.csv");
+			LevelLogger.info(">>> output branch coverage information to file : branch_coverage.csv");
 			Utils.printCoverage(coverage, subject.getCoverageInfoPath(), "branch_coverage.csv");
 		}
 		
@@ -119,8 +121,8 @@ public class Main {
 		Identifier.backup(subject);
 		
 		LevelLogger.info("step 4: compute predicate coverage information");
-		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, allCoveredStatement,
-				failedTestsAndCoveredMethods.getFirst(), useStatisticalDebugging, useSober);
+		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, model, allCoveredStatement,
+				failedTestsAndCoveredMethods.getFirst(), useSober);
 
 		if(predicateCoverage == null && !useSober){
 			return false;

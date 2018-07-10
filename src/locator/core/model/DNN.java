@@ -9,11 +9,10 @@ package locator.core.model;
 
 import java.io.File;
 
-import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.java.Subject;
-import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
 import locator.common.util.Utils;
+import locator.inst.visitor.feature.FeatureExtraction;
 
 /**
  * 
@@ -21,7 +20,7 @@ import locator.common.util.Utils;
  *
  * Jul 5, 2018
  */
-public class DNN extends Model {
+public class DNN extends MLModel {
 
 	public final static String NAME = "dnn";
 	
@@ -31,43 +30,19 @@ public class DNN extends Model {
 	}
 
 	@Override
-	public void trainModel(Subject subject) {
-		if(prepare(subject)) {
-			// train model
-			try {
-				LevelLogger.info(">>>>>> Begin Trainning ...");
-				ExecuteCommand.executeTrain(subject);
-				LevelLogger.info(">>>>>> End Trainning !");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	@Override
-	public void evaluate(Subject subject) {
-		if(prepare(subject)) {
-			// evaluate model
-			try {
-				LevelLogger.info(">>>>>> Begin Evaluating ...");
-				ExecuteCommand.executeEvaluate(subject);
-				LevelLogger.info(">>>>>> End Evaluating !");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	
-	private boolean prepare(Subject subject) {
+	public boolean modelExist(Subject subject) {
 		File varModel = new File(_modelPath + "/" + subject.getName() + "_" + subject.getId() + "/var");
 		File exprModel = new File(_modelPath + "/" + subject.getName() + "_" + subject.getId() + "/expr");
 		if (varModel.exists() && exprModel.exists()) {
 			LevelLogger.info("Models are already exist and will be used directly !");
-			return false;
+			return true;
 		}
+		return false;
+	}
+	
+	@Override
+	public boolean prepare(Subject subject) {
 		// get train features
-		String srcPath = subject.getHome() + subject.getSsrc();
 		String outPath = _outPath + "/" + subject.getName() + "/" + subject.getNameAndId();
 
 		// create necessary directories
@@ -77,8 +52,9 @@ public class DNN extends Model {
 		String targetVarPath = outPath + "/var/" + subject.getNameAndId() + ".var.csv";
 		String targetExprPath = outPath + "/expr/" + subject.getNameAndId() + ".expr.csv";
 
-		FeatureGenerator.generateTrainFeature(srcPath, targetVarPath, targetExprPath);
+		FeatureExtraction.generateTrainFeatures(subject, targetVarPath, targetExprPath);
 		return true;
 	}
+	
 
 }

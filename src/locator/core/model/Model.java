@@ -15,11 +15,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import locator.common.config.Constant;
+import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
 import locator.common.java.Pair;
 import locator.common.java.Subject;
@@ -39,12 +42,14 @@ public abstract class Model {
 	protected String _modelPath = Constant.STR_ML_HOME + "/model/";
 	protected String _outPath = Constant.STR_ML_OUT_FILE_PATH;
 	protected String _inPath = Constant.STR_ML_PREDICT_EXP_PATH;
+	protected String _predicates_backup_file;
 	protected static Set<String> _uniqueFeatures = new HashSet<>();
 	protected String __name__ = "@Model ";
 	protected String _modelName = "model";
 
-	protected Model(String modelName) {
+	protected Model(String modelName, String predicateBackupFile) {
 		_modelName = modelName;
+		_predicates_backup_file = predicateBackupFile;
 		_modelPath = Constant.STR_ML_HOME + "/" + modelName;
 		_outPath = Constant.STR_ML_OUT_FILE_PATH + "/" + modelName;
 		_inPath = Constant.STR_ML_PREDICT_EXP_PATH + "/" + modelName;
@@ -63,8 +68,127 @@ public abstract class Model {
 	}
 	
 	
-	public abstract void trainModel(Subject subject);
-	public abstract void evaluate(Subject subject);
+	public abstract boolean modelExist(Subject subject);
+
+	public abstract boolean prepare(Subject subject);
+
+	public abstract boolean trainModel(Subject subject);
+
+	public abstract boolean evaluate(Subject subject);
+
+	public abstract boolean instrumentPredicates(
+			Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates, boolean useSober);
+
+	public abstract Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject,
+			Set<String> allStatements, boolean useSober);
+
+	protected Map<String, List<Integer>> mapLocations2File(Subject subject, Set<String> allStatements) {
+		String srcPath = subject.getHome() + subject.getSsrc();
+		Map<String, List<Integer>> file2LocationList = new HashMap<>();
+		int allStmtCount = allStatements.size();
+		int currentStmtCount = 1;
+		for (String stmt : allStatements) {
+			LevelLogger.debug("======================== [" + currentStmtCount + "/" + allStmtCount
+					+ "] statements (statistical debugging) =================.");
+			currentStmtCount++;
+			String[] stmtInfo = stmt.split("#");
+			if (stmtInfo.length != 2) {
+				LevelLogger.error(__name__ + "#mapLocations2File statement parse error : " + stmt);
+				System.exit(0);
+			}
+			Integer methodID = Integer.valueOf(stmtInfo[0]);
+			int line = Integer.parseInt(stmtInfo[1]);
+			if (line == 2317) {
+				LevelLogger.debug(__name__ + "#mapLocations2File : exist");
+			}
+			String methodString = Identifier.getMessage(methodID);
+			LevelLogger.debug("Current statement  : **" + methodString + "#" + line + "**");
+			String[] methodInfo = methodString.split("#");
+			if (methodInfo.length < 4) {
+				LevelLogger.error(__name__ + "#mapLocations2File method info parse error : " + methodString);
+				System.exit(0);
+			}
+			String clazz = methodInfo[0].replace(".", Constant.PATH_SEPARATOR);
+			int index = clazz.indexOf("$");
+			if (index > 0) {
+				clazz = clazz.substring(0, index);
+			}
+			String relJavaPath = clazz + ".java";
+
+			String fileName = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
+
+			List<Integer> list = file2LocationList.get(relJavaPath);
+			if (list == null) {
+				File file = new File(fileName);
+				if (!file.exists()) {
+					LevelLogger.error("Cannot find file : " + fileName);
+					continue;
+				}
+				list = new LinkedList<>();
+			}
+			list.add(line);
+			file2LocationList.put(relJavaPath, list);
+		}
+		return file2LocationList;
+	}
+	
+	
+	protected void printPredicateInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
+			Subject subject) {
+		LevelLogger.debug("\n------------------------begin predicate info------------------------\n");
+
+		StringBuffer contents = new StringBuffer();
+		for (Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()) {
+			LevelLogger.debug("FILE NAME : " + entry.getKey());
+			for (Entry<Integer, List<Pair<String, String>>> line2Preds : entry.getValue().entrySet()) {
+				LevelLogger.debug("LINE : " + line2Preds.getKey());
+				LevelLogger.debug("PREDICATES : ");
+				for (Pair<String, String> pair : line2Preds.getValue()) {
+					LevelLogger.debug(pair.getFirst() + ",");
+					contents.append(entry.getKey() + "\t" + line2Preds.getKey() + "\t" + pair.getFirst() + "\t"
+							+ pair.getSecond());
+					contents.append("\n");
+				}
+				LevelLogger.debug("\n");
+			}
+		}
+		LevelLogger.debug("\n------------------------end predicate info------------------------\n");
+		String outputFile = subject.getCoverageInfoPath() + "/" + _predicates_backup_file;
+		JavaFile.writeStringToFile(outputFile, contents.toString(), true);
+	}
+
+	protected Map<String, Map<Integer, List<Pair<String, String>>>> recoverPredicates(Subject subject) {
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
+		String inputFile = subject.getCoverageInfoPath() + "/" + _predicates_backup_file;
+		File file = new File(inputFile);
+		if (!file.exists() || !file.isFile()) {
+			return null;
+		}
+		LevelLogger.info("Recover predicates from file.");
+		List<String> contents = JavaFile.readFileToStringList(file);
+		for (String content : contents) {
+			if (contents.isEmpty()) {
+				continue;
+			}
+			String parts[] = content.split("\t");
+			// fix bug: predicates may contain anonymous class
+			if (parts.length != 4) {
+				continue;
+			}
+			Map<Integer, List<Pair<String, String>>> line2Predicates = file2Line2Predicates.get(parts[0]);
+			if (line2Predicates == null) {
+				line2Predicates = new HashMap<>();
+				file2Line2Predicates.put(parts[0], line2Predicates);
+			}
+			List<Pair<String, String>> predicates = line2Predicates.get(Integer.valueOf(parts[1]));
+			if (predicates == null) {
+				predicates = new ArrayList<>();
+				line2Predicates.put(Integer.valueOf(parts[1]), predicates);
+			}
+			predicates.add(new Pair<String, String>(parts[2], parts[3]));
+		}
+		return file2Line2Predicates;
+	}
 	
 	/**
 	 * 
@@ -116,7 +240,7 @@ public abstract class Model {
 		}
 
 		try {
-			ExecuteCommand.executePredict(subject);
+			ExecuteCommand.executePredict(subject, this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
