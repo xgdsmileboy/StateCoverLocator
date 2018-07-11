@@ -7,17 +7,7 @@
 
 package locator.core;
 
-import java.util.Set;
-
-import org.junit.Assert;
 import org.junit.Test;
-
-import locator.common.config.Constant;
-import locator.common.config.Identifier;
-import locator.common.java.Pair;
-import locator.common.java.Subject;
-import locator.inst.Instrument;
-import locator.inst.visitor.DeInstrumentVisitor;
 
 /**
  * @author Jiajun

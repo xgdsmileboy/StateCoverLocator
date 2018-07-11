@@ -5,27 +5,27 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.core;
+package locator.core.alg;
 
 /**
  * @author Jiajun
  * @date Jun 13, 2017
  */
-public class Tarantula extends PredicateCoverageAlgorithm {
+public class Barinel extends PredicateCoverageAlgorithm {
 
 	@Override
 	public String getName() {
-		return "Tarantula";
+		return "Barinel";
 	}
 
 	/**
-	 * (failed(s) / totalFailed) / (failed(s) / totalFailed + passed(s) / totalPassed)
+	 * 1 - (passed(s) / (passed(s) + failed(s)))
 	 */
 	@Override
 	public double getScore(int fcover, int pcover, int totalFailed,
 			int totalPassed, int fcoverObserved, int pcoverObserved) {
 		if (pcover + fcover == 0) return 0;
-		return (fcover * 1.0 / totalFailed) / (fcover * 1.0 / totalFailed + pcover * 1.0 / totalPassed);
+		return 1.0 - (pcover * 1.0 / (pcover + fcover));
 	}
 
 }

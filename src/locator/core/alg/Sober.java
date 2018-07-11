@@ -1,8 +1,10 @@
-package locator.core;
+package locator.core.alg;
 
 import java.util.List;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
+
+import locator.core.PredicateCoverage;
 
 public class Sober extends TrueFalseCoverageNumberAlgorithm {
 

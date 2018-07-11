@@ -17,11 +17,11 @@ import java.util.Set;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.CmdFactory;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.common.util.Pair;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.visitor.MethodInstrumentVisitor;

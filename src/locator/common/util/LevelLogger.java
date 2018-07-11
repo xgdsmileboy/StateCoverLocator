@@ -16,9 +16,7 @@ import org.apache.log4j.PropertyConfigurator;
 public class LevelLogger {
 	private static Logger logger_ = Logger.getLogger("state-cover-fl");
 
-	private static LevelLogger levelLogger_ = new LevelLogger();
-
-	private LevelLogger() {
+	static {
 		File f = new File("res/conf/log4j.properties");
 		if (f.exists()) {
 			PropertyConfigurator.configure("res/conf/log4j.properties");

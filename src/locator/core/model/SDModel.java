@@ -11,8 +11,8 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import locator.common.java.JavaFile;
-import locator.common.java.Pair;
 import locator.common.java.Subject;
+import locator.common.util.Pair;
 import locator.inst.visitor.NewNoSideEffectPredicateInstrumentVisitor;
 
 public class SDModel extends Model {

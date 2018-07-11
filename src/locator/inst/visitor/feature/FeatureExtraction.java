@@ -62,9 +62,9 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
-import locator.common.java.Pair;
 import locator.common.java.Subject;
-import locator.core.run.path.LineInfo;
+import locator.common.util.Pair;
+import locator.core.LineInfo;
 
 /**
  * @author Jiajun

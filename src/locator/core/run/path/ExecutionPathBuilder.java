@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.Set;
 
 import locator.common.config.Constant;
-import locator.common.java.CoverInfo;
 import locator.common.util.LevelLogger;
+import locator.core.CoverInfo;
 
 /**
  * This class is responsible for constructing the execution path from the output

@@ -34,8 +34,6 @@ public class NewTestMethodInstrumentVisitorTest {
 		compilationUnit.accept(new NewTestMethodInstrumentVisitor(methods, false));
 		System.out.println(compilationUnit);
 		
-		compilationUnit.accept(new DeInstrumentVisitor());
-		System.out.println(compilationUnit);
 	}
 	
 }

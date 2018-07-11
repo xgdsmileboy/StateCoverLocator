@@ -5,7 +5,7 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.common.java;
+package locator.common.util;
 
 /**
  * User defined struct, which saves the information appear together

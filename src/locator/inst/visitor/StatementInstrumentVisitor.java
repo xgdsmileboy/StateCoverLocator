@@ -38,7 +38,6 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Method;
 import locator.common.util.LevelLogger;
 import locator.inst.gen.GenStatement;
 

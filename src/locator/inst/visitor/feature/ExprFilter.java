@@ -36,9 +36,9 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.junit.validator.PublicClassValidator;
 
 import locator.common.java.JavaFile;
-import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
+import locator.common.util.Pair;
 
 /**
  * @author Jiajun

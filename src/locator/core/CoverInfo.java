@@ -5,7 +5,7 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.common.java;
+package locator.core;
 
 /**
  * @author Jiajun

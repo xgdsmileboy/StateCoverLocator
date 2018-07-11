@@ -5,12 +5,10 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.core;
+package locator.common.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import locator.common.util.LevelLogger;
 
 /**
  * @author Jiajun

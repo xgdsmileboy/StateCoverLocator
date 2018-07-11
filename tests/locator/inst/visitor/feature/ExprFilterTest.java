@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
-import locator.core.run.path.LineInfo;
+import locator.core.LineInfo;
 
 public class ExprFilterTest {
 

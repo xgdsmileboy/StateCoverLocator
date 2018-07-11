@@ -1,4 +1,4 @@
-package locator.core;
+package locator.core.alg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,9 +8,10 @@ import java.util.Map;
 // import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
-import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
+import locator.common.util.Pair;
+import locator.core.PredicateCoverage;
 
 public abstract class PredicateCoverageAlgorithm extends Algorithm {
 	public abstract double getScore(int fcover, int pcover, int totalFailed, int totalPassed, int fcoverObserved, int pcoverObserved);

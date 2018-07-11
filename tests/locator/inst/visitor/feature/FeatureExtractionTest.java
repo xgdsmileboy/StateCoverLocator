@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import locator.common.config.Constant;
-import locator.core.run.path.LineInfo;
+import locator.core.LineInfo;
 
 /**
  * @author Jiajun

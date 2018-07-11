@@ -5,27 +5,27 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.core;
+package locator.core.alg;
 
 /**
  * @author Jiajun
  * @date Jun 13, 2017
  */
-public class DStar extends PredicateCoverageAlgorithm {
+public class Tarantula extends PredicateCoverageAlgorithm {
 
 	@Override
 	public String getName() {
-		return "DStar";
+		return "Tarantula";
 	}
+
 	/**
-	 * failed(s)^n / (passed(s) + (totalFailed - failed(s)))
-	 * n is integer, here we set it as 2
+	 * (failed(s) / totalFailed) / (failed(s) / totalFailed + passed(s) / totalPassed)
 	 */
 	@Override
 	public double getScore(int fcover, int pcover, int totalFailed,
 			int totalPassed, int fcoverObserved, int pcoverObserved) {
 		if (pcover + fcover == 0) return 0;
-		return fcover * fcover * 1.0 / (pcover + (totalFailed - fcover));
+		return (fcover * 1.0 / totalFailed) / (fcover * 1.0 / totalFailed + pcover * 1.0 / totalPassed);
 	}
 
 }

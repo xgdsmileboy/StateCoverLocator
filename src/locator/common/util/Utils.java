@@ -14,9 +14,9 @@ import java.util.Map.Entry;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.CoverInfo;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
+import locator.core.CoverInfo;
 
 /**
  * @author Jiajun

@@ -1,4 +1,4 @@
-package locator.core;
+package locator.core.alg;
 
 public class Simple extends PredicateCoverageAlgorithm {
 

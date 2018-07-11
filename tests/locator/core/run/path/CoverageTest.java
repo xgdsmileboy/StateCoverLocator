@@ -7,18 +7,7 @@
 
 package locator.core.run.path;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.Assert;
 import org.junit.Test;
-
-import locator.common.config.Configure;
-import locator.common.config.Constant;
-import locator.common.config.Identifier;
-import locator.common.java.Subject;
-import locator.inst.Instrument;
-import locator.inst.visitor.DeInstrumentVisitor;
 
 /**
  * @author Jiajun
@@ -69,38 +58,4 @@ public class CoverageTest {
 //		Assert.assertTrue(line == 93);
 	}
 
-	@Test
-	public void test_getAllCoveredStatement() {
-		Constant.PROJECT_HOME = "res/junitRes";
-		Subject subject = new Subject("chart", 2, "/source", "/tests", "/build", "/build-tests", null);
-		// preprocess : remove all instrument
-		DeInstrumentVisitor deInstrumentVisitor = new DeInstrumentVisitor();
-		Instrument.execute(subject.getHome() + subject.getSsrc(), deInstrumentVisitor);
-		Instrument.execute(subject.getHome() + subject.getTsrc(), deInstrumentVisitor);
-		// copy auxiliary file to subject path
-		Configure.config_dumper(subject);
-
-		String failedTest1 = "org.jfree.data.general.junit.DatasetUtilitiesTests#void#testBug2849731_2#?";
-		int methodID = Identifier.getIdentifier(failedTest1);
-		Set<Integer> testcases = new HashSet<>();
-		testcases.add(methodID);
-		Set<String> coveredStatement = Coverage.getAllCoveredStatement(subject, testcases);
-
-		Assert.assertTrue(coveredStatement.size() == 89);
-
-		String errorLocation = "org.jfree.data.general.DatasetUtilities#Range#iterateDomainBounds#?,XYDataset,boolean";
-		int errorMethod = Identifier.getIdentifier(errorLocation);
-
-		boolean containErrorLocation = false;
-		for (String statement : coveredStatement) {
-			String[] methodInfo = statement.split("#");
-			int method = Integer.parseInt(methodInfo[0]);
-			if (method == errorMethod) {
-				containErrorLocation = true;
-				break;
-			}
-		}
-
-		Assert.assertTrue(containErrorLocation);
-	}
 }

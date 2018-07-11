@@ -19,8 +19,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import locator.common.java.Pair;
 import locator.common.java.Subject;
+import locator.common.util.CList;
+import locator.common.util.Pair;
+import locator.core.alg.Algorithm;
 
 /**
  * @author Jiajun

@@ -5,15 +5,16 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.core;
+package locator.core.alg;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import locator.common.java.JavaFile;
-import locator.common.java.Pair;
 import locator.common.java.Subject;
+import locator.common.util.Pair;
+import locator.core.PredicateCoverage;
 
 /**
  * @author Jiajun

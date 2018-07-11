@@ -41,7 +41,7 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Pair;
+import locator.common.util.Pair;
 import locator.inst.gen.GenStatement;
 
 /**

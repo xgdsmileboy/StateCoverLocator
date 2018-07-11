@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import org.junit.Test;
 
 import locator.common.config.Constant;
-import locator.common.java.CoverInfo;
+import locator.core.CoverInfo;
 
 /**
  * @author Jiajun

@@ -21,7 +21,6 @@ import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Method;
 import locator.inst.gen.GenStatement;
 
 /**

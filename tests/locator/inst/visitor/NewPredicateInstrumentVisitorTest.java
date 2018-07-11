@@ -8,16 +8,14 @@
 package locator.inst.visitor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.junit.Test;
 
 import locator.common.java.JavaFile;
-import locator.common.java.Pair;
+import locator.common.util.Pair;
 
 /**
  * @author Jiajun
@@ -36,8 +34,6 @@ public class NewPredicateInstrumentVisitorTest {
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 //		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);
-		compilationUnit.accept(new DeInstrumentVisitor());
-		System.out.println(compilationUnit);
 	}
 	
 	@Test

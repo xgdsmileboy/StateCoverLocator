@@ -44,7 +44,7 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Pair;
+import locator.common.util.Pair;
 import polyglot.ast.Case;
 
 public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{

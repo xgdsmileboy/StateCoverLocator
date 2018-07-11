@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.junit.Test;
 
 import locator.common.java.JavaFile;
-import locator.common.java.Pair;
+import locator.common.util.Pair;
 
 /**
  * @author Jiajun

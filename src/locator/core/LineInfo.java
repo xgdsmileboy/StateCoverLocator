@@ -1,4 +1,4 @@
-package locator.core.run.path;
+package locator.core;
 
 import java.util.HashMap;
 import java.util.Map;

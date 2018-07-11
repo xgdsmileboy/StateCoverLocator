@@ -24,11 +24,11 @@ import java.util.Set;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
-import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
-import locator.core.run.path.LineInfo;
+import locator.common.util.Pair;
+import locator.core.LineInfo;
 import locator.inst.visitor.feature.NewExprFilter;
 
 /**
