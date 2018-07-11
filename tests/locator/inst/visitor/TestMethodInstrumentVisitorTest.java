@@ -21,7 +21,7 @@ import locator.common.java.JavaFile;
  * @author Jiajun
  * @date Jun 2, 2017
  */
-public class NewTestMethodInstrumentVisitorTest {
+public class TestMethodInstrumentVisitorTest {
 
 	@Test
 	public void test_InstrumentForTestClass(){

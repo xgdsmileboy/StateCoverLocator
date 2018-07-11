@@ -272,6 +272,15 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 						}
 					}
 				} else if(!Modifier.isFinal(node.getModifiers())) {
+					Type type = node.getType();
+					if(fragment.getExtraDimensions() > 0) {
+						if(type.isArrayType()) {
+							ArrayType arrayType = (ArrayType) type;
+							type = ast.newArrayType((Type) ASTNode.copySubtree(ast, arrayType.getElementType()), arrayType.getDimensions() + fragment.getExtraDimensions());
+						} else {
+							type = ast.newArrayType((Type) ASTNode.copySubtree(ast, type), fragment.getExtraDimensions());
+						}
+					}
 					Expression expression = genDefaultValue(node.getType());
 					fragment.setInitializer((Expression) ASTNode.copySubtree(fragment.getAST(), expression));
 				}

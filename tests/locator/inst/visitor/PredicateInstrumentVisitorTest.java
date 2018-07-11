@@ -21,7 +21,7 @@ import locator.common.util.Pair;
  * @author Jiajun
  * @date Jun 2, 2017
  */
-public class NewPredicateInstrumentVisitorTest {
+public class PredicateInstrumentVisitorTest {
 
 	@Test
 	public void test_predicateInstrumentForClazz() {

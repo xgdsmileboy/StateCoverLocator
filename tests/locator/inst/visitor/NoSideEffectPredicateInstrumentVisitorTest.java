@@ -1,126 +1,138 @@
-/**
- * Copyright (C) SEI, PKU, PRC. - All Rights Reserved.
- * Unauthorized copying of this file via any medium is
- * strictly prohibited Proprietary and Confidential.
- * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
- */
-
 package locator.inst.visitor;
 
-/**
- * @author Jiajun
- * @date Jan 4, 2018
- */
+import java.util.HashSet;
+import java.util.Set;
+
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.junit.Test;
+
+import locator.common.java.JavaFile;
+
 public class NoSideEffectPredicateInstrumentVisitorTest {
 
+	private String file = "res/junitRes/SideEffect.java";
+	private String srcPath = "/res/junitRes";
+	private String relJavaPath = "SideEffect.java";
 	
-//	private CompilationUnit getTestCompilationUnit() {
-//		return (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString("./res/junitRes/SideEffect.java"), ASTParser.K_COMPILATION_UNIT);
-//	}
-//	
-//	@Test
-//	public void test_if() {
-//		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
-//		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
-//		List<Pair<String, String>> pairs = new ArrayList<>();
-//		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-//		condition.put(23, pairs);
-//		instrumentVisitor.setCondition(condition);
-//		CompilationUnit unit = getTestCompilationUnit();
-//		unit.accept(instrumentVisitor);
-//		System.out.println(unit.toString());
-//	}
-//	
-//	@Test
-//	public void test_for() {
-//		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
-//		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
-//		List<Pair<String, String>> pairs = new ArrayList<>();
-//		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-//		condition.put(34, pairs);
-//		instrumentVisitor.setCondition(condition);
-//		CompilationUnit unit = getTestCompilationUnit();
-//		unit.accept(instrumentVisitor);
-//		System.out.println(unit.toString());
-//	}
-//	
-//	@Test
-//	public void test_while() {
-//		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
-//		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
-//		List<Pair<String, String>> pairs = new ArrayList<>();
-//		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-//		condition.put(64, pairs);
-//		instrumentVisitor.setCondition(condition);
-//		CompilationUnit unit = getTestCompilationUnit();
-//		unit.accept(instrumentVisitor);
-//		System.out.println(unit.toString());
-//	}
-//	
-//	@Test
-//	public void test_do() {
-//		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
-//		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
-//		List<Pair<String, String>> pairs = new ArrayList<>();
-//		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-//		condition.put(57, pairs);
-//		instrumentVisitor.setCondition(condition);
-//		CompilationUnit unit = getTestCompilationUnit();
-//		unit.accept(instrumentVisitor);
-//		System.out.println(unit.toString());
-//	}
-//	
-//	@Test
-//	public void test_switch() {
-//		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
-//		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
-//		List<Pair<String, String>> pairs = new ArrayList<>();
-//		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-//		condition.put(80, pairs);
-//		instrumentVisitor.setCondition(condition);
-//		CompilationUnit unit = getTestCompilationUnit();
-//		unit.accept(instrumentVisitor);
-//		System.out.println(unit.toString());
-//	}
-//	
-//	@Test
-//	public void test_return() {
-//		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
-//		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
-//		List<Pair<String, String>> pairs = new ArrayList<>();
-//		pairs.add(new Pair<String, String>("#RETURN", "1.0"));
-//		condition.put(115, pairs);
-//		instrumentVisitor.setCondition(condition);
-//		CompilationUnit unit = getTestCompilationUnit();
-//		unit.accept(instrumentVisitor);
-//		System.out.println(unit.toString());
-//	}
-//	
-//	@Test
-//	public void test_return_not_instrument() {
-//		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
-//		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
-//		List<Pair<String, String>> pairs = new ArrayList<>();
-//		pairs.add(new Pair<String, String>("#RETURN", "1.0"));
-//		condition.put(119, pairs);
-//		instrumentVisitor.setCondition(condition);
-//		CompilationUnit unit = getTestCompilationUnit();
-//		unit.accept(instrumentVisitor);
-//		System.out.println(unit.toString());
-//	}
-//	
-//	@Test
-//	public void test_addInitializer() {
-//		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
-//		Map<Integer, List<Pair<String, String>>> condition = new HashMap<>();
-//		List<Pair<String, String>> pairs = new ArrayList<>();
-//		pairs.add(new Pair<String, String>("#CONDITION", "1.0"));
-//		condition.put(105, pairs);
-//		condition.put(108, pairs);
-//		instrumentVisitor.setCondition(condition);
-//		CompilationUnit unit = getTestCompilationUnit();
-//		unit.accept(instrumentVisitor);
-//		System.out.println(unit.toString());
-//	}
+	private CompilationUnit getTestCompilationUnit() {
+		return (CompilationUnit) JavaFile.genASTFromSource(JavaFile.readFileToString(file), ASTParser.K_COMPILATION_UNIT);
+	}
+	
+	@Test
+	public void test_if() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(11);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_for() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(10);
+		lines.add(22);
+		lines.add(34);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_while() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(64);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_do() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(48);
+		lines.add(57);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_switch() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(80);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	// No instrument? May be the type of the variable does not resolved
+	@Test
+	public void test_return() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(90);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_return_not_instrument() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(119);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_return_in_died_loop() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(124);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		// there should be no instrument
+		System.out.println(unit.toString());
+	}
+	
+	@Test
+	public void test_initialize_array() {
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(133);
+		lines.add(134);
+		lines.add(135);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		// there should be no instrument
+		System.out.println(unit.toString());
+	}
 	
 }
