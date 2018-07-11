@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.CharacterLiteral;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ForStatement;
@@ -23,6 +24,7 @@ import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
@@ -203,6 +205,9 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int start = _cu.getLineNumber(node.getStartPosition());
 		if (_lines.contains(start)) {
 			Expression expr = node.getRightHandSide();
+			if(expr instanceof NumberLiteral || expr instanceof BooleanLiteral || expr instanceof CharacterLiteral) {
+				return true;
+			}
 			if (node.getLeftHandSide() != null && expr != null) {
 				ITypeBinding type = expr.resolveTypeBinding();
 				String leftVarName = node.getLeftHandSide().toString();
@@ -240,6 +245,9 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			for(VariableDeclarationFragment fragment : fragments) {
 				Expression expr = fragment.getInitializer();
 				if (expr != null) {
+					if(expr instanceof NumberLiteral || expr instanceof BooleanLiteral || expr instanceof CharacterLiteral) {
+						continue;
+					}
 					String rightExprStr = expr.toString();
 					ITypeBinding type = expr.resolveTypeBinding();
 					String typeStr = null;
