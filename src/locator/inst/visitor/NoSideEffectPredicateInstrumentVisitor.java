@@ -1,14 +1,11 @@
 package locator.inst.visitor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.print.attribute.standard.RequestingUserName;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -16,22 +13,16 @@ import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayInitializer;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Initializer;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Modifier;
-import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
@@ -45,7 +36,6 @@ import edu.pku.sei.conditon.simple.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.util.Pair;
-import polyglot.ast.Case;
 
 public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Set<Integer> _lines = null;
@@ -54,7 +44,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private String _relJavaPath = "";
 	private boolean _useSober;
 	private String _methodID = "";
-	private Map<Integer, List<Pair<String, String>>> _predicates = new HashMap();
+	private Map<Integer, List<Pair<String, String>>> _predicates = new HashMap<>();
 	private static AST ast = AST.newAST(Constant.AST_LEVEL);
 	
 	public NoSideEffectPredicateInstrumentVisitor(boolean useSober) {
@@ -75,7 +65,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private void clear() {
 		_leftVars.clear();
 		_methodID = "";
-		_predicates = new HashMap();
+		_predicates = new HashMap<>();
 	}
 	
 	@Override
@@ -131,7 +121,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			Expression expr = node.getExpression();
 			if (expr != null && isComparableType(expr.resolveTypeBinding())) {
 				String condition = expr.toString();
-				node.setExpression((Expression) node.copySubtree(node.getAST(),
+				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(),
 						genReturnWithLog(expr, expr.resolveTypeBinding(), start)));
 				addPredicates(getPredicateForReturns(condition), start);
 			}
@@ -144,7 +134,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
 			String condition = expr.toString();
-			node.setExpression((Expression) node.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
+			node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
 			addPredicates(getPredicateForConditions(condition), start);
 		}
 		return true;
@@ -164,7 +154,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			Expression expr = node.getExpression();
 			if(expr != null) {
 				String condition = expr.toString();
-				node.setExpression((Expression) node.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
+				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
 				addPredicates(getPredicateForConditions(condition), start);
 			}
 		}
@@ -179,7 +169,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			if (condition.equals("true")) {
 				return true;
 			}
-			node.setExpression((Expression) node.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
+			node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
 			addPredicates(getPredicateForConditions(condition), start);
 		}
 		return true;
@@ -193,7 +183,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			if (condition.equals("true")) {
 				return true;
 			}
-			node.setExpression((Expression) node.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
+			node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
 			addPredicates(getPredicateForConditions(condition), start);
 		}
 		return true;
@@ -229,7 +219,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 						}
 					}
 					if (!variables.isEmpty()) {						
-						node.setRightHandSide((Expression) node.copySubtree(node.getAST(),
+						node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(),
 								genAssignWithLog(expr, variables, type, start)));
 						addPredicates(getPredicatesForAssignment(rightExprStr, variables), start);
 					}
@@ -243,6 +233,10 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int start = _cu.getLineNumber(node.getStartPosition());
 		if (_lines.contains(start)) {
 			List<VariableDeclarationFragment> fragments = node.fragments();
+			Set<String> definedVars = new HashSet<>();
+			for(VariableDeclarationFragment fragment : fragments) {
+				definedVars.add(fragment.getName().getFullyQualifiedName());
+			}
 			for(VariableDeclarationFragment fragment : fragments) {
 				Expression expr = fragment.getInitializer();
 				if (expr != null) {
@@ -267,12 +261,12 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 							String[] elements = feature.split("\t");
 							String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
 							String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
-							if (!varName.equals(leftVarName) && !varName.equals(rightExprStr) && varType.equals(type.getName())) {							
+							if (!definedVars.contains(varName) && !varName.equals(rightExprStr) && varType.equals(type.getName())) {							
 								variables.add(varName);
 							}
 						}
 						if (!variables.isEmpty()) {							
-							fragment.setInitializer((Expression) node.copySubtree(node.getAST(),
+							fragment.setInitializer((Expression) ASTNode.copySubtree(node.getAST(),
 									genAssignWithLog(expr, variables, type, start)));
 							addPredicates(getPredicatesForAssignment(rightExprStr, variables), start);
 						}
