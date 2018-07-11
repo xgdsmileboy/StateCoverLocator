@@ -289,7 +289,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 							type = ast.newArrayType((Type) ASTNode.copySubtree(ast, type), fragment.getExtraDimensions());
 						}
 					}
-					Expression expression = genDefaultValue(node.getType());
+					Expression expression = genDefaultValue(type);
 					fragment.setInitializer((Expression) ASTNode.copySubtree(fragment.getAST(), expression));
 				}
 			}
