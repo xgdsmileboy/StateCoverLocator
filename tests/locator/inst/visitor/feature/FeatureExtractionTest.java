@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import locator.common.config.Constant;
-import locator.core.run.path.LineInfo;
+import locator.core.LineInfo;
 
 /**
  * @author Jiajun
@@ -29,7 +29,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 74, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 74, new LineInfo(), varFeature, expFeature);
 		for(String string : varFeature) {
 			System.out.println(string);
 		}
@@ -43,7 +43,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 145, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 145, new LineInfo(), varFeature, expFeature);
 		for(String string : varFeature) {
 			System.out.println(string);
 		}
@@ -65,7 +65,7 @@ public class FeatureExtractionTest {
 		int line = 132;
 		List<String> vars = new ArrayList<String>();
 		List<String> exprs = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, line, new LineInfo(), vars, exprs);
+		FeatureExtraction.generateFeatures(path, relJavaPath, line, new LineInfo(), vars, exprs);
 		System.out.println("Variables : ");
 		for (String string : vars) {
 			System.out.println(string);
@@ -82,7 +82,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "BigFraction.java";
 		List<String> vars = new ArrayList<String>();
 		List<String> exprs = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 76, new LineInfo(), vars, exprs);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 76, new LineInfo(), vars, exprs);
 		System.out.println("Variables : ");
 		for (String string : vars) {
 			System.out.println(string);
@@ -99,7 +99,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> vars = new ArrayList<String>();
 		List<String> exprs = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 48, new LineInfo(), vars, exprs);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 48, new LineInfo(), vars, exprs);
 		System.out.println("Variables : ");
 		for (String string : vars) {
 			System.out.println(string);
@@ -117,7 +117,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 48, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 48, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 1);
 	}
@@ -130,7 +130,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 85, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 85, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 2);
 	}
@@ -143,7 +143,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 98, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 98, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 2);
 	}
@@ -155,7 +155,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 74, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 74, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 2);
 	}
@@ -169,7 +169,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 87, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 87, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 5);
 	}
@@ -181,7 +181,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 145, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 145, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 3);
 	}
@@ -194,7 +194,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 290, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 290, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 0);
 	}
@@ -206,7 +206,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 824, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 824, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 0);
 	}
@@ -218,7 +218,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 1574, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 1574, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 1);
 	}
@@ -230,7 +230,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 1577, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 1577, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 0);
 	}
@@ -242,7 +242,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/jfree/data/general/DatasetUtilities.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 1558, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 1558, new LineInfo(), varFeature, expFeature);
 		Assert.assertTrue(varFeature.size() == expFeature.size());
 		Assert.assertTrue(varFeature.size() == 2);
 	}
@@ -254,7 +254,7 @@ public class FeatureExtractionTest {
 		String relJavaPath = "/org/apache/commons/math3/fraction/BigFraction.java";
 		List<String> varFeature = new ArrayList<String>();
 		List<String> expFeature = new ArrayList<String>();
-		FeatureExtraction.extractAllFeatures(path, relJavaPath, 36, new LineInfo(), varFeature, expFeature);
+		FeatureExtraction.generateFeatures(path, relJavaPath, 36, new LineInfo(), varFeature, expFeature);
 		// System.out.println("Variables : ");
 		// for (String string : vars.getFirst()) {
 		// System.out.println(string);

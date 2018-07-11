@@ -3,7 +3,7 @@ import datetime
 from Utils.config import *
 import heapq as hq
 from clustering.cluster import *
-import expr_model
+from DNN.dnn import *
 
 import tensorflow as tf
 
@@ -58,10 +58,8 @@ class XGExpr(object):
                 y_prob = model.predict_proba(X_pred)
                 classes = model.classes_
         else:
-            classifier = expr_model.get_dnn_classifier(feature_num, y_encoder.classes_.shape[0], self.__configure__.get_expr_nn_model_dir())
-            test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': np.array(X_pred.values)}, y=None, num_epochs=1, shuffle=False)
-            predictions = list(classifier.predict(input_fn = test_input_fn))
-            y_prob = [p['probabilities'] for p in predictions]
+            dnn_model = DNN(self.__configure__)
+            y_prob = dnn_model.predict(np.array(X_pred.values), feature_num, y_encoder.classes_.shape[0], False)
 
         ## save the result
         with open(expr_predicted, 'w') as f:

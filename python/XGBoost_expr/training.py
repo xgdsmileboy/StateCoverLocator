@@ -18,11 +18,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import svm
+from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
-from XGBoost_expr import expr_model
 
 import tensorflow as tf
 import shutil as su
+from DNN.dnn import *
 
 
 
@@ -34,29 +35,6 @@ class TrainExpr(object):
         @param configure: Configure
         """
         self.__configure__ = configure
-
-    def evaluate_dnn(self, X, Y, feature_num, class_num):
-        X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size=0.3, random_state=7)
-        feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
-        classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [64, 64, 64, 64, 64, 64],
-                                              n_classes = class_num)
-
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=10000, shuffle=True)
-        test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_valid}, y=y_valid, num_epochs=1, shuffle=True)
-        same_train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=1, shuffle=True)
-        classifier.train(input_fn=train_input_fn)
-        accuracy_score = classifier.evaluate(input_fn=test_input_fn)["accuracy"]
-        print("\nTest Accuracy: {0:f}\n".format(accuracy_score))
-        accuracy_score_train = classifier.evaluate(input_fn=same_train_input_fn)["accuracy"]
-        print("\nTrain Accuracy: {0:f}\n".format(accuracy_score_train))
-
-    def train_dnn(self, X, Y, feature_num, class_num):
-        su.rmtree(self.__configure__.get_expr_nn_model_dir())
-        classifier = expr_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_expr_nn_model_dir())
-
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=1000, shuffle=True)
-        classifier.train(input_fn=train_input_fn)
 
     def train(self, feature_num, training_objective, str_encoder, evaluate):
 
@@ -240,29 +218,34 @@ class TrainExpr(object):
             #         pk.dump(best_model, f)
             #         print('Model saved in {}'.format(model_file))
 
-        elif (self.__configure__.get_model_type() == 'randomforest'):
-            model = RandomForestClassifier(random_state = 0)
-            if evaluate:
-                X_train, X_valid, y_train, y_valid = train_test_split(frequent_X, frequent_y, test_size=0.3, random_state=7)
-                model.fit(X_train, y_train)
-                score1 = model.score(X_train, y_train)
-                score2 = model.score(X_valid, y_valid)
-                print("\nTest Accuracy: {0:f}\n".format(score2))
-                print("\nTrain Accuracy: {0:f}\n".format(score1))
+        #elif (self.__configure__.get_model_type() == 'randomforest'):
+        #    model = RandomForestClassifier(random_state = 0)
+        #    if evaluate:
+        #        X_train, X_valid, y_train, y_valid = train_test_split(frequent_X, frequent_y, test_size=0.3, random_state=7)
+        #        model.fit(X_train, y_train)
+        #        score1 = model.score(X_train, y_train)
+        #        score2 = model.score(X_valid, y_valid)
+        #        print("\nTest Accuracy: {0:f}\n".format(score2))
+        #        print("\nTrain Accuracy: {0:f}\n".format(score1))
+        #    else:
+        #        model.fit(frequent_X, frequent_y)
+        #        with open(model_file, 'w') as f:
+        #            pk.dump(model, f)
+        #            print('Model saved in {}'.format(model_file))
+        elif (self.__configure__.get_model_type() == 'tree' or self.__configure__.get_model_type() == 'randomforest'):
+            if self.__configure__.get_model_type() == 'tree':
+                model = DecisionTreeClassifier(random_state = 0)
             else:
-                model.fit(frequent_X, frequent_y)
-                with open(model_file, 'w') as f:
-                    pk.dump(model, f)
-                    print('Model saved in {}'.format(model_file))
-        elif (self.__configure__.get_model_type() == 'tree'):
-            model = DecisionTreeClassifier(random_state = 0)
+                model = RandomForestClassifier(random_state = 0)
+                frequent_y = np.ravel(frequent_y)
             if evaluate:
                 X_train, X_valid, y_train, y_valid = train_test_split(frequent_X, frequent_y, test_size=0.3, random_state=7)
                 model.fit(X_train, y_train)
-                score1 = model.score(X_train, y_train)
-                score2 = model.score(X_valid, y_valid)
-                print("\nTest Accuracy: {0:f}\n".format(score2))
-                print("\nTrain Accuracy: {0:f}\n".format(score1))
+                y_classes = model.predict(X_valid)
+                DNN.print_all_accuracy_precision_recall_f1(y_valid, y_classes, 'Test')
+
+                y_classes = model.predict(X_train)
+                DNN.print_all_accuracy_precision_recall_f1(y_train, y_classes, 'Train')
             else:
                 model.fit(frequent_X, frequent_y)
                 with open(model_file, 'w') as f:
@@ -271,8 +254,9 @@ class TrainExpr(object):
         elif (self.__configure__.get_model_type() == 'dnn'):
             X_input = frequent_X.values
             Y_input = frequent_y.values
+            dnn_model = DNN(self.__configure__)
             if evaluate:
-                self.evaluate_dnn(np.array(X_input), np.array(Y_input), frequent_X.shape[1], y_encoder.classes_.shape[0])
+                dnn_model.evaluate(np.array(X_input), np.array(Y_input), frequent_X.shape[1], y_encoder.classes_.shape[0], False)
             else:
                 # encoded_input = pd.DataFrame(np.concatenate((X_input, Y_input.reshape(Y_input.shape[0], 1)), axis=1))
                 # encoded_input.to_csv(self.__configure__.get_expr_nn_training_file(), index = False, header = False)
@@ -288,7 +272,7 @@ class TrainExpr(object):
                 #     f.write('0,1\n')
                 #     f.write('%s' % csv_format_data)
                 print(frequent_X.shape[1])
-                self.train_dnn(np.array(X_input), np.array(Y_input), frequent_X.shape[1], y_encoder.classes_.shape[0])
+                dnn_model.train(np.array(X_input), np.array(Y_input), frequent_X.shape[1], y_encoder.classes_.shape[0], self.__configure__.get_expr_nn_model_dir(), False)
 
         end_time = datetime.datetime.now()
         run_time = end_time-start_time

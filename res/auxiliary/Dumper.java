@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
 public class Dumper {
 
 	public static boolean SUCC_TEST = false;
@@ -27,6 +28,7 @@ public class Dumper {
 	private static Set alreadyRun = new HashSet();
 	private static Set alreadyObserved = new HashSet();
 	private static List coverages = new ArrayList();
+	private static String operators[] = {"<=", ">=", "==", "!=", "<", ">"};
 
 	private static final long MAX_OUTPUT_FILE_SIZE = 5; // max file size in GB
 //	private static final String OUT_AND_LIB_PATH = "/home/jiajun/code/space/StateCoverLocator";
@@ -224,7 +226,8 @@ public class Dumper {
 		return true;
 	}
 	
-	public static boolean logConditionCoverage(boolean condition, String trueLogInfo, String falseLogInfo) {
+	// logConditionCoverage, lcc for short
+	public static boolean lcc(boolean condition, String trueLogInfo, String falseLogInfo) {
 		observe(trueLogInfo);
 		observe(falseLogInfo);
 		if (condition) {
@@ -242,6 +245,124 @@ public class Dumper {
 			writeFalse(message);
 		}
 		return condition;
+	}
+	
+	private static void logCoverage(boolean condition, String message, boolean useSober) {
+		if (useSober) {
+			if (condition) {
+				writeTrue(message);
+			} else {
+				writeFalse(message);
+			}
+		} else {
+			observe(message);
+			if (condition) {
+				write(message);
+			}
+		}
+	}
+	
+	public static Double lpc(final double a, double b, String message, String var1, String var2, boolean useSober) {
+		return (Double)lpccommon(Double.valueOf(a), Double.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Integer lpc(final int a, int b, String message, String var1, String var2, boolean useSober) {
+		return (Integer)lpccommon(Integer.valueOf(a), Integer.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Float lpc(final float a, float b, String message, String var1, String var2, boolean useSober) {
+		return (Float)lpccommon(Float.valueOf(a), Float.valueOf(b), message, var1, var2, useSober);
+	}
+	public static Byte lpc(final byte a, byte b, String message, String var1, String var2, boolean useSober) {
+		return (Byte)lpccommon(Byte.valueOf(a), Byte.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Character lpc(final char a, char b, String message, String var1, String var2, boolean useSober) {
+		return (Character)lpccommon(Character.valueOf(a), Character.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Long lpc(final long a, long b, String message, String var1, String var2, boolean useSober) {
+		return (Long)lpccommon(Long.valueOf(a), Long.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	public static Short lpc(final short a, short b, String message, String var1, String var2, boolean useSober) {
+		return (Short)lpccommon(Short.valueOf(a), Short.valueOf(b), message, var1, var2, useSober);
+	}
+	
+	// logPairCoverage, lpc for short to shorten function
+	public static Object lpccommon(final Object a, Object b, String message, String var1, String var2, boolean useSober) {
+		Comparable ac = (Comparable) a;
+		Comparable bc = (Comparable) b;
+		int cmp = ac.compareTo(bc);
+		for(int i = 0; i < operators.length; i++) {
+			String op = operators[i];
+			String finalMessage = message + "#" + var1 + op + var2 + "#1";
+			boolean condition = false;
+			if (op.equals("<")) {
+				condition = cmp < 0;
+			} else if (op.equals("<=")) {
+				condition = cmp <= 0;
+			} else if (op.equals(">")) {
+				condition = cmp > 0;
+			} else if (op.equals(">=")) {
+				condition = cmp >= 0;
+			} else if (op.equals("==")) {
+				condition = cmp == 0;
+			} else if (op.equals("!=")) {
+				condition = cmp != 0;
+			}
+			logCoverage(condition, finalMessage, useSober);
+		}
+		return a;
+	}
+	
+	public static Integer lpcs(final int a, int[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Integer.valueOf(a);
+	}
+	
+	public static Float lpcs(final float a, float[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Float.valueOf(a);
+	}
+	
+	public static Double lpcs(final double a, double[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Double.valueOf(a);
+	}
+	
+	public static Long lpcs(final long a, long[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Long.valueOf(a);
+	}
+	
+	public static Character lpcs(final char a, char[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Character.valueOf(a);
+	}
+	
+	public static Short lpcs(final short a, short[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Short.valueOf(a);
+	}
+	
+	public static Byte lpcs(final byte a, byte[] vars, String message, String name, String[] names, boolean useSober) {
+		for(int i = 0; i < vars.length; i++) {
+			Dumper.lpc(a, vars[i], message, name, names[i], useSober);
+		}
+		return Byte.valueOf(a);
 	}
 	
 	private static boolean readTrueOrFalse() {
@@ -401,5 +522,26 @@ class PredicateRecord {
 	public String getValue() {
 		String passStr = pass ? "1" : "0";
 		return trueCnt + "\t" + falseCnt + "\t" + passStr;
+	}
+}
+
+class PredicateSignature {
+	private boolean condition = false;
+	private String signature = "";
+	
+	public boolean getCondition() {
+		return condition;
+	}
+	
+	public void setCondition(boolean cond) {
+		condition = cond;
+	}
+	
+	public String getSignature() {
+		return signature;
+	}
+	
+	public void setSignature(String sig) {
+		signature = sig;
 	}
 }

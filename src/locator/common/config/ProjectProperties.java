@@ -40,6 +40,6 @@ public class ProjectProperties {
 		return source;
 	}
 	public SOURCE_LEVEL getTargetLevel() {
-		return source;
+		return target;
 	}
 }

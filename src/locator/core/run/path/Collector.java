@@ -17,15 +17,15 @@ import java.util.Set;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
-import locator.common.java.Pair;
 import locator.common.java.Subject;
 import locator.common.util.CmdFactory;
 import locator.common.util.ExecuteCommand;
 import locator.common.util.LevelLogger;
+import locator.common.util.Pair;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.visitor.MethodInstrumentVisitor;
-import locator.inst.visitor.NewTestMethodInstrumentVisitor;
+import locator.inst.visitor.TestMethodInstrumentVisitor;
 
 /**
  * @author Jiajun
@@ -35,9 +35,13 @@ public class Collector {
 
 	private final static String __name__ = "@Collector ";
 
-	
+	/**
+	 * collect the failed test cases and the methods covered by them
+	 * @param subject : the subject to be tested
+	 * @return a pair that contains the <p>ids of failted test cases</p> and 
+	 * the <p>ids of covered methods</p> 
+	 */
 	public static Pair<Set<Integer>, Set<Integer>> collectFailedTestAndCoveredMethod(Subject subject){
-		Pair<Set<Integer>, Set<Integer>> testsAndMethods = new Pair<>();
 		// run all test
 		try {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
@@ -47,59 +51,11 @@ public class Collector {
 		}
 		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
 		ExecuteCommand.copyFile(Constant.STR_TMP_D4J_OUTPUT_FILE, Constant.STR_INFO_OUT_PATH + "/" + subject.getName()
-				+ "/" + subject.getName() + "_" + subject.getId() + "_original_test.log");
+				+ "/" + subject.getNameAndId() + "_original_test.log");
 		Set<Integer> coveredMethods = collectCoveredMethod(subject, failedTest);
 		return new Pair<Set<Integer>, Set<Integer>>(failedTest, coveredMethods);
 	}
 	
-	/**
-	 * collect all failed test cases and passed test cases
-	 * 
-	 * @param subject
-	 *            : current considered subject
-	 * @return a pair of test cases, the first element is a set of failed test
-	 *         cases and the second element is a set of passed test cases
-	 */
-//	public static Pair<Set<Integer>, Set<Integer>> collectAllTestCases(Subject subject) {
-//		Pair<Set<Integer>, Set<Integer>> allTests = new Pair<>();
-//		// run all test
-//		try {
-//			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
-//		} catch (Exception e) {
-//			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
-//			return null;
-//		}
-//
-//		Set<Integer> failedTest = findFailedTestFromFile(Constant.STR_TMP_D4J_OUTPUT_FILE);
-//		String srcPath = subject.getHome() + subject.getSsrc();
-//		String tsrPath = subject.getHome() + subject.getTsrc();
-//		Set<Method> coveredMethods = collectCoveredMethod(subject, failedTest);
-//
-//		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor(coveredMethods);
-//		Instrument.execute(srcPath, methodInstrumentVisitor);
-//
-//		// test case instrument
-//		Instrument.execute(tsrPath, new MethodInstrumentVisitor(Constant.INSTRUMENT_K_TEST));
-//		// run all test
-//		try {
-//			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject));
-//		} catch (Exception e) {
-//			LevelLogger.fatal(__name__ + "#collectAllTestCases run test failed !", e);
-//			return null;
-//		}
-//		Instrument.execute(tsrPath, new DeInstrumentVisitor());
-//		Instrument.execute(srcPath, new DeInstrumentVisitor());
-//
-//		Set<Integer> passedTest = collectAllPassedTestCases(Constant.STR_TMP_INSTR_OUTPUT_FILE, failedTest);
-//		// Set<Integer> passedTest = collectAllPassedTestCases(subject.getHome()
-//		// + "/all-tests.txt", failedTest);
-//
-//		allTests.setFirst(failedTest);
-//		allTests.setSecond(passedTest);
-//
-//		return allTests;
-//	}
-
 	/**
 	 * collect all passed test cases based on the output info, before which the
 	 * test cases should be instrumented and we should run all the test cases
@@ -244,7 +200,7 @@ public class Collector {
 		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor();
 		String subjectSourcePath = subject.getHome() + subject.getSsrc();
 		Instrument.execute(subjectSourcePath, methodInstrumentVisitor);
-		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(testcases, false);
+		TestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new TestMethodInstrumentVisitor(testcases, false);
 		String subjectTestPath = subject.getHome() + subject.getTsrc();
 		Instrument.execute(subjectTestPath, newTestMethodInstrumentVisitor);
 		Set<Integer> allMethods = new HashSet<>();
@@ -274,44 +230,7 @@ public class Collector {
 
 		ExecuteCommand.copyFolder(subjectSourcePath + "_ori", subjectSourcePath);
 		ExecuteCommand.copyFolder(subjectTestPath + "_ori", subjectTestPath);
-//		Instrument.execute(subjectSourcePath, new DeInstrumentVisitor());
 		return allMethods;
 	}
 
-	// public static Map<Integer, Map<Integer, Set<String>>>
-	// collectAllPredicates(Subject subject, List<String> statements){
-	// Map<Integer, Map<Integer, Set<String>>> allPredicates = new HashMap<>();
-	// String srcPath = subject.getHome() + subject.getSsrc();
-	// for(String stmt : statements){
-	// String[] stmtInfo = stmt.split("#");
-	// if(stmtInfo.length != 2){
-	// LevelLogger.error(__name__ + "#collectAllPredicates statement information
-	// error : " + stmt);
-	// System.exit(1);
-	// }
-	// int methodID = Integer.parseInt(stmtInfo[0]);
-	// int line = Integer.parseInt(stmtInfo[1]);
-	// String methodString = Identifier.getMessage(methodID);
-	//
-	// }
-	// return allPredicates;
-	// }
-	//
-	// private static class VarCollectorVisitor extends ASTVisitor{
-	// private String _leftVarName = null;
-	// private Set<String> _rightVarNames = null;
-	//
-	// public VarCollectorVisitor(){
-	// _leftVarName = null;
-	// _rightVarNames = new HashSet<>();
-	// }
-	//
-	// public String getleftVarName(){
-	// return _leftVarName;
-	// }
-	//
-	// public Set<String> getRightVarNames(){
-	// return _rightVarNames;
-	// }
-	// }
 }

@@ -97,7 +97,7 @@ public class Constant {
 	public static String PROJECT_HOME = null;
 	
 	// project properties
-	public static final String [] PROJECT_NAME = {"chart", "closure", "lang", "math", "time", "mockito"};
+	public static final String [] PROJECT_NAME = {"chart", "closure", "lang", "math", "time"};
 	public static Map<String, ProjectProperties> PROJECT_PROP = new HashMap<String, ProjectProperties>();
 	public static Map<String, Integer> BUG_NUMBER = new HashMap<String, Integer>();
 
@@ -153,8 +153,7 @@ public class Constant {
 	 * Machine learning home path TODO : need to refactor
 	 */
 	public final static String STR_ML_HOME = HOME + "/python";
-	public final static String STR_ML_VAR_OUT_FILE_PATH = STR_ML_HOME + "/input";
-	public final static String STR_ML_EXP_OUT_FILE_PATH = STR_ML_HOME + "/input";
+	public final static String STR_ML_OUT_FILE_PATH = STR_ML_HOME + "/input";
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
 	public static String TENSORFLOW_ACTIVATE_PATH = "";
 	

@@ -17,7 +17,6 @@ import org.junit.Test;
 
 import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
-import locator.common.java.Method;
 
 /**
  * @author Jiajun

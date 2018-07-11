@@ -9,6 +9,7 @@ package locator.common.util;
 
 import locator.common.config.Constant;
 import locator.common.java.Subject;
+import locator.core.model.Model;
 
 /**
  * @author Jiajun
@@ -74,7 +75,7 @@ public class CmdFactory {
 	 * @param subject
 	 * @return
 	 */
-	public static String[] createTrainCmd(Subject subject) {
+	public static String[] createTrainCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
 		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
@@ -88,7 +89,7 @@ public class CmdFactory {
 		stringBuffer.append(" ");
 		stringBuffer.append(subject.getId());
 		stringBuffer.append(" ");
-		stringBuffer.append(Constant.TRAINING_MODEL);
+		stringBuffer.append(model.getModelName());
 		stringBuffer.append(" && deactivate");
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
@@ -100,7 +101,7 @@ public class CmdFactory {
 	 * @param subject
 	 * @return
 	 */
-	public static String[] createEvaluateCmd(Subject subject) {
+	public static String[] createEvaluateCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
 		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
@@ -114,7 +115,7 @@ public class CmdFactory {
 		stringBuffer.append(" ");
 		stringBuffer.append(subject.getId());
 		stringBuffer.append(" ");
-		stringBuffer.append(Constant.TRAINING_MODEL);
+		stringBuffer.append(model.getModelName());
 		stringBuffer.append(" && deactivate");
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
@@ -126,7 +127,7 @@ public class CmdFactory {
 	 * @param subject
 	 * @return
 	 */
-	public static String[] createPredictCmd(Subject subject) {
+	public static String[] createPredictCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
 		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
@@ -140,7 +141,7 @@ public class CmdFactory {
 		stringBuffer.append(" ");
 		stringBuffer.append(subject.getId());
 		stringBuffer.append(" ");
-		stringBuffer.append(Constant.TRAINING_MODEL);
+		stringBuffer.append(model.getModelName());
 		stringBuffer.append(" && deactivate");
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;

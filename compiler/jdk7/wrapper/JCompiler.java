@@ -18,7 +18,6 @@ import jdk7.javax.tools.StandardJavaFileManager;
 import jdk7.javax.tools.ToolProvider;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
-import polyglot.ast.Case;
 
 
 public class JCompiler {

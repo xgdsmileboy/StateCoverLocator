@@ -22,7 +22,6 @@ import java.util.Map.Entry;
 
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
-import soot.coffi.constant_element_value;
 
 /**
  * Used for label each method with a unique id
@@ -41,6 +40,7 @@ public class Identifier {
 		counter = 0;
 	}
 	
+	@SuppressWarnings("resource")
 	public static void backup(Subject subject){
 		String fileName =  Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getName() + "_" + subject.getId() + "/identifier.txt" ;
 		File file = new File(fileName);

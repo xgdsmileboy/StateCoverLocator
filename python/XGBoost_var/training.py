@@ -18,11 +18,12 @@ from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import metrics
-from XGBoost_var import var_model
 from sklearn.preprocessing import OneHotEncoder
+from DNN.dnn import *
 
 import tensorflow as tf
 import shutil as su
+import Queue
 
 
 
@@ -34,29 +35,6 @@ class Train(object):
         @param configure: Configure
         """
         self.__configure__ = configure
-
-    def evaluate_dnn(self, X, Y, feature_num, class_num):
-        X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size=0.3, random_state=7)
-        feature_columns = [tf.feature_column.numeric_column("x", shape=[feature_num])]
-        classifier = tf.estimator.DNNClassifier(feature_columns = feature_columns,
-                                              hidden_units = [64, 64, 64, 64, 64, 64],
-                                              n_classes = class_num)
-
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=1000, shuffle=True)
-        test_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_valid}, y=y_valid, num_epochs=1, shuffle=True)
-        same_train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X_train}, y=y_train, num_epochs=1, shuffle=True)
-        classifier.train(input_fn=train_input_fn)
-        accuracy_score = classifier.evaluate(input_fn=test_input_fn)["accuracy"]
-        print("\nTest Accuracy: {0:f}\n".format(accuracy_score))
-        accuracy_score_train = classifier.evaluate(input_fn=same_train_input_fn)["accuracy"]
-        print("\nTrain Accuracy: {0:f}\n".format(accuracy_score_train))
-
-    def train_dnn(self, X, Y, feature_num, class_num):
-        su.rmtree(self.__configure__.get_var_nn_model_dir())
-        classifier = var_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_var_nn_model_dir())
-
-        train_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=Y, num_epochs=100, shuffle=True)
-        classifier.train(input_fn=train_input_fn)
 
     def train(self, feature_num, training_objective, str_encoder, evaluate):
         start_time = datetime.datetime.now()
@@ -216,37 +194,42 @@ class Train(object):
             #     with open(model_file, 'w') as f:
             #         pk.dump(best_model, f)
             #         print('Model saved in {}'.format(model_file))
-        elif (self.__configure__.get_model_type() == 'randomforest'):
-            model = RandomForestClassifier(random_state = 0)
-            if evaluate:
-                X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.3, random_state=7)
-                model.fit(X_train, y_train)
-                score1 = model.score(X_valid, y_valid)
-                score2 = model.score(X_train, y_train)
-                print("\nTest Accuracy: {0:f}\n".format(score1))
-                print("\nTrain Accuracy: {0:f}\n".format(score2))
+        #elif (self.__configure__.get_model_type() == 'randomforest'):
+        #    model = RandomForestClassifier(random_state = 0)
+        #    if evaluate:
+        #        X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.3, random_state=7)
+        #        model.fit(X_train, y_train)
+        #        score1 = model.score(X_valid, y_valid)
+        #        score2 = model.score(X_train, y_train)
+        #        print("\nTest Accuracy: {0:f}\n".format(score1))
+        #        print("\nTrain Accuracy: {0:f}\n".format(score2))
+        #    else:
+        #        model.fit(encoded_X, encoded_Y)
+        #        with open(model_file, 'w') as f:
+        #            pk.dump(model, f)
+        #            print('Model saved in {}'.format(model_file))
+        elif (self.__configure__.get_model_type() == 'tree' or self.__configure__.get_model_type() == 'randomforest'):
+            if self.__configure__.get_model_type() == 'tree':
+                model = DecisionTreeClassifier(random_state = 0)
             else:
-                model.fit(encoded_X, encoded_Y)
-                with open(model_file, 'w') as f:
-                    pk.dump(model, f)
-                    print('Model saved in {}'.format(model_file))
-        elif (self.__configure__.get_model_type() == 'tree'):
-            model = DecisionTreeClassifier(random_state = 0)
+                model = RandomForestClassifier(random_state = 0)
             if evaluate:
                 X_train, X_valid, y_train, y_valid = train_test_split(encoded_X, encoded_Y, test_size=0.3, random_state=7)
                 model.fit(X_train, y_train)
-                score1 = model.score(X_valid, y_valid)
-                score2 = model.score(X_train, y_train)
-                print("\nTest Accuracy: {0:f}\n".format(score1))
-                print("\nTrain Accuracy: {0:f}\n".format(score2))
+                y_classes = model.predict(X_valid)
+                DNN.print_all_accuracy_precision_recall_f1(y_valid, y_classes, 'Test')
+
+                y_classes = model.predict(X_train)
+                DNN.print_all_accuracy_precision_recall_f1(y_train, y_classes, 'Train')
             else:
                 model.fit(encoded_X, encoded_Y)
                 with open(model_file, 'w') as f:
                     pk.dump(model, f)
                     print('Model saved in {}'.format(model_file))
         elif (self.__configure__.get_model_type() == 'dnn'):
+            dnn_model = DNN(self.__configure__)
             if evaluate:
-                self.evaluate_dnn(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0])
+                dnn_model.evaluate(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0], True)
             else:
                 # encoded_input = pd.DataFrame(np.concatenate((encoded_X, encoded_Y.reshape(encoded_Y.shape[0], 1)), axis=1))
                 # encoded_input.to_csv(self.__configure__.get_var_nn_training_file(), index = False, header = False)
@@ -262,7 +245,7 @@ class Train(object):
             #     f.write('0,1\n')
             #     f.write('%s' % csv_format_data)
                 print(encoded_X.shape[1])
-                self.train_dnn(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0])
+                dnn_model.train(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0], self.__configure__.get_var_nn_model_dir(), True)
 
         end_time = datetime.datetime.now()
         run_time = end_time-start_time

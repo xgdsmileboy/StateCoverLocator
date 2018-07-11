@@ -31,11 +31,9 @@ public class NewTestMethodInstrumentVisitorTest {
 		String methodString = "org.apache.commons.math3.analysis.integration.IterativeLegendreGaussIntegratorTest#void#testNormalDistributionWithLargeSigma#?";
 		Set<Integer> methods = new HashSet<>();
 		methods.add(Identifier.getIdentifier(methodString));
-		compilationUnit.accept(new NewTestMethodInstrumentVisitor(methods, false));
+		compilationUnit.accept(new TestMethodInstrumentVisitor(methods, false));
 		System.out.println(compilationUnit);
 		
-		compilationUnit.accept(new DeInstrumentVisitor());
-		System.out.println(compilationUnit);
 	}
 	
 }
