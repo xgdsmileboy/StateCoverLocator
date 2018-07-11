@@ -21,7 +21,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 	
 	@Test
 	public void test_if() {
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Set<Integer> lines = new HashSet<>();
 		lines.add(11);
 		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
@@ -33,7 +33,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 	
 	@Test
 	public void test_for() {
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Set<Integer> lines = new HashSet<>();
 		lines.add(10);
 		lines.add(22);
@@ -47,7 +47,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 	
 	@Test
 	public void test_while() {
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Set<Integer> lines = new HashSet<>();
 		lines.add(64);
 		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
@@ -59,7 +59,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 	
 	@Test
 	public void test_do() {
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Set<Integer> lines = new HashSet<>();
 		lines.add(48);
 		lines.add(57);
@@ -72,7 +72,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 	
 	@Test
 	public void test_switch() {
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Set<Integer> lines = new HashSet<>();
 		lines.add(80);
 		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
@@ -85,7 +85,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 	// No instrument? May be the type of the variable does not resolved
 	@Test
 	public void test_return() {
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Set<Integer> lines = new HashSet<>();
 		lines.add(90);
 		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
@@ -97,7 +97,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 	
 	@Test
 	public void test_return_not_instrument() {
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Set<Integer> lines = new HashSet<>();
 		lines.add(119);
 		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
@@ -109,7 +109,7 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 	
 	@Test
 	public void test_return_in_died_loop() {
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
 		Set<Integer> lines = new HashSet<>();
 		lines.add(124);
 		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);

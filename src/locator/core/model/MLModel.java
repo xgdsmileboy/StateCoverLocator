@@ -22,7 +22,7 @@ import locator.common.util.Pair;
 import locator.core.LineInfo;
 import locator.core.run.Runner;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
-import locator.inst.visitor.NewPredicateInstrumentVisitor;
+import locator.inst.visitor.PredicateInstrumentVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
 
@@ -149,7 +149,7 @@ public Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Su
                 // the source file will instrumented iteratively, before which
                 // the original source file should be saved
                 // ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
-                NewPredicateInstrumentVisitor newPredicateInstrumentVisitor = new NewPredicateInstrumentVisitor(null,
+                PredicateInstrumentVisitor newPredicateInstrumentVisitor = new PredicateInstrumentVisitor(null,
                         line);
                 List<Pair<String, String>> legalConditions = new ArrayList<>();
                 // read original file once

@@ -45,7 +45,7 @@ import locator.inst.gen.GenStatement;
  * @author Jiajun
  * @date Jun 2, 2017
  */
-public class NewPredicateInstrumentVisitor extends TraversalVisitor {
+public class PredicateInstrumentVisitor extends TraversalVisitor {
 
 	private final static String __name__ = "@NewPredicateInstrumentVisitor ";
 
@@ -56,7 +56,7 @@ public class NewPredicateInstrumentVisitor extends TraversalVisitor {
 	/**
 	 * 
 	 */
-	public NewPredicateInstrumentVisitor(List<Pair<String, String>> condition, int line) {
+	public PredicateInstrumentVisitor(List<Pair<String, String>> condition, int line) {
 		_condition = condition;
 		_line = line;
 	}

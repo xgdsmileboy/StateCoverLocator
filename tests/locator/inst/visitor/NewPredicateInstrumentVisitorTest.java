@@ -30,7 +30,7 @@ public class NewPredicateInstrumentVisitorTest {
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		List<Pair<String, String>> conditions = new ArrayList<>();
 		conditions.add(new Pair<String, String>("a > b", "0.5"));
-		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 27);
+		PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(conditions, 27);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 //		Assert.assertTrue(InstrumentCount.getInstrumentCount(compilationUnit) == 1);
@@ -43,7 +43,7 @@ public class NewPredicateInstrumentVisitorTest {
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		List<Pair<String, String>> conditions = new ArrayList<>();
 		conditions.add(new Pair<String, String>("a > b", "0.5"));
-		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 36);
+		PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(conditions, 36);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 	}
@@ -55,7 +55,7 @@ public class NewPredicateInstrumentVisitorTest {
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		List<Pair<String, String>> conditions = new ArrayList<>();
 		conditions.add(new Pair<String, String>("a > b", "0.5"));
-		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 64);
+		PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(conditions, 64);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 	}
@@ -67,7 +67,7 @@ public class NewPredicateInstrumentVisitorTest {
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		List<Pair<String, String>> conditions = new ArrayList<>();
 		conditions.add(new Pair<String, String>("a > b", "0.5"));
-		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 75);
+		PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(conditions, 75);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 	}
@@ -79,7 +79,7 @@ public class NewPredicateInstrumentVisitorTest {
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		List<Pair<String, String>> conditions = new ArrayList<>();
 		conditions.add(new Pair<String, String>("a > b", "0.5"));
-		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 121);
+		PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(conditions, 121);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 	}
@@ -91,7 +91,7 @@ public class NewPredicateInstrumentVisitorTest {
 				.genASTFromSource(JavaFile.readFileToString(filePath), ASTParser.K_COMPILATION_UNIT);
 		List<Pair<String, String>> conditions = new ArrayList<>();
 		conditions.add(new Pair<String, String>("a > b", "0.5"));
-		NewPredicateInstrumentVisitor predicateInstrumentVisitor = new NewPredicateInstrumentVisitor(conditions, 128);
+		PredicateInstrumentVisitor predicateInstrumentVisitor = new PredicateInstrumentVisitor(conditions, 128);
 		compilationUnit.accept(predicateInstrumentVisitor);
 		System.out.println(compilationUnit);
 	}

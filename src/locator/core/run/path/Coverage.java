@@ -28,7 +28,7 @@ import locator.core.model.Model;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.visitor.BranchInstrumentVisitor;
-import locator.inst.visitor.NewTestMethodInstrumentVisitor;
+import locator.inst.visitor.TestMethodInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.TraversalVisitor;
 
@@ -70,7 +70,7 @@ public class Coverage {
         // instrument those methods ran by failed tests
         Instrument.execute(src, traversalVisitor);
 
-        NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(
+        TestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new TestMethodInstrumentVisitor(
                 failedTestAndCoveredMethods.getFirst(), false);
         Instrument.execute(test, newTestMethodInstrumentVisitor);
         
@@ -151,7 +151,7 @@ public class Coverage {
             Set<Integer> failedTests, boolean useSober) {
         String srcPath = subject.getHome() + subject.getSsrc();
         String testPath = subject.getHome() + subject.getTsrc();
-        NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(failedTests, useSober);
+        TestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new TestMethodInstrumentVisitor(failedTests, useSober);
         Instrument.execute(testPath, newTestMethodInstrumentVisitor);
 
 		long start = System.currentTimeMillis();

@@ -47,7 +47,7 @@ import locator.common.config.Identifier;
 import locator.common.util.Pair;
 import polyglot.ast.Case;
 
-public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
+public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Set<Integer> _lines = null;
 	private List<Pair<String, String>> _leftVars = new ArrayList<Pair<String, String>>();
 	private String _srcPath = "";
@@ -57,7 +57,7 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private Map<Integer, List<Pair<String, String>>> _predicates = new HashMap();
 	private static AST ast = AST.newAST(Constant.AST_LEVEL);
 	
-	public NewNoSideEffectPredicateInstrumentVisitor(boolean useSober) {
+	public NoSideEffectPredicateInstrumentVisitor(boolean useSober) {
 		_useSober = useSober;
 	}
 	

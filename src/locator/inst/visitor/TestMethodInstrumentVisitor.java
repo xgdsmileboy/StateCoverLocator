@@ -30,7 +30,7 @@ import locator.inst.gen.GenStatement;
  * @author Jiajun
  * @date Jun 2, 2017
  */
-public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
+public class TestMethodInstrumentVisitor extends TraversalVisitor {
 
 	private final static String __name__ = "@NewTestMethodInstrumentVisitor ";
 	
@@ -38,7 +38,7 @@ public class NewTestMethodInstrumentVisitor extends TraversalVisitor {
 	
 	private boolean _useSober = false;
 
-	public NewTestMethodInstrumentVisitor(Set<Integer> failedMethods, boolean useSober) {
+	public TestMethodInstrumentVisitor(Set<Integer> failedMethods, boolean useSober) {
 		_failedTest = failedMethods;
 		_methodFlag = Constant.INSTRUMENT_K_TEST;
 		_useSober = useSober;

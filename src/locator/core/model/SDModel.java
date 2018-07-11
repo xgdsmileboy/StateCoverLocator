@@ -13,7 +13,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
 import locator.common.util.Pair;
-import locator.inst.visitor.NewNoSideEffectPredicateInstrumentVisitor;
+import locator.inst.visitor.NoSideEffectPredicateInstrumentVisitor;
 
 public class SDModel extends Model {
 
@@ -41,7 +41,7 @@ public class SDModel extends Model {
 		String srcPath = subject.getHome() + subject.getSsrc();
 		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
 		Map<String, List<Integer>> file2LocationList = mapLocations2File(subject, allStatements);
-		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(
 				useSober);
 		for (Entry<String, List<Integer>> entry : file2LocationList.entrySet()) {
 			String relJavaPath = entry.getKey();

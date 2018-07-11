@@ -25,7 +25,7 @@ import locator.common.util.Pair;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
 import locator.inst.visitor.MethodInstrumentVisitor;
-import locator.inst.visitor.NewTestMethodInstrumentVisitor;
+import locator.inst.visitor.TestMethodInstrumentVisitor;
 
 /**
  * @author Jiajun
@@ -200,7 +200,7 @@ public class Collector {
 		MethodInstrumentVisitor methodInstrumentVisitor = new MethodInstrumentVisitor();
 		String subjectSourcePath = subject.getHome() + subject.getSsrc();
 		Instrument.execute(subjectSourcePath, methodInstrumentVisitor);
-		NewTestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new NewTestMethodInstrumentVisitor(testcases, false);
+		TestMethodInstrumentVisitor newTestMethodInstrumentVisitor = new TestMethodInstrumentVisitor(testcases, false);
 		String subjectTestPath = subject.getHome() + subject.getTsrc();
 		Instrument.execute(subjectTestPath, newTestMethodInstrumentVisitor);
 		Set<Integer> allMethods = new HashSet<>();
