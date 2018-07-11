@@ -347,6 +347,9 @@ public class NewNoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	}
 	
 	private Expression genConditionWithLog(Expression condition, int line) {
+		if(condition instanceof BooleanLiteral) {
+			return condition;
+		}
 		MethodInvocation methodInvocation = ast.newMethodInvocation();
 		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
 		if (_useSober) {			

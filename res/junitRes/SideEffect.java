@@ -119,4 +119,14 @@ public class SideEffect {
 		return 0;
 	}
 	
+	public int return_in_died_loop() {
+		int sum = 0;
+		for(int i = 0; true; i++) {
+			sum += i;
+			if(sum > 1000) {
+				return sum;
+			}
+		}
+	}
+	
 }

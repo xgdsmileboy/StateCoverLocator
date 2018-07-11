@@ -107,4 +107,17 @@ public class NewNoSideEffectPredicateInstrumentVisitorTest {
 		System.out.println(unit.toString());
 	}
 	
+	@Test
+	public void test_return_in_died_loop() {
+		NewNoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NewNoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(124);
+		instrumentVisitor.initOneRun(lines, srcPath, relJavaPath);
+		
+		CompilationUnit unit = getTestCompilationUnit();
+		unit.accept(instrumentVisitor);
+		// there should be no instrument
+		System.out.println(unit.toString());
+	}
+	
 }
