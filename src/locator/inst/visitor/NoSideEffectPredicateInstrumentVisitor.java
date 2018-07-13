@@ -122,7 +122,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
 			if (expr != null && isComparableType(expr.resolveTypeBinding())) {
-				String condition = expr.toString();
+				String condition = expr.toString().replaceAll("\\s+", " ");
 				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(),
 						genReturnWithLog(expr, expr.resolveTypeBinding(), start)));
 				addPredicates(getPredicateForReturns(condition), start);
@@ -135,7 +135,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int start = _cu.getLineNumber(node.getExpression().getStartPosition());
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
-			String condition = expr.toString();
+			String condition = expr.toString().replaceAll("\\s+", " ");
 			node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
 			addPredicates(getPredicateForConditions(condition), start);
 		}
@@ -155,7 +155,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
 			if(expr != null) {
-				String condition = expr.toString();
+				String condition = expr.toString().replaceAll("\\s+", " ");
 				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
 				addPredicates(getPredicateForConditions(condition), start);
 			}
@@ -167,7 +167,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int start = _cu.getLineNumber(node.getExpression().getStartPosition());
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
-			String condition = expr.toString();
+			String condition = expr.toString().replaceAll("\\s+", " ");
 			if (condition.equals("true")) {
 				return true;
 			}
@@ -181,7 +181,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int start = _cu.getLineNumber(node.getExpression().getStartPosition());
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
-			String condition = expr.toString();
+			String condition = expr.toString().replaceAll("\\s+", " ");
 			if (condition.equals("true")) {
 				return true;
 			}
@@ -212,7 +212,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 				ITypeBinding type = expr.resolveTypeBinding();
 				String leftVarName = node.getLeftHandSide().toString();
 				if (isComparableType(type)) {
-					String rightExprStr = expr.toString();
+					String rightExprStr = expr.toString().replaceAll("\\s+", " ");
 					Set<String> variables = new HashSet<String>();
 					List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
 					for (String feature : varFeature) {
