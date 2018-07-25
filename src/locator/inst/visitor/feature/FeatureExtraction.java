@@ -59,7 +59,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import edu.pku.sei.conditon.simple.FeatureGenerator;
+import extractor.main.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
@@ -74,7 +74,9 @@ public class FeatureExtraction {
 
 	public static void generateTrainFeatures(Subject subject, String tarVarPath, String tarExprPath) {
 		String srcPath = subject.getHome() + subject.getSsrc();
-		FeatureGenerator.generateTrainFeature(srcPath, tarVarPath, tarExprPath);
+//		FeatureGenerator.generateTrainFeature(srcPath, tarVarPath, tarExprPath);
+		FeatureGenerator.generateTrainVarFeatures(srcPath, tarVarPath + "/" + subject.getNameAndId() + ".var.csv");
+		FeatureGenerator.generateTrainExprFeatures(srcPath, tarExprPath + "/" + subject.getNameAndId() + ".expr.csv");
 	}
 
 	public static Set<String> generateFeatures(String srcPath, String relJavaPath, int line, LineInfo info,
@@ -83,8 +85,11 @@ public class FeatureExtraction {
 		if (srcPath == null || relJavaPath == null) {
 			return keys;
 		}
-		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
-		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
+//		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
+//		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
+		
+		List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(srcPath, relJavaPath, line);
+		List<String> expFeature = FeatureGenerator.generateExprFeatureForLine(srcPath, relJavaPath, line);
 
 		CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSource(
 				JavaFile.readFileToString(srcPath + Constant.PATH_SEPARATOR + relJavaPath),

@@ -34,7 +34,9 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import edu.pku.sei.conditon.simple.FeatureGenerator;
+import com.sun.org.apache.xalan.internal.utils.FeatureManager.Feature;
+
+import extractor.main.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.util.Pair;
@@ -214,7 +216,8 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 				if (isComparableType(type)) {
 					String rightExprStr = expr.toString().replaceAll("\\s+", " ");
 					Set<String> variables = new HashSet<String>();
-					List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
+					List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(_srcPath, _relJavaPath, start);
+//					List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
 					for (String feature : varFeature) {
 						String[] elements = feature.split("\t");
 						String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
@@ -264,7 +267,8 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 					if (typeStr != null) {
 						String leftVarName = fragment.getName().getFullyQualifiedName();
 						Set<String> variables = new HashSet<String>();
-						List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
+						List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(_srcPath, _relJavaPath, start);
+//						List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
 						for (String feature : varFeature) {
 							String[] elements = feature.split("\t");
 							String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];

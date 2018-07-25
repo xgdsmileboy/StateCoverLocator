@@ -33,7 +33,6 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.junit.validator.PublicClassValidator;
 
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;

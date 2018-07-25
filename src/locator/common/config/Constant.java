@@ -20,8 +20,12 @@ import java.util.Properties;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 
-import edu.pku.sei.conditon.simple.SplIfAndVariablePairVisitor;
-import edu.pku.sei.conditon.simple.SplIfStmtVisitor;
+import extractor.core.process.feature.ExprFeature;
+import extractor.core.process.feature.VarFeature;
+import extractor.core.process.feature.item.FileName;
+import extractor.core.process.feature.item.LineNumber;
+import extractor.core.process.feature.item.VarName;
+import extractor.core.process.feature.item.VarType;
 import jdk7.wrapper.JCompiler.SOURCE_LEVEL;
 import locator.common.util.LevelLogger;
 
@@ -61,12 +65,12 @@ public class Constant {
 	public final static String ANT_BUILD_SUCCESS = "BUILD SUCCESSFUL";
 	
 	// header for feature
-	public final static String FEATURE_VAR_HEADER = SplIfAndVariablePairVisitor.getVarHeader();
-	public final static String FEATURE_EXPR_HEADER = SplIfStmtVisitor.getExprHeader();
-	public final static int FEATURE_VAR_NAME_INDEX = 5;
-	public final static int FEATURE_VAR_TYPE_INDEX = 6;
-	public final static int FEATURE_FILE_NAME_INDEX = 3;
-	public final static int FEATURE_LINE_INDEX = 1;
+	public final static String FEATURE_VAR_HEADER = VarFeature.getFeatureHeader();
+	public final static String FEATURE_EXPR_HEADER = ExprFeature.getFeatureHeader();
+	public final static int FEATURE_VAR_NAME_INDEX = VarFeature.getFeatureIndex(VarName.class);
+	public final static int FEATURE_VAR_TYPE_INDEX = VarFeature.getFeatureIndex(VarType.class);
+	public final static int FEATURE_FILE_NAME_INDEX = ExprFeature.getFeatureIndex(FileName.class);
+	public final static int FEATURE_LINE_INDEX = ExprFeature.getFeatureIndex(LineNumber.class);
 	
 	// variables collecting flag
 	public static boolean PREDICT_LEFT_HAND_SIDE_VARIABLE = true;
