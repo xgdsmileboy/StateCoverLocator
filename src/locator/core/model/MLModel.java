@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -242,8 +244,8 @@ public abstract class MLModel extends Model {
 			// <varName, type>
 			LineInfo info = new LineInfo(line, relJavaPath, clazz);
 
-			Set<String> variabelsToPredict = FeatureExtraction.obtainAllUsedVaraiblesForPredict(srcPath, relJavaPath,
-					line, Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE, varFeatures, exprFeatures);
+			Set<String> variabelsToPredict = FeatureExtraction.obtainAllUsedVaraiblesForPredict(srcPath, info,
+					Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE, varFeatures, exprFeatures);
 
 			for (String key : variabelsToPredict) {
 				lineInfoMapping.put(key, info);
@@ -291,7 +293,13 @@ public abstract class MLModel extends Model {
 			String key = columns[0];
 			String varName = columns[1];
 			// TODO: update filter algorithm
-			String condition = columns[2].replaceAll("$[a-zA-Z_][a-zA-Z_1-9]*$", varName);//replace("$", varName);
+			Pattern pattern = Pattern.compile("\\$([a-zA-Z_][a-zA-Z_1-9]*)\\$");
+			Matcher matcher = pattern.matcher(columns[2]);
+			String originalType = "?";
+			if(matcher.find()) {
+				originalType = matcher.group(1);
+			}
+			String condition = columns[2].replaceAll("\\$[a-zA-Z_][a-zA-Z_1-9]*\\$", varName);//replace("$", varName);
 			String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
 			String prob = columns[3];
 			String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), null);
@@ -334,7 +342,7 @@ public abstract class MLModel extends Model {
 			}
 			uniqueFeatures.add(string);
 			LevelLogger.debug(string);
-			JavaFile.writeStringToFile(varFile, string + "\n", true);
+			JavaFile.writeStringToFile(varFile, "\n" + string, true);
 		}
 
 		File expFile = new File(getExprFeatureOutputPath(subject));
@@ -346,7 +354,7 @@ public abstract class MLModel extends Model {
 			}
 			uniqueFeatures.add(string);
 			LevelLogger.debug(string);
-			JavaFile.writeStringToFile(expFile, string + "\n", true);
+			JavaFile.writeStringToFile(expFile, "\n" + string, true);
 		}
 		return true;
 	}

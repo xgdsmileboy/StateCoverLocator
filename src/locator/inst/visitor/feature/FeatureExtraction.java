@@ -80,9 +80,11 @@ public class FeatureExtraction {
 		FeatureGenerator.generateTrainExprFeatures(srcPath, tarExprPath);
 	}
 
-	public static Set<String> obtainAllUsedVaraiblesForPredict(String srcPath, String relJavaFile, int line,
+	public static Set<String> obtainAllUsedVaraiblesForPredict(String srcPath, LineInfo info,
 			boolean includeVarWrite, List<String> varFeatures, List<String> exprFeatures) {
 		Set<String> variables = null;
+		String relJavaFile = info.getRelJavaPath();
+		int line = info.getLine();
 		if (includeVarWrite) {
 			variables = CodeAnalyzer.getAllVariablesUsed(srcPath, relJavaFile, line);
 		} else {
@@ -95,6 +97,8 @@ public class FeatureExtraction {
 		for(String feature : varF) {
 			String[] elements = feature.split("\t");
 			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
+			String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
+			info.addLegalVariable(varName, varType);
 			if(variables.contains(varName)) {
 				varFeatures.add(feature);
 				String key = elements[Constant.FEATURE_FILE_NAME_INDEX] + "::" + line + "::" + varName;
