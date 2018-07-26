@@ -83,7 +83,7 @@ class Cluster(object):
 		return encoder, var_data.shape[1], expr_data.shape[1]
 
 	def cluster_var(self, var_dataset, expr_dataset):
-		all_var = np.row_stack((var_dataset[:, 5:6], expr_dataset[:, 5:6]))
+		all_var = np.row_stack((var_dataset[:, 4:5], expr_dataset[:, 4:5]))
 
 		# all_var = np.array([['len'], ['length'], ['cross'], ['clockwise']])
 		all_var = all_var.astype(str)
@@ -123,14 +123,14 @@ class Cluster(object):
 		return result
 
 	def cluster_func(self, var_dataset, expr_dataset):
-		all_function = np.row_stack((var_dataset[:, 4:5], expr_dataset[:, 4:5]))
+		all_function = np.row_stack((var_dataset[:, 3:4], expr_dataset[:, 3:4]))
 
 		return self.cluster_func_or_file(all_function, self.__configure__.get_func_cluster_model_file(),
 			self.__configure__.get_func_cluster_file(), self.__configure__.get_func_cluster_info_file())
 
 
 	def cluster_file(self, var_dataset, expr_dataset):
-		all_file = np.row_stack((var_dataset[:, 3:4], expr_dataset[:, 3:4]))
+		all_file = np.row_stack((var_dataset[:, 2:3], expr_dataset[:, 2:3]))
 
 		return self.cluster_func_or_file(all_file, self.__configure__.get_file_cluster_model_file(),
 			self.__configure__.get_file_cluster_file(), self.__configure__.get_file_cluster_info_file())

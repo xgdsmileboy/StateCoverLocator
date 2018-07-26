@@ -30,6 +30,7 @@ import locator.common.util.LevelLogger;
 import locator.common.util.Pair;
 import locator.core.LineInfo;
 import locator.inst.visitor.feature.NewExprFilter;
+import sun.security.util.AuthResources_pt_BR;
 
 /**
  * 
@@ -39,9 +40,9 @@ import locator.inst.visitor.feature.NewExprFilter;
  */
 public abstract class Model {
 
-	protected String _modelPath = Constant.STR_ML_HOME + "/model/";
-	protected String _outPath = Constant.STR_ML_OUT_FILE_PATH;
-	protected String _inPath = Constant.STR_ML_PREDICT_EXP_PATH;
+	protected String _modelPath;
+	protected String _outPath;
+	protected String _inPath;
 	protected String _predicates_backup_file;
 	protected static Set<String> _uniqueFeatures = new HashSet<>();
 	protected String __name__ = "@Model ";
@@ -50,7 +51,7 @@ public abstract class Model {
 	protected Model(String modelName, String predicateBackupFile) {
 		_modelName = modelName;
 		_predicates_backup_file = predicateBackupFile;
-		_modelPath = Constant.STR_ML_HOME + "/" + modelName;
+		_modelPath = Constant.STR_ML_HOME + "/model/" + modelName;
 		_outPath = Constant.STR_ML_OUT_FILE_PATH + "/" + modelName;
 		_inPath = Constant.STR_ML_PREDICT_EXP_PATH + "/" + modelName;
 	}
@@ -82,6 +83,27 @@ public abstract class Model {
 	public abstract Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject,
 			Set<String> allStatements, boolean useSober);
 
+	
+	public String getVarFeatureOutputPath(Subject subject) {
+		String file = _outPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/pred/" + subject.getNameAndId() + ".var.csv";
+		return file;
+	}
+
+	public String getExprFeatureOutputPath(Subject subject) {
+		String file = _outPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/pred/" + subject.getNameAndId() + ".expr.csv";
+		return file;
+	}
+
+	public String getPredicResultPath(Subject subject) {
+		String file = _inPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/" + subject.getNameAndId() + ".joint.csv";
+		return file;
+	}
+	
+	public String getPredictResultDir(Subject subject) {
+		String file = _inPath + "/" + subject.getName() + "/" + subject.getNameAndId();
+		return file;
+	}
+	
 	protected Map<String, List<Integer>> mapLocations2File(Subject subject, Set<String> allStatements) {
 		String srcPath = subject.getHome() + subject.getSsrc();
 		Map<String, List<Integer>> file2LocationList = new HashMap<>();
@@ -200,14 +222,14 @@ public abstract class Model {
 	 *            : features for expression predict
 	 * @param lineInfoMapping
 	 *            : record the info for each line of source code, formatted as
-	 *            <xx.java#145, {line, relJavaPath, clazz}>
+	 *            <filename::line::varName, {line, relJavaPath, clazz}>
 	 * @return <fileName, <variable, [<predicate, probability>]>>
 	 */
 	public Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
 			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
 		String currentClassName = null;
 		// TODO : return conditions for left variable and right variables
-		File varFile = new File(subject.getVarFeatureOutputPath());
+		File varFile = new File(getVarFeatureOutputPath(subject));
 		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
 		for (String string : varFeatures) {
 			// filter duplicated features
@@ -219,14 +241,12 @@ public abstract class Model {
 			LevelLogger.info(string);
 			if (currentClassName == null) {
 				String[] features = string.split("\t");
-				int index = features[Constant.FEATURE_FILE_NAME_INDEX].length();
-				// name.java -> name
-				currentClassName = features[Constant.FEATURE_FILE_NAME_INDEX].substring(0, index - 5);
+				currentClassName = features[Constant.FEATURE_FILE_NAME_INDEX];
 			}
 			JavaFile.writeStringToFile(varFile, string + "\n", true);
 		}
 
-		File expFile = new File(subject.getExprFeatureOutputPath());
+		File expFile = new File(getExprFeatureOutputPath(subject));
 		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
 		for (String string : exprFeatures) {
 			// filter duplicated features
@@ -247,14 +267,14 @@ public abstract class Model {
 			e.printStackTrace();
 		}
 
-		Map<String, Map<String, List<Pair<String, String>>>> rightConditions = new HashMap<>();
-		File rslFile = new File(subject.getPredicResultPath());
+		Map<String, Map<String, List<Pair<String, String>>>> predictedConditions = new HashMap<>();
+		File rslFile = new File(getPredicResultPath(subject));
 		BufferedReader bReader = null;
 		try {
 			bReader = new BufferedReader(new FileReader(rslFile));
 		} catch (FileNotFoundException e) {
 			LevelLogger.warn(__name__ + "#predict file not found : " + rslFile.getAbsolutePath());
-			return rightConditions;
+			return predictedConditions;
 		}
 
 		String line = null;
@@ -270,13 +290,14 @@ public abstract class Model {
 					}
 					String key = columns[0];
 					String varName = columns[1];
-					String condition = columns[2].replace("$", varName);
+					// TODO: update filter algorithm
+					String condition = columns[2].replaceAll("$[a-zA-Z_][a-zA-Z_1-9]*$", varName);//replace("$", varName);
 					String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
 					String prob = columns[3];
 					String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key),
 							currentClassName);
 					if (newCond != null) {
-						Map<String, List<Pair<String, String>>> linePreds = rightConditions.get(key);
+						Map<String, List<Pair<String, String>>> linePreds = predictedConditions.get(key);
 						if (linePreds == null) {
 							linePreds = new HashMap<>();
 						}
@@ -287,7 +308,7 @@ public abstract class Model {
 						Pair<String, String> pair = new Pair<String, String>(newCond, prob);
 						preds.add(pair);
 						linePreds.put(varName, preds);
-						rightConditions.put(key, linePreds);
+						predictedConditions.put(key, linePreds);
 
 					} else {
 						LevelLogger.info(
@@ -304,7 +325,7 @@ public abstract class Model {
 		ExecuteCommand.deleteGivenFile(expFile.getAbsolutePath());
 		ExecuteCommand.deleteGivenFile(rslFile.getAbsolutePath());
 
-		return rightConditions;
+		return predictedConditions;
 	}
 
 }

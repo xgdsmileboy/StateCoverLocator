@@ -11,8 +11,6 @@ import java.io.File;
 
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
-import locator.common.util.Utils;
-import locator.inst.visitor.feature.FeatureExtraction;
 
 /**
  * 
@@ -38,22 +36,6 @@ public class XGBoost extends MLModel {
 			LevelLogger.info("Models are already exist and will be used directly !");
 			return false;
 		}
-		return true;
-	}
-
-	@Override
-	public boolean prepare(Subject subject) {
-		// get train features
-		String outPath = _outPath + "/" + subject.getName() + "/" + subject.getName() + "_" + subject.getId();
-
-		// create necessary directories
-		Utils.pathGuarantee(outPath + "/var", outPath + "/expr", outPath + "/cluster", outPath + "/pred",
-				subject.getPredictResultDir());
-
-		// generate features for trainning
-		String targetVarPath = outPath + "/var/" + subject.getName() + "_" + subject.getId() + ".var.csv";
-		String targetExprPath = outPath + "/expr/" + subject.getName() + "_" + subject.getId() + ".expr.csv";
-		FeatureExtraction.generateTrainFeatures(subject, targetVarPath, targetExprPath);
 		return true;
 	}
 	

@@ -47,9 +47,9 @@ class TrainExpr(object):
         dataset = data.values
         print('Raw data size: {}'.format(dataset.shape))
         # split data into X and y
-        X = dataset[:, 3:3 + feature_num]
+        X = dataset[:, 2:2 + feature_num]
         X = X.astype(str)
-        Y = dataset[:, 3 + feature_num]
+        Y = dataset[:, 2 + feature_num]
         # Y = dataset[:, target_col:target_col+1]
         # print(Y)
         # encoding string as integers
@@ -57,7 +57,7 @@ class TrainExpr(object):
         x_encoders = [None] * feature_num
         for i in range(0, X.shape[1]):
             feature = np.zeros((X.shape[0], 1))
-            if i <= 4 or i == 9 or i == 10 or i == 11:
+            if i <= 3:
                 x_encoders[i] = LabelEncoder()
                 feature = x_encoders[i].fit_transform(X[:, i])
                 feature = feature.reshape(X.shape[0], 1)

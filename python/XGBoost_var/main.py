@@ -36,8 +36,8 @@ class XGVar(object):
         varnames = list()
         line_ids = list()
         for r in range(0, encoded_var.shape[0]):
-            line_ids.append(raw_var_values[r, 3] + "::" + str(raw_var_values[r, 1]) + "::" + raw_var_values[r, 5])
-            varnames.append(raw_var_values[r, 5])
+            line_ids.append(raw_var_values[r, 2] + "::" + str(raw_var_values[r, 0]) + "::" + raw_var_values[r, 4])
+            varnames.append(raw_var_values[r, 4])
 
         encoded_rows_array = np.array(encoded_var)
         # print(encoded_rows_array.shape)
@@ -111,17 +111,17 @@ class XGVar(object):
         original_data = pd.read_csv(original_data_file_path, sep='\t', header=0, encoding='utf-8')
         original_dataset = original_data.values
         print('Dataset size: {}'.format(original_dataset.shape))
-        feature_num = original_data.shape[1] - 4
+        feature_num = original_data.shape[1] - 3
         # split data into X and y
         # 3 to 11: 8
-        X = original_dataset[:, 3:-1]
+        X = original_dataset[:, 2:-1]
         X = X.astype(str)
 
         # encoding string as integers
         x_encoders = [None] * feature_num
         one_hot_encoder = [None] * feature_num
         for i in range(0, X.shape[1]):
-            if i <= 4 or i == 10 or i == 11:
+            if i <= 3:
                 x_encoders[i] = LabelEncoder()
                 feature = x_encoders[i].fit_transform(X[:, i])
                 feature = feature.reshape(X.shape[0], 1)
@@ -145,42 +145,43 @@ class XGVar(object):
 
         encoded_feature = list()
         new_feature_num = feature_num
+        start = 2
         for i in range(0, dataset.shape[0]):
             feature = list()
             for j in range(0, feature_num):
                 # TODO : if the key does not exit in the encoder, how to transform
                 try:
                     if j == 0:
-                        tmp = str_encoder['file'][str(dataset[i, 3 + j])]
+                        tmp = str_encoder['file'][str(dataset[i, start + j])]
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 1:
-                        tmp = str_encoder['func'][str(dataset[i, 3 + j])]
+                        tmp = str_encoder['func'][str(dataset[i, start + j])]
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 2:
-                        tmp = str_encoder['var'][str(dataset[i, 3 + j]).lower()]
+                        tmp = str_encoder['var'][str(dataset[i, start + j]).lower()]
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     #elif j == 5:
                         #feature = np.append(feature, int(dataset[i, 3 + j]))
-                    elif j == 3 or j == 4 or j == 10 or j == 11:
-                        tmp = x_encoders[j].transform([str(dataset[i, 3 + j])])[0]
+                    elif j == 3:
+                        tmp = x_encoders[j].transform([str(dataset[i, start + j])])[0]
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     else:
-                        feature = np.append(feature, int(dataset[i, 3 + j]))
+                        feature = np.append(feature, int(dataset[i, start + j]))
                 except Exception as e:
                     if j == 2:
                         # feature.append(len(var_encoder))
                         X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
-                        X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
+                        X_0[0] = Cluster.var_to_vec(str(dataset[i, start + j]).lower())
                         pred = kmeans_model['var'].predict(X_0)
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
                     elif j == 0:
                         X_0 = np.mat(np.zeros((1, len(unique_words['file']))))
-                        X_0[0] = Cluster.name_to_vec(str(dataset[i, 3 + j]), unique_words['file'])
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, start + j]), unique_words['file'])
                         pred = kmeans_model['file'].predict(X_0)
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
                     elif j == 1:
                         X_0 = np.mat(np.zeros((1, len(unique_words['func']))))
-                        X_0[0] = Cluster.name_to_vec(str(dataset[i, 3 + j]), unique_words['func'])
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, start + j]), unique_words['func'])
                         pred = kmeans_model['func'].predict(X_0)
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
                     else:

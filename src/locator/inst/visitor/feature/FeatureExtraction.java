@@ -59,6 +59,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
+import extractor.main.CodeAnalyzer;
 import extractor.main.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
@@ -75,8 +76,43 @@ public class FeatureExtraction {
 	public static void generateTrainFeatures(Subject subject, String tarVarPath, String tarExprPath) {
 		String srcPath = subject.getHome() + subject.getSsrc();
 //		FeatureGenerator.generateTrainFeature(srcPath, tarVarPath, tarExprPath);
-		FeatureGenerator.generateTrainVarFeatures(srcPath, tarVarPath + "/" + subject.getNameAndId() + ".var.csv");
-		FeatureGenerator.generateTrainExprFeatures(srcPath, tarExprPath + "/" + subject.getNameAndId() + ".expr.csv");
+		FeatureGenerator.generateTrainVarFeatures(srcPath, tarVarPath);
+		FeatureGenerator.generateTrainExprFeatures(srcPath, tarExprPath);
+	}
+
+	public static Set<String> obtainAllUsedVaraiblesForPredict(String srcPath, String relJavaFile, int line,
+			boolean includeVarWrite, List<String> varFeatures, List<String> exprFeatures) {
+		Set<String> variables = null;
+		if (includeVarWrite) {
+			variables = CodeAnalyzer.getAllVariablesUsed(srcPath, relJavaFile, line);
+		} else {
+			variables = CodeAnalyzer.getAllVariablesReadUse(srcPath, relJavaFile, line);
+		}
+		Set<String> keys = new HashSet<>();
+		List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(srcPath, relJavaFile, line);
+		List<String> expFeature = FeatureGenerator.generateExprFeatureForLine(srcPath, relJavaFile, line);
+		
+		for(String feature : varFeature) {
+			String[] elements = feature.split("\t");
+			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
+			if(variables.contains(varName)) {
+				varFeature.add(feature);
+				String key = elements[Constant.FEATURE_FILE_NAME_INDEX] + "::" + line + "::" + varName;
+				keys.add(key);
+			}
+		}
+		
+		for(String feature : expFeature) {
+			String[] elements = feature.split("\t");
+			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
+			if(variables.contains(varName)) {
+				exprFeatures.add(feature);
+				String key = elements[Constant.FEATURE_FILE_NAME_INDEX] + "::" + line + "::" + varName;
+				keys.add(key);
+			}
+		}
+		
+		return keys;
 	}
 
 	public static Set<String> generateFeatures(String srcPath, String relJavaPath, int line, LineInfo info,
@@ -85,12 +121,12 @@ public class FeatureExtraction {
 		if (srcPath == null || relJavaPath == null) {
 			return keys;
 		}
-//		List<String> varFeature = FeatureGenerator.generateVarFeature(srcPath, relJavaPath, line);
-//		List<String> expFeature = FeatureGenerator.generateExprFeature(srcPath, relJavaPath, line);
 		
 		List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(srcPath, relJavaPath, line);
 		List<String> expFeature = FeatureGenerator.generateExprFeatureForLine(srcPath, relJavaPath, line);
 
+		
+		
 		CompilationUnit cu = (CompilationUnit) JavaFile.genASTFromSource(
 				JavaFile.readFileToString(srcPath + Constant.PATH_SEPARATOR + relJavaPath),
 				ASTParser.K_COMPILATION_UNIT);

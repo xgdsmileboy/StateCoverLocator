@@ -64,9 +64,9 @@ class XGExpr(object):
         ## save the result
         with open(expr_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
-                key = dataset[i, 3] + "::" + str(dataset[i, 1]) + "::" + dataset[i, 5] 
+                key = dataset[i, 2] + "::" + str(dataset[i, 0]) + "::" + dataset[i, 4]
                 f.write('%s\t' % key)
-                f.write('%s\t' % dataset[i, 5])
+                f.write('%s\t' % dataset[i, 4])
                 # f.write('%s' % y_prob[i])
                 line = y_prob[i]
                 # the predicted indices, ordered with the classes in alphabet order
@@ -102,14 +102,14 @@ class XGExpr(object):
         original_dataset = original_data.values
         print('Raw data size: {}'.format(original_dataset.shape))
         # split data into X and y
-        X = original_dataset[:, 3:-1]
+        X = original_dataset[:, 2:-1]
         X = X.astype(str)
         Y = original_dataset[:, -1]
 
         y_encoder = LabelEncoder()
         encoded_y = y_encoder.fit_transform(Y)
 
-        feature_num = original_data.shape[1] - 4
+        feature_num = original_data.shape[1] - 3
         # encoding string as integers
         x_encoders = [None] * feature_num
         one_hot_encoder = [None] * feature_num
@@ -117,7 +117,7 @@ class XGExpr(object):
             x_encoders[i] = LabelEncoder()
             feature = x_encoders[i].fit_transform(X[:, i])
             feature = feature.reshape(X.shape[0], 1)
-            if i <= 4 or i == 9 or i == 10 or i == 11:
+            if i <= 3:
                 if i == 0:
                     # file name
                     for j in range(0, X.shape[0]):
@@ -139,42 +139,43 @@ class XGExpr(object):
 
         encoded_x = list()
         new_feature_num = feature_num
+        start = 2
         for i in range(0, dataset.shape[0]):
             feature = list()
             for j in range(0, feature_num):
                 try:
                     if j == 0:
-                        tmp = str_encoder['file'][str(dataset[i, 3 + j])]
+                        tmp = str_encoder['file'][str(dataset[i, start + j])]
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 1:
-                        tmp = str_encoder['func'][str(dataset[i, 3 + j])]
+                        tmp = str_encoder['func'][str(dataset[i, start + j])]
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     elif j == 2:
-                        tmp = str_encoder['var'][str(dataset[i, 3 + j]).lower()]
+                        tmp = str_encoder['var'][str(dataset[i, start + j]).lower()]
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     #elif j == 5:
                         #feature = np.append(feature, int(dataset[i, 3 + j]))
-                    elif j == 3 or j == 4 or j == 9 or j == 10 or j == 11:
-                        tmp = x_encoders[j].transform([str(dataset[i, 3 + j])])[0]
+                    elif j == 3:
+                        tmp = x_encoders[j].transform([str(dataset[i, start + j])])[0]
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis = 0)
                     else:
-                        feature = np.append(feature, int(dataset[i, 3 + j]))
+                        feature = np.append(feature, int(dataset[i, start + j]))
                 except Exception as e:
                     print(e)
                     if j == 2:
                         # feature.append(len(var_encoder))
                         X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
-                        X_0[0] = Cluster.var_to_vec(str(dataset[i, 3 + j]).lower())
+                        X_0[0] = Cluster.var_to_vec(str(dataset[i, start + j]).lower())
                         pred = kmeans_model['var'].predict(X_0)
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
                     elif j == 0:
                         X_0 = np.mat(np.zeros((1, len(unique_words['file']))))
-                        X_0[0] = Cluster.name_to_vec(str(dataset[i, 3 + j]), unique_words['file'])
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, start + j]), unique_words['file'])
                         pred = kmeans_model['file'].predict(X_0)
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
                     elif j == 1:
                         X_0 = np.mat(np.zeros((1, len(unique_words['func']))))
-                        X_0[0] = Cluster.name_to_vec(str(dataset[i, 3 + j]), unique_words['func'])
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, start + j]), unique_words['func'])
                         pred = kmeans_model['func'].predict(X_0)
                         feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis = 0)
                     else:

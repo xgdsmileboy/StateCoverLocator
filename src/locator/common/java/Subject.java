@@ -114,29 +114,6 @@ public class Subject {
 		return Constant.PROJECT_HOME + "/" + _name + "/" + _name + "_" + _id + "_buggy";
 	}
 	
-	public String getVarFeatureOutputPath() {
-		String file = Constant.STR_ML_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
-				+ _id + ".var.csv";
-		return file;
-	}
-
-	public String getExprFeatureOutputPath() {
-		String file = Constant.STR_ML_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
-				+ _id + ".expr.csv";
-		return file;
-	}
-
-	public String getPredicResultPath() {
-		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id + "/" + _name + "_" + _id
-				+ ".joint.csv";
-		return file;
-	}
-	
-	public String getPredictResultDir() {
-		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id;
-		return file;
-	}
-	
 	public String getCoverageInfoPath() {
 		return Constant.STR_INFO_OUT_PATH + "/" + _name + "/" + _name + "_" + _id;
 	}
