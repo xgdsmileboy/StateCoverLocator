@@ -1,12 +1,17 @@
 package locator.core.model;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -26,6 +31,7 @@ import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.PredicateInstrumentVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
+import locator.inst.visitor.feature.NewExprFilter;
 
 public abstract class MLModel extends Model {
 
@@ -35,11 +41,9 @@ public abstract class MLModel extends Model {
 
 	public boolean trainModel(Subject subject) {
 		if (modelExist(subject)) {
-			LevelLogger.info("@MLModel model exist, use directly.");
 			return true;
 		}
 		if (!prepare(subject)) {
-			LevelLogger.error("@MLModel prepare data failed!");
 			return false;
 		}
 		// train model
@@ -100,10 +104,10 @@ public abstract class MLModel extends Model {
 	public Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject,
 			Set<String> allStatements, boolean useSober) {
 
-		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = null;
 
 		if (Constant.RECOVER_PREDICATE_FROM_FILE) {
-			file2Line2Predicates = recoverPredicates(subject);
+			file2Line2Predicates = Utils.recoverPredicates(subject, _predicates_backup_file);
 		}
 		if (file2Line2Predicates != null) {
 			return file2Line2Predicates;
@@ -113,53 +117,13 @@ public abstract class MLModel extends Model {
 
 		String srcPath = subject.getHome() + subject.getSsrc();
 
-		Map<String, LineInfo> lineInfoMapping = new HashMap<String, LineInfo>();
 		List<String> varFeatures = new ArrayList<String>();
 		List<String> exprFeatures = new ArrayList<String>();
-		for (String stmt : allStatements) {
-
-			String[] stmtInfo = stmt.split("#");
-			if (stmtInfo.length != 2) {
-				LevelLogger.error(__name__ + "#getAllPredicates statement parse error : " + stmt);
-				System.exit(0);
-			}
-			Integer methodID = Integer.valueOf(stmtInfo[0]);
-			int line = Integer.parseInt(stmtInfo[1]);
-			String methodString = Identifier.getMessage(methodID);
-			LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
-			String[] methodInfo = methodString.split("#");
-			if (methodInfo.length < 4) {
-				LevelLogger.error(__name__ + "#getAllPredicates method info parse error : " + methodString);
-				System.exit(0);
-			}
-			String clazz = methodInfo[0].replace(".", Constant.PATH_SEPARATOR);
-			int index = clazz.indexOf("$");
-			if (index > 0) {
-				clazz = clazz.substring(0, index);
-			}
-			String relJavaPath = clazz + ".java";
-
-			String fileName = srcPath + "/" + relJavaPath;
-			File file = new File(fileName);
-			if (!file.exists()) {
-				LevelLogger.error("Cannot find file : " + fileName);
-				continue;
-			}
-
-			// <varName, type>
-			LineInfo info = new LineInfo(line, relJavaPath, clazz);
-
-			Set<String> variabelsToPredict = FeatureExtraction.obtainAllUsedVaraiblesForPredict(srcPath, relJavaPath,
-					line, Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE, varFeatures, exprFeatures);
-
-			for (String key : variabelsToPredict) {
-				lineInfoMapping.put(key, info);
-			}
-		}
+		Map<String, LineInfo> lineInfoMapping = mapLine2Features(srcPath, allStatements, varFeatures, exprFeatures);
+		
 		Map<String, Map<String, List<Pair<String, String>>>> location2varName2Conditions = this.predict(subject, varFeatures,
 				exprFeatures, lineInfoMapping);
-		// TODO : currently, only instrument predicates for right variables
-		// if predicted conditions are not empty for right variables,
+		
 		// instrument each condition one by one and compute coverage
 		// information for each predicate
 		JCompiler compiler = JCompiler.getInstance();
@@ -171,7 +135,6 @@ public abstract class MLModel extends Model {
 				String javaFile = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
 				// the source file will instrumented iteratively, before which
 				// the original source file should be saved
-				// ExecuteCommand.copyFile(javaFile, javaFile + ".bak");
 				PredicateInstrumentVisitor newPredicateInstrumentVisitor = new PredicateInstrumentVisitor(null, line);
 				List<Pair<String, String>> legalConditions = new ArrayList<>();
 				// read original file once
@@ -216,7 +179,7 @@ public abstract class MLModel extends Model {
 						}
 					}
 				}
-
+				file2Line2Predicates = new HashMap<>();
 				if (legalConditions.size() > 0) {
 					Map<Integer, List<Pair<String, String>>> line2Predicate = file2Line2Predicates.get(javaFile);
 					if (line2Predicate == null) {
@@ -232,21 +195,159 @@ public abstract class MLModel extends Model {
 				}
 				if (!compiler.compile(subject, relJavaPath, source)) {
 					if (!Runner.compileSubject(subject)) {
-						LevelLogger.error(
-								__name__ + "#getAllPredicates ERROR : compile original source failed : " + javaFile);
+						LevelLogger.error( __name__ + "#getAllPredicates ERROR : compile original source failed : " + javaFile);
 					}
 				}
-				// delete corresponding class file to enable re-compile for next
-				// loop.
-				// ExecuteCommand.deleteGivenFile(binFile);
-				// restore original source file
-				// ExecuteCommand.moveFile(javaFile + ".bak", javaFile);
 			} // end of "conditionsForRightVars != null"
 		} // end of "for(String stmt : allStatements)"
 
 		LevelLogger.debug("-------------------FOR DEBUG----------------------");
-		printPredicateInfo(file2Line2Predicates, subject);
-		file2Line2Predicates = recoverPredicates(subject);
+		Utils.printPredicateInfo(file2Line2Predicates, subject, _predicates_backup_file);
+		file2Line2Predicates = Utils.recoverPredicates(subject, _predicates_backup_file);
 		return file2Line2Predicates;
+	}
+	
+	private Map<String, LineInfo> mapLine2Features(String srcPath, Set<String> allStatements, List<String> varFeatures, List<String> exprFeatures) {
+		Map<String, LineInfo> lineInfoMapping = new HashMap<String, LineInfo>();
+		for (String stmt : allStatements) {
+
+			String[] stmtInfo = stmt.split("#");
+			if (stmtInfo.length != 2) {
+				LevelLogger.error(__name__ + "#getAllPredicates statement parse error : " + stmt);
+				System.exit(0);
+			}
+			Integer methodID = Integer.valueOf(stmtInfo[0]);
+			int line = Integer.parseInt(stmtInfo[1]);
+			String methodString = Identifier.getMessage(methodID);
+			LevelLogger.info("Current statement  : **" + methodString + "#" + line + "**");
+			String[] methodInfo = methodString.split("#");
+			if (methodInfo.length < 4) {
+				LevelLogger.error(__name__ + "#getAllPredicates method info parse error : " + methodString);
+				System.exit(0);
+			}
+			String clazz = methodInfo[0].replace(".", Constant.PATH_SEPARATOR);
+			int index = clazz.indexOf("$");
+			if (index > 0) {
+				clazz = clazz.substring(0, index);
+			}
+			String relJavaPath = clazz + ".java";
+
+			String fileName = srcPath + "/" + relJavaPath;
+			File file = new File(fileName);
+			if (!file.exists()) {
+				LevelLogger.error("Cannot find file : " + fileName);
+				continue;
+			}
+
+			// <varName, type>
+			LineInfo info = new LineInfo(line, relJavaPath, clazz);
+
+			Set<String> variabelsToPredict = FeatureExtraction.obtainAllUsedVaraiblesForPredict(srcPath, relJavaPath,
+					line, Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE, varFeatures, exprFeatures);
+
+			for (String key : variabelsToPredict) {
+				lineInfoMapping.put(key, info);
+			}
+		}
+		return lineInfoMapping;
+	}
+	
+	/**
+	 * 
+	 * @param subject
+	 *            : current predict subject
+	 * @param varFeatures:
+	 *            features for variable predict
+	 * @param exprFeatures
+	 *            : features for expression predict
+	 * @param lineInfoMapping
+	 *            : record the info for each line of source code, formatted as
+	 *            <filename::line::varName, {line, relJavaPath, clazz}>
+	 * @return <fileName, <variable, [<predicate, probability>]>>
+	 */
+	private Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
+			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
+		
+		dumpFeature2File(subject, varFeatures, exprFeatures);
+
+		try {
+			ExecuteCommand.executePredict(subject, this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		Map<String, Map<String, List<Pair<String, String>>>> predictedConditions = new HashMap<>();
+		List<String> predResult = JavaFile.readFileToStringList(getPredicResultPath(subject));
+		
+		for(int index = 1; index < predResult.size(); index ++) {
+			String line = predResult.get(index);
+			String[] columns = line.split("\t");
+			if (columns.length < 4) {
+				LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
+				continue;
+			}
+			String key = columns[0];
+			String varName = columns[1];
+			// TODO: update filter algorithm
+			String condition = columns[2].replaceAll("$[a-zA-Z_][a-zA-Z_1-9]*$", varName);//replace("$", varName);
+			String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
+			String prob = columns[3];
+			String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), null);
+			if (newCond != null) {
+				Map<String, List<Pair<String, String>>> linePreds = predictedConditions.get(key);
+				if (linePreds == null) {
+					linePreds = new HashMap<>();
+				}
+				List<Pair<String, String>> preds = linePreds.get(varName);
+				if (preds == null) {
+					preds = new ArrayList<>();
+				}
+				Pair<String, String> pair = new Pair<String, String>(newCond, prob);
+				preds.add(pair);
+				linePreds.put(varName, preds);
+				predictedConditions.put(key, linePreds);
+
+			} else {
+				LevelLogger.info(
+						"Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
+			}
+		}
+		
+		// delete result files
+		ExecuteCommand.deleteGivenFile(new File(getVarFeatureOutputPath(subject)).getAbsolutePath());
+		ExecuteCommand.deleteGivenFile(new File(getExprFeatureOutputPath(subject)).getAbsolutePath());
+		ExecuteCommand.deleteGivenFile(new File(getPredicResultPath(subject)).getAbsolutePath());
+
+		return predictedConditions;
+	}
+	
+	private boolean dumpFeature2File(Subject subject, List<String> varFeatures, List<String> exprFeatures) {
+		File varFile = new File(getVarFeatureOutputPath(subject));
+		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
+		Set<String> uniqueFeatures = new HashSet<>();
+		for (String string : varFeatures) {
+			// filter duplicated features
+			if (uniqueFeatures.contains(string)) {
+				continue;
+			}
+			uniqueFeatures.add(string);
+			LevelLogger.debug(string);
+			JavaFile.writeStringToFile(varFile, string + "\n", true);
+		}
+
+		File expFile = new File(getExprFeatureOutputPath(subject));
+		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
+		for (String string : exprFeatures) {
+			// filter duplicated features
+			if (uniqueFeatures.contains(string)) {
+				continue;
+			}
+			uniqueFeatures.add(string);
+			LevelLogger.debug(string);
+			JavaFile.writeStringToFile(expFile, string + "\n", true);
+		}
+		return true;
 	}
 }

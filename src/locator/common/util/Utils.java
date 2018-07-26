@@ -8,6 +8,8 @@
 package locator.common.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -78,6 +80,63 @@ public class Utils {
 			// view coverage.csv file
 			JavaFile.writeStringToFile(file, stringBuffer.toString(), true);
 		}
+	}
+	
+	public static void printPredicateInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
+			Subject subject, String backupFile) {
+		LevelLogger.debug("\n------------------------begin predicate info------------------------\n");
+
+		StringBuffer contents = new StringBuffer();
+		for (Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()) {
+			LevelLogger.debug("FILE NAME : " + entry.getKey());
+			for (Entry<Integer, List<Pair<String, String>>> line2Preds : entry.getValue().entrySet()) {
+				LevelLogger.debug("LINE : " + line2Preds.getKey());
+				LevelLogger.debug("PREDICATES : ");
+				for (Pair<String, String> pair : line2Preds.getValue()) {
+					LevelLogger.debug(pair.getFirst() + ",");
+					contents.append(entry.getKey() + "\t" + line2Preds.getKey() + "\t" + pair.getFirst() + "\t"
+							+ pair.getSecond());
+					contents.append("\n");
+				}
+				LevelLogger.debug("\n");
+			}
+		}
+		LevelLogger.debug("\n------------------------end predicate info------------------------\n");
+		String outputFile = subject.getCoverageInfoPath() + "/" + backupFile;
+		JavaFile.writeStringToFile(outputFile, contents.toString(), true);
+	}
+
+	public static Map<String, Map<Integer, List<Pair<String, String>>>> recoverPredicates(Subject subject, String backupFile) {
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
+		String inputFile = subject.getCoverageInfoPath() + "/" + backupFile;
+		File file = new File(inputFile);
+		if (!file.exists() || !file.isFile()) {
+			return null;
+		}
+		LevelLogger.info("Recover predicates from file.");
+		List<String> contents = JavaFile.readFileToStringList(file);
+		for (String content : contents) {
+			if (contents.isEmpty()) {
+				continue;
+			}
+			String parts[] = content.split("\t");
+			// fix bug: predicates may contain anonymous class
+			if (parts.length != 4) {
+				continue;
+			}
+			Map<Integer, List<Pair<String, String>>> line2Predicates = file2Line2Predicates.get(parts[0]);
+			if (line2Predicates == null) {
+				line2Predicates = new HashMap<>();
+				file2Line2Predicates.put(parts[0], line2Predicates);
+			}
+			List<Pair<String, String>> predicates = line2Predicates.get(Integer.valueOf(parts[1]));
+			if (predicates == null) {
+				predicates = new ArrayList<>();
+				line2Predicates.put(Integer.valueOf(parts[1]), predicates);
+			}
+			predicates.add(new Pair<String, String>(parts[2], parts[3]));
+		}
+		return file2Line2Predicates;
 	}
 	
 	/**

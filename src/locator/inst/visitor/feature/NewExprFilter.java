@@ -84,6 +84,8 @@ public class NewExprFilter {
 			return null;
 		}
 
+		currentClassName = currentClassName == null ? "DUMMY" : currentClassName;
+		
 		ASTNode node = JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
 
 		ExprAnalysisVisitor visitor = new ExprAnalysisVisitor(varName, type, info, currentClassName);

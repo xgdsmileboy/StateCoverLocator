@@ -89,20 +89,20 @@ public class FeatureExtraction {
 			variables = CodeAnalyzer.getAllVariablesReadUse(srcPath, relJavaFile, line);
 		}
 		Set<String> keys = new HashSet<>();
-		List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(srcPath, relJavaFile, line);
-		List<String> expFeature = FeatureGenerator.generateExprFeatureForLine(srcPath, relJavaFile, line);
+		List<String> varF = FeatureGenerator.generateVarFeatureForLine(srcPath, relJavaFile, line);
+		List<String> expF = FeatureGenerator.generateExprFeatureForLine(srcPath, relJavaFile, line);
 		
-		for(String feature : varFeature) {
+		for(String feature : varF) {
 			String[] elements = feature.split("\t");
 			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
 			if(variables.contains(varName)) {
-				varFeature.add(feature);
+				varFeatures.add(feature);
 				String key = elements[Constant.FEATURE_FILE_NAME_INDEX] + "::" + line + "::" + varName;
 				keys.add(key);
 			}
 		}
 		
-		for(String feature : expFeature) {
+		for(String feature : expF) {
 			String[] elements = feature.split("\t");
 			String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
 			if(variables.contains(varName)) {
