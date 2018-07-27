@@ -1003,12 +1003,12 @@ public class Analyzer {
 		 *   SimpleName
 		 *   QualifiedName
 		 */
-		Pattern clazz = Pattern.compile("[A-Z][A-Za-z_]*");
-		Pattern constant=Pattern.compile("[A-Z][A-Z_]*");
+		Pattern clazz = Pattern.compile("^[A-Z][A-Za-z_]*");
+		Pattern constant=Pattern.compile("^[A-Z][A-Z_]*");
 		private boolean visit(Name node, USETYPE useType, Expression booleanExpr) {
 			if(node instanceof SimpleName) {
 				String name = node.getFullyQualifiedName();
-				if (constant.matcher(name).find() || clazz.matcher(name).find()) {
+				if (constant.matcher(name).matches() || clazz.matcher(name).matches()) {
 					return true;
 				}
 				int line = _unit.getLineNumber(node.getStartPosition());
@@ -1192,178 +1192,120 @@ public class Analyzer {
 				return visit((TypeDeclaration) node, varUsetype, booleanExpr);
 			} else if (node instanceof EnumDeclaration) {
 				return visit((EnumDeclaration) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof MethodDeclaration) {
 				return visit((MethodDeclaration) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof AssertStatement) {
 				return visit((AssertStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof Block) {
 				return visit((Block) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof BreakStatement) {
 				return visit((BreakStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof CatchClause) {
 				return visit((CatchClause) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ConstructorInvocation) {
 				return visit((ConstructorInvocation) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ContinueStatement) {
 				return visit((ContinueStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof DoStatement) {
 				return visit((DoStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof EmptyStatement) {
 				return visit((EmptyStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof EnhancedForStatement) {
 				return visit((EnhancedForStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ExpressionStatement) {
 				return visit((ExpressionStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ForStatement) {
 				return visit((ForStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof IfStatement) {
 				return visit((IfStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof LabeledStatement) {
 				return visit((LabeledStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ReturnStatement) {
 				return visit((ReturnStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof SuperConstructorInvocation) {
 				return visit((SuperConstructorInvocation) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof SwitchCase) {
 				return visit((SwitchCase) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof SwitchStatement) {
 				return visit((SwitchStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof SynchronizedStatement) {
 				return visit((SynchronizedStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ThrowStatement) {
 				return visit((ThrowStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof TryStatement) {
 				return visit((TryStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof TypeDeclarationStatement) {
 				return visit((TypeDeclarationStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof VariableDeclarationStatement) {
 				return visit((VariableDeclarationStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof WhileStatement) {
 				return visit((WhileStatement) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof Annotation) {
 				return visit((Annotation) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ArrayAccess) {
 				return visit((ArrayAccess) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ArrayCreation) {
 				return visit((ArrayCreation) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ArrayInitializer) {
 				return visit((ArrayInitializer) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof Assignment) {
 				return visit((Assignment) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof BooleanLiteral) {
 				return visit((BooleanLiteral) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof CastExpression) {
 				return visit((CastExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof CharacterLiteral) {
 				return visit((CharacterLiteral) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ClassInstanceCreation) {
 				return visit((ClassInstanceCreation) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ConditionalExpression) {
 				return visit((ConditionalExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof CreationReference) {
 				return visit((CreationReference) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ExpressionMethodReference) {
 				return visit((ExpressionMethodReference) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof FieldAccess) {
 				return visit((FieldAccess) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof InfixExpression) {
 				return visit((InfixExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof InstanceofExpression) {
 				return visit((InstanceofExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof LambdaExpression) {
 				return visit((LambdaExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof MethodInvocation) {
 				return visit((MethodInvocation) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof MethodReference) {
 				return visit((MethodReference) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof Name) {
 				return visit((Name) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof NullLiteral) {
 				return visit((NullLiteral) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof NumberLiteral) {
 				return visit((NumberLiteral) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ParenthesizedExpression) {
 				return visit((ParenthesizedExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof PostfixExpression) {
 				return visit((PostfixExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof PrefixExpression) {
 				return visit((PrefixExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof StringLiteral) {
 				return visit((StringLiteral) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof SuperFieldAccess) {
 				return visit((SuperFieldAccess) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof SuperMethodInvocation) {
 				return visit((SuperMethodInvocation) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof SuperMethodReference) {
 				return visit((SuperMethodReference) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof ThisExpression) {
 				return visit((ThisExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof TypeLiteral) {
 				return visit((TypeLiteral) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof TypeMethodReference) {
 				return visit((TypeMethodReference) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof VariableDeclarationExpression) {
 				return visit((VariableDeclarationExpression) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else if (node instanceof SingleVariableDeclaration) {
 				return visit((SingleVariableDeclaration) node, varUsetype, booleanExpr);
-			} else if (node instanceof EnumDeclaration) {
 			} else {
 				LevelLogger.error("Cannot parse node : " + node.toString());
 			}
