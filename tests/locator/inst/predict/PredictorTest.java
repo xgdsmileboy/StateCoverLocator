@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import locator.common.java.Subject;
 import locator.common.util.Pair;
-import locator.inst.visitor.feature.FeatureExtraction;
+import locator.core.model.predict.FeatureExtraction;
 
 public class PredictorTest {
 

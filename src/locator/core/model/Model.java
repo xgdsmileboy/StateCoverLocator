@@ -66,22 +66,22 @@ public abstract class Model {
 			Set<String> allStatements, boolean useSober);
 
 	
-	public String getVarFeatureOutputPath(Subject subject) {
+	public String getVarFeatureOutputFile(Subject subject) {
 		String file = _outPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/pred/" + subject.getNameAndId() + ".var.csv";
 		return file;
 	}
 
-	public String getExprFeatureOutputPath(Subject subject) {
+	public String getExprFeatureOutputFile(Subject subject) {
 		String file = _outPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/pred/" + subject.getNameAndId() + ".expr.csv";
 		return file;
 	}
 
-	public String getPredicResultPath(Subject subject) {
+	public String getPredictResultFile(Subject subject) {
 		String file = _inPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/" + subject.getNameAndId() + ".joint.csv";
 		return file;
 	}
 	
-	public String getPredictResultDir(Subject subject) {
+	public String getPredictResultPath(Subject subject) {
 		String file = _inPath + "/" + subject.getName() + "/" + subject.getNameAndId();
 		return file;
 	}

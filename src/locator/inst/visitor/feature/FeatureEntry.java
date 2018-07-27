@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.Type;
  * @author Jiajun
  * @date May 12, 2017
  */
+@Deprecated
 public class FeatureEntry {
 
 	public static enum AssignType {

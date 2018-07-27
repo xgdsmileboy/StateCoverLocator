@@ -19,6 +19,7 @@ import locator.common.util.LevelLogger;
  * @author Jiajun
  * @date May 12, 2017
  */
+@Deprecated
 public class TypingInfo {
 
 	private static Map<String, Type> fieldTypeMap = new HashMap<>();

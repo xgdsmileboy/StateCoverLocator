@@ -50,6 +50,7 @@ import locator.core.LineInfo;
  * @author Jiajun
  * @date Jun 26, 2017
  */
+@Deprecated
 public class NewExprFilter {
 
 	private static Map<String, Pair<Set<String>, String>> _typeInfo = new HashMap<>();

@@ -26,12 +26,12 @@ import locator.common.util.LevelLogger;
 import locator.common.util.Pair;
 import locator.common.util.Utils;
 import locator.core.LineInfo;
+import locator.core.model.predict.FeatureExtraction;
+import locator.core.model.predict.PredicateFilter;
 import locator.core.run.Runner;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.PredicateInstrumentVisitor;
 import locator.inst.visitor.feature.ExprFilter;
-import locator.inst.visitor.feature.FeatureExtraction;
-import locator.inst.visitor.feature.PredicateFilter;
 
 public abstract class MLModel extends Model {
 
@@ -41,7 +41,7 @@ public abstract class MLModel extends Model {
 	}
 
 	public boolean trainModel(Subject subject) {
-		if(!Constant.RE_TRAIN_MODEL) {
+		if (!Constant.RE_TRAIN_MODEL) {
 			if (modelExist(subject)) {
 				return true;
 			}
@@ -81,7 +81,7 @@ public abstract class MLModel extends Model {
 
 		// create necessary directories
 		Utils.pathGuarantee(outPath + "/var", outPath + "/expr", outPath + "/cluster", outPath + "/pred",
-				getPredictResultDir(subject));
+				getPredictResultPath(subject));
 
 		String targetVarPath = outPath + "/var/" + subject.getNameAndId() + ".var.csv";
 		String targetExprPath = outPath + "/expr/" + subject.getNameAndId() + ".expr.csv";
@@ -116,23 +116,26 @@ public abstract class MLModel extends Model {
 			return file2Line2Predicates;
 		}
 		// parse all object type
-		ExprFilter.init(subject);
+//		ExprFilter.init(subject);
 
 		String srcPath = subject.getHome() + subject.getSsrc();
 
 		List<String> varFeatures = new ArrayList<String>();
 		List<String> exprFeatures = new ArrayList<String>();
 		Map<String, LineInfo> lineInfoMapping = mapLine2Features(srcPath, allStatements, varFeatures, exprFeatures);
-		
+
 		Map<String, Map<String, List<Pair<String, String>>>> location2varName2Conditions = predict(subject, varFeatures,
 				exprFeatures, lineInfoMapping);
-		
+
+		file2Line2Predicates = new HashMap<>();
 		// instrument each condition one by one and compute coverage
 		// information for each predicate
 		JCompiler compiler = JCompiler.getInstance();
-		for (Map.Entry<String, Map<String, List<Pair<String, String>>>> entry : location2varName2Conditions.entrySet()) {
+		for (Map.Entry<String, Map<String, List<Pair<String, String>>>> entry : location2varName2Conditions
+				.entrySet()) {
 			final LineInfo info = lineInfoMapping.get(entry.getKey());
 			int line = info.getLine();
+			Set<String> alreadyVisited = new HashSet<>();
 			if (entry.getValue() != null && entry.getValue().size() > 0) {
 				String relJavaPath = info.getRelJavaPath();
 				String javaFile = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
@@ -152,6 +155,12 @@ public abstract class MLModel extends Model {
 								+ allConditionCount + "].");
 						currentConditionCount++;
 
+						// filter duplicate
+						if (alreadyVisited.contains(condition.getFirst())) {
+							continue;
+						}
+						alreadyVisited.add(condition.getFirst());
+						alreadyVisited.add("!(" + condition.getFirst() + ")");
 						// instrument one condition statement into source file
 						CompilationUnit compilationUnit = (CompilationUnit) JavaFile.genASTFromSource(source,
 								ASTParser.K_COMPILATION_UNIT);
@@ -182,7 +191,7 @@ public abstract class MLModel extends Model {
 						}
 					}
 				}
-				file2Line2Predicates = new HashMap<>();
+
 				if (legalConditions.size() > 0) {
 					Map<Integer, List<Pair<String, String>>> line2Predicate = file2Line2Predicates.get(javaFile);
 					if (line2Predicate == null) {
@@ -198,7 +207,8 @@ public abstract class MLModel extends Model {
 				}
 				if (!compiler.compile(subject, relJavaPath, source)) {
 					if (!Runner.compileSubject(subject)) {
-						LevelLogger.error( __name__ + "#getAllPredicates ERROR : compile original source failed : " + javaFile);
+						LevelLogger.error(
+								__name__ + "#getAllPredicates ERROR : compile original source failed : " + javaFile);
 					}
 				}
 			} // end of "conditionsForRightVars != null"
@@ -209,8 +219,9 @@ public abstract class MLModel extends Model {
 		file2Line2Predicates = Utils.recoverPredicates(subject, _predicates_backup_file);
 		return file2Line2Predicates;
 	}
-	
-	private Map<String, LineInfo> mapLine2Features(String srcPath, Set<String> allStatements, List<String> varFeatures, List<String> exprFeatures) {
+
+	private Map<String, LineInfo> mapLine2Features(String srcPath, Set<String> allStatements, List<String> varFeatures,
+			List<String> exprFeatures) {
 		Map<String, LineInfo> lineInfoMapping = new HashMap<String, LineInfo>();
 		for (String stmt : allStatements) {
 
@@ -254,7 +265,7 @@ public abstract class MLModel extends Model {
 		}
 		return lineInfoMapping;
 	}
-	
+
 	/**
 	 * 
 	 * @param subject
@@ -270,7 +281,7 @@ public abstract class MLModel extends Model {
 	 */
 	private Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
 			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
-		
+
 		dumpFeature2File(subject, varFeatures, exprFeatures);
 
 		try {
@@ -282,28 +293,28 @@ public abstract class MLModel extends Model {
 		}
 
 		Map<String, Map<String, List<Pair<String, String>>>> predictedConditions = new HashMap<>();
-		List<String> predResult = JavaFile.readFileToStringList(getPredicResultPath(subject));
-		
+		List<String> predResult = JavaFile.readFileToStringList(getPredictResultFile(subject));
+
 		Map<String, Map<String, List<Pair<String, Double>>>> location2varName2Predicates = parsePredicates(predResult);
-		
+
 		Comparator<Pair<String, Double>> comparator = new Comparator<Pair<String, Double>>() {
 			@Override
 			public int compare(Pair<String, Double> o1, Pair<String, Double> o2) {
-				return o1.getSecond().compareTo(o2.getSecond());
+				return o2.getSecond().compareTo(o1.getSecond());
 			}
 		};
-		
-		for(Entry<String, Map<String, List<Pair<String, Double>>>> entry : location2varName2Predicates.entrySet()) {
+
+		for (Entry<String, Map<String, List<Pair<String, Double>>>> entry : location2varName2Predicates.entrySet()) {
 			String key = entry.getKey();
 			Map<String, List<Pair<String, Double>>> varName2Predicates = entry.getValue();
-			for(Entry<String, List<Pair<String, Double>>> inner : varName2Predicates.entrySet()) {
+			for (Entry<String, List<Pair<String, Double>>> inner : varName2Predicates.entrySet()) {
 				String varName = inner.getKey();
 				String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
 				List<Pair<String, Double>> conditions = inner.getValue();
 				// sort predicates with descending order of probability
 				Collections.sort(conditions, comparator);
-				
-				for(Pair<String, Double> condPair : conditions) {
+
+				for (Pair<String, Double> condPair : conditions) {
 					String cond = condPair.getFirst();
 					Double prob = condPair.getSecond();
 					String newCond = PredicateFilter.filter(cond, varName, varType);
@@ -322,24 +333,24 @@ public abstract class MLModel extends Model {
 						predictedConditions.put(key, linePreds);
 
 					} else {
-						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + cond);
+						LevelLogger
+								.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + cond);
 					}
 				}
 			}
 		}
-		
-		
+
 		// delete result files
-		ExecuteCommand.deleteGivenFile(new File(getVarFeatureOutputPath(subject)).getAbsolutePath());
-		ExecuteCommand.deleteGivenFile(new File(getExprFeatureOutputPath(subject)).getAbsolutePath());
-		ExecuteCommand.deleteGivenFile(new File(getPredicResultPath(subject)).getAbsolutePath());
+		ExecuteCommand.deleteGivenFile(new File(getVarFeatureOutputFile(subject)).getAbsolutePath());
+		ExecuteCommand.deleteGivenFile(new File(getExprFeatureOutputFile(subject)).getAbsolutePath());
+		ExecuteCommand.deleteGivenFile(new File(getPredictResultFile(subject)).getAbsolutePath());
 
 		return predictedConditions;
 	}
-	
+
 	private Map<String, Map<String, List<Pair<String, Double>>>> parsePredicates(List<String> predResult) {
 		Map<String, Map<String, List<Pair<String, Double>>>> location2varName2Predicates = new HashMap<>();
-		for(int index = 1; index < predResult.size(); index ++) {
+		for (int index = 1; index < predResult.size(); index++) {
 			String line = predResult.get(index);
 			String[] columns = line.split("\t");
 			if (columns.length < 4) {
@@ -351,23 +362,23 @@ public abstract class MLModel extends Model {
 			String cond = columns[2];
 			Double prob = Double.parseDouble(columns[3]);
 			Map<String, List<Pair<String, Double>>> result = location2varName2Predicates.get(key);
-			if(result == null) {
+			if (result == null) {
 				result = new HashMap<>();
 				location2varName2Predicates.put(key, result);
 			}
 			List<Pair<String, Double>> conditions = result.get(varName);
-			if(conditions == null) {
+			if (conditions == null) {
 				conditions = new LinkedList<>();
 				result.put(varName, conditions);
 			}
 			conditions.add(new Pair<String, Double>(cond, prob));
 		}
-		
+
 		return location2varName2Predicates;
 	}
-	
+
 	private boolean dumpFeature2File(Subject subject, List<String> varFeatures, List<String> exprFeatures) {
-		File varFile = new File(getVarFeatureOutputPath(subject));
+		File varFile = new File(getVarFeatureOutputFile(subject));
 		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
 		Set<String> uniqueFeatures = new HashSet<>();
 		for (String string : varFeatures) {
@@ -380,7 +391,7 @@ public abstract class MLModel extends Model {
 			JavaFile.writeStringToFile(varFile, "\n" + string, true);
 		}
 
-		File expFile = new File(getExprFeatureOutputPath(subject));
+		File expFile = new File(getExprFeatureOutputFile(subject));
 		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
 		for (String string : exprFeatures) {
 			// filter duplicated features

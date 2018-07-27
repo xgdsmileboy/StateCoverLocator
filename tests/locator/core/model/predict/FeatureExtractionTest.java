@@ -5,7 +5,7 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.inst.visitor.feature;
+package locator.core.model.predict;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import locator.common.config.Constant;
 import locator.core.LineInfo;
+import locator.core.model.predict.FeatureExtraction;
 
 /**
  * @author Jiajun

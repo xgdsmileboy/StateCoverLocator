@@ -43,6 +43,7 @@ import locator.common.util.Pair;
  * @author Jiajun
  * @date May 27, 2017
  */
+@Deprecated
 public class ExprFilter {
 
 	private static Map<String, Pair<Set<String>, String>> _typeInfo = new HashMap<>();

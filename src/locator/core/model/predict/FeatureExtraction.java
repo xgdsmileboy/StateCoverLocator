@@ -5,7 +5,7 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.inst.visitor.feature;
+package locator.core.model.predict;
 
 import java.util.HashMap;
 import java.util.HashSet;
