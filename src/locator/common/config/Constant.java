@@ -41,7 +41,7 @@ public class Constant {
 
 	// used for instrument
 	public final static String INSTRUMENT_DOT_SEPARATOR = ".";
-	public final static String INSTRUMENT_STR_SEP = "";//"#"
+//	public final static String INSTRUMENT_STR_SEP = "";//"#"
 	public final static String INSTRUMENT_FLAG = "";//"[INST]"
 	public final static String INSTRUMENT_K_TEST = "T";
 	public final static String INSTRUMENT_K_SOURCE = "M";
@@ -73,7 +73,7 @@ public class Constant {
 	public final static int FEATURE_LINE_INDEX = ExprFeature.getFeatureIndex(LineNumber.class);
 	
 	// variables collecting flag
-	public static boolean PREDICT_LEFT_HAND_SIDE_VARIABLE = true;
+	public static boolean PREDICT_LEFT_HAND_SIDE_VARIABLE = false;
 	
 	// update predicate
 	public static boolean RECOVER_PREDICATE_FROM_FILE = true;
@@ -85,6 +85,7 @@ public class Constant {
 	// training model
 	// xgboost, dnn or randomforest
 	public static String TRAINING_MODEL = "dnn";
+	public static boolean RE_TRAIN_MODEL = false;
 	public static boolean TRAINING_EVALUATION = false;
 	
 	// system command
@@ -266,9 +267,10 @@ public class Constant {
 			Constant.RECOVER_PREDICATE_FROM_FILE = Boolean.parseBoolean(prop.getProperty("PREDICATE.RECOVER"));
 			Constant.TOP_K_PREDICATES_FOR_EACH_VAR = Integer.parseInt(prop.getProperty("PREDICATE.TOPK"));
 			Constant.TRAINING_MODEL = prop.getProperty("TRAINING.MODEL").trim();
+			Constant.RE_TRAIN_MODEL = Boolean.parseBoolean(prop.getProperty("MODEL.RETRAIN"));
+			Constant.TRAINING_EVALUATION =  Boolean.parseBoolean(prop.getProperty("TRAINING.EVALUATION"));
 			Constant.USE_SOBER =  Boolean.parseBoolean(prop.getProperty("USE.SOBER"));
 			Constant.USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
-			Constant.TRAINING_EVALUATION =  Boolean.parseBoolean(prop.getProperty("TRAINING.EVALUATION"));
 			Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE = Boolean.parseBoolean(prop.getProperty("PREDICT.LEFT.VAR"));
 			Constant.OUT_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
 			in.close();
