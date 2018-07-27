@@ -4,24 +4,24 @@
  * strictly prohibited Proprietary and Confidential.
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
-package locator.aux.extractor.core.process.feature;
+package locator.aux.extractor.core.feature;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import locator.aux.extractor.core.ast.node.Use;
-import locator.aux.extractor.core.ast.node.Variable;
-import locator.aux.extractor.core.process.feature.item.ColumnNumber;
-import locator.aux.extractor.core.process.feature.item.Feature;
-import locator.aux.extractor.core.process.feature.item.FileName;
-import locator.aux.extractor.core.process.feature.item.IfUse;
-import locator.aux.extractor.core.process.feature.item.LastAssign;
-import locator.aux.extractor.core.process.feature.item.LineNumber;
-import locator.aux.extractor.core.process.feature.item.LoopUse;
-import locator.aux.extractor.core.process.feature.item.MethodName;
-import locator.aux.extractor.core.process.feature.item.ParamDef;
-import locator.aux.extractor.core.process.feature.item.VarName;
-import locator.aux.extractor.core.process.feature.item.VarType;
+import locator.aux.extractor.core.feature.item.ColumnNumber;
+import locator.aux.extractor.core.feature.item.Feature;
+import locator.aux.extractor.core.feature.item.FileName;
+import locator.aux.extractor.core.feature.item.IfUse;
+import locator.aux.extractor.core.feature.item.LastAssign;
+import locator.aux.extractor.core.feature.item.LineNumber;
+import locator.aux.extractor.core.feature.item.LoopUse;
+import locator.aux.extractor.core.feature.item.MethodName;
+import locator.aux.extractor.core.feature.item.ParamDef;
+import locator.aux.extractor.core.feature.item.VarName;
+import locator.aux.extractor.core.feature.item.VarType;
+import locator.aux.extractor.core.parser.Use;
+import locator.aux.extractor.core.parser.Variable;
 
 /**
  * @author Jiajun

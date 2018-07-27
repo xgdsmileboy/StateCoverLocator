@@ -5,7 +5,7 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.aux.extractor.core.process.feature;
+package locator.aux.extractor.core.parser;
 
 import java.io.File;
 import java.util.HashMap;
@@ -86,12 +86,8 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import locator.aux.extractor.core.ast.node.BasicBlock;
-import locator.aux.extractor.core.ast.node.StmtType;
-import locator.aux.extractor.core.ast.node.Use;
-import locator.aux.extractor.core.ast.node.Variable;
-import locator.aux.extractor.core.ast.node.BasicBlock.BLOCKTYPE;
-import locator.aux.extractor.core.ast.node.Use.USETYPE;
+import locator.aux.extractor.core.parser.BasicBlock.BLOCKTYPE;
+import locator.aux.extractor.core.parser.Use.USETYPE;
 import locator.common.java.JavaFile;
 import locator.common.util.LevelLogger;
 

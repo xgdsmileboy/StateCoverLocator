@@ -4,17 +4,17 @@
  * strictly prohibited Proprietary and Confidential.
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
-package locator.aux.extractor.core.process.feature.item;
+package locator.aux.extractor.core.feature.item;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import locator.aux.extractor.core.ast.node.BasicBlock;
-import locator.aux.extractor.core.ast.node.Use;
-import locator.aux.extractor.core.ast.node.Variable;
-import locator.aux.extractor.core.ast.node.Use.USETYPE;
+import locator.aux.extractor.core.parser.BasicBlock;
+import locator.aux.extractor.core.parser.Use;
+import locator.aux.extractor.core.parser.Variable;
+import locator.aux.extractor.core.parser.Use.USETYPE;
 import locator.common.util.LevelLogger;
 
 /**

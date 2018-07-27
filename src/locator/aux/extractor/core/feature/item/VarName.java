@@ -4,51 +4,54 @@
  * strictly prohibited Proprietary and Confidential.
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
-package locator.aux.extractor.core.process.feature.item;
+package locator.aux.extractor.core.feature.item;
 
-import locator.aux.extractor.core.ast.node.Use;
-import locator.aux.extractor.core.ast.node.Variable;
+import locator.aux.extractor.core.parser.Use;
+import locator.aux.extractor.core.parser.Variable;
 
 /**
  * @author Jiajun
  *
  * Jul 24, 2018
  */
-public class ColumnNumber extends Feature {
+public class VarName extends Feature {
 
-	private static ColumnNumber instance = null;
+	private static VarName instance = null;
 	private Use _use;
+	private String _name;
 	
-	public static ColumnNumber getInstance() {
+	public static VarName getInstance() {
 		if(instance == null) {
-			instance = new ColumnNumber();
+			instance = new VarName();
 		}
 		return instance;
 	}
 	
-	protected ColumnNumber() {
-		super("Column");
+	protected VarName() {
+		super("VarName");
 	}
 	
-	private ColumnNumber(Use use) {
+	private VarName(Use use) {
 		this();
 		_use = use;
 	}
 
 	@Override
 	public Feature extractFeature(Use use) {
-		ColumnNumber columnNumber = new ColumnNumber(use);
-		return columnNumber;
+		VarName varName = new VarName(use);
+		varName._name = use.getVariableDefine().getName();
+		return varName;
 	}
 
 	@Override
 	public String getStringFormat() {
-		return String.valueOf(_use.getColumnNumber());
+		return _name;
 	}
+	
 
 	@Override
 	public String extractFeature(Variable variable, int line) {
-		return "?";
+		return variable.getName();
 	}
-
+	
 }

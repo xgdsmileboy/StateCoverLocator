@@ -4,11 +4,11 @@
  * strictly prohibited Proprietary and Confidential.
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
-package locator.aux.extractor.core.process.feature.item;
+package locator.aux.extractor.core.feature.item;
 
-import locator.aux.extractor.core.ast.node.StmtType;
-import locator.aux.extractor.core.ast.node.Use;
-import locator.aux.extractor.core.ast.node.Variable;
+import locator.aux.extractor.core.parser.StmtType;
+import locator.aux.extractor.core.parser.Use;
+import locator.aux.extractor.core.parser.Variable;
 
 /**
  * @author Jiajun

@@ -11,12 +11,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import locator.aux.extractor.core.ast.node.BasicBlock;
-import locator.aux.extractor.core.ast.node.Use;
-import locator.aux.extractor.core.ast.node.Variable;
-import locator.aux.extractor.core.process.feature.Analyzer;
-import locator.aux.extractor.core.process.feature.ExprFeature;
-import locator.aux.extractor.core.process.feature.VarFeature;
+import locator.aux.extractor.core.feature.ExprFeature;
+import locator.aux.extractor.core.feature.VarFeature;
+import locator.aux.extractor.core.parser.Analyzer;
+import locator.aux.extractor.core.parser.BasicBlock;
+import locator.aux.extractor.core.parser.Use;
+import locator.aux.extractor.core.parser.Variable;
 import locator.common.java.JavaFile;
 
 /**

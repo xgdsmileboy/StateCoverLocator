@@ -3,10 +3,10 @@ package locator.aux.extractor;
 import java.util.HashSet;
 import java.util.Set;
 
-import locator.aux.extractor.core.ast.node.BasicBlock;
-import locator.aux.extractor.core.ast.node.Use;
-import locator.aux.extractor.core.ast.node.Use.USETYPE;
-import locator.aux.extractor.core.process.feature.Analyzer;
+import locator.aux.extractor.core.parser.Analyzer;
+import locator.aux.extractor.core.parser.BasicBlock;
+import locator.aux.extractor.core.parser.Use;
+import locator.aux.extractor.core.parser.Use.USETYPE;
 
 public class CodeAnalyzer {
 

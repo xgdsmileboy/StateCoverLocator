@@ -5,7 +5,7 @@
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
 
-package locator.aux.extractor.core.ast.node;
+package locator.aux.extractor.core.parser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,8 +18,8 @@ import java.util.Set;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Type;
 
-import locator.aux.extractor.core.ast.node.Use.USETYPE;
-import locator.aux.extractor.core.process.feature.VarFeature;
+import locator.aux.extractor.core.feature.VarFeature;
+import locator.aux.extractor.core.parser.Use.USETYPE;
 import locator.common.util.LevelLogger;
 import locator.common.util.Pair;
 

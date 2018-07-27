@@ -4,7 +4,7 @@
  * strictly prohibited Proprietary and Confidential.
  * Written by Jiajun Jiang<jiajun.jiang@pku.edu.cn>.
  */
-package locator.aux.extractor.core.ast.node;
+package locator.aux.extractor.core.parser;
 
 /**
  * @author Jiajun
