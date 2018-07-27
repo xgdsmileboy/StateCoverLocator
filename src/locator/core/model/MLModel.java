@@ -1,9 +1,6 @@
 package locator.core.model;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -33,7 +28,7 @@ import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.PredicateInstrumentVisitor;
 import locator.inst.visitor.feature.ExprFilter;
 import locator.inst.visitor.feature.FeatureExtraction;
-import locator.inst.visitor.feature.NewExprFilter;
+import locator.inst.visitor.feature.PredicateFilter;
 
 public abstract class MLModel extends Model {
 
@@ -42,8 +37,10 @@ public abstract class MLModel extends Model {
 	}
 
 	public boolean trainModel(Subject subject) {
-		if (modelExist(subject)) {
-			return true;
+		if(!Constant.RE_TRAIN_MODEL) {
+			if (modelExist(subject)) {
+				return true;
+			}
 		}
 		if (!prepare(subject)) {
 			return false;
@@ -292,17 +289,19 @@ public abstract class MLModel extends Model {
 			}
 			String key = columns[0];
 			String varName = columns[1];
-			// TODO: update filter algorithm
-			Pattern pattern = Pattern.compile("\\$([a-zA-Z_][a-zA-Z_1-9]*)\\$");
-			Matcher matcher = pattern.matcher(columns[2]);
-			String originalType = "?";
-			if(matcher.find()) {
-				originalType = matcher.group(1);
-			}
-			String condition = columns[2].replaceAll("\\$[a-zA-Z_][a-zA-Z_1-9]*\\$", varName);//replace("$", varName);
+//			// TODO: update filter algorithm
+//			Pattern pattern = Pattern.compile("\\$([a-zA-Z_][a-zA-Z_1-9]*)\\$");
+//			Matcher matcher = pattern.matcher(columns[2]);
+//			String originalType = "?";
+//			if(matcher.find()) {
+//				originalType = matcher.group(1);
+//			}
+//			String condition = columns[2].replaceAll("\\$[a-zA-Z_][a-zA-Z_1-9]*\\$", varName);//replace("$", varName);
+			String condition = columns[2];
 			String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
 			String prob = columns[3];
-			String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), null);
+//			String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), null);
+			String newCond = PredicateFilter.filter(condition, varName, varType);
 			if (newCond != null) {
 				Map<String, List<Pair<String, String>>> linePreds = predictedConditions.get(key);
 				if (linePreds == null) {
