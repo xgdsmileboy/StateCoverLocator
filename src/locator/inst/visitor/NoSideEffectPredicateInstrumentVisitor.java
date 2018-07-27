@@ -36,7 +36,7 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 
 import com.sun.org.apache.xalan.internal.utils.FeatureManager.Feature;
 
-import extractor.main.FeatureGenerator;
+import locator.aux.extractor.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.util.Pair;

@@ -59,8 +59,8 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import extractor.main.CodeAnalyzer;
-import extractor.main.FeatureGenerator;
+import locator.aux.extractor.CodeAnalyzer;
+import locator.aux.extractor.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;

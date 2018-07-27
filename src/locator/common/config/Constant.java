@@ -20,13 +20,13 @@ import java.util.Properties;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 
-import extractor.core.process.feature.ExprFeature;
-import extractor.core.process.feature.VarFeature;
-import extractor.core.process.feature.item.FileName;
-import extractor.core.process.feature.item.LineNumber;
-import extractor.core.process.feature.item.VarName;
-import extractor.core.process.feature.item.VarType;
 import jdk7.wrapper.JCompiler.SOURCE_LEVEL;
+import locator.aux.extractor.core.process.feature.ExprFeature;
+import locator.aux.extractor.core.process.feature.VarFeature;
+import locator.aux.extractor.core.process.feature.item.FileName;
+import locator.aux.extractor.core.process.feature.item.LineNumber;
+import locator.aux.extractor.core.process.feature.item.VarName;
+import locator.aux.extractor.core.process.feature.item.VarType;
 import locator.common.util.LevelLogger;
 
 /**

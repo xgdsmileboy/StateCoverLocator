@@ -96,6 +96,108 @@ public class JavaFile {
 		return astParser.createAST(null);
 	}
 	
+	/**
+	 * create {@code CompilationUnit} from given file {@code srcFile}
+	 * @param srcFile : absolute path of java source code
+	 * @param srcPath : base path of source code
+	 * @return a compilation unit
+	 */
+	public static CompilationUnit genASTFromFileWithType(String srcFile, String srcPath) {
+		return (CompilationUnit) genASTFromSourceWithType(readFileToString(srcFile), ASTParser.K_COMPILATION_UNIT, srcFile, srcPath);
+	}
+	
+	/**
+	 * @param icu
+	 * @param type
+	 * @param filePath
+	 * @param srcPath
+	 * @return
+	 * @see #genASTFromSourceWithType(String icu, String jversion, int astLevel, int
+	 *      type, String filePath, String srcPath)
+	 */
+	public static ASTNode genASTFromSourceWithType(String icu, int type, String filePath, String srcPath) {
+		return genASTFromSourceWithType(icu, Constant.JAVA_VERSION, Constant.AST_LEVEL, type, filePath, srcPath);
+	}
+	
+	/**
+	 * @param icu
+	 * @param jversion
+	 * @param type
+	 * @param filePath
+	 * @param srcPath
+	 * @return
+	 * @see #genASTFromSourceWithType(String icu, String jversion, int astLevel, int
+	 *      type, String filePath, String srcPath)
+	 */
+	public static ASTNode genASTFromSourceWithType(String icu, String jversion, int type, String filePath, String srcPath) {
+		return genASTFromSourceWithType(icu, jversion, Constant.AST_LEVEL, type, filePath, srcPath);
+	}
+	
+	/**
+	 * @param icu
+	 * @param astLevel
+	 * @param type
+	 * @param filePath
+	 * @param srcPath
+	 * @return
+	 * @see #genASTFromSourceWithType(String icu, String jversion, int astLevel, int
+	 *      type, String filePath, String srcPath)
+	 */
+	public static ASTNode genASTFromSourceWithType(String icu, int astLevel, int type, String filePath, String srcPath) {
+		return genASTFromSourceWithType(icu, Constant.JAVA_VERSION, astLevel, type, filePath, srcPath);
+	}
+	
+	/**
+	 * @param icu
+	 *            : source code with {@code String} format
+	 * @param jversion
+	 *            : the version of JAVA, can be one of the following:
+	 *            <ul>
+	 *            <li>{@code JavaCore.VERSION_1_1}</li>
+	 *            <li>{@code JavaCore.VERSION_1_2}</li>
+	 *            <li>{@code JavaCore.VERSION_1_3}</li>
+	 *            <li>{@code JavaCore.VERSION_1_4}</li>
+	 *            <li>{@code JavaCore.VERSION_1_5}</li>
+	 *            <li>{@code JavaCore.VERSION_1_6}</li>
+	 *            <li>{@code JavaCore.VERSION_1_7}</li>
+	 *            <li>{@code JavaCore.VERSION_1_8}</li>
+	 *            </ul>
+	 * @param astLevel
+	 *            : AST level of created AST, can be one of the following:
+	 *            <ul>
+	 *            <li>{@code AST.JLS2}</li>
+	 *            <li>{@code AST.JLS3}</li>
+	 *            <li>{@code AST.JLS4}</li>
+	 *            <li>{@code AST.JLS8}</li>
+	 *            </ul>
+	 * @param type
+	 *            : the type of AST node, can be one of the following:
+	 *            <ul>
+	 *            <li>{@code ASTParser.K_CLASS_BODY_DECLARATIONS}</li>
+	 *            <li>{@code ASTParser.K_COMPILATION_UNIT}</li>
+	 *            <li>{@code ASTParser.K_EXPRESSION}</li>
+	 *            <li>{@code ASTParser.K_STATEMENTS}</li>
+	 *            </ul>
+	 * @param filePath
+	 *            : source file absolute path
+	 * @param srcPath
+	 *            : the base of source file
+	 * @return AST
+	 */
+	public static ASTNode genASTFromSourceWithType(String icu, String jversion, int astLevel, int type, String filePath, String srcPath) {
+		ASTParser astParser = ASTParser.newParser(astLevel);
+		Map<?, ?> options = JavaCore.getOptions();
+		JavaCore.setComplianceOptions(jversion, options);
+		astParser.setCompilerOptions(options);
+		astParser.setSource(icu.toCharArray());
+		astParser.setKind(type);
+		astParser.setResolveBindings(true);
+		astParser.setEnvironment(getClassPath(), new String[] {srcPath}, null, true);
+		astParser.setUnitName(filePath);
+		astParser.setBindingsRecovery(true);
+		return astParser.createAST(null);
+	}
+	
 	private static String[] getClassPath() {
 		String property = System.getProperty("java.class.path", ".");
 		return property.split(File.pathSeparator);
