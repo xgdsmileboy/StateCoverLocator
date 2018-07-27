@@ -3,8 +3,11 @@ package locator.core.model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,6 +37,7 @@ public abstract class MLModel extends Model {
 
 	protected MLModel(String modelName) {
 		super(modelName, "predicates_backup.txt");
+		__name__ = "@MLModel";
 	}
 
 	public boolean trainModel(Subject subject) {
@@ -120,7 +124,7 @@ public abstract class MLModel extends Model {
 		List<String> exprFeatures = new ArrayList<String>();
 		Map<String, LineInfo> lineInfoMapping = mapLine2Features(srcPath, allStatements, varFeatures, exprFeatures);
 		
-		Map<String, Map<String, List<Pair<String, String>>>> location2varName2Conditions = this.predict(subject, varFeatures,
+		Map<String, Map<String, List<Pair<String, String>>>> location2varName2Conditions = predict(subject, varFeatures,
 				exprFeatures, lineInfoMapping);
 		
 		// instrument each condition one by one and compute coverage
@@ -262,7 +266,7 @@ public abstract class MLModel extends Model {
 	 * @param lineInfoMapping
 	 *            : record the info for each line of source code, formatted as
 	 *            <filename::line::varName, {line, relJavaPath, clazz}>
-	 * @return <fileName, <variable, [<predicate, probability>]>>
+	 * @return <filename::line::varName, <variable, [<predicate, probability>]>>
 	 */
 	private Map<String, Map<String, List<Pair<String, String>>>> predict(Subject subject, List<String> varFeatures,
 			List<String> exprFeatures, Map<String, LineInfo> lineInfoMapping) {
@@ -280,47 +284,50 @@ public abstract class MLModel extends Model {
 		Map<String, Map<String, List<Pair<String, String>>>> predictedConditions = new HashMap<>();
 		List<String> predResult = JavaFile.readFileToStringList(getPredicResultPath(subject));
 		
-		for(int index = 1; index < predResult.size(); index ++) {
-			String line = predResult.get(index);
-			String[] columns = line.split("\t");
-			if (columns.length < 4) {
-				LevelLogger.error(__name__ + "@predict Parse predict result failed : " + line);
-				continue;
+		Map<String, Map<String, List<Pair<String, Double>>>> location2varName2Predicates = parsePredicates(predResult);
+		
+		Comparator<Pair<String, Double>> comparator = new Comparator<Pair<String, Double>>() {
+			@Override
+			public int compare(Pair<String, Double> o1, Pair<String, Double> o2) {
+				return o1.getSecond().compareTo(o2.getSecond());
 			}
-			String key = columns[0];
-			String varName = columns[1];
-//			// TODO: update filter algorithm
-//			Pattern pattern = Pattern.compile("\\$([a-zA-Z_][a-zA-Z_1-9]*)\\$");
-//			Matcher matcher = pattern.matcher(columns[2]);
-//			String originalType = "?";
-//			if(matcher.find()) {
-//				originalType = matcher.group(1);
-//			}
-//			String condition = columns[2].replaceAll("\\$[a-zA-Z_][a-zA-Z_1-9]*\\$", varName);//replace("$", varName);
-			String condition = columns[2];
-			String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
-			String prob = columns[3];
-//			String newCond = NewExprFilter.filter(varType, varName, condition, lineInfoMapping.get(key), null);
-			String newCond = PredicateFilter.filter(condition, varName, varType);
-			if (newCond != null) {
-				Map<String, List<Pair<String, String>>> linePreds = predictedConditions.get(key);
-				if (linePreds == null) {
-					linePreds = new HashMap<>();
-				}
-				List<Pair<String, String>> preds = linePreds.get(varName);
-				if (preds == null) {
-					preds = new ArrayList<>();
-				}
-				Pair<String, String> pair = new Pair<String, String>(newCond, prob);
-				preds.add(pair);
-				linePreds.put(varName, preds);
-				predictedConditions.put(key, linePreds);
+		};
+		
+		for(Entry<String, Map<String, List<Pair<String, Double>>>> entry : location2varName2Predicates.entrySet()) {
+			String key = entry.getKey();
+			Map<String, List<Pair<String, Double>>> varName2Predicates = entry.getValue();
+			for(Entry<String, List<Pair<String, Double>>> inner : varName2Predicates.entrySet()) {
+				String varName = inner.getKey();
+				String varType = lineInfoMapping.get(key).getLegalVariableType(varName);
+				List<Pair<String, Double>> conditions = inner.getValue();
+				// sort predicates with descending order of probability
+				Collections.sort(conditions, comparator);
+				
+				for(Pair<String, Double> condPair : conditions) {
+					String cond = condPair.getFirst();
+					Double prob = condPair.getSecond();
+					String newCond = PredicateFilter.filter(cond, varName, varType);
+					if (newCond != null) {
+						Map<String, List<Pair<String, String>>> linePreds = predictedConditions.get(key);
+						if (linePreds == null) {
+							linePreds = new HashMap<>();
+						}
+						List<Pair<String, String>> preds = linePreds.get(varName);
+						if (preds == null) {
+							preds = new ArrayList<>();
+						}
+						Pair<String, String> pair = new Pair<String, String>(newCond, String.valueOf(prob));
+						preds.add(pair);
+						linePreds.put(varName, preds);
+						predictedConditions.put(key, linePreds);
 
-			} else {
-				LevelLogger.info(
-						"Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + condition);
+					} else {
+						LevelLogger.info("Filter illegal predicates : " + varName + "(" + varType + ")" + " -> " + cond);
+					}
+				}
 			}
 		}
+		
 		
 		// delete result files
 		ExecuteCommand.deleteGivenFile(new File(getVarFeatureOutputPath(subject)).getAbsolutePath());
@@ -328,6 +335,35 @@ public abstract class MLModel extends Model {
 		ExecuteCommand.deleteGivenFile(new File(getPredicResultPath(subject)).getAbsolutePath());
 
 		return predictedConditions;
+	}
+	
+	private Map<String, Map<String, List<Pair<String, Double>>>> parsePredicates(List<String> predResult) {
+		Map<String, Map<String, List<Pair<String, Double>>>> location2varName2Predicates = new HashMap<>();
+		for(int index = 1; index < predResult.size(); index ++) {
+			String line = predResult.get(index);
+			String[] columns = line.split("\t");
+			if (columns.length < 4) {
+				LevelLogger.error(__name__ + "#parsePredicates Parse predict result failed : " + line);
+				continue;
+			}
+			String key = columns[0];
+			String varName = columns[1];
+			String cond = columns[2];
+			Double prob = Double.parseDouble(columns[3]);
+			Map<String, List<Pair<String, Double>>> result = location2varName2Predicates.get(key);
+			if(result == null) {
+				result = new HashMap<>();
+				location2varName2Predicates.put(key, result);
+			}
+			List<Pair<String, Double>> conditions = result.get(varName);
+			if(conditions == null) {
+				conditions = new LinkedList<>();
+				result.put(varName, conditions);
+			}
+			conditions.add(new Pair<String, Double>(cond, prob));
+		}
+		
+		return location2varName2Predicates;
 	}
 	
 	private boolean dumpFeature2File(Subject subject, List<String> varFeatures, List<String> exprFeatures) {
