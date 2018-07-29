@@ -54,4 +54,16 @@ public class PredicateFilterTest {
 		
 	}
 	
+	@Test
+	public void test_replaceArray() {
+		String predicate = PredicateFilter.filter("$double[]$.length>0", "values", "int[]");
+		Assert.assertTrue("values.length>0".equals(predicate));
+	}
+	
+	@Test
+	public void test_repalceGenericType() {
+		String predicate = PredicateFilter.filter("$List<String>$.size()>0", "list", "int[]");
+		Assert.assertTrue("list.size()>0".equals(predicate));
+	}
+	
 }
