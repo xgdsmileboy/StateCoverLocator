@@ -27,6 +27,10 @@ public class CmdFactory {
 	public static String[] createTestSuiteCmd(Subject subject) {
 		return createD4JCmd(subject, "test");
 	}
+	
+	public static String[] createTestSuiteCmd(Subject subject, int minTimeout) {
+		return createD4JCmd(subject, minTimeout, "test");
+	}
 
 	/**
 	 * build execution command for running a single test case
@@ -64,6 +68,15 @@ public class CmdFactory {
 	private static String[] createD4JCmd(Subject subject, String args) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(Constant.COMMAND_CD + subject.getHome() + " && ");
+		stringBuffer.append(Constant.COMMAND_D4J + args);
+		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
+		return cmd;
+	}
+	
+	private static String[] createD4JCmd(Subject subject, int minTimeout ,String args) {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(Constant.COMMAND_CD + subject.getHome() + " && ");
+		stringBuffer.append(Constant.COMMAND_TIMEOUT + minTimeout + "m ");
 		stringBuffer.append(Constant.COMMAND_D4J + args);
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;

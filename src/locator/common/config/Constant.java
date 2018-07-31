@@ -93,6 +93,7 @@ public class Constant {
 	public static String COMMAND_RM = null;
 	public static String COMMAND_MV = null;
 	public static String COMMAND_CP = null;
+	public static String COMMAND_TIMEOUT = null;
 	public static String COMMAND_JAVA = null;
 	public static String COMMAND_D4J = null;
 	public static String COMMAND_PYTHON = null;
@@ -182,6 +183,7 @@ public class Constant {
 			Constant.COMMAND_CP = prop.getProperty("COMMAND.CP").replace("/", Constant.PATH_SEPARATOR) + " ";
 			// for deleting files
 			Constant.COMMAND_RM = prop.getProperty("COMMAND.RM").replace("/", Constant.PATH_SEPARATOR) + " -rf ";
+			Constant.COMMAND_TIMEOUT = prop.getProperty("COMMAND.TIMEOUT").replaceAll("/", Constant.PATH_SEPARATOR) + " ";
 			// for backup file
 			Constant.COMMAND_MV = prop.getProperty("COMMAND.MV").replace("/", Constant.PATH_SEPARATOR) + " ";
 			Constant.COMMAND_D4J = prop.getProperty("COMMAND.D4J").replace("/", Constant.PATH_SEPARATOR) + " ";

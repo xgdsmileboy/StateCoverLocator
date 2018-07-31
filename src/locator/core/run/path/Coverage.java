@@ -168,7 +168,7 @@ public class Coverage {
         Configure.compileAuxiliaryJava(subject);
         // if the instrumented project builds success, and the test
         // result is the same with original project
-        if (!Runner.testSuite(subject)) {
+        if (!Runner.testSuite(subject, 60)) {
             LevelLogger.error("Build failed by predicates : ");
             String file = Constant.HOME + "/rlst.log";
             JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Build failed by predicates!\n", true);
