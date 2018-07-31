@@ -30,7 +30,7 @@ public class PredicateFilter {
 	 */
 	public static String filter(String condWithType, String varName, String varType) {
 		// match the $TYPE$
-		String regex = "\\$([a-zA-Z_][a-zA-Z_1-9]*)\\$";
+		String regex = "\\$([a-zA-Z_]+.*)\\$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(condWithType);
 		String originalType = varType;
