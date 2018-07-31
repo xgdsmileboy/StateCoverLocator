@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import jdk7.wrapper.JCompiler;
+import locator.aux.extractor.core.parser.Analyzer;
 import locator.common.config.Configure;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
@@ -158,6 +159,8 @@ public class Main {
 		
 		List<Subject> allSubjects = getTestSubject(args);
 		for(Subject subject : allSubjects) {
+			// clear cache to enable re-analyzing source files for different subjects
+			Analyzer.clearCache();
 			try {
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy:MM:dd:HH:mm:ss");
 				Date startTime = new Date();
