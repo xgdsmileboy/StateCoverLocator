@@ -17,6 +17,7 @@ import locator.aux.extractor.core.feature.item.LastAssign;
 import locator.aux.extractor.core.feature.item.LineNumber;
 import locator.aux.extractor.core.feature.item.LoopUse;
 import locator.aux.extractor.core.feature.item.MethodName;
+import locator.aux.extractor.core.feature.item.MethodSize;
 import locator.aux.extractor.core.feature.item.ParamDef;
 import locator.aux.extractor.core.feature.item.VarName;
 import locator.aux.extractor.core.feature.item.VarType;
@@ -45,6 +46,7 @@ public class VarFeature {
 		featureConfig.add(VarName.getInstance());
 		featureConfig.add(VarType.getInstance());
 		featureConfig.add(ParamDef.getInstance());
+		featureConfig.add(MethodSize.getInstance());
 		featureConfig.add(LastAssign.getInstance());
 		featureConfig.add(LoopUse.getInstance());
 		featureConfig.add(IfUse.getInstance());
