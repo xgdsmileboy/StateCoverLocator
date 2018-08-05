@@ -59,6 +59,9 @@ public class Runner {
 			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject, minTimeout));
 			long end = System.currentTimeMillis();
 			LevelLogger.info("Run all test cases cost : " + ((end - begin)/1000) + " sec"); 
+			if((end - begin) / 60000 > minTimeout - 1) {
+				LevelLogger.error("Run test suite time out : " + subject.getNameAndId());
+			}
 		} catch (Exception e) {
 			LevelLogger.fatal(__name__ + "#testSuite run test suite failed !", e);
 		}
