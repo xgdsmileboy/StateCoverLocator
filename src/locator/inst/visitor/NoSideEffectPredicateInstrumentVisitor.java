@@ -25,6 +25,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.ParameterizedType;
 import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
@@ -33,8 +34,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
-
-import com.sun.org.apache.xalan.internal.utils.FeatureManager.Feature;
+import org.eclipse.jdt.core.dom.WildcardType;
 
 import locator.aux.extractor.FeatureGenerator;
 import locator.common.config.Constant;
@@ -231,6 +231,11 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 								genAssignWithLog(expr, variables, type, start)));
 						addPredicates(getPredicatesForAssignment(rightExprStr, variables), start);
 					}
+				} else if(Constant.ADD_NULL_PREDICATE_FOR_ASSGIN) {
+					node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(), genCompNullWithLog(expr, type, start)));
+					List<String> predicates = new ArrayList<>(1);
+					predicates.add(expr.toString() + "=null#ASSIGN");
+					addPredicates(predicates, start);
 				}
 			}
 		}
@@ -467,6 +472,89 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		ce.setType(ast.newPrimitiveType(typeName2PrimitiveTypeCode(pType)));
 		ce.setExpression(ast.newNumberLiteral("0"));
 		return ce;
+	}
+	
+	private Expression genCompNullWithLog(Expression expr, ITypeBinding type, int line) {
+		if(type == null || type.isPrimitive()) {
+			return expr;
+		}
+		
+		Type castType = parseType(type);
+		if(castType == null) {
+			return expr;
+		}
+		
+		//  auxiliary.Dumper.lpcNull(final Object a, String message, String var, boolean useSober) 
+		MethodInvocation methodInvocation = ast.newMethodInvocation();
+		methodInvocation.setExpression(ast.newName("auxiliary.Dumper"));
+		methodInvocation.setName(ast.newSimpleName("lpcNull"));
+		// Object a
+		methodInvocation.arguments().add(ASTNode.copySubtree(ast, expr));
+		
+		// String message
+		StringLiteral stringLiteral = ast.newStringLiteral();
+		stringLiteral.setLiteralValue(_methodID + "#" + Integer.toString(line));
+		methodInvocation.arguments().add(stringLiteral);
+		
+		// Stirng var
+		StringLiteral exprString = ast.newStringLiteral();
+		exprString.setLiteralValue(expr.toString());
+		methodInvocation.arguments().add(exprString);
+		
+		// boolean useSober
+		BooleanLiteral useSoberLiteral = ast.newBooleanLiteral(_useSober);
+		methodInvocation.arguments().add(useSoberLiteral);
+		
+		// (Type)auxiliary.Dumper.lpcNull(final Object a, String message, String var, boolean useSober);
+		CastExpression ce = ast.newCastExpression();
+		ce.setType((Type) ASTNode.copySubtree(ast, castType));
+		ce.setExpression(methodInvocation);
+		
+		return ce;
+	}
+
+	private Type parseType(ITypeBinding typeBinding) {
+		if (typeBinding == null) {
+			return null;
+		}
+
+		if (typeBinding.isPrimitive()) {
+			return ast.newPrimitiveType(PrimitiveType.toCode(typeBinding.getName()));
+		}
+
+		if (typeBinding.isCapture()) {
+			ITypeBinding wildCard = typeBinding.getWildcard();
+			WildcardType capType = ast.newWildcardType();
+			ITypeBinding bound = wildCard.getBound();
+			if (bound != null) {
+				capType.setBound(parseType(bound), wildCard.isUpperbound());
+			}
+			return capType;
+		}
+
+		if (typeBinding.isArray()) {
+			Type elType = parseType(typeBinding.getElementType());
+			return ast.newArrayType(elType, typeBinding.getDimensions());
+		}
+
+		if (typeBinding.isParameterizedType()) {
+			ParameterizedType type = ast.newParameterizedType(parseType(typeBinding.getErasure()));
+
+			@SuppressWarnings("unchecked")
+			List<Type> newTypeArgs = type.typeArguments();
+			for (ITypeBinding typeArg : typeBinding.getTypeArguments()) {
+				newTypeArgs.add(parseType(typeArg));
+			}
+
+			return type;
+		}
+
+		// simple or raw type
+		String qualName = typeBinding.getQualifiedName();
+		if ("".equals(qualName)) {
+			return null;
+		}
+		return ast.newSimpleType(ast.newName(qualName));
 	}
 	
 	private Expression genAssignWithLog(Expression var1, Set<String> var2, ITypeBinding type, int line) {

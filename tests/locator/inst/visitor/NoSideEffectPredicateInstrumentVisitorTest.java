@@ -7,7 +7,10 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.junit.Test;
 
+import locator.common.config.Configure;
+import locator.common.config.Constant;
 import locator.common.java.JavaFile;
+import locator.common.java.Subject;
 
 public class NoSideEffectPredicateInstrumentVisitorTest {
 
@@ -134,5 +137,27 @@ public class NoSideEffectPredicateInstrumentVisitorTest {
 		// there should be no instrument
 		System.out.println(unit.toString());
 	}
+	
+	@Test
+	public void test_compare_assignObject() {
+		Constant.PROJECT_HOME = Constant.HOME + "/res/junitRes";
+		Subject subject = Configure.getSubject("time", 1);
+		String relJavaFile = "org/joda/time/Partial.java";
+		String src = subject.getHome() + subject.getSsrc();
+		String fileName = src + "/" + relJavaFile; 
+		
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(false);
+		Set<Integer> lines = new HashSet<>();
+		lines.add(245);
+		instrumentVisitor.initOneRun(lines, src, relJavaPath);
+		
+		CompilationUnit unit = (CompilationUnit) JavaFile.genASTFromSourceWithType(
+				JavaFile.readFileToString(fileName), ASTParser.K_COMPILATION_UNIT, fileName, subject);
+		unit.accept(instrumentVisitor);
+		// there should be no instrument
+		System.out.println(unit.toString());
+		
+	}
+	
 	
 }

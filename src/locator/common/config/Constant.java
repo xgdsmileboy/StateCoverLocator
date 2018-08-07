@@ -82,6 +82,8 @@ public class Constant {
 	
 	public static boolean OUT_BRANCH_COVERAGE = false; 
 	
+	public static boolean ADD_NULL_PREDICATE_FOR_ASSGIN = true;
+	
 	// training model
 	// xgboost, dnn or randomforest
 	public static String TRAINING_MODEL = "dnn";
