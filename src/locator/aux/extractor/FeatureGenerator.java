@@ -267,4 +267,12 @@ public class FeatureGenerator {
 		return keys;
 	}
 
+	public static String getVarFeatureHeader() {
+		return VarFeature.getFeatureHeader();
+	}
+	
+	public static String getExprFeatureHeader() {
+		return ExprFeature.getFeatureHeader();
+	}
+	
 }

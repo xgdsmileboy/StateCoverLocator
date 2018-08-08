@@ -64,13 +64,13 @@ public class Constant {
 	public final static String ANT_BUILD_FAILED = "BUILD FAILED";
 	public final static String ANT_BUILD_SUCCESS = "BUILD SUCCESSFUL";
 	
-	// header for feature
-	public final static String FEATURE_VAR_HEADER = VarFeature.getFeatureHeader();
-	public final static String FEATURE_EXPR_HEADER = ExprFeature.getFeatureHeader();
-	public final static int FEATURE_VAR_NAME_INDEX = VarFeature.getFeatureIndex(VarName.class);
-	public final static int FEATURE_VAR_TYPE_INDEX = VarFeature.getFeatureIndex(VarType.class);
-	public final static int FEATURE_FILE_NAME_INDEX = ExprFeature.getFeatureIndex(FileName.class);
-	public final static int FEATURE_LINE_INDEX = ExprFeature.getFeatureIndex(LineNumber.class);
+//	// header for feat
+//	public final static String FEATURE_VAR_HEADER = VarFeature.getFeatureHeader();
+//	public final static String FEATURE_EXPR_HEADER = ExprFeature.getFeatureHeader();
+//	public final static int FEATURE_VAR_NAME_INDEX = VarFeature.getFeatureIndex(VarName.class);
+//	public final static int FEATURE_VAR_TYPE_INDEX = VarFeature.getFeatureIndex(VarType.class);
+//	public final static int FEATURE_FILE_NAME_INDEX = ExprFeature.getFeatureIndex(FileName.class);
+//	public final static int FEATURE_LINE_INDEX = ExprFeature.getFeatureIndex(LineNumber.class);
 	
 	// variables collecting flag
 	public static boolean PREDICT_LEFT_HAND_SIDE_VARIABLE = false;

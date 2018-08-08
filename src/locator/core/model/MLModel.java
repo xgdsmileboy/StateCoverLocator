@@ -381,7 +381,7 @@ public abstract class MLModel extends Model {
 
 	private boolean dumpFeature2File(Subject subject, List<String> varFeatures, List<String> exprFeatures) {
 		File varFile = new File(getVarFeatureOutputFile(subject));
-		JavaFile.writeStringToFile(varFile, Constant.FEATURE_VAR_HEADER);
+		JavaFile.writeStringToFile(varFile, FeatureGenerator.getVarFeatureHeader());
 		Set<String> uniqueFeatures = new HashSet<>();
 		for (String string : varFeatures) {
 			// filter duplicated features
@@ -394,7 +394,7 @@ public abstract class MLModel extends Model {
 		}
 
 		File expFile = new File(getExprFeatureOutputFile(subject));
-		JavaFile.writeStringToFile(expFile, Constant.FEATURE_EXPR_HEADER);
+		JavaFile.writeStringToFile(expFile, FeatureGenerator.getExprFeatureHeader());
 		for (String string : exprFeatures) {
 			// filter duplicated features
 			if (uniqueFeatures.contains(string)) {

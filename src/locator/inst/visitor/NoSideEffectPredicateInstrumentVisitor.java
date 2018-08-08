@@ -2,7 +2,6 @@ package locator.inst.visitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +35,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.WildcardType;
 
-import locator.aux.extractor.FeatureGenerator;
+import locator.aux.extractor.CodeAnalyzer;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.util.Pair;
@@ -212,20 +211,21 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			}
 			if (node.getLeftHandSide() != null && expr != null) {
 				ITypeBinding type = expr.resolveTypeBinding();
-				String leftVarName = node.getLeftHandSide().toString();
+//				String leftVarName = node.getLeftHandSide().toString();
 				if (isComparableType(type)) {
+					Set<String> variables = CodeAnalyzer.getAllVariablesReadUse(_srcPath, _relJavaPath, start);
 					String rightExprStr = expr.toString().replaceAll("\\s+", " ");
-					Set<String> variables = new HashSet<String>();
-					List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(_srcPath, _relJavaPath, start);
-//					List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
-					for (String feature : varFeature) {
-						String[] elements = feature.split("\t");
-						String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
-						String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
-						if (!varName.equals(leftVarName) && !varName.equals(rightExprStr) && varType.equals(type.getName())) {							
-							variables.add(varName);
-						}
-					}
+//					Set<String> variables = new HashSet<String>();
+//					List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(_srcPath, _relJavaPath, start);
+////					List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
+//					for (String feature : varFeature) {
+//						String[] elements = feature.split("\t");
+//						String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
+//						String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
+//						if (!varName.equals(leftVarName) && !varName.equals(rightExprStr) && varType.equals(type.getName())) {							
+//							variables.add(varName);
+//						}
+//					}
 					if (!variables.isEmpty()) {						
 						node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(),
 								genAssignWithLog(expr, variables, type, start)));
@@ -246,10 +246,10 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int start = _cu.getLineNumber(node.getStartPosition());
 		if (_lines.contains(start)) {
 			List<VariableDeclarationFragment> fragments = node.fragments();
-			Set<String> definedVars = new HashSet<>();
-			for(VariableDeclarationFragment fragment : fragments) {
-				definedVars.add(fragment.getName().getFullyQualifiedName());
-			}
+//			Set<String> definedVars = new HashSet<>();
+//			for(VariableDeclarationFragment fragment : fragments) {
+//				definedVars.add(fragment.getName().getFullyQualifiedName());
+//			}
 			for(VariableDeclarationFragment fragment : fragments) {
 				Expression expr = fragment.getInitializer();
 				if (expr != null) {
@@ -270,18 +270,21 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 						}
 					}
 					if (typeStr != null) {
-						String leftVarName = fragment.getName().getFullyQualifiedName();
-						Set<String> variables = new HashSet<String>();
-						List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(_srcPath, _relJavaPath, start);
-//						List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
-						for (String feature : varFeature) {
-							String[] elements = feature.split("\t");
-							String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
-							String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
-							if (!definedVars.contains(varName) && !varName.equals(rightExprStr) && varType.equals(type.getName())) {							
-								variables.add(varName);
-							}
-						}
+						int line = _cu.getLineNumber(fragment.getStartPosition());
+						Set<String> variables = CodeAnalyzer.getAllVariablesReadUse(_srcPath, _relJavaPath, line);
+						
+//						String leftVarName = fragment.getName().getFullyQualifiedName();
+//						Set<String> variables = new HashSet<String>();
+//						List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(_srcPath, _relJavaPath, start);
+////						List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
+//						for (String feature : varFeature) {
+//							String[] elements = feature.split("\t");
+//							String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
+//							String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
+//							if (!definedVars.contains(varName) && !varName.equals(rightExprStr) && varType.equals(type.getName())) {							
+//								variables.add(varName);
+//							}
+//						}
 						if (!variables.isEmpty()) {							
 							fragment.setInitializer((Expression) ASTNode.copySubtree(node.getAST(),
 									genAssignWithLog(expr, variables, type, start)));
