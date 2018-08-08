@@ -25,6 +25,9 @@ import locator.common.java.JavaFile;
 import locator.core.LineInfo;
 
 /**
+ * This class is an interface to access the feature generating process, which
+ * can be adapt to new APIs easily
+ * 
  * @author Jiajun
  * @date Jul 7, 2018
  */

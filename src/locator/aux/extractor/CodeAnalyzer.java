@@ -11,6 +11,14 @@ import locator.aux.extractor.core.parser.Use;
 import locator.aux.extractor.core.parser.Use.USETYPE;
 import locator.aux.extractor.core.parser.Variable;
 
+/**
+ * This class is an interface of code analysis, which provide several useful
+ * functions
+ * 
+ * @author Jiajun
+ *
+ *         Aug 8, 2018
+ */
 public class CodeAnalyzer {
 
 	/**
@@ -30,7 +38,7 @@ public class CodeAnalyzer {
 		Set<Use> uses = basicBlock.getVariableUses(line);
 		Set<String> variabls = new HashSet<>();
 		for (Use use : uses) {
-			if(use.getUseType() == USETYPE.DEFINE) {
+			if (use.getUseType() == USETYPE.DEFINE) {
 				continue;
 			}
 			variabls.add(use.getVariableDefine().getName());
