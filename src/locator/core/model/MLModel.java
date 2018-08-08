@@ -27,12 +27,10 @@ import locator.common.util.LevelLogger;
 import locator.common.util.Pair;
 import locator.common.util.Utils;
 import locator.core.LineInfo;
-import locator.core.model.predict.FeatureExtraction;
 import locator.core.model.predict.PredicateFilter;
 import locator.core.run.Runner;
 import locator.inst.visitor.MultiLinePredicateInstrumentVisitor;
 import locator.inst.visitor.PredicateInstrumentVisitor;
-import locator.inst.visitor.feature.ExprFilter;
 
 public abstract class MLModel extends Model {
 
