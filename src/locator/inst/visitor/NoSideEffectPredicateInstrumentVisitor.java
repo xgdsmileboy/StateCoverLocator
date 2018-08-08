@@ -2,8 +2,10 @@ package locator.inst.visitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -211,21 +213,15 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			}
 			if (node.getLeftHandSide() != null && expr != null) {
 				ITypeBinding type = expr.resolveTypeBinding();
-//				String leftVarName = node.getLeftHandSide().toString();
 				if (isComparableType(type)) {
-					Set<String> variables = CodeAnalyzer.getAllVariablesReadUse(_srcPath, _relJavaPath, start);
 					String rightExprStr = expr.toString().replaceAll("\\s+", " ");
-//					Set<String> variables = new HashSet<String>();
-//					List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(_srcPath, _relJavaPath, start);
-////					List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
-//					for (String feature : varFeature) {
-//						String[] elements = feature.split("\t");
-//						String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
-//						String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
-//						if (!varName.equals(leftVarName) && !varName.equals(rightExprStr) && varType.equals(type.getName())) {							
-//							variables.add(varName);
-//						}
-//					}
+					Set<String> variables = new HashSet<>();
+					Map<String, String> availableVars = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, start);
+					for(Entry<String, String> entry : availableVars.entrySet()) {
+						if(!entry.getKey().equals(rightExprStr) && entry.getValue().equals(type.getName())) {
+							variables.add(entry.getKey());
+						}
+					}
 					if (!variables.isEmpty()) {						
 						node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(),
 								genAssignWithLog(expr, variables, type, start)));
@@ -246,10 +242,6 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int start = _cu.getLineNumber(node.getStartPosition());
 		if (_lines.contains(start)) {
 			List<VariableDeclarationFragment> fragments = node.fragments();
-//			Set<String> definedVars = new HashSet<>();
-//			for(VariableDeclarationFragment fragment : fragments) {
-//				definedVars.add(fragment.getName().getFullyQualifiedName());
-//			}
 			for(VariableDeclarationFragment fragment : fragments) {
 				Expression expr = fragment.getInitializer();
 				if (expr != null) {
@@ -271,20 +263,14 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 					}
 					if (typeStr != null) {
 						int line = _cu.getLineNumber(fragment.getStartPosition());
-						Set<String> variables = CodeAnalyzer.getAllVariablesReadUse(_srcPath, _relJavaPath, line);
+						Set<String> variables = new HashSet<>();
+						Map<String, String> varAvailable = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, line);
+						for(Entry<String, String> entry : varAvailable.entrySet()) {
+							if(!entry.getKey().equals(rightExprStr) && entry.getValue().equals(type.getName())) {
+								variables.add(entry.getKey());
+							}
+						}
 						
-//						String leftVarName = fragment.getName().getFullyQualifiedName();
-//						Set<String> variables = new HashSet<String>();
-//						List<String> varFeature = FeatureGenerator.generateVarFeatureForLine(_srcPath, _relJavaPath, start);
-////						List<String> varFeature = FeatureGenerator.generateVarFeature(_srcPath, _relJavaPath, start);
-//						for (String feature : varFeature) {
-//							String[] elements = feature.split("\t");
-//							String varName = elements[Constant.FEATURE_VAR_NAME_INDEX];
-//							String varType = elements[Constant.FEATURE_VAR_TYPE_INDEX];
-//							if (!definedVars.contains(varName) && !varName.equals(rightExprStr) && varType.equals(type.getName())) {							
-//								variables.add(varName);
-//							}
-//						}
 						if (!variables.isEmpty()) {							
 							fragment.setInitializer((Expression) ASTNode.copySubtree(node.getAST(),
 									genAssignWithLog(expr, variables, type, start)));
