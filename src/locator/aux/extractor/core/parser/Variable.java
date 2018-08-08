@@ -33,6 +33,9 @@ public class Variable {
 	private String _name;
 	private Type _type;
 	private BasicBlock _basicBlock;
+	private boolean _isField;
+	private boolean _isArgument;
+	private boolean _isLocalVar;
 	
 	private Set<Use> _uSet;
 
@@ -45,6 +48,7 @@ public class Variable {
 		_name = name;
 		_type = type;
 		_uSet = new HashSet<>();
+		setLocalVar();
 	}
 	
 	public void addUse(Use use) {
@@ -62,6 +66,36 @@ public class Variable {
 	
 	public void setParentBlock(BasicBlock basicBlock) {
 		_basicBlock = basicBlock;
+	}
+
+	public void setField() {
+		_isField = true;
+		_isArgument = false;
+		_isLocalVar = false;
+	}
+	
+	public void setArgument() {
+		_isArgument = true;
+		_isField = false;
+		_isLocalVar = false;
+	}
+	
+	public void setLocalVar() {
+		_isLocalVar = true;
+		_isField = false;
+		_isArgument = false;
+	}
+	
+	public boolean isField() {
+		return _isField;
+	}
+	
+	public boolean isArgument() {
+		return _isArgument;
+	}
+	
+	public boolean isLocal() {
+		return _isLocalVar;
 	}
 	
 	public BasicBlock getParentBlock() {

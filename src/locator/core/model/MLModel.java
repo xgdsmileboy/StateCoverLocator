@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import jdk7.wrapper.JCompiler;
+import locator.aux.extractor.FeatureGenerator;
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
@@ -85,8 +86,11 @@ public abstract class MLModel extends Model {
 
 		String targetVarPath = outPath + "/var/" + subject.getNameAndId() + ".var.csv";
 		String targetExprPath = outPath + "/expr/" + subject.getNameAndId() + ".expr.csv";
-
-		FeatureExtraction.generateTrainFeatures(subject, targetVarPath, targetExprPath);
+		String srcPath = subject.getHome() + subject.getSsrc();
+		
+		FeatureGenerator.generateTrainVarFeatures(srcPath, targetVarPath);
+		FeatureGenerator.generateTrainExprFeatures(srcPath, targetExprPath);
+		
 		return true;
 	}
 
@@ -256,7 +260,7 @@ public abstract class MLModel extends Model {
 			// <varName, type>
 			LineInfo info = new LineInfo(line, relJavaPath, clazz);
 
-			Set<String> variabelsToPredict = FeatureExtraction.obtainAllUsedVaraiblesForPredict(srcPath, info,
+			Set<String> variabelsToPredict = FeatureGenerator.obtainAllUsedVaraiblesForPredict(srcPath, info,
 					Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE, varFeatures, exprFeatures);
 
 			for (String key : variabelsToPredict) {
