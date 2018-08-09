@@ -287,7 +287,7 @@ public class Analyzer {
 			for (Object arg : node.parameters()) {
 				SingleVariableDeclaration svd = (SingleVariableDeclaration) arg;
 				Type type = parseArrayType(svd.getType(), node.getExtraDimensions());
-				Name name = node.getName();
+				SimpleName name = svd.getName();
 				int line = _unit.getLineNumber(name.getStartPosition());
 				int column = _unit.getColumnNumber(name.getStartPosition());
 				Variable variable = new Variable(_file, line, column, node.getModifiers(), svd.getInitializer(), name.getFullyQualifiedName(), type);
@@ -296,7 +296,6 @@ public class Analyzer {
 				variable.addUse(use);
 				basicBlock.addVariables(variable);
 				process(svd.getInitializer(), USETYPE.READ, booleanExpr);
-				return true;
 			}
 			process(node.getBody(), USETYPE.UNKNOWN, null);
 			_visitedStatement.pop();
