@@ -10,7 +10,6 @@ import java.util.Set;
 
 import locator.common.config.Configure;
 import locator.common.config.Constant;
-import locator.common.config.ProjectProperties;
 import locator.common.java.Subject;
 
 /**
@@ -29,9 +28,7 @@ public class ProjectSelector {
 	 * @return single subject
 	 */
 	public static Subject select(String whichProject, int whichBug) {
-		ProjectProperties prop = Constant.PROJECT_PROP.get(whichProject);
 		Subject subject = Configure.getSubject(whichProject, whichBug);
-		subject.setClasspath(prop.getClasspath());
 		return subject;
 //		return new Subject(whichProject, whichBug, prop.getSsrc(), prop.getTsrc(), prop.getSbin(), prop.getTbin(), prop.getClasspath());
 	}

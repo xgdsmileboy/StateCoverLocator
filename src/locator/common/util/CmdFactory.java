@@ -91,7 +91,7 @@ public class CmdFactory {
 	public static String[] createTrainCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
-		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(Constant.STR_TENSORFLOW_ACTIVATE_PATH);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);
@@ -117,7 +117,7 @@ public class CmdFactory {
 	public static String[] createEvaluateCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
-		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(Constant.STR_TENSORFLOW_ACTIVATE_PATH);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);
@@ -143,7 +143,7 @@ public class CmdFactory {
 	public static String[] createPredictCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
-		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(Constant.STR_TENSORFLOW_ACTIVATE_PATH);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);

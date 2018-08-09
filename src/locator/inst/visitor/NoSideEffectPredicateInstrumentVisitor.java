@@ -227,7 +227,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 								genAssignWithLog(expr, variables, type, start)));
 						addPredicates(getPredicatesForAssignment(rightExprStr, variables), start);
 					}
-				} else if(Constant.ADD_NULL_PREDICATE_FOR_ASSGIN) {
+				} else if(Constant.BOOL_ADD_NULL_PREDICATE_FOR_ASSGIN) {
 					node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(), genCompNullWithLog(expr, type, start)));
 					List<String> predicates = new ArrayList<>(1);
 					predicates.add(expr.toString() + "=null#ASSIGN");

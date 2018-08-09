@@ -57,6 +57,14 @@ public class JCompiler {
 	private static SOURCE_LEVEL source_level = SOURCE_LEVEL.L_1_6;
 	private static SOURCE_LEVEL target_level = source_level.L_1_6;
 	
+	public static void setSourceLevel(String level) {
+		source_level = SOURCE_LEVEL.toSourceLevel(level);
+	}
+	
+	public static void setTargetLevel(String level) {
+		target_level = SOURCE_LEVEL.toSourceLevel(level);
+	}
+	
 	public static void setSourceLevel(SOURCE_LEVEL level) {
 		source_level = level;
 	}

@@ -93,7 +93,7 @@ public class Main {
 		int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
 		
 		// output branch coverage information
-		if(Constant.OUT_BRANCH_COVERAGE) {
+		if(Constant.BOOL_OUT_BRANCH_COVERAGE) {
 			LevelLogger.info(">>> compute branch coverage information.");
 			String testsPath = subject.getHome() + "/all-tests.txt";
 			ExecuteCommand.deleteGivenFile(testsPath);
@@ -169,9 +169,9 @@ public class Main {
 
 				String subjectInfo = subject.getName() + "_" + subject.getId();
 				// set compile level : to refactor
-				JCompiler.setSourceLevel(Constant.PROJECT_PROP.get(subject.getName()).getSourceLevel());
-				JCompiler.setTargetLevel(Constant.PROJECT_PROP.get(subject.getName()).getTargetLevel());
-				if (!proceed(subject, Constant.USE_STATISTICAL_DEBUGGING, Constant.USE_SOBER)) {
+				JCompiler.setSourceLevel(subject.getSourceLevel());
+				JCompiler.setTargetLevel(subject.getTargetLevel());
+				if (!proceed(subject, Constant.BOOL_USE_STATISTICAL_DEBUGGING, Constant.BOOL_USE_SOBER)) {
 					String d4jOutput = JavaFile.readFileToString(Constant.STR_TMP_D4J_OUTPUT_FILE);
 					JavaFile.writeStringToFile(Constant.STR_ERROR_BACK_UP + "/" + subjectInfo + ".d4j.out", d4jOutput);
 				}
@@ -179,7 +179,7 @@ public class Main {
 				Date endTime = new Date();
 				String end = simpleDateFormat.format(endTime);
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);
-				JavaFile.writeStringToFile(Constant.TIME_LOG, subjectInfo + "\t"
+				JavaFile.writeStringToFile(Constant.STR_TIME_LOG, subjectInfo + "\t"
 						+ Long.toString(endTime.getTime() - startTime.getTime()) + "\t" + startTime + "\n", true);
 			} catch (Exception e) {
 				e.printStackTrace();

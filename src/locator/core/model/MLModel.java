@@ -111,7 +111,7 @@ public abstract class MLModel extends Model {
 
 		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = null;
 
-		if (Constant.RECOVER_PREDICATE_FROM_FILE) {
+		if (Constant.BOOL_RECOVER_PREDICATE_FROM_FILE) {
 			file2Line2Predicates = Utils.recoverPredicates(subject, _predicates_backup_file);
 		}
 		if (file2Line2Predicates != null) {
@@ -259,7 +259,7 @@ public abstract class MLModel extends Model {
 			LineInfo info = new LineInfo(line, relJavaPath, clazz);
 
 			Set<String> variabelsToPredict = FeatureGenerator.obtainAllUsedVaraiblesForPredict(srcPath, info,
-					Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE, varFeatures, exprFeatures);
+					Constant.BOOL_PREDICT_LEFT_VARIABLE, varFeatures, exprFeatures);
 
 			for (String key : variabelsToPredict) {
 				lineInfoMapping.put(key, info);
