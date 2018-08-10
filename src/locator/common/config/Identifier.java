@@ -117,6 +117,14 @@ public class Identifier {
 		}
 	}
 
+	public static boolean containKey(Integer id) {
+		return identifiers.containsKey(id);
+	}
+	
+	public static boolean containsKey(String key) {
+		return inverseIdentifier.containsKey(key);
+	}
+	
 	/**
 	 * get exclusive method id based on the given method string information,
 	 * 

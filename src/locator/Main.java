@@ -88,42 +88,53 @@ public class Main {
 		// fix bug for ast parser
 		Configure.config_astlevel(subject);
 
-		LevelLogger.info("step 1: collect failed test and covered methods.");
-		Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
-		int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
-		
-		// output branch coverage information
-		if(Constant.BOOL_OUT_BRANCH_COVERAGE) {
-			LevelLogger.info(">>> compute branch coverage information.");
+		Identifier.restore(subject);
+		Set<String> allCoveredStatement = new HashSet<>();
+		Set<Integer> failedTests = new HashSet<>();
+		int totalTestNum = -1;
+		if(!Constant.BOOL_RECOMPUTE_ORI) {
+			totalTestNum = Utils.recoverFailedTestsAndCoveredStmt(subject, failedTests, allCoveredStatement);
+		}
+		int stepRecord = 1;
+		if(totalTestNum < 0) {
+			LevelLogger.info("step " + (stepRecord ++) + " : collect failed test and covered methods.");
+			Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
+//			int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
+			
+			// output branch coverage information
+			if(Constant.BOOL_OUT_BRANCH_COVERAGE) {
+				LevelLogger.info("step " + (stepRecord ++) + " : compute branch coverage information.");
+				String testsPath = subject.getHome() + "/all-tests.txt";
+				ExecuteCommand.deleteGivenFile(testsPath);
+				Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
+				LevelLogger.info(">>> output branch coverage information to file : branch_coverage.csv");
+				Utils.printCoverage(coverage, subject.getCoverageInfoPath(), "branch_coverage.csv");
+			}
+			
+			LevelLogger.info("step " + (stepRecord ++) + " : compute original coverage information.");
 			String testsPath = subject.getHome() + "/all-tests.txt";
 			ExecuteCommand.deleteGivenFile(testsPath);
-			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
-			LevelLogger.info(">>> output branch coverage information to file : branch_coverage.csv");
-			Utils.printCoverage(coverage, subject.getCoverageInfoPath(), "branch_coverage.csv");
-		}
-		
-		LevelLogger.info("step 2: compute original coverage information.");
-		String testsPath = subject.getHome() + "/all-tests.txt";
-		ExecuteCommand.deleteGivenFile(testsPath);
-		Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, StatementInstrumentVisitor.class);
-		int totalTestNum = JavaFile.readFileToStringList(testsPath).size();
-		
-		LevelLogger.info("output original coverage information to file : ori_coverage.csv");
-		Utils.printCoverage(coverage, subject.getCoverageInfoPath(), "ori_coverage.csv");
-
-		LevelLogger.info("step 3: compute statements covered by failed tests");
-		Set<String> allCoveredStatement = new HashSet<>();
-		for(Entry<String, CoverInfo> entry : coverage.entrySet()){
-			if(entry.getValue().getFailedCount() > 0){
-				allCoveredStatement.add(entry.getKey());
+			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, StatementInstrumentVisitor.class);
+			totalTestNum = JavaFile.readFileToStringList(testsPath).size();
+			
+			LevelLogger.info("output original coverage information to file : ori_coverage.csv");
+			Utils.printCoverage(coverage, subject.getCoverageInfoPath(), "ori_coverage.csv");
+	
+			failedTests = failedTestsAndCoveredMethods.getFirst();
+			LevelLogger.info("step " + (stepRecord ++) + " : compute statements covered by failed tests");
+			for(Entry<String, CoverInfo> entry : coverage.entrySet()){
+				if(entry.getValue().getFailedCount() > 0){
+					allCoveredStatement.add(entry.getKey());
+				}
 			}
+			
+			Identifier.backup(subject);
+			Utils.backupFailedTestsAndCoveredStmt(subject, totalTestNum, failedTests, allCoveredStatement);
 		}
 		
-		Identifier.backup(subject);
-		
-		LevelLogger.info("step 4: compute predicate coverage information");
+		LevelLogger.info("step " + (stepRecord ++) + " : compute predicate coverage information");
 		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, model, allCoveredStatement,
-				failedTestsAndCoveredMethods.getFirst(), useSober);
+				failedTests, useSober);
 
 		if(predicateCoverage == null && !useSober){
 			return false;
@@ -135,7 +146,7 @@ public class Main {
 			Utils.printCoverage(predicateCoverage, subject.getCoverageInfoPath(), predCoverageFile);
 		}
 
-		LevelLogger.info("Compute suspicious for each statement and out put to file.");
+		LevelLogger.info("step " + (stepRecord ++) + " : compute suspicious for each statement and out put to file.");
 		List<Algorithm> algorithms = new ArrayList<>();
 		if (useSober) {
 			algorithms.add(new Sober());
@@ -149,7 +160,7 @@ public class Main {
 			algorithms.add(new Simple());
 			algorithms.add(new StatisticalDebugging());
 		}
-		Suspicious.compute(subject, algorithms, totalFailed, totalTestNum - totalFailed, useStatisticalDebugging, useSober);
+		Suspicious.compute(subject, algorithms, failedTests.size(), totalTestNum - failedTests.size(), useStatisticalDebugging, useSober);
 		
 		return true;
 	}

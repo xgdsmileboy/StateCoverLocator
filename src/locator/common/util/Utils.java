@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
@@ -80,6 +81,73 @@ public class Utils {
 			// view coverage.csv file
 			JavaFile.writeStringToFile(file, stringBuffer.toString(), true);
 		}
+	}
+	
+	public static void backupFailedTestsAndCoveredStmt(Subject subject, int totalTestNumber, Set<Integer> failedTest, Set<String> coveredStmt) {
+		LevelLogger.debug("\n------------Begin backup failed tests & covered statement----------\n");
+		StringBuffer buffer = new StringBuffer(totalTestNumber + ":" + failedTest.size());
+		for(Integer integer : failedTest) {
+			buffer.append("\n" + integer);
+		}
+		String fileName = Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getNameAndId() + "/failedTest.txt" ;
+		JavaFile.writeStringToFile(fileName, buffer.toString());
+		
+		buffer = new StringBuffer();
+		for(String string : coveredStmt) {
+			buffer.append(string + "\n");
+		}
+		fileName = Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getNameAndId() + "/coveredstmt.txt" ;
+		JavaFile.writeStringToFile(fileName, buffer.toString().trim());
+	}
+	
+	public static int recoverFailedTestsAndCoveredStmt(Subject subject, Set<Integer> failedTests, Set<String> allCoveredStmt) {
+		LevelLogger.debug("\n------------Begin recover failed tests & covered statement----------\n");
+		String fileName = Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getNameAndId() + "/failedTest.txt" ;
+		List<String> content = JavaFile.readFileToStringList(fileName);
+		boolean containIllegal = false;
+		int totalNumberOfTests = -1;
+		int failedTestsNumber = -1;
+		if(content.size() > 0) {
+			String numbers = content.get(0);
+			try {
+				totalNumberOfTests = Integer.parseInt(numbers.split(":")[0]);
+				failedTestsNumber = Integer.parseInt(numbers.split(":")[1]);
+			} catch (Exception e) {}
+			for(int index = 1; index < content.size(); index ++) {
+				String string = content.get(index);
+				if(!Identifier.containsKey(string)) {
+					containIllegal = true;
+					break;
+				}
+				failedTests.add(Identifier.getIdentifier(string));
+			}
+		}
+		if(containIllegal || failedTests.size() != failedTestsNumber) {
+			JavaFile.writeStringToFile(fileName, "");
+			return -1;
+		}
+		
+		fileName = Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getNameAndId() + "/coveredstmt.txt" ;
+		allCoveredStmt.addAll(JavaFile.readFileToStringList(fileName));
+		containIllegal = false;
+		try {
+			for(String string : allCoveredStmt) {
+				String[] strs = string.split("#");
+				Integer integer = Integer.parseInt(strs[0]);
+				if(!Identifier.containKey(integer)) {
+					containIllegal = true;
+					break;
+				}
+			}
+		} catch (Exception e) {
+		}
+		
+		if(containIllegal || allCoveredStmt.size() == 0) {
+			JavaFile.writeStringToFile(fileName, "");
+			return -1;
+		}
+		
+		return totalNumberOfTests;
 	}
 	
 	public static void printPredicateInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,

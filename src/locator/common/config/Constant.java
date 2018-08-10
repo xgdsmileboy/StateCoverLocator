@@ -58,6 +58,8 @@ public class Constant {
 	// variables collecting flag
 	public static boolean BOOL_PREDICT_LEFT_VARIABLE = false;
 	
+	public static boolean BOOL_RECOMPUTE_ORI = false;
+	
 	// update predicate
 	public static boolean BOOL_RECOVER_PREDICATE_FROM_FILE = true;
 	public static boolean BOOL_USE_STATISTICAL_DEBUGGING = true;
@@ -215,6 +217,7 @@ public class Constant {
 			Constant.BOOL_PREDICT_LEFT_VARIABLE = Boolean.parseBoolean(prop.getProperty("PREDICT.LEFT.VAR"));
 			Constant.BOOL_OUT_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
 			Constant.TIME_OUT_RUN_TEST_SUITE = Integer.parseInt(prop.getProperty("TEST.TIMEOUT"));
+			Constant.BOOL_RECOMPUTE_ORI = Boolean.parseBoolean(prop.getProperty("RECOMPUTE.ORI"));
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_runtime get properties failed!" + e.getMessage());
