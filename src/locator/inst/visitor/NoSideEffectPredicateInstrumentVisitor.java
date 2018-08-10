@@ -542,7 +542,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 
 		// simple or raw type
 		String qualName = typeBinding.getQualifiedName();
-		if ("".equals(qualName)) {
+		if (qualName == null || "".equals(qualName)) {
 			return null;
 		}
 		return ast.newSimpleType(ast.newName(qualName));

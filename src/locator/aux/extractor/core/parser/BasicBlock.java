@@ -50,6 +50,7 @@ public class BasicBlock {
 		UNKNOWN
 	}
 	
+	private final static boolean _record_global_variable = false;
 	private static Set<Variable> _globalVariables = new HashSet<>();
 	// private static Map<String, Use> _unresolvedUse = new HashMap<>();
 
@@ -120,7 +121,9 @@ public class BasicBlock {
 		}
 
 		if (variable == null) {
-			LevelLogger.warn("@BasicBlock Cannot find defined variable with name : " + varName);
+			if(_record_global_variable) {
+				LevelLogger.warn("@BasicBlock Cannot find defined variable with name : " + varName);
+			}
 		} else {
 			variable.addUse(use);
 		}
