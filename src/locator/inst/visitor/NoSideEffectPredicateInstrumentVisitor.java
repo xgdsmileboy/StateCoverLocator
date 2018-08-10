@@ -213,7 +213,8 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			}
 			if (node.getLeftHandSide() != null && expr != null) {
 				String lhString = node.getLeftHandSide().toString();
-				ITypeBinding type = expr.resolveTypeBinding();
+//				ITypeBinding type = expr.resolveTypeBinding();
+				ITypeBinding type = node.getLeftHandSide().resolveTypeBinding();
 				if (isComparableType(type)) {
 					String rightExprStr = expr.toString().replaceAll("\\s+", " ");
 					Set<String> variables = new HashSet<>();
