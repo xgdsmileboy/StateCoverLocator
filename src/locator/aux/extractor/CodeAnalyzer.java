@@ -7,6 +7,7 @@ import java.util.Set;
 
 import locator.aux.extractor.core.parser.Analyzer;
 import locator.aux.extractor.core.parser.BasicBlock;
+import locator.aux.extractor.core.parser.StmtType;
 import locator.aux.extractor.core.parser.Use;
 import locator.aux.extractor.core.parser.Use.USETYPE;
 import locator.aux.extractor.core.parser.Variable;
@@ -86,13 +87,38 @@ public class CodeAnalyzer {
 	 * @return a map contains all illegal variables can be used in the given code
 	 *         line
 	 */
-	public static Map<String, String> getAllLocalVariablesAvailableWithType(String base, String relJavaFile, int line) {
-		BasicBlock basicBlock = Analyzer.analyze(relJavaFile, base);
+	public static Map<String, String> getAllLocalVariablesAvailableWithType(String base, String relJavaFile, int line, boolean mustInitialized) {
+		BasicBlock basicBlock = Analyzer.analyze(relJavaFile, base);	
 		Set<Variable> variables = basicBlock.getAllValidVariables(line);
 		Map<String, String> varMap = new HashMap<>();
 		for (Variable v : variables) {
 			if (v.isField()) {
 				continue;
+			}
+			if (mustInitialized && !v.isArgument()) {
+				BasicBlock minimal = basicBlock.getMinimalBasicBlock(line);
+				int level = minimal.getBlockLevel();
+				boolean initialized = false;
+				for (Use use : v.getUseSet()) {
+					int lel = use.getParentBlock().getBlockLevel();
+					int lin = use.getLineNumber();
+					// argument of enhanced for statement considered initialized
+					if (use.getStmtType() == StmtType.ENHANCEDFOR) {
+						initialized = true;
+						break;
+					} else if (lin < line && lel <= level) {
+						// find a legal write operation
+						// or defined with initializer
+						if (use.getUseType() == USETYPE.WRITE || (use.getUseType() == USETYPE.DEFINE
+								&& use.getVariableDefine().getInitializer() != null)) {
+							initialized = true;
+							break;
+						}
+					}
+				}
+				if(!initialized) {
+					continue;
+				}
 			}
 			varMap.put(v.getName(), v.getType().toString());
 		}

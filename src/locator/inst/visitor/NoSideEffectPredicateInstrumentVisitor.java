@@ -212,13 +212,15 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 				return true;
 			}
 			if (node.getLeftHandSide() != null && expr != null) {
+				String lhString = node.getLeftHandSide().toString();
 				ITypeBinding type = expr.resolveTypeBinding();
 				if (isComparableType(type)) {
 					String rightExprStr = expr.toString().replaceAll("\\s+", " ");
 					Set<String> variables = new HashSet<>();
-					Map<String, String> availableVars = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, start);
+					Map<String, String> availableVars = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, start, true);
 					for(Entry<String, String> entry : availableVars.entrySet()) {
-						if(!entry.getKey().equals(rightExprStr) && entry.getValue().equals(type.getName())) {
+						String varName = entry.getKey();
+						if(!lhString.equals(varName) && !varName.equals(rightExprStr) && entry.getValue().equals(type.getName())) {
 							variables.add(entry.getKey());
 						}
 					}
@@ -264,7 +266,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 					if (typeStr != null) {
 						int line = _cu.getLineNumber(fragment.getStartPosition());
 						Set<String> variables = new HashSet<>();
-						Map<String, String> varAvailable = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, line);
+						Map<String, String> varAvailable = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, line, true);
 						for(Entry<String, String> entry : varAvailable.entrySet()) {
 							if(!entry.getKey().equals(rightExprStr) && entry.getValue().equals(type.getName())) {
 								variables.add(entry.getKey());
