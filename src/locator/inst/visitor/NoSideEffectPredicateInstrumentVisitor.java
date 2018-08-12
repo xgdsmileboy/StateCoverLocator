@@ -125,7 +125,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
 			if (expr != null && isComparableType(expr.resolveTypeBinding())) {
-				String condition = expr.toString().replaceAll("\\s+", " ");
+				String condition = expr.toString().replace("\n", " ").replaceAll("\\s+", " ");
 				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(),
 						genReturnWithLog(expr, expr.resolveTypeBinding(), start)));
 				addPredicates(getPredicateForReturns(condition), start);

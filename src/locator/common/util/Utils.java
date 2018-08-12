@@ -63,7 +63,12 @@ public class Utils {
 			StringBuffer stringBuffer = new StringBuffer();
 			String key = entry.getKey();
 			String[] info = key.split("#");
-			String methodString = Identifier.getMessage(Integer.parseInt(info[0]));
+			String methodString = null;
+			try {
+				methodString = Identifier.getMessage(Integer.parseInt(info[0]));
+			} catch (Exception e) {
+				continue;
+			}
 			stringBuffer.append(methodString);
 			String moreInfo = key.substring(info[0].length() + 1);
 			stringBuffer.append("#");
@@ -114,12 +119,16 @@ public class Utils {
 				failedTestsNumber = Integer.parseInt(numbers.split(":")[1]);
 			} catch (Exception e) {}
 			for(int index = 1; index < content.size(); index ++) {
-				String string = content.get(index);
-				if(!Identifier.containsKey(string)) {
+				Integer id = -1;
+				try {
+					id = Integer.parseInt(content.get(index));
+				} catch (Exception e) {
+				}
+				if(!Identifier.containKey(id)) {
 					containIllegal = true;
 					break;
 				}
-				failedTests.add(Identifier.getIdentifier(string));
+				failedTests.add(id);
 			}
 		}
 		if(containIllegal || failedTests.size() != failedTestsNumber) {
