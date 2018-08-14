@@ -241,4 +241,14 @@ public class Utils {
 		JavaFile.writeStringToFile(Constant.HOME + "/logs/project.log", content);
 	}
 	
+	public static StringBuffer strJoin(String joint, String... components) {
+		if(components.length == 0) return new StringBuffer();
+		StringBuffer buffer = new StringBuffer(components[0]);
+		for(int i = 1; i < components.length; i++) {
+			buffer.append(joint);
+			buffer.append(components[i]);
+		}
+		return buffer;
+	}
+	
 }

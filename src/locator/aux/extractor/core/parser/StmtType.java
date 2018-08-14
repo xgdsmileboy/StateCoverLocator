@@ -23,6 +23,7 @@ public enum StmtType {
     DO("DoStatement"),
     EMPTY("EmptyStatement"),
     ENHANCEDFOR("EnhancedForStatement"),
+    ASSIGNMENT("Assignment"),
     EXRESSION("ExpressionStatement"),
     FOR_INIT("ForStatement-init"),
     FOR_COND("ForStatement-cond"),

@@ -853,8 +853,10 @@ public class Analyzer {
 		 *   Expression AssignmentOperator Expression
 		 */
 		private boolean visit(Assignment node, USETYPE useType, Expression booleanExpr) {
+			_visitedStatement.push(StmtType.ASSIGNMENT);
 			process(node.getLeftHandSide(), USETYPE.WRITE, booleanExpr);
 			process(node.getRightHandSide(), USETYPE.READ, booleanExpr);
+			_visitedStatement.pop();
 			return true;
 		}
 
