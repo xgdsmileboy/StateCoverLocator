@@ -6,13 +6,17 @@
  */
 package locator.aux.extractor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import locator.aux.extractor.core.feature.ExprFeature;
 import locator.aux.extractor.core.feature.VarFeature;
+import locator.core.alg.Algorithm;
+import locator.core.alg.Ochiai;
 
 /**
  * @author Jiajun
@@ -119,6 +123,30 @@ public class FeatureGeneratorTest {
 		System.out.println(ExprFeature.getFeatureHeader());
 		for(String feature : features) {
 			System.out.println(feature);
+		}
+	}
+	
+	@Test
+	public void test_generateClassifierTrainData() {
+		String baseDir = base + "/res/junitRes/time/time_1_buggy/src/main/java";
+		String tarFile = "/home/ubuntu/Desktop/test.csv";
+		String projNameForTrain = "time";
+		int idForTrain = 1;
+		Algorithm algorithm = new Ochiai();
+		FeatureGenerator.generateTrainClassifierFeatures(baseDir, tarFile, projNameForTrain, idForTrain, algorithm);
+	}
+	
+	@Test
+	public void test_generateClassifierFeatureForLine() {
+		String baseDir = base + "/res/junitRes/time/time_1_buggy/src/main/java";
+		String relJavaFile = "org/joda/time/Partial.java";
+		int line = 217;
+		Algorithm algorithm = new Ochiai();
+		Set<String> predicates = new HashSet<>();
+		predicates.add("loopUnitField.isSupported() == false");
+		List<String> features = FeatureGenerator.generateClassifierFeatureForLine(baseDir, relJavaFile, line, predicates, algorithm);
+		for(String string : features) {
+			System.out.println(string);
 		}
 	}
 	

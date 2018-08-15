@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import locator.aux.extractor.core.feature.ClassifierFeature;
 import locator.aux.extractor.core.feature.ExprFeature;
 import locator.aux.extractor.core.feature.VarFeature;
 import locator.aux.extractor.core.feature.item.FileName;
@@ -23,6 +24,7 @@ import locator.aux.extractor.core.parser.Use;
 import locator.aux.extractor.core.parser.Variable;
 import locator.common.java.JavaFile;
 import locator.core.LineInfo;
+import locator.core.alg.Algorithm;
 
 /**
  * This class is an interface to access the feature generating process, which
@@ -273,6 +275,76 @@ public class FeatureGenerator {
 	
 	public static String getExprFeatureHeader() {
 		return ExprFeature.getFeatureHeader();
+	}
+	
+	/**
+	 * Generate predicate classifier training data
+	 * 
+	 * @param baseDir
+	 *            : base directory of source files
+	 * @param tarFile
+	 *            : target file to output feature data
+	 * @param projNameForTrain
+	 *            : project name for feature extraction
+	 * @param idForTrain
+	 *            : bug id for feature extraction
+	 * @param algorithm
+	 *            : which algorithm is used to decide the label
+	 */
+	public static void generateTrainClassifierFeatures(String baseDir, String tarFile, String projNameForTrain,
+			int idForTrain, Algorithm algorithm) {
+		String predicatePath = System.getProperty("user.dir") + "/res/label/" + projNameForTrain + "/"
+				+ projNameForTrain + "_" + idForTrain + "/" + algorithm.getName() + ".csv";
+		List<String> contents = JavaFile.readFileToStringList(predicatePath);
+		StringBuffer buffer = new StringBuffer(ClassifierFeature.getFeatureHeader());
+		
+		for(int i = 1; i < contents.size(); i ++) {
+			String[] data = contents.get(i).split("\t");
+			String predicate = data[1];
+			String label = data[2];
+			String[] locs = data[0].split("#");
+			if(locs.length != 5) {
+				continue;
+			}
+			String clazz = locs[0];
+			int line = -1;
+			try {
+				line = Integer.parseInt(locs[4]);
+			} catch (Exception e) {
+				continue;
+			}
+			int index = clazz.indexOf("$");
+			if(index > 0) {
+				clazz = clazz.substring(0, index);
+			}
+			String relJavaFile = clazz.replace(".", "/") + ".java";
+			List<String> features = ClassifierFeature.getFeature(baseDir, relJavaFile, line, predicate, label);
+			for(String string : features) {
+				buffer.append("\n" + string);
+			}
+		}
+		JavaFile.writeStringToFile(tarFile, buffer.toString());
+	}
+
+	/**
+	 * Generate Classifier feature for the given location
+	 * 
+	 * @param baseDir
+	 *            : base directory of source code
+	 * @param relJavaFile
+	 *            : relative file path of the java file to extract feature
+	 * @param line
+	 *            : line number
+	 * @param predicates
+	 *            : predicates at this location
+	 * @return a list of features for predict
+	 */
+	public static List<String> generateClassifierFeatureForLine(String baseDir, String relJavaFile, int line, Set<String> predicates) {
+		List<String> features = new LinkedList<>();
+		for(String pred : predicates) {
+			features.addAll(ClassifierFeature.getFeature(baseDir, relJavaFile, line, pred, "X"));
+		}
+		return features;
 	}
 	
 }
