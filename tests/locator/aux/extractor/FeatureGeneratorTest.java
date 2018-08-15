@@ -141,10 +141,9 @@ public class FeatureGeneratorTest {
 		String baseDir = base + "/res/junitRes/time/time_1_buggy/src/main/java";
 		String relJavaFile = "org/joda/time/Partial.java";
 		int line = 217;
-		Algorithm algorithm = new Ochiai();
 		Set<String> predicates = new HashSet<>();
 		predicates.add("loopUnitField.isSupported() == false");
-		List<String> features = FeatureGenerator.generateClassifierFeatureForLine(baseDir, relJavaFile, line, predicates, algorithm);
+		List<String> features = FeatureGenerator.generateClassifierFeatureForLine(baseDir, relJavaFile, line, predicates);
 		for(String string : features) {
 			System.out.println(string);
 		}
