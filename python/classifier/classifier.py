@@ -37,6 +37,10 @@ class Classifier(object):
         print("{0} Recall {2}: {1:f}\n".format(label, metric[1], average_type))
         print("{0} F1score {2}: {1:f}\n".format(label, metric[2], average_type))
 
+    def train_classifier(selfs, feature_num):
+
+        return classifier
+
     def train(self, X, Y, feature_num, class_num, model_dir_):
         X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size = 0.25, random_state = 7)
 

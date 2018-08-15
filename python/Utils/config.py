@@ -31,6 +31,10 @@ class Configure(object):
     def get_model_type(self):
         return self.__model_type__
 
+    def get_raw_classifier_train_in_file(self):
+        # python/input/classifier/math/math_1/predicate/math_1.csv
+        return self.__input_base_path__ + '/predicate/' + self._bug_name_id + '.csv'
+
     def get_raw_var_train_in_file(self):
         # python/input/dnn/math/math_1/var/math_1.var.csv
         return self.__input_base_path__ + '/var/' + self._bug_name_id + '.var.csv'
@@ -67,6 +71,20 @@ class Configure(object):
         if not os.path.exists(path):
             os.makedirs(path)
         return path + self._bug_name_id + '.file_cluster.csv'
+
+    def get_predicate_cluster_file(self):
+        # python/input/classifier/cluster/math/math_1/cluster/math_1.pred_cluster.csv
+        path = self.__input_base_path__ + '/cluster/'
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + self._bug_name_id + '.pred_cluster.csv'
+
+    def get_classifier_model_file(self):
+        # python/input/classifier/math/math_1/math_1.classifier_model.pkl
+        path = self.__model_base_path__
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + '/' + self._bug_name_id + '.classifier_model.pkl'
 
     def get_var_model_file(self):
         # python/model/dnn/math/math_1/math_1.var_model.pkl
