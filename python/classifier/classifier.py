@@ -12,7 +12,11 @@ from classifier import classifier_model
 import tensorflow as tf
 import shutil as su
 import Queue
-
+import datetime
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+from clustering.cluster import *
 
 class Classifier(object):
 
@@ -37,9 +41,86 @@ class Classifier(object):
         print("{0} Recall {2}: {1:f}\n".format(label, metric[1], average_type))
         print("{0} F1score {2}: {1:f}\n".format(label, metric[2], average_type))
 
-    def train_classifier(selfs, feature_num):
+    def train_classifier(self, str_encoder, feature_num, evaluate):
+        start_time = datetime.datetime.now()
 
-        return classifier
+        data_file_path = self.__configure__.get_raw_classifier_train_in_file()
+
+        # load data from a csv file
+        data = pd.read_csv(data_file_path, sep='\t', header=0, encoding='utf-8')
+        dataset = data.values
+        print('Dataset size: {}'.format(dataset.shape))
+        # split data into X and y
+        # 3 to 11: 8
+        X = dataset[:, 2:2 + feature_num]
+        X = X.astype(str)
+        Y = dataset[:, 2 + feature_num]
+        Y = Y.astype(str)
+        classes = np.unique(Y)
+        class_num = len(classes)
+        print('Class number: %d' % class_num)
+
+        # encoding string as integers
+        encoded_X = None
+        x_encoders = [None] * feature_num
+        for i in range(0, X.shape[1]):
+            feature = np.zeros((X.shape[0], 1))
+            if i <= 3:
+                x_encoders[i] = LabelEncoder()
+                feature = x_encoders[i].fit_transform(X[:, i])
+                feature = feature.reshape(X.shape[0], 1)
+                if i == 0:
+                    # file name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['file'][str(X[j, i])]
+                elif i == 1:
+                    # function name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['func'][str(X[j, i])]
+                elif i == 2:
+                    # variable name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['var'][str(X[j, i]).lower()]
+                # elif i == 5:
+                # dist0
+                # for j in range(0, X.shape[0]):
+                # feature[j] = int(X[j, i])
+                one_hot_encoder = OneHotEncoder(sparse=False)
+                feature = one_hot_encoder.fit_transform(feature)
+            elif i == 7: # predicate
+                for j in range(0, X.shape[0]):
+                    feature[j] = str_encoder['pred'][str(X[j, i]).lower()]
+                one_hot_encoder = OneHotEncoder(sparse=False)
+                feature = one_hot_encoder.fit_transform(feature)
+            else:
+                for j in range(0, X.shape[0]):
+                    feature[j] = int(X[j, i])
+            if encoded_X is None:
+                encoded_X = feature
+            else:
+                encoded_X = np.concatenate((encoded_X, feature), axis=1)
+        # encoded targets = original targets
+        y_encoder = LabelEncoder()
+        encoded_Y = y_encoder.fit_transform(Y)
+
+        model_file = self.__configure__.get_classifier_model_dir()
+
+        # init the model
+        if os.path.exists(model_file):
+            print('Model file already exists and be removed.')
+            su.rmtree(model_file)
+
+        print('Training the model...')
+
+        if evaluate:
+            self.evaluate(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0], True)
+        else:
+            print(encoded_X.shape[1])
+            classifier = self.train(encoded_X, encoded_Y, encoded_X.shape[1], y_encoder.classes_.shape[0], model_file)
+
+        end_time = datetime.datetime.now()
+        run_time = end_time - start_time
+        print('Training fininshed, time cost : {}'.format(run_time))
 
     def train(self, X, Y, feature_num, class_num, model_dir_):
         X_train, X_valid, y_train, y_valid = train_test_split(X, Y, test_size = 0.25, random_state = 7)
@@ -125,6 +206,7 @@ class Classifier(object):
 
         return classifier
 
+
     def evaluate(self, X, Y, feature_num, class_num):
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state = 7)
         default_eval_model = '/tmp/tmp_classifier_val'
@@ -147,9 +229,157 @@ class Classifier(object):
         if os.path.exists(default_eval_model):
             su.rmtree(default_eval_model)
 
-    def predict(self, X, feature_num, class_num, is_var):
 
-        classifier = classifier_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_var_nn_model_dir())
+    def classify(self, str_encoder, kmeans_model, unique_words):
+
+        print('Predicting var for {}...'.format(self.__configure__.get_bug_id()))
+
+        encoded_var, feature_num = self.encode_str(str_encoder, kmeans_model, unique_words)
+        # get the predicted varnames
+        self.predict_vars(encoded_var, feature_num)
+
+    def encode_str(self, str_encoder, kmeans_model, unique_words):
+        data_file_path = self.__configure__.get_raw_classify_pred_in_file()
+
+        original_data_file_path = self.__configure__.get_raw_classifier_train_in_file()
+        # load data from a csv file
+        original_data = pd.read_csv(original_data_file_path, sep='\t', header=0, encoding='utf-8')
+        original_dataset = original_data.values
+        print('Dataset size: {}'.format(original_dataset.shape))
+        feature_num = original_data.shape[1] - 3
+        # split data into X and y
+        # 3 to 11: 8
+        X = original_dataset[:, 2:-1]
+        X = X.astype(str)
+
+        # encoding string as integers
+        x_encoders = [None] * feature_num
+        one_hot_encoder = [None] * feature_num
+        for i in range(0, X.shape[1]):
+            if i <= 3:
+                x_encoders[i] = LabelEncoder()
+                feature = x_encoders[i].fit_transform(X[:, i])
+                feature = feature.reshape(X.shape[0], 1)
+                if i == 0:
+                    # file name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['file'][str(X[j, i])]
+                elif i == 1:
+                    # function name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['func'][str(X[j, i])]
+                elif i == 2:
+                    # variable name
+                    for j in range(0, X.shape[0]):
+                        feature[j] = str_encoder['var'][str(X[j, i]).lower()]
+                one_hot_encoder[i] = OneHotEncoder(sparse=False)
+                one_hot_encoder[i].fit(feature)
+            if i == 7:
+                # predicates
+                for j in range(0, X.shape[0]):
+                    feature[j] = str_encoder['pred'][str(X[j, i]).lower()]
+                one_hot_encoder[i] = OneHotEncoder(sparse=False)
+                one_hot_encoder[i].fit(feature)
+
+        data = pd.read_csv(data_file_path, sep='\t', header=0, encoding='utf-8')
+        dataset = data.values
+
+        encoded_feature = list()
+        new_feature_num = feature_num
+        start = 2
+        for i in range(0, dataset.shape[0]):
+            feature = list()
+            for j in range(0, feature_num):
+                # TODO : if the key does not exit in the encoder, how to transform
+                try:
+                    if j == 0:
+                        tmp = str_encoder['file'][str(dataset[i, start + j])]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis=0)
+                    elif j == 1:
+                        tmp = str_encoder['func'][str(dataset[i, start + j])]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis=0)
+                    elif j == 2:
+                        tmp = str_encoder['var'][str(dataset[i, start + j]).lower()]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis=0)
+                    elif j == 7:
+                        tmp = str_encoder['pred'][str(dataset[i, start + j]).lower()]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis=0)
+                    # elif j == 5:
+                    # feature = np.append(feature, int(dataset[i, 3 + j]))
+                    elif j == 3:
+                        tmp = x_encoders[j].transform([str(dataset[i, start + j])])[0]
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[tmp]])[0]), axis=0)
+                    else:
+                        feature = np.append(feature, int(dataset[i, start + j]))
+                except Exception as e:
+                    if j == 7:
+                        X_0 = np.mat(np.zeros((1, 42 * 42 + 1)))
+                        X_0[0] = Cluster.predicate_to_vector(str(dataset[i, start + j]).lower())
+                        pred = kmeans_model['pred'].predict(X_0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis=0)
+                    elif j == 2:
+                        # feature.append(len(var_encoder))
+                        X_0 = np.mat(np.zeros((1, 27 * 27 + 1)))
+                        X_0[0] = Cluster.var_to_vec(str(dataset[i, start + j]).lower())
+                        pred = kmeans_model['var'].predict(X_0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis=0)
+                    elif j == 0:
+                        X_0 = np.mat(np.zeros((1, len(unique_words['file']))))
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, start + j]), unique_words['file'])
+                        pred = kmeans_model['file'].predict(X_0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis=0)
+                    elif j == 1:
+                        X_0 = np.mat(np.zeros((1, len(unique_words['func']))))
+                        X_0[0] = Cluster.name_to_vec(str(dataset[i, start + j]), unique_words['func'])
+                        pred = kmeans_model['func'].predict(X_0)
+                        feature = np.concatenate((feature, one_hot_encoder[j].transform([[pred[0]]])[0]), axis=0)
+                    else:
+                        feature = np.concatenate((feature, np.zeros(one_hot_encoder[j].n_values_)), axis=0)
+
+            new_feature_num = len(feature)
+            feature = np.append(feature, 0)
+            encoded_feature.append(feature)
+
+        return (pd.DataFrame(encoded_feature), new_feature_num)
+
+    def predict_vars(self, encoded_var, feature_num):
+        # encoded_oracle_var =  oracle[0:-4]+ '.var_encoded.csv'
+        class_predicted = self.__configure__.get_classify_pred_out_file()
+        if os.path.exists(class_predicted):
+            os.remove(class_predicted)
+
+        raw_var_path = self.__configure__.get_raw_classify_pred_in_file()
+        raw_var = pd.read_csv(raw_var_path, sep='\t', header=0)
+        raw_var_values = raw_var.values
+
+        varnames = list()
+        line_ids = list()
+        for r in range(0, encoded_var.shape[0]):
+            line_ids.append(raw_var_values[r, 2] + "::" + str(raw_var_values[r, 0]) + "::" + raw_var_values[r, 4])
+            varnames.append(raw_var_values[r, 4])
+
+        encoded_rows_array = np.array(encoded_var)
+        # print(encoded_rows_array.shape)
+        X_pred = encoded_rows_array[:, 0:-1]
+        X_pred = X_pred.astype(float)
+
+        y_pred = encoded_rows_array[:, -1]
+
+        y_pred = y_pred.astype(float)
+
+        print(feature_num)
+        y_prob = self.predict(X_pred, feature_num, 2)
+        print(y_prob)
+        with open(class_predicted, 'w') as f:
+            for i in range(0, X_pred.shape[0]):
+                f.write('%s\t' % line_ids[i])
+                f.write('%s\t' % varnames[i])
+                f.write('%.4f' % y_prob[i][1])
+                f.write('\n')
+
+    def predict(self, X, feature_num, class_num):
+
+        classifier = classifier_model.get_dnn_classifier(feature_num, class_num, self.__configure__.get_classifier_model_dir())
 
         predict_input_fn = tf.estimator.inputs.numpy_input_fn(x={'x': X}, y=None, num_epochs=1, shuffle=False)
         predictions = list(classifier.predict(input_fn = predict_input_fn))

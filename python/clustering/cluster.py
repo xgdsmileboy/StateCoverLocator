@@ -3,7 +3,6 @@ import os
 
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import KMeans
-from sklearn.decomposition.tests.test_nmf import random_state
 from sklearn.externals import joblib
 
 from Utils.config import *
@@ -16,8 +15,8 @@ class Cluster(object):
     def __init__(self, configure):
         self.__configure__ = configure
 
-    staticmethod
-    def parseChar(ch):
+    @staticmethod
+    def parse_char(ch):
         # 0-26
         if ch >= 'a' and ch <= 'z':
             return ord(ch) - ord('a')
@@ -40,12 +39,12 @@ class Cluster(object):
     @staticmethod
     def predicate_to_vector(p):
         result = np.array(np.zeros(42 * 42 + 1))
-        if len(v) == 1:
+        if len(p) == 1:
             result[41 * 41] = 1
         else:
             for j in range(0, len(p) - 1):
-                first = parseChar(p[j])
-                second = parseChar(p[j + 1])
+                first = Cluster.parse_char(p[j])
+                second = Cluster.parse_char(p[j + 1])
                 pos = first * 42 + second
                 result[pos] = 1
         return result
@@ -142,11 +141,11 @@ class Cluster(object):
 
     def cluster_predicate(self, pred_dataset):
         all_pred = np.row_stack(pred_dataset[:, 9:10])
-        all_pred = allPred.astype(str)
+        all_pred = all_pred.astype(str)
         
         unique_pred = set()
         
-        for i in range(0, all_pred.shade(0)):
+        for i in range(0, all_pred.shape[0]):
             unique_pred.add(str(all_pred[i][0]).lower())
         
         X = np.mat(np.zeros((len(unique_pred), 42 * 42 + 1)))
@@ -166,7 +165,7 @@ class Cluster(object):
         joblib.dump(kmeans, self.__configure__.get_predicate_cluster_model_file())
         
         result = {}
-        output_file_path = self.__configure__.get_get_predicate_cluster_file()
+        output_file_path = self.__configure__.get_predicate_cluster_file()
         if (os.path.exists(output_file_path)):
             os.remove(output_file_path)
         with open(output_file_path, 'w+') as f:
@@ -283,6 +282,24 @@ class Cluster(object):
 
         return result
 
+    def get_all_cluster(self):
+        encoder = {}
+        model = {}
+
+        encoder['var'], model['var'] = self.get_var_cluster()
+        encoder['func'], model['func'] = self.get_func_cluster()
+        encoder['file'], model['file'] = self.get_file_cluster()
+        encoder['pred'], model['pred'] = self.get_pred_cluster()
+
+        unique_words = {}
+        with open(self.__configure__.get_func_cluster_info_file(), 'r') as f:
+            unique_words['func'] = eval(f.read())
+
+        with open(self.__configure__.get_file_cluster_info_file(), 'r') as f:
+            unique_words['file'] = eval(f.read())
+
+        return encoder, model, unique_words
+
     def get_cluster(self):
         encoder = {}
         model = {}
@@ -320,3 +337,7 @@ class Cluster(object):
     def get_file_cluster(self):
         return self.get_cluster_routine(self.__configure__.get_file_cluster_model_file(),
                                         self.__configure__.get_file_cluster_file())
+
+    def get_pred_cluster(self):
+        return self.get_cluster_routine(self.__configure__.get_predicate_cluster_model_file(),
+                                        self.__configure__.get_predicate_cluster_file())

@@ -27,7 +27,7 @@ if __name__ == '__main__':
         str_encoder, column = cluster.cluster_classifier_string()
         feature_num = column - 3
         classifier = Classifier(config)
-        classifier.train_classifier(feature_num)
+        classifier.train_classifier(str_encoder, feature_num, False)
     else:
         cluster = Cluster(config)
         str_encoder, var_column, expr_column  = cluster.cluster_string()
