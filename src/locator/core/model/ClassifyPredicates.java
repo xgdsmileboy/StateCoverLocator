@@ -127,7 +127,7 @@ public class ClassifyPredicates extends MLModel {
 				for(String string : features) {
 					buffer.append("\n" + string);
 					data = string.split("\t");
-					String key = data[fileNameIndex] + "::" + data[varNameIndex] + "::" + line;
+					String key = data[fileNameIndex] + "::" + line + data[varNameIndex];
 					lineInfoMap.put(key, new LineInfo(line, relJavaFile, ""));
 				}
 			}

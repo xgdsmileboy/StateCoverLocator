@@ -352,11 +352,11 @@ class Classifier(object):
         raw_var = pd.read_csv(raw_var_path, sep='\t', header=0)
         raw_var_values = raw_var.values
 
-        varnames = list()
+        predicates = list()
         line_ids = list()
         for r in range(0, encoded_var.shape[0]):
             line_ids.append(raw_var_values[r, 2] + "::" + str(raw_var_values[r, 0]) + "::" + raw_var_values[r, 4])
-            varnames.append(raw_var_values[r, 4])
+            predicates.append(raw_var_values[r, 9])
 
         encoded_rows_array = np.array(encoded_var)
         # print(encoded_rows_array.shape)
@@ -373,7 +373,7 @@ class Classifier(object):
         with open(class_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
                 f.write('%s\t' % line_ids[i])
-                f.write('%s\t' % varnames[i])
+                f.write('%s\t' % predicates[i])
                 f.write('%.4f' % y_prob[i][1])
                 f.write('\n')
 
