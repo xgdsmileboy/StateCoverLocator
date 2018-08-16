@@ -133,7 +133,7 @@ public class FeatureGeneratorTest {
 		String projNameForTrain = "time";
 		int idForTrain = 1;
 		Algorithm algorithm = new Ochiai();
-		FeatureGenerator.generateTrainClassifierFeatures(baseDir, tarFile, projNameForTrain, idForTrain, algorithm);
+		FeatureGenerator.generateTrainClassifierFeatures(baseDir, tarFile, projNameForTrain, idForTrain, algorithm.getName(), true);
 	}
 	
 	@Test

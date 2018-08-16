@@ -24,7 +24,6 @@ import locator.aux.extractor.core.parser.Use;
 import locator.aux.extractor.core.parser.Variable;
 import locator.common.java.JavaFile;
 import locator.core.LineInfo;
-import locator.core.alg.Algorithm;
 
 /**
  * This class is an interface to access the feature generating process, which
@@ -292,11 +291,14 @@ public class FeatureGenerator {
 	 *            : which algorithm is used to decide the label
 	 */
 	public static void generateTrainClassifierFeatures(String baseDir, String tarFile, String projNameForTrain,
-			int idForTrain, Algorithm algorithm) {
+			int idForTrain, String algName, boolean addHeader) {
 		String predicatePath = System.getProperty("user.dir") + "/res/label/" + projNameForTrain + "/"
-				+ projNameForTrain + "_" + idForTrain + "/" + algorithm.getName() + ".csv";
+				+ projNameForTrain + "_" + idForTrain + "/" + algName + ".csv";
 		List<String> contents = JavaFile.readFileToStringList(predicatePath);
-		StringBuffer buffer = new StringBuffer(ClassifierFeature.getFeatureHeader());
+		StringBuffer buffer = new StringBuffer();
+		if(addHeader) {
+			buffer.append(ClassifierFeature.getFeatureHeader());
+		}
 		
 		for(int i = 1; i < contents.size(); i ++) {
 			String[] data = contents.get(i).split("\t");
@@ -323,7 +325,7 @@ public class FeatureGenerator {
 				buffer.append("\n" + string);
 			}
 		}
-		JavaFile.writeStringToFile(tarFile, buffer.toString());
+		JavaFile.writeStringToFile(tarFile, buffer.toString(), !addHeader);
 	}
 
 	/**

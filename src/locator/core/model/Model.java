@@ -7,12 +7,17 @@
 
 package locator.core.model;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import locator.common.config.Constant;
+import locator.common.config.Identifier;
 import locator.common.java.Subject;
+import locator.common.util.LevelLogger;
 import locator.common.util.Pair;
 
 /**
@@ -75,6 +80,11 @@ public abstract class Model {
 		String file = _outPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/pred/" + subject.getNameAndId() + ".expr.csv";
 		return file;
 	}
+	
+	public String getClassifyFeatureOutputFile(Subject subject) {
+		String file = _outPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/pred/" + subject.getNameAndId() + ".csv";
+		return file;
+	}
 
 	public String getPredictResultFile(Subject subject) {
 		String file = _inPath + "/" + subject.getName() + "/" + subject.getNameAndId() + "/" + subject.getNameAndId() + ".joint.csv";
@@ -86,5 +96,54 @@ public abstract class Model {
 		return file;
 	}
 	
+	protected Map<String, List<Integer>> mapLocations2File(Subject subject, Set<String> allStatements) {
+		String srcPath = subject.getHome() + subject.getSsrc();
+		Map<String, List<Integer>> file2LocationList = new HashMap<>();
+		int allStmtCount = allStatements.size();
+		int currentStmtCount = 1;
+		for (String stmt : allStatements) {
+			LevelLogger.debug("======================== [" + currentStmtCount + "/" + allStmtCount
+					+ "] statements (statistical debugging) =================.");
+			currentStmtCount++;
+			String[] stmtInfo = stmt.split("#");
+			if (stmtInfo.length != 2) {
+				LevelLogger.error(__name__ + "#mapLocations2File statement parse error : " + stmt);
+				System.exit(0);
+			}
+			Integer methodID = Integer.valueOf(stmtInfo[0]);
+			int line = Integer.parseInt(stmtInfo[1]);
+			if (line == 2317) {
+				LevelLogger.debug(__name__ + "#mapLocations2File : exist");
+			}
+			String methodString = Identifier.getMessage(methodID);
+			LevelLogger.debug("Current statement  : **" + methodString + "#" + line + "**");
+			String[] methodInfo = methodString.split("#");
+			if (methodInfo.length < 4) {
+				LevelLogger.error(__name__ + "#mapLocations2File method info parse error : " + methodString);
+				System.exit(0);
+			}
+			String clazz = methodInfo[0].replace(".", Constant.PATH_SEPARATOR);
+			int index = clazz.indexOf("$");
+			if (index > 0) {
+				clazz = clazz.substring(0, index);
+			}
+			String relJavaPath = clazz + ".java";
+
+			String fileName = srcPath + Constant.PATH_SEPARATOR + relJavaPath;
+
+			List<Integer> list = file2LocationList.get(relJavaPath);
+			if (list == null) {
+				File file = new File(fileName);
+				if (!file.exists()) {
+					LevelLogger.error("Cannot find file : " + fileName);
+					continue;
+				}
+				list = new LinkedList<>();
+			}
+			list.add(line);
+			file2LocationList.put(relJavaPath, list);
+		}
+		return file2LocationList;
+	}
 	
 }

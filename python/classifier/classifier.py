@@ -344,7 +344,7 @@ class Classifier(object):
 
     def predict_vars(self, encoded_var, feature_num):
         # encoded_oracle_var =  oracle[0:-4]+ '.var_encoded.csv'
-        class_predicted = self.__configure__.get_classify_pred_out_file()
+        class_predicted = self.__configure__.get_joint_predict_file()
         if os.path.exists(class_predicted):
             os.remove(class_predicted)
 
