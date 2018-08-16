@@ -39,6 +39,7 @@ import locator.core.alg.Simple;
 import locator.core.alg.Sober;
 import locator.core.alg.StatisticalDebugging;
 import locator.core.alg.Tarantula;
+import locator.core.model.ClassifyPredicates;
 import locator.core.model.DNN;
 import locator.core.model.Model;
 import locator.core.model.SDModel;
@@ -71,6 +72,8 @@ public class Main {
 				model = new DNN();
 			} else if(XGBoost.NAME.equals(Constant.TRAINING_MODEL)) {
 				model = new XGBoost();
+			} else if(ClassifyPredicates.NAME.equals(Constant.TRAINING_MODEL)) {
+				model = new ClassifyPredicates();
 			}
 			if(Constant.TRAINING_EVALUATION) {
 				model.evaluate(subject);

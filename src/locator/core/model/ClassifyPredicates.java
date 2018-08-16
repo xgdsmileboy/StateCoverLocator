@@ -33,7 +33,7 @@ public class ClassifyPredicates extends MLModel {
 
 	public final static String NAME = "classifier";
 	
-	protected ClassifyPredicates() {
+	public ClassifyPredicates() {
 		super(NAME);
 		__name__ = "@ClassifyPredicates ";
 	}
@@ -86,6 +86,15 @@ public class ClassifyPredicates extends MLModel {
 	@Override
 	public Map<String, Map<Integer, List<Pair<String, String>>>> getAllPredicates(Subject subject,
 			Set<String> allStatements, boolean useSober) {
+		
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = null;
+		if (Constant.BOOL_RECOVER_PREDICATE_FROM_FILE) {
+			file2Line2Predicates = Utils.recoverPredicates(subject, _predicates_backup_file);
+		}
+		if (file2Line2Predicates != null) {
+			return file2Line2Predicates;
+		}
+		
 		String srcPath = subject.getHome() + subject.getSsrc();
 		
 		Map<String, List<Integer>> file2LocationList = mapLocations2File(subject, allStatements);
@@ -115,7 +124,7 @@ public class ClassifyPredicates extends MLModel {
 		
 		int fileNameIndex = ClassifierFeature.getFeatureIndex(FileName.class);
 		int varNameIndex = ClassifierFeature.getFeatureIndex(VarName.class);
-		Map<String, LineInfo	> lineInfoMap = new HashMap<>();
+		Map<String, LineInfo> lineInfoMap = new HashMap<>();
 		
 		StringBuffer buffer = new StringBuffer(ClassifierFeature.getFeatureHeader());
 		String[] data = null;
@@ -143,7 +152,7 @@ public class ClassifyPredicates extends MLModel {
 			e.printStackTrace();
 		}
 		
-		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
+		file2Line2Predicates = new HashMap<>();
 		List<String> content = JavaFile.readFileToStringList(getPredictResultFile(subject));
 		if(content != null) {
 			LineInfo info = null;
@@ -173,6 +182,8 @@ public class ClassifyPredicates extends MLModel {
 			}
 		}
 		
+		Utils.printPredicateInfo(file2Line2Predicates, subject, _predicates_backup_file);
+		file2Line2Predicates = Utils.recoverPredicates(subject, _predicates_backup_file);
 		return file2Line2Predicates;
 	}
 
