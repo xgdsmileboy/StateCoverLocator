@@ -135,6 +135,20 @@ class Configure(object):
             os.makedirs(path)
         return path + '/' + self._bug_name_id + '.file_cluster_model.info'
 
+    def get_predicate_cluster_model_file(self):
+        # python/model/dnn/math/math_1/math_1.predicate_cluster_model.pkl
+        path = self.__model_base_path__
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + '/' + self._bug_name_id + '.predicate_cluster_model.pkl'
+
+    def get_predicate_cluster_info_file(self):
+        # python/model/dnn/math/math_1/math_1.predicate_cluster_model.info
+        path = self.__model_base_path__
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + '/' + self._bug_name_id + '.predicate_cluster_model.info'
+
     def get_var_nn_model_dir(self):
         # python/model/dnn/math/math_1/var/
         path = self.__model_base_path__ + '/var/'

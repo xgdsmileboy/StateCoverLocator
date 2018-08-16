@@ -1,11 +1,14 @@
-import pandas as pd
-import numpy as np
 from math import isnan
-from sklearn.cluster import KMeans
-from sklearn.cluster import AgglomerativeClustering
 import os
-from Utils.config import *
+
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import KMeans
+from sklearn.decomposition.tests.test_nmf import random_state
 from sklearn.externals import joblib
+
+from Utils.config import *
+import numpy as np
+import pandas as pd
 
 
 class Cluster(object):
@@ -138,8 +141,40 @@ class Cluster(object):
         return encoder, data.shape[1]
 
     def cluster_predicate(self, pred_dataset):
+        all_pred = np.row_stack(pred_dataset[:, 9:10])
+        all_pred = allPred.astype(str)
+        
+        unique_pred = set()
+        
+        for i in range(0, all_pred.shade(0)):
+            unique_pred.add(str(all_pred[i][0]).lower())
+        
+        X = np.mat(np.zeros((len(unique_pred), 42 * 42 + 1)))
+        pred_str = list()
+        
+        i = 0
+        for p in unique_pred:
+            X[i] = self.predicate_to_vector(p)
+            pred_str.append(p)
+            i = i + 1
+            
+        print len(unique_pred)
+        
+        kmeans = KMeans(n_clusters=len(unique_pred), random_state=0).fit(X)
+        
+        # export model
+        joblib.dump(kmeans, self.__configure__.get_predicate_cluster_model_file())
+        
         result = {}
-
+        output_file_path = self.__configure__.get_get_predicate_cluster_file()
+        if (os.path.exists(output_file_path)):
+            os.remove(output_file_path)
+        with open(output_file_path, 'w+') as f:
+            for i in range(0, X.shape[0]):
+                result[pred_str[i]] = kmeans.labels_[i]
+                f.write('%s\t' % pred_str[i])
+                f.write('%d\n' % kmeans.labels_[i])
+            f.close()
         return result
 
     def cluster_var(self, var_dataset, expr_dataset):
