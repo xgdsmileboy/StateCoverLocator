@@ -13,9 +13,39 @@ class Cluster(object):
     def __init__(self, configure):
         self.__configure__ = configure
 
+    staticmethod
+    def parseChar(ch):
+        # 0-26
+        if ch >= 'a' and ch <= 'z':
+            return ord(ch) - ord('a')
+        # 27-36
+        if ch >= '0' and ch <= '9':
+            return ord(ch) - ord('0') + 27
+        # compare
+        if ch == '>' or ch == '<' or ch == '=' or ch == '!':
+            return 37
+        # aritmatic
+        if ch == '+' or ch == '-' or ch == '*' or ch == '/' or ch == '%':
+            return 38
+        # bit operator
+        if ch == '&' or ch == '|' or ch == '^' or ch == '~':
+            return 39
+        if ch == '[' or ch == ']' or ch == '(' or ch == ')' or ch == '{' or ch == '}':
+            return 40
+        return 41
+
     @staticmethod
     def predicate_to_vector(p):
-        result = np.array(np.zeros())
+        result = np.array(np.zeros(42 * 42 + 1))
+        if len(v) == 1:
+            result[41 * 41] = 1
+        else:
+            for j in range(0, len(p) - 1):
+                first = parseChar(p[j])
+                second = parseChar(p[j + 1])
+                pos = first * 42 + second
+                result[pos] = 1
+        return result
 
     @staticmethod
     def var_to_vec(v):
