@@ -372,10 +372,11 @@ class Classifier(object):
         print(y_prob)
         with open(class_predicted, 'w') as f:
             for i in range(0, X_pred.shape[0]):
-                f.write('%s\t' % line_ids[i])
-                f.write('%s\t' % predicates[i])
-                f.write('%.4f' % y_prob[i][1])
-                f.write('\n')
+                if y_prob[i][1] >= 0.5:
+                    f.write('%s\t' % line_ids[i])
+                    f.write('%s\t' % predicates[i])
+                    f.write('%.4f' % y_prob[i][1])
+                    f.write('\n')
 
     def predict(self, X, feature_num, class_num):
 

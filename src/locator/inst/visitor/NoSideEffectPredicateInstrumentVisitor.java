@@ -228,12 +228,12 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 					if (!variables.isEmpty()) {						
 						node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(),
 								genAssignWithLog(expr, variables, type, start)));
-						addPredicates(getPredicatesForAssignment(rightExprStr, variables), start);
+						addPredicates(getPredicatesForAssignment(lhString, variables), start);
 					}
 				} else if(Constant.BOOL_ADD_NULL_PREDICATE_FOR_ASSGIN) {
 					node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(), genCompNullWithLog(expr, type, start)));
 					List<String> predicates = new ArrayList<>(1);
-					predicates.add(expr.toString() + "=null#ASSIGN");
+					predicates.add(lhString + " = null#ASSIGN");
 					addPredicates(predicates, start);
 				}
 			}
@@ -341,7 +341,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		for(final String variable : variables) {
 			List<String> similarPredicates = new ArrayList<String>();
 			for (final String op : operators) {
-				predicates.add(var1 + op + variables + "#ASSIGN");
+				predicates.add(var1 + op + variable + "#ASSIGN");
 			}
 		}
 		return predicates;

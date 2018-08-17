@@ -158,8 +158,13 @@ class Cluster(object):
             i = i + 1
             
         print len(unique_pred)
+        clazz = len(unique_pred) / 20
+        if clazz < 10:
+            clazz = 10
+        if len(unique_pred) < 10:
+            clazz = len(unique_pred)
         
-        kmeans = KMeans(n_clusters=len(unique_pred), random_state=0).fit(X)
+        kmeans = KMeans(n_clusters=clazz, random_state=0).fit(X)
         
         # export model
         joblib.dump(kmeans, self.__configure__.get_predicate_cluster_model_file())

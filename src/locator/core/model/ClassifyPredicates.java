@@ -66,7 +66,7 @@ public class ClassifyPredicates extends MLModel {
 		String srcPath = null;
 		String algName = new Ochiai().getName();
 		boolean addHeader = true;
-		for(;id <= bound; id ++) {
+		for(id ++;id <= bound; id ++) {
 			Subject subj = Configure.getSubject(curName, id);
 			srcPath = subj.getHome() + subj.getSsrc();
 			FeatureGenerator.generateTrainClassifierFeatures(srcPath, targetPath, curName, id, algName, addHeader);
@@ -115,7 +115,12 @@ public class ClassifyPredicates extends MLModel {
 			for(Entry<Integer, List<Pair<String, String>>> inner : instrumentVisitor.getPredicates().entrySet()) {
 				Set<String> predicates = new HashSet<>();
 				for(Pair<String, String> pair : inner.getValue()) {
-					predicates.add(pair.getFirst());
+					String pred = pair.getFirst();
+					int index = pred.lastIndexOf('#');
+					if(index > 0) {
+						pred = pred.substring(0, index);
+					}
+					predicates.add(pred);
 				}
 				line2PredSet.put(inner.getKey(), predicates);
 			}
@@ -128,15 +133,16 @@ public class ClassifyPredicates extends MLModel {
 		
 		StringBuffer buffer = new StringBuffer(ClassifierFeature.getFeatureHeader());
 		String[] data = null;
+		String ori_srcPath = subject.getHome() + subject.getSsrc() + "_ori";
 		for(Entry<String, Map<Integer, Set<String>>> entry : allPossiblePredicates.entrySet()) {
 			String relJavaFile = entry.getKey();
 			for(Entry<Integer, Set<String>> inner : entry.getValue().entrySet()) {
 				int line = inner.getKey();
-				List<String> features = FeatureGenerator.generateClassifierFeatureForLine(srcPath, relJavaFile, line, inner.getValue());
+				List<String> features = FeatureGenerator.generateClassifierFeatureForLine(ori_srcPath, relJavaFile, line, inner.getValue());
 				for(String string : features) {
 					buffer.append("\n" + string);
 					data = string.split("\t");
-					String key = data[fileNameIndex] + "::" + line + data[varNameIndex];
+					String key = data[fileNameIndex] + "::" + line + "::" + data[varNameIndex];
 					lineInfoMap.put(key, new LineInfo(line, relJavaFile, ""));
 				}
 			}

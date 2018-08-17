@@ -180,7 +180,7 @@ public class Coverage {
         } else {
             JavaFile.writeStringToFile(Constant.STR_RESULT_RECORD_LOG, "Project : " + subject.getNameAndId() + " Success!\n", true);
         }
-
+//
         Map<String, CoverInfo> coverage = null;
         if (!useSober) {
             coverage = ExecutionPathBuilder.buildCoverage(Constant.STR_TMP_INSTR_OUTPUT_FILE);
