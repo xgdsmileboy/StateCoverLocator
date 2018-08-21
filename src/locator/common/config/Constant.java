@@ -67,7 +67,7 @@ public class Constant {
 	
 	public static boolean BOOL_OUT_BRANCH_COVERAGE = false; 
 	
-	public static boolean BOOL_ADD_NULL_PREDICATE_FOR_ASSGIN = true;
+	public static boolean BOOL_ADD_NULL_PREDICATE_FOR_ASSGIN = false;
 	
 	// training model
 	// xgboost, dnn or randomforest

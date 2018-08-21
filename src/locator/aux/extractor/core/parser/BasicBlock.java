@@ -68,6 +68,7 @@ public class BasicBlock {
 	private String _publicClazz;
 	private CompilationUnit _unit;
 	private Set<Variable> _variables;
+	private Set<ConstValue> _constants;
 	private Set<BasicBlock> _children;
 	private BasicBlock _parent;
 	private BLOCKTYPE _blockType = BLOCKTYPE.UNKNOWN;
@@ -82,6 +83,7 @@ public class BasicBlock {
 		_publicClazz = clazz;
 		_unit = unit;
 		_variables = new HashSet<>(7);
+		_constants = new HashSet<>(7);
 		_children = new HashSet<>(3);
 		_parent = parent;
 		_level = 0;
@@ -110,6 +112,11 @@ public class BasicBlock {
 		variable.setParentBlock(this);
 		variable.setClazz(_publicClazz);
 		variable.setPackage(_package);
+	}
+	
+	public void addConstant(ConstValue constValue) {
+		_constants.add(constValue);
+		constValue.setParentBlock(this);
 	}
 
 	public void addVariableUse(String varName, Use use) {
@@ -197,6 +204,10 @@ public class BasicBlock {
 	public Set<BasicBlock> getChildrenBlock() {
 		return _children;
 	}
+	
+	public Set<ConstValue> getConstants() {
+		return _constants;
+	}
 
 	public Pair<Integer, Integer> getCodeRange() {
 		return _codeRange;
@@ -260,6 +271,20 @@ public class BasicBlock {
 			variables.addAll(basicBlock.recursivelyGetVariables());
 		}
 		return Collections.unmodifiableSet(variables);
+	}
+	
+	public Set<ConstValue> getAllConstValueUsedUp2Now() {
+		Set<ConstValue> constValues = new HashSet<>();
+		constValues.addAll(_constants);
+		BasicBlock parent = this.getParent();
+		while(parent != null) {
+			if(parent.getBlockType() == BLOCKTYPE.METHOD) {
+				break;
+			}
+			constValues.addAll(parent.getConstants());
+			parent = parent.getParent();
+		}
+		return constValues;
 	}
 	
 	public Set<Use> recursivelyGetUses() {

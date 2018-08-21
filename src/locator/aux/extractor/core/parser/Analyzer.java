@@ -45,6 +45,7 @@ import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InstanceofExpression;
@@ -866,6 +867,11 @@ public class Analyzer {
          *      false
 		 */
 		private boolean visit(BooleanLiteral node, USETYPE useType, Expression booleanExpr) {
+			int line = _unit.getLineNumber(node.getStartPosition());
+			int column = _unit.getColumnNumber(node.getStartPosition());
+			Boolean value = Boolean.valueOf(node.booleanValue());
+			BoolValue boolValue = new BoolValue(_file, line, column, value, genPrimitiveType(node.getAST(), PrimitiveType.BOOLEAN));
+			_visitedBlock.peek().addConstant(boolValue);
 			return true;
 		}
 
@@ -879,6 +885,11 @@ public class Analyzer {
 		}
 
 		private boolean visit(CharacterLiteral node, USETYPE useType, Expression booleanExpr) {
+			int line = _unit.getLineNumber(node.getStartPosition());
+			int column = _unit.getColumnNumber(node.getStartPosition());
+			Character ch = Character.valueOf(node.charValue());
+			CharValue charValue = new CharValue(_file, line, column, ch, genPrimitiveType(node.getAST(), PrimitiveType.CHAR));
+			_visitedBlock.peek().addConstant(charValue);
 			return true;
 		}
 
@@ -1039,37 +1050,71 @@ public class Analyzer {
 		Pattern clazz = Pattern.compile("^[A-Z][A-Za-z_]*");
 		Pattern constant=Pattern.compile("^[A-Z][A-Z_]*");
 		private boolean visit(Name node, USETYPE useType, Expression booleanExpr) {
-			if(node instanceof SimpleName) {
-				String name = node.getFullyQualifiedName();
-				if (constant.matcher(name).matches() || clazz.matcher(name).matches()) {
-					return true;
-				}
-				int line = _unit.getLineNumber(node.getStartPosition());
-				int column = _unit.getColumnNumber(node.getStartPosition());
-				Use use = new Use(line, column, node.getParent(), booleanExpr, useType, _visitedStatement.peek(), _visitedBlock.peek());
-				_visitedBlock.peek().addVariableUse(node.getFullyQualifiedName(), use);
+			int line = _unit.getLineNumber(node.getStartPosition());
+			int column = _unit.getColumnNumber(node.getStartPosition());
+			if(node.resolveTypeBinding() != null && node.resolveTypeBinding().isEnum()) {
+				EnumValue enumValue = new EnumValue(_file, line, column, node.toString(), parseSimpleType(node.getAST(), node.resolveTypeBinding()));
+				_visitedBlock.peek().addConstant(enumValue);
+				
 			} else {
-				QualifiedName qName = (QualifiedName) node;
-				// skip some constant and static access
-				if (constant.matcher(qName.getName().getFullyQualifiedName()).find()
-						|| clazz.matcher(qName.getQualifier().getFullyQualifiedName()).find()) {
-					return true;
+				if(node instanceof SimpleName) {
+					String name = node.getFullyQualifiedName();
+					if (constant.matcher(name).matches() || clazz.matcher(name).matches()) {
+						return true;
+					}
+					Use use = new Use(line, column, node.getParent(), booleanExpr, useType, _visitedStatement.peek(), _visitedBlock.peek());
+					_visitedBlock.peek().addVariableUse(node.getFullyQualifiedName(), use);
+				} else {
+					QualifiedName qName = (QualifiedName) node;
+					// skip some constant and static access
+					if (constant.matcher(qName.getName().getFullyQualifiedName()).find()
+							|| clazz.matcher(qName.getQualifier().getFullyQualifiedName()).find()) {
+						return true;
+					}
+					Name name = qName.getName();
+					Use use = new Use(line, column, qName, booleanExpr, useType, _visitedStatement.peek(), _visitedBlock.peek());
+					_visitedBlock.peek().addVariableUse(name.getFullyQualifiedName(), use);
+					process(qName.getQualifier(), USETYPE.READ, booleanExpr);
 				}
-				Name name = qName.getName();
-				int line = _unit.getLineNumber(name.getStartPosition());
-				int column = _unit.getColumnNumber(name.getStartPosition());
-				Use use = new Use(line, column, qName, booleanExpr, useType, _visitedStatement.peek(), _visitedBlock.peek());
-				_visitedBlock.peek().addVariableUse(name.getFullyQualifiedName(), use);
-				process(qName.getQualifier(), USETYPE.READ, booleanExpr);
 			}
 			return true;
 		}
 
 		private boolean visit(NullLiteral node, USETYPE useType, Expression booleanExpr) {
+			int line = _unit.getLineNumber(node.getStartPosition());
+			int column = _unit.getColumnNumber(node.getStartPosition());
+			NullValue nullValue = new NullValue(_file, line, column);
+			_visitedBlock.peek().addConstant(nullValue);
 			return true;
 		}
 
 		private boolean visit(NumberLiteral node, USETYPE useType, Expression booleanExpr) {
+			int line = _unit.getLineNumber(node.getStartPosition());
+			int column = _unit.getColumnNumber(node.getStartPosition());
+			ITypeBinding typeBinding = node.resolveTypeBinding();
+			
+			ConstValue constValue = null;
+			if(typeBinding != null) {
+				switch(typeBinding.toString()) {
+				case "int":
+					constValue = new IntValue(_file, line, column, Integer.valueOf(node.getToken()), genPrimitiveType(node.getAST(), PrimitiveType.INT));
+					break;
+				case "float":
+					constValue = new FloatValue(_file, line, column, Float.valueOf(node.getToken()), genPrimitiveType(node.getAST(), PrimitiveType.FLOAT));
+					break;
+				case "double":
+					constValue = new DoubleValue(_file, line, column, Double.valueOf(node.getToken()), genPrimitiveType(node.getAST(), PrimitiveType.DOUBLE));
+					break;
+				case "long":
+					constValue = new LongValue(_file, line, column, Long.valueOf(node.getToken()),  genPrimitiveType(node.getAST(), PrimitiveType.LONG));
+					break;
+				default :
+				}
+			}
+			if(constValue != null) {
+				_visitedBlock.peek().addConstant(constValue);
+			}
+			
 			return true;
 		}
 
@@ -1360,6 +1405,18 @@ public class Analyzer {
 				}
 			} else {
 				return type;
+			}
+		}
+		
+		private Type parseSimpleType(AST ast, ITypeBinding typeBinding) {
+			if(typeBinding == null) {
+				return ast.newWildcardType();
+			} else {
+				try {
+					return ast.newSimpleType(ast.newSimpleName(typeBinding.toString()));
+				} catch (Exception exception) {
+					return ast.newWildcardType();
+				}
 			}
 		}
 	}

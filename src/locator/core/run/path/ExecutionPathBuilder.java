@@ -56,7 +56,7 @@ public class ExecutionPathBuilder {
 				String[] lineInfo = line.split("\t");
 				if (lineInfo.length < 5) {
 					LevelLogger.error(__name__ + "#collectAllExecutedMethods instrument output format error : " + line);
-					System.exit(0);
+					continue;
 				}
 				String lineNum = lineInfo[0];
 				int failNum = Integer.parseInt(lineInfo[1]);
