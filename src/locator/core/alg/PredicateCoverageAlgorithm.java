@@ -27,7 +27,7 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 		}
 
 		List<String> oriContent = JavaFile.readFileToStringList(oriCoveragePath);
-		if (!getName().equals("StatisticalDebugging")) {			
+		if (!getName().equals("StatisticalDebugging") && !getName().equals("OriginalStatisticalDebugging")) {			
 			for(String line : oriContent) {
 				String parts[] = line.split("\t");
 				if (parts.length != 5) {
