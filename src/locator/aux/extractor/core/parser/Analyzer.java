@@ -287,7 +287,7 @@ public class Analyzer {
 			_visitedStatement.push(StmtType.METHODECL);
 			for (Object arg : node.parameters()) {
 				SingleVariableDeclaration svd = (SingleVariableDeclaration) arg;
-				Type type = parseArrayType(svd.getType(), node.getExtraDimensions());
+				Type type = parseArrayType(svd.getType(), svd.getExtraDimensions());
 				SimpleName name = svd.getName();
 				int line = _unit.getLineNumber(name.getStartPosition());
 				int column = _unit.getColumnNumber(name.getStartPosition());
@@ -1094,21 +1094,30 @@ public class Analyzer {
 			ITypeBinding typeBinding = node.resolveTypeBinding();
 			
 			ConstValue constValue = null;
+			int radix = 10;
+			String tokens = node.getToken();
+			String value = tokens.toLowerCase();
+			if(value.startsWith("0x") || tokens.startsWith("-0x")) {
+				radix = 16;
+			}
 			if(typeBinding != null) {
-				switch(typeBinding.toString()) {
-				case "int":
-					constValue = new IntValue(_file, line, column, Integer.valueOf(node.getToken()), genPrimitiveType(node.getAST(), PrimitiveType.INT));
-					break;
-				case "float":
-					constValue = new FloatValue(_file, line, column, Float.valueOf(node.getToken()), genPrimitiveType(node.getAST(), PrimitiveType.FLOAT));
-					break;
-				case "double":
-					constValue = new DoubleValue(_file, line, column, Double.valueOf(node.getToken()), genPrimitiveType(node.getAST(), PrimitiveType.DOUBLE));
-					break;
-				case "long":
-					constValue = new LongValue(_file, line, column, Long.valueOf(node.getToken()),  genPrimitiveType(node.getAST(), PrimitiveType.LONG));
-					break;
-				default :
+				try {
+					switch(typeBinding.toString()) {
+					case "int":
+						constValue = new IntValue(_file, line, column, Integer.valueOf(tokens, radix), genPrimitiveType(node.getAST(), PrimitiveType.INT));
+						break;
+					case "float":
+						constValue = new FloatValue(_file, line, column, Float.valueOf(tokens), genPrimitiveType(node.getAST(), PrimitiveType.FLOAT));
+						break;
+					case "double":
+						constValue = new DoubleValue(_file, line, column, Double.valueOf(tokens), genPrimitiveType(node.getAST(), PrimitiveType.DOUBLE));
+						break;
+					case "long":
+						constValue = new LongValue(_file, line, column, Long.valueOf(tokens, radix),  genPrimitiveType(node.getAST(), PrimitiveType.LONG));
+						break;
+					default :
+					}
+				} catch (Exception e) {
 				}
 			}
 			if(constValue != null) {

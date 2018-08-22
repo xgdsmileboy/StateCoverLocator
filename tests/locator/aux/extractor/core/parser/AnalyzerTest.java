@@ -42,6 +42,17 @@ public class AnalyzerTest {
 	@Test
 	public void test_getValidVariables_withType() {
 		String srcBase = base + "/res/junitRes/math/math_3_buggy/src/main/java";
+		String file = "org/apache/commons/math3/util/FastMath.java";
+		BasicBlock basicBlock = Analyzer.analyze(file, srcBase);
+		Set<Variable> variables = basicBlock.getAllValidVariables(2012, "double");
+		for(Variable variable : variables) {
+			System.out.println(variable.getName() + "(" + variable.getType() + ")");
+		}
+	}
+	
+	@Test
+	public void test_getValidVariables_withType2() {
+		String srcBase = base + "/res/junitRes/math/math_3_buggy/src/main/java";
 		String file = "org/apache/commons/math3/util/MathArrays.java";
 		BasicBlock basicBlock = Analyzer.analyze(file, srcBase);
 		Set<Variable> variables = basicBlock.getAllValidVariables(821, "double[]");
