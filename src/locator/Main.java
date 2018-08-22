@@ -35,6 +35,7 @@ import locator.core.alg.Barinel;
 import locator.core.alg.DStar;
 import locator.core.alg.Ochiai;
 import locator.core.alg.Op2;
+import locator.core.alg.OriginalStatisticalDebugging;
 import locator.core.alg.Simple;
 import locator.core.alg.Sober;
 import locator.core.alg.StatisticalDebugging;
@@ -162,6 +163,7 @@ public class Main {
 			algorithms.add(new Op2());
 			algorithms.add(new Simple());
 			algorithms.add(new StatisticalDebugging());
+			algorithms.add(new OriginalStatisticalDebugging());
 		}
 		Suspicious.compute(subject, algorithms, failedTests.size(), totalTestNum - failedTests.size(), useStatisticalDebugging, useSober);
 		
