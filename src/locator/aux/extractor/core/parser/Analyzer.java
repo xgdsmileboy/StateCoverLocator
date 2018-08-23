@@ -287,7 +287,11 @@ public class Analyzer {
 			_visitedStatement.push(StmtType.METHODECL);
 			for (Object arg : node.parameters()) {
 				SingleVariableDeclaration svd = (SingleVariableDeclaration) arg;
-				Type type = parseArrayType(svd.getType(), svd.getExtraDimensions());
+				int dim = 0;
+				if(svd.toString().contains("...")) {
+					dim = 1;
+				}
+				Type type = parseArrayType(svd.getType(), svd.getExtraDimensions() + dim);
 				SimpleName name = svd.getName();
 				int line = _unit.getLineNumber(name.getStartPosition());
 				int column = _unit.getColumnNumber(name.getStartPosition());
