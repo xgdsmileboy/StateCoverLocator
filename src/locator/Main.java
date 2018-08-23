@@ -127,7 +127,7 @@ public class Main {
 		}
 		
 		String predCoverageFileName = useStatisticalDebugging ? "pred_coverage_sd.csv" : "pred_coverage.csv";
-		File predCoverageFile = new File(predCoverageFileName);
+		File predCoverageFile = new File(subject.getCoverageInfoPath() + "/" + predCoverageFileName);
 		
 		if(Constant.BOOL_RECOMPUTE_PRED || !predCoverageFile.exists()) {
 
