@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jdt.core.dom.Modifier;
+
 import locator.aux.extractor.core.parser.Analyzer;
 import locator.aux.extractor.core.parser.BasicBlock;
 import locator.aux.extractor.core.parser.StmtType;
@@ -96,6 +98,9 @@ public class CodeAnalyzer {
 				continue;
 			}
 			if (mustInitialized && !v.isArgument()) {
+				if(Modifier.isFinal(v.getModifiers())) {
+					continue;
+				}
 				BasicBlock minimal = basicBlock.getMinimalBasicBlock(line);
 				int level = minimal.getBlockLevel();
 				boolean initialized = false;
