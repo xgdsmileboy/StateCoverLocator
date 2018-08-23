@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.CharacterLiteral;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ForStatement;
@@ -124,7 +125,7 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		int start = _cu.getLineNumber(node.getStartPosition());
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
-			if (expr != null && isComparableType(expr.resolveTypeBinding())) {
+			if (expr != null && !(expr instanceof ClassInstanceCreation) && isComparableType(expr.resolveTypeBinding())) {
 				String condition = expr.toString().replace("\n", " ").replaceAll("\\s+", " ");
 				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(),
 						genReturnWithLog(expr, expr.resolveTypeBinding(), start)));
