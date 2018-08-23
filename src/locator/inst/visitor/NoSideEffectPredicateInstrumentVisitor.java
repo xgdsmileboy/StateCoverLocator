@@ -49,12 +49,18 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private String _srcPath = "";
 	private String _relJavaPath = "";
 	private boolean _useSober;
+	private boolean _branch;
+	private boolean _assign;
+	private boolean _return;
 	private String _methodID = "";
 	private Map<Integer, List<Pair<String, String>>> _predicates = new HashMap<>();
 	private static AST ast = AST.newAST(Constant.AST_LEVEL);
 	
-	public NoSideEffectPredicateInstrumentVisitor(boolean useSober) {
+	public NoSideEffectPredicateInstrumentVisitor(boolean useSober, boolean insBranch, boolean insAssign, boolean insReturn) {
 		_useSober = useSober;
+		_branch = insBranch;
+		_assign = insAssign;
+		_return = insReturn;
 	}
 	
 	public void initOneRun(Set<Integer> lines, String srcPath, String relJavaPath) {
@@ -122,43 +128,26 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 //	}
 
 	public boolean visit(ReturnStatement node) {
-		int start = _cu.getLineNumber(node.getStartPosition());
-		if (_lines.contains(start)) {
-			Expression expr = node.getExpression();
-			if (expr != null && !(expr instanceof ClassInstanceCreation) && isComparableType(expr.resolveTypeBinding())) {
-				String condition = expr.toString().replace("\n", " ").replaceAll("\\s+", " ");
-				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(),
-						genReturnWithLog(expr, expr.resolveTypeBinding(), start)));
-				addPredicates(getPredicateForReturns(condition), start);
+		if(_return) {
+			int start = _cu.getLineNumber(node.getStartPosition());
+			if (_lines.contains(start)) {
+				Expression expr = node.getExpression();
+				if (expr != null && !(expr instanceof ClassInstanceCreation) && isComparableType(expr.resolveTypeBinding())) {
+					String condition = expr.toString().replace("\n", " ").replaceAll("\\s+", " ");
+					node.setExpression((Expression) ASTNode.copySubtree(node.getAST(),
+							genReturnWithLog(expr, expr.resolveTypeBinding(), start)));
+					addPredicates(getPredicateForReturns(condition), start);
+				}
 			}
 		}
 		return true;
 	}
 	
 	public boolean visit(IfStatement node) {
-		int start = _cu.getLineNumber(node.getExpression().getStartPosition());
-		if (_lines.contains(start)) {
-			Expression expr = node.getExpression();
-			String condition = expr.toString().replaceAll("\\s+", " ");
-			node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
-			addPredicates(getPredicateForConditions(condition), start);
-		}
-		return true;
-	}
-	
-	public boolean visit(ForStatement node) {
-		int position = node.getStartPosition();
-		if (node.getExpression() != null) {
-			position = node.getExpression().getStartPosition();
-		} else if (node.initializers() != null && node.initializers().size() > 0) {
-			position = ((ASTNode) node.initializers().get(0)).getStartPosition();
-		} else if (node.updaters() != null && node.updaters().size() > 0) {
-			position = ((ASTNode) node.updaters().get(0)).getStartPosition();
-		}
-		int start = _cu.getLineNumber(position);
-		if (_lines.contains(start)) {
-			Expression expr = node.getExpression();
-			if(expr != null) {
+		if(_branch) {
+			int start = _cu.getLineNumber(node.getExpression().getStartPosition());
+			if (_lines.contains(start)) {
+				Expression expr = node.getExpression();
 				String condition = expr.toString().replaceAll("\\s+", " ");
 				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
 				addPredicates(getPredicateForConditions(condition), start);
@@ -167,30 +156,57 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 		return true;
 	}
 	
-	public boolean visit(WhileStatement node) {
-		int start = _cu.getLineNumber(node.getExpression().getStartPosition());
-		if (_lines.contains(start)) {
-			Expression expr = node.getExpression();
-			String condition = expr.toString().replaceAll("\\s+", " ");
-			if (condition.equals("true")) {
-				return true;
+	public boolean visit(ForStatement node) {
+		if(_branch) {
+			int position = node.getStartPosition();
+			if (node.getExpression() != null) {
+				position = node.getExpression().getStartPosition();
+			} else if (node.initializers() != null && node.initializers().size() > 0) {
+				position = ((ASTNode) node.initializers().get(0)).getStartPosition();
+			} else if (node.updaters() != null && node.updaters().size() > 0) {
+				position = ((ASTNode) node.updaters().get(0)).getStartPosition();
 			}
-			node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
-			addPredicates(getPredicateForConditions(condition), start);
+			int start = _cu.getLineNumber(position);
+			if (_lines.contains(start)) {
+				Expression expr = node.getExpression();
+				if(expr != null) {
+					String condition = expr.toString().replaceAll("\\s+", " ");
+					node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
+					addPredicates(getPredicateForConditions(condition), start);
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean visit(WhileStatement node) {
+		if(_branch) {
+			int start = _cu.getLineNumber(node.getExpression().getStartPosition());
+			if (_lines.contains(start)) {
+				Expression expr = node.getExpression();
+				String condition = expr.toString().replaceAll("\\s+", " ");
+				if (condition.equals("true")) {
+					return true;
+				}
+				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
+				addPredicates(getPredicateForConditions(condition), start);
+			}
 		}
 		return true;
 	}
 	
 	public boolean visit(DoStatement node) {
-		int start = _cu.getLineNumber(node.getExpression().getStartPosition());
-		if (_lines.contains(start)) {
-			Expression expr = node.getExpression();
-			String condition = expr.toString().replaceAll("\\s+", " ");
-			if (condition.equals("true")) {
-				return true;
+		if(_branch) {
+			int start = _cu.getLineNumber(node.getExpression().getStartPosition());
+			if (_lines.contains(start)) {
+				Expression expr = node.getExpression();
+				String condition = expr.toString().replaceAll("\\s+", " ");
+				if (condition.equals("true")) {
+					return true;
+				}
+				node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
+				addPredicates(getPredicateForConditions(condition), start);
 			}
-			node.setExpression((Expression) ASTNode.copySubtree(node.getAST(), genConditionWithLog(expr, start)));
-			addPredicates(getPredicateForConditions(condition), start);
 		}
 		return true;
 	}
@@ -206,40 +222,42 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 //	}
 	
 	public boolean visit(Assignment node) {
-		int start = _cu.getLineNumber(node.getStartPosition());
-		if (_lines.contains(start)) {
-			Expression expr = node.getRightHandSide();
-			if(expr instanceof NumberLiteral || expr instanceof BooleanLiteral || expr instanceof CharacterLiteral) {
-				return true;
-			}
-			if (node.getLeftHandSide() != null && expr != null) {
-				String lhString = node.getLeftHandSide().toString();
-//				ITypeBinding type = expr.resolveTypeBinding();
-				ITypeBinding type = node.getLeftHandSide().resolveTypeBinding();
-				ITypeBinding rightType = node.getRightHandSide().resolveTypeBinding();
-				if(rightType != null && type != null && !rightType.toString().equals(type.toString())) {
+		if(_assign) {
+			int start = _cu.getLineNumber(node.getStartPosition());
+			if (_lines.contains(start)) {
+				Expression expr = node.getRightHandSide();
+				if(expr instanceof NumberLiteral || expr instanceof BooleanLiteral || expr instanceof CharacterLiteral) {
 					return true;
 				}
-				if (isComparableType(type)) {
-					String rightExprStr = expr.toString().replaceAll("\\s+", " ");
-					Set<String> variables = new HashSet<>();
-					Map<String, String> availableVars = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, start, true);
-					for(Entry<String, String> entry : availableVars.entrySet()) {
-						String varName = entry.getKey();
-						if(!lhString.equals(varName) && !varName.equals(rightExprStr) && entry.getValue().equals(type.getName())) {
-							variables.add(entry.getKey());
+				if (node.getLeftHandSide() != null && expr != null) {
+					String lhString = node.getLeftHandSide().toString();
+	//				ITypeBinding type = expr.resolveTypeBinding();
+					ITypeBinding type = node.getLeftHandSide().resolveTypeBinding();
+					ITypeBinding rightType = node.getRightHandSide().resolveTypeBinding();
+					if(rightType != null && type != null && !rightType.toString().equals(type.toString())) {
+						return true;
+					}
+					if (isComparableType(type)) {
+						String rightExprStr = expr.toString().replaceAll("\\s+", " ");
+						Set<String> variables = new HashSet<>();
+						Map<String, String> availableVars = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, start, true);
+						for(Entry<String, String> entry : availableVars.entrySet()) {
+							String varName = entry.getKey();
+							if(!lhString.equals(varName) && !varName.equals(rightExprStr) && entry.getValue().equals(type.getName())) {
+								variables.add(entry.getKey());
+							}
 						}
+						if (!variables.isEmpty()) {						
+							node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(),
+									genAssignWithLog(expr, variables, type, start)));
+							addPredicates(getPredicatesForAssignment(lhString, variables), start);
+						}
+					} else if(Constant.BOOL_ADD_NULL_PREDICATE_FOR_ASSGIN) {
+						node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(), genCompNullWithLog(expr, type, start)));
+						List<String> predicates = new ArrayList<>(1);
+						predicates.add(lhString + " = null#ASSIGN");
+						addPredicates(predicates, start);
 					}
-					if (!variables.isEmpty()) {						
-						node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(),
-								genAssignWithLog(expr, variables, type, start)));
-						addPredicates(getPredicatesForAssignment(lhString, variables), start);
-					}
-				} else if(Constant.BOOL_ADD_NULL_PREDICATE_FOR_ASSGIN) {
-					node.setRightHandSide((Expression) ASTNode.copySubtree(node.getAST(), genCompNullWithLog(expr, type, start)));
-					List<String> predicates = new ArrayList<>(1);
-					predicates.add(lhString + " = null#ASSIGN");
-					addPredicates(predicates, start);
 				}
 			}
 		}
@@ -247,56 +265,58 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	}
 	
 	public boolean visit(VariableDeclarationStatement node) {
-		int start = _cu.getLineNumber(node.getStartPosition());
-		if (_lines.contains(start)) {
-			List<VariableDeclarationFragment> fragments = node.fragments();
-			for(VariableDeclarationFragment fragment : fragments) {
-				Expression expr = fragment.getInitializer();
-				if (expr != null) {
-					if(expr instanceof NumberLiteral || expr instanceof BooleanLiteral || expr instanceof CharacterLiteral) {
-						continue;
-					}
-					String rightExprStr = expr.toString();
-					ITypeBinding type = expr.resolveTypeBinding();
-					String typeStr = null;
-					if(type != null) {
-						if (isComparableType(type)) {
-							typeStr = type.getName();
+		if (_assign) {
+			int start = _cu.getLineNumber(node.getStartPosition());
+			if (_lines.contains(start)) {
+				List<VariableDeclarationFragment> fragments = node.fragments();
+				for(VariableDeclarationFragment fragment : fragments) {
+					Expression expr = fragment.getInitializer();
+					if (expr != null) {
+						if(expr instanceof NumberLiteral || expr instanceof BooleanLiteral || expr instanceof CharacterLiteral) {
+							continue;
 						}
-					} else if(fragment.resolveBinding() != null) {
-						type = fragment.resolveBinding().getType();
-						if(type != null && isComparableType(type)) {
-							typeStr = type.getName();
-						}
-					}
-					if (typeStr != null) {
-						int line = _cu.getLineNumber(fragment.getStartPosition());
-						Set<String> variables = new HashSet<>();
-						Map<String, String> varAvailable = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, line, true);
-						for(Entry<String, String> entry : varAvailable.entrySet()) {
-							if(!entry.getKey().equals(rightExprStr) && entry.getValue().equals(type.getName())) {
-								variables.add(entry.getKey());
+						String rightExprStr = expr.toString();
+						ITypeBinding type = expr.resolveTypeBinding();
+						String typeStr = null;
+						if(type != null) {
+							if (isComparableType(type)) {
+								typeStr = type.getName();
+							}
+						} else if(fragment.resolveBinding() != null) {
+							type = fragment.resolveBinding().getType();
+							if(type != null && isComparableType(type)) {
+								typeStr = type.getName();
 							}
 						}
-						
-						if (!variables.isEmpty()) {							
-							fragment.setInitializer((Expression) ASTNode.copySubtree(node.getAST(),
-									genAssignWithLog(expr, variables, type, start)));
-							addPredicates(getPredicatesForAssignment(rightExprStr, variables), start);
+						if (typeStr != null) {
+							int line = _cu.getLineNumber(fragment.getStartPosition());
+							Set<String> variables = new HashSet<>();
+							Map<String, String> varAvailable = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, line, true);
+							for(Entry<String, String> entry : varAvailable.entrySet()) {
+								if(!entry.getKey().equals(rightExprStr) && entry.getValue().equals(type.getName())) {
+									variables.add(entry.getKey());
+								}
+							}
+							
+							if (!variables.isEmpty()) {							
+								fragment.setInitializer((Expression) ASTNode.copySubtree(node.getAST(),
+										genAssignWithLog(expr, variables, type, start)));
+								addPredicates(getPredicatesForAssignment(rightExprStr, variables), start);
+							}
 						}
-					}
-				} else if(!Modifier.isFinal(node.getModifiers())) {
-					Type type = node.getType();
-					if(fragment.getExtraDimensions() > 0) {
-						if(type.isArrayType()) {
-							ArrayType arrayType = (ArrayType) type;
-							type = ast.newArrayType((Type) ASTNode.copySubtree(ast, arrayType.getElementType()), arrayType.getDimensions() + fragment.getExtraDimensions());
-						} else {
-							type = ast.newArrayType((Type) ASTNode.copySubtree(ast, type), fragment.getExtraDimensions());
+					} else if(!Modifier.isFinal(node.getModifiers())) {
+						Type type = node.getType();
+						if(fragment.getExtraDimensions() > 0) {
+							if(type.isArrayType()) {
+								ArrayType arrayType = (ArrayType) type;
+								type = ast.newArrayType((Type) ASTNode.copySubtree(ast, arrayType.getElementType()), arrayType.getDimensions() + fragment.getExtraDimensions());
+							} else {
+								type = ast.newArrayType((Type) ASTNode.copySubtree(ast, type), fragment.getExtraDimensions());
+							}
 						}
+						Expression expression = genDefaultValue(type);
+						fragment.setInitializer((Expression) ASTNode.copySubtree(fragment.getAST(), expression));
 					}
-					Expression expression = genDefaultValue(type);
-					fragment.setInitializer((Expression) ASTNode.copySubtree(fragment.getAST(), expression));
 				}
 			}
 		}

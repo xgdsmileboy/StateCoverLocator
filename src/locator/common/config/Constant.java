@@ -66,7 +66,10 @@ public class Constant {
 	public static boolean BOOL_USE_STATISTICAL_DEBUGGING = true;
 	public static boolean BOOL_USE_SOBER = false;
 	
-	public static boolean BOOL_OUT_BRANCH_COVERAGE = false; 
+	
+	public static boolean BOOL_BRANCH_COVERAGE = true;
+	public static boolean BOOL_ASSIGNMENT_COVERAGE = true;
+	public static boolean BOOL_RETURN_COVERAGE = true;
 	
 	public static boolean BOOL_ADD_NULL_PREDICATE_FOR_ASSGIN = false;
 	
@@ -216,7 +219,9 @@ public class Constant {
 			Constant.BOOL_USE_SOBER =  Boolean.parseBoolean(prop.getProperty("USE.SOBER"));
 			Constant.BOOL_USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
 			Constant.BOOL_PREDICT_LEFT_VARIABLE = Boolean.parseBoolean(prop.getProperty("PREDICT.LEFT.VAR"));
-			Constant.BOOL_OUT_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
+			Constant.BOOL_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
+			Constant.BOOL_ASSIGNMENT_COVERAGE = Boolean.parseBoolean(prop.getProperty("ASSIGN.COVERAGE"));
+			Constant.BOOL_RETURN_COVERAGE = Boolean.parseBoolean(prop.getProperty("RETURN.COVERAGE"));
 			Constant.TIME_OUT_RUN_TEST_SUITE = Integer.parseInt(prop.getProperty("TEST.TIMEOUT"));
 			Constant.BOOL_RECOMPUTE_ORI = Boolean.parseBoolean(prop.getProperty("RECOMPUTE.ORI"));
 			Constant.BOOL_RECOMPUTE_PRED = Boolean.parseBoolean(prop.getProperty(""));

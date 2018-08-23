@@ -104,22 +104,11 @@ public class Main {
 		if(totalTestNum < 0) {
 			LevelLogger.info("step " + (stepRecord ++) + " : collect failed test and covered methods.");
 			Pair<Set<Integer>, Set<Integer>> failedTestsAndCoveredMethods = Collector.collectFailedTestAndCoveredMethod(subject);
-//			int totalFailed = failedTestsAndCoveredMethods.getFirst().size();
-			
-			// output branch coverage information
-			if(Constant.BOOL_OUT_BRANCH_COVERAGE) {
-				LevelLogger.info("step " + (stepRecord ++) + " : compute branch coverage information.");
-				String testsPath = subject.getHome() + "/all-tests.txt";
-				ExecuteCommand.deleteGivenFile(testsPath);
-				Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, BranchInstrumentVisitor.class);
-				LevelLogger.info(">>> output branch coverage information to file : branch_coverage.csv");
-				Utils.printCoverage(coverage, subject.getCoverageInfoPath(), "branch_coverage.csv");
-			}
 			
 			LevelLogger.info("step " + (stepRecord ++) + " : compute original coverage information.");
 			String testsPath = subject.getHome() + "/all-tests.txt";
 			ExecuteCommand.deleteGivenFile(testsPath);
-			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods, StatementInstrumentVisitor.class);
+			Map<String, CoverInfo> coverage = Coverage.computeOriginalCoverage(subject, failedTestsAndCoveredMethods);
 			totalTestNum = JavaFile.readFileToStringList(testsPath).size();
 			
 			LevelLogger.info("output original coverage information to file : ori_coverage.csv");

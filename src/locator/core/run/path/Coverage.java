@@ -56,17 +56,13 @@ public class Coverage {
 	 * @return
 	 */
 	public static Map<String, CoverInfo> computeOriginalCoverage(Subject subject,
-			Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods, Class<?> visitor) {
+			Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods) {
 
         String src = subject.getHome() + subject.getSsrc();
         String test = subject.getHome() + subject.getTsrc();
 
-        TraversalVisitor traversalVisitor = null;
-        if(visitor == BranchInstrumentVisitor.class) {
-        	traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
-        } else {
-        	traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
-        }
+        TraversalVisitor traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+
         // instrument those methods ran by failed tests
         Instrument.execute(src, traversalVisitor);
 

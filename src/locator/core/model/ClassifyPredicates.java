@@ -100,7 +100,8 @@ public class ClassifyPredicates extends MLModel {
 		Map<String, List<Integer>> file2LocationList = mapLocations2File(subject, allStatements);
 		Map<String, Map<Integer, Set<String>>> allPossiblePredicates = new HashMap<>();
 		
-		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(useSober);
+		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(useSober,
+				Constant.BOOL_BRANCH_COVERAGE, Constant.BOOL_ASSIGNMENT_COVERAGE, Constant.BOOL_RETURN_COVERAGE);
 		for (Entry<String, List<Integer>> entry : file2LocationList.entrySet()) {
 			String relJavaPath = entry.getKey();
 			String fileName = srcPath + "/" + relJavaPath;
