@@ -59,6 +59,7 @@ public class Constant {
 	public static boolean BOOL_PREDICT_LEFT_VARIABLE = false;
 	
 	public static boolean BOOL_RECOMPUTE_ORI = false;
+	public static boolean BOOL_RECOMPUTE_PRED = false;
 	
 	// update predicate
 	public static boolean BOOL_RECOVER_PREDICATE_FROM_FILE = true;
@@ -218,6 +219,7 @@ public class Constant {
 			Constant.BOOL_OUT_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
 			Constant.TIME_OUT_RUN_TEST_SUITE = Integer.parseInt(prop.getProperty("TEST.TIMEOUT"));
 			Constant.BOOL_RECOMPUTE_ORI = Boolean.parseBoolean(prop.getProperty("RECOMPUTE.ORI"));
+			Constant.BOOL_RECOMPUTE_PRED = Boolean.parseBoolean(prop.getProperty(""));
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_runtime get properties failed!" + e.getMessage());

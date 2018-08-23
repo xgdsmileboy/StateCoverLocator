@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// import locator.common.config.Constant;
-import locator.common.config.Identifier;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
 import locator.common.util.LevelLogger;
@@ -84,7 +82,7 @@ public abstract class PredicateCoverageAlgorithm extends Algorithm {
 		}
 		
 		List<Pair<Double, String>> contents = new ArrayList<Pair<Double, String>>();
-		if (getName().equals("StatisticalDebugging")) {
+		if (getName().equals("StatisticalDebugging") || getName().equals("OriginalStatisticalDebugging")) {
 			for(Map.Entry<String, PredicateCoverage> p : statementScore.entrySet()) {
 				PredicateCoverage predCov = p.getValue();
 				contents.add(new Pair<>(predCov.getScore(),

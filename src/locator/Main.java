@@ -7,6 +7,7 @@
 
 package locator;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -136,18 +137,23 @@ public class Main {
 			Utils.backupFailedTestsAndCoveredStmt(subject, totalTestNum, failedTests, allCoveredStatement);
 		}
 		
-		LevelLogger.info("step " + (stepRecord ++) + " : compute predicate coverage information");
-		Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, model, allCoveredStatement,
-				failedTests, useSober);
-
-		if(predicateCoverage == null && !useSober){
-			return false;
-		}
+		String predCoverageFileName = useStatisticalDebugging ? "pred_coverage_sd.csv" : "pred_coverage.csv";
+		File predCoverageFile = new File(predCoverageFileName);
 		
-		if (!useSober) {
-			String predCoverageFile = useStatisticalDebugging ? "pred_coverage_sd.csv" : "pred_coverage.csv";
-			LevelLogger.info("output predicate coverage information to file : " + predCoverageFile);
-			Utils.printCoverage(predicateCoverage, subject.getCoverageInfoPath(), predCoverageFile);
+		if(Constant.BOOL_RECOMPUTE_PRED || !predCoverageFile.exists()) {
+
+			LevelLogger.info("step " + (stepRecord ++) + " : compute predicate coverage information");
+			Map<String, CoverInfo> predicateCoverage = Coverage.computePredicateCoverage(subject, model, allCoveredStatement,
+					failedTests, useSober);
+			
+			if(predicateCoverage == null && !useSober){
+				return false;
+			}
+			
+			if (!useSober) {
+				LevelLogger.info("output predicate coverage information to file : " + predCoverageFileName);
+				Utils.printCoverage(predicateCoverage, subject.getCoverageInfoPath(), predCoverageFileName);
+			}
 		}
 
 		LevelLogger.info("step " + (stepRecord ++) + " : compute suspicious for each statement and out put to file.");
