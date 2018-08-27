@@ -151,7 +151,7 @@ public class Utils {
 		} catch (Exception e) {
 		}
 		
-		if(containIllegal || allCoveredStmt.size() == 0) {
+		if(containIllegal) {
 			JavaFile.writeStringToFile(fileName, "");
 			return -1;
 		}

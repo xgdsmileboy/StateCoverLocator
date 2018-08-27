@@ -689,11 +689,12 @@ public class Analyzer {
 			basicBlock.setBlockType(BLOCKTYPE.TRY, "TryStatement");
 			_visitedBlock.push(basicBlock);
 			_visitedStatement.push(StmtType.TRY);
-			if (node.resources() != null) {
-				for (Object object : node.resources()) {
-					process((ASTNode) object, USETYPE.READ, null);
-				}
-			}
+			// This operation is not supported when the AST was parsed with a lower parser (<JLS4)
+//			if (node.resources() != null) {
+//				for (Object object : node.resources()) {
+//					process((ASTNode) object, USETYPE.READ, null);
+//				}
+//			}
 			process(node.getBody(), USETYPE.UNKNOWN, null);
 			_visitedBlock.pop();
 			_visitedStatement.pop();

@@ -13,7 +13,9 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
+import locator.common.util.LevelLogger;
 import locator.common.util.Pair;
+import locator.common.util.Utils;
 import locator.inst.visitor.NoSideEffectPredicateInstrumentVisitor;
 
 public class SDModel extends Model {
@@ -70,6 +72,8 @@ public class SDModel extends Model {
 			JavaFile.writeStringToFile(fileName, unit.toString());
 			file2Line2Predicates.put(fileName, instrumentVisitor.getPredicates());
 		}
+		LevelLogger.debug("-------------------FOR DEBUG----------------------");
+		Utils.printPredicateInfo(file2Line2Predicates, subject, _predicates_backup_file);
 		return file2Line2Predicates;
 	}
 	

@@ -48,8 +48,6 @@ import locator.core.model.SDModel;
 import locator.core.model.XGBoost;
 import locator.core.run.path.Collector;
 import locator.core.run.path.Coverage;
-import locator.inst.visitor.BranchInstrumentVisitor;
-import locator.inst.visitor.StatementInstrumentVisitor;
 
 public class Main {
 
@@ -100,6 +98,7 @@ public class Main {
 		if(!Constant.BOOL_RECOMPUTE_ORI) {
 			totalTestNum = Utils.recoverFailedTestsAndCoveredStmt(subject, failedTests, allCoveredStatement);
 		}
+		Date startTime = new Date();
 		int stepRecord = 1;
 		if(totalTestNum < 0) {
 			LevelLogger.info("step " + (stepRecord ++) + " : collect failed test and covered methods.");
@@ -125,6 +124,7 @@ public class Main {
 			Identifier.backup(subject);
 			Utils.backupFailedTestsAndCoveredStmt(subject, totalTestNum, failedTests, allCoveredStatement);
 		}
+		Date middleTime = new Date();
 		
 		String predCoverageFileName = useStatisticalDebugging ? "pred_coverage_sd.csv" : "pred_coverage.csv";
 		File predCoverageFile = new File(subject.getCoverageInfoPath() + "/" + predCoverageFileName);
@@ -144,6 +144,12 @@ public class Main {
 				Utils.printCoverage(predicateCoverage, subject.getCoverageInfoPath(), predCoverageFileName);
 			}
 		}
+		
+		Date endTime = new Date();
+		
+		JavaFile.writeStringToFile(Constant.STR_TIME_LOG, subject.getName() + "_" + subject.getId() + "\t"
+				+ Long.toString(middleTime.getTime() - startTime.getTime()) + "\t"
+				+ Long.toString(endTime.getTime() - middleTime.getTime()) + "\t" + startTime + "\n", true);
 
 		LevelLogger.info("step " + (stepRecord ++) + " : compute suspicious for each statement and out put to file.");
 		List<Algorithm> algorithms = new ArrayList<>();
@@ -190,8 +196,6 @@ public class Main {
 				Date endTime = new Date();
 				String end = simpleDateFormat.format(endTime);
 				LevelLogger.info("BEGIN : " + begin + " - END : " + end);
-				JavaFile.writeStringToFile(Constant.STR_TIME_LOG, subjectInfo + "\t"
-						+ Long.toString(endTime.getTime() - startTime.getTime()) + "\t" + startTime + "\n", true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
