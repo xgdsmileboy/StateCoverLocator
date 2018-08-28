@@ -319,6 +319,20 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 					}
 				}
 			}
+		} else {
+			if(!Modifier.isFinal(node.getModifiers())) {
+				List<VariableDeclarationFragment> fragments = node.fragments();
+				for(VariableDeclarationFragment fragment : fragments) {
+					Expression expr = fragment.getInitializer();
+					if(expr == null) {
+						ITypeBinding binding = fragment.getName().resolveTypeBinding();
+						if(binding != null && !binding.isPrimitive()) {
+							fragment.setInitializer(fragment.getAST().newNullLiteral());
+						}
+					}
+				}
+				
+			}
 		}
 		return true;
 	}
