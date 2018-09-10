@@ -321,14 +321,21 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 			}
 		} else {
 			if(!Modifier.isFinal(node.getModifiers())) {
+				Type type = node.getType();
 				List<VariableDeclarationFragment> fragments = node.fragments();
 				for(VariableDeclarationFragment fragment : fragments) {
 					Expression expr = fragment.getInitializer();
 					if(expr == null) {
-						ITypeBinding binding = fragment.getName().resolveTypeBinding();
-						if(binding != null && !binding.isPrimitive()) {
-							fragment.setInitializer(fragment.getAST().newNullLiteral());
+						if(fragment.getExtraDimensions() > 0) {
+							if(type.isArrayType()) {
+								ArrayType arrayType = (ArrayType) type;
+								type = ast.newArrayType((Type) ASTNode.copySubtree(ast, arrayType.getElementType()), arrayType.getDimensions() + fragment.getExtraDimensions());
+							} else {
+								type = ast.newArrayType((Type) ASTNode.copySubtree(ast, type), fragment.getExtraDimensions());
+							}
 						}
+						Expression expression = genDefaultValue(type);
+						fragment.setInitializer((Expression) ASTNode.copySubtree(fragment.getAST(), expression));
 					}
 				}
 				
