@@ -27,7 +27,7 @@ import locator.core.CoverInfo;
 import locator.core.model.Model;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
-import locator.inst.visitor.BranchInstrumentVisitor;
+import locator.inst.visitor.MethodInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
 import locator.inst.visitor.TestMethodInstrumentVisitor;
 import locator.inst.visitor.TraversalVisitor;
@@ -61,8 +61,12 @@ public class Coverage {
         String src = subject.getHome() + subject.getSsrc();
         String test = subject.getHome() + subject.getTsrc();
 
-        TraversalVisitor traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
-
+        TraversalVisitor traversalVisitor = null;
+        if(Constant.BOOL_METHOD_LEVEL) {
+        	traversalVisitor = new MethodInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        } else {
+        	traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        }
         // instrument those methods ran by failed tests
         Instrument.execute(src, traversalVisitor);
 

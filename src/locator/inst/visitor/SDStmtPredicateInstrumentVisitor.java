@@ -43,7 +43,7 @@ import locator.common.config.Constant;
 import locator.common.config.Identifier;
 import locator.common.util.Pair;
 
-public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
+public class SDStmtPredicateInstrumentVisitor extends NoSideEffectPreidcateInstrumentVisitor {
 	private Set<Integer> _lines = null;
 	private List<Pair<String, String>> _leftVars = new ArrayList<Pair<String, String>>();
 	private String _srcPath = "";
@@ -53,10 +53,9 @@ public class NoSideEffectPredicateInstrumentVisitor extends TraversalVisitor{
 	private boolean _assign;
 	private boolean _return;
 	private String _methodID = "";
-	private Map<Integer, List<Pair<String, String>>> _predicates = new HashMap<>();
 	private static AST ast = AST.newAST(Constant.AST_LEVEL);
 	
-	public NoSideEffectPredicateInstrumentVisitor(boolean useSober, boolean insBranch, boolean insAssign, boolean insReturn) {
+	public SDStmtPredicateInstrumentVisitor(boolean useSober, boolean insBranch, boolean insAssign, boolean insReturn) {
 		_useSober = useSober;
 		_branch = insBranch;
 		_assign = insAssign;

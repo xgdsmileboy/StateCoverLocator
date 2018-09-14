@@ -27,7 +27,7 @@ import locator.common.util.Pair;
 import locator.common.util.Utils;
 import locator.core.LineInfo;
 import locator.core.alg.Ochiai;
-import locator.inst.visitor.NoSideEffectPredicateInstrumentVisitor;
+import locator.inst.visitor.SDStmtPredicateInstrumentVisitor;
 
 public class ClassifyPredicates extends MLModel {
 
@@ -100,7 +100,7 @@ public class ClassifyPredicates extends MLModel {
 		Map<String, List<Integer>> file2LocationList = mapLocations2File(subject, allStatements);
 		Map<String, Map<Integer, Set<String>>> allPossiblePredicates = new HashMap<>();
 		
-		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(useSober,
+		SDStmtPredicateInstrumentVisitor instrumentVisitor = new SDStmtPredicateInstrumentVisitor(useSober,
 				Constant.BOOL_BRANCH_COVERAGE, Constant.BOOL_ASSIGNMENT_COVERAGE, Constant.BOOL_RETURN_COVERAGE);
 		for (Entry<String, List<Integer>> entry : file2LocationList.entrySet()) {
 			String relJavaPath = entry.getKey();
