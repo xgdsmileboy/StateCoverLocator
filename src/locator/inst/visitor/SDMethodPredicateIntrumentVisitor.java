@@ -23,6 +23,7 @@ import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
@@ -89,11 +90,12 @@ public class SDMethodPredicateIntrumentVisitor extends NoSideEffectPreidcateInst
 		if(node.getBody() != null && node.getBody().statements().size() > 0) {
 			ASTNode firstNode = (ASTNode) node.getBody().statements().get(0);
 			int line = _cu.getLineNumber(node.getBody().getStartPosition());
+			boolean staticMethod = Modifier.isStatic(node.getModifiers());
 			List<ASTNode> insertNodes = new LinkedList<>();
 			Map<String, Set<String>> alreadyConsidered = new HashMap<>();
 			for(Object object : node.parameters()) {
 				SingleVariableDeclaration svd = (SingleVariableDeclaration) object;
-				ASTNode insert = process(svd, line, alreadyConsidered);
+				ASTNode insert = process(svd, line, staticMethod, alreadyConsidered);
 				if(insert != null) {
 					insertNodes.add(insert);
 				}
@@ -130,7 +132,7 @@ public class SDMethodPredicateIntrumentVisitor extends NoSideEffectPreidcateInst
 	}
 	
 
-	public ExpressionStatement process(SingleVariableDeclaration node, int line, Map<String, Set<String>> alreadyConsidered) {
+	public ExpressionStatement process(SingleVariableDeclaration node, int line, boolean staticMethod, Map<String, Set<String>> alreadyConsidered) {
 		Type type = node.getType();
 		int extra = node.toString().contains("...") ? 1 : 0;
 		ExpressionStatement exprStmt = null;
@@ -146,7 +148,12 @@ public class SDMethodPredicateIntrumentVisitor extends NoSideEffectPreidcateInst
 		if (isComparableType(type)) {
 			Set<String> variables = new HashSet<>();
 			String argName = node.getName().getFullyQualifiedName();
-			Map<String, String> availableVars = CodeAnalyzer.getAllVariablesAvailableWithType(_srcPath, _relJavaPath, line);
+			Map<String, String> availableVars = null;
+			if(staticMethod) {
+				availableVars = CodeAnalyzer.getAllLocalVariablesAvailableWithType(_srcPath, _relJavaPath, line, true);
+			} else {
+				availableVars = CodeAnalyzer.getAllVariablesAvailableWithType(_srcPath, _relJavaPath, line);
+			}
 			for (Entry<String, String> entry : availableVars.entrySet()) {
 				String varName = entry.getKey();
 				if (!argName.equals(varName) && entry.getValue().equals(type.toString())) {
