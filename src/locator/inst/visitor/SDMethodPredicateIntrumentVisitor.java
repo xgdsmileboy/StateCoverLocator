@@ -17,12 +17,15 @@ import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.ReturnStatement;
@@ -118,6 +121,15 @@ public class SDMethodPredicateIntrumentVisitor extends NoSideEffectPreidcateInst
 		int start = _cu.getLineNumber(node.getStartPosition());
 		if (_lines.contains(start)) {
 			Expression expr = node.getExpression();
+			if(expr instanceof NumberLiteral || expr instanceof NullLiteral) {
+				return true;
+			}
+			if(expr instanceof ConditionalExpression) {
+				ConditionalExpression ce = (ConditionalExpression) expr;
+				if(ce.getThenExpression() instanceof NullLiteral || ce.getElseExpression() instanceof NullLiteral) {
+					return true;
+				}
+			}
 			if (expr != null && !(expr instanceof ClassInstanceCreation)
 					&& isComparableType(expr.resolveTypeBinding())) {
 				String condition = expr.toString().replace("\n", " ").replaceAll("\\s+", " ");
@@ -280,8 +292,10 @@ public class SDMethodPredicateIntrumentVisitor extends NoSideEffectPreidcateInst
 			return null;
 		}
 		MethodInvocation mi = ast.newMethodInvocation();
+		ParenthesizedExpression pe = ast.newParenthesizedExpression();
+		pe.setExpression((Expression)ASTNode.copySubtree(pe.getAST(), expr));
 		CastExpression ce = ast.newCastExpression();
-		ce.setExpression((Expression) ASTNode.copySubtree(ce.getAST(), expr));
+		ce.setExpression(pe);
 		ce.setType(ast.newSimpleType(ast.newSimpleName(type)));
 		ParenthesizedExpression parenthesizedExpression = ast.newParenthesizedExpression();
 		parenthesizedExpression.setExpression(ce);
