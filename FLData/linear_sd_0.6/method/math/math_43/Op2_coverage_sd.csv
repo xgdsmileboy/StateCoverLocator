@@ -1,0 +1,55 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.apache.commons.math.stat.descriptive.SummaryStatistics#void#checkEmpty#?#643	5.997762863534676	5.998508575689784	5.998210290827741	!(n > 0)	_
+org.apache.commons.math.stat.descriptive.SummaryStatistics#void#addValue#?,double#158	5.9850857568978375	5.985831469052946	5.985533184190903	!(!(meanImpl instanceof Mean))	GT
+org.apache.commons.math.stat.descriptive.summary.SumOfSquares#void#increment#?,double#75	5.974645786726324	5.981357196122297	5.9786726323639074	d * d==d	_
+org.apache.commons.math.stat.descriptive.rank.Min#void#increment#?,double#76	5.97613721103654	5.977628635346756	5.977032065622669	!(d < value || Double.isNaN(value))	_
+org.apache.commons.math.stat.descriptive.rank.Max#void#increment#?,double#76	5.97613721103654	5.97613721103654	5.97613721103654	d > value || Double.isNaN(value)	_
+org.apache.commons.math.stat.descriptive.summary.SumOfLogs#void#increment#?,double#84	5.974645786726324	5.974645786726324	5.974645786726324	FastMath.log(d)<=d	_
+org.apache.commons.math.stat.descriptive.moment.FirstMoment#void#increment#?,double#108	5.947800149142431	5.976882923191648	5.965249813571962	dev / n0==n0	_
+org.apache.commons.math.util.FastMath#double#log#?,double,double[]#1166	5.954884414615958	5.96607009694258	5.9615958240119316	ab==xa	_
+org.apache.commons.math.stat.descriptive.moment.SecondMoment#void#increment#?,double#80	5.960477255779269	5.962341536167039	5.9615958240119316	!(n < 1)	_
+org.apache.commons.math.util.FastMath#double#log#?,double#1096	5.901193139448173	5.96607009694258	5.940119313944818	log(x,null)==0	_
+org.apache.commons.math.stat.descriptive.AbstractUnivariateStatistic#boolean#test#?,double[],int,int,boolean#180	5.930648769574944	5.930648769574944	5.930350484712901	!(length == 0 && !allowEmpty)	_
+org.apache.commons.math.stat.descriptive.moment.Mean#double#evaluate#?,double[],int,int#162	3.971290082028337	3.9802386278896345	3.976659209545115	sum.evaluate(values,begin,length) / sampleSize<sampleSize	_
+org.apache.commons.math.stat.descriptive.summary.Sum#double#evaluate#?,double[],int,int#127	3.969052945563013	3.970171513795675	3.96972408650261	sum>0	_
+org.apache.commons.math.stat.descriptive.AbstractStorelessUnivariateStatistic#double#evaluate#?,double[]#62	3.9675615212527964	3.9686800894854586	3.968232662192394	evaluate(values,0,values.length)>0	_
+org.apache.commons.math.stat.descriptive.moment.GeometricMean#?#GeometricMean#?,SumOfLogs#85	5.9850857568978375	0.0	2.394034302759135		_
+org.apache.commons.math.stat.descriptive.moment.Variance#?#Variance#?,SecondMoment#113	5.984712900820283	0.0	2.3938851603281135		_
+org.apache.commons.math.stat.descriptive.moment.Mean#?#Mean#?,FirstMoment#90	5.984712900820283	0.0	2.3938851603281135		_
+org.apache.commons.math.stat.descriptive.summary.Sum#void#increment#?,double#76	5.974645786726324	0.0	2.3898583146905295		_
+org.apache.commons.math.stat.descriptive.rank.Max#?#Max#?#58	5.960104399701716	0.0	2.3840417598806862		_
+org.apache.commons.math.stat.descriptive.rank.Min#?#Min#?#57	5.960104399701716	0.0	2.3840417598806862		_
+org.apache.commons.math.stat.descriptive.summary.SumOfSquares#?#SumOfSquares#?#57	5.958985831469053	0.0	2.3835943325876214		_
+org.apache.commons.math.stat.descriptive.summary.SumOfLogs#?#SumOfLogs#?#65	5.956375838926174	0.0	2.38255033557047		_
+org.apache.commons.math.stat.descriptive.summary.Sum#?#Sum#?#57	5.943325876211782	0.0	2.377330350484713		_
+org.apache.commons.math.stat.descriptive.moment.SecondMoment#?#SecondMoment#?#61	5.937360178970917	0.0	2.374944071588367		_
+org.apache.commons.math.stat.descriptive.moment.FirstMoment#?#FirstMoment#?#83	5.91461595824012	0.0	2.365846383296048		_
+org.apache.commons.math.stat.descriptive.moment.Variance#double#evaluate#?,double[],double,int,int#420	1.9981357196122296	1.9988814317673378	1.9985831469052944	(accum - (accum2 * accum2 / len)) / len<=dev	_
+org.apache.commons.math.stat.descriptive.moment.GeometricMean#double#evaluate#?,double[],int,int#145	1.9962714392244594	1.9962714392244594	1.9962714392244594	FastMath.exp(sumOfLogs.evaluate(values,begin,length) / length)>0	_
+org.apache.commons.math.stat.descriptive.summary.SumOfLogs#double#evaluate#?,double[],int,int#132	1.9947800149142432	1.9947800149142432	1.9947800149142432	test(values,begin,length,true)	_
+org.apache.commons.math.stat.descriptive.SummaryStatistics#double#getGeometricMean#?#286	1.994034302759135	1.994034302759135	1.994034302759135	geoMeanImpl.getResult()>=0	_
+org.apache.commons.math.stat.descriptive.moment.GeometricMean#double#getResult#?#114	1.9932885906040267	1.9932885906040267	1.9932885906040267	Double.NaN!=0	_
+org.apache.commons.math.stat.descriptive.moment.Variance#double#getResult#?#180	1.9917971662938105	1.9917971662938105	1.9917971662938105	Double.NaN>=0	_
+org.apache.commons.math.stat.descriptive.summary.SumOfLogs#long#getN#?#100	1.9843400447427293	1.9910514541387025	1.9883668903803133	n==0	_
+org.apache.commons.math.stat.descriptive.SummaryStatistics#double#getMean#?#205	1.987695749440716	1.988441461595824	1.9881431767337807	meanImpl.getResult()>=0	_
+org.apache.commons.math.stat.descriptive.moment.Variance#double#evaluate#?,double[]#230	1.9869500372856077	1.9869500372856077	1.9869500372856077	evaluate(values,0,values.length)>=0	_
+org.apache.commons.math.stat.descriptive.SummaryStatistics#double#getVariance#?#239	1.9869500372856077	1.9869500372856077	1.9869500372856077	varianceImpl.getResult()>=0	_
+org.apache.commons.math.stat.descriptive.moment.Variance#double#evaluate#?,double[],int,int#265	1.9813571961222969	1.9895600298284861	1.9862788963460105	evaluate(values,m,begin,length)<m	_
+org.apache.commons.math.stat.descriptive.moment.Mean#double#getResult#?#129	1.9783743475018642	1.9794929157345265	1.9790454884414617	moment.m1>0	_
+org.apache.commons.math.stat.descriptive.moment.Variance#void#clear#?#204	1.9776286353467563	1.9776286353467563	1.9776286353467563	incMoment	_
+org.apache.commons.math.util.FastMath#double#exp#?,double,double,double[]#875	1.9056674123788218	1.959358687546607	1.9338553318419092	ExpIntTable.EXP_INT_TABLE_B[EXP_INT_TABLE_MAX_INDEX + intVal]==extra	_
+org.apache.commons.math.util.FastMath#double#exp#?,double#807	1.8926174496644295	1.895973154362416	1.8946308724832215	exp(x,0.0,null)>0	_
+org.apache.commons.math.stat.descriptive.moment.Mean#?#Mean#?#80	3.9556301267710663	0.0	1.5822520507084266		_
+org.apache.commons.math.stat.descriptive.AbstractUnivariateStatistic#boolean#test#?,double[],int,int#137	3.938105891126025	0.0	1.57524235645041		_
+org.apache.commons.math.stat.descriptive.SummaryStatistics#void#setGeoMeanImpl#?,StorelessUnivariateStatistic#578	2.0	0.0	0.8		_
+org.apache.commons.math.stat.descriptive.SummaryStatistics#void#setVarianceImpl#?,StorelessUnivariateStatistic#636	2.0	0.0	0.8		_
+org.apache.commons.math.stat.descriptive.SummaryStatistics#void#setMeanImpl#?,StorelessUnivariateStatistic#607	1.9992542878448918	0.0	0.7997017151379567		_
+org.apache.commons.math.stat.descriptive.moment.Variance#?#Variance#?,boolean#126	1.9962714392244594	0.0	0.7985085756897838		_
+org.apache.commons.math.stat.descriptive.moment.GeometricMean#?#GeometricMean#?#66	1.9739000745712154	0.0	0.7895600298284862		_
+org.apache.commons.math.stat.descriptive.moment.SecondMoment#void#clear#?#92	1.9627143922445935	0.0	0.7850857568978374		_
+org.apache.commons.math.stat.descriptive.moment.FirstMoment#void#clear#?#118	1.9574944071588367	0.0	0.7829977628635347		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[][]#loadLnMant#?#6174	-0.028337061894108874	0.0	-0.01133482475764355		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[]#loadExpIntA#?#6142	-0.03243847874720358	0.0	-0.012975391498881432		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[]#loadExpFracA#?#6158	-0.03243847874720358	0.0	-0.012975391498881432		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[]#loadExpIntB#?#6150	-0.03243847874720358	0.0	-0.012975391498881432		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[]#loadExpFracB#?#6166	-0.03243847874720358	0.0	-0.012975391498881432		_

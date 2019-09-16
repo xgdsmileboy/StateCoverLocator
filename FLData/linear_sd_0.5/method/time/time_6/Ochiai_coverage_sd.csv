@@ -1,0 +1,401 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.joda.time.chrono.GJChronology$ImpreciseCutoverField#long#add#?,long,int#978	0.6761234037828132	0.6761234037828132	1.3522468075656264	instant + iGapDuration < iCutover	GT
+org.joda.time.LocalDate#int#getDayOfWeek#?#1531	0.5163977794943222	0.5163977794943222	1.0327955589886444	getChronology().dayOfWeek().get(getLocalMillis())>0	_
+org.joda.time.LocalDate#int#getWeekOfWeekyear#?#1500	0.5163977794943222	0.5163977794943222	1.0327955589886444	getChronology().weekOfWeekyear().get(getLocalMillis())>=0	_
+org.joda.time.chrono.GJChronology#long#getDateTimeMillis#?,int,int,int,int#341	0.49613893835683387	0.49613893835683387	0.9922778767136677	!(instant >= iCutoverMillis)	_
+org.joda.time.field.SkipDateTimeField#long#set#?,long,int#90	0.4472135954999579	0.4472135954999579	0.8944271909999159	!(value == iSkip)	_
+org.joda.time.chrono.BasicWeekyearDateTimeField#long#set#?,long,int#189	0.2176428750330035	0.6708203932499369	0.8605570528600397	iChronology.getWeekOfWeekyear(workInstant)>workWoyYear	_
+org.joda.time.LocalDate#int#get#?,DateTimeFieldType#558	0.20519567041703082	0.6324555320336759	0.8376512024507067	fieldType.getField(getChronology()).get(getLocalMillis())<=0	_
+org.joda.time.format.FormatUtils#void#appendPaddedInteger#?,StringBuffer,int,int#53	0.2581988897471611	0.5163977794943222	0.7745966692414833	-value<size	_
+org.joda.time.chrono.JulianChronology#int#adjustYearForSet#?,int#79	0.4472135954999579	0.5477225575051661	0.7232398192368996	year == 0	_
+org.joda.time.chrono.GJChronology#long#gregorianToJulianByWeekyear#?,long#596	0.4472135954999579	0.2581988897471611	0.7054124852471191	convertByWeekyear(instant,iGregorianChronology,iJulianChronology)<0	_
+org.joda.time.chrono.GJChronology$CutoverField#long#gregorianToJulian#?,long#922	0.4472135954999579	0.4472135954999579	0.7054124852471191	gregorianToJulianByWeekyear(instant)!=0	_
+org.joda.time.chrono.GJChronology#long#convertByWeekyear#?,long,Chronology,Chronology#96	0.4472135954999579	0.2581988897471611	0.7054124852471191	to.weekyear().set(0,from.weekyear().get(instant))!=instant	_
+org.joda.time.chrono.BasicWeekyearDateTimeField#int#get#?,long#60	0.14907119849998599	0.5477225575051661	0.696793756005152	iChronology.getWeekyear(instant)<=0	_
+org.joda.time.chrono.BasicChronology#int#getWeekyear#?,long#503	0.16390750941244592	0.5477225575051661	0.6923954041562898	getWeekOfWeekyear(instant,year)>year	_
+org.joda.time.chrono.BasicChronology#long#getFirstWeekOfYearMillis#?,int#349	0.14221363894199315	0.50709255283711	0.6327487253246187	getDayOfWeek(jan1millis)>=year	_
+org.joda.time.chrono.BasicChronology#int#getYear#?,long#437	0.16770509831248423	0.5163977794943222	0.5739032427728518	year==0	_
+org.joda.time.LocalDate#LocalDate#plusYears#?,int#1202	0.26967994498529685	0.26967994498529685	0.5393598899705937	!(years == 0)	_
+org.joda.time.chrono.BasicWeekyearDateTimeField#long#add#?,long,int#75	0.25819888974716115	0.27386127875258304	0.5320601684997441	set(instant,get(instant) + years)<=0	_
+org.joda.time.LocalDate#LocalDate#withWeekOfWeekyear#?,int#1663	0.5163977794943222	0.0	0.5163977794943222		_
+org.joda.time.LocalDate#Property#weekyear#?#1763	0.5163977794943222	0.0	0.5163977794943222		_
+org.joda.time.LocalDate#LocalDate#withDayOfWeek#?,int#1708	0.5163977794943222	0.0	0.5163977794943222		_
+org.joda.time.chrono.BasicGJChronology#long#setYear#?,long,int#177	0.09525969852639353	0.4242640687119285	0.4957291112030901	getMillisOfDay(instant)==year	_
+org.joda.time.LocalDate#long#getLocalMillis#?#610	0.16760038078849773	0.32128773156099955	0.48888811234949725	iLocalMillis<0	_
+org.joda.time.chrono.BasicYearDateTimeField#int#get#?,long#54	0.04772399890175149	0.40451991747794525	0.45224391637969674	iChronology.getYear(instant)==0	_
+org.joda.time.chrono.BasicChronology#int#getDayOfWeek#?,long#549	0.20952908873087345	0.20952908873087345	0.4190581774617469	7 + (int)((daysSince19700101 + 4) % 7)!=0	_
+org.joda.time.chrono.GJChronology#Chronology#withZone#?,DateTimeZone#319	0.20385887657505022	0.20385887657505022	0.40385887657505026	zone == getZone()	_
+org.joda.time.LocalDate$Property#LocalDate#addToCopy#?,int#1965	0.4	0.0	0.4		_
+org.joda.time.IllegalFieldValueException#String#createMessage#?,String,Number,Number,Number,String#45	0.22360679774997896	0.22360679774997896	0.38425066353047876	upperBound == null	_
+org.joda.time.LocalDate#boolean#isSupported#?,DateTimeFieldType#574	0.18650096164806276	0.18650096164806276	0.36538639984804594	DATE_DURATION_TYPES.contains(durType) || durType.getField(getChronology()).getUnitMillis() >= getChronology().days().getUnitMillis()	_
+org.joda.time.field.PreciseDurationDateTimeField#long#roundFloor#?,long#96	0.17888543819998318	0.17888543819998318	0.35777087639996635	instant - instant % iUnitMillis - iUnitMillis!=0	_
+org.joda.time.chrono.BasicChronology#int#getWeeksInYear#?,int#337	0.17038855027411945	0.17038855027411945	0.3407771005482389	getFirstWeekOfYearMillis(year + 1)>=firstWeekMillis1	_
+org.joda.time.chrono.GJChronology$CutoverField#long#roundFloor#?,long#884	0.1860521018838127	0.18786728732554486	0.33977819238809487	instant<0	_
+org.joda.time.field.SkipDateTimeField#int#get#?,long#84	0.23717082451262844	0.23717082451262844	0.3306473674400918	value<=0	_
+org.joda.time.field.DelegatedDateTimeField#int#get#?,long#96	0.09128709291752769	0.23717082451262844	0.3284579174301561	iField.get(instant)<0	_
+org.joda.time.chrono.GJChronology#DateTimeZone#getZone#?#292	0.1619552660357832	0.1619552660357832	0.3164887478930344	!((base=getBase()) != null)	_
+org.joda.time.field.PreciseDurationDateTimeField#int#getMaximumValueForSet#?,long,int#163	0.15811388300841897	0.15811388300841897	0.31622776601683794	getMaximumValue(instant)>=0	_
+org.joda.time.chrono.BasicChronology#long#getDateTimeMillis#?,int,int,int,int#159	0.12679578233524344	0.18633899812498247	0.3131347804602259	getDateMidnightMillis(year,monthOfYear,dayOfMonth) + millisOfDay<0	_
+org.joda.time.chrono.BasicWeekyearDateTimeField#int#getMaximumValue#?#228	0.1556997888323046	0.1556997888323046	0.3113995776646092	iChronology.getMaxYear()>=0	_
+org.joda.time.chrono.JulianChronology#long#getDateMidnightMillis#?,int,int,int#207	0.15453348185725116	0.15511334686589626	0.3096468287231474	super.getDateMidnightMillis(adjustYearForSet(year),monthOfYear,dayOfMonth)<0	_
+org.joda.time.chrono.JulianChronology#long#getApproxMillisAtEpochDividedByTwo#?#261	0.1501173250081603	0.1501173250081603	0.3002346500163206	(1969L * MILLIS_PER_YEAR + 352L * DateTimeConstants.MILLIS_PER_DAY) / 2>=0	_
+org.joda.time.chrono.JulianChronology#long#getAverageMillisPerYearDividedByTwo#?#253	0.1501173250081603	0.1501173250081603	0.3002346500163206	MILLIS_PER_YEAR / 2>0	_
+org.joda.time.chrono.BasicChronology#int#getDayOfMonth#?,long#458	0.048886022200033775	0.2504897164340598	0.2993757386340936	getMonthOfYear(millis,year)>year	_
+org.joda.time.chrono.GJChronology#boolean#equals#?,Object#417	0.14907119849998599	0.14907119849998599	0.2941664485219883	this == obj	_
+org.joda.time.chrono.JulianChronology#int#getMaxYear#?#245	0.14509525002200233	0.14509525002200233	0.29019050004400465	MAX_YEAR!=0	_
+org.joda.time.chrono.JulianChronology#int#getMinYear#?#241	0.14462030521243746	0.14462030521243746	0.2892406104248749	MIN_YEAR<=0	_
+org.joda.time.LocalDate#DateTime#toDateTimeAtStartOfDay#?,DateTimeZone#731	0.11952286093343936	0.1690308509457033	0.2885537118791427	zone.convertLocalToUTC(localMillis,false)==localMillis	_
+org.joda.time.chrono.BasicWeekOfWeekyearDateTimeField#int#getMaximumValueForSet#?,long,int#111	0.1432229748078866	0.1432229748078866	0.2864459496157732	value > 52 ? getMaximumValue(instant) : 52>=0	_
+org.joda.time.chrono.GJDayOfWeekDateTimeField#int#getMaximumValue#?#112	0.14301938838683884	0.14301938838683884	0.28603877677367767	DateTimeConstants.SUNDAY>=0	_
+org.joda.time.chrono.GJDayOfWeekDateTimeField#int#getMinimumValue#?#103	0.14221363894199315	0.14221363894199315	0.2844272778839863	DateTimeConstants.MONDAY>0	_
+org.joda.time.LocalDate#?#LocalDate#?,long,Chronology#340	0.12909944487358058	0.15491933384829668	0.28401877872187725	chronology.dayOfMonth().roundFloor(localMillis)==localMillis	_
+org.joda.time.LocalDate#String#toString#?#1819	0.282842712474619	0.0	0.282842712474619		_
+org.joda.time.chrono.JulianChronology#long#calculateFirstDayOfYearMillis#?,int#228	0.1414213562373095	0.1690308509457033	0.282842712474619	!isLeapYear(year)	_
+org.joda.time.field.PreciseDateTimeField#int#get#?,long#82	0.12943696033811472	0.14368424162141993	0.27312120195953465	iRange - 1 + (int)(((instant + 1) / getUnitMillis()) % iRange)==0	_
+org.joda.time.DateTimeZone#long#getMillisKeepLocal#?,DateTimeZone,long#1058	0.09214426752509268	0.1777046633277277	0.26984893085282036	oldInstant<0	_
+org.joda.time.chrono.BasicWeekOfWeekyearDateTimeField#int#getMinimumValue#?#79	0.13483997249264842	0.13483997249264842	0.26967994498529685	1>0	_
+org.joda.time.chrono.BasicChronology#int#getWeekOfWeekyear#?,long#517	0.1315587028960544	0.1315587028960544	0.2631174057921088	getWeekOfWeekyear(instant,getYear(instant))>0	_
+org.joda.time.chrono.GJChronology$CutoverField#int#get#?,long#654	0.13046561461068845	0.16064386578049977	0.2609312292213769	iGregorianField.get(instant)!=0	_
+org.joda.time.chrono.BasicChronology#int#getWeekOfWeekyear#?,long,int#531	0.12909944487358055	0.12909944487358055	0.2581988897471611	1!=0	_
+org.joda.time.chrono.GJChronology$LinkedDurationField#long#add#?,long,int#1099	0.16609095970747995	0.08770580193070293	0.2537967616381829	iField.add(instant,value)<0	_
+org.joda.time.field.BaseDateTimeField#int#getMaximumValue#?,long#792	0.12403473458920847	0.12403473458920847	0.24806946917841693	getMaximumValue()>0	_
+org.joda.time.chrono.GregorianChronology#long#calculateFirstDayOfYearMillis#?,int#209	0.07352146220938077	0.1690308509457033	0.23974152906435806	((year + 3) >> 2) - leapYears + ((leapYears + 3) >> 2) - 1<=year	_
+org.joda.time.chrono.BasicChronology#long#getDateMidnightMillis#?,int,int,int#615	0.06324555320336758	0.16484511834894675	0.22809067155231433	getYearMonthDayMillis(year,monthOfYear,dayOfMonth)<0	_
+org.joda.time.chrono.BasicWeekOfWeekyearDateTimeField#int#get#?,long#54	0.10690449676496974	0.10690449676496974	0.21380899352993948	iChronology.getWeekOfWeekyear(instant)!=0	_
+org.joda.time.LocalDate#boolean#equals#?,Object#637	0.10690449676496974	0.10690449676496974	0.21231375210391573	iChronology.equals(other.iChronology)	_
+org.joda.time.chrono.BasicChronology#long#getYearMonthDayMillis#?,int,int,int#396	0.05900757705937287	0.14874102932718242	0.2077486063865553	millis + (dayOfMonth - 1) * (long)DateTimeConstants.MILLIS_PER_DAY<0	_
+org.joda.time.chrono.GJChronology#Chronology#withUTC#?#306	0.20126184217065105	0.0	0.20126184217065105		_
+org.joda.time.chrono.GJChronology#long#convertByYear#?,long,Chronology,Chronology#84	0.11766968108291041	0.0793675790132545	0.1970372600961649	to.getDateTimeMillis(from.year().get(instant),from.monthOfYear().get(instant),from.dayOfMonth().get(instant),from.millisOfDay().get(instant))<0	_
+org.joda.time.chrono.BasicChronology#long#getYearMillis#?,int#369	0.05547001962252291	0.13840913308956662	0.19387915271208953	getYearInfo(year).iFirstDayMillis<0	_
+org.joda.time.LocalDate#LocalDate#withLocalMillis#?,long#1041	0.19166296949998196	0.0	0.19166296949998196		_
+org.joda.time.chrono.BasicYearDateTimeField#long#roundCeiling#?,long#133	0.09325048082403138	0.09759000729485333	0.1908404881188847	instant<0	_
+org.joda.time.field.FieldUtils#int#safeAdd#?,int,int#70	0.03229589403992915	0.15811388300841897	0.1904097770483481	sum==0	_
+org.joda.time.chrono.GJChronology#void#assemble#?,Fields#506	0.09534625892455924	0.09534625892455924	0.18859673974859062	gregorian.millisOfDay().get(iCutoverMillis) == 0	_
+org.joda.time.chrono.GJChronology$ImpreciseCutoverField#?#ImpreciseCutoverField#?,DateTimeField,DateTimeField,DurationField,long,boolean#967	0.09325048082403138	0.09325048082403138	0.18650096164806276	durationField == null	_
+org.joda.time.chrono.GJChronology$CutoverField#?#CutoverField#?,DateTimeField,DateTimeField,long,boolean#642	0.09325048082403138	0.09325048082403138	0.18650096164806276	!(rangeField == null)	_
+org.joda.time.chrono.JulianChronology#boolean#isLeapYear#?,int#211	0.18196863131170973	0.0	0.18196863131170973		_
+org.joda.time.chrono.BasicChronology#int#getDayOfMonth#?,long,int,int#478	0.047860450928336525	0.13333333333333333	0.18119378426166985	getTotalMillisByYearMonth(year,month)>millis	_
+org.joda.time.field.BaseDateTimeField#long#roundCeiling#?,long#890	0.08032193289024989	0.09759000729485333	0.1779119401851032	instant<0	_
+org.joda.time.chrono.BasicYearDateTimeField#long#add#?,long,int#63	0.03378204876602724	0.1432229748078866	0.17700502357391384	set(instant,newYear)<=0	_
+org.joda.time.LocalDate#?#LocalDate#?,int,int,int,Chronology#459	0.17099639201419237	0.0	0.17099639201419237		_
+org.joda.time.chrono.GJChronology$CutoverField#long#set#?,long,int#734	0.08528028654224416	0.08567058737562387	0.17095087391786803	!(instant >= iCutover)	_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#void#printTo#?,StringBuffer,ReadablePartial,Locale#2697	0.08233869695926183	0.08233869695926183	0.16467739391852365	!(elements == null)	_
+org.joda.time.format.DateTimeFormatterBuilder$PaddedNumber#void#printTo#?,StringBuffer,ReadablePartial,Locale#1494	0.08164965809277261	0.08164965809277261	0.16329931618554522	partial.isSupported(iFieldType)	_
+org.joda.time.LocalDate$Property#?#Property#?,LocalDate,DateTimeField#1895	0.16329931618554522	0.0	0.16329931618554522		_
+org.joda.time.format.DateTimeFormatter#void#printTo#?,StringBuffer,ReadablePartial#536	0.0809776330178916	0.0809776330178916	0.1619552660357832	!(partial == null)	_
+org.joda.time.LocalDate#Chronology#getChronology#?#619	0.1617962004226434	0.0	0.1617962004226434		_
+org.joda.time.chrono.GJChronology#long#julianToGregorianByYear#?,long#584	0.0778498944161523	0.08164965809277261	0.1594995525089249	convertByYear(instant,iJulianChronology,iGregorianChronology)<0	_
+org.joda.time.base.AbstractInstant#Instant#toInstant#?#137	0.15811388300841897	0.0	0.15811388300841897		_
+org.joda.time.field.PreciseDurationDateTimeField#long#set#?,long,int#80	0.04332384056875261	0.1110349815296408	0.1543588220983934	instant + (value - get(instant)) * iUnitMillis<0	_
+org.joda.time.chrono.BasicWeekyearDateTimeField#long#roundFloor#?,long#239	0.08164965809277261	0.08770580193070293	0.15095135513407051	instant<0	_
+org.joda.time.chrono.BasicWeekOfWeekyearDateTimeField#long#roundFloor#?,long#65	0.05923488777590923	0.08770580193070293	0.14694068970661217	super.roundFloor(instant + 3 * DateTimeConstants.MILLIS_PER_DAY) - 3 * DateTimeConstants.MILLIS_PER_DAY<0	_
+org.joda.time.chrono.BasicChronology#int#getMillisOfDay#?,long#561	0.06937088393567811	0.08470470997752534	0.14079846489908152	(int)(instant % DateTimeConstants.MILLIS_PER_DAY)==0	_
+org.joda.time.chrono.BasicChronology#int#getDayOfYear#?,long,int#494	0.06874516652539955	0.07117482792171623	0.13991999444711578	getYearMillis(year)<instant	_
+org.joda.time.field.DelegatedDateTimeField#int#getMaximumValue#?#228	0.06942101345006232	0.06942101345006232	0.13884202690012465	iField.getMaximumValue()!=0	_
+org.joda.time.chrono.BasicGJChronology#long#getTotalMillisByYearMonth#?,int,int#140	0.06657426652986062	0.06864431429344132	0.13521858082330196	MAX_TOTAL_MILLIS_BY_MONTH_ARRAY[month - 1]==0	_
+org.joda.time.DurationFieldType$StandardDurationFieldType#int#hashCode#?#278	0.06523280730534423	0.06523280730534423	0.13046561461068845	(1 << iOrdinal)>=0	_
+org.joda.time.chrono.AssembledChronology#long#getDateTimeMillis#?,int,int,int,int#120	0.03834824944236852	0.09128709291752768	0.1296353423598962	base.getDateTimeMillis(year,monthOfYear,dayOfMonth,millisOfDay)<0	_
+org.joda.time.chrono.BasicChronology#int#getMaxMonth#?#700	0.06365425246889946	0.06365425246889946	0.1273085049377989	12>=0	_
+org.joda.time.chrono.JulianChronology#JulianChronology#getInstance#?,DateTimeZone,int#125	0.06388765649999399	0.06324555320336758	0.12649110640673517	!(zone == null)	_
+org.joda.time.chrono.BasicChronology#int#getMaxMonth#?,int#691	0.0631697948772702	0.0631697948772702	0.1263395897545404	getMaxMonth()>=0	_
+org.joda.time.chrono.BasicGJChronology#int#getDaysInYearMonth#?,int,int#123	0.0631697948772702	0.0631697948772702	0.1263395897545404	MIN_DAYS_PER_MONTH_ARRAY[month - 1]>=0	_
+org.joda.time.field.FieldUtils#void#verifyValueBounds#?,DateTimeFieldType,int,int,int#235	0.06311944030978033	0.06314460253534021	0.12626404284512055	!((value < lowerBound) || (value > upperBound))	_
+org.joda.time.chrono.GJChronology#long#gregorianToJulianByYear#?,long#588	0.0837707816583391	0.04207031619116713	0.12584109784950623	convertByYear(instant,iGregorianChronology,iJulianChronology)!=0	_
+org.joda.time.chrono.BasicChronology#int#getMonthOfYear#?,long#444	0.060370911247298216	0.060370911247298216	0.12074182249459643	getMonthOfYear(millis,getYear(millis))!=0	_
+org.joda.time.field.FieldUtils#void#verifyValueBounds#?,DateTimeField,int,int,int#217	0.06008417681261097	0.06014935583392302	0.120233532646534	!((value < lowerBound) || (value > upperBound))	_
+org.joda.time.chrono.GregorianChronology#long#getApproxMillisAtEpochDividedByTwo#?#241	0.05858079029065378	0.05858079029065378	0.11716158058130756	(1970L * MILLIS_PER_YEAR) / 2>0	_
+org.joda.time.chrono.GregorianChronology#long#getAverageMillisPerYearDividedByTwo#?#233	0.05858079029065378	0.05858079029065378	0.11716158058130756	MILLIS_PER_YEAR / 2!=0	_
+org.joda.time.chrono.BasicMonthOfYearDateTimeField#int#get#?,long#72	0.0582222509739582	0.0582222509739582	0.1164445019479164	iChronology.getMonthOfYear(instant)>=0	_
+org.joda.time.chrono.GregorianChronology#int#getMinYear#?#221	0.05775428155578901	0.05775428155578901	0.11550856311157802	MIN_YEAR!=0	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#weekElement#?#1812	0.05773502691896257	0.05773502691896257	0.11547005383792514	wwe == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#fractionElement#?#1880	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(fse == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicTimeNoMillis#?#1515	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(btx == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateTimeParser#?#1333	0.05773502691896257	0.05773502691896257	0.11547005383792514	dtp == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#timeElementParser#?#1280	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(tpe == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateTimeNoMillis#?#1429	0.05773502691896257	0.05773502691896257	0.11547005383792514	dtx == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateTime#?#1419	0.05773502691896257	0.05773502691896257	0.11547005383792514	dt == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#localDateParser#?#1225	0.05773502691896257	0.05773502691896257	0.11547005383792514	ldp == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicWeekDateTime#?#1609	0.05773502691896257	0.05773502691896257	0.11547005383792514	bwdt == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dayOfYearElement#?#1832	0.05773502691896257	0.05773502691896257	0.11547005383792514	dye == null	_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#append#?,DateTimePrinter,DateTimeParser[]#308	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(parsers == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateHourMinuteSecondMillis#?#1751	0.05773502691896257	0.05773502691896257	0.11547005383792514	dhmsl == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateParser#?#1212	0.05773502691896257	0.05773502691896257	0.11547005383792514	dp == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#hourElement#?#1851	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(hde == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateElementParser#?#1232	0.05773502691896257	0.05773502691896257	0.11547005383792514	dpe == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#localTimeParser#?#1270	0.05773502691896257	0.05773502691896257	0.11547005383792514	ltp == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#tTimeNoMillis#?#1409	0.05773502691896257	0.05773502691896257	0.11547005383792514	ttx == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicOrdinalDate#?#1567	0.05773502691896257	0.05773502691896257	0.11547005383792514	bod == null	_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendFixedDecimal#?,DateTimeFieldType,int#464	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(fieldType == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateHourMinute#?#1729	0.05773502691896257	0.05773502691896257	0.11547005383792514	dhm == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#weekyearElement#?#1803	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(we == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#time#?#1379	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(t == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#secondElement#?#1870	0.05773502691896257	0.05773502691896257	0.11547005383792514	sme == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#timeParser#?#1259	0.05773502691896257	0.05773502691896257	0.11547005383792514	tp == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicWeekDate#?#1597	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(bwd == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#hourMinute#?#1672	0.05773502691896257	0.05773502691896257	0.11547005383792514	hm == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#yearMonthDay#?#1640	0.05773502691896257	0.05773502691896257	0.11547005383792514	ymd == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateHour#?#1718	0.05773502691896257	0.05773502691896257	0.11547005383792514	dh == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#hourMinuteSecondMillis#?#1693	0.05773502691896257	0.05773502691896257	0.11547005383792514	hmsl == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#tTime#?#1399	0.05773502691896257	0.05773502691896257	0.11547005383792514	tt == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#literalTElement#?#1842	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(lte == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateHourMinuteSecondFraction#?#1762	0.05773502691896257	0.05773502691896257	0.11547005383792514	dhmsf == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicTTimeNoMillis#?#1537	0.05773502691896257	0.05773502691896257	0.11547005383792514	bttx == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#yearMonth#?#1630	0.05773502691896257	0.05773502691896257	0.11547005383792514	ym == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#hourMinuteSecond#?#1682	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(hms == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#weekDateTime#?#1469	0.05773502691896257	0.05773502691896257	0.11547005383792514	wdt == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#offsetElement#?#1892	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(ze == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateHourMinuteSecond#?#1740	0.05773502691896257	0.05773502691896257	0.11547005383792514	dhms == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dateOptionalTimeParser#?#1349	0.05773502691896257	0.05773502691896257	0.11547005383792514	dotp == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#yearElement#?#1774	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(ye == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#monthElement#?#1783	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(mye == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#timeNoMillis#?#1389	0.05773502691896257	0.05773502691896257	0.11547005383792514	tx == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicTime#?#1501	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(bt == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#hourMinuteSecondFraction#?#1706	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(hmsf == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#weekDateTimeNoMillis#?#1479	0.05773502691896257	0.05773502691896257	0.11547005383792514	wdtx == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#localDateOptionalTimeParser#?#1364	0.05773502691896257	0.05773502691896257	0.11547005383792514	ldotp == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dayOfMonthElement#?#1793	0.05773502691896257	0.05773502691896257	0.11547005383792514	dme == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#minuteElement#?#1860	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(mhe == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#weekyearWeek#?#1651	0.05773502691896257	0.05773502691896257	0.11547005383792514	ww == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicWeekDateTimeNoMillis#?#1619	0.05773502691896257	0.05773502691896257	0.11547005383792514	bwdtx == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicDateTime#?#1547	0.05773502691896257	0.05773502691896257	0.11547005383792514	bdt == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicOrdinalDateTimeNoMillis#?#1587	0.05773502691896257	0.05773502691896257	0.11547005383792514	bodtx == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#ordinalDateTime#?#1449	0.05773502691896257	0.05773502691896257	0.11547005383792514	odt == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicOrdinalDateTime#?#1577	0.05773502691896257	0.05773502691896257	0.11547005383792514	bodt == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicDate#?#1490	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(bd == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicDateTimeNoMillis#?#1557	0.05773502691896257	0.05773502691896257	0.11547005383792514	bdtx == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#basicTTime#?#1527	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(btt == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#ordinalDate#?#1439	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(od == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#dayOfWeekElement#?#1822	0.05773502691896257	0.05773502691896257	0.11547005383792514	!(dwe == null)	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#weekyearWeekDay#?#1661	0.05773502691896257	0.05773502691896257	0.11547005383792514	wwd == null	_
+org.joda.time.format.ISODateTimeFormat$Constants#DateTimeFormatter#ordinalDateTimeNoMillis#?#1459	0.05773502691896257	0.05773502691896257	0.11547005383792514	odtx == null	_
+org.joda.time.format.DateTimeFormatterBuilder$MatchingParser#?#MatchingParser#?,DateTimeParser[]#2801	0.05679618342470648	0.05773502691896257	0.11453121034366905	!(len > est)	_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#int#estimateParsedLength#?#2730	0.057259833431386825	0.057259833431386825	0.11451966686277365	iParsedLengthEstimate>0	_
+org.joda.time.chrono.GregorianChronology#int#getMaxYear#?#225	0.05686961097110806	0.05686961097110806	0.11373922194221613	MAX_YEAR!=0	_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#millisOfDay#?#173	0.11293848786315641	0.0	0.11293848786315641		_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#void#addArrayToList#?,List<Object>,Object[]#2779	0.0563436169819011	0.0563436169819011	0.1126872339638022	!(i < array.length)	_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeParser#toParser#?#154	0.05590169943749474	0.05590169943749474	0.11180339887498948	isParser(f)	_
+org.joda.time.format.DateTimeFormatterBuilder#void#checkParser#?,DateTimeParser#357	0.055048188256318034	0.0563436169819011	0.11139180523821914	!(parser == null)	_
+org.joda.time.chrono.BasicChronology#YearInfo#getYearInfo#?,int#748	0.05547001962252291	0.055607067440108786	0.1110770870626317	!(info == null || info.iYear != year)	_
+org.joda.time.format.DateTimeFormatterBuilder$MatchingParser#int#estimateParsedLength#?#2810	0.05547001962252291	0.05547001962252291	0.11094003924504582	iParsedLengthEstimate!=0	_
+org.joda.time.format.DateTimeFormatterBuilder$Fraction#int#estimateParsedLength#?#2064	0.055048188256318034	0.055048188256318034	0.11009637651263607	iMaxDigits!=0	_
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneOffset#int#estimatePrintedLength#?#2138	0.05383819020581655	0.05679618342470648	0.109870672668134	!(iShowSeparators)	_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendFraction#?,DateTimeFieldType,int,int#573	0.05383819020581655	0.05383819020581655	0.1076763804116331	!(maxDigits < minDigits)	_
+org.joda.time.format.DateTimeFormatterBuilder$Fraction#?#Fraction#?,DateTimeFieldType,int,int#1898	0.05383819020581655	0.05383819020581655	0.1076763804116331	!(maxDigits > 18)	_
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneOffset#int#estimateParsedLength#?#2274	0.05383819020581655	0.05383819020581655	0.1076763804116331	estimatePrintedLength()>0	_
+org.joda.time.format.DateTimeFormatterBuilder$Fraction#int#estimatePrintedLength#?#1906	0.05383819020581655	0.05383819020581655	0.1076763804116331	iMaxDigits>0	_
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneOffset#?#TimeZoneOffset#?,String,String,boolean,int,int#2125	0.05270462766947299	0.05270462766947299	0.10540925533894598	!(minFields <= 0 || maxFields < minFields)	_
+org.joda.time.chrono.ISOYearOfEraDateTimeField#int#getMaximumValue#?#91	0.052342392259021375	0.052342392259021375	0.10468478451804275	getWrappedField().getMaximumValue()>=0	_
+org.joda.time.chrono.ISOYearOfEraDateTimeField#int#getMinimumValue#?#87	0.052342392259021375	0.052342392259021375	0.10468478451804275	0<=0	_
+org.joda.time.format.ISODateTimeFormat#DateTimeFormatter#date#?#658	0.10327955589886445	0.0	0.10327955589886445		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#append#?,DateTimeFormatter#217	0.05031546054266276	0.05031546054266276	0.10063092108532552	!(formatter == null)	_
+org.joda.time.format.DateTimeFormatterBuilder#Object#getFormatter#?#1145	0.05773502691896257	0.05773502691896257	0.09907993844869872	!(printer != null)	_
+org.joda.time.format.DateTimeFormatterBuilder$StringLiteral#int#estimateParsedLength#?#1299	0.04938647983247948	0.04938647983247948	0.09877295966495896	iValue.length()>=0	_
+org.joda.time.format.ISODateTimeFormat#DateTimeFormatter#yearMonthDay#?#991	0.09877295966495896	0.0	0.09877295966495896		_
+org.joda.time.chrono.BasicYearDateTimeField#long#set#?,long,int#84	0.02874797872880345	0.06984302957695782	0.09859100830576126	iChronology.setYear(instant,year)<0	_
+org.joda.time.chrono.GJChronology#int#getMinimumDaysInFirstWeek#?#405	0.0490880693673816	0.0490880693673816	0.0981761387347632	iGregorianChronology.getMinimumDaysInFirstWeek()>=0	_
+org.joda.time.format.DateTimeFormatterBuilder$StringLiteral#int#estimatePrintedLength#?#1275	0.0490880693673816	0.0490880693673816	0.0981761387347632	iValue.length()>=0	_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendLiteral#?,String#408	0.0490880693673816	0.0490880693673816	0.0981761387347632	!(text == null)	_
+org.joda.time.chrono.GJDayOfWeekDateTimeField#int#get#?,long#56	0.04905524551257964	0.04905524551257964	0.09811049102515929	iChronology.getDayOfWeek(instant)>0	_
+org.joda.time.chrono.GJChronology#GJChronology#getInstance#?,DateTimeZone,ReadableInstant,int#192	0.07559289460184544	0.049690399499995326	0.09791468171703654	!(gregorianCutover == null)	GT
+org.joda.time.chrono.GJChronology#?#GJChronology#?,JulianChronology,GregorianChronology,Instant#270	0.09759000729485333	0.0	0.09759000729485333		_
+org.joda.time.chrono.BasicDayOfMonthDateTimeField#int#get#?,long#47	0.04820676840414582	0.04820676840414582	0.09641353680829164	iChronology.getDayOfMonth(instant)>0	_
+org.joda.time.chrono.BasicGJChronology#int#getMonthOfYear#?,long,int#88	0.0475214916279892	0.047775031529665	0.0952965231576542	(int)((millis - getYearMillis(year)) >> 10)>=year	_
+org.joda.time.Instant#long#getMillis#?#256	0.033709993123162106	0.06142951168339512	0.09513950480655722	iMillis<0	_
+org.joda.time.chrono.GJChronology$CutoverField#?#CutoverField#?,DateTimeField,DateTimeField,long#621	0.09325048082403138	0.0	0.09325048082403138		_
+org.joda.time.chrono.GJChronology$ImpreciseCutoverField#?#ImpreciseCutoverField#?,DateTimeField,DateTimeField,DurationField,long#954	0.09325048082403138	0.0	0.09325048082403138		_
+org.joda.time.chrono.GJChronology$ImpreciseCutoverField#?#ImpreciseCutoverField#?,DateTimeField,DateTimeField,long#943	0.09325048082403138	0.0	0.09325048082403138		_
+org.joda.time.chrono.GJChronology$LinkedDurationField#?#LinkedDurationField#?,DurationField,ImpreciseCutoverField#1094	0.09325048082403138	0.0	0.09325048082403138		_
+org.joda.time.chrono.GJChronology#GJChronology#getInstance#?,DateTimeZone,ReadableInstant#174	0.09325048082403138	0.0	0.09325048082403138		_
+org.joda.time.base.BaseLocal#?#BaseLocal#?#47	0.09245003270420486	0.0	0.09245003270420486		_
+org.joda.time.DateTimeZone#long#convertLocalToUTC#?,long,boolean#1040	0.03342631352324378	0.0582222509739582	0.09164856449720199	instantUTC<=0	_
+org.joda.time.field.DividedDateTimeField#?#DividedDateTimeField#?,DateTimeField,DateTimeFieldType,int#73	0.03892494720807615	0.052342392259021375	0.09126733946709753	(i >= 0) ? i / divisor : ((i + 1) / divisor - 1)==i	_
+org.joda.time.field.PreciseDurationDateTimeField#long#getUnitMillis#?#154	0.04556943771292084	0.04556943771292084	0.09113887542584168	iUnitMillis>0	_
+org.joda.time.chrono.ISOChronology#void#assemble#?,Fields#169	0.052342392259021375	0.052342392259021375	0.08614856244816205	getBase().getZone() == DateTimeZone.UTC	_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#void#decompose#?,List<Object>,List<Object>,List<Object>#2769	0.0563436169819011	0.0563436169819011	0.08576811129872608	element instanceof Composite	_
+org.joda.time.DateTimeUtils#Chronology#getChronology#?,Chronology#282	0.04408238762319924	0.04408238762319924	0.08529366721043594	!(chrono == null)	_
+org.joda.time.format.DateTimeFormatterBuilder$UnpaddedNumber#int#estimatePrintedLength#?#1405	0.042257712736425826	0.042257712736425826	0.08451542547285165	iMaxParsedDigits!=0	_
+org.joda.time.format.DateTimeFormatterBuilder#boolean#isPrinter#?,Object#1165	0.05773502691896257	0.05773502691896257	0.084461151110205	!(f instanceof DateTimePrinter)	_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendSignedDecimal#?,DateTimeFieldType,int,int#495	0.04207031619116713	0.04207031619116713	0.0835930561180371	!(minDigits <= 1)	_
+org.joda.time.IllegalFieldValueException#?#IllegalFieldValueException#?,DateTimeFieldType,Number,Number,Number#116	0.0834057656228299	0.0	0.0834057656228299		_
+org.joda.time.format.DateTimeFormatter#DateTimeFormatter#withZone#?,DateTimeZone#322	0.041522739926869986	0.041522739926869986	0.08304547985373997	!(iZone == zone)	_
+org.joda.time.field.DelegatedDateTimeField#long#set#?,long,int#172	0.03952847075210474	0.04343722427630694	0.08296569502841168	iField.set(instant,value)<0	_
+org.joda.time.format.DateTimeFormatterBuilder$CharacterLiteral#void#printTo#?,StringBuffer,ReadablePartial,Locale#1228	0.08233869695926183	0.0	0.08233869695926183		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatter#toFormatter#?#107	0.027267094157460592	0.05463583647081531	0.08165299781873027	!(isPrinter(f))	_
+org.joda.time.format.DateTimeFormatter#String#print#?,ReadablePartial#614	0.08131156281817417	0.0	0.08131156281817417		_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#?#Composite#?,List<Object>#2622	0.05198752449100364	0.05198752449100364	0.08091536719802223	printerList.contains(null) || printerList.isEmpty()	_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#int#estimatePrintedLength#?#2654	0.03960590171906697	0.03960590171906697	0.07921180343813394	iPrintedLengthEstimate>=0	_
+org.joda.time.chrono.BasicChronology#int#getMinimumDaysInFirstWeek#?#185	0.03907323325822818	0.03907323325822818	0.07814646651645636	iMinDaysInFirstWeek>0	_
+org.joda.time.DateTimeUtils#DateTimeZone#getZone#?,DateTimeZone#299	0.03968378950662725	0.03968378950662725	0.07734596836436272	!(zone == null)	_
+org.joda.time.field.ScaledDurationField#?#ScaledDurationField#?,DurationField,DurationFieldType,int#48	0.03863337046431279	0.03863337046431279	0.07712338841028785	!(scalar == 0 || scalar == 1)	_
+org.joda.time.format.DateTimeFormatter#DateTimePrinter#requirePrinter#?#660	0.038173222287591214	0.038173222287591214	0.07634644457518243	!(printer == null)	_
+org.joda.time.field.DecoratedDurationField#?#DecoratedDurationField#?,DurationField,DurationFieldType#53	0.03779644730092272	0.03779644730092272	0.07559289460184544	!(field == null)	_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendDecimal#?,DateTimeFieldType,int,int#443	0.04264014327112208	0.04264014327112208	0.07187541058135638	minDigits <= 1	_
+org.joda.time.chrono.GregorianChronology#GregorianChronology#getInstance#?,DateTimeZone,int#111	0.03580574370197165	0.03580574370197165	0.0716114874039433	!(zone == null)	_
+org.joda.time.format.DateTimeFormatterBuilder#boolean#isParser#?,Object#1176	0.042257712736425826	0.042257712736425826	0.06898383692766827	!(f instanceof Composite)	_
+org.joda.time.chrono.AssembledChronology#DateTimeField#weekOfWeekyear#?#240	0.06864431429344132	0.0	0.06864431429344132		_
+org.joda.time.chrono.AssembledChronology#void#setFields#?#369	0.041522739926869986	0.041522739926869986	0.06815392199143536	iBase == null	_
+org.joda.time.field.DecoratedDateTimeField#?#DecoratedDateTimeField#?,DateTimeField,DateTimeFieldType#58	0.033058980245364314	0.033058980245364314	0.06611796049072863	!(!field.isSupported())	_
+org.joda.time.field.BaseDateTimeField#boolean#isSupported#?#69	0.06585855599381421	0.0	0.06585855599381421		_
+org.joda.time.DateTimeFieldType$StandardDateTimeFieldType#DurationFieldType#getDurationType#?#452	0.0651558364144604	0.0	0.0651558364144604		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#weekyear#?#248	0.06310547428675069	0.0	0.06310547428675069		_
+org.joda.time.base.AbstractPartial#?#AbstractPartial#?#54	0.062402572037414734	0.0	0.062402572037414734		_
+org.joda.time.format.DateTimeFormatterBuilder$PaddedNumber#int#estimatePrintedLength#?#1468	0.030358837035945812	0.030358837035945812	0.060717674071891624	iMaxParsedDigits!=0	_
+org.joda.time.format.DateTimeFormatterBuilder$NumberFormatter#int#estimateParsedLength#?#1326	0.030015011259383207	0.030015011259383207	0.060030022518766414	iMaxParsedDigits>0	_
+org.joda.time.format.DateTimeFormatterBuilder$CharacterLiteral#int#estimatePrintedLength#?#1212	0.02988071523335984	0.02988071523335984	0.05976143046671968	1!=0	_
+org.joda.time.field.DelegatedDateTimeField#DurationField#getRangeDurationField#?#196	0.05976143046671968	0.0	0.05976143046671968		_
+org.joda.time.format.DateTimeFormatterBuilder$CharacterLiteral#int#estimateParsedLength#?#1236	0.0298142396999972	0.0298142396999972	0.0596284793999944	1!=0	_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#dayOfMonth#?#273	0.058084586279776904	0.0	0.058084586279776904		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendFractionOfMinute#?,int,int#614	0.05773502691896257	0.0	0.05773502691896257		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendFractionOfHour#?,int,int#631	0.05773502691896257	0.0	0.05773502691896257		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#append#?,DateTimeParser#258	0.057259833431386825	0.0	0.057259833431386825		_
+org.joda.time.format.ISODateTimeFormat#DateTimeFormatter#hour#?#1029	0.057259833431386825	0.0	0.057259833431386825		_
+org.joda.time.format.DateTimeFormatterBuilder$FixedNumber#?#FixedNumber#?,DateTimeFieldType,int,boolean#1522	0.057259833431386825	0.0	0.057259833431386825		_
+org.joda.time.format.ISODateTimeFormat#DateTimeFormatter#weekDate#?#780	0.05679618342470648	0.0	0.05679618342470648		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendOptional#?,DateTimeParser#346	0.05679618342470648	0.0	0.05679618342470648		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendWeekyear#?,int,int#807	0.05679618342470648	0.0	0.05679618342470648		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendDayOfYear#?,int#785	0.0563436169819011	0.0	0.0563436169819011		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#monthOfYear#?#318	0.055831953060444174	0.0	0.055831953060444174		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#year#?#327	0.055814557218594754	0.0	0.055814557218594754		_
+org.joda.time.chrono.ISOChronology#Chronology#withZone#?,DateTimeZone#146	0.030787453590353963	0.030787453590353963	0.055671083680025935	zone == getZone()	_
+org.joda.time.chrono.GregorianChronology#boolean#isLeapYear#?,int#197	0.05545295979753924	0.0	0.05545295979753924		_
+org.joda.time.tz.FixedDateTimeZone#int#hashCode#?#102	0.027369027575198667	0.02795084971874737	0.05531987729394604	getID().hashCode() + 37 * iStandardOffset + 31 * iWallOffset>0	_
+org.joda.time.chrono.GJChronology$CutoverField#DurationField#getDurationField#?#773	0.055048188256318034	0.0	0.055048188256318034		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendDayOfWeek#?,int#765	0.05463583647081531	0.0	0.05463583647081531		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendWeekOfWeekyear#?,int#795	0.05463583647081531	0.0	0.05463583647081531		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#millisOfDay#?#164	0.05438277426523709	0.0	0.05438277426523709		_
+org.joda.time.field.PreciseDateTimeField#long#set#?,long,int#112	0.013775097846589401	0.0404888165089458	0.0542639143555352	instant + (value - get(instant)) * iUnitMillis<0	_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendTimeZoneOffset#?,String,boolean,int,int#1091	0.05423261445466404	0.0	0.05423261445466404		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendFractionOfSecond#?,int,int#597	0.05383819020581655	0.0	0.05383819020581655		_
+org.joda.time.chrono.AssembledChronology#Chronology#getBase#?#308	0.05377587746479043	0.0	0.05377587746479043		_
+org.joda.time.chrono.AssembledChronology$Fields#void#copyFieldsFrom#?,Chronology#469	0.026678526425610406	0.026678526425610406	0.05335705285122081	isSupported(f=chrono.months())	_
+org.joda.time.base.BaseDateTime#long#checkInstant#?,long,Chronology#284	0.012674485010489558	0.040655781409087086	0.053330266419576645	instant<0	_
+org.joda.time.chrono.AssembledChronology#DateTimeField#dayOfMonth#?#228	0.05307448924342753	0.0	0.05307448924342753		_
+org.joda.time.chrono.ISOYearOfEraDateTimeField#?#ISOYearOfEraDateTimeField#?#46	0.052342392259021375	0.0	0.052342392259021375		_
+org.joda.time.DateTimeFieldType#String#getName#?#378	0.052164053095730106	0.0	0.052164053095730106		_
+org.joda.time.field.UnsupportedDurationField#UnsupportedDurationField#getInstance#?,DurationFieldType#55	0.025949964805384102	0.026171196129510688	0.052121160934894786	!(field == null)	_
+org.joda.time.base.AbstractInstant#boolean#equals#?,Object#262	0.025691749776935398	0.025691749776935398	0.051383499553870796	!(readableInstant instanceof ReadableInstant == false)	_
+org.joda.time.chrono.AssembledChronology#DurationField#years#?#264	0.05	0.0	0.05		_
+org.joda.time.chrono.GJChronology#Instant#getGregorianCutover#?#396	0.049690399499995326	0.0	0.049690399499995326		_
+org.joda.time.format.DateTimeFormatterBuilder$StringLiteral#?#StringLiteral#?,String#1271	0.0490880693673816	0.0	0.0490880693673816		_
+org.joda.time.format.DateTimeFormatter#DateTimeParser#getParser#?#174	0.048795003647426664	0.0	0.048795003647426664		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendSecondOfMinute#?,int#685	0.04794633014853841	0.0	0.04794633014853841		_
+org.joda.time.field.BaseDurationField#?#BaseDurationField#?,DurationFieldType#48	0.023408229439226113	0.023408229439226113	0.04678445854983533	!(type == null)	_
+org.joda.time.tz.FixedDateTimeZone#int#getOffset#?,long#49	0.02267462937912591	0.02350502473611342	0.04617965411523933	iWallOffset==0	_
+org.joda.time.format.DateTimeFormatter#DateTimeFormatter#withZoneUTC#?#302	0.04612656040144425	0.0	0.04612656040144425		_
+org.joda.time.chrono.BasicChronology$YearInfo#?#YearInfo#?,int,long#780	0.04523312730319006	0.0	0.04523312730319006		_
+org.joda.time.format.DateTimeFormatter#DateTimePrinter#getPrinter#?#156	0.045175395145262566	0.0	0.045175395145262566		_
+org.joda.time.field.AbstractReadableInstantFieldProperty#?#AbstractReadableInstantFieldProperty#?#55	0.04489001392432336	0.0	0.04489001392432336		_
+org.joda.time.chrono.GregorianChronology#GregorianChronology#getInstanceUTC#?#81	0.044065264923923174	0.0	0.044065264923923174		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#dayOfWeek#?#224	0.04318894504492167	0.0	0.04318894504492167		_
+org.joda.time.chrono.BasicYearDateTimeField#int#getMaximumValue#?#119	0.02156655464068768	0.02156655464068768	0.04313310928137536	iChronology.getMaxYear()>=0	_
+org.joda.time.chrono.AssembledChronology#DateTimeField#year#?#268	0.04313310928137536	0.0	0.04313310928137536		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#append0#?,DateTimePrinter,DateTimeParser#386	0.04264014327112208	0.0	0.04264014327112208		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#monthOfYear#?#260	0.0422813138065352	0.0	0.0422813138065352		_
+org.joda.time.format.DateTimeFormatterBuilder$UnpaddedNumber#?#UnpaddedNumber#?,DateTimeFieldType,int,boolean#1401	0.04207031619116713	0.0	0.04207031619116713		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendYear#?,int,int#829	0.04207031619116713	0.0	0.04207031619116713		_
+org.joda.time.field.BaseDateTimeField#?#BaseDateTimeField#?,DateTimeFieldType#51	0.019592783347677303	0.019592783347677303	0.039185566695354605	!(type == null)	_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#minuteOfDay#?#209	0.03907323325822818	0.0	0.03907323325822818		_
+org.joda.time.field.RemainderDateTimeField#?#RemainderDateTimeField#?,DividedDateTimeField,DateTimeFieldType#89	0.03892494720807615	0.0	0.03892494720807615		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendMonthOfYear#?,int#817	0.03892494720807615	0.0	0.03892494720807615		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#weekyearOfCentury#?#309	0.03849001794597505	0.0	0.03849001794597505		_
+org.joda.time.Instant#?#Instant#?,long#119	0.03820803599504351	0.0	0.03820803599504351		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#yearOfCentury#?#345	0.037529331252040075	0.0	0.037529331252040075		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendDayOfMonth#?,int#775	0.037139067635410375	0.0	0.037139067635410375		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#yearOfEra#?#336	0.037139067635410375	0.0	0.037139067635410375		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#centuryOfEra#?#354	0.036760731104690386	0.0	0.036760731104690386		_
+org.joda.time.base.BaseDateTime#long#getMillis#?#295	0.011822115035531811	0.024845199749997663	0.036667314785529474	iMillis<0	_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#secondOfDay#?#191	0.03663716527236558	0.0	0.03663716527236558		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendMinuteOfHour#?,int#705	0.03639372626234195	0.0	0.03639372626234195		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendHourOfDay#?,int#725	0.03580574370197165	0.0	0.03580574370197165		_
+org.joda.time.chrono.ISOChronology#?#ISOChronology#?,Chronology#122	0.033806170189140665	0.0	0.033806170189140665		_
+org.joda.time.chrono.BasicChronology#DateTimeZone#getZone#?#143	0.016854996561581053	0.016854996561581053	0.03313076573700424	!((base=getBase()) != null)	_
+org.joda.time.DateTimeFieldType$StandardDateTimeFieldType#DateTimeField#getField#?,Chronology#498	0.03270349700838643	0.0	0.03270349700838643		_
+org.joda.time.base.BaseDateTime#?#BaseDateTime#?,long,Chronology#126	0.015646023188518772	0.016002560614563885	0.03164858380308266	checkInstant(instant,iChronology)>=instant	_
+org.joda.time.chrono.GJEraDateTimeField#DurationField#getRangeDurationField#?#131	0.03162277660168379	0.0	0.03162277660168379		_
+org.joda.time.chrono.GJEraDateTimeField#DurationField#getDurationField#?#127	0.03162277660168379	0.0	0.03162277660168379		_
+org.joda.time.format.DateTimeFormatterBuilder$PaddedNumber#?#PaddedNumber#?,DateTimeFieldType,int,boolean,int#1464	0.030787453590353963	0.0	0.030787453590353963		_
+org.joda.time.field.RemainderDateTimeField#DurationField#getRangeDurationField#?#139	0.030499714066520935	0.0	0.030499714066520935		_
+org.joda.time.field.DecoratedDateTimeField#DurationField#getRangeDurationField#?#90	0.03042903097250923	0.0	0.03042903097250923		_
+org.joda.time.chrono.BasicWeekOfWeekyearDateTimeField#DurationField#getRangeDurationField#?#58	0.03021989426077497	0.0	0.03021989426077497		_
+org.joda.time.chrono.BasicWeekyearDateTimeField#DurationField#getRangeDurationField#?#208	0.03021989426077497	0.0	0.03021989426077497		_
+org.joda.time.chrono.BasicDayOfYearDateTimeField#DurationField#getRangeDurationField#?#56	0.029617443887954616	0.0	0.029617443887954616		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#weekyear#?#300	0.029235267310234306	0.0	0.029235267310234306		_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#boolean#isParser#?#2751	0.029049644688706338	0.0	0.029049644688706338		_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#boolean#isPrinter#?#2747	0.029049644688706338	0.0	0.029049644688706338		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendLiteral#?,char#397	0.028988551782622423	0.0	0.028988551782622423		_
+org.joda.time.format.DateTimeFormatterBuilder$CharacterLiteral#?#CharacterLiteral#?,char#1207	0.028988551782622423	0.0	0.028988551782622423		_
+org.joda.time.format.DateTimeFormatterBuilder$NumberFormatter#?#NumberFormatter#?,DateTimeFieldType,int,boolean#1322	0.02880756009578387	0.0	0.02880756009578387		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#weekOfWeekyear#?#291	0.02868876552746235	0.0	0.02868876552746235		_
+org.joda.time.field.DividedDateTimeField#DurationField#getDurationField#?#182	0.028629916715693413	0.0	0.028629916715693413		_
+org.joda.time.field.DecoratedDateTimeField#DurationField#getDurationField#?#86	0.028227871846881837	0.0	0.028227871846881837		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#dayOfYear#?#282	0.02778850071883642	0.0	0.02778850071883642		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#dayOfWeek#?#264	0.027524094128159017	0.0	0.027524094128159017		_
+org.joda.time.chrono.AssembledChronology#?#AssembledChronology#?,Chronology,Object#100	0.02711630722733202	0.0	0.02711630722733202		_
+org.joda.time.format.DateTimeFormatter#?#DateTimeFormatter#?,DateTimePrinter,DateTimeParser#118	0.026967994498529685	0.0	0.026967994498529685		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#append0#?,Object#374	0.026919095102908276	0.0	0.026919095102908276		_
+org.joda.time.chrono.AssembledChronology$Fields#boolean#isSupported#?,DurationField#558	0.026678526425610406	0.0	0.026678526425610406		_
+org.joda.time.chrono.AssembledChronology$Fields#boolean#isSupported#?,DateTimeField#562	0.026678526425610406	0.0	0.026678526425610406		_
+org.joda.time.chrono.BaseChronology#DurationField#eras#?#660	0.026631182064565374	0.0	0.026631182064565374		_
+org.joda.time.field.MillisDurationField#boolean#isSupported#?#62	0.026537244621713762	0.0	0.026537244621713762		_
+org.joda.time.format.DateTimeFormatterBuilder#?#DateTimeFormatterBuilder#?#84	0.02639818386742273	0.0	0.02639818386742273		_
+org.joda.time.chrono.BaseChronology#?#BaseChronology#?#54	0.02626128657194451	0.0	0.02626128657194451		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#weekyearOfCentury#?#252	0.026171196129510688	0.0	0.026171196129510688		_
+org.joda.time.field.UnsupportedDurationField#boolean#isSupported#?#92	0.026126497213658208	0.0	0.026126497213658208		_
+org.joda.time.chrono.AssembledChronology#DurationField#eras#?#288	0.026126497213658208	0.0	0.026126497213658208		_
+org.joda.time.chrono.AssembledChronology#DurationField#centuries#?#280	0.026037782196164774	0.0	0.026037782196164774		_
+org.joda.time.chrono.AssembledChronology#DurationField#halfdays#?#204	0.026037782196164774	0.0	0.026037782196164774		_
+org.joda.time.field.BaseDurationField#DurationFieldType#getType#?#55	0.025863030005593587	0.0	0.025863030005593587		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#hourOfHalfday#?#208	0.025649458802128853	0.0	0.025649458802128853		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#clockhourOfDay#?#200	0.025649458802128853	0.0	0.025649458802128853		_
+org.joda.time.chrono.AssembledChronology#DurationField#weekyears#?#244	0.025482359571881278	0.0	0.025482359571881278		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#minuteOfDay#?#188	0.025278006958277935	0.0	0.025278006958277935		_
+org.joda.time.DurationFieldType#DurationFieldType#eras#?#205	0.025118017965166415	0.0	0.025118017965166415		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#clockhourOfHalfday#?#212	0.02507849312877596	0.0	0.02507849312877596		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#yearOfCentury#?#276	0.024922239313961342	0.0	0.024922239313961342		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#centuryOfEra#?#284	0.02480694691784169	0.0	0.02480694691784169		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#yearOfEra#?#272	0.02469323991623974	0.0	0.02469323991623974		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#halfdayOfDay#?#216	0.024655683636076897	0.0	0.024655683636076897		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#era#?#292	0.024470439211619822	0.0	0.024470439211619822		_
+org.joda.time.field.PreciseDateTimeField#int#getMaximumValue#?#131	0.01222607177678836	0.01222607177678836	0.02445214355357672	iRange - 1>0	_
+org.joda.time.field.PreciseDurationDateTimeField#int#getMinimumValue#?#150	0.012078034628861947	0.012078034628861947	0.024156069257723893	0>=0	_
+org.joda.time.format.DateTimeFormatter#?#DateTimeFormatter#?,DateTimePrinter,DateTimeParser,Locale,boolean,Chronology,DateTimeZone,Integer,int#136	0.022941573387056175	0.0	0.022941573387056175		_
+org.joda.time.chrono.BasicDayOfMonthDateTimeField#DurationField#getRangeDurationField#?#51	0.02233278122417767	0.0	0.02233278122417767		_
+org.joda.time.chrono.BasicYearDateTimeField#DurationField#getRangeDurationField#?#95	0.022222222222222223	0.0	0.022222222222222223		_
+org.joda.time.chrono.BasicMonthOfYearDateTimeField#DurationField#getRangeDurationField#?#315	0.022167554926073633	0.0	0.022167554926073633		_
+org.joda.time.field.PreciseDateTimeField#DurationField#getRangeDurationField#?#122	0.022113289104342324	0.0	0.022113289104342324		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#dayOfYear#?#232	0.020988774008055672	0.0	0.020988774008055672		_
+org.joda.time.chrono.AssembledChronology#DurationField#weeks#?#236	0.020672455764868078	0.0	0.020672455764868078		_
+org.joda.time.field.ImpreciseDateTimeField#DurationField#getDurationField#?#137	0.020541200750444025	0.0	0.020541200750444025		_
+org.joda.time.field.DecoratedDateTimeField#DateTimeField#getWrappedField#?#70	0.020370021093167764	0.0	0.020370021093167764		_
+org.joda.time.DateTime#?#DateTime#?,long,Chronology#220	0.020040120401405057	0.0	0.020040120401405057		_
+org.joda.time.chrono.AssembledChronology#DurationField#millis#?#156	0.019480930197663147	0.0	0.019480930197663147		_
+org.joda.time.chrono.AssembledChronology#DurationField#seconds#?#168	0.019425717247145282	0.0	0.019425717247145282		_
+org.joda.time.chrono.AssembledChronology#DateTimeZone#getZone#?#107	0.009174698042719672	0.00917662935482247	0.018351327397542142	(base=iBase) != null	_
+org.joda.time.chrono.AssembledChronology#DurationField#minutes#?#180	0.018349396085439344	0.0	0.018349396085439344		_
+org.joda.time.DateTimeZone#String#getID#?#734	0.018062786995975737	0.0	0.018062786995975737		_
+org.joda.time.field.BaseDateTimeField#DateTimeFieldType#getType#?#58	0.017975032046140385	0.0	0.017975032046140385		_
+org.joda.time.chrono.AssembledChronology#DurationField#hours#?#192	0.017527682734987296	0.0	0.017527682734987296		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#secondOfDay#?#176	0.017187814721168516	0.0	0.017187814721168516		_
+org.joda.time.field.BaseDurationField#boolean#isSupported#?#66	0.016678252811038963	0.0	0.016678252811038963		_
+org.joda.time.chrono.AssembledChronology#DurationField#months#?#256	0.015861031714362882	0.0	0.015861031714362882		_
+org.joda.time.chrono.AssembledChronology#DurationField#days#?#220	0.01543952792821099	0.0	0.01543952792821099		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#millisOfSecond#?#160	0.015294382258037451	0.0	0.015294382258037451		_
+org.joda.time.field.PreciseDurationDateTimeField#DurationField#getDurationField#?#141	0.01381447409988844	0.0	0.01381447409988844		_
+org.joda.time.chrono.ISOChronology#ISOChronology#getInstanceUTC#?#77	0.013239518037357893	0.0	0.013239518037357893		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#minuteOfHour#?#200	0.012639003479138967	0.0	0.012639003479138967		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#hourOfDay#?#218	0.012534320519584096	0.0	0.012534320519584096		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#secondOfMinute#?#172	0.012341917379408774	0.0	0.012341917379408774		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#minuteOfHour#?#184	0.012158110873601292	0.0	0.012158110873601292		_
+org.joda.time.DateTimeFieldType#DateTimeFieldType#secondOfMinute#?#182	0.012113428212804355	0.0	0.012113428212804355		_
+org.joda.time.base.BaseDateTime#Chronology#checkChronology#?,Chronology#270	0.012029871166784604	0.0	0.012029871166784604		_
+org.joda.time.chrono.AssembledChronology#DateTimeField#hourOfDay#?#196	0.011995202878081344	0.0	0.011995202878081344		_
+org.joda.time.base.AbstractDateTime#?#AbstractDateTime#?#51	0.011948019705168268	0.0	0.011948019705168268		_
+org.joda.time.base.AbstractInstant#?#AbstractInstant#?#61	0.011581803068053625	0.0	0.011581803068053625		_
+org.joda.time.chrono.ISOChronology#Chronology#withUTC#?#133	0.011111111111111112	0.0	0.011111111111111112		_
+org.joda.time.chrono.AssembledChronology#Object#getParam#?#315	0.0095980959266335	0.0	0.0095980959266335		_
+org.joda.time.DurationFieldType#DurationFieldType#years#?#187	0.0	0.0	0.0		_
+org.joda.time.DurationFieldType#DurationFieldType#weekyears#?#169	0.0	0.0	0.0		_
+org.joda.time.DurationFieldType#DurationFieldType#months#?#178	0.0	0.0	0.0		_
+org.joda.time.DurationFieldType#DurationFieldType#centuries#?#196	0.0	0.0	0.0		_
+org.joda.time.DurationFieldType#DurationFieldType#weeks#?#160	0.0	0.0	0.0		_
+org.joda.time.DurationFieldType#DurationFieldType#days#?#151	0.0	0.0	0.0		_

@@ -25,6 +25,8 @@ import tensorflow as tf
 import shutil as su
 import Queue
 
+
+
 class Train(object):
 
     def __init__(self, configure):

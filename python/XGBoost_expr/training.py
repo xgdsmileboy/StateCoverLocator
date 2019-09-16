@@ -25,6 +25,8 @@ import tensorflow as tf
 import shutil as su
 from DNN.dnn import *
 
+
+
 class TrainExpr(object):
 
     def __init__(self, configure):

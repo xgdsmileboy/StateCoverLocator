@@ -1,0 +1,29 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.apache.commons.math.ode.events.EventState#boolean#evaluateStep#?,StepInterpolator#237	0.0	0.989010989010989	0.989010989010989	root==ta	_
+org.apache.commons.math.analysis.solvers.BrentSolver#double#solve#?,UnivariateRealFunction,double,double,double,double,double,double#303	0.0	0.12030075187969924	0.12030075187969924	1.0 - r3<y0	_
+org.apache.commons.math.analysis.solvers.BrentSolver#double#solve#?,UnivariateRealFunction,double,double#224	0.0	0.10127877237851662	0.10127877237851662	solve(f,min,yMin,max,yMax,min,yMin)<=min	_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#storeTime#?,double#220	0.0	0.009428625306430327	0.009428625306430327	currentTime - previousTime<t	_
+org.apache.commons.math.ode.events.EventState#void#reinitializeBegin#?,double,double[]#152	0.0	0.005623721881390597	0.005623721881390597	handler.g(tStart,yStart)<=tStart	_
+org.apache.commons.math.ode.events.EventState#void#stepAccepted#?,double,double[]#297	0.0	0.005623721881390597	0.005623721881390597	handler.g(t,y)<=t	_
+org.apache.commons.math.ode.events.EventState#boolean#reset#?,double,double[]#330	0.0	0.005168626437524228	0.005168626437524228	!(!pendingEvent)	_
+org.apache.commons.math.ode.events.CombinedEventsManager#boolean#evaluateStep#?,StepInterpolator#128	0.0	0.0026033192320208264	0.0026033192320208264	!(states.isEmpty())	_
+org.apache.commons.math.ode.AbstractIntegrator#void#sanityChecks#?,FirstOrderDifferentialEquations,double,double[],double,double[]#198	0.0	0.002135448444173276	0.002135448444173276	!(ode.getDimension() != y0.length)	_
+org.apache.commons.math.ConvergingAlgorithmImpl#?#ConvergingAlgorithmImpl#?,int,double#65	0.0	0.001449625513409037	0.001449625513409037	defaultRelativeAccuracy<=defaultAbsoluteAccuracy	_
+org.apache.commons.math.ode.events.CombinedEventsManager#boolean#stop#?#216	0.0	0.0014326647564469898	0.0014326647564469898	state.stop()	_
+org.apache.commons.math.ode.nonstiff.RungeKuttaIntegrator#?#RungeKuttaIntegrator#?,String,double[],double[][],double[],RungeKuttaStepInterpolator,double#91	0.0	0.0	0.0	Math.abs(step)>=step	_
+org.apache.commons.math.ode.events.EventState#?#EventState#?,EventHandler,double,double,int#97	0.0	0.0	0.0	maxCheckInterval>=convergence	_
+org.apache.commons.math.ode.nonstiff.DormandPrince853Integrator#double#estimateError#?,double[][],double[],double[],double#253	0.0	0.0	0.0	E1_01 * yDotK[0][j] + E1_06 * yDotK[5][j] + E1_07 * yDotK[6][j] + E1_08 * yDotK[7][j] + E1_09 * yDotK[8][j] + E1_10 * yDotK[9][j] + E1_11 * yDotK[10][j] + E1_12 * yDotK[11][j]>error1	_
+org.apache.commons.math.ode.nonstiff.EmbeddedRungeKuttaIntegrator#?#EmbeddedRungeKuttaIntegrator#?,String,boolean,double[],double[][],double[],RungeKuttaStepInterpolator,double,double,double,double#124	0.0	0.0	0.0	-1.0 / getOrder()!=scalRelativeTolerance	_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#double[]#getInterpolatedState#?#272	0.0	0.0	0.0	dirtyState	_
+org.apache.commons.math.ode.nonstiff.EmbeddedRungeKuttaIntegrator#double#integrate#?,FirstOrderDifferentialEquations,double,double[],double,double[]#268	0.0	0.0	0.0	a[k - 1][l] * yDotK[l][j]>=error	GT
+org.apache.commons.math.ode.AbstractIntegrator#void#computeDerivatives#?,double,double[],double[]#179	0.0	0.0	0.0	!(++evaluations > maxEvaluations)	_
+org.apache.commons.math.ode.nonstiff.RungeKuttaIntegrator#double#integrate#?,FirstOrderDifferentialEquations,double,double[],double,double[]#137	0.0	0.0	0.0	!lastStep	GT
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl#?#UnivariateRealSolverImpl#?,int,double#95	0.0	0.0	0.0	defaultFunctionValueAccuracy<=defaultAbsoluteAccuracy	_
+org.apache.commons.math.ode.AbstractIntegrator#void#setMaxEvaluations#?,int#143	0.0	0.0	0.0	(maxEvaluations < 0) ? Integer.MAX_VALUE : maxEvaluations>maxEvaluations	_
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl#void#verifyInterval#?,double,double#208	0.0	0.0	0.0	!(lower >= upper)	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#?#AdaptiveStepsizeIntegrator#?,String,double,double,double,double#96	0.0	0.0	0.0	Math.abs(maxStep)<=maxStep	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#void#sanityChecks#?,FirstOrderDifferentialEquations,double,double[],double,double[]#180	0.0	0.0	0.0	!((vecRelativeTolerance != null) && (vecRelativeTolerance.length != y0.length))	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#double#initializeStep#?,FirstOrderDifferentialEquations,boolean,int,double[],double,double[],double[],double[],double[]#209	0.0	0.0	0.0	initialStep > 0	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#void#setInitialStepSize#?,double#150	0.0	0.0	0.0	!((initialStepSize < minStep) || (initialStepSize > maxStep))	_
+org.apache.commons.math.ode.events.CombinedEventsManager#boolean#reset#?,double,double[]#237	0.0	0.0	0.0	!(state.reset(t,y))	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#double#filterStep#?,double,boolean,boolean#293	0.0	0.0	0.0	!(filteredH < -maxStep)	_

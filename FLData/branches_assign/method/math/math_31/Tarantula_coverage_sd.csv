@@ -1,0 +1,70 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.apache.commons.math3.distribution.FDistribution#?#FDistribution#?,double,double,double#97	0.9958606416005519	0.9986163957108266	1.9944770373113785	numeratorDegreesOfFreedom>=denominatorDegreesOfFreedom	_
+org.apache.commons.math3.distribution.BinomialDistribution#?#BinomialDistribution#?,int,double#54	0.9972366148531953	0.9972366148531953	1.9944732297063905	!(p < 0 || p > 1)	_
+org.apache.commons.math3.distribution.FDistribution#double#getNumericalMean#?#193	0.9972366148531953	0.9972366148531953	1.9937847681151903	denominatorDF > 2	_
+org.apache.commons.math3.distribution.FDistribution#double#calculateNumericalVariance#?#229	0.9972366148531953	0.9972366148531953	1.9937847681151903	denominatorDF > 4	_
+org.apache.commons.math3.distribution.FDistribution#double#getNumericalVariance#?#214	0.9965481532619952	0.9965481532619952	1.9930963065239904	!numericalVarianceIsCalculated	_
+org.apache.commons.math3.distribution.FDistribution#double#cumulativeProbability#?,double#148	0.9965481532619952	0.9986163957108266	1.9924201822856977	denominatorDegreesOfFreedom==n	_
+org.apache.commons.math3.distribution.BinomialDistribution#double#cumulativeProbability#?,int#96	0.9958606416005519	0.9958606416005519	1.9917212832011038	!(x < 0)	_
+org.apache.commons.math3.distribution.AbstractIntegerDistribution#int#inverseCumulativeProbability#?,double#109	0.9924372636644895	0.9944884602135723	1.9869257238780618	1.0 / k<tmp	_
+org.apache.commons.math3.distribution.AbstractIntegerDistribution#int#solveInverseCumulativeProbability#?,double,int,int#134	0.991074493649159	0.991074493649159	1.982148987298318	!(xm < lower || xm > upper)	_
+org.apache.commons.math3.distribution.AbstractRealDistribution#double#inverseCumulativeProbability#?,double#122	0.9863341305090536	0.9965481532619952	1.97952397893445	FastMath.sqrt(getNumericalVariance())<p	_
+org.apache.commons.math3.special.Beta#double#regularizedBeta#?,double,double,double,double,int#154	0.9866712235133287	0.9897154610901612	1.970354048046683	FastMath.exp((a * FastMath.log(x)) + (b * FastMath.log(1.0 - x)) - FastMath.log(a) - logBeta(a,b,epsilon,maxIterations)) * 1.0 / fraction.evaluate(x,epsilon,maxIterations)<=epsilon	_
+org.apache.commons.math3.util.ContinuedFraction#double#evaluate#?,double,double,int#187	1.0	1.0	1.9671691792294808	hPrev==cN	GT
+org.apache.commons.math3.special.Beta#double#logBeta#?,double,double,double,int#201	0.9799728445349626	0.9836456558773424	1.963618500412305	Gamma.logGamma(a) + Gamma.logGamma(b) - Gamma.logGamma(a + b)<epsilon	_
+org.apache.commons.math3.analysis.solvers.BrentSolver#double#doSolve#?#97	0.9736930860033727	0.9958606416005519	1.9630298208300325	computeObjectiveValue(min)==yInitial	_
+org.apache.commons.math3.analysis.solvers.UnivariateSolverUtils#double#solve#?,UnivariateFunction,double,double,double#73	0.9809717974855591	0.9809717974855591	1.9612774002020277	!(function == null)	_
+org.apache.commons.math3.util.FastMath#double#exp#?,double,double,double[]#830	0.9750084430935494	0.9756674552213586	1.950675898314908	!(hiPrec != null)	_
+org.apache.commons.math3.special.Gamma#double#logGamma#?,double#101	0.9569108385813722	0.9920962199312715	1.9490070585126436	((x + .5) * FastMath.log(tmp)) - tmp + HALF_LOG_2_PI + FastMath.log(sum / x)>=tmp	_
+org.apache.commons.math3.special.Gamma#double#lanczos#?,double#352	0.9553275976174719	0.9553275976174719	1.9106551952349438	sum + (LANCZOS[i] / (x + i))<=x	_
+org.apache.commons.math3.util.FastMath#double#log#?,double,double[]#1275	0.9118761844598864	0.9863341305090536	1.89821031496894	lnza * epsilon>x	_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#void#setup#?,int,FUNC,double,double,double#177	0.9156359023152554	0.917381633301557	1.8330175356168124	max>min	_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#?#BaseAbstractUnivariateSolver#?,double,double,double#94	0.9115882538680139	0.917381633301557	1.828969887169571	relativeAccuracy<absoluteAccuracy	_
+org.apache.commons.math3.analysis.solvers.UnivariateSolverUtils#void#verifyInterval#?,double,double#336	0.906436420722135	0.9092913385826772	1.8157277593048122	!(lower >= upper)	_
+org.apache.commons.math3.util.Precision#boolean#equals#?,double,double,int#302	0.8566765578635015	0.9159263959390863	1.7726029538025878	Double.doubleToLongBits(y)<xInt	_
+org.apache.commons.math3.exception.util.ArgUtils#Object[]#flatten#?,Object[]#45	0.8471244131455399	0.8471244131455399	1.6942488262910798	!(o instanceof Object[])	_
+org.apache.commons.math3.util.Incrementor#void#incrementCount#?#150	0.7488975356679638	0.7488975356679638	1.4977950713359276	!(++count > maximalCount)	_
+org.apache.commons.math3.util.MathUtils#void#checkNotNull#?,Object#257	0.7026040399123874	0.702946189432676	1.4055502293450632	!(o == null)	_
+org.apache.commons.math3.distribution.FDistribution#double#getSolverAbsoluteAccuracy#?#178	0.9972366148531953	0.0	0.9972366148531953		_
+org.apache.commons.math3.distribution.BinomialDistribution#int#getSupportLowerBound#?#137	0.9965481532619952	0.0	0.9965481532619952		_
+org.apache.commons.math3.distribution.FDistribution#double#getSupportUpperBound#?#260	0.9965481532619952	0.0	0.9965481532619952		_
+org.apache.commons.math3.distribution.FDistribution#double#getSupportLowerBound#?#248	0.9965481532619952	0.0	0.9965481532619952		_
+org.apache.commons.math3.distribution.FDistribution#double#getNumeratorDegreesOfFreedom#?#163	0.9965481532619952	0.0	0.9965481532619952		_
+org.apache.commons.math3.distribution.BinomialDistribution#double#getNumericalMean#?#114	0.9965481532619952	0.0	0.9965481532619952		_
+org.apache.commons.math3.distribution.BinomialDistribution#int#getSupportUpperBound#?#149	0.9965481532619952	0.0	0.9965481532619952		_
+org.apache.commons.math3.distribution.BinomialDistribution#double#getNumericalVariance#?#124	0.9965481532619952	0.0	0.9965481532619952		_
+org.apache.commons.math3.distribution.FDistribution#double#getDenominatorDegreesOfFreedom#?#172	0.9958606416005519	0.0	0.9958606416005519		_
+org.apache.commons.math3.distribution.FDistribution#?#FDistribution#?,double,double#68	0.9958606416005519	0.0	0.9958606416005519		_
+org.apache.commons.math3.exception.ConvergenceException#?#ConvergenceException#?,Localizable,Object#49	0.9955172413793104	0.0	0.9955172413793104		_
+org.apache.commons.math3.distribution.AbstractIntegerDistribution#double#checkedCumulativeProbability#?,int#200	0.991074493649159	0.0	0.991074493649159		_
+org.apache.commons.math3.exception.MathIllegalStateException#ExceptionContext#getContext#?#74	0.9856606350290201	0.0	0.9856606350290201		_
+org.apache.commons.math3.exception.MathIllegalStateException#?#MathIllegalStateException#?#69	0.9846521145975443	0.0	0.9846521145975443		_
+org.apache.commons.math3.exception.MathIllegalStateException#?#MathIllegalStateException#?,Localizable,Object#47	0.9793080054274085	0.0	0.9793080054274085		_
+org.apache.commons.math3.special.Beta#double#regularizedBeta#?,double,double,double#50	0.9779810298102981	0.0	0.9779810298102981		_
+org.apache.commons.math3.analysis.solvers.BrentSolver#?#BrentSolver#?,double#53	0.9678176332551124	0.0	0.9678176332551124		_
+org.apache.commons.math3.util.ContinuedFraction#?#ContinuedFraction#?#45	0.9645840294019379	0.0	0.9645840294019379		_
+org.apache.commons.math3.util.Precision#boolean#equals#?,double,double,double#265	0.948111658456486	0.0	0.948111658456486		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#void#verifySequence#?,double,double,double#268	0.9443899247628393	0.0	0.9443899247628393		_
+org.apache.commons.math3.analysis.solvers.UnivariateSolverUtils#void#verifySequence#?,double,double,double#355	0.9431558314276379	0.0	0.9431558314276379		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#double#getStartValue#?#122	0.9431558314276379	0.0	0.9431558314276379		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#double#solve#?,int,FUNC,double,double#195	0.9346066688248623	0.0	0.9346066688248623		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#double#getFunctionValueAccuracy#?#140	0.9250240307593721	0.0	0.9250240307593721		_
+org.apache.commons.math3.analysis.solvers.AbstractUnivariateSolver#?#AbstractUnivariateSolver#?,double#37	0.9214810086179381	0.0	0.9214810086179381		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#?#BaseAbstractUnivariateSolver#?,double#65	0.917381633301557	0.0	0.917381633301557		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#double#getMin#?#110	0.9167989838043823	0.0	0.9167989838043823		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#double#getMax#?#116	0.9167989838043823	0.0	0.9167989838043823		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#void#incrementEvaluationCount#?#294	0.9162170739447795	0.0	0.9162170739447795		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#double#computeObjectiveValue#?,double#154	0.9162170739447795	0.0	0.9162170739447795		_
+org.apache.commons.math3.analysis.solvers.BaseAbstractUnivariateSolver#double#solve#?,int,FUNC,double,double,double#190	0.9156359023152554	0.0	0.9156359023152554		_
+org.apache.commons.math3.util.FastMath#double#log#?,double#1096	0.9078616352201258	0.0	0.9078616352201258		_
+org.apache.commons.math3.util.FastMath#double#exp#?,double#807	0.9047320589157005	0.0	0.9047320589157005		_
+org.apache.commons.math3.util.FastMath#long#abs#?,long#3002	0.8556609365737996	0.0	0.8556609365737996		_
+org.apache.commons.math3.exception.util.ExceptionContext#void#addMessage#?,Localizable,Object#87	0.8204035237283319	0.0	0.8204035237283319		_
+org.apache.commons.math3.exception.util.ExceptionContext#?#ExceptionContext#?,Throwable#65	0.8201704545454546	0.0	0.8201704545454546		_
+org.apache.commons.math3.util.FastMath#double#sqrt#?,double#375	0.7842977451779408	0.0	0.7842977451779408		_
+org.apache.commons.math3.util.FastMath#double#abs#?,double#3020	0.7444559051057246	0.0	0.7444559051057246		_
+org.apache.commons.math3.util.Incrementor#void#resetCount#?#159	0.7431145431145432	0.0	0.7431145431145432		_
+org.apache.commons.math3.util.Incrementor#void#setMaximalCount#?,int#91	0.738174379953976	0.0	0.738174379953976		_
+org.apache.commons.math3.util.Incrementor#?#Incrementor#?#52	0.7325551890383152	0.0	0.7325551890383152		_
+org.apache.commons.math3.util.Incrementor#?#Incrementor#?,int#61	0.7314416012161136	0.0	0.7314416012161136		_
+org.apache.commons.math3.util.Incrementor#?#Incrementor#?,int,MaxCountExceededCallback#80	0.7310711572550013	0.0	0.7310711572550013		_

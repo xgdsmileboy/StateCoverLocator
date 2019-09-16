@@ -1,6 +1,5 @@
 from math import isnan
 import os
-
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import KMeans
 from sklearn.externals import joblib

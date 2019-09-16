@@ -1,0 +1,121 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.apache.commons.math.ode.nonstiff.DormandPrince853StepInterpolator#void#computeInterpolatedStateAndDerivatives#?,double,double#362	0.21320071635561041	1.0	1.2132007163556104	2 * theta==oneMinusThetaH	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#void#setInitialStepSize#?,double#209	0.5773502691896258	0.5773502691896258	1.1547005383792517	!((initialStepSize < minStep) || (initialStepSize > maxStep))	_
+org.apache.commons.math.ode.nonstiff.DormandPrince853Integrator#double#estimateError#?,double[][],double[],double[],double#278	0.2	0.5	0.7	error1 + 0.01 * error2>error2	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#double#initializeStep#?,boolean,int,double[],double,double[],double[],double[],double[]#250	0.5773502691896258	0.5773502691896258	0.6783655236448469	initialStep > 0	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#void#setStepSizeControl#?,double,double,double,double#157	0.10721125348377948	0.5	0.6072112534837795	FastMath.abs(minimalStep)>=absoluteTolerance	_
+org.apache.commons.math.ode.nonstiff.EmbeddedRungeKuttaIntegrator#void#integrate#?,ExpandableStatefulODE,double#254	0.15617376188860607	0.4472135954999579	0.5820535679926063	hNew>error	_
+org.apache.commons.math.util.FastMath#double#ceil#?,double#3375	0.2886751345948129	0.2886751345948129	0.5773502691896258	!(y == 0)	_
+org.apache.commons.math.ode.events.EventState#boolean#reset#?,double,double[]#333	0.31622776601683794	0.31622776601683794	0.574426655763999	nextAction == EventHandler.Action.RESET_STATE	_
+org.apache.commons.math.ode.AbstractIntegrator#double#acceptStep#?,AbstractStepInterpolator,double[],double[],double#337	0.2773500981126146	0.2773500981126146	0.5355489878597757	currentEvent.reset(eventT,eventY)	GT
+org.apache.commons.math.ode.events.EventState#boolean#evaluateStep#?,StepInterpolator#229	0.23570226039551587	0.24253562503633297	0.47823788543184886	forward ? bracketing.solve(maxIterationCount,f,ta,tb,AllowedSolution.RIGHT_SIDE) : bracketing.solve(maxIterationCount,f,tb,ta,AllowedSolution.LEFT_SIDE)>ta	_
+org.apache.commons.math.ode.events.EventState#void#stepAccepted#?,double,double[]#301	0.23570226039551587	0.23570226039551587	0.45930905814549483	pendingEvent && (FastMath.abs(pendingEventTime - t) <= convergence)	_
+org.apache.commons.math.ode.events.EventState#?#EventState#?,EventHandler,double,double,int,UnivariateRealSolver#104	0.22360679774997896	0.22360679774997896	0.4472135954999579	maxCheckInterval!=convergence	_
+org.apache.commons.math.ode.events.EventState#void#reinitializeBegin#?,StepInterpolator#157	0.22360679774997896	0.22360679774997896	0.4472135954999579	!(g0 == 0)	_
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver#double#doSolve#?#203	0.24253562503633297	0.24253562503633297	0.44665977026826453	y[signChangeIndex]>=absYA	_
+org.apache.commons.math.ode.nonstiff.DormandPrince853StepInterpolator#void#doFinalize#?#425	0.21320071635561041	0.22360679774997896	0.4368075141055894	currentState[j] + h * s>=s	_
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver#double#guessX#?,double,double[],double[],int,int#366	0.20412414523193154	0.20412414523193154	0.4082482904638631	i + 1 - start>=i	_
+org.apache.commons.math.ode.nonstiff.DormandPrince853StepInterpolator#void#reinitialize#?,AbstractIntegrator,double[],double[][],boolean,EquationsMapper,EquationsMapper[]#298	0.2	0.2	0.4	k < v.length	_
+org.apache.commons.math.ode.nonstiff.DormandPrince853StepInterpolator#?#DormandPrince853StepInterpolator#?,DormandPrince853StepInterpolator#246	0.2	0.2	0.4	interpolator.currentState == null	_
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver#?#BracketingNthOrderBrentSolver#?,double,int#83	0.19611613513818404	0.19611613513818404	0.3885662248680593	!(maximalOrder < 2)	_
+org.apache.commons.math.ode.nonstiff.EmbeddedRungeKuttaIntegrator#?#EmbeddedRungeKuttaIntegrator#?,String,boolean,double[],double[][],double[],RungeKuttaStepInterpolator,double,double,double,double#124	0.15249857033260467	0.15811388300841897	0.3106124533410236	-1.0 / getOrder()<maxStep	_
+org.apache.commons.math.ode.AbstractIntegrator#void#addEventHandler#?,EventHandler,double,double,int#128	0.24253562503633297	0.0	0.24253562503633297		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#setSoftPreviousTime#?,double#320	0.24253562503633297	0.0	0.24253562503633297		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#setSoftCurrentTime#?,double#334	0.24253562503633297	0.0	0.24253562503633297		_
+org.apache.commons.math.ode.events.EventState#double#getEventTime#?#285	0.23570226039551587	0.0	0.23570226039551587		_
+org.apache.commons.math.ode.AbstractIntegrator#void#addEventHandler#?,EventHandler,double,double,int,UnivariateRealSolver#139	0.22941573387056174	0.0	0.22941573387056174		_
+org.apache.commons.math.ode.events.EventState#boolean#stop#?#317	0.22941573387056174	0.0	0.22941573387056174		_
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver#double#solve#?,int,UnivariateRealFunction,double,double,AllowedSolution#385	0.22360679774997896	0.0	0.22360679774997896		_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#double#filterStep#?,double,boolean,boolean#333	0.10482848367219183	0.10482848367219183	0.20965696734438366	!(filteredH < -maxStep)	_
+org.apache.commons.math.ode.nonstiff.DormandPrince853Integrator#?#DormandPrince853Integrator#?,double,double,double,double#220	0.20412414523193154	0.0	0.20412414523193154		_
+org.apache.commons.math.ode.nonstiff.RungeKuttaStepInterpolator#?#RungeKuttaStepInterpolator#?,RungeKuttaStepInterpolator#84	0.10050378152592121	0.10050378152592121	0.20100756305184242	!(interpolator.currentState != null)	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#void#sanityChecks#?,ExpandableStatefulODE,double#229	0.1	0.10050378152592121	0.20050378152592122	!((vecRelativeTolerance != null) && (vecRelativeTolerance.length != mainSetDimension))	_
+org.apache.commons.math.ode.nonstiff.DormandPrince853StepInterpolator#void#storeTime#?,double#310	0.2	0.0	0.2		_
+org.apache.commons.math.ode.nonstiff.DormandPrince853StepInterpolator#StepInterpolator#doCopy#?#278	0.2	0.0	0.2		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#?#AbstractStepInterpolator#?,AbstractStepInterpolator#180	0.10050378152592121	0.10050378152592121	0.19951853582358864	interpolator.currentState == null	_
+org.apache.commons.math.util.FastMath#double#pow#?,double,double#1564	0.07352146220938077	0.12403473458920847	0.19755619679858924	aa + ab>x	_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#finalizeStep#?#482	0.09853292781642932	0.09805806756909202	0.19611613513818404	!finalized	_
+org.apache.commons.math.ode.nonstiff.DormandPrince853StepInterpolator#?#DormandPrince853StepInterpolator#?#234	0.19245008972987526	0.0	0.19245008972987526		_
+org.apache.commons.math.ode.nonstiff.DormandPrince853Integrator#int#getOrder#?#247	0.19245008972987526	0.0	0.19245008972987526		_
+org.apache.commons.math.ode.AbstractIntegrator#void#sanityChecks#?,ExpandableStatefulODE,double#386	0.0827605888602368	0.09712858623572641	0.1798891750959632	FastMath.abs(equations.getTime() - t)==t	_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#void#setup#?,int,FUNC,double,double,double#178	0.08838834764831843	0.08944271909999159	0.17783106674831	startValue>min	_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#?#BaseAbstractUnivariateRealSolver#?,double,double,double#93	0.086710996952412	0.08944271909999159	0.1761537160524036	absoluteAccuracy>functionValueAccuracy	_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#storeTime#?,double#301	0.08137884587711594	0.09325048082403138	0.17462932670114734	globalCurrentTime - globalPreviousTime==t	_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#allocateInterpolatedArrays#?,int#212	0.09407208683835973	0.09407208683835973	0.1731290283425692	dimension < 0	_
+org.apache.commons.math.util.Precision#boolean#equals#?,double,double,int#272	0.08391813582966891	0.08804509063256238	0.17196322646223128	SGN_MASK - xInt<yInt	_
+org.apache.commons.math.ode.ExpandableStatefulODE#int#getTotalDimension#?#96	0.08512565307587486	0.08512565307587486	0.16904378890554378	components.isEmpty()	_
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils#void#verifyInterval#?,double,double#336	0.08333333333333333	0.08481889296799709	0.16815222630133042	!(lower >= upper)	_
+org.apache.commons.math.ode.EquationsMapper#void#insertEquationData#?,double[],double[]#92	0.08391813582966891	0.08391813582966891	0.16783627165933782	!(equationData.length != dimension)	_
+org.apache.commons.math.ode.AbstractIntegrator#double#integrate#?,FirstOrderDifferentialEquations,double,double[],double,double[]#203	0.08391813582966891	0.08391813582966891	0.16783627165933782	!(y.length != equations.getDimension())	_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#evaluateCompleteInterpolatedState#?#402	0.08362420100070908	0.08362420100070908	0.16724840200141816	dirtyState	_
+org.apache.commons.math.ode.ExpandableStatefulODE#void#setPrimaryState#?,double[]#192	0.0827605888602368	0.0827605888602368	0.1655211777204736	!(primaryState.length != this.primaryState.length)	_
+org.apache.commons.math.ode.EquationsMapper#void#extractEquationData#?,double[],double[]#77	0.08164965809277261	0.08164965809277261	0.16329931618554522	!(equationData.length != dimension)	_
+org.apache.commons.math.ode.EquationsMapper#?#EquationsMapper#?,int,int#50	0.08032193289024989	0.08058229640253803	0.16090422929278791	firstIndex<dimension	_
+org.apache.commons.math.util.FastMath#double#log#?,double,double[]#1224	0.07254762501100116	0.086710996952412	0.15925862196341317	ab<lnzb	_
+org.apache.commons.math.util.FastMath#double#ulp#?,double#3032	0.07832604499879574	0.07832604499879574	0.15665208999759148	!(Double.isInfinite(x))	_
+org.apache.commons.math.util.FastMath#double#exp#?,double,double,double[]#920	0.07392212709545729	0.08219949365267865	0.1480470587615674	tempC * extra * z + tempC * extra + tempC * z + tempB + tempA>=extra	_
+org.apache.commons.math.ode.nonstiff.EmbeddedRungeKuttaIntegrator#void#setSafety#?,double#187	0.1336306209562122	0.0	0.1336306209562122		_
+org.apache.commons.math.ode.nonstiff.EmbeddedRungeKuttaIntegrator#void#setMaxGrowth#?,double#359	0.1336306209562122	0.0	0.1336306209562122		_
+org.apache.commons.math.ode.nonstiff.EmbeddedRungeKuttaIntegrator#void#setMinReduction#?,double#345	0.1336306209562122	0.0	0.1336306209562122		_
+org.apache.commons.math.util.FastMath#double#min#?,double,double#3470	0.06711560552140243	0.06711560552140243	0.1316653279581927	a > b	_
+org.apache.commons.math.util.FastMathLiteralArrays#double[][]#loadLnMant#?#6174	0.11624763874381928	0.0	0.11624763874381928		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#void#verifySequence#?,double,double,double#268	0.11180339887498948	0.0	0.11180339887498948		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#getStartValue#?#122	0.11043152607484653	0.0	0.11043152607484653		_
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils#void#verifySequence#?,double,double,double#355	0.11043152607484653	0.0	0.11043152607484653		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[]#loadExpFracA#?#6158	0.10846522890932808	0.0	0.10846522890932808		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[]#loadExpFracB#?#6166	0.10846522890932808	0.0	0.10846522890932808		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[]#loadExpIntA#?#6142	0.10846522890932808	0.0	0.10846522890932808		_
+org.apache.commons.math.util.FastMathLiteralArrays#double[]#loadExpIntB#?#6150	0.10846522890932808	0.0	0.10846522890932808		_
+org.apache.commons.math.util.FastMath#double#floor#?,double#3350	0.056077215409204434	0.05598925109558543	0.10833164335460681	!(y == 0)	_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#?#AdaptiveStepsizeIntegrator#?,String,double,double,double,double#112	0.10721125348377948	0.0	0.10721125348377948		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#solve#?,int,FUNC,double,double#195	0.10153461651336192	0.0	0.10153461651336192		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#StepInterpolator#copy#?#268	0.09901475429766744	0.0	0.09901475429766744		_
+org.apache.commons.math.ode.nonstiff.RungeKuttaStepInterpolator#void#reinitialize#?,AbstractIntegrator,double[],double[][],boolean,EquationsMapper,EquationsMapper[]#131	0.09901475429766744	0.0	0.09901475429766744		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#reinitialize#?,double[],boolean,EquationsMapper,EquationsMapper[]#260	0.09901475429766744	0.0	0.09901475429766744		_
+org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator#void#resetInternalState#?#354	0.09759000729485333	0.0	0.09759000729485333		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#getRelativeAccuracy#?#134	0.09759000729485333	0.0	0.09759000729485333		_
+org.apache.commons.math.ode.nonstiff.RungeKuttaStepInterpolator#?#RungeKuttaStepInterpolator#?#58	0.09667364890456635	0.0	0.09667364890456635		_
+org.apache.commons.math.util.FastMath#double#max#?,double,double#3538	0.05212860351426869	0.05212860351426869	0.09619386843819186	a > b	_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#?#AbstractStepInterpolator#?#124	0.09578262852211514	0.0	0.09578262852211514		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#getAbsoluteAccuracy#?#128	0.0949157995752499	0.0	0.0949157995752499		_
+org.apache.commons.math.util.Incrementor#void#incrementCount#?#150	0.0472455591261534	0.047298376984040214	0.09454393611019361	!(++count > maximalCount)	_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#getFunctionValueAccuracy#?#140	0.0944911182523068	0.0	0.0944911182523068		_
+org.apache.commons.math.analysis.solvers.AbstractUnivariateRealSolver#?#AbstractUnivariateRealSolver#?,double#37	0.09166984970282113	0.0	0.09166984970282113		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#double#getPreviousTime#?#359	0.08944271909999159	0.0	0.08944271909999159		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#?#BaseAbstractUnivariateRealSolver#?,double#65	0.0890870806374748	0.0	0.0890870806374748		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#getMin#?#110	0.0890870806374748	0.0	0.0890870806374748		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#getMax#?#116	0.0890870806374748	0.0	0.0890870806374748		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#void#incrementEvaluationCount#?#294	0.08873565094161139	0.0	0.08873565094161139		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#computeObjectiveValue#?,double#153	0.08873565094161139	0.0	0.08873565094161139		_
+org.apache.commons.math.analysis.solvers.BaseAbstractUnivariateRealSolver#double#solve#?,int,FUNC,double,double,double#187	0.08838834764831843	0.0	0.08838834764831843		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#double#getCurrentTime#?#368	0.08804509063256238	0.0	0.08804509063256238		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#double#getGlobalPreviousTime#?#342	0.08606629658238704	0.0	0.08606629658238704		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#double#getGlobalCurrentTime#?#350	0.08606629658238704	0.0	0.08606629658238704		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#boolean#isForward#?#384	0.0854357657716761	0.0	0.0854357657716761		_
+org.apache.commons.math.ode.ExpandableStatefulODE#void#computeDerivatives#?,double,double[],double[]#116	0.0842151921066519	0.0	0.0842151921066519		_
+org.apache.commons.math.ode.AbstractIntegrator#void#computeDerivatives#?,double,double[],double[]#250	0.08391813582966891	0.0	0.08391813582966891		_
+org.apache.commons.math.ode.ExpandableStatefulODE#double[]#getCompleteState#?#293	0.08391813582966891	0.0	0.08391813582966891		_
+org.apache.commons.math.ode.AbstractIntegrator#void#setStateInitialized#?,boolean#261	0.08391813582966891	0.0	0.08391813582966891		_
+org.apache.commons.math.ode.AbstractIntegrator#void#setEquations#?,ExpandableStatefulODE#192	0.08391813582966891	0.0	0.08391813582966891		_
+org.apache.commons.math.ode.ExpandableStatefulODE#EquationsMapper[]#getSecondaryMappers#?#167	0.08391813582966891	0.0	0.08391813582966891		_
+org.apache.commons.math.ode.ExpandableStatefulODE#EquationsMapper#getPrimaryMapper#?#155	0.08362420100070908	0.0	0.08362420100070908		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#double[]#getInterpolatedState#?#412	0.08362420100070908	0.0	0.08362420100070908		_
+org.apache.commons.math.util.MathUtils#void#checkNotNull#?,Object#515	0.0413802944301184	0.041451333614483915	0.08283162804460231	!(o == null)	_
+org.apache.commons.math.ode.ExpandableStatefulODE#double#getTime#?#181	0.0827605888602368	0.0	0.0827605888602368		_
+org.apache.commons.math.ode.ExpandableStatefulODE#?#ExpandableStatefulODE#?,FirstOrderDifferentialEquations#78	0.0827605888602368	0.0	0.0827605888602368		_
+org.apache.commons.math.ode.ExpandableStatefulODE#void#setTime#?,double#174	0.0827605888602368	0.0	0.0827605888602368		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#shift#?#289	0.08137884587711594	0.0	0.08137884587711594		_
+org.apache.commons.math.ode.sampling.AbstractStepInterpolator#void#setInterpolatedTime#?,double#378	0.08137884587711594	0.0	0.08137884587711594		_
+org.apache.commons.math.ode.AbstractIntegrator#?#AbstractIntegrator#?,String#86	0.08111071056538127	0.0	0.08111071056538127		_
+org.apache.commons.math.ode.EquationsMapper#int#getDimension#?#65	0.08111071056538127	0.0	0.08111071056538127		_
+org.apache.commons.math.ode.AbstractIntegrator#void#setMaxEvaluations#?,int#169	0.08111071056538127	0.0	0.08111071056538127		_
+org.apache.commons.math.ode.AbstractIntegrator#void#resetEvaluations#?#185	0.08006407690254357	0.0	0.08006407690254357		_
+org.apache.commons.math.util.FastMath#int#max#?,int,int#3495	0.07559289460184544	0.0	0.07559289460184544		_
+org.apache.commons.math.util.FastMath#long#abs#?,long#3005	0.0524863881081478	0.0	0.0524863881081478		_
+org.apache.commons.math.util.Incrementor#void#resetCount#?#159	0.04632410546120795	0.0	0.04632410546120795		_
+org.apache.commons.math.util.Incrementor#void#setMaximalCount#?,int#91	0.04569116623849538	0.0	0.04569116623849538		_
+org.apache.commons.math.util.Incrementor#?#Incrementor#?#52	0.045221563164613454	0.0	0.045221563164613454		_
+org.apache.commons.math.util.Incrementor#?#Incrementor#?,int#61	0.045083481733371615	0.0	0.045083481733371615		_
+org.apache.commons.math.util.Incrementor#?#Incrementor#?,int,MaxCountExceededCallback#79	0.04503773491110449	0.0	0.04503773491110449		_
+org.apache.commons.math.util.FastMath#double#sqrt#?,double#375	0.038604571824109146	0.0	0.038604571824109146		_
+org.apache.commons.math.util.FastMath#double#abs#?,double#3023	0.03304093002275449	0.0	0.03304093002275449		_
