@@ -33,7 +33,6 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.junit.validator.PublicClassValidator;
 
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
@@ -44,6 +43,7 @@ import locator.common.util.Pair;
  * @author Jiajun
  * @date May 27, 2017
  */
+@Deprecated
 public class ExprFilter {
 
 	private static Map<String, Pair<Set<String>, String>> _typeInfo = new HashMap<>();

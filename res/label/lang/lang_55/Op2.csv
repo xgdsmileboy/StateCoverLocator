@@ -1,0 +1,17 @@
+line	predicate	lable
+org.apache.commons.lang.time.StopWatch#long#getTime#?#210	(this.stopTime - this.startTime)== 0	0
+org.apache.commons.lang.time.StopWatch#long#getTime#?#209	this.runningState == STATE_STOPPED || this.runningState == STATE_SUSPENDED	0
+org.apache.commons.lang.time.StopWatch#long#getTime#?#209	!(this.runningState == STATE_STOPPED || this.runningState == STATE_SUSPENDED)	0
+org.apache.commons.lang.time.StopWatch#void#start#?#99	!(this.runningState != STATE_UNSTARTED)	0
+org.apache.commons.lang.time.StopWatch#void#suspend#?#176	!(this.runningState != STATE_RUNNING)	0
+org.apache.commons.lang.time.StopWatch#long#getTime#?#210	(this.stopTime - this.startTime)<= 0	0
+org.apache.commons.lang.time.StopWatch#void#start#?#99	this.runningState != STATE_UNSTARTED	0
+org.apache.commons.lang.time.StopWatch#void#start#?#96	this.runningState == STATE_STOPPED	0
+org.apache.commons.lang.time.StopWatch#void#stop#?#115	this.runningState != STATE_RUNNING && this.runningState != STATE_SUSPENDED	1
+org.apache.commons.lang.time.StopWatch#long#getTime#?#210	(this.stopTime - this.startTime)< 0	0
+org.apache.commons.lang.time.StopWatch#long#getTime#?#210	(this.stopTime - this.startTime)>= 0	0
+org.apache.commons.lang.time.StopWatch#void#stop#?#115	!(this.runningState != STATE_RUNNING && this.runningState != STATE_SUSPENDED)	1
+org.apache.commons.lang.time.StopWatch#void#suspend#?#176	this.runningState != STATE_RUNNING	1
+org.apache.commons.lang.time.StopWatch#void#start#?#96	!(this.runningState == STATE_STOPPED)	0
+org.apache.commons.lang.time.StopWatch#long#getTime#?#210	(this.stopTime - this.startTime)!= 0	0
+org.apache.commons.lang.time.StopWatch#long#getTime#?#210	(this.stopTime - this.startTime)> 0	0

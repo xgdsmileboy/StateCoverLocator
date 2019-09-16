@@ -364,7 +364,7 @@ public class ExecuteCommand {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	private static String executeAndOutputFile(String[] command, String outputFile)
+	private static void executeAndOutputFile(String[] command, String outputFile)
 			throws IOException, InterruptedException {
 		final BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
 		Process process = null;
@@ -402,7 +402,6 @@ public class ExecuteCommand {
 				process.waitFor();
 			} catch (InterruptedException e) {
 				LevelLogger.error(__name__ + "#execute Process interrupted !");
-				return "";
 			}
 			writer.close();
 		} catch (IOException e) {
@@ -413,11 +412,6 @@ public class ExecuteCommand {
 			}
 			process = null;
 		}
-		String result = "";
-		for(String s : results) {
-			result += s;
-		}
-		return result;
 	}
 	
 	private static ProcessBuilder getProcessBuilder(String[] command) { 

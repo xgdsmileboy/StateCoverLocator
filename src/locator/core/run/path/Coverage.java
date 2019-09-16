@@ -27,9 +27,9 @@ import locator.core.CoverInfo;
 import locator.core.model.Model;
 import locator.core.run.Runner;
 import locator.inst.Instrument;
-import locator.inst.visitor.BranchInstrumentVisitor;
-import locator.inst.visitor.TestMethodInstrumentVisitor;
+import locator.inst.visitor.MethodInstrumentVisitor;
 import locator.inst.visitor.StatementInstrumentVisitor;
+import locator.inst.visitor.TestMethodInstrumentVisitor;
 import locator.inst.visitor.TraversalVisitor;
 
 /**
@@ -56,14 +56,14 @@ public class Coverage {
 	 * @return
 	 */
 	public static Map<String, CoverInfo> computeOriginalCoverage(Subject subject,
-			Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods, Class<?> visitor) {
+			Pair<Set<Integer>, Set<Integer>> failedTestAndCoveredMethods) {
 
         String src = subject.getHome() + subject.getSsrc();
         String test = subject.getHome() + subject.getTsrc();
 
         TraversalVisitor traversalVisitor = null;
-        if(visitor == BranchInstrumentVisitor.class) {
-        	traversalVisitor = new BranchInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
+        if(Constant.BOOL_METHOD_LEVEL) {
+        	traversalVisitor = new MethodInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
         } else {
         	traversalVisitor = new StatementInstrumentVisitor(failedTestAndCoveredMethods.getSecond());
         }
@@ -168,20 +168,17 @@ public class Coverage {
         Configure.compileAuxiliaryJava(subject);
         // if the instrumented project builds success, and the test
         // result is the same with original project
-        if (!Runner.testSuite(subject)) {
+        if (!Runner.testSuite(subject, Constant.TIME_OUT_RUN_TEST_SUITE)) {
             LevelLogger.error("Build failed by predicates : ");
-            String file = Constant.HOME + "/rlst.log";
-            JavaFile.writeStringToFile(file, "Project : " + subject.getName() + "_" + subject.getId() + " Build failed by predicates!\n", true);
+            JavaFile.writeStringToFile(Constant.STR_RESULT_RECORD_LOG, "Project : " + subject.getName() + "_" + subject.getId() + " Build failed by predicates!\n", true);
             return null;
         }
         if (!isSameTestResult(failedTests, Constant.STR_TMP_D4J_OUTPUT_FILE)) {
-            LevelLogger.info("Cause different test state by predicates :");
-            String file = Constant.HOME + "/rlst.log";
-            JavaFile.writeStringToFile(file, "Project : " + subject.getNameAndId() + " Different test result!\n", true);
+            LevelLogger.error("Cause different test state by predicates :");
+            JavaFile.writeStringToFile(Constant.STR_RESULT_RECORD_LOG, "Project : " + subject.getNameAndId() + " Different test result!\n", true);
             logErrorInfo(subject, failedTests);
         } else {
-            String file = Constant.HOME + "/rlst.log";
-            JavaFile.writeStringToFile(file, "Project : " + subject.getNameAndId() + " Success!\n", true);
+            JavaFile.writeStringToFile(Constant.STR_RESULT_RECORD_LOG, "Project : " + subject.getNameAndId() + " Success!\n", true);
         }
 
         Map<String, CoverInfo> coverage = null;

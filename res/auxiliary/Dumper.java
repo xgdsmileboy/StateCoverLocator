@@ -289,6 +289,11 @@ public class Dumper {
 		return (Short)lpccommon(Short.valueOf(a), Short.valueOf(b), message, var1, var2, useSober);
 	}
 	
+	public static Object lpcNull(final Object a, String message, String var, boolean useSober) {
+		logCoverage(a == null, message + "#" + var + "==null#1", useSober);
+		return a;
+	}
+	
 	// logPairCoverage, lpc for short to shorten function
 	public static Object lpccommon(final Object a, Object b, String message, String var1, String var2, boolean useSober) {
 		Comparable ac = (Comparable) a;

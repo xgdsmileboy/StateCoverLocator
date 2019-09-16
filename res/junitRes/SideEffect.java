@@ -129,4 +129,16 @@ public class SideEffect {
 		}
 	}
 	
+	public void initialize_array() {
+		int values[];
+		int[] data;
+		int[] name[][];
+		
+		values = new int[2];
+		data = new int[3];
+		if(values[1] > data[1]) {
+			return;
+		}
+	}
+	
 }

@@ -232,5 +232,5 @@ public class Collector {
 		ExecuteCommand.copyFolder(subjectTestPath + "_ori", subjectTestPath);
 		return allMethods;
 	}
-
+	
 }

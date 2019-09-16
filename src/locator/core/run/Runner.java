@@ -52,6 +52,21 @@ public class Runner {
 		}
 		return checkBuild();
 	}
+	
+	public static boolean testSuite(Subject subject, int minTimeout) {
+		try {
+			long begin = System.currentTimeMillis();
+			ExecuteCommand.executeDefects4JTest(CmdFactory.createTestSuiteCmd(subject, minTimeout));
+			long end = System.currentTimeMillis();
+			LevelLogger.info("Run all test cases cost : " + ((end - begin)/1000) + " sec"); 
+			if((end - begin) / 60000 > minTimeout - 1) {
+				LevelLogger.error("Run test suite time out : " + subject.getNameAndId());
+			}
+		} catch (Exception e) {
+			LevelLogger.fatal(__name__ + "#testSuite run test suite failed !", e);
+		}
+		return checkBuild();
+	}
 
 	public static boolean testSingleCase(Subject subject, String testcase) {
 		try {
@@ -124,7 +139,7 @@ public class Runner {
 		}
 
 		String line = null;
-		boolean buildSuccess = true;
+		boolean buildSuccess = false;
 		try {
 			while ((line = bReader.readLine()) != null) {
 				if (line.startsWith(Constant.ANT_BUILD_SUCCESS)) {

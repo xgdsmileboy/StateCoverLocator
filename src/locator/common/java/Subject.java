@@ -8,7 +8,7 @@
 package locator.common.java;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import locator.common.config.Constant;
@@ -25,6 +25,8 @@ public class Subject {
 	private String _tsrc = null;
 	private String _sbin = null;
 	private String _tbin = null;
+	private String _src_level = "1.6";
+	private String _class_level = "1.6";
 	private List<String> _classpath;
 
 	/**
@@ -44,7 +46,8 @@ public class Subject {
 	 *            : relative path for test byte code, e.g., "/test-classes"
 	 */
 	public Subject(String name, int id, String ssrc, String tsrc, String sbin, String tbin) {
-		this(name, id, ssrc, tsrc, sbin, tbin, new ArrayList<String>(0));
+		this(name, id, ssrc, tsrc, sbin, tbin, new LinkedList<String>());
+		_classpath = obtainClasspath(name);
 	}
 	
 	public Subject(String name, int id, String ssrc, String tsrc, String sbin, String tbin, List<String> classpath) {
@@ -55,6 +58,11 @@ public class Subject {
 		_sbin = sbin;
 		_tbin = tbin;
 		_classpath = classpath;
+		// Special case
+		if(name.equals("chart")) {
+			_src_level = "1.4";
+			_class_level = "1.4";
+		}
 	}
 
 	public String getName() {
@@ -85,6 +93,14 @@ public class Subject {
 		return _tbin;
 	}
 	
+	public String getSourceLevel() {
+		return _src_level;
+	}
+	
+	public String getTargetLevel() {
+		return _class_level;
+	}
+	
 	public void setClasspath(List<String> classpath) {
 		_classpath = classpath;
 	}
@@ -104,6 +120,51 @@ public class Subject {
 		}
 		return true;
 	}
+	
+	private List<String> obtainClasspath(String projName) {
+		List<String> classpath = new LinkedList<>();
+		switch(projName) {
+		case "math":
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/hamcrest-core-1.3.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/junit-4.11.jar");
+			break;
+		case "chart":
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/junit-4.11.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/iText-2.1.4.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/servlet.jar");
+			break;
+		case "lang":
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/cglib-nodep-2.2.2.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/commons-io-2.4.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/easymock-3.1.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/hamcrest-core-1.3.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/junit-4.11.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/objenesis-1.2.jar");
+			break;
+		case "closure":
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/caja-r4314.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/jarjar.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/ant.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/ant-launcher.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/args4j.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/jsr305.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/guava.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/json.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/protobuf-java.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/junit-4.11.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/rhino.jar");
+			break;
+		case "time":
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/junit-4.11.jar");
+			classpath.add(Constant.STR_PROJ_DEPENDCE_PATH + "/joda-convert-1.2.jar");
+			break;
+		case "mockito":
+			break;
+		default :
+			System.err.println("UNKNOWN project name : " + projName);
+		}
+		return classpath;
+	}
 
 	/**
 	 * get absolute home path for subject
@@ -112,29 +173,6 @@ public class Subject {
 	 */
 	public String getHome() {
 		return Constant.PROJECT_HOME + "/" + _name + "/" + _name + "_" + _id + "_buggy";
-	}
-	
-	public String getVarFeatureOutputPath() {
-		String file = Constant.STR_ML_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
-				+ _id + ".var.csv";
-		return file;
-	}
-
-	public String getExprFeatureOutputPath() {
-		String file = Constant.STR_ML_OUT_FILE_PATH + "/" + _name + "/" + _name + "_" + _id + "/pred/" + _name + "_"
-				+ _id + ".expr.csv";
-		return file;
-	}
-
-	public String getPredicResultPath() {
-		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id + "/" + _name + "_" + _id
-				+ ".joint.csv";
-		return file;
-	}
-	
-	public String getPredictResultDir() {
-		String file = Constant.STR_ML_PREDICT_EXP_PATH + "/" + _name + "/" + _name + "_" + _id;
-		return file;
 	}
 	
 	public String getCoverageInfoPath() {

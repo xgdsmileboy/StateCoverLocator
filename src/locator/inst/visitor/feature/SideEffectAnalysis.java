@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.PrefixExpression;
 
 import locator.common.java.JavaFile;
 
+@Deprecated
 public class SideEffectAnalysis {
 	public static boolean hasSideEffect(String expression) {
 		ASTNode node = JavaFile.genASTFromSource(expression, ASTParser.K_EXPRESSION);

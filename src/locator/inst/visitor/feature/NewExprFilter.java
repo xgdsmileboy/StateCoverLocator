@@ -50,6 +50,7 @@ import locator.core.LineInfo;
  * @author Jiajun
  * @date Jun 26, 2017
  */
+@Deprecated
 public class NewExprFilter {
 
 	private static Map<String, Pair<Set<String>, String>> _typeInfo = new HashMap<>();
@@ -84,6 +85,8 @@ public class NewExprFilter {
 			return null;
 		}
 
+		currentClassName = currentClassName == null ? "DUMMY" : currentClassName;
+		
 		ASTNode node = JavaFile.genASTFromSource(condition, ASTParser.K_EXPRESSION);
 
 		ExprAnalysisVisitor visitor = new ExprAnalysisVisitor(varName, type, info, currentClassName);

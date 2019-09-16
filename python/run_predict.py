@@ -1,6 +1,7 @@
 from Utils.join_prob import *
 from XGBoost_expr.main import *
 from XGBoost_var.main import *
+from classifier.classifier import *
 from clustering.cluster import *
 from Utils.config import *
 import os
@@ -21,19 +22,27 @@ if __name__ == '__main__':
         sys.argv[3]
     )
 
-    cluster = Cluster(config)
-    str_encoder, kmeans_model, unique_words = cluster.get_cluster()
+    if config.get_model_type() == "classifier":
+        cluster = Cluster(config)
+        str_encoder, kmeans_model, unique_words = cluster.get_all_cluster()
 
-    xgvar = XGVar(config)
-    xgvar.run_predict_vars(str_encoder, kmeans_model, unique_words)
+        classifier = Classifier(config)
+        classifier.classify(str_encoder, kmeans_model, unique_words)
 
-    xgexpr = XGExpr(config)
-    xgexpr.run_gen_exprs(str_encoder, kmeans_model, unique_words)
+    else:
+        cluster = Cluster(config)
+        str_encoder, kmeans_model, unique_words = cluster.get_cluster()
 
-    join_prob(config)
+        xgvar = XGVar(config)
+        xgvar.run_predict_vars(str_encoder, kmeans_model, unique_words)
 
-    if config.get_model_type() == 'randomforest':
-        if os.path.exists(config.get_expr_model_file()):
-            os.remove(config.get_expr_model_file())
-        if os.path.exists(config.get_var_model_file()):
-            os.remove(config.get_var_model_file())
+        xgexpr = XGExpr(config)
+        xgexpr.run_gen_exprs(str_encoder, kmeans_model, unique_words)
+
+        join_prob(config)
+
+        if config.get_model_type() == 'randomforest':
+            if os.path.exists(config.get_expr_model_file()):
+                os.remove(config.get_expr_model_file())
+            if os.path.exists(config.get_var_model_file()):
+                os.remove(config.get_var_model_file())

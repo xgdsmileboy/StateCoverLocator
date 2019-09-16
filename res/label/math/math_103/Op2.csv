@@ -1,0 +1,117 @@
+line	predicate	lable
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret < tmp	0
+org.apache.commons.math.MaxIterationsExceededException#?#MaxIterationsExceededException#?,int#38	this.maxIterations >= maxIterations	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum < g	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#158	Double.isNaN(a) || Double.isNaN(x) || (a <= 0.0)|| (x < 0.0)	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#158	!(Double.isNaN(a) || Double.isNaN(x) || (a <= 0.0)|| (x < 0.0))	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setStandardDeviation#?,double#93	!(sd <= 0.0)	0
+org.apache.commons.math.distribution.NormalDistributionImpl#double#cumulativeProbability#?,double#109	(0.5 * (1.0 + Erf.erf((x - mean) / (standardDeviation * Math.sqrt(2.0)))))< 0	1
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret <= x	0
+org.apache.commons.math.MaxIterationsExceededException#?#MaxIterationsExceededException#?,int#38	this.maxIterations <= maxIterations	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setStandardDeviation#?,double#97	standardDeviation > sd	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum > x	0
+org.apache.commons.math.distribution.NormalDistributionImpl#double#cumulativeProbability#?,double#109	(0.5 * (1.0 + Erf.erf((x - mean) / (standardDeviation * Math.sqrt(2.0)))))>= 0	1
+org.apache.commons.math.MaxIterationsExceededException#?#MaxIterationsExceededException#?,int#38	this.maxIterations == maxIterations	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum == x	0
+org.apache.commons.math.special.Erf#double#erf#?,double#58	ret < x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum < g	0
+org.apache.commons.math.special.Erf#double#erf#?,double#60	(ret)>= 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#106	(ret)> 0	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setStandardDeviation#?,double#97	standardDeviation >= sd	0
+org.apache.commons.math.special.Erf#double#erf#?,double#58	ret > x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret < g	0
+org.apache.commons.math.MathException#String#translate#?,String,Locale#83	!((cachedResources == null) || (!cachedResources.getLocale().equals(locale)))	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#171	!(Math.abs(an) > epsilon && n < maxIterations)	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#162	!(a >= 1.0 && x > a)	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum >= x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#106	(ret)== 0	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#179	!(n >= maxIterations)	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum == g	0
+org.apache.commons.math.distribution.NormalDistributionImpl#double#cumulativeProbability#?,double#109	(0.5 * (1.0 + Erf.erf((x - mean) / (standardDeviation * Math.sqrt(2.0)))))<= 0	1
+org.apache.commons.math.special.Erf#double#erf#?,double#58	ret != x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#90	Double.isNaN(x) || (x <= 0.0)	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret == sum	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum <= x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#90	!(Double.isNaN(x) || (x <= 0.0))	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setMean#?,double#76	this.mean > mean	0
+org.apache.commons.math.special.Erf#double#erf#?,double#57	x < 0	0
+org.apache.commons.math.MaxIterationsExceededException#?#MaxIterationsExceededException#?,int#38	this.maxIterations != maxIterations	1
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret == x	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#160	x == 0.0	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#186	(ret)!= 0	0
+org.apache.commons.math.special.Erf#double#erf#?,double#60	(ret)< 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum >= g	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum >= g	0
+org.apache.commons.math.distribution.NormalDistributionImpl#double#cumulativeProbability#?,double#109	(0.5 * (1.0 + Erf.erf((x - mean) / (standardDeviation * Math.sqrt(2.0)))))> 0	1
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret <= sum	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#106	(ret)<= 0	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setMean#?,double#76	this.mean != mean	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret >= sum	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret > g	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum > g	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#96	!(i > 0)	0
+org.apache.commons.math.MathException#String#translate#?,String,Locale#83	(cachedResources == null) || (!cachedResources.getLocale().equals(locale))	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setStandardDeviation#?,double#97	standardDeviation <= sd	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum != x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret != g	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#160	!(x == 0.0)	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setMean#?,double#76	this.mean >= mean	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setStandardDeviation#?,double#97	standardDeviation != sd	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum == x	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#186	(ret)<= 0	0
+org.apache.commons.math.special.Erf#double#erf#?,double#60	(ret)!= 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret > sum	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret != sum	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret > x	0
+org.apache.commons.math.MaxIterationsExceededException#?#MaxIterationsExceededException#?,int#38	this.maxIterations > maxIterations	1
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#106	(ret)!= 0	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setStandardDeviation#?,double#93	sd <= 0.0	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setMean#?,double#76	this.mean == mean	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret == tmp	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setStandardDeviation#?,double#97	standardDeviation == sd	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#162	a >= 1.0 && x > a	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum <= x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum >= x	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#186	(ret)>= 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret == g	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret > tmp	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum > x	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#186	(ret)== 0	0
+org.apache.commons.math.special.Erf#double#erf#?,double#60	(ret)== 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#106	(ret)< 0	0
+org.apache.commons.math.special.Erf#double#erf#?,double#58	ret == x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum != g	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret >= x	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#171	Math.abs(an) > epsilon && n < maxIterations	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setStandardDeviation#?,double#97	standardDeviation < sd	0
+org.apache.commons.math.special.Erf#double#erf#?,double#57	!(x < 0)	0
+org.apache.commons.math.distribution.NormalDistributionImpl#double#cumulativeProbability#?,double#109	(0.5 * (1.0 + Erf.erf((x - mean) / (standardDeviation * Math.sqrt(2.0)))))!= 0	1
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum != g	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#179	n >= maxIterations	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret < sum	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum == g	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#186	(ret)< 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret <= tmp	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#106	(ret)>= 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum <= g	0
+org.apache.commons.math.special.Erf#double#erf#?,double#60	(ret)<= 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret != x	0
+org.apache.commons.math.special.Erf#double#erf#?,double#60	(ret)> 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#96	i > 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum < x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum <= g	0
+org.apache.commons.math.special.Erf#double#erf#?,double#58	ret >= x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret <= g	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret != tmp	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum > g	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret >= g	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#97	sum != x	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret >= tmp	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setMean#?,double#76	this.mean <= mean	0
+org.apache.commons.math.MaxIterationsExceededException#?#MaxIterationsExceededException#?,int#38	this.maxIterations < maxIterations	1
+org.apache.commons.math.special.Erf#double#erf#?,double#58	ret <= x	0
+org.apache.commons.math.special.Gamma#double#regularizedGammaP#?,double,double,double,int#186	(ret)> 0	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#99	sum < x	0
+org.apache.commons.math.distribution.NormalDistributionImpl#void#setMean#?,double#76	this.mean < mean	0
+org.apache.commons.math.special.Gamma#double#logGamma#?,double#102	ret < x	0
+org.apache.commons.math.distribution.NormalDistributionImpl#double#cumulativeProbability#?,double#109	(0.5 * (1.0 + Erf.erf((x - mean) / (standardDeviation * Math.sqrt(2.0)))))== 0	1

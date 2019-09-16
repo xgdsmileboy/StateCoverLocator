@@ -27,6 +27,10 @@ public class CmdFactory {
 	public static String[] createTestSuiteCmd(Subject subject) {
 		return createD4JCmd(subject, "test");
 	}
+	
+	public static String[] createTestSuiteCmd(Subject subject, int minTimeout) {
+		return createD4JCmd(subject, minTimeout, "test");
+	}
 
 	/**
 	 * build execution command for running a single test case
@@ -68,6 +72,15 @@ public class CmdFactory {
 		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
 		return cmd;
 	}
+	
+	private static String[] createD4JCmd(Subject subject, int minTimeout ,String args) {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(Constant.COMMAND_CD + subject.getHome() + " && ");
+		stringBuffer.append(Constant.COMMAND_TIMEOUT + minTimeout + "m ");
+		stringBuffer.append(Constant.COMMAND_D4J + args);
+		String[] cmd = new String[] { "/bin/bash", "-c", stringBuffer.toString() };
+		return cmd;
+	}
 
 	/**
 	 * create model training command
@@ -78,7 +91,7 @@ public class CmdFactory {
 	public static String[] createTrainCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
-		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(Constant.STR_TENSORFLOW_ACTIVATE_PATH);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);
@@ -104,7 +117,7 @@ public class CmdFactory {
 	public static String[] createEvaluateCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
-		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(Constant.STR_TENSORFLOW_ACTIVATE_PATH);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);
@@ -130,7 +143,7 @@ public class CmdFactory {
 	public static String[] createPredictCmd(Subject subject, Model model) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("source ");
-		stringBuffer.append(Constant.TENSORFLOW_ACTIVATE_PATH);
+		stringBuffer.append(Constant.STR_TENSORFLOW_ACTIVATE_PATH);
 		stringBuffer.append(" && ");
 		stringBuffer.append(Constant.COMMAND_CD);
 		stringBuffer.append(Constant.STR_ML_HOME);

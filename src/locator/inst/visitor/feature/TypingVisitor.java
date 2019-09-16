@@ -35,6 +35,7 @@ import org.eclipse.jdt.internal.compiler.batch.FileSystem.ClasspathNormalizer;
  * @author Jiajun
  * @date May 12, 2017
  */
+@Deprecated
 public class TypingVisitor extends ASTVisitor {
 
 	public boolean visit(TypeDeclaration node) {

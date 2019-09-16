@@ -8,9 +8,12 @@
 package locator.common.util;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import locator.common.config.Constant;
 import locator.common.config.Identifier;
@@ -60,7 +63,12 @@ public class Utils {
 			StringBuffer stringBuffer = new StringBuffer();
 			String key = entry.getKey();
 			String[] info = key.split("#");
-			String methodString = Identifier.getMessage(Integer.parseInt(info[0]));
+			String methodString = null;
+			try {
+				methodString = Identifier.getMessage(Integer.parseInt(info[0]));
+			} catch (Exception e) {
+				continue;
+			}
 			stringBuffer.append(methodString);
 			String moreInfo = key.substring(info[0].length() + 1);
 			stringBuffer.append("#");
@@ -78,6 +86,134 @@ public class Utils {
 			// view coverage.csv file
 			JavaFile.writeStringToFile(file, stringBuffer.toString(), true);
 		}
+	}
+	
+	public static void backupFailedTestsAndCoveredStmt(Subject subject, int totalTestNumber, Set<Integer> failedTest, Set<String> coveredStmt) {
+		LevelLogger.debug("\n------------Begin backup failed tests & covered statement----------\n");
+		StringBuffer buffer = new StringBuffer(totalTestNumber + ":" + failedTest.size());
+		for(Integer integer : failedTest) {
+			buffer.append("\n" + integer);
+		}
+		String fileName = Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getNameAndId() + "/failedTest.txt" ;
+		JavaFile.writeStringToFile(fileName, buffer.toString());
+		
+		buffer = new StringBuffer();
+		for(String string : coveredStmt) {
+			buffer.append(string + "\n");
+		}
+		fileName = Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getNameAndId() + "/coveredstmt.txt" ;
+		JavaFile.writeStringToFile(fileName, buffer.toString().trim());
+	}
+	
+	public static int recoverFailedTestsAndCoveredStmt(Subject subject, Set<Integer> failedTests, Set<String> allCoveredStmt) {
+		LevelLogger.debug("\n------------Begin recover failed tests & covered statement----------\n");
+		String fileName = Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getNameAndId() + "/failedTest.txt" ;
+		List<String> content = JavaFile.readFileToStringList(fileName);
+		boolean containIllegal = false;
+		int totalNumberOfTests = -1;
+		int failedTestsNumber = -1;
+		if(content.size() > 0) {
+			String numbers = content.get(0);
+			try {
+				totalNumberOfTests = Integer.parseInt(numbers.split(":")[0]);
+				failedTestsNumber = Integer.parseInt(numbers.split(":")[1]);
+			} catch (Exception e) {}
+			for(int index = 1; index < content.size(); index ++) {
+				Integer id = -1;
+				try {
+					id = Integer.parseInt(content.get(index));
+				} catch (Exception e) {
+				}
+				if(!Identifier.containKey(id)) {
+					containIllegal = true;
+					break;
+				}
+				failedTests.add(id);
+			}
+		}
+		if(containIllegal || failedTests.size() != failedTestsNumber) {
+			JavaFile.writeStringToFile(fileName, "");
+			return -1;
+		}
+		
+		fileName = Constant.STR_INFO_OUT_PATH + "/" + subject.getName() + "/" + subject.getNameAndId() + "/coveredstmt.txt" ;
+		allCoveredStmt.addAll(JavaFile.readFileToStringList(fileName));
+		containIllegal = false;
+		try {
+			for(String string : allCoveredStmt) {
+				String[] strs = string.split("#");
+				Integer integer = Integer.parseInt(strs[0]);
+				if(!Identifier.containKey(integer)) {
+					containIllegal = true;
+					break;
+				}
+			}
+		} catch (Exception e) {
+		}
+		
+		if(containIllegal) {
+			JavaFile.writeStringToFile(fileName, "");
+			return -1;
+		}
+		
+		return totalNumberOfTests;
+	}
+	
+	public static void printPredicateInfo(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
+			Subject subject, String backupFile) {
+		LevelLogger.debug("\n------------------------begin predicate info------------------------\n");
+
+		StringBuffer contents = new StringBuffer();
+		for (Entry<String, Map<Integer, List<Pair<String, String>>>> entry : file2Line2Predicates.entrySet()) {
+			LevelLogger.debug("FILE NAME : " + entry.getKey());
+			for (Entry<Integer, List<Pair<String, String>>> line2Preds : entry.getValue().entrySet()) {
+				LevelLogger.debug("LINE : " + line2Preds.getKey());
+				LevelLogger.debug("PREDICATES : ");
+				for (Pair<String, String> pair : line2Preds.getValue()) {
+					LevelLogger.debug(pair.getFirst() + ",");
+					contents.append(entry.getKey() + "\t" + line2Preds.getKey() + "\t" + pair.getFirst() + "\t"
+							+ pair.getSecond());
+					contents.append("\n");
+				}
+				LevelLogger.debug("\n");
+			}
+		}
+		LevelLogger.debug("\n------------------------end predicate info------------------------\n");
+		String outputFile = subject.getCoverageInfoPath() + "/" + backupFile;
+		JavaFile.writeStringToFile(outputFile, contents.toString(), true);
+	}
+
+	public static Map<String, Map<Integer, List<Pair<String, String>>>> recoverPredicates(Subject subject, String backupFile) {
+		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
+		String inputFile = subject.getCoverageInfoPath() + "/" + backupFile;
+		File file = new File(inputFile);
+		if (!file.exists() || !file.isFile()) {
+			return null;
+		}
+		LevelLogger.info("Recover predicates from file.");
+		List<String> contents = JavaFile.readFileToStringList(file);
+		for (String content : contents) {
+			if (contents.isEmpty()) {
+				continue;
+			}
+			String parts[] = content.split("\t");
+			// fix bug: predicates may contain anonymous class
+			if (parts.length != 4) {
+				continue;
+			}
+			Map<Integer, List<Pair<String, String>>> line2Predicates = file2Line2Predicates.get(parts[0]);
+			if (line2Predicates == null) {
+				line2Predicates = new HashMap<>();
+				file2Line2Predicates.put(parts[0], line2Predicates);
+			}
+			List<Pair<String, String>> predicates = line2Predicates.get(Integer.valueOf(parts[1]));
+			if (predicates == null) {
+				predicates = new ArrayList<>();
+				line2Predicates.put(Integer.valueOf(parts[1]), predicates);
+			}
+			predicates.add(new Pair<String, String>(parts[2], parts[3]));
+		}
+		return file2Line2Predicates;
 	}
 	
 	/**
@@ -103,6 +239,16 @@ public class Utils {
 			content += subject.getName() + "\t" + Integer.toString(subject.getId()) + "\n";
 		}
 		JavaFile.writeStringToFile(Constant.HOME + "/logs/project.log", content);
+	}
+	
+	public static StringBuffer strJoin(String joint, String... components) {
+		if(components.length == 0) return new StringBuffer();
+		StringBuffer buffer = new StringBuffer(components[0]);
+		for(int i = 1; i < components.length; i++) {
+			buffer.append(joint);
+			buffer.append(components[i]);
+		}
+		return buffer;
 	}
 	
 }

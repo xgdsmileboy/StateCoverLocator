@@ -10,10 +10,15 @@ import java.util.Set;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import locator.common.config.Constant;
 import locator.common.java.JavaFile;
 import locator.common.java.Subject;
+import locator.common.util.LevelLogger;
 import locator.common.util.Pair;
-import locator.inst.visitor.NoSideEffectPredicateInstrumentVisitor;
+import locator.common.util.Utils;
+import locator.inst.visitor.SDMethodPredicateIntrumentVisitor;
+import locator.inst.visitor.SDStmtPredicateInstrumentVisitor;
+import locator.inst.visitor.NoSideEffectPreidcateInstrumentVisitor;
 
 public class SDModel extends Model {
 
@@ -32,8 +37,23 @@ public class SDModel extends Model {
 
 	@Override
 	public boolean prepare(Subject subject) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
+	}
+	
+	@Override
+	public boolean trainModel(Subject subject) {
+		return true;
+	}
+
+	@Override
+	public boolean evaluate(Subject subject) {
+		return true;
+	}
+	
+	@Override
+	public boolean instrumentPredicates(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
+			boolean useSober) {
+		return true;
 	}
 	
 	@Override
@@ -41,8 +61,13 @@ public class SDModel extends Model {
 		String srcPath = subject.getHome() + subject.getSsrc();
 		Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates = new HashMap<>();
 		Map<String, List<Integer>> file2LocationList = mapLocations2File(subject, allStatements);
-		NoSideEffectPredicateInstrumentVisitor instrumentVisitor = new NoSideEffectPredicateInstrumentVisitor(
-				useSober);
+		NoSideEffectPreidcateInstrumentVisitor instrumentVisitor = null;
+		if(Constant.BOOL_METHOD_LEVEL) {
+			instrumentVisitor = new SDMethodPredicateIntrumentVisitor(useSober);
+		} else {
+			instrumentVisitor = new SDStmtPredicateInstrumentVisitor(useSober,
+					Constant.BOOL_BRANCH_COVERAGE, Constant.BOOL_ASSIGNMENT_COVERAGE, Constant.BOOL_RETURN_COVERAGE);
+		}
 		for (Entry<String, List<Integer>> entry : file2LocationList.entrySet()) {
 			String relJavaPath = entry.getKey();
 			String fileName = srcPath + "/" + relJavaPath;
@@ -54,23 +79,9 @@ public class SDModel extends Model {
 			JavaFile.writeStringToFile(fileName, unit.toString());
 			file2Line2Predicates.put(fileName, instrumentVisitor.getPredicates());
 		}
+		LevelLogger.debug("-------------------FOR DEBUG----------------------");
+		Utils.printPredicateInfo(file2Line2Predicates, subject, _predicates_backup_file);
 		return file2Line2Predicates;
 	}
 	
-	@Override
-	public boolean instrumentPredicates(Map<String, Map<Integer, List<Pair<String, String>>>> file2Line2Predicates,
-			boolean useSober) {
-		return true;
-	}
-
-	@Override
-	public boolean trainModel(Subject subject) {
-		return true;
-	}
-
-	@Override
-	public boolean evaluate(Subject subject) {
-		return true;
-	}
-
 }

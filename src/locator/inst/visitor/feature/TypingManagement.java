@@ -16,6 +16,7 @@ import locator.common.util.LevelLogger;
  * @author Jiajun
  * @date May 12, 2017
  */
+@Deprecated
 public class TypingManagement {
 
 	private final static String __name__ = "@TypingManagement ";

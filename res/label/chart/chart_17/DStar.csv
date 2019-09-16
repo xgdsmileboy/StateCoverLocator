@@ -1,0 +1,13 @@
+line	predicate	lable
+org.jfree.data.time.TimeSeries#TimeSeries#createCopy#?,int,int#876	!(start < 0)	0
+org.jfree.data.time.TimeSeries#TimeSeries#createCopy#?,int,int#876	start < 0	1
+org.jfree.data.time.TimeSeries#int#getItemCount#?#238	(this.data.size())!= 0	1
+org.jfree.data.time.TimeSeries#int#getItemCount#?#238	(this.data.size())> 0	1
+org.jfree.data.time.TimeSeries#int#getItemCount#?#238	(this.data.size())>= 0	0
+org.jfree.data.general.Series#?#Series#?,Comparable,String#112	key == null	1
+org.jfree.data.time.TimeSeries#TimeSeries#createCopy#?,int,int#879	!(end < start)	1
+org.jfree.data.time.TimeSeries#TimeSeries#createCopy#?,int,int#879	end < start	0
+org.jfree.data.time.TimeSeries#int#getItemCount#?#238	(this.data.size())<= 0	0
+org.jfree.data.general.Series#?#Series#?,Comparable,String#112	!(key == null)	0
+org.jfree.data.time.TimeSeries#int#getItemCount#?#238	(this.data.size())== 0	0
+org.jfree.data.time.TimeSeries#int#getItemCount#?#238	(this.data.size())< 0	1

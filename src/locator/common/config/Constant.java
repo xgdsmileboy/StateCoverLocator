@@ -12,17 +12,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 
-import edu.pku.sei.conditon.simple.SplIfAndVariablePairVisitor;
-import edu.pku.sei.conditon.simple.SplIfStmtVisitor;
-import jdk7.wrapper.JCompiler.SOURCE_LEVEL;
 import locator.common.util.LevelLogger;
 
 /**
@@ -37,7 +32,7 @@ public class Constant {
 
 	// used for instrument
 	public final static String INSTRUMENT_DOT_SEPARATOR = ".";
-	public final static String INSTRUMENT_STR_SEP = "";//"#"
+//	public final static String INSTRUMENT_STR_SEP = "";//"#"
 	public final static String INSTRUMENT_FLAG = "";//"[INST]"
 	public final static String INSTRUMENT_K_TEST = "T";
 	public final static String INSTRUMENT_K_SOURCE = "M";
@@ -47,40 +42,42 @@ public class Constant {
 	public final static String SOURCE_FILE_SUFFIX = ".java";
 	public final static String PATH_SEPARATOR = System.getProperty("file.separator");
 
-	// least length for failed test trace
-	public final static int TRACE_LENGTH_FOR_FAILED_TEST = 20;
-	
 	public static int AST_LEVEL = AST.JLS8;
 	public static String JAVA_VERSION = JavaCore.VERSION_1_7;
 
 	// instrument top K predicates for each variable
 	public static int TOP_K_PREDICATES_FOR_EACH_VAR = 5;
 
+	// time limit for running test suite with instrument predicates in minutes
+	public static int TIME_OUT_RUN_TEST_SUITE = 60;
+	
 	// build flags
 	public final static String ANT_BUILD_FAILED = "BUILD FAILED";
 	public final static String ANT_BUILD_SUCCESS = "BUILD SUCCESSFUL";
 	
-	// header for feature
-	public final static String FEATURE_VAR_HEADER = SplIfAndVariablePairVisitor.getVarHeader();
-	public final static String FEATURE_EXPR_HEADER = SplIfStmtVisitor.getExprHeader();
-	public final static int FEATURE_VAR_NAME_INDEX = 5;
-	public final static int FEATURE_VAR_TYPE_INDEX = 6;
-	public final static int FEATURE_FILE_NAME_INDEX = 3;
-	public final static int FEATURE_LINE_INDEX = 1;
-	
 	// variables collecting flag
-	public static boolean PREDICT_LEFT_HAND_SIDE_VARIABLE = true;
+	public static boolean BOOL_PREDICT_LEFT_VARIABLE = false;
+	
+	public static boolean BOOL_RECOMPUTE_ORI = false;
+	public static boolean BOOL_RECOMPUTE_PRED = false;
 	
 	// update predicate
-	public static boolean RECOVER_PREDICATE_FROM_FILE = true;
-	public static boolean USE_STATISTICAL_DEBUGGING = true;
-	public static boolean USE_SOBER = false;
+	public static boolean BOOL_RECOVER_PREDICATE_FROM_FILE = true;
+	public static boolean BOOL_USE_STATISTICAL_DEBUGGING = true;
+	public static boolean BOOL_USE_SOBER = false;
 	
-	public static boolean OUT_BRANCH_COVERAGE = false; 
+	
+	public static boolean BOOL_METHOD_LEVEL = false;
+	public static boolean BOOL_BRANCH_COVERAGE = true;
+	public static boolean BOOL_ASSIGNMENT_COVERAGE = true;
+	public static boolean BOOL_RETURN_COVERAGE = true;
+	
+	public static boolean BOOL_ADD_NULL_PREDICATE_FOR_ASSGIN = false;
 	
 	// training model
 	// xgboost, dnn or randomforest
 	public static String TRAINING_MODEL = "dnn";
+	public static boolean RE_TRAIN_MODEL = false;
 	public static boolean TRAINING_EVALUATION = false;
 	
 	// system command
@@ -88,6 +85,7 @@ public class Constant {
 	public static String COMMAND_RM = null;
 	public static String COMMAND_MV = null;
 	public static String COMMAND_CP = null;
+	public static String COMMAND_TIMEOUT = null;
 	public static String COMMAND_JAVA = null;
 	public static String COMMAND_D4J = null;
 	public static String COMMAND_PYTHON = null;
@@ -98,10 +96,13 @@ public class Constant {
 	
 	// project properties
 	public static final String [] PROJECT_NAME = {"chart", "closure", "lang", "math", "time"};
-	public static Map<String, ProjectProperties> PROJECT_PROP = new HashMap<String, ProjectProperties>();
 	public static Map<String, Integer> BUG_NUMBER = new HashMap<String, Integer>();
 
 	// system properties
+	/*
+	 * res/d4jlibs
+	 */
+	public final static String STR_PROJ_DEPENDCE_PATH = HOME + PATH_SEPARATOR + "res" + PATH_SEPARATOR + "d4jlibs";
 	/**
 	 * out
 	 */
@@ -147,15 +148,32 @@ public class Constant {
 	 */
 	public final static String STR_ML_EVALUATION = STR_OUT_PATH + "/evaluation";
 	
-	public final static String TIME_LOG = STR_OUT_PATH + "/time.log";
+	/**
+	 * out/time.log
+	 */
+	public final static String STR_TIME_LOG = STR_OUT_PATH + "/time.log";
 
 	/**
+	 * rlst.log
+	 */
+	public final static String STR_RESULT_RECORD_LOG = HOME + "/rlst.log";
+	
+	/*
 	 * Machine learning home path TODO : need to refactor
 	 */
+	/**
+	 * python
+	 */
 	public final static String STR_ML_HOME = HOME + "/python";
+	/**
+	 * python/input
+	 */
 	public final static String STR_ML_OUT_FILE_PATH = STR_ML_HOME + "/input";
+	/**
+	 * python/output
+	 */
 	public final static String STR_ML_PREDICT_EXP_PATH = STR_ML_HOME + "/output";
-	public static String TENSORFLOW_ACTIVATE_PATH = "";
+	public static String STR_TENSORFLOW_ACTIVATE_PATH;
 	
 	public enum PredicateStatement {
 		IF, WHILE, DO, RETURN, FOR, ASSIGN, SWITCH
@@ -177,80 +195,15 @@ public class Constant {
 			Constant.COMMAND_CP = prop.getProperty("COMMAND.CP").replace("/", Constant.PATH_SEPARATOR) + " ";
 			// for deleting files
 			Constant.COMMAND_RM = prop.getProperty("COMMAND.RM").replace("/", Constant.PATH_SEPARATOR) + " -rf ";
+			Constant.COMMAND_TIMEOUT = prop.getProperty("COMMAND.TIMEOUT").replaceAll("/", Constant.PATH_SEPARATOR) + " ";
 			// for backup file
 			Constant.COMMAND_MV = prop.getProperty("COMMAND.MV").replace("/", Constant.PATH_SEPARATOR) + " ";
 			Constant.COMMAND_D4J = prop.getProperty("COMMAND.D4J").replace("/", Constant.PATH_SEPARATOR) + " ";
 			Constant.COMMAND_PYTHON = prop.getProperty("COMMAND.PYTHON").replace("/", Constant.PATH_SEPARATOR) + " ";
-			Constant.TENSORFLOW_ACTIVATE_PATH = prop.getProperty("TENSORFLOW.ACTIVATE").replace("/", Constant.PATH_SEPARATOR);
+			Constant.STR_TENSORFLOW_ACTIVATE_PATH = prop.getProperty("TENSORFLOW.ACTIVATE").replace("/", Constant.PATH_SEPARATOR);
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_system get properties failed!" + e.getMessage());
-		}
-		
-		try {
-			String filePath = Constant.HOME + "/res/conf/project.properties";
-			InputStream in = new BufferedInputStream(new FileInputStream(filePath));
-			prop.load(in);
-			String base = HOME + PATH_SEPARATOR + "res" + PATH_SEPARATOR + "d4jlibs";
-			for(String name : Constant.PROJECT_NAME) {
-				String ssrc = prop.getProperty(name.toUpperCase() + ".SSRC").replace("/", Constant.PATH_SEPARATOR);
-				String tsrc = prop.getProperty(name.toUpperCase() + ".TSRC").replace("/", Constant.PATH_SEPARATOR);
-				String sbin = prop.getProperty(name.toUpperCase() + ".SBIN").replace("/", Constant.PATH_SEPARATOR);
-				String tbin = prop.getProperty(name.toUpperCase() + ".TBIN").replace("/", Constant.PATH_SEPARATOR);
-				String sourceLevel = prop.getProperty(name.toUpperCase() + ".SRCLEVEL");
-				if (sourceLevel == null || sourceLevel.length() == 0) {
-					sourceLevel = "1.6";
-				}
-				String targetLevel = prop.getProperty(name.toUpperCase() + ".TARLEVEL");
-				if(targetLevel == null || targetLevel.length() == 0) {
-					targetLevel = "1.6";
-				}
-				List<String> classpath = new LinkedList<>();
-				switch(name) {
-				case "math":
-					classpath.add(base + "/hamcrest-core-1.3.jar");
-					classpath.add(base + "/junit-4.11.jar");
-					break;
-				case "chart":
-					classpath.add(base + "/junit-4.11.jar");
-					classpath.add(base + "/iText-2.1.4.jar");
-					classpath.add(base + "/servlet.jar");
-					break;
-				case "lang":
-					classpath.add(base + "/cglib-nodep-2.2.2.jar");
-					classpath.add(base + "/commons-io-2.4.jar");
-					classpath.add(base + "/easymock-3.1.jar");
-					classpath.add(base + "/hamcrest-core-1.3.jar");
-					classpath.add(base + "/junit-4.11.jar");
-					classpath.add(base + "/objenesis-1.2.jar");
-					break;
-				case "closure":
-					classpath.add(base + "/caja-r4314.jar");
-					classpath.add(base + "/jarjar.jar");
-					classpath.add(base + "/ant.jar");
-					classpath.add(base + "/ant-launcher.jar");
-					classpath.add(base + "/args4j.jar");
-					classpath.add(base + "/jsr305.jar");
-					classpath.add(base + "/guava.jar");
-					classpath.add(base + "/json.jar");
-					classpath.add(base + "/protobuf-java.jar");
-					classpath.add(base + "/junit-4.11.jar");
-					classpath.add(base + "/rhino.jar");
-					break;
-				case "time":
-					classpath.add(base + "/junit-4.11.jar");
-					classpath.add(base + "/joda-convert-1.2.jar");
-					break;
-				case "mockito":
-					break;
-				default :
-					System.err.println("UNKNOWN project name : " + name);
-				}
-				Constant.PROJECT_PROP.put(name, new ProjectProperties(ssrc, tsrc, sbin, tbin, classpath, SOURCE_LEVEL.toSourceLevel(sourceLevel), SOURCE_LEVEL.toSourceLevel(targetLevel)));
-			}
-			in.close();
-		} catch (IOException e) {
-			LevelLogger.error(__name__ + "#config_project get properties failed!" + e.getMessage());
 		}
 		
 		try {
@@ -259,14 +212,21 @@ public class Constant {
 			prop.load(in);
 			
 			Constant.PROJECT_HOME = prop.getProperty("PROJECT.HOME").replace("/", Constant.PATH_SEPARATOR);
-			Constant.RECOVER_PREDICATE_FROM_FILE = Boolean.parseBoolean(prop.getProperty("PREDICATE.RECOVER"));
+			Constant.BOOL_RECOVER_PREDICATE_FROM_FILE = Boolean.parseBoolean(prop.getProperty("PREDICATE.RECOVER"));
 			Constant.TOP_K_PREDICATES_FOR_EACH_VAR = Integer.parseInt(prop.getProperty("PREDICATE.TOPK"));
 			Constant.TRAINING_MODEL = prop.getProperty("TRAINING.MODEL").trim();
-			Constant.USE_SOBER =  Boolean.parseBoolean(prop.getProperty("USE.SOBER"));
-			Constant.USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
+			Constant.RE_TRAIN_MODEL = Boolean.parseBoolean(prop.getProperty("MODEL.RETRAIN"));
 			Constant.TRAINING_EVALUATION =  Boolean.parseBoolean(prop.getProperty("TRAINING.EVALUATION"));
-			Constant.PREDICT_LEFT_HAND_SIDE_VARIABLE = Boolean.parseBoolean(prop.getProperty("PREDICT.LEFT.VAR"));
-			Constant.OUT_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
+			Constant.BOOL_USE_SOBER =  Boolean.parseBoolean(prop.getProperty("USE.SOBER"));
+			Constant.BOOL_USE_STATISTICAL_DEBUGGING =  Boolean.parseBoolean(prop.getProperty("USE.STATISTICAL.DEBUGGING"));
+			Constant.BOOL_PREDICT_LEFT_VARIABLE = Boolean.parseBoolean(prop.getProperty("PREDICT.LEFT.VAR"));
+			Constant.BOOL_METHOD_LEVEL = Boolean.parseBoolean(prop.getProperty("PREDICAT.METHODLEVEL"));
+			Constant.BOOL_BRANCH_COVERAGE = Boolean.parseBoolean(prop.getProperty("BRANCH.COVERAGE"));
+			Constant.BOOL_ASSIGNMENT_COVERAGE = Boolean.parseBoolean(prop.getProperty("ASSIGN.COVERAGE"));
+			Constant.BOOL_RETURN_COVERAGE = Boolean.parseBoolean(prop.getProperty("RETURN.COVERAGE"));
+			Constant.TIME_OUT_RUN_TEST_SUITE = Integer.parseInt(prop.getProperty("TEST.TIMEOUT"));
+			Constant.BOOL_RECOMPUTE_ORI = Boolean.parseBoolean(prop.getProperty("RECOMPUTE.ORI"));
+			Constant.BOOL_RECOMPUTE_PRED = Boolean.parseBoolean(prop.getProperty(""));
 			in.close();
 		} catch (IOException e) {
 			LevelLogger.error(__name__ + "#config_runtime get properties failed!" + e.getMessage());
