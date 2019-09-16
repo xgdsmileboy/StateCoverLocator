@@ -1,4 +1,4 @@
-##### This repository contains all fault localizaiton results for the paper submitted to TOSEM.
+##### This directory contains all fault localizaiton results for the paper submitted to TOSEM.
 
 ##### Each sub-directory contains the detailed results for:
 
