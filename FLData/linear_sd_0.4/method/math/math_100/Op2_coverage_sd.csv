@@ -1,0 +1,42 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.apache.commons.math.estimation.AbstractEstimator#double[][]#getCovariances#?,EstimationProblem#172	0.9981834695731153	0.9990917347865577	0.9985467756584923	cols>=rows	GT
+org.apache.commons.math.estimation.SimpleEstimationProblem#EstimatedParameter[]#getUnboundParameters#?#71	0.989100817438692	1.0	0.9934604904632153	!(!p.isBound())	_
+org.apache.commons.math.estimation.WeightedMeasurement#?#WeightedMeasurement#?,double,double,boolean#81	0.9900090826521344	0.9945504087193461	0.9918256130790191	weight==measuredValue	_
+org.apache.commons.math.estimation.GaussNewtonEstimator#void#estimate#?,EstimationProblem#168	0.9900090826521344	0.9945504087193461	0.9907356948228883	!((getCostEvaluations() < 2) || (Math.abs(previous - cost) > (cost * steadyStateThreshold) && (Math.abs(cost) > convergence)))	_
+org.apache.commons.math.estimation.AbstractEstimator#int#getCostEvaluations#?#57	0.9881925522252498	0.9881925522252498	0.9881925522252498	costEvaluations>=0	_
+org.apache.commons.math.estimation.GaussNewtonEstimator#?#GaussNewtonEstimator#?,int,double,double#76	0.9872842870118075	0.9872842870118075	0.9872842870118075	convergence>=steadyStateThreshold	_
+org.apache.commons.math.linear.RealMatrixImpl#RealMatrix#solve#?,RealMatrix#722	0.9863760217983651	0.989100817438692	0.9869209809264305	b.getRowDimension()!=nColB	_
+org.apache.commons.math.linear.RealMatrixImpl#RealMatrix#add#?,RealMatrix#152	0.9854677565849228	0.9881925522252498	0.9865576748410536	this.getColumnDimension()!=rowCount	_
+org.apache.commons.math.linear.RealMatrixImpl#void#luDecompose#?#813	0.9800181653042689	0.9954586739327884	0.9856494096276114	sum==largest	_
+org.apache.commons.math.linear.RealMatrixImpl#boolean#isSingular#?#588	0.9836512261580381	0.9800181653042689	0.9800181653042689	lu == null	_
+org.apache.commons.math.estimation.AbstractEstimator#void#updateJacobian#?#79	0.9700272479564033	0.9863760217983651	0.976566757493188	factor * wm.getPartial(parameters[j])==factor	_
+org.apache.commons.math.estimation.AbstractEstimator#double#getRMS#?,EstimationProblem#133	0.963669391462307	0.9854677565849228	0.9723887375113534	Math.sqrt(criterion / wm.length)<=0	_
+org.apache.commons.math.linear.RealMatrixImpl#double[][]#copyOut#?#1003	0.971843778383288	0.971843778383288	0.9718437783832878	i < nRows	_
+org.apache.commons.math.linear.RealMatrixImpl#?#RealMatrixImpl#?,int,int#89	0.9700272479564033	0.9700272479564033	0.9694822888283379	!(rowDimension <= 0 || columnDimension <= 0)	_
+org.apache.commons.math.estimation.AbstractEstimator#void#updateResidualsAndCost#?#109	0.9600363306085377	0.9745685740236149	0.9658492279745685	wm.getWeight() * residual * residual==residual	_
+org.apache.commons.math.linear.RealMatrixImpl#boolean#isValidCoordinate#?,int,int#1032	0.9564032697547684	0.9791099000908265	0.9654859218891917	this.getColumnDimension()<nRows	_
+org.apache.commons.math.linear.RealMatrixImpl#double#getEntry#?,int,int#526	0.9573115349682108	0.9772933696639419	0.9653042688465032	data[row][column]<0	_
+org.apache.commons.math.estimation.WeightedMeasurement#double#getResidual#?#111	0.9564032697547684	0.9763851044504995	0.9643960036330609	measuredValue - getTheoreticalValue()==0	_
+org.apache.commons.math.estimation.EstimatedParameter#double#getEstimate#?#86	0.9527702089009991	0.9809264305177112	0.964032697547684	estimate==0	_
+org.apache.commons.math.linear.RealMatrixImpl#void#setSubMatrix#?,double[][],int,int#399	0.9554950045413261	0.9745685740236149	0.9620345140781108	subMatrix[0].length<nRows	_
+org.apache.commons.math.estimation.WeightedMeasurement#double#getWeight#?#92	0.9564032697547684	0.9564032697547684	0.9564032697547684	weight!=0	_
+org.apache.commons.math.linear.RealMatrixImpl#int#getColumnDimension#?#611	0.9464123524069028	0.9464123524069028	0.9464123524069028	data[0].length>0	_
+org.apache.commons.math.linear.RealMatrixImpl#int#getRowDimension#?#604	0.9464123524069028	0.9464123524069028	0.9464123524069028	data.length>=0	_
+org.apache.commons.math.estimation.EstimatedParameter#?#EstimatedParameter#?,String,double,boolean#60	0.9990917347865577	0.0	0.5994550408719346		_
+org.apache.commons.math.estimation.SimpleEstimationProblem#EstimatedParameter[]#getAllParameters#?#58	0.9990917347865577	0.0	0.5994550408719346		_
+org.apache.commons.math.estimation.SimpleEstimationProblem#WeightedMeasurement[]#getMeasurements#?#86	0.989100817438692	0.0	0.5934604904632153		_
+org.apache.commons.math.estimation.SimpleEstimationProblem#void#addMeasurement#?,WeightedMeasurement#101	0.989100817438692	0.0	0.5934604904632153		_
+org.apache.commons.math.estimation.SimpleEstimationProblem#void#addParameter#?,EstimatedParameter#93	0.989100817438692	0.0	0.5934604904632153		_
+org.apache.commons.math.estimation.SimpleEstimationProblem#?#SimpleEstimationProblem#?#49	0.989100817438692	0.0	0.5934604904632153		_
+org.apache.commons.math.estimation.WeightedMeasurement#void#setIgnored#?,boolean#146	0.989100817438692	0.0	0.5934604904632153		_
+org.apache.commons.math.estimation.EstimatedParameter#boolean#isBound#?#107	0.9872842870118075	0.0	0.5923705722070844		_
+org.apache.commons.math.estimation.WeightedMeasurement#boolean#isIgnored#?#155	0.9863760217983651	0.0	0.591825613079019		_
+org.apache.commons.math.linear.RealMatrixImpl#boolean#isSquare#?#581	0.9782016348773842	0.0	0.5869209809264305		_
+org.apache.commons.math.linear.RealMatrixImpl#double[][]#getData#?#267	0.9727520435967303	0.0	0.5836512261580381		_
+org.apache.commons.math.linear.RealMatrixImpl#double[][]#getDataRef#?#278	0.9691189827429609	0.0	0.5814713896457765		_
+org.apache.commons.math.estimation.EstimatedParameter#void#setEstimate#?,double#79	0.9591280653950953	0.0	0.5754768392370572		_
+org.apache.commons.math.estimation.AbstractEstimator#void#incrementJacobianEvaluationsCounter#?#88	0.9573115349682108	0.0	0.5743869209809265		_
+org.apache.commons.math.estimation.AbstractEstimator#void#setMaxCostEval#?,int#48	0.9573115349682108	0.0	0.5743869209809265		_
+org.apache.commons.math.estimation.AbstractEstimator#void#initializeEstimate#?,EstimationProblem#231	0.9573115349682108	0.0	0.5743869209809265		_
+org.apache.commons.math.linear.RealMatrixImpl#void#copyIn#?,double[][]#1020	0.9536784741144414	0.0	0.5722070844686649		_
+org.apache.commons.math.linear.RealMatrixImpl#?#RealMatrixImpl#?,double[][]#110	0.9536784741144414	0.0	0.5722070844686649		_

@@ -1,0 +1,55 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.joda.time.DateTimeZone#DateTimeZone#forOffsetHoursMinutes#?,int,int#265	1.0	1.0	0.9992443324937027	FieldUtils.safeAdd(hoursInMinutes,-minutesOffset)<hoursInMinutes	GT
+org.joda.time.DateTimeZone#DateTimeZone#forID#?,String#215	0.9979848866498741	0.9979848866498741	0.9979848866498741	id.startsWith("+") || id.startsWith("-")	_
+org.joda.time.DateTimeZone#int#parseOffset#?,String#619	0.9974811083123426	0.9987405541561712	0.997984886649874	-(int)offsetFormatter().withChronology(chrono).parseMillis(str)<0	_
+org.joda.time.DateTimeZone#DateTimeFormatter#offsetFormatter#?#671	0.9974811083123426	0.9974811083123426	0.9974811083123425	!(cOffsetFormatter == null)	_
+org.joda.time.DateTimeZone#String#printOffset#?,int#644	0.996977329974811	0.998992443324937	0.9935516372795969	offset / DateTimeConstants.MILLIS_PER_MINUTE>hours	_
+org.joda.time.DateTimeZone#DateTimeZone#fixedOffsetZone#?,String,int#360	0.9957178841309824	0.9957178841309824	0.9929471032745592	zone != null	_
+org.joda.time.field.FieldUtils#int#safeMultiply#?,int,int#123	0.9861460957178841	0.9947103274559194	0.9895717884130982	(int)total<0	_
+org.joda.time.tz.FixedDateTimeZone#?#FixedDateTimeZone#?,String,String,int,int#40	0.9889168765743073	0.9896725440806046	0.9892191435768263	wallOffset>=standardOffset	_
+org.joda.time.tz.FixedDateTimeZone#boolean#equals#?,Object#88	0.9896725440806046	0.9896725440806046	0.9883123425692695	this == obj	_
+org.joda.time.format.FormatUtils#int#parseTwoDigits#?,String,int#352	0.981360201511335	0.9987405541561712	0.9883123425692695	text.charAt(position) - '0'>position	_
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneOffset#int#parseInto#?,DateTimeParserBucket,String,int#2307	0.9949622166246851	0.9949622166246851	0.9860453400503778	c == '-'	_
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneOffset#int#digitCount#?,String,int,int#2457	0.981360201511335	0.981360201511335	0.981360201511335	!(c < '0' || c > '9')	_
+org.joda.time.tz.ZoneInfoProvider#DateTimeZone#getZone#?,String#141	0.9972292191435769	0.9972292191435769	0.9759193954659949	obj == null	_
+org.joda.time.format.DateTimeFormatter#long#parseMillis#?,String#747	0.9662468513853905	0.9896725440806046	0.975617128463476	bucket.computeMillis(true,text)<0	_
+org.joda.time.DateTimeZone#?#DateTimeZone#?,String#691	0.9743073047858942	0.9743073047858942	0.9741561712846347	!(id == null)	_
+org.joda.time.format.DateTimeParserBucket#long#computeMillis#?,boolean,String#352	0.9720403022670026	0.9954659949622167	0.9526952141057934	!(count > 0)	_
+org.joda.time.format.DateTimeFormatter#DateTimeFormatter#withChronology#?,Chronology#257	0.9541561712846347	0.9541561712846347	0.9497732997481108	!(iChrono == chrono)	_
+org.joda.time.format.DateTimeParserBucket#void#sort#?,SavedField[],int#416	0.9241813602015113	0.9241813602015113	0.9241813602015113	!(high > 10)	_
+org.joda.time.format.FormatUtils#void#appendPaddedInteger#?,StringBuffer,int,int#74	0.8954659949622166	0.9408060453400504	0.9136020151133502	((value + 1) * 13421772) >> 27==size	_
+org.joda.time.format.DateTimeFormatter#DateTimeParser#requireParser#?#926	0.9138539042821159	0.9138539042821159	0.913551637279597	!(parser == null)	_
+org.joda.time.field.FieldUtils#int#safeAdd#?,int,int#64	0.8065491183879093	0.993198992443325	0.8809068010075567	val1 + val2==val1	_
+org.joda.time.format.DateTimeFormatter#Chronology#selectChronology#?,Chronology#941	0.9544080604534005	0.9544080604534005	0.8734005037783376	iChrono != null	_
+org.joda.time.DateTimeZone#DateTimeZone#forOffsetMillis#?,int#284	0.9926952141057934	0.0	0.595617128463476		GT
+org.joda.time.format.DateTimeParserBucket#void#setOffset#?,Integer#196	0.9720403022670026	0.0	0.5832241813602015		_
+org.joda.time.chrono.BaseChronology#?#BaseChronology#?#54	0.9284634760705289	0.0	0.5570780856423173		_
+org.joda.time.format.DateTimeFormatter#?#DateTimeFormatter#?,DateTimePrinter,DateTimeParser,Locale,boolean,Chronology,DateTimeZone,Integer,int#128	0.9168765743073048	0.0	0.5501259445843829		_
+org.joda.time.format.DateTimeParserBucket#?#DateTimeParserBucket#?,long,Chronology,Locale,Integer,int#120	0.9138539042821159	0.0	0.5483123425692695		_
+org.joda.time.DateTimeUtils#Chronology#getChronology#?,Chronology#282	0.35919395465994963	0.35919395465994963	0.30312342569269524	!(chrono == null)	_
+org.joda.time.tz.ZoneInfoProvider#InputStream#openResource#?,String#197	-2.5188916876574307E-4	0.0	-1.5113350125944583E-4		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatter#toFormatter#?#117	-2.5188916876574307E-4	0.0	-1.5113350125944583E-4		_
+org.joda.time.tz.DateTimeZoneBuilder#DateTimeZone#readFrom#?,DataInput,String#121	-2.5188916876574307E-4	0.0	-1.5113350125944583E-4		_
+org.joda.time.tz.CachedDateTimeZone#CachedDateTimeZone#forZone#?,DateTimeZone#69	-5.037783375314861E-4	0.0	-3.0226700251889167E-4		_
+org.joda.time.format.DateTimeFormatterBuilder#boolean#isPrinter#?,Object#1171	-0.007304785894206549	0.0	-0.0043828715365239294		_
+org.joda.time.format.DateTimeFormatterBuilder#Object#getFormatter#?#1150	-0.00831234256926952	0.0	-0.0049874055415617125		_
+org.joda.time.DateTimeUtils#void#put#?,Map<String,DateTimeZone>,String,String#63	-0.008816120906801008	0.0	-0.005289672544080605		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#appendTimeZoneOffset#?,String,boolean,int,int#1091	-0.014609571788413099	0.0	-0.008765743073047859		_
+org.joda.time.tz.DateTimeZoneBuilder$OfYear#OfYear#readFrom#?,DataInput#482	-0.015365239294710327	0.0	-0.009219143576826195		_
+org.joda.time.tz.DateTimeZoneBuilder$PrecalculatedZone#PrecalculatedZone#readFrom#?,DataInput,String#1372	-0.015365239294710327	0.0	-0.009219143576826195		_
+org.joda.time.tz.DateTimeZoneBuilder$DSTZone#DSTZone#readFrom#?,DataInput,String#1166	-0.015365239294710327	0.0	-0.009219143576826195		_
+org.joda.time.tz.DateTimeZoneBuilder$Recurrence#Recurrence#readFrom#?,DataInput#740	-0.015365239294710327	0.0	-0.009219143576826195		_
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneOffset#?#TimeZoneOffset#?,String,String,boolean,int,int#2125	-0.015617128463476071	0.0	-0.009370277078085642		_
+org.joda.time.tz.DateTimeZoneBuilder#long#readMillis#?,DataInput#202	-0.015869017632241814	0.0	-0.009521410579345089		_
+org.joda.time.tz.DateTimeZoneBuilder$DSTZone#?#DSTZone#?,String,int,Recurrence,Recurrence#1177	-0.0163727959697733	0.0	-0.009823677581863978		_
+org.joda.time.tz.DateTimeZoneBuilder$OfYear#?#OfYear#?,char,int,int,int,boolean,int#505	-0.01662468513853904	0.0	-0.009974811083123425		_
+org.joda.time.tz.DateTimeZoneBuilder$Recurrence#?#Recurrence#?,OfYear,String,int#749	-0.01662468513853904	0.0	-0.009974811083123425		_
+org.joda.time.tz.CachedDateTimeZone#?#CachedDateTimeZone#?,DateTimeZone#88	-0.017380352644836273	0.0	-0.010428211586901763		_
+org.joda.time.tz.DateTimeZoneBuilder$PrecalculatedZone#?#PrecalculatedZone#?,String,long[],int[],int[],String[],DSTZone#1503	-0.017632241813602016	0.0	-0.01057934508816121		_
+org.joda.time.tz.ZoneInfoProvider#DateTimeZone#loadZoneData#?,String#236	-0.018387909319899243	0.0	-0.011032745591939546		_
+org.joda.time.tz.DateTimeZoneBuilder#DateTimeZone#readFrom#?,InputStream,String#98	-0.018639798488664986	0.0	-0.011183879093198991		_
+org.joda.time.format.DateTimeFormatterBuilder#boolean#isParser#?,Object#1179	-0.03198992443324937	0.0	-0.019193954659949622		_
+org.joda.time.format.DateTimeFormatterBuilder#DateTimeFormatterBuilder#append0#?,Object#377	-0.0765743073047859	0.0	-0.04594458438287154		_
+org.joda.time.format.DateTimeFormatter#?#DateTimeFormatter#?,DateTimePrinter,DateTimeParser#109	-0.08337531486146096	0.0	-0.05002518891687658		_
+org.joda.time.format.DateTimeFormatterBuilder#?#DateTimeFormatterBuilder#?#84	-0.08639798488664988	0.0	-0.051838790931989925		_
+org.joda.time.DateTimeZone#String#getID#?#707	-0.1478589420654912	0.0	-0.08871536523929471		_

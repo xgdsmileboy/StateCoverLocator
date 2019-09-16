@@ -1,0 +1,39 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.apache.commons.math.optimization.linear.SimplexSolver#void#solvePhase1#?,SimplexTableau#168	0.0	0.5238095238095237	0.3142857142857142	tableau.getNumArtificialVariables() == 0	_
+org.apache.commons.math.optimization.linear.SimplexSolver#Integer#getPivotRow#?,int,SimplexTableau#83	0.0	0.5238095238095237	0.3142857142857142	rhs / entry==entry	GT
+org.apache.commons.math.optimization.linear.SimplexTableau#void#discardArtificialVariables#?#307	0.0	0.5238095238095237	0.3142857142857142	numArtificialVariables == 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#double[][]#createTableau#?,boolean#133	0.0	0.38888888888888895	0.23333333333333336	!(getNumObjectiveFunctions() == 2)	_
+org.apache.commons.math.optimization.linear.LinearConstraint#double#getValue#?#184	0.0	0.38888888888888895	0.23333333333333336	value==0	_
+org.apache.commons.math.linear.ArrayRealVector#RealVector#mapMultiply#?,double#340	0.0	0.2823529411764706	0.16941176470588235	data[i] * d>d	_
+org.apache.commons.math.optimization.linear.SimplexSolver#void#doIteration#?,SimplexTableau#118	0.0	0.19047619047619047	0.11428571428571427	tableau.getEntry(i,pivotCol)>pivotVal	_
+org.apache.commons.math.optimization.linear.SimplexSolver#RealPointValuePair#doOptimize#?#190	0.0	0.06837606837606836	0.04102564102564101	!isOptimal(tableau)	_
+org.apache.commons.math.optimization.linear.SimplexSolver#boolean#isOptimal#?,SimplexTableau#151	0.0	0.06837606837606836	0.04102564102564101	MathUtils.compareTo(tableau.getEntry(0,i),0,epsilon) < 0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#Integer#getBasicRow#?,int,boolean#296	0.0	0.05681818181818182	0.034090909090909095	!MathUtils.equals(getEntry(i,col),0.0,epsilon)	_
+org.apache.commons.math.linear.Array2DRowRealMatrix#void#setSubMatrix#?,double[][],int,int#330	0.0	0.035266974291364536	0.021160184574818722	subMatrix[0].length>nRows	_
+org.apache.commons.math.optimization.linear.SimplexTableau#double#getEntry#?,int,int#415	0.0	0.01568627450980392	0.009411764705882352	tableau.getEntry(row,column)<0	_
+org.apache.commons.math.optimization.linear.LinearObjectiveFunction#double#getConstantTerm#?#83	0.0	0.013888888888888895	0.008333333333333337	constantTerm==0	_
+org.apache.commons.math.linear.Array2DRowRealMatrix#double#getEntry#?,int,int#354	0.0	0.012180922525750114	0.007308553515450068	data[row][column]<0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getNumArtificialVariables#?#497	0.0	0.010989010989011005	0.006593406593406603	numArtificialVariables<=0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getConstraintTypeCounts#?,Relationship#240	0.0	0.006535947712418305	0.003921568627450983	count<=0	_
+org.apache.commons.math.optimization.RealPointValuePair#double#getValue#?#86	0.0	0.0	0.0	value<=0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getSlackVariableOffset#?#433	0.0	0.0	0.0	getNumObjectiveFunctions() + numDecisionVariables!=0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getHeight#?#406	0.0	0.0	0.0	tableau.getRowDimension()>0	_
+org.apache.commons.math.optimization.linear.AbstractLinearOptimizer#void#incrementIterationsCounter#?#86	0.0	0.0	0.0	!(++iterations > maxIterations)	_
+org.apache.commons.math.linear.ArrayRealVector#void#checkVectorDimensions#?,int#1287	0.0	0.0	0.0	!(data.length != n)	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getOriginalNumDecisionVariables#?#481	0.0	0.0	0.0	restrictToNonNegative ? numDecisionVariables : numDecisionVariables - 1>0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getNegativeDecisionVariableOffset#?#458	0.0	0.0	0.0	getNumObjectiveFunctions() + getOriginalNumDecisionVariables()>=0	_
+org.apache.commons.math.linear.Array2DRowRealMatrix#int#getRowDimension#?#404	0.0	0.0	0.0	(data == null) ? 0 : data.length>=0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#LinearConstraint#normalize#?,LinearConstraint#211	0.0	0.0	0.0	!(constraint.getValue() < 0)	_
+org.apache.commons.math.optimization.linear.SimplexTableau#Integer#getBasicRowForSolution#?,int#282	0.0	0.0	0.0	getBasicRow(col,false)>=0	_
+org.apache.commons.math.linear.ArrayRealVector#int#getDimension#?#1157	0.0	0.0	0.0	data.length>0	_
+org.apache.commons.math.optimization.linear.SimplexSolver#Integer#getPivotColumn#?,SimplexTableau#67	0.0	0.0	0.0	minPos>=0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#void#subtractRow#?,int,int,double#387	0.0	0.0	0.0	j < getWidth()	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getWidth#?#398	0.0	0.0	0.0	tableau.getColumnDimension()>0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getNumVariables#?#190	0.0	0.0	0.0	f.getCoefficients().getDimension()!=0	_
+org.apache.commons.math.linear.Array2DRowRealMatrix#int#getColumnDimension#?#410	0.0	0.0	0.0	((data == null) || (data[0] == null)) ? 0 : data[0].length>0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#RealPointValuePair#getSolution#?#345	0.0	0.0	0.0	getBasicRowForSolution(getNumObjectiveFunctions() + i)<=negativeVarBasicRow	_
+org.apache.commons.math.linear.ArrayRealVector#double#dotProduct#?,double[]#886	0.0	0.0	0.0	!(i < data.length)	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getNumObjectiveFunctions#?#225	0.0	0.0	0.0	this.numArtificialVariables > 0 ? 2 : 1>=0	_
+org.apache.commons.math.optimization.linear.SimplexTableau#void#divideRow#?,int,double#370	0.0	0.0	0.0	j < getWidth()	_
+org.apache.commons.math.util.MathUtils#int#compareTo#?,double,double,double#367	0.0	0.0	0.0	!(equals(x,y,eps))	_
+org.apache.commons.math.optimization.linear.SimplexTableau#int#getRhsOffset#?#449	0.0	0.0	0.0	getWidth() - 1!=0	_

@@ -1,0 +1,84 @@
+line	original_score	max_predicate_score	total	predicate	label
+org.joda.time.tz.CachedDateTimeZone$Info#int#getOffset#?,long#204	0.0	0.05162237556893262	0.02064895022757305	!(iNextInfo == null || millis < iNextInfo.iPeriodStart)	_
+org.joda.time.format.FormatUtils#void#appendPaddedInteger#?,StringBuffer,int,int#74	0.0	0.010649837294152453	0.004259934917660981	((value + 1) * 13421772) >> 27==size	_
+org.joda.time.format.DateTimeFormatter#void#printTo#?,StringBuffer,long,Chronology#622	0.0	0.008567430437224533	0.0034269721748898135	instant + offset>instant	_
+org.joda.time.field.PreciseDurationDateTimeField#long#remainder#?,long#127	0.0	0.008426866834259817	0.003370746733703927	instant % iUnitMillis==0	_
+org.joda.time.format.DateTimeFormatterBuilder$Fraction#void#printTo#?,StringBuffer,Writer,long,Chronology#1894	0.0	0.008181404979546487	0.003272561991818595	fraction == 0	_
+org.joda.time.format.DateTimeFormatterBuilder$TimeZoneOffset#void#printTo#?,StringBuffer,long,Chronology,int,DateTimeZone,Locale#2090	0.0	0.0064338851283426025	0.002573554051337041	displayOffset >= 0	_
+org.joda.time.chrono.BasicChronology#int#getYear#?,long#407	0.0	0.00473447429571976	0.001893789718287904	instant - yearStart>=unitMillis	_
+org.joda.time.field.PreciseDateTimeField#int#get#?,long#80	0.0	0.0038476757037016816	0.0015390702814806728	(int)((instant / getUnitMillis()) % iRange)==0	_
+org.joda.time.format.DateTimeFormatter#Chronology#selectChronology#?,Chronology#916	0.0	0.002593216991582063	0.0010372867966328254	!(iChrono != null)	_
+org.joda.time.DateTimeZone#int#getOffsetFromLocal#?,long#883	0.0	0.0020554202192448238	8.221680876979295E-4	instantLocal - offsetLocal<instantLocal	GT
+org.joda.time.chrono.BasicGJChronology#int#getDaysInYearMonth#?,int,int#120	0.0	0.0018491909179842358	7.396763671936944E-4	!(isLeapYear(year))	_
+org.joda.time.chrono.BasicGJChronology#long#getTotalMillisByYearMonth#?,int,int#139	0.0	0.0014138458250447994	5.655383300179198E-4	!(isLeapYear(year))	_
+org.joda.time.format.ISODateTimeFormat#DateTimeFormatter#dateTime#?#936	0.0	9.459779046589391E-4	3.7839116186357566E-4	!(dt == null)	_
+org.joda.time.chrono.BasicChronology#long#getYearMillis#?,int#360	0.0	8.570405239459678E-4	3.428162095783871E-4	getYearInfo(year).iFirstDayMillis>0	_
+org.joda.time.tz.CachedDateTimeZone#int#getOffset#?,long#111	0.0	7.323200068122788E-4	2.929280027249115E-4	getInfo(instant).getOffset(instant)>0	_
+org.joda.time.chrono.BasicChronology#long#getDateMidnightMillis#?,int,int,int#606	0.0	7.080660966588897E-4	2.8322643866355587E-4	getYearMonthDayMillis(year,monthOfYear,dayOfMonth)>0	_
+org.joda.time.base.BaseDateTime#long#getMillis#?#295	0.0	6.900725707465798E-4	2.7602902829863195E-4	iMillis>0	_
+org.joda.time.chrono.BasicChronology#int#getDayOfMonth#?,long,int,int#469	0.0	6.509623482310631E-4	2.6038493929242526E-4	getTotalMillisByYearMonth(year,month)<millis	_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#void#printTo#?,StringBuffer,long,Chronology,int,DateTimeZone,Locale#2515	0.0	5.932801139097814E-4	2.3731204556391258E-4	locale == null	_
+org.joda.time.chrono.BasicChronology#long#getYearMonthDayMillis#?,int,int,int#387	0.0	5.417156249099537E-4	2.1668624996398148E-4	millis + (dayOfMonth - 1) * (long)DateTimeConstants.MILLIS_PER_DAY>0	_
+org.joda.time.chrono.AssembledChronology#long#getDateTimeMillis#?,int,int,int,int,int,int,int#133	0.0	5.234338898907743E-4	2.0937355595630972E-4	base.getDateTimeMillis(year,monthOfYear,dayOfMonth,hourOfDay,minuteOfHour,secondOfMinute,millisOfSecond)>0	_
+org.joda.time.DateTimeUtils#Chronology#getInstantChronology#?,ReadableInstant#164	0.0	5.02969454278143E-4	2.0118778171125722E-4	!(instant == null)	_
+org.joda.time.DateTimeUtils#long#getInstantMillis#?,ReadableInstant#146	0.0	4.715167402476031E-4	1.8860669609904127E-4	!(instant == null)	_
+org.joda.time.chrono.BasicChronology#DateTimeZone#getZone#?#143	0.0	4.022338441614683E-4	1.6089353766458734E-4	!((base=getBase()) != null)	_
+org.joda.time.base.BaseDateTime#long#checkInstant#?,long,Chronology#284	0.0	3.4749007915824023E-4	1.389960316632961E-4	instant>0	_
+org.joda.time.DateTimeUtils#Chronology#getChronology#?,Chronology#252	0.0	3.226643494390254E-4	1.2906573977561017E-4	!(chrono == null)	_
+org.joda.time.base.BaseDateTime#?#BaseDateTime#?,long,Chronology#126	0.0	2.324612366492715E-4	9.29844946597086E-5	checkInstant(instant,iChronology)>=instant	_
+org.joda.time.chrono.BasicChronology#long#getDateTimeMillis#?,int,int,int,int,int,int,int#177	0.0	1.962991550654271E-4	7.851966202617085E-5	getDateMidnightMillis(year,monthOfYear,dayOfMonth) + hourOfDay * DateTimeConstants.MILLIS_PER_HOUR + minuteOfHour * DateTimeConstants.MILLIS_PER_MINUTE + secondOfMinute * DateTimeConstants.MILLIS_PER_SECOND + millisOfSecond>0	_
+org.joda.time.tz.CachedDateTimeZone#Info#getInfo#?,long#150	0.0	1.6712065668289538E-4	6.684826267315816E-5	period & cInfoCacheMask==period	_
+org.joda.time.chrono.ISOChronology#ISOChronology#getInstance#?,DateTimeZone#101	0.0	8.58454248203924E-5	3.4338169928156956E-5	chrono != null && chrono.getZone() == zone	_
+org.joda.time.chrono.BasicChronology#int#getDayOfMonth#?,long#449	0.0	8.073872084875646E-5	3.2295488339502586E-5	getMonthOfYear(millis,year)<=year	_
+org.joda.time.chrono.BasicGJChronology#int#getMonthOfYear#?,long,int#88	0.0	6.555243140991576E-5	2.622097256396631E-5	(int)((millis - getYearMillis(year)) >> 10)>year	_
+org.joda.time.chrono.BasicYearDateTimeField#int#get#?,long#54	0.0	6.463562053658358E-5	2.585424821463343E-5	iChronology.getYear(instant)>0	_
+org.joda.time.chrono.BasicChronology#YearInfo#getYearInfo#?,int#739	0.0	2.11636105825108E-5	8.465444233004321E-6	!(info == null || info.iYear != year)	_
+org.joda.time.field.FieldUtils#void#verifyValueBounds#?,DateTimeFieldType,int,int,int#232	0.0	4.596612756060168E-6	1.8386451024240675E-6	!((value < lowerBound) || (value > upperBound))	_
+org.joda.time.chrono.BasicGJChronology#long#setYear#?,long,int#198	0.0	0.0	0.0	instant!=0	_
+org.joda.time.field.PreciseDurationField#long#add#?,long,int#105	0.0	0.0	0.0	FieldUtils.safeAdd(instant,addition)>0	_
+org.joda.time.chrono.BasicMonthOfYearDateTimeField#int#get#?,long#72	0.0	0.0	0.0	iChronology.getMonthOfYear(instant)>0	_
+org.joda.time.tz.DateTimeZoneBuilder$DSTZone#long#nextTransition#?,long#1235	0.0	0.0	0.0	(start > end) ? end : start>=0	_
+org.joda.time.chrono.BasicDayOfMonthDateTimeField#int#getMaximumValueForSet#?,long,int#96	0.0	0.0	0.0	iChronology.getDaysInMonthMaxForSet(instant,value)>0	_
+org.joda.time.chrono.BasicChronology#int#getMillisOfDay#?,long#552	0.0	0.0	0.0	(int)(instant % DateTimeConstants.MILLIS_PER_DAY)==0	_
+org.joda.time.chrono.BasicChronology#int#getMaxMonth#?#691	0.0	0.0	0.0	12>0	_
+org.joda.time.chrono.GregorianChronology#long#getApproxMillisAtEpochDividedByTwo#?#241	0.0	0.0	0.0	(1970L * MILLIS_PER_YEAR) / 2!=0	_
+org.joda.time.field.MillisDurationField#long#add#?,long,int#117	0.0	0.0	0.0	FieldUtils.safeAdd(instant,value)>0	_
+org.joda.time.field.PreciseDurationDateTimeField#long#getUnitMillis#?#154	0.0	0.0	0.0	iUnitMillis>0	_
+org.joda.time.tz.DateTimeZoneBuilder$Recurrence#int#getSaveMillis#?#776	0.0	0.0	0.0	iSaveMillis<=0	_
+org.joda.time.chrono.BasicDayOfMonthDateTimeField#int#getMinimumValue#?#55	0.0	0.0	0.0	1>0	_
+org.joda.time.chrono.ZonedChronology#long#getDateTimeMillis#?,int,int,int,int,int,int,int#119	0.0	0.0	0.0	localToUTC(getBase().getDateTimeMillis(year,monthOfYear,dayOfMonth,hourOfDay,minuteOfHour,secondOfMinute,millisOfSecond))>0	_
+org.joda.time.format.DateTimeFormatter#DateTimePrinter#requirePrinter#?#656	0.0	0.0	0.0	!(printer == null)	_
+org.joda.time.field.PreciseDateTimeField#int#getMaximumValue#?#131	0.0	0.0	0.0	iRange - 1>=0	_
+org.joda.time.tz.DateTimeZoneBuilder$OfYear#long#next#?,long,int,int#549	0.0	0.0	0.0	!(iMode == 'w')	_
+org.joda.time.chrono.BasicMonthOfYearDateTimeField#long#set#?,long,int#298	0.0	0.0	0.0	!(thisDom > maxDom)	_
+org.joda.time.base.BaseDateTime#?#BaseDateTime#?,int,int,int,int,int,int,int,Chronology#256	0.0	0.0	0.0	checkInstant(instant,iChronology)<=instant	_
+org.joda.time.field.FieldUtils#long#safeAdd#?,long,long#84	0.0	0.0	0.0	!((val1 ^ sum) < 0 && (val1 ^ val2) >= 0)	_
+org.joda.time.chrono.ZonedChronology#long#localToUTC#?,long#147	0.0	0.0	0.0	instant>0	_
+org.joda.time.chrono.BasicChronology#int#getMaxMonth#?,int#682	0.0	0.0	0.0	getMaxMonth()!=0	_
+org.joda.time.tz.DateTimeZoneBuilder$OfYear#long#setDayOfWeek#?,Chronology,long#719	0.0	0.0	0.0	daysToAdd != 0	_
+org.joda.time.chrono.BasicChronology#int#getDayOfYear#?,long,int#486	0.0	0.0	0.0	(int)((instant - yearStart) / DateTimeConstants.MILLIS_PER_DAY) + 1>=0	_
+org.joda.time.field.FieldUtils#void#verifyValueBounds#?,DateTimeField,int,int,int#214	0.0	0.0	0.0	!((value < lowerBound) || (value > upperBound))	_
+org.joda.time.tz.DateTimeZoneBuilder$PrecalculatedZone#long#nextTransition#?,long#1573	0.0	0.0	0.0	!(i < transitions.length)	_
+org.joda.time.field.BaseDateTimeField#long#add#?,long,int#253	0.0	0.0	0.0	getDurationField().add(instant,value)>=0	_
+org.joda.time.chrono.GregorianChronology#long#getAverageMillisPerYearDividedByTwo#?#233	0.0	0.0	0.0	MILLIS_PER_YEAR / 2>=0	_
+org.joda.time.chrono.BasicYearDateTimeField#long#add#?,long,int#58	0.0	0.0	0.0	!(years == 0)	_
+org.joda.time.chrono.GJDayOfWeekDateTimeField#int#get#?,long#56	0.0	0.0	0.0	iChronology.getDayOfWeek(instant)>0	_
+org.joda.time.chrono.GregorianChronology#int#getMaxYear#?#225	0.0	0.0	0.0	MAX_YEAR>=0	_
+org.joda.time.chrono.AssembledChronology#DateTimeZone#getZone#?#107	0.0	0.0	0.0	(base=iBase) != null	_
+org.joda.time.field.PreciseDateTimeField#long#set#?,long,int#112	0.0	0.0	0.0	instant + (value - get(instant)) * iUnitMillis>0	_
+org.joda.time.chrono.BasicGJChronology#int#getDaysInMonthMaxForSet#?,long,int#134	0.0	0.0	0.0	(value > 28 ? getDaysInMonthMax(instant) : 28)>0	_
+org.joda.time.tz.DateTimeZoneBuilder$Recurrence#long#next#?,long,int,int#761	0.0	0.0	0.0	iOfYear.next(instant,standardOffset,saveMillis)!=0	_
+org.joda.time.chrono.BasicDayOfMonthDateTimeField#int#get#?,long#47	0.0	0.0	0.0	iChronology.getDayOfMonth(instant)>0	_
+org.joda.time.chrono.BasicChronology#int#getMonthOfYear#?,long#435	0.0	0.0	0.0	getMonthOfYear(millis,getYear(millis))>=0	_
+org.joda.time.chrono.BasicChronology#int#getDayOfWeek#?,long#534	0.0	0.0	0.0	instant >= 0	_
+org.joda.time.chrono.BasicChronology#int#getDayOfMonth#?,long,int#459	0.0	0.0	0.0	getDayOfMonth(millis,year,month)>=0	_
+org.joda.time.format.DateTimeFormatterBuilder$Composite#int#estimatePrintedLength#?#2504	0.0	0.0	0.0	iPrintedLengthEstimate>=0	_
+org.joda.time.tz.CachedDateTimeZone#long#nextTransition#?,long#123	0.0	0.0	0.0	iZone.nextTransition(instant)>=0	_
+org.joda.time.field.PreciseDurationDateTimeField#int#getMinimumValue#?#150	0.0	0.0	0.0	0>=0	_
+org.joda.time.tz.DateTimeZoneBuilder$OfYear#long#setDayOfMonthNext#?,Chronology,long#683	0.0	0.0	0.0	next>=0	_
+org.joda.time.field.PreciseDurationDateTimeField#long#set#?,long,int#80	0.0	0.0	0.0	instant + (value - get(instant)) * iUnitMillis!=0	_
+org.joda.time.field.FieldUtils#int#safeAdd#?,int,int#70	0.0	0.0	0.0	sum>=0	_
+org.joda.time.chrono.GregorianChronology#int#getMinYear#?#221	0.0	0.0	0.0	MIN_YEAR<=0	_
+org.joda.time.chrono.BasicMonthOfYearDateTimeField#long#add#?,long,int#146	0.0	0.0	0.0	datePart + timePart>=0	_
+org.joda.time.chrono.BasicYearDateTimeField#long#set#?,long,int#84	0.0	0.0	0.0	iChronology.setYear(instant,year)>0	_
+org.joda.time.tz.DateTimeZoneBuilder$OfYear#long#setDayOfMonth#?,Chronology,long#713	0.0	0.0	0.0	instant>0	_
